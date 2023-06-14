@@ -1,0 +1,70 @@
+.popular-categories {
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  height: fit-content;
+  width: -webkit-fill-available;
+  position: fixed;
+  z-index: 5;
+  background-color: #0f0f0f;
+  top: 70px;
+  height: 40px;
+}
+
+.top-tags {
+  cursor: pointer;
+  background-color: #292929;
+  padding: 12px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 400;
+  margin-left: 25px;
+  transition: all 0.18s ease;
+}
+
+.top-tags:hover {
+  background-color: #3f3f3f;
+}
+
+.tag-0 {
+  background-color: white;
+  color: #0f0f0f;
+}
+
+.browse-data {
+  background-color: #0f0f0f;
+  width: calc(100% - 250px);
+  position: relative;
+  left: 250px;
+  top: 100px;
+}
+
+.browse {
+  background-color: #0f0f0f;
+  display: flex;
+}
+
+.uploaded-videos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-rows: repeat(4, 1fr);
+  justify-content: center;
+  grid-column-gap: 20px;
+  grid-row-gap: 50px;
+}
+
+.video-section {
+  color: white;
+  margin: 80px;
+}
+
+.video-data {
+  width: 360px;
+}
+
+.title{
+  font-weight: 500 !important;
+}

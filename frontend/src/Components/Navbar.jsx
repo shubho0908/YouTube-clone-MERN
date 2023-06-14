@@ -7,8 +7,11 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 
 import "../Css/navbar.css";
 import Logo from "../img/logo1.png";
+import { useState } from "react";
 
 function Navbar() {
+  const [isbtnClicked, setisbtnClicked] = useState(false);
+
   return (
     <>
       <div className="navbar">
@@ -19,7 +22,11 @@ function Navbar() {
         <div className="middle-bar">
           <div className="search">
             <input type="text" placeholder="Type to search" id="searchType" />
-            <SearchRoundedIcon className="search-icon" fontSize="large" style={{ color: "rgb(160, 160, 160)" }} />
+            <SearchRoundedIcon
+              className="search-icon"
+              fontSize="large"
+              style={{ color: "rgb(160, 160, 160)" }}
+            />
           </div>
         </div>
         <div className="right-bar">
@@ -33,7 +40,17 @@ function Navbar() {
             fontSize="large"
             style={{ color: "rgb(160, 160, 160)" }}
           />
-          <button className="signin">
+          <button
+            onClick={() => {
+              if (isbtnClicked === false) {
+                setisbtnClicked(true);
+              } else {
+                setisbtnClicked(false);
+              }
+              console.log(isbtnClicked);
+            }}
+            className="signin"
+          >
             <AccountCircleOutlinedIcon
               fontSize="medium"
               style={{ color: "rgb(0, 162, 255)" }}
@@ -41,6 +58,19 @@ function Navbar() {
             <p>Signin</p>
           </button>
         </div>
+      </div>
+      <div
+        className="auth-popup"
+        style={
+          isbtnClicked === true ? { display: "block" } : { display: "none" }
+        }
+      >
+        <p>Name</p>
+        <input type="text" />
+        <p>Name</p>
+        <input type="text" />
+        <p>Name</p>
+        <input type="text" />
       </div>
     </>
   );

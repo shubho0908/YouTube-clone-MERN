@@ -1,0 +1,39 @@
+.main-left-section {
+  background-color: #0f0f0f;
+  color: white;
+  position: fixed;
+  top: 60px;
+  height: 100%;
+  padding: 16px;
+  width: 225px;
+  line-height: 48px;
+}
+
+.home {
+  background-color: #3d3f4365;
+  border-radius: 8px;
+}
+
+.sec-data {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  padding-right: 80px;
+  transition: all .15s ease;
+}
+
+.sec-data:hover{
+  background-color: #3d3f4365;
+  border-radius: 8px;
+}
+
+.sec-data > p {
+  padding-left: 20px;
+}
+
+.seperate {
+  border: 1px solid #5b5d6265 !important;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
