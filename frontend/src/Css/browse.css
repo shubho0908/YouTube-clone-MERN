@@ -1,0 +1,20 @@
+.browse-videos {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding-left: 100px;
+  padding-right: 100px;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.thumbnails {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  grid-column-gap: 10px;
+  grid-row-gap: 55px;
+}
+.video-thumbnails {
+  border-radius: 10px;
+}
