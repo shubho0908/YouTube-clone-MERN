@@ -1,8 +1,8 @@
-@import url("https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
 
 * {
   margin: 0;
-  font-family: "Ubuntu", sans-serif;
+  font-family: 'Roboto', sans-serif;
 }
 
 .navbar {
@@ -11,7 +11,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #1c222a;
+  background-color: #0f0f0f;
 }
 
 .left-bar,
@@ -23,27 +23,44 @@
 }
 
 .youtubeLogo {
-  width: 130px;
+  width: 110px;
   cursor: pointer;
   padding-left: 30px;
 }
 
 .search {
-  background-color: #1c222a;
-  padding: 6px;
-  border-radius: 5px;
-  width: 700px;
+  background-color: #0f0f0f;
+  border-radius: 25px;
+  min-width: 420px;
+  max-width: 700px;
+  border: .5px solid rgba(255, 255, 255, 0.351);
+}
+
+.search-icon{
+  cursor: pointer;
+  padding-right: 10px;
+  background-color: #3d3f4365;
+  border-radius: inherit;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    padding: 6px;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 #searchType {
   cursor: pointer;
-  background-color: #1c222a;
+  background-color: #0f0f0f;
   color: white;
+  border-radius: 25px;
   border: none;
   outline: none;
-  width: 650px;
+  min-width: 400px;
+  max-width: 650px;
   font-size: 16px;
   padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 #searchType::-webkit-input-placeholder {
@@ -51,8 +68,8 @@
 }
 
 .right-bar {
-  width: 200px;
-  padding-right: 45px;
+  width: 230px;
+  padding-right: 25px;
   justify-content: space-between;
 }
 
@@ -66,13 +83,13 @@
   margin-left: 10px;
   padding: 8px;
   padding-left: 10px;
-  padding-right: 10px;
   font-size: 16px;
   border-radius: 25px;
   transition: all 0.15s ease;
 }
 .signin > p {
   padding-left: 7px;
+  padding-right: 3px;
 }
 
 .signin:hover {
@@ -87,6 +104,6 @@
 
 .icon-btns:hover {
   color: white !important;
-  background-color: #3d3f43;
+  background-color: #3d3f4365;
 
 }
