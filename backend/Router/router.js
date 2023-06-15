@@ -93,7 +93,8 @@ router.get("/getchannel/:email", async (req, res) => {
     } else {
       const channel = user.hasChannel;
       const profile = user.profilePic;
-      res.json({ channel, profile });
+      const ChannelName = user.channelName;
+      res.json({ channel, profile, ChannelName });
     }
   } catch (error) {
     res.json({
@@ -132,6 +133,5 @@ router.post("/savechannel", async (req, res) => {
     });
   }
 });
-
 
 module.exports = router;

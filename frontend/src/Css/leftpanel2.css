@@ -1,0 +1,69 @@
+.main-section2 {
+  display: flex;
+  flex-direction: column;
+  background-color: #171717;
+  position: fixed;
+  top: 68px;
+  color: white;
+  height: 100%;
+  width: 270px;
+  padding-top: 35px;
+  border-right: 1px solid rgba(128, 128, 128, 0.333);
+  text-align: center;
+  line-height: 30px;
+}
+
+.profile_img {
+  width: 110px;
+  border-radius: 60%;
+}
+
+.about-channel {
+  margin-top: 10px;
+}
+.c-name {
+  font-size: 14px;
+  color: #a9a9a9;
+}
+
+.dashboard > p {
+  color: #a9a9a9;
+}
+
+.panel {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: all 0.18s ease;
+}
+
+.panel:hover {
+  background-color: #1e1e1e;
+}
+
+.panel > p {
+  padding-left: 25px;
+}
+
+.second-panel,
+.third-panel {
+  margin-top: 35px;
+  line-height: 55px;
+}
+
+.dashboard {
+  background-color: #1e1e1e;
+}
+
+.dashboard > .studio-icon {
+  color: #fe3e2b !important;
+}
+
+.dashboard > p {
+  background-color: #1e1e1e;
+  color: #fe3e2b;
+}
+
+.studio-icon {
+  padding-left: 60px;
+}

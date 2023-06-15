@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import Navbar from "./Navbar";
+import Navbar2 from "./Navbar2";
+import LeftPanel2 from "./LeftPanel2";
 import jwtDecode from "jwt-decode";
 import avatar from "../img/avatar.png";
 import "../Css/studio.css";
@@ -120,7 +121,8 @@ function Studio() {
 
   return (
     <>
-      <Navbar />
+      <Navbar2 />
+      <LeftPanel2/>
       <div className="studio">
         <div
           className="create-channel"
