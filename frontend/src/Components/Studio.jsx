@@ -109,20 +109,28 @@ function Studio() {
       });
       const { message } = await response.json();
       if (message === "Channel saved successfully") {
-        alert(message);
         setisChannel(true);
+        window.location.reload();
       }
     } catch (error) {
-      alert(error.message);
-    } finally{
-      setisLoading(false)
+      console.log(error.message);
+    } finally {
+      setisLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (isChannel === false) {
+      document.body.classList.add("bg-css");
+    } else {
+      document.body.classList.remove("bg-css");
+    }
+  }, [isChannel]);
 
   return (
     <>
       <Navbar2 />
-      <LeftPanel2/>
+      <LeftPanel2 />
       <div className="studio">
         <div
           className="create-channel"
@@ -156,8 +164,12 @@ function Studio() {
                 onChange={handleChannelname}
               />
             </div>
-            <button className="save-data" type="submit">
-            {isLoading ? "Loading..." : "SAVE"}
+            <button
+              className="save-data"
+              type="submit"
+              disabled={isLoading ? true : false}
+            >
+              {isLoading ? "LOADING..." : "SAVE"}
             </button>
           </form>
         </div>

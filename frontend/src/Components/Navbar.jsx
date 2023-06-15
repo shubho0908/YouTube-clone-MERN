@@ -49,6 +49,7 @@ function Navbar() {
     }
   }, [email]);
 
+
   return (
     <>
       <div className="navbar">

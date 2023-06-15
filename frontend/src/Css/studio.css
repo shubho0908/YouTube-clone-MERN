@@ -17,6 +17,7 @@
   align-items: center;
   flex-direction: column;
   border-radius: 10px;
+  z-index: 11;
   animation: fadeUp 0.25s ease-out forwards;
 }
 .upload-btn-wrapper {

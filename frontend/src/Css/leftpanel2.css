@@ -15,7 +15,10 @@
 
 .profile_img {
   width: 110px;
-  border-radius: 60%;
+  height: 108px;
+  object-fit: cover;
+
+  border-radius: 50%;
 }
 
 .about-channel {
