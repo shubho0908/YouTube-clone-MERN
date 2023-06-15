@@ -1,5 +1,39 @@
+import { useState } from "react";
 import "../Css/navbar.css";
+
 function Signup() {
+  const [data, setData] = useState({});
+
+  const handleInputs = (e) => {
+    setData({
+      ...data,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const SubmitData = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:3000/signup", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const { message, token } = await response.json();
+      if (message === "REGISTRATION SUCCESSFULL") {
+        localStorage.setItem("userToken", token);
+        alert(message);
+        window.location.reload();
+        document.body.classList.remove("bg-class");
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+    console.log("Clicked");
+  };
+
   return (
     <>
       <div className="above-data">
@@ -10,29 +44,35 @@ function Signup() {
         </p>
       </div>
       <div className="signup-form">
-        <input
-          type="text"
-          name="name"
-          className="username"
-          placeholder="Name"
-          required
-        />
-        <input
-          type="email"
-          name="email"
-          className="email"
-          placeholder="Email Address"
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          className="password"
-          placeholder="Passcode"
-          required
-        />
-        <button className="signup-btn">Create Your Account</button>
-        
+        <form onSubmit={SubmitData}>
+          <input
+            type="text"
+            name="name"
+            className="username"
+            placeholder="Name"
+            required
+            onChange={handleInputs}
+          />
+          <input
+            type="email"
+            name="email"
+            className="email"
+            placeholder="Email Address"
+            required
+            onChange={handleInputs}
+          />
+          <input
+            type="password"
+            name="password"
+            className="password"
+            placeholder="Passcode"
+            required
+            onChange={handleInputs}
+          />
+          <button className="signup-btn" type="submit">
+            Create Your Account
+          </button>
+        </form>
       </div>
     </>
   );

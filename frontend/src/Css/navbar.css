@@ -171,14 +171,14 @@
   color: gray;
 }
 
-.signup-form {
+.signup-form, form {
   display: flex;
   justify-content: center;
   flex-direction: column;
   margin-top: 30px;
 }
 
-.signup-form > input {
+form > input {
   background-color: #3d3f4359;
   outline: none;
   height: 35px;
@@ -189,7 +189,7 @@
   border-radius: 5px;
 }
 
-.signup-form > input::placeholder {
+form > input::placeholder {
   color: rgba(255, 255, 255, 0.59);
 }
 
@@ -244,4 +244,8 @@
 .already>p:nth-child(2){
   cursor: pointer;
   margin-left: 5px;
+}
+
+.profile-pic{
+  width: 50px;
 }

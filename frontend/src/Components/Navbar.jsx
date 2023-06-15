@@ -8,13 +8,21 @@ import ClearRoundedIcon from "@mui/icons-material/ClearRounded";
 
 import "../Css/navbar.css";
 import Logo from "../img/logo1.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Signup from "./Signup";
 import Signin from "./Signin";
+import avatar from "../img/avatar.png";
 
 function Navbar() {
   const [isbtnClicked, setisbtnClicked] = useState(false);
   const [isSwitch, setisSwitched] = useState(false);
+  const token = localStorage.getItem("userToken");
+
+  useEffect(() => {
+    if (token) {
+      setisbtnClicked(false);
+    }
+  }, []);
 
   return (
     <>
@@ -33,7 +41,14 @@ function Navbar() {
             />
           </div>
         </div>
-        <div className="right-bar">
+        <div
+          className="right-bar"
+          style={
+            token
+              ? { justifyContent: "space-evenly", paddingRight: "0px" }
+              : { justifyContent: "space-between", paddingRight: "25px" }
+          }
+        >
           <VideoCallOutlinedIcon
             className="icon-btns"
             fontSize="large"
@@ -55,6 +70,7 @@ function Navbar() {
               }
             }}
             className="signin"
+            style={token ? { display: "none" } : { display: "flex" }}
           >
             <AccountCircleOutlinedIcon
               fontSize="medium"
@@ -62,6 +78,12 @@ function Navbar() {
             />
             <p>Signin</p>
           </button>
+          <img
+            src={avatar}
+            alt=""
+            className="profile-pic"
+            style={token ? { display: "block" } : { display: "none" }}
+          />
         </div>
       </div>
       <div
