@@ -5,6 +5,11 @@
   margin: 0;
   font-family: "Roboto", sans-serif;
 }
+
+*::-webkit-scrollbar{
+  display: none;
+}
+
 .navbar {
   padding: 10px;
   padding-left: 25px;
@@ -247,5 +252,7 @@ form > input::placeholder {
 }
 
 .profile-pic{
+  cursor: pointer;
   width: 50px;
+  border-radius: 50%;
 }

@@ -1,0 +1,101 @@
+@import url("https://fonts.googleapis.com/css2?family=Geologica:wght@600&display=swap");
+
+.studio {
+  background-color: #151515;
+  height: 100vh;
+}
+
+.create-channel {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #282828;
+  color: white;
+  padding: 50px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 10px;
+  animation: fadeUp 0.25s ease-out forwards;
+}
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  margin-top: 20px;
+}
+
+.btn {
+  cursor: pointer;
+  color: #282828;
+  background-color: #3ea6ff;
+  padding: 8px 20px;
+  border-radius: 3px;
+  font-size: 16px;
+  border: none;
+}
+
+.upload-btn-wrapper input[type="file"] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+
+.selected-pic {
+  width: 120px;
+  border-radius: 50%;
+  height: 120px;
+  object-fit: cover;
+}
+
+.channel-head {
+  font-size: 35px;
+  font-family: "Geologica", sans-serif;
+}
+
+.channel-slogan {
+  margin-top: 15px;
+  font-weight: lighter;
+  color: gray;
+}
+.profile-pic-section {
+  margin-top: 35px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.channel-name {
+  margin-top: 30px;
+}
+
+.channelName {
+  background-color: #3d3f4359;
+  outline: none;
+  height: 28px;
+  width: 300px;
+  padding: 10px;
+  color: white;
+  margin-bottom: 10px;
+  font-size: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.27);
+  border-radius: 5px;
+}
+
+.channel-deatils {
+  margin-top: 0px;
+}
+
+.save-data {
+  margin-top: 15px;
+  cursor: pointer;
+  color: #282828;
+  background-color: #3ea6ff;
+  padding: 8px 20px;
+  border-radius: 3px;
+  font-size: 16px;
+  border: none;
+}

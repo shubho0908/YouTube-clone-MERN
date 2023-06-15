@@ -11,6 +11,7 @@ const router = express.Router();
 // Middlewares
 router.use(cors());
 router.use(bodyParser.json());
+router.use(bodyParser.urlencoded({ extended: true }));
 
 router.get("/", (req, res) => {
   res.send("Welcome to Youtube App Backend!");
@@ -80,5 +81,57 @@ router.post("/login", async (req, res) => {
     });
   }
 });
+
+router.get("/getchannel/:email", async (req, res) => {
+  try {
+    const email = req.params.email;
+    const user = await userData.findOne({ email });
+    if (!user) {
+      return res.json({
+        message: "USER DOESN'T EXIST",
+      });
+    } else {
+      const channel = user.hasChannel;
+      const profile = user.profilePic;
+      res.json({ channel, profile });
+    }
+  } catch (error) {
+    res.json({
+      message: error.message,
+    });
+  }
+});
+
+router.post("/savechannel", async (req, res) => {
+  try {
+    const { email, ChannelName, profileURL } = req.body;
+    const user = await userData.findOneAndUpdate(
+      { email },
+      {
+        $set: {
+          profilePic: profileURL,
+          channelName: ChannelName,
+          hasChannel: true,
+        },
+      },
+      { new: true } // Return the updated document
+    );
+
+    if (!user) {
+      return res.json({
+        message: "USER DOESN'T EXIST",
+      });
+    }
+
+    return res.json({
+      message: "Channel saved successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "An error occurred",
+    });
+  }
+});
+
 
 module.exports = router;

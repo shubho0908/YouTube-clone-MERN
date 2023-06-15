@@ -12,24 +12,56 @@ import { useEffect, useState } from "react";
 import Signup from "./Signup";
 import Signin from "./Signin";
 import avatar from "../img/avatar.png";
+import { useNavigate } from "react-router-dom";
+import jwtDecode from "jwt-decode";
 
 function Navbar() {
   const [isbtnClicked, setisbtnClicked] = useState(false);
   const [isSwitch, setisSwitched] = useState(false);
   const token = localStorage.getItem("userToken");
+  const [email, setEmail] = useState();
+  const [profilePic, setProfilePic] = useState();
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (token) {
       setisbtnClicked(false);
+      setEmail(jwtDecode(token).email);
     }
-  }, []);
+  }, [token]);
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:3000/getchannel/${email}`
+        );
+        const { profile } = await response.json();
+        setProfilePic(profile);
+      } catch (error) {
+        alert(error.message);
+      }
+    };
+
+    if (email) {
+      getData();
+    }
+  }, [email]);
 
   return (
     <>
       <div className="navbar">
         <div className="left-bar">
           <MenuRoundedIcon fontSize="large" style={{ color: "white" }} />
-          <img src={Logo} alt="logo" className="youtubeLogo" />
+          <img
+            src={Logo}
+            alt="logo"
+            className="youtubeLogo"
+            onClick={() => {
+              navigate("/");
+            }}
+          />
         </div>
         <div className="middle-bar">
           <div className="search">
@@ -53,6 +85,9 @@ function Navbar() {
             className="icon-btns"
             fontSize="large"
             style={{ color: "rgb(160, 160, 160)" }}
+            onClick={() => {
+              navigate("/studio");
+            }}
           />
           <NotificationsNoneOutlinedIcon
             className="icon-btns"
@@ -79,7 +114,7 @@ function Navbar() {
             <p>Signin</p>
           </button>
           <img
-            src={avatar}
+            src={profilePic ? profilePic : avatar}
             alt=""
             className="profile-pic"
             style={token ? { display: "block" } : { display: "none" }}

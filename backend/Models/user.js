@@ -19,6 +19,16 @@ const UserData = new mongoose.Schema({
     type: String,
     required: true,
   },
+  profilePic: {
+    type: String,
+  },
+  hasChannel: {
+    type: Boolean,
+    default: false,
+  },
+  channelName: {
+    type: String,
+  },
   thumbnails: [
     {
       imageURL: {
