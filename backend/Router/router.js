@@ -8,7 +8,7 @@ const bodyParser = require("body-parser");
 const userData = require("../Models/user");
 const router = express.Router();
 
-//Middlewares
+// Middlewares
 router.use(cors());
 router.use(bodyParser.json());
 
@@ -21,7 +21,7 @@ router.post("/signup", async (req, res) => {
     const { name, email, password } = req.body;
     const user = await userData.findOne({ email });
     if (user) {
-      res.json({
+      return res.json({
         message: "USER ALREADY EXISTS",
       });
     }
@@ -37,10 +37,48 @@ router.post("/signup", async (req, res) => {
     await saveData.save();
 
     res.json({
-      message: "REGISTRATION SUCCESSFULL",
+      message: "REGISTRATION SUCCESSFUL",
       token,
     });
-  } catch (error) {}
+  } catch (error) {
+    res.json({
+      message: error.message,
+    });
+  }
+});
+
+router.post("/login", async (req, res) => {
+  try {
+    const { email1, password1 } = req.body;
+    const user = await userData.findOne({ email: email1 });
+    if (!user) {
+      return res.json({
+        message: "USER DOESN'T EXIST",
+      });
+    }
+
+    const name = user.name;
+    const email = user.email;
+    const password = user.password;
+    const checkPassword = await bcrypt.compare(password1, password);
+    if (checkPassword) {
+      const token = await jwt.sign({ name, email }, process.env.SECRET_KEY, {
+        expiresIn: "12h",
+      });
+      return res.json({
+        message: "LOGIN SUCCESSFUL",
+        token,
+      });
+    } else {
+      res.json({
+        message: "INVALID CREDENTIALS",
+      });
+    }
+  } catch (error) {
+    res.json({
+      message: error.message,
+    });
+  }
 });
 
 module.exports = router;

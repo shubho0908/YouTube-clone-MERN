@@ -22,16 +22,16 @@ function Signup() {
         },
       });
       const { message, token } = await response.json();
-      if (message === "REGISTRATION SUCCESSFULL") {
+      if (message === "REGISTRATION SUCCESSFUL") {
         localStorage.setItem("userToken", token);
         alert(message);
         window.location.reload();
         document.body.classList.remove("bg-class");
       }
+      alert(message);
     } catch (error) {
       alert(error.message);
     }
-    console.log("Clicked");
   };
 
   return (
