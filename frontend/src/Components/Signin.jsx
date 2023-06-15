@@ -1,32 +1,40 @@
 import "../Css/navbar.css";
 
 function Signin() {
+
+  const handleInputs =(e)=>{
+    
+  }
+
   return (
     <>
       <div className="above-data">
         <p className="signup-head">Login to Your Account</p>
         <p className="signup-desc">
-          Unlock Your World of Entertainment, Unlock Your World of
-          Entertainment, Join the YouTube Community
+          Stay Connected-Stay Entertained, Step into the World of YouTube, Join
+          the YouTube Community
         </p>
       </div>
       <div className="signup-form">
-        <input
-          type="email"
-          name="email"
-          className="email"
-          placeholder="Email Address"
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          className="password"
-          placeholder="Passcode"
-          required
-        />
-        <button className="signup-btn">Login to Your Account</button>
-        
+        <form>
+          <input
+            type="email"
+            name="email1"
+            className="email"
+            placeholder="Email Address"
+            required
+          />
+          <input
+            type="password"
+            name="password1"
+            className="password"
+            placeholder="Passcode"
+            required
+          />
+          <button className="signup-btn" type="submit">
+            Login to Your Account
+          </button>
+        </form>
       </div>
     </>
   );
