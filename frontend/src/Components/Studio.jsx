@@ -9,6 +9,7 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import Upload from "../img/upload.png";
 import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined";
+import AddPhotoAlternateOutlinedIcon from "@mui/icons-material/AddPhotoAlternateOutlined";
 
 function Studio() {
   const [email, setEmail] = useState("");
@@ -24,6 +25,7 @@ function Studio() {
   const [VideoURL, setVideoURL] = useState("");
   const [Progress, setProgress] = useState(0);
   const [uploadTask, setUploadTask] = useState(null);
+  const [videoLink, setVideoLink] = useState("https://www.youtube.com");
 
   useEffect(() => {
     const token = localStorage.getItem("userToken");
@@ -254,6 +256,25 @@ function Studio() {
     setVideoName(e.target.value);
   };
 
+  const handleCopyLink = () => {
+    navigator.clipboard
+      .writeText(videoLink)
+      .then(() => {
+        alert("Link Copied!");
+      })
+      .catch((error) => {
+        console.log("Error copying link to clipboard:", error);
+      });
+  };
+
+  //UPLOAD THUMBNAIL
+
+  const handleThumbnailChange = (event) => {
+    const file = event.target.files[0];
+    // Handle the uploaded file here
+    console.log("Uploaded file:", file);
+  };
+
   return (
     <>
       <Navbar2 />
@@ -328,7 +349,7 @@ function Studio() {
             />
           </div>
           <hr className="seperate seperate2" />
-          <div
+          {/* <div
             className="middle-data"
             style={
               isVideoSelected === false
@@ -355,14 +376,14 @@ function Studio() {
                 onChange={handleVideoChange}
               />
             </div>
-          </div>
+          </div> */}
           <div
             className="uploading-video-data"
-            style={
-              isVideoSelected === true
-                ? { display: "flex" }
-                : { display: "none" }
-            }
+            // style={
+            //   isVideoSelected === true
+            //     ? { display: "flex" }
+            //     : { display: "none" }
+            // }
           >
             <div className="left-video-section">
               <form className="details-form">
@@ -381,9 +402,36 @@ function Studio() {
                     className="video-description"
                     placeholder="Description"
                   />
+                  <input
+                    type="text"
+                    className="video-tags"
+                    placeholder="Tags"
+                  />
                 </div>
               </form>
-              <div className="thumbnail-section"></div>
+              <div className="thumbnail-section">
+                <p>Thumbnail</p>
+                <p>
+                  Select or upload a picture that shows what&apos;s in your
+                  video. A good thumbnail stands out and draws viewer&apos;s
+                  attention.
+                </p>
+                <label htmlFor="thumbnail-input" className="upload-thumbnail">
+                  <AddPhotoAlternateOutlinedIcon
+                    fontSize="medium"
+                    style={{ color: "#808080" }}
+                  />
+                  <p>Upload thumbnail</p>
+                </label>
+                <input
+                  id="thumbnail-input"
+                  type="file"
+                  accept="image/*"
+                  style={{ display: "none" }}
+                  onChange={handleThumbnailChange}
+                />
+              </div>
+              <div className="video-tag-section"></div>
             </div>
             <div className="right-video-section">
               <div className="preview-video">
@@ -418,8 +466,10 @@ function Studio() {
                     </a>
                   </div>
                   <ContentCopyOutlinedIcon
+                    className="copy-btn"
                     fontSize="medium"
                     style={{ color: "gray" }}
+                    onClick={handleCopyLink}
                   />
                 </div>
                 <div className="file-details">
@@ -428,6 +478,10 @@ function Studio() {
                 </div>
               </div>
             </div>
+          </div>
+          <hr className="seperate seperate2" />
+          <div className="last-btn">
+            <button className="save-video-data">SAVE</button>
           </div>
         </div>
       </div>
