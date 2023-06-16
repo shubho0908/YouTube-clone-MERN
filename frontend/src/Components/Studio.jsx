@@ -17,6 +17,10 @@ function Studio() {
   const [previewImage, setPreviewImage] = useState(avatar);
   const [ChannelName, setChannelName] = useState();
   const [isLoading, setisLoading] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
+  const [isVideoSelected, setIsVideoSelected] = useState(false);
+  const [videoName, setVideoName] = useState("Upload videos");
+  const [VideoURL, setVideoURL] = useState("");
 
   useEffect(() => {
     const token = localStorage.getItem("userToken");
@@ -29,6 +33,43 @@ function Studio() {
     }
   });
 
+  useEffect(() => {
+    const createBtn = document.querySelector(".create-btn");
+
+    const handleClick = () => {
+      setIsClicked(true);
+    };
+
+    if (createBtn) {
+      createBtn.addEventListener("click", handleClick);
+    }
+
+    return () => {
+      if (createBtn) {
+        createBtn.removeEventListener("click", handleClick);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isChannel === false) {
+      document.body.classList.add("bg-css");
+    } else {
+      document.body.classList.remove("bg-css");
+    }
+  }, [isChannel]);
+
+  useEffect(() => {
+    if (isClicked === true) {
+      document.body.classList.add("bg-css");
+    } else {
+      document.body.classList.remove("bg-css");
+    }
+    console.log(isClicked);
+  }, [isClicked]);
+
+  //GET CHANNEL'S DATA
+
   const ChannelAvailable = async () => {
     try {
       const response = await fetch(`http://localhost:3000/getchannel/${email}`);
@@ -39,17 +80,14 @@ function Studio() {
     }
   };
 
+  //IMAGE UPLOAD
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setSelectedImage(file);
     if (file) {
       setPreviewImage(URL.createObjectURL(file));
     }
-  };
-
-  const handleVideoChange = (e) => {
-    const file = e.target.files[0];
-    setSelectedVideo(file);
   };
 
   const handleChannelname = (e) => {
@@ -90,6 +128,52 @@ function Studio() {
     }
   };
 
+  // UPLOAD VIDEO
+
+  const handleVideoChange = (e) => {
+    const file = e.target.files[0];
+    setSelectedVideo(file);
+    setIsVideoSelected(true);
+
+    if (file) {
+      setVideoName(file.name);
+      uploadVideo(file);
+    }
+  };
+
+  const uploadVideo = async (videoFile) => {
+    try {
+      const fileReference = ref(storage, `videos/${videoFile.name}`);
+      const uploadTask = uploadBytesResumable(fileReference, videoFile);
+
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          // Handle upload progress if needed
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log(`Upload progress: ${progress}%`);
+        },
+        (error) => {
+          // Handle error during upload
+          console.log(error);
+        },
+        () => {
+          // Handle successful upload
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+            console.log("Video download URL:", downloadURL);
+            setVideoURL(downloadURL);
+            // Do something with the download URL, e.g., save it to database
+          });
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //SAVE DATA TO DB
+
   const saveChannelData = async (e) => {
     e.preventDefault();
 
@@ -127,13 +211,21 @@ function Studio() {
     }
   };
 
-  useEffect(() => {
-    if (isChannel === false) {
-      document.body.classList.add("bg-css");
-    } else {
-      document.body.classList.remove("bg-css");
-    }
-  }, [isChannel]);
+  //ON VIDEO DROP
+
+  const handleUploadImageClick = () => {
+    const fileInput = document.getElementById("videoFileInput");
+    fileInput.click();
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    const file = e.dataTransfer.files[0];
+    setSelectedVideo(file);
+    setIsVideoSelected(true);
+    setVideoName(file.name);
+    uploadVideo(file);
+  };
 
   return (
     <>
@@ -183,30 +275,69 @@ function Studio() {
         </div>
         <div
           className="upload-content"
-          style={isChannel === true ? { display: "flex" } : { display: "none" }}
+          onDrop={handleDrop}
+          onDragOver={(e) => e.preventDefault()}
+          style={
+            isChannel === true && isClicked === true
+              ? { display: "flex" }
+              : { display: "none" }
+          }
         >
           <div className="top-head">
-            <p>Upload videos</p>
+            <p>{videoName}</p>
             <CloseRoundedIcon
-              className=""
+              className="close"
               fontSize="large"
               style={{ color: "gray" }}
+              onClick={() => {
+                if (isClicked === true) {
+                  setIsClicked(false);
+                }
+              }}
             />
           </div>
           <hr className="seperate seperate2" />
-          <div className="middle-data">
-            <img src={Upload} alt="" className="upload-img" />
+          {/* <div
+            className="middle-data"
+            style={
+              isVideoSelected === false
+                ? { display: "flex" }
+                : { display: "none" }
+            }
+          >
+            <img
+              src={Upload}
+              className="upload-img"
+              onClick={handleUploadImageClick}
+              onDrop={handleDrop}
+              onDragOver={(e) => e.preventDefault()}
+            />
             <p>Drag and drop video files to upload</p>
             <p>Your videos will be private until you publish them.</p>
             <div className="upload-btn-wrapper">
               <button className="btn">SELECT FILES</button>
               <input
+                id="videoFileInput"
                 type="file"
                 name="videoFile"
                 accept="video/*"
                 onChange={handleVideoChange}
               />
             </div>
+          </div> */}
+          <div
+            className="uploading-video-data"
+            style={
+              isVideoSelected === true
+                ? { display: "flex" }
+                : { display: "none" }
+            }
+          >
+            <div className="left-video-section">
+              <div className="details-section"></div>
+              <div className="thumbnail-section"></div>
+            </div>
+            <div className="right-video-section"></div>
           </div>
         </div>
       </div>

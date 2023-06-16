@@ -132,19 +132,36 @@
   justify-content: space-between;
 }
 
-.upload-img{
+.upload-img {
+  cursor: pointer;
   width: 170px;
 }
 
-.middle-data{
+.middle-data {
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: center;
   line-height: 34px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
-.middle-data>p:nth-child(3){
+.middle-data > p:nth-child(3) {
   font-size: 14px;
   color: gray;
+}
+
+.close {
+  cursor: pointer;
+  transition: all 0.15s ease;
+  padding: 5px;
+}
+
+.close:hover {
+  color: white !important;
+  background-color: rgba(128, 128, 128, 0.306);
+  border-radius: 50%;
 }
