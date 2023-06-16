@@ -6,11 +6,14 @@ import avatar from "../img/avatar.png";
 import "../Css/studio.css";
 import { storage } from "../Firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
+import Upload from "../img/upload.png";
 
 function Studio() {
   const [email, setEmail] = useState("");
   const [isChannel, setisChannel] = useState();
   const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedVideo, setSelectedVideo] = useState(null);
   const [previewImage, setPreviewImage] = useState(avatar);
   const [ChannelName, setChannelName] = useState();
   const [isLoading, setisLoading] = useState(false);
@@ -42,6 +45,11 @@ function Studio() {
     if (file) {
       setPreviewImage(URL.createObjectURL(file));
     }
+  };
+
+  const handleVideoChange = (e) => {
+    const file = e.target.files[0];
+    setSelectedVideo(file);
   };
 
   const handleChannelname = (e) => {
@@ -172,6 +180,34 @@ function Studio() {
               {isLoading ? "LOADING..." : "SAVE"}
             </button>
           </form>
+        </div>
+        <div
+          className="upload-content"
+          style={isChannel === true ? { display: "flex" } : { display: "none" }}
+        >
+          <div className="top-head">
+            <p>Upload videos</p>
+            <CloseRoundedIcon
+              className=""
+              fontSize="large"
+              style={{ color: "gray" }}
+            />
+          </div>
+          <hr className="seperate seperate2" />
+          <div className="middle-data">
+            <img src={Upload} alt="" className="upload-img" />
+            <p>Drag and drop video files to upload</p>
+            <p>Your videos will be private until you publish them.</p>
+            <div className="upload-btn-wrapper">
+              <button className="btn">SELECT FILES</button>
+              <input
+                type="file"
+                name="videoFile"
+                accept="video/*"
+                onChange={handleVideoChange}
+              />
+            </div>
+          </div>
         </div>
       </div>
     </>

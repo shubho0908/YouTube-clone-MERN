@@ -100,3 +100,51 @@
   font-size: 16px;
   border: none;
 }
+
+.upload-content {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #282828;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  max-width: 800px;
+  min-width: 750px;
+  height: 700px;
+  z-index: 11;
+  animation: fadeUp 0.25s ease-out forwards;
+}
+
+.seperate2 {
+  margin-top: 0;
+}
+
+.top-head {
+  display: flex;
+  align-items: center;
+  padding: 25px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  font-size: 18px;
+  justify-content: space-between;
+}
+
+.upload-img{
+  width: 170px;
+}
+
+.middle-data{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 34px;
+}
+
+.middle-data>p:nth-child(3){
+  font-size: 14px;
+  color: gray;
+}

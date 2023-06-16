@@ -2,8 +2,6 @@
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import VideoCallOutlinedIcon from "@mui/icons-material/VideoCallOutlined";
-import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
-import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 
 import "../Css/navbar.css";
 import StudioLogo from "../img/studio.png";
@@ -13,7 +11,6 @@ import { useNavigate } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 
 function Navbar2() {
-  const [isbtnClicked, setisbtnClicked] = useState(false);
   const token = localStorage.getItem("userToken");
   const [email, setEmail] = useState();
   const [profilePic, setProfilePic] = useState();
@@ -22,7 +19,6 @@ function Navbar2() {
 
   useEffect(() => {
     if (token) {
-      setisbtnClicked(false);
       setEmail(jwtDecode(token).email);
     }
   }, [token]);
@@ -77,38 +73,15 @@ function Navbar2() {
               : { justifyContent: "space-between", paddingRight: "25px" }
           }
         >
-          <VideoCallOutlinedIcon
-            className="icon-btns"
-            fontSize="large"
-            style={{ color: "rgb(160, 160, 160)" }}
-            onClick={() => {
-              navigate("/studio");
-            }}
-          />
-          <NotificationsNoneOutlinedIcon
-            className="icon-btns"
-            fontSize="large"
-            style={{ color: "rgb(160, 160, 160)" }}
-          />
-          <button
-            onClick={() => {
-              if (isbtnClicked === false) {
-                setisbtnClicked(true);
-                document.body.classList.add("bg-css");
-              } else {
-                setisbtnClicked(false);
-                document.body.classList.remove("bg-css");
-              }
-            }}
-            className="signin"
-            style={token ? { display: "none" } : { display: "flex" }}
-          >
-            <AccountCircleOutlinedIcon
-              fontSize="medium"
-              style={{ color: "rgb(0, 162, 255)" }}
+          <div className="create-btn">
+            <VideoCallOutlinedIcon
+              className=""
+              fontSize="large"
+              style={{ color: "#FF4E45" }}
             />
-            <p>Signin</p>
-          </button>
+            <p>CREATE</p>
+          </div>
+
           <img
             src={profilePic ? profilePic : avatar}
             alt=""
@@ -117,7 +90,6 @@ function Navbar2() {
           />
         </div>
       </div>
-      
     </>
   );
 }
