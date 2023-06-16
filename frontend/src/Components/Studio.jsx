@@ -8,6 +8,7 @@ import { storage } from "../Firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import Upload from "../img/upload.png";
+import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined";
 
 function Studio() {
   const [email, setEmail] = useState("");
@@ -21,6 +22,8 @@ function Studio() {
   const [isVideoSelected, setIsVideoSelected] = useState(false);
   const [videoName, setVideoName] = useState("Upload videos");
   const [VideoURL, setVideoURL] = useState("");
+  const [Progress, setProgress] = useState(0);
+  const [uploadTask, setUploadTask] = useState(null);
 
   useEffect(() => {
     const token = localStorage.getItem("userToken");
@@ -76,7 +79,7 @@ function Studio() {
       const { channel } = await response.json();
       setisChannel(channel);
     } catch (error) {
-      alert(error.message);
+      console.log(error.message);
     }
   };
 
@@ -136,39 +139,56 @@ function Studio() {
     setIsVideoSelected(true);
 
     if (file) {
-      setVideoName(file.name);
+      const fileName = file.name;
+      setVideoName(fileName.substring(0, fileName.lastIndexOf(".")));
       uploadVideo(file);
     }
   };
 
-  const uploadVideo = async (videoFile) => {
+  const uploadVideo = (videoFile) => {
     try {
       const fileReference = ref(storage, `videos/${videoFile.name}`);
       const uploadTask = uploadBytesResumable(fileReference, videoFile);
+      setUploadTask(uploadTask); // Store the upload task
 
       uploadTask.on(
         "state_changed",
         (snapshot) => {
           // Handle upload progress if needed
-          const progress =
+          let progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log(`Upload progress: ${progress}%`);
+          progress = Math.round(progress);
+          setProgress(progress);
         },
         (error) => {
           // Handle error during upload
           console.log(error);
         },
-        () => {
+        async () => {
           // Handle successful upload
-          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          try {
+            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
             console.log("Video download URL:", downloadURL);
             setVideoURL(downloadURL);
-            // Do something with the download URL, e.g., save it to database
-          });
+            // Do something with the download URL, e.g., save it to the database
+          } catch (error) {
+            console.log(error);
+          }
         }
       );
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  //CANCEL VIDEO UPLOAD
+
+  const cancelVideoUpload = () => {
+    if (uploadTask) {
+      uploadTask.cancel();
+      setIsVideoSelected(false);
+      setVideoName("Upload videos");
+      setProgress(0);
     }
   };
 
@@ -223,8 +243,15 @@ function Studio() {
     const file = e.dataTransfer.files[0];
     setSelectedVideo(file);
     setIsVideoSelected(true);
-    setVideoName(file.name);
+    const fileName = file.name;
+    setVideoName(fileName.substring(0, fileName.lastIndexOf(".")));
     uploadVideo(file);
+  };
+
+  //VIDEO DETAILS SECTION
+
+  const handleTitleChange = (e) => {
+    setVideoName(e.target.value);
   };
 
   return (
@@ -290,14 +317,18 @@ function Studio() {
               fontSize="large"
               style={{ color: "gray" }}
               onClick={() => {
+                if (Progress !== 100) {
+                  cancelVideoUpload();
+                }
                 if (isClicked === true) {
                   setIsClicked(false);
+                  window.location.reload();
                 }
               }}
             />
           </div>
           <hr className="seperate seperate2" />
-          {/* <div
+          <div
             className="middle-data"
             style={
               isVideoSelected === false
@@ -324,7 +355,7 @@ function Studio() {
                 onChange={handleVideoChange}
               />
             </div>
-          </div> */}
+          </div>
           <div
             className="uploading-video-data"
             style={
@@ -334,10 +365,69 @@ function Studio() {
             }
           >
             <div className="left-video-section">
-              <div className="details-section"></div>
+              <form className="details-form">
+                <div className="details-section">
+                  <p>Details</p>
+                  <input
+                    type="text"
+                    className="video-title"
+                    value={videoName}
+                    placeholder="Title (required)"
+                    required
+                    onChange={handleTitleChange}
+                  />
+                  <input
+                    type="text"
+                    className="video-description"
+                    placeholder="Description"
+                  />
+                </div>
+              </form>
               <div className="thumbnail-section"></div>
             </div>
-            <div className="right-video-section"></div>
+            <div className="right-video-section">
+              <div className="preview-video">
+                <div
+                  className="preview-img"
+                  style={
+                    Progress === 100 && VideoURL !== ""
+                      ? { display: "none" }
+                      : { display: "block" }
+                  }
+                >
+                  <p>Uploading video...{Progress}%</p>
+                </div>
+                {Progress === 100 && VideoURL !== "" ? (
+                  <iframe
+                    width="284.44"
+                    height="160"
+                    src={VideoURL}
+                    title="YouTube video player"
+                    frameBorder="0"
+                    allowFullScreen
+                  ></iframe>
+                ) : null}
+              </div>
+
+              <div className="preview-bottom">
+                <div className="link-details">
+                  <div className="vid-link">
+                    <p>Video link</p>
+                    <a href="https://www.youtube.com/">
+                      https://www.youtube.com
+                    </a>
+                  </div>
+                  <ContentCopyOutlinedIcon
+                    fontSize="medium"
+                    style={{ color: "gray" }}
+                  />
+                </div>
+                <div className="file-details">
+                  <p>Filename</p>
+                  <p>{videoName}</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

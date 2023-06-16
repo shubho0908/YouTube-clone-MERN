@@ -111,8 +111,8 @@
   display: flex;
   flex-direction: column;
   border-radius: 10px;
-  max-width: 800px;
-  min-width: 750px;
+  max-width: 100%;
+  min-width: 800px;
   height: 700px;
   z-index: 11;
   animation: fadeUp 0.25s ease-out forwards;
@@ -127,6 +127,7 @@
   align-items: center;
   padding: 25px;
   padding-bottom: 10px;
+  padding-right: 12px;
   padding-top: 10px;
   font-size: 18px;
   justify-content: space-between;
@@ -164,4 +165,113 @@
   color: white !important;
   background-color: rgba(128, 128, 128, 0.306);
   border-radius: 50%;
+}
+
+.details-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 40px;
+  padding-top: 20px;
+}
+
+.details-section > p {
+  margin-bottom: 20px;
+  font-size: 22px;
+}
+
+.video-title {
+  background-color: #282828;
+  height: 50px;
+  width: 380px;
+  border: 2px solid rgba(128, 128, 128, 0.337);
+  border-radius: 3px;
+  padding: 10px;
+  color: white;
+  font-size: 17px;
+}
+
+.video-description {
+  background-color: #282828;
+  height: 75px;
+  width: 380px;
+  border: 2px solid rgba(128, 128, 128, 0.337);
+  border-radius: 3px;
+  padding: 10px;
+  margin-top: 20px;
+  color: white;
+  font-size: 17px;
+}
+
+.video-title:focus,
+.video-description:focus {
+  outline: 2px solid rgb(0, 145, 255);
+}
+.details-form {
+  margin-top: 0;
+}
+
+.video-description::placeholder,
+.video-title::placeholder {
+  position: absolute;
+  top: 6px;
+  font-size: 14px;
+}
+
+.video-title:focus::placeholder,
+.video-description:focus::placeholder {
+  color: rgb(0, 145, 255);
+}
+
+.uploading-video-data {
+  display: flex;
+  align-items: center;
+}
+
+.right-video-section {
+  position: relative;
+  top: 58px;
+}
+
+.preview-video {
+  width: 284.44px;
+  height: 160px;
+  background-color: #0d0d0d;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.preview-img > p,
+.vid-link > p {
+  color: #808080;
+  font-size: 14px;
+}
+
+.file-details {
+  margin-top: 15px;
+}
+
+.file-details > p:nth-child(1) {
+  color: #808080;
+  font-size: 14px;
+}
+
+.vid-link > a {
+  color: #207bc5;
+  text-decoration: none;
+}
+
+.preview-bottom {
+  background-color: #1f1f1f;
+  padding: 10px;
+  line-height: 22px;
+}
+.link-details {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
