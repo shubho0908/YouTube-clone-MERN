@@ -522,6 +522,9 @@ function Studio() {
                     className="close close2"
                     fontSize="medium"
                     style={{ color: "gray" }}
+                    onClick={() => {
+                      setIsThumbnailSelected(false);
+                    }}
                   />
                   <img
                     className="prevThumbnail"
@@ -542,7 +545,7 @@ function Studio() {
                       : { display: "block" }
                   }
                 >
-                  <p>Uploading video...{Progress}%</p>
+                  <p>Uploading video...</p>
                 </div>
                 {Progress === 100 && VideoURL !== "" ? (
                   <iframe
@@ -595,7 +598,7 @@ function Studio() {
                   style={
                     Progress === 100
                       ? { display: "none" }
-                      : { color: "gray", marginRight: "5px" }
+                      : { color: "gray", marginRight: "6px" }
                   }
                 />
                 <SdIcon
@@ -604,7 +607,7 @@ function Studio() {
                   style={
                     Progress >= 60
                       ? { display: "none" }
-                      : { color: "gray", marginLeft: "5px" }
+                      : { color: "gray", marginLeft: "6px" }
                   }
                 />
                 <CloudDoneRoundedIcon
@@ -612,7 +615,12 @@ function Studio() {
                   fontSize="large"
                   style={
                     Progress === 100
-                      ? { display: "block", color: "#3ea6ff", marginRight: "5px", animation:"none" }
+                      ? {
+                          display: "block",
+                          color: "#3ea6ff",
+                          marginRight: "6px",
+                          animation: "none",
+                        }
                       : { display: "none" }
                   }
                 />
@@ -621,10 +629,33 @@ function Studio() {
                   fontSize="large"
                   style={
                     Progress >= 60
-                      ? { display: "block", color: "#3ea6ff", marginLeft: "5px", animation:"none" }
+                      ? {
+                          display: "block",
+                          color: "#3ea6ff",
+                          marginLeft: "6px",
+                          animation: "none",
+                        }
                       : { display: "none" }
                   }
                 />
+                <p
+                  style={
+                    Progress === 100
+                      ? { display: "none" }
+                      : { marginLeft: "12px" }
+                  }
+                >
+                  Uploading {Progress}% ...
+                </p>
+                <p
+                  style={
+                    Progress === 100
+                      ? { marginLeft: "12px" }
+                      : { display: "none" }
+                  }
+                >
+                  Video uploaded
+                </p>
               </div>
               <button className="save-video-data">PUBLISH</button>
             </div>
