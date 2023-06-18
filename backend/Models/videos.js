@@ -2,10 +2,6 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 
 const VideoData = new mongoose.Schema({
-  uploader: {
-    type: String,
-    required: true,
-  },
   email: {
     type: String,
     required: true,
@@ -18,6 +14,10 @@ const VideoData = new mongoose.Schema({
   VideoData: [
     {
       thumbnailURL: {
+        type: String,
+        required: true,
+      },
+      uploader: {
         type: String,
         required: true,
       },

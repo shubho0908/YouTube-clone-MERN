@@ -155,11 +155,11 @@ router.post("/publish", async (req, res) => {
 
       if (!videos) {
         videos = new videodata({
-          uploader : user.channelName,
           email,
           VideoData: [
             {
               thumbnailURL: thumbnailLink,
+              uploader: user.channelName,
               videoURL: videoLink,
               Title: videoTitle,
               Description: videoDescription,
@@ -170,6 +170,7 @@ router.post("/publish", async (req, res) => {
       } else {
         videos.VideoData.push({
           thumbnailURL: thumbnailLink,
+          uploader: user.channelName,
           videoURL: videoLink,
           Title: videoTitle,
           Description: videoDescription,
@@ -187,6 +188,27 @@ router.post("/publish", async (req, res) => {
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "An error occurred" });
+  }
+});
+
+router.get("/getvideos", async (req, res) => {
+  try {
+    const videos = await videodata.find({});
+    const videoURLs = videos.flatMap((video) =>
+      video.VideoData.map((data) => data.videoURL)
+    );
+    const thumbnailURLs = videos.flatMap((video) =>
+      video.VideoData.map((data) => data.thumbnailURL)
+    );
+    const titles = videos.flatMap((video) =>
+      video.VideoData.map((data) => data.Title)
+    );
+    const Uploader = videos.flatMap((video) =>
+      video.VideoData.map((data) => data.uploader)
+    );
+    res.json({ thumbnailURLs, videoURLs, titles, Uploader });
+  } catch (error) {
+    res.status(500).json({ message: "An error occurred" });
   }
 });
 

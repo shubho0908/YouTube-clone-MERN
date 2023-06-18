@@ -68,3 +68,8 @@
 .title{
   font-weight: 500 !important;
 }
+
+.uploader{
+  font-size: 14px;
+  color: gray;
+}

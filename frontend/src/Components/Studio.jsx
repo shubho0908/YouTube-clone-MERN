@@ -282,17 +282,15 @@ function Studio() {
   const handleThumbnailChange = (event) => {
     const file = event.target.files[0];
 
-    // Check if the file is an image and has a 16:9 aspect ratio
     if (file && file.type.startsWith("image/")) {
       const img = new Image();
       img.onload = function () {
         const aspectRatio = img.width / img.height;
         if (Math.abs(aspectRatio - 16 / 9) < 0.01) {
-          setIsThumbnailSelected(true);
           setSelectedThumbnail(file);
           setPreviewThumbnail(URL.createObjectURL(file));
+          setIsThumbnailSelected(true);
         } else {
-          // Reset the selection if the aspect ratio is not 16:9
           setIsThumbnailSelected(false);
           setSelectedThumbnail(null);
           setPreviewThumbnail(null);
@@ -301,7 +299,6 @@ function Studio() {
       };
       img.src = URL.createObjectURL(file);
     } else {
-      // Reset the selection if the file is not an image
       setIsThumbnailSelected(false);
       setSelectedThumbnail(null);
       setPreviewThumbnail(null);
