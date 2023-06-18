@@ -101,14 +101,20 @@
   border: none;
 }
 
-.last-btn{
+.last-btn {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
   padding: 15px;
 }
 
-.save-video-data{
+.last-segment {
+  position: absolute;
+  width: 100%;
+  bottom: 0px;
+}
+
+.save-video-data {
   cursor: pointer;
   color: #282828;
   background-color: #3ea6ff;
@@ -131,7 +137,7 @@
   border-radius: 10px;
   max-width: 100%;
   min-width: 800px;
-  height: fit-content;
+  height: 750px;
   z-index: 11;
   animation: fadeUp 0.25s ease-out forwards;
 }
@@ -352,4 +358,44 @@
   border-radius: 3px;
   border-style: dashed;
   margin-top: 20px;
+}
+
+.prevThumbnail {
+  cursor: pointer;
+  width: 176px;
+  height: 100px;
+  margin-top: 18px;
+  border-radius: 4px;
+  object-fit: cover;
+  transition: all 0.2s ease;
+  border: 2px solid rgba(255, 255, 255, 0.633);
+}
+
+.close2 {
+  position: absolute;
+  left: 182px;
+  bottom: 160px;
+  padding: 3px;
+  z-index: 12;
+}
+
+.left-icons {
+  display: flex;
+  align-items: center;
+}
+
+.left-ic {
+  animation: colorFade 4s infinite;
+}
+
+@keyframes colorFade {
+  0% {
+    color: gray;
+  } /* Start with gray color */
+  50% {
+    color: #3ea6ff;
+  } /* Transition to light blue color */
+  100% {
+    color: gray;
+  } /* Transition back to gray color */
 }

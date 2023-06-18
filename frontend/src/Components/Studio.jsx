@@ -10,17 +10,24 @@ import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import Upload from "../img/upload.png";
 import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined";
 import AddPhotoAlternateOutlinedIcon from "@mui/icons-material/AddPhotoAlternateOutlined";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import SdIcon from "@mui/icons-material/Sd";
+import HdIcon from "@mui/icons-material/Hd";
+import CloudDoneRoundedIcon from "@mui/icons-material/CloudDoneRounded";
 
 function Studio() {
   const [email, setEmail] = useState("");
   const [isChannel, setisChannel] = useState();
   const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedThumbnail, setSelectedThumbnail] = useState(null);
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [previewImage, setPreviewImage] = useState(avatar);
+  const [previewThumbnail, setPreviewThumbnail] = useState(null);
   const [ChannelName, setChannelName] = useState();
   const [isLoading, setisLoading] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const [isVideoSelected, setIsVideoSelected] = useState(false);
+  const [isThumbnailSelected, setIsThumbnailSelected] = useState(false);
   const [videoName, setVideoName] = useState("Upload videos");
   const [VideoURL, setVideoURL] = useState("");
   const [Progress, setProgress] = useState(0);
@@ -271,8 +278,66 @@ function Studio() {
 
   const handleThumbnailChange = (event) => {
     const file = event.target.files[0];
-    // Handle the uploaded file here
-    console.log("Uploaded file:", file);
+
+    // Check if the file is an image and has a 16:9 aspect ratio
+    if (file && file.type.startsWith("image/")) {
+      const img = new Image();
+      img.onload = function () {
+        const aspectRatio = img.width / img.height;
+        if (Math.abs(aspectRatio - 16 / 9) < 0.01) {
+          setIsThumbnailSelected(true);
+          setSelectedThumbnail(file);
+          setPreviewThumbnail(URL.createObjectURL(file));
+        } else {
+          // Reset the selection if the aspect ratio is not 16:9
+          setIsThumbnailSelected(false);
+          setSelectedThumbnail(null);
+          setPreviewThumbnail(null);
+          alert("Please select a 16:9 aspect ratio image.");
+        }
+      };
+      img.src = URL.createObjectURL(file);
+    } else {
+      // Reset the selection if the file is not an image
+      setIsThumbnailSelected(false);
+      setSelectedThumbnail(null);
+      setPreviewThumbnail(null);
+      alert("Please select an image file.");
+    }
+  };
+
+  const uploadThumbnail = async () => {
+    try {
+      if (isThumbnailSelected === false) {
+        return null;
+      }
+
+      const fileReference = ref(storage, `thumbnail/${selectedThumbnail.name}`);
+      const uploadData = uploadBytesResumable(fileReference, selectedThumbnail);
+
+      return new Promise((resolve, reject) => {
+        uploadData.on(
+          "state_changed",
+          null,
+          (error) => {
+            console.log(error);
+            reject(error);
+          },
+          async () => {
+            try {
+              const downloadURL = await getDownloadURL(uploadData.snapshot.ref);
+              resolve(downloadURL);
+            } catch (error) {
+              console.log(error);
+              reject(error);
+            }
+          }
+        );
+      });
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
   };
 
   return (
@@ -349,7 +414,7 @@ function Studio() {
             />
           </div>
           <hr className="seperate seperate2" />
-          {/* <div
+          <div
             className="middle-data"
             style={
               isVideoSelected === false
@@ -376,14 +441,14 @@ function Studio() {
                 onChange={handleVideoChange}
               />
             </div>
-          </div> */}
+          </div>
           <div
             className="uploading-video-data"
-            // style={
-            //   isVideoSelected === true
-            //     ? { display: "flex" }
-            //     : { display: "none" }
-            // }
+            style={
+              isVideoSelected === true
+                ? { display: "flex" }
+                : { display: "none" }
+            }
           >
             <div className="left-video-section">
               <form className="details-form">
@@ -409,7 +474,14 @@ function Studio() {
                   />
                 </div>
               </form>
-              <div className="thumbnail-section">
+              <div
+                className="thumbnail-section"
+                style={
+                  isThumbnailSelected === false
+                    ? { display: "flex" }
+                    : { display: "none" }
+                }
+              >
                 <p>Thumbnail</p>
                 <p>
                   Select or upload a picture that shows what&apos;s in your
@@ -430,6 +502,33 @@ function Studio() {
                   style={{ display: "none" }}
                   onChange={handleThumbnailChange}
                 />
+              </div>
+              <div
+                className="thumbnail-section thumb2"
+                style={
+                  isThumbnailSelected === true
+                    ? { display: "flex" }
+                    : { display: "none" }
+                }
+              >
+                <p>Thumbnail</p>
+                <p>
+                  Select or upload a picture that shows what&apos;s in your
+                  video. A good thumbnail stands out and draws viewer&apos;s
+                  attention.
+                </p>
+                <div className="thumb2-img">
+                  <CloseRoundedIcon
+                    className="close close2"
+                    fontSize="medium"
+                    style={{ color: "gray" }}
+                  />
+                  <img
+                    className="prevThumbnail"
+                    src={previewThumbnail}
+                    alt=""
+                  />
+                </div>
               </div>
               <div className="video-tag-section"></div>
             </div>
@@ -479,9 +578,56 @@ function Studio() {
               </div>
             </div>
           </div>
-          <hr className="seperate seperate2" />
-          <div className="last-btn">
-            <button className="save-video-data">SAVE</button>
+          <div
+            className="last-segment"
+            style={
+              isVideoSelected === true
+                ? { display: "block" }
+                : { display: "none" }
+            }
+          >
+            <hr className="seperate seperate2" />
+            <div className="last-btn">
+              <div className="left-icons">
+                <CloudUploadIcon
+                  className="left-ic"
+                  fontSize="large"
+                  style={
+                    Progress === 100
+                      ? { display: "none" }
+                      : { color: "gray", marginRight: "5px" }
+                  }
+                />
+                <SdIcon
+                  className="left-ic"
+                  fontSize="large"
+                  style={
+                    Progress >= 60
+                      ? { display: "none" }
+                      : { color: "gray", marginLeft: "5px" }
+                  }
+                />
+                <CloudDoneRoundedIcon
+                  className="left-ic"
+                  fontSize="large"
+                  style={
+                    Progress === 100
+                      ? { display: "block", color: "#3ea6ff", marginRight: "5px", animation:"none" }
+                      : { display: "none" }
+                  }
+                />
+                <HdIcon
+                  className="left-ic"
+                  fontSize="large"
+                  style={
+                    Progress >= 60
+                      ? { display: "block", color: "#3ea6ff", marginLeft: "5px", animation:"none" }
+                      : { display: "none" }
+                  }
+                />
+              </div>
+              <button className="save-video-data">PUBLISH</button>
+            </div>
           </div>
         </div>
       </div>
