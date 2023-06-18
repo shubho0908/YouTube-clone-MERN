@@ -6,6 +6,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const bodyParser = require("body-parser");
 const userData = require("../Models/user");
+const videodata = require("../Models/videos");
 const router = express.Router();
 
 // Middlewares
@@ -131,6 +132,61 @@ router.post("/savechannel", async (req, res) => {
     return res.status(500).json({
       message: "An error occurred",
     });
+  }
+});
+
+router.post("/publish", async (req, res) => {
+  try {
+    const {
+      videoTitle,
+      videoDescription,
+      tags,
+      videoLink,
+      thumbnailLink,
+      email,
+    } = req.body;
+
+    const user = await userData.findOne({ email });
+    let videos = await videodata.findOne({ email });
+
+    if (user) {
+      user.videos.push({ videoURL: videoLink });
+      user.thumbnails.push({ imageURL: thumbnailLink });
+
+      if (!videos) {
+        videos = new videodata({
+          uploader : user.channelName,
+          email,
+          VideoData: [
+            {
+              thumbnailURL: thumbnailLink,
+              videoURL: videoLink,
+              Title: videoTitle,
+              Description: videoDescription,
+              Tags: tags,
+            },
+          ],
+        });
+      } else {
+        videos.VideoData.push({
+          thumbnailURL: thumbnailLink,
+          videoURL: videoLink,
+          Title: videoTitle,
+          Description: videoDescription,
+          Tags: tags,
+        });
+      }
+
+      await user.save();
+      await videos.save();
+
+      return res.status(200).json({ message: "Video published" });
+    } else {
+      return res.status(404).json({ message: "User not found" });
+    }
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "An error occurred" });
   }
 });
 

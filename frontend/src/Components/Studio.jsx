@@ -32,6 +32,9 @@ function Studio() {
   const [VideoURL, setVideoURL] = useState("");
   const [Progress, setProgress] = useState(0);
   const [uploadTask, setUploadTask] = useState(null);
+  const [videoDescription, setVideoDescription] = useState("");
+  const [videoTags, setVideoTags] = useState("");
+
   const [videoLink, setVideoLink] = useState("https://www.youtube.com");
 
   useEffect(() => {
@@ -340,6 +343,39 @@ function Studio() {
     }
   };
 
+  //SAVE UPLOAD DATA TO DATABASE
+
+  const PublishData = async () => {
+    try {
+      // Upload the thumbnail
+      const thumbnailURL = await uploadThumbnail();
+      // Proceed with saving the data
+      const data = {
+        videoTitle: videoName,
+        videoDescription: videoDescription,
+        tags: videoTags,
+        videoLink: VideoURL,
+        thumbnailLink: thumbnailURL,
+        email: email,
+      };
+
+      // Send the POST request
+      const response = await fetch("http://localhost:3000/publish", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      // Handle the response
+      const result = await response.json();
+      console.log(result); // Handle the result as per your requirement
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   return (
     <>
       <Navbar2 />
@@ -466,11 +502,13 @@ function Studio() {
                     type="text"
                     className="video-description"
                     placeholder="Description"
+                    onChange={(e) => setVideoDescription(e.target.value)}
                   />
                   <input
                     type="text"
                     className="video-tags"
                     placeholder="Tags"
+                    onChange={(e) => setVideoTags(e.target.value)}
                   />
                 </div>
               </form>
@@ -657,7 +695,9 @@ function Studio() {
                   Video uploaded
                 </p>
               </div>
-              <button className="save-video-data">PUBLISH</button>
+              <button className="save-video-data" onClick={PublishData}>
+                PUBLISH
+              </button>
             </div>
           </div>
         </div>
