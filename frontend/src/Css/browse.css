@@ -53,7 +53,7 @@
   grid-template-rows: repeat(4, 1fr);
   justify-content: center;
   grid-column-gap: 10px;
-  grid-row-gap: 50px;
+  grid-row-gap: 18px;
 }
 
 .video-section {
