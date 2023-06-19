@@ -2,6 +2,10 @@ import Navbar from "./Navbar";
 import LeftPanel from "./LeftPanel";
 import "../Css/browse.css";
 import { useEffect, useState } from "react";
+import ReactLoading from "react-loading";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import Tooltip from "@mui/material/Tooltip";
+import Zoom from "@mui/material/Zoom";
 
 function Browse() {
   const [videos, setVideos] = useState("");
@@ -97,62 +101,101 @@ function Browse() {
               );
             })}
           </div>
-          <div
-            className="video-section"
-            style={{
-              ...(thumbnails ? { height: "auto" } : { height: "100vh" }),
-              ...(menuClicked === true
-                ? { marginLeft: "40px" }
-                : { marginLeft: "80px" }),
-            }}
-          >
+          {thumbnails ? (
             <div
-              className="uploaded-videos"
-              style={
-                menuClicked === true
-                  ? { paddingRight: "50px" }
-                  : { paddingRight: "0px" }
-              }
+              className="video-section"
+              style={{
+                ...(thumbnails ? { height: "auto" } : { height: "100vh" }),
+                ...(menuClicked === true
+                  ? { marginLeft: "40px" }
+                  : { marginLeft: "80px" }),
+              }}
             >
-              {thumbnails &&
-                thumbnails.map((element, index) => {
-                  return (
-                    <div className="video-data" key={index}>
-                      <img
-                        style={{ width: "330px", borderRadius: "10px" }}
-                        src={element}
-                        alt="temp"
-                      />
-                      <p className="duration">
-                        {Math.floor(duration[index] / 60) +
-                          ":" +
-                          (Math.round(duration[index] % 60) < 10
-                            ? "0" + Math.round(duration[index] % 60)
-                            : Math.round(duration[index] % 60))}
-                      </p>
+              <div
+                className="uploaded-videos"
+                style={
+                  menuClicked === true
+                    ? { paddingRight: "50px" }
+                    : { paddingRight: "0px" }
+                }
+              >
+                {thumbnails &&
+                  thumbnails.map((element, index) => {
+                    return (
+                      <div className="video-data" key={index}>
+                        <img
+                          style={{ width: "330px", borderRadius: "10px" }}
+                          src={element}
+                          alt="temp"
+                        />
+                        <p className="duration">
+                          {Math.floor(duration[index] / 60) +
+                            ":" +
+                            (Math.round(duration[index] % 60) < 10
+                              ? "0" + Math.round(duration[index] % 60)
+                              : Math.round(duration[index] % 60))}
+                        </p>
 
-                      <div className="channel-basic-data">
-                        <div className="channel-pic">
-                          <img
-                            className="channel-profile"
-                            src={ProfilePic[index]}
-                            alt="channel-profile"
-                          />
-                        </div>
-                        <div className="channel-text-data">
-                          <p className="title" style={{ marginTop: "10px" }}>
-                            {Titles[index]}
-                          </p>
-                          <p className="uploader" style={{ marginTop: "10px" }}>
-                            {uploader[index]}
-                          </p>
+                        <div className="channel-basic-data">
+                          <div className="channel-pic">
+                            <img
+                              className="channel-profile"
+                              src={ProfilePic[index]}
+                              alt="channel-profile"
+                            />
+                          </div>
+                          <div className="channel-text-data">
+                            <p className="title" style={{ marginTop: "10px" }}>
+                              {Titles[index]}
+                            </p>
+                            <div className="video-uploader">
+                              <p
+                                className="uploader"
+                                style={{ marginTop: "10px" }}
+                              >
+                                {uploader[index]}
+                              </p>
+                              <Tooltip
+                                TransitionComponent={Zoom}
+                                title="Verified"
+                                placement="right"
+                              >
+                                <CheckCircleIcon
+                                  fontSize="100px"
+                                  style={{
+                                    color: "rgb(138, 138, 138)",
+                                    marginTop: "8px",
+                                    marginLeft: "4px",
+                                  }}
+                                />
+                              </Tooltip>
+                            </div>
+                            <div className="view-time">
+                              <p className="views">1M views</p>
+                              <p
+                                className="upload-time"
+                                style={{ marginLeft: "4px" }}
+                              >
+                                &#x2022; 5 hours ago
+                              </p>
+                            </div>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className="spinner" style={{ height: "100vh" }}>
+              <ReactLoading
+                type={"spin"}
+                color={"white"}
+                height={50}
+                width={50}
+              />
+            </div>
+          )}
         </div>
       </div>
     </>

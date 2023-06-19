@@ -73,7 +73,7 @@
 
 .uploader {
   font-size: 14px;
-  color: gray;
+  color: rgb(130, 130, 130);;
 }
 
 .menu,
@@ -118,4 +118,28 @@
   padding: 5px;
   border-radius: 4px;
   font-size: 14px;
+}
+
+.spinner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  position: relative;
+  top: 150px;
+}
+
+.view-time{
+  display: flex;
+  align-items: center;
+  margin-top: 4px;
+}
+
+.view-time > p {
+  font-size: 14px;
+  color: rgb(130, 130, 130);
+}
+
+.video-uploader{
+  display: flex;
+  align-items: center;
 }

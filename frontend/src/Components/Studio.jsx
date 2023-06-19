@@ -430,7 +430,7 @@ function Studio() {
                 <input
                   type="file"
                   name="myfile"
-                  accept="image/*"
+                  accept=".jpg, .png"
                   onChange={handleImageChange}
                 />
               </div>
@@ -567,7 +567,7 @@ function Studio() {
                 <input
                   id="thumbnail-input"
                   type="file"
-                  accept="image/*"
+                  accept=".jpg, .png"
                   style={{ display: "none" }}
                   onChange={handleThumbnailChange}
                 />
