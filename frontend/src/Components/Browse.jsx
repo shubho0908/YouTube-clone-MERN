@@ -81,7 +81,7 @@ function Browse() {
         <div
           className="browse-data"
           style={
-            menuClicked ? { left: "100px", width: "100%" } : { left: "250px" }
+            menuClicked ? { left: "80px", width: "100%" } : { left: "250px" }
           }
         >
           <div className="popular-categories">
@@ -102,13 +102,20 @@ function Browse() {
                 : { marginLeft: "80px" }),
             }}
           >
-            <div className="uploaded-videos">
+            <div
+              className="uploaded-videos"
+              style={
+                menuClicked === true
+                  ? { paddingRight: "50px" }
+                  : { paddingRight: "0px" }
+              }
+            >
               {thumbnails &&
                 thumbnails.map((element, index) => {
                   return (
                     <div className="video-data" key={index}>
                       <img
-                        style={{ width: "350px", borderRadius: "8px" }}
+                        style={{ width: "330px", borderRadius: "8px" }}
                         src={element}
                         alt="temp"
                       />

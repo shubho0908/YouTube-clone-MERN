@@ -34,6 +34,7 @@ function Studio() {
   const [uploadTask, setUploadTask] = useState(null);
   const [videoDescription, setVideoDescription] = useState("");
   const [videoTags, setVideoTags] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const [videoLink, setVideoLink] = useState("https://www.youtube.com");
 
@@ -80,7 +81,6 @@ function Studio() {
     } else {
       document.body.classList.remove("bg-css");
     }
-    console.log(isClicked);
   }, [isClicked]);
 
   //GET CHANNEL'S DATA
@@ -363,6 +363,7 @@ function Studio() {
       alert("Please select a thumbnail");
     } else {
       try {
+        setLoading(true);
         // Upload the thumbnail
         const thumbnailURL = await uploadThumbnail();
         // Proceed with saving the data
@@ -374,7 +375,6 @@ function Studio() {
           thumbnailLink: thumbnailURL,
           email: email,
         };
-
         // Send the POST request
         const response = await fetch("http://localhost:3000/publish", {
           method: "POST",
@@ -385,8 +385,8 @@ function Studio() {
         });
 
         // Handle the response
-        const result = await response.json();
-        console.log(result); // Handle the result as per your requirement
+        await response.json();
+        setLoading(false);
       } catch (error) {
         console.log(error.message);
       }
@@ -712,8 +712,12 @@ function Studio() {
                   Video uploaded
                 </p>
               </div>
-              <button className="save-video-data" onClick={PublishData}>
-                PUBLISH
+              <button
+                className="save-video-data"
+                onClick={PublishData}
+                disabled={loading === true ? true : false}
+              >
+                {loading === true ? "LOADING..." : "PUBLISH"}
               </button>
             </div>
           </div>

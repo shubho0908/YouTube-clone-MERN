@@ -11,6 +11,24 @@ function LeftPanel2() {
   const token = localStorage.getItem("userToken");
   const [profileIMG, setProfileIMG] = useState();
   const [channel, setChannel] = useState("");
+  const [menuClicked, setMenuClicked] = useState(false);
+
+  useEffect(() => {
+    const handleMenuButtonClick = () => {
+      setMenuClicked((prevMenuClicked) => !prevMenuClicked);
+    };
+
+    const menuButton = document.querySelector(".menu2");
+    if (menuButton) {
+      menuButton.addEventListener("click", handleMenuButtonClick);
+    }
+
+    return () => {
+      if (menuButton) {
+        menuButton.removeEventListener("click", handleMenuButtonClick);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     setEmail(jwtDecode(token).email);
@@ -35,9 +53,14 @@ function LeftPanel2() {
     }
   }, [email]);
 
+  console.log(menuClicked);
+
   return (
     <>
-      <div className="main-section2">
+      <div
+        className="main-section2"
+        style={menuClicked === true ? { display: "none" } : { display: "flex" }}
+      >
         <div className="first-panel">
           <img src={profileIMG} alt="" className="profile_img" />
           <div className="about-channel">

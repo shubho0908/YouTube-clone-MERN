@@ -49,10 +49,10 @@
 
 .uploaded-videos {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(315px, 1fr));
   grid-template-rows: repeat(4, 1fr);
   justify-content: center;
-  grid-column-gap: 20px;
+  grid-column-gap: 10px;
   grid-row-gap: 50px;
 }
 
@@ -62,6 +62,7 @@
 }
 
 .video-data {
+  cursor: pointer;
   width: 360px;
 }
 
@@ -74,14 +75,16 @@
   color: gray;
 }
 
-.menu {
+.menu,
+.menu2 {
   cursor: pointer;
   transition: all 0.15s ease;
   padding: 7px;
   border-radius: 50%;
 }
 
-.menu:hover {
+.menu:hover,
+.menu2:hover {
   color: white !important;
   background-color: #3d3f4365;
 }

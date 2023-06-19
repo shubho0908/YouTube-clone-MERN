@@ -103,13 +103,13 @@ function LeftPanel() {
           <div className="home sec-data sec-data2">
             <HomeIcon fontSize="medium" style={{ color: "white" }} />
           </div>
-          <div className="trending sec-data sec-data2">
+          <div className="trending trending2 sec-data sec-data2">
             <WhatshotOutlinedIcon
               fontSize="medium"
               style={{ color: "white" }}
             />
           </div>
-          <div className="subscription sec-data sec-data2">
+          <div className="subscription subscription2 sec-data sec-data2">
             <SubscriptionsOutlinedIcon
               fontSize="medium"
               style={{ color: "white" }}
@@ -118,7 +118,7 @@ function LeftPanel() {
         </div>
         {/* <hr className="seperate" /> */}
         <div className="second-section">
-          <div className="library sec-data sec-data2">
+          <div className="library library2 sec-data sec-data2">
             <VideoLibraryOutlinedIcon
               fontSize="medium"
               style={{ color: "white" }}

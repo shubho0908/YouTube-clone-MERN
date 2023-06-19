@@ -46,14 +46,13 @@
 }
 
 .main-2 {
-  width: 50px !important;
-  line-height: 80px;
+  width: 62px !important;
   flex-direction: column;
   align-items: center;
 }
 
-.trending,
-.subscription,
-.library {
+.trending2,
+.subscription2,
+.library2 {
   margin-top: 15px;
 }

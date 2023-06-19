@@ -289,7 +289,7 @@
   font-size: 14px;
 }
 
-.left-icons>p {
+.left-icons > p {
   color: #9a9a9a;
   font-size: 14px;
 }
@@ -312,6 +312,7 @@
   background-color: #1f1f1f;
   padding: 10px;
   line-height: 22px;
+  max-width: 254px;
 }
 .link-details {
   display: flex;
