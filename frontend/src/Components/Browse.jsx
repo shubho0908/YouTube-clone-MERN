@@ -8,10 +8,43 @@ function Browse() {
   const [thumbnails, setThumbnails] = useState();
   const [Titles, setTitles] = useState();
   const [uploader, setUploader] = useState();
+  const [menuClicked, setMenuClicked] = useState(false);
+
+  useEffect(() => {
+    const handleMenuButtonClick = () => {
+      setMenuClicked((prevMenuClicked) => !prevMenuClicked);
+    };
+
+    const menuButton = document.querySelector(".menu");
+    menuButton.addEventListener("click", handleMenuButtonClick);
+
+    return () => {
+      menuButton.removeEventListener("click", handleMenuButtonClick);
+    };
+  }, []);
 
   const Tags = [
     "All",
     "Music",
+    "Tutorial",
+    "Vlog",
+    "Gaming",
+    "Comedy",
+    "Beauty",
+    "Travel",
+    "Food",
+    "Fashion",
+    "Tutorial",
+    "Vlog",
+    "Gaming",
+    "Comedy",
+    "Beauty",
+    "Travel",
+    "Food",
+    "Fashion",
+    "Travel",
+    "Food",
+    "Fashion",
     "Tutorial",
     "Vlog",
     "Gaming",
@@ -29,12 +62,12 @@ function Browse() {
   const getVideos = async () => {
     try {
       const response = await fetch("http://localhost:3000/getvideos");
-      const { videoURLs, thumbnailURLs, titles,Uploader } = await response.json();
+      const { videoURLs, thumbnailURLs, titles, Uploader } =
+        await response.json();
       setVideos(videoURLs);
       setThumbnails(thumbnailURLs);
       setTitles(titles);
-      setUploader(Uploader)
-        console.log(Uploader);
+      setUploader(Uploader);
     } catch (error) {
       console.log(error.message);
     }
@@ -45,7 +78,12 @@ function Browse() {
       <Navbar />
       <div className="browse">
         <LeftPanel />
-        <div className="browse-data">
+        <div
+          className="browse-data"
+          style={
+            menuClicked ? { left: "100px", width: "100%" } : { left: "250px" }
+          }
+        >
           <div className="popular-categories">
             {Tags.map((element, index) => {
               return (
@@ -55,14 +93,22 @@ function Browse() {
               );
             })}
           </div>
-          <div className="video-section">
+          <div
+            className="video-section"
+            style={{
+              ...(thumbnails ? { height: "auto" } : { height: "100vh" }),
+              ...(menuClicked === true
+                ? { marginLeft: "40px" }
+                : { marginLeft: "80px" }),
+            }}
+          >
             <div className="uploaded-videos">
               {thumbnails &&
                 thumbnails.map((element, index) => {
                   return (
                     <div className="video-data" key={index}>
                       <img
-                        style={{ width: "360px", borderRadius: "8px" }}
+                        style={{ width: "350px", borderRadius: "8px" }}
                         src={element}
                         alt="temp"
                       />

@@ -147,6 +147,13 @@ function Studio() {
 
   const handleVideoChange = (e) => {
     const file = e.target.files[0];
+    const fileSizeInMB = file.size / (1024 * 1024); // Convert file size to MB
+
+    if (fileSizeInMB > 25) {
+      alert("Please select a video file with a size of up to 25MB.");
+      return;
+    }
+
     setSelectedVideo(file);
     setIsVideoSelected(true);
 
@@ -253,6 +260,13 @@ function Studio() {
   const handleDrop = (e) => {
     e.preventDefault();
     const file = e.dataTransfer.files[0];
+    const fileSizeInMB = file.size / (1024 * 1024);
+
+    if (fileSizeInMB > 25) {
+      alert("Please select a video file with a size of up to 25MB.");
+      return;
+    }
+
     setSelectedVideo(file);
     setIsVideoSelected(true);
     const fileName = file.name;
@@ -343,33 +357,39 @@ function Studio() {
   //SAVE UPLOAD DATA TO DATABASE
 
   const PublishData = async () => {
-    try {
-      // Upload the thumbnail
-      const thumbnailURL = await uploadThumbnail();
-      // Proceed with saving the data
-      const data = {
-        videoTitle: videoName,
-        videoDescription: videoDescription,
-        tags: videoTags,
-        videoLink: VideoURL,
-        thumbnailLink: thumbnailURL,
-        email: email,
-      };
+    if (videoName === "" || videoDescription === "" || videoTags === "") {
+      alert("Input fields can't be empty");
+    } else if (selectedThumbnail === null) {
+      alert("Please select a thumbnail");
+    } else {
+      try {
+        // Upload the thumbnail
+        const thumbnailURL = await uploadThumbnail();
+        // Proceed with saving the data
+        const data = {
+          videoTitle: videoName,
+          videoDescription: videoDescription,
+          tags: videoTags,
+          videoLink: VideoURL,
+          thumbnailLink: thumbnailURL,
+          email: email,
+        };
 
-      // Send the POST request
-      const response = await fetch("http://localhost:3000/publish", {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+        // Send the POST request
+        const response = await fetch("http://localhost:3000/publish", {
+          method: "POST",
+          body: JSON.stringify(data),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
 
-      // Handle the response
-      const result = await response.json();
-      console.log(result); // Handle the result as per your requirement
-    } catch (error) {
-      console.log(error.message);
+        // Handle the response
+        const result = await response.json();
+        console.log(result); // Handle the result as per your requirement
+      } catch (error) {
+        console.log(error.message);
+      }
     }
   };
 

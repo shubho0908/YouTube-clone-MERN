@@ -45,7 +45,7 @@ function Navbar2() {
     <>
       <div className="navbar">
         <div className="left-bar">
-          <MenuRoundedIcon fontSize="large" style={{ color: "white" }} />
+          <MenuRoundedIcon className="menu" fontSize="large" style={{ color: "white" }} />
           <img
             src={StudioLogo}
             alt="logo"

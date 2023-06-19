@@ -20,10 +20,10 @@
   align-items: center;
   padding-left: 10px;
   padding-right: 80px;
-  transition: all .15s ease;
+  transition: all 0.15s ease;
 }
 
-.sec-data:hover{
+.sec-data:hover {
   background-color: #3d3f4365;
   border-radius: 8px;
 }
@@ -36,4 +36,24 @@
   border: 1px solid #5b5d6265 !important;
   margin-top: 15px;
   margin-bottom: 15px;
+}
+
+/* SHORT HAND  */
+
+.sec-data2 {
+  padding: 12px !important;
+  display: flex;
+}
+
+.main-2 {
+  width: 50px !important;
+  line-height: 80px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.trending,
+.subscription,
+.library {
+  margin-top: 15px;
 }

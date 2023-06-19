@@ -58,18 +58,30 @@
 
 .video-section {
   color: white;
-  margin: 80px;
+  margin: 60px;
 }
 
 .video-data {
   width: 360px;
 }
 
-.title{
+.title {
   font-weight: 500 !important;
 }
 
-.uploader{
+.uploader {
   font-size: 14px;
   color: gray;
+}
+
+.menu {
+  cursor: pointer;
+  transition: all 0.15s ease;
+  padding: 7px;
+  border-radius: 50%;
+}
+
+.menu:hover {
+  color: white !important;
+  background-color: #3d3f4365;
 }

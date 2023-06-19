@@ -6,12 +6,33 @@ import VideoLibraryOutlinedIcon from "@mui/icons-material/VideoLibraryOutlined";
 import HistoryOutlinedIcon from "@mui/icons-material/HistoryOutlined";
 import WatchLaterOutlinedIcon from "@mui/icons-material/WatchLaterOutlined";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
-import ExitToAppOutlinedIcon from '@mui/icons-material/ExitToAppOutlined';
+import ExitToAppOutlinedIcon from "@mui/icons-material/ExitToAppOutlined";
+import { useEffect, useState } from "react";
 
 function LeftPanel() {
+  const [menuClicked, setMenuClicked] = useState(false);
+
+  useEffect(() => {
+    const handleMenuButtonClick = () => {
+      setMenuClicked((prevMenuClicked) => !prevMenuClicked);
+    };
+
+    const menuButton = document.querySelector(".menu");
+    menuButton.addEventListener("click", handleMenuButtonClick);
+
+    return () => {
+      menuButton.removeEventListener("click", handleMenuButtonClick);
+    };
+  }, []);
+
   return (
     <>
-      <div className="main-left-section">
+      <div
+        className="main-left-section"
+        style={
+          menuClicked === true ? { display: "none" } : { display: "block" }
+        }
+      >
         <div className="first-section ">
           <div className="home sec-data">
             <HomeIcon fontSize="medium" style={{ color: "white" }} />
@@ -32,7 +53,7 @@ function LeftPanel() {
             <p>Subscription</p>
           </div>
         </div>
-          <hr className="seperate" />
+        <hr className="seperate" />
         <div className="second-section">
           <div className="library sec-data">
             <VideoLibraryOutlinedIcon
@@ -61,9 +82,47 @@ function LeftPanel() {
 
         <div className="third-section"></div>
         <div className="final-section">
-        <div className="exit sec-data">
-            <ExitToAppOutlinedIcon fontSize="medium" style={{ color: "white" }} />
+          <div className="exit sec-data">
+            <ExitToAppOutlinedIcon
+              fontSize="medium"
+              style={{ color: "white" }}
+            />
             <p>Sign out</p>
+          </div>
+        </div>
+      </div>
+
+      {/* SHORT HAND  */}
+      <div
+        className="main-left-section main-2"
+        style={
+          menuClicked === true ? { display: "flex" } : { display: "none" }
+        }
+      >
+        <div className="first-section ">
+          <div className="home sec-data sec-data2">
+            <HomeIcon fontSize="medium" style={{ color: "white" }} />
+          </div>
+          <div className="trending sec-data sec-data2">
+            <WhatshotOutlinedIcon
+              fontSize="medium"
+              style={{ color: "white" }}
+            />
+          </div>
+          <div className="subscription sec-data sec-data2">
+            <SubscriptionsOutlinedIcon
+              fontSize="medium"
+              style={{ color: "white" }}
+            />
+          </div>
+        </div>
+        {/* <hr className="seperate" /> */}
+        <div className="second-section">
+          <div className="library sec-data sec-data2">
+            <VideoLibraryOutlinedIcon
+              fontSize="medium"
+              style={{ color: "white" }}
+            />
           </div>
         </div>
       </div>
