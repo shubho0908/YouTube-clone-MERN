@@ -41,6 +41,10 @@ const UserData = new mongoose.Schema({
       videoURL: {
         type: String,
       },
+      videoLength: {
+        type: Number,
+        required: true,
+      },
     },
   ],
   likedVideos: [

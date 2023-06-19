@@ -255,9 +255,9 @@ form > input::placeholder {
 .profile-pic {
   cursor: pointer;
   width: 42px;
-  height: 40px;
+  height: 42px;
   object-fit: cover;
-  border-radius: 50%;
+  border-radius: 100%;
 }
 
 .create-btn {

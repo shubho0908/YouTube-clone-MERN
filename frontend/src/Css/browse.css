@@ -59,6 +59,7 @@
 .video-section {
   color: white;
   margin: 60px;
+  height: 100vh;
 }
 
 .video-data {
@@ -87,4 +88,34 @@
 .menu2:hover {
   color: white !important;
   background-color: #3d3f4365;
+}
+
+.channel-basic-data {
+  display: flex;
+  position: relative;
+  bottom: 25px;
+}
+
+.channel-profile {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 100%;
+  margin-top: 8px;
+}
+
+.channel-text-data {
+  margin-left: 15px;
+  width: 75%;
+}
+
+.duration {
+  width: fit-content;
+  position: relative;
+  bottom: 37px;
+  left: 285px;
+  background-color: #000000c9;
+  padding: 5px;
+  border-radius: 4px;
+  font-size: 14px;
 }

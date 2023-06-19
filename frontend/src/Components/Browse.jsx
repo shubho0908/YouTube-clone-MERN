@@ -8,6 +8,8 @@ function Browse() {
   const [thumbnails, setThumbnails] = useState();
   const [Titles, setTitles] = useState();
   const [uploader, setUploader] = useState();
+  const [ProfilePic, setProfilePic] = useState();
+  const [duration, setDuration] = useState();
   const [menuClicked, setMenuClicked] = useState(false);
 
   useEffect(() => {
@@ -62,12 +64,14 @@ function Browse() {
   const getVideos = async () => {
     try {
       const response = await fetch("http://localhost:3000/getvideos");
-      const { videoURLs, thumbnailURLs, titles, Uploader } =
+      const { videoURLs, thumbnailURLs, titles, Uploader, Profile, Duration } =
         await response.json();
       setVideos(videoURLs);
       setThumbnails(thumbnailURLs);
       setTitles(titles);
       setUploader(Uploader);
+      setProfilePic(Profile);
+      setDuration(Duration);
     } catch (error) {
       console.log(error.message);
     }
@@ -115,16 +119,35 @@ function Browse() {
                   return (
                     <div className="video-data" key={index}>
                       <img
-                        style={{ width: "330px", borderRadius: "8px" }}
+                        style={{ width: "330px", borderRadius: "10px" }}
                         src={element}
                         alt="temp"
                       />
-                      <p className="title" style={{ marginTop: "10px" }}>
-                        {Titles[index]}
+                      <p className="duration">
+                        {Math.floor(duration[index] / 60) +
+                          ":" +
+                          (Math.round(duration[index] % 60) < 10
+                            ? "0" + Math.round(duration[index] % 60)
+                            : Math.round(duration[index] % 60))}
                       </p>
-                      <p className="uploader" style={{ marginTop: "10px" }}>
-                        {uploader[index]}
-                      </p>
+
+                      <div className="channel-basic-data">
+                        <div className="channel-pic">
+                          <img
+                            className="channel-profile"
+                            src={ProfilePic[index]}
+                            alt="channel-profile"
+                          />
+                        </div>
+                        <div className="channel-text-data">
+                          <p className="title" style={{ marginTop: "10px" }}>
+                            {Titles[index]}
+                          </p>
+                          <p className="uploader" style={{ marginTop: "10px" }}>
+                            {uploader[index]}
+                          </p>
+                        </div>
+                      </div>
                     </div>
                   );
                 })}

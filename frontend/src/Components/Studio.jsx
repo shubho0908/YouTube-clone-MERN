@@ -35,6 +35,7 @@ function Studio() {
   const [videoDescription, setVideoDescription] = useState("");
   const [videoTags, setVideoTags] = useState("");
   const [loading, setLoading] = useState(false);
+  const [duration, setDuration] = useState(null);
 
   const [videoLink, setVideoLink] = useState("https://www.youtube.com");
 
@@ -164,37 +165,48 @@ function Studio() {
     }
   };
 
-  const uploadVideo = (videoFile) => {
+  const uploadVideo = async (videoFile) => {
     try {
       const fileReference = ref(storage, `videos/${videoFile.name}`);
       const uploadTask = uploadBytesResumable(fileReference, videoFile);
       setUploadTask(uploadTask); // Store the upload task
 
-      uploadTask.on(
-        "state_changed",
-        (snapshot) => {
-          // Handle upload progress if needed
-          let progress =
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          progress = Math.round(progress);
-          setProgress(progress);
-        },
-        (error) => {
-          // Handle error during upload
-          console.log(error);
-        },
-        async () => {
-          // Handle successful upload
-          try {
-            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-            console.log("Video download URL:", downloadURL);
-            setVideoURL(downloadURL);
-            // Do something with the download URL, e.g., save it to the database
-          } catch (error) {
+      const videoElement = document.createElement("video");
+      videoElement.preload = "metadata";
+
+      videoElement.onloadedmetadata = async function () {
+        const duration = videoElement.duration; // Duration in seconds
+        console.log("Video duration:", duration);
+        setDuration(duration);
+
+        uploadTask.on(
+          "state_changed",
+          (snapshot) => {
+            // Handle upload progress if needed
+            let progress =
+              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            progress = Math.round(progress);
+            setProgress(progress);
+          },
+          (error) => {
+            // Handle error during upload
             console.log(error);
+          },
+          async () => {
+            // Handle successful upload
+            try {
+              const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+              console.log("Video download URL:", downloadURL);
+              setVideoURL(downloadURL);
+              // Do something with the download URL, e.g., save it to the database
+            } catch (error) {
+              console.log(error);
+            }
           }
-        }
-      );
+        );
+      };
+
+      videoElement.src = URL.createObjectURL(videoFile);
     } catch (error) {
       console.log(error);
     }
@@ -374,6 +386,7 @@ function Studio() {
           videoLink: VideoURL,
           thumbnailLink: thumbnailURL,
           email: email,
+          video_duration: duration,
         };
         // Send the POST request
         const response = await fetch("http://localhost:3000/publish", {
@@ -385,7 +398,8 @@ function Studio() {
         });
 
         // Handle the response
-        await response.json();
+        const result = await response.json();
+        console.log(result);
         setLoading(false);
       } catch (error) {
         console.log(error.message);

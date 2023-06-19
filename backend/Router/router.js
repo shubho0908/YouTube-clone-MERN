@@ -143,6 +143,7 @@ router.post("/publish", async (req, res) => {
       tags,
       videoLink,
       thumbnailLink,
+      video_duration,
       email,
     } = req.body;
 
@@ -150,20 +151,23 @@ router.post("/publish", async (req, res) => {
     let videos = await videodata.findOne({ email });
 
     if (user) {
-      user.videos.push({ videoURL: videoLink });
+      user.videos.push({ videoURL: videoLink, videoLength: video_duration });
       user.thumbnails.push({ imageURL: thumbnailLink });
 
       if (!videos) {
         videos = new videodata({
           email,
+
           VideoData: [
             {
               thumbnailURL: thumbnailLink,
               uploader: user.channelName,
               videoURL: videoLink,
+              ChannelProfile: user.profilePic,
               Title: videoTitle,
               Description: videoDescription,
               Tags: tags,
+              videoLength: video_duration,
             },
           ],
         });
@@ -172,9 +176,11 @@ router.post("/publish", async (req, res) => {
           thumbnailURL: thumbnailLink,
           uploader: user.channelName,
           videoURL: videoLink,
+          ChannelProfile: user.profilePic,
           Title: videoTitle,
           Description: videoDescription,
           Tags: tags,
+          videoLength: video_duration,
         });
       }
 
@@ -206,7 +212,14 @@ router.get("/getvideos", async (req, res) => {
     const Uploader = videos.flatMap((video) =>
       video.VideoData.map((data) => data.uploader)
     );
-    res.json({ thumbnailURLs, videoURLs, titles, Uploader });
+    const Duration = videos.flatMap((video) =>
+      video.VideoData.map((data) => data.videoLength)
+    );
+    const Profile = videos.flatMap((video) =>
+      video.VideoData.map((data) => data.ChannelProfile)
+    );
+    
+    res.json({ thumbnailURLs, videoURLs, titles, Uploader, Profile, Duration });
   } catch (error) {
     res.status(500).json({ message: "An error occurred" });
   }

@@ -11,6 +11,7 @@ const VideoData = new mongoose.Schema({
       }
     },
   },
+
   VideoData: [
     {
       thumbnailURL: {
@@ -25,7 +26,10 @@ const VideoData = new mongoose.Schema({
         type: String,
         required: true,
       },
-
+      ChannelProfile: {
+        type: String,
+        required: true,
+      },
       Title: {
         type: String,
         required: true,
@@ -37,6 +41,10 @@ const VideoData = new mongoose.Schema({
       Tags: {
         type: String,
         required: true,
+      },
+      videoLength: {
+        type: Number,
+        required:true
       },
     },
   ],

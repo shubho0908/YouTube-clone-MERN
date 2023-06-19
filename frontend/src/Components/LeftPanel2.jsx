@@ -53,8 +53,6 @@ function LeftPanel2() {
     }
   }, [email]);
 
-  console.log(menuClicked);
-
   return (
     <>
       <div
