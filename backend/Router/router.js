@@ -218,10 +218,22 @@ router.get("/getvideos", async (req, res) => {
     const Profile = videos.flatMap((video) =>
       video.VideoData.map((data) => data.ChannelProfile)
     );
-    
+
     res.json({ thumbnailURLs, videoURLs, titles, Uploader, Profile, Duration });
   } catch (error) {
     res.status(500).json({ message: "An error occurred" });
+  }
+});
+
+router.get("/getuserdata/:email", async (req, res) => {
+  try {
+    const email = req.params.email;
+    const videos = await videodata.findOne({ email });
+    const channelIMG = videos.VideoData.map((data) => data.ChannelProfile);
+    res.json({channelIMG});
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 });
 

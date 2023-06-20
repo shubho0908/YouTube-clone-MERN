@@ -1,0 +1,52 @@
+.account-pop {
+  background-color: #282828;
+  position: fixed;
+  color: white;
+  z-index: 20;
+  right: 20px;
+  top: 68px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-radius: 10px;
+  width: 270px;
+}
+
+.channelIMG {
+  width: 42px;
+  height: 42px;
+  object-fit: cover;
+  border-radius: 100%;
+}
+
+.user-section {
+  cursor: pointer;
+  display: flex;
+  padding-left: 35px;
+
+}
+
+.right-part {
+  margin-left: 10px;
+  line-height: 25px;
+}
+
+.c-sec {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  line-height: 45px;
+  padding-left: 35px;
+  transition: all 0.15s ease;
+}
+
+.c-sec:hover {
+  background-color: #3e3e3e;
+}
+
+.c-sec > p {
+  margin-left: 20px;
+}
+
+.open {
+  margin-left: 55px;
+}
