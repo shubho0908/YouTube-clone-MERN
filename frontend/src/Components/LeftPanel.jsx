@@ -6,7 +6,6 @@ import VideoLibraryOutlinedIcon from "@mui/icons-material/VideoLibraryOutlined";
 import HistoryOutlinedIcon from "@mui/icons-material/HistoryOutlined";
 import WatchLaterOutlinedIcon from "@mui/icons-material/WatchLaterOutlined";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
-import ExitToAppOutlinedIcon from "@mui/icons-material/ExitToAppOutlined";
 import { useEffect, useState } from "react";
 
 function LeftPanel() {
@@ -78,18 +77,7 @@ function LeftPanel() {
             <p>Liked videos</p>
           </div>
         </div>
-        <hr className="seperate" />
-
-        <div className="third-section"></div>
-        <div className="final-section">
-          <div className="exit sec-data">
-            <ExitToAppOutlinedIcon
-              fontSize="medium"
-              style={{ color: "white" }}
-            />
-            <p>Sign out</p>
-          </div>
-        </div>
+        
       </div>
 
       {/* SHORT HAND  */}

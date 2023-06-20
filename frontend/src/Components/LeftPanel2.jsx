@@ -4,7 +4,6 @@ import jwtDecode from "jwt-decode";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import VideoLibraryOutlinedIcon from "@mui/icons-material/VideoLibraryOutlined";
 import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
-import ExitToAppOutlinedIcon from "@mui/icons-material/ExitToAppOutlined";
 
 function LeftPanel2() {
   const [email, setEmail] = useState("");
@@ -92,16 +91,7 @@ function LeftPanel2() {
             <p>Comments</p>
           </div>
         </div>
-        <div className="third-panel">
-          <div className="out panel">
-            <ExitToAppOutlinedIcon
-              className="studio-icon"
-              fontSize="medium"
-              style={{ color: "#A9A9A9" }}
-            />
-            <p>Sign out</p>
-          </div>
-        </div>
+        
       </div>
     </>
   );

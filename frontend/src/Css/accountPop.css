@@ -8,7 +8,7 @@
   padding-top: 20px;
   padding-bottom: 20px;
   border-radius: 10px;
-  width: 270px;
+  width: 280px;
 }
 
 .channelIMG {
@@ -22,7 +22,6 @@
   cursor: pointer;
   display: flex;
   padding-left: 35px;
-
 }
 
 .right-part {
@@ -44,9 +43,65 @@
 }
 
 .c-sec > p {
-  margin-left: 20px;
+  margin-left: 15px;
 }
 
 .open {
-  margin-left: 55px;
+  margin-left: 35px;
+}
+
+.appearance-title {
+  display: flex;
+  align-items: center;
+  padding-left: 25px;
+}
+
+.appearance-title > p {
+  margin-left: 35px;
+}
+
+.caution {
+  font-size: 13px;
+  color: gray;
+  text-align: center;
+}
+
+.theme-list {
+  line-height: 45px;
+  margin-top: 15px;
+}
+
+.dark-theme,
+.light-theme {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding-left: 25px;
+  transition: all 0.15s ease;
+}
+
+.dark-theme:hover,
+.light-theme:hover {
+  background-color: #3e3e3e;
+}
+
+.dark-theme > p,
+.light-theme > p {
+  margin-left: 35px;
+}
+
+.dark-arrow,
+.light-arrow {
+  color: white;
+}
+
+.back-arrow {
+  cursor: pointer;
+  transition: all 0.15s ease;
+  padding: 7px;
+  border-radius: 100%;
+}
+
+.back-arrow:hover {
+  background-color: #3e3e3e;
 }
