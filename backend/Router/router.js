@@ -218,8 +218,19 @@ router.get("/getvideos", async (req, res) => {
     const Profile = videos.flatMap((video) =>
       video.VideoData.map((data) => data.ChannelProfile)
     );
+    const videoID = videos.flatMap((video) =>
+      video.VideoData.map((data) => data.id)
+    );
 
-    res.json({ thumbnailURLs, videoURLs, titles, Uploader, Profile, Duration });
+    res.json({
+      thumbnailURLs,
+      videoURLs,
+      titles,
+      Uploader,
+      Profile,
+      Duration,
+      videoID,
+    });
   } catch (error) {
     res.status(500).json({ message: "An error occurred" });
   }
@@ -230,7 +241,24 @@ router.get("/getuserdata/:email", async (req, res) => {
     const email = req.params.email;
     const videos = await videodata.findOne({ email });
     const channelIMG = videos.VideoData.map((data) => data.ChannelProfile);
-    res.json({channelIMG});
+    res.json({ channelIMG });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+router.get("/videodata/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const video = await videodata.findOne({ "VideoData._id": id });
+
+    if (!video) {
+      return res.status(404).json({ error: "Video not found" });
+    }
+
+    res.json(video);
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });

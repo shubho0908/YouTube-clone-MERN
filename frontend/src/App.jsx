@@ -2,6 +2,7 @@ import Browse from "./Components/Browse";
 import Studio from "./Components/Studio";
 import Error from "./Components/Error";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import VideoSection from "./Components/VideoSection";
 
 function App() {
   const token = localStorage.getItem("userToken");
@@ -12,6 +13,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Browse />} />
           <Route path="/studio" element={token ? <Studio /> : <Error />} />
+          <Route path="/:id" element={token ? <VideoSection /> : <Error />} />
         </Routes>
       </BrowserRouter>
     </>

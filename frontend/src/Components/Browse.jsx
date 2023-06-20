@@ -6,6 +6,7 @@ import ReactLoading from "react-loading";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
+import { useNavigate } from "react-router-dom";
 
 function Browse() {
   const [videos, setVideos] = useState("");
@@ -14,7 +15,10 @@ function Browse() {
   const [uploader, setUploader] = useState();
   const [ProfilePic, setProfilePic] = useState();
   const [duration, setDuration] = useState();
+  const [VideoID, setVideoID] = useState();
   const [menuClicked, setMenuClicked] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleMenuButtonClick = () => {
@@ -68,14 +72,22 @@ function Browse() {
   const getVideos = async () => {
     try {
       const response = await fetch("http://localhost:3000/getvideos");
-      const { videoURLs, thumbnailURLs, titles, Uploader, Profile, Duration } =
-        await response.json();
+      const {
+        videoURLs,
+        thumbnailURLs,
+        titles,
+        Uploader,
+        Profile,
+        Duration,
+        videoID,
+      } = await response.json();
       setVideos(videoURLs);
       setThumbnails(thumbnailURLs);
       setTitles(titles);
       setUploader(Uploader);
       setProfilePic(Profile);
       setDuration(Duration);
+      setVideoID(videoID);
     } catch (error) {
       console.log(error.message);
     }
@@ -122,7 +134,11 @@ function Browse() {
                 {thumbnails &&
                   thumbnails.map((element, index) => {
                     return (
-                      <div className="video-data" key={index}>
+                      <div
+                        className="video-data"
+                        key={index}
+                        onClick={() => navigate(`/${VideoID[index]}`)}
+                      >
                         <img
                           style={{ width: "330px", borderRadius: "10px" }}
                           src={element}
