@@ -265,4 +265,15 @@ router.get("/videodata/:id", async (req, res) => {
   }
 });
 
+router.get("/checkchannel/:email", async (req, res) => {
+  try {
+    const email = req.params.email;
+    const user = await userData.findOne({ email });
+    const channel = user.channelName;
+    res.json(channel);
+  } catch (error) {
+    res.json(error.message);
+  }
+});
+
 module.exports = router;

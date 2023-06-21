@@ -13,12 +13,34 @@ import ThumbDownOutlinedIcon from "@mui/icons-material/ThumbDownOutlined";
 import ReplyIcon from "@mui/icons-material/Reply";
 import { TfiDownload } from "react-icons/Tfi";
 import BookmarkAddOutlinedIcon from "@mui/icons-material/BookmarkAddOutlined";
+import jwtDecode from "jwt-decode";
 
 function VideoSection() {
   const { id } = useParams();
   const [videoData, setVideoData] = useState(null);
+  const [email, setEmail] = useState();
+  const [channelName, setChannelName] = useState();
   const [plyrInitialized, setPlyrInitialized] = useState(false);
+  const [buttonDisabled, setButtonDisabled] = useState(false);
   const videoRef = useRef(null);
+  const token = localStorage.getItem("userToken");
+
+  useEffect(() => {
+    setEmail(jwtDecode(token).email);
+  }, [token]);
+
+  useEffect(() => {
+    const checkChannel = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/checkchannel/${email}`);
+        const channel = await response.json();
+        setChannelName(channel);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    checkChannel();
+  });
 
   useEffect(() => {
     const getVideoData = async () => {
@@ -74,8 +96,14 @@ function VideoSection() {
     return <div>Video not found</div>;
   }
 
-  const { videoURL, Title, thumbnailURL, ChannelProfile, uploader } =
-    matchedVideo;
+  const {
+    videoURL,
+    Title,
+    thumbnailURL,
+    ChannelProfile,
+    uploader,
+    Description,
+  } = matchedVideo;
 
   return (
     <>
@@ -115,7 +143,12 @@ function VideoSection() {
                 </div>
                 <p className="channel-subs">10M subscribers</p>
               </div>
-              <button className="subscribe">Subscribe</button>
+              <button
+                className="subscribe"
+                disabled={uploader === channelName ? true : false}
+              >
+                Subscribe
+              </button>
             </div>
             <div className="channel-right-data">
               <div className="like-dislike">
@@ -156,7 +189,15 @@ function VideoSection() {
               </div>
             </div>
           </div>
-          <div className="description-section2"></div>
+          <div className="description-section2">
+            <div className="views-date">
+              <p>10M views</p>
+              <p>3 days ago</p>
+            </div>
+            <div className="desc-data">
+              <p style={{ marginTop: "10px" }}>{Description}</p>
+            </div>
+          </div>
         </div>
         <div className="recommended-section"></div>
       </div>

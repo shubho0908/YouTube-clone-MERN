@@ -35,14 +35,13 @@
   height: auto;
 }
 
-.spin2,
 .main-video-section2 {
   background-color: #0f0f0f;
-  height: 100vh;
+  height: 150vh;
 }
 
 .left-video-section {
-  padding-top: 100px;
+  padding-top: 90px;
   padding-left: 100px;
 }
 
@@ -200,4 +199,21 @@
 .download-btn:hover,
 .share:hover {
   background-color: #3f3f3f;
+}
+
+.views-date {
+  display: flex;
+  align-items: center;
+  width: 170px;
+  justify-content: space-between;
+}
+
+.description-section2 {
+  margin-top: 20px;
+  background-color: #272727;
+  color: white;
+  width: 1265px;
+  padding: 10px;
+  border-radius: 10px;
+  height: fit-content;
 }
