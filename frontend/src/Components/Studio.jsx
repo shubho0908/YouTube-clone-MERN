@@ -504,7 +504,7 @@ function Studio() {
                 id="videoFileInput"
                 type="file"
                 name="videoFile"
-                accept="video/*"
+                accept="video/mp4"
                 onChange={handleVideoChange}
               />
             </div>

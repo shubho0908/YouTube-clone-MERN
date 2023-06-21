@@ -1,0 +1,33 @@
+.videoframe {
+  width: 1280px;
+  height: 720px;
+}
+
+/* PLAYER CONTROLS */
+
+.plyr--red,
+.plyr__control--overlaid {
+  background: red !important;
+}
+
+.plyr--full-ui input[type="range"] {
+  color: red !important;
+}
+
+.plyr--video .plyr__control:focus-visible,
+.plyr--video,
+.plyr--video .plyr__control[aria-expanded="true"] {
+  background: none !important;
+}
+
+.plyr__control:hover {
+  background: none !important;
+}
+
+.main-video-section {
+  background-color: #0f0f0f;
+}
+.left-video-section {
+  padding-top: 100px;
+  padding-left: 100px;
+}
