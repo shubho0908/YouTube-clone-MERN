@@ -24,10 +24,18 @@
   background: none !important;
 }
 
-.main-video-section {
+.main-video-section,
+.spin2 {
   background-color: #0f0f0f;
+  height: 100vh;
 }
 .left-video-section {
   padding-top: 100px;
   padding-left: 100px;
+}
+
+.spin2 {
+  position: absolute;
+  left: 50%;
+  top: 30%;
 }

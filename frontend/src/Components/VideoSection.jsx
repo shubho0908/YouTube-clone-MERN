@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import Plyr from "plyr";
 import Navbar from "./Navbar";
 import "../Css/videoSection.css";
+import ReactLoading from "react-loading";
 import "plyr/dist/plyr.css";
 
 function VideoSection() {
@@ -39,7 +40,20 @@ function VideoSection() {
   }, [plyrInitialized, videoData]);
 
   if (!videoData) {
-    return <div>Loading...</div>;
+    return (
+      <>
+        <div className="main-video-section">
+          <div className="spin2" style={{ height: "100vh" }}>
+            <ReactLoading
+              type={"spin"}
+              color={"white"}
+              height={50}
+              width={50}
+            />
+          </div>
+        </div>
+      </>
+    );
   }
 
   const { VideoData } = videoData;
@@ -49,7 +63,7 @@ function VideoSection() {
     return <div>Video not found</div>;
   }
 
-  const { videoURL, Title } = matchedVideo;
+  const { videoURL, Title, thumbnailURL } = matchedVideo;
 
   return (
     <>
@@ -57,9 +71,15 @@ function VideoSection() {
       <div className="main-video-section">
         <div className="left-video-section">
           <div className="videoframe">
-            <video className="play-video" controls ref={videoRef}>
+            <video
+              className="play-video"
+              controls
+              ref={videoRef}
+              poster={thumbnailURL}
+            >
               <source src={videoURL} type="video/mp4" />
             </video>
+            <h4>{Title}</h4>
           </div>
         </div>
         <div className="recommended-section"></div>
