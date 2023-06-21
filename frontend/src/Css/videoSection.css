@@ -21,6 +21,7 @@
 
 .plyr {
   width: inherit;
+  height: 720px;
 }
 
 .plyr__control:hover {
@@ -31,6 +32,7 @@
 .main-video-section {
   background-color: #0f0f0f;
   height: auto;
+  display: flex;
 }
 
 .main-video-section2 {
@@ -217,5 +219,77 @@
 }
 
 .left-video-section {
-  width: 72vw;
+  width: 1280px;
+}
+
+.comments-section {
+  margin-top: 25px;
+}
+
+.total-comments {
+  color: white;
+  display: flex;
+  align-items: center;
+}
+
+.sorting {
+  display: flex;
+  align-items: center;
+  margin-left: 35px;
+}
+
+.my-comment-area {
+  display: flex;
+  align-items: center;
+  margin-top: 25px;
+}
+
+.comment-input {
+  color: white;
+  font-size: 16px;
+  width: -webkit-fill-available;
+  background-color: rgba(245, 222, 179, 0);
+  margin-left: 20px;
+  outline: none;
+  border: none;
+  padding: 5px;
+  border-bottom: 2px solid rgba(128, 128, 128, 0.506);
+}
+
+.comment-input::placeholder {
+  font-size: 16px;
+}
+
+/* RECOMMEND SECTION  */
+
+.recommended-section {
+  color: white;
+  position: relative;
+  top: 90px;
+  left: 25px;
+}
+
+.video-section2{
+  margin-top: 20px;
+}
+
+.video-data12 {
+  margin-top: 10px;
+}
+
+.recommend-thumbnails {
+  width: 200px;
+  border-radius: 8px;
+}
+
+.tag-one,
+.tag-two {
+  margin-left: 0;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.recommend-tags {
+  display: flex;
+  align-items: center;
 }

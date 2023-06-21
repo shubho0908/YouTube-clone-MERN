@@ -13,6 +13,7 @@ import ThumbDownOutlinedIcon from "@mui/icons-material/ThumbDownOutlined";
 import ReplyIcon from "@mui/icons-material/Reply";
 import { TfiDownload } from "react-icons/Tfi";
 import BookmarkAddOutlinedIcon from "@mui/icons-material/BookmarkAddOutlined";
+import SortOutlinedIcon from "@mui/icons-material/SortOutlined";
 import jwtDecode from "jwt-decode";
 
 function VideoSection() {
@@ -23,6 +24,16 @@ function VideoSection() {
   const [plyrInitialized, setPlyrInitialized] = useState(false);
   const videoRef = useRef(null);
   const token = localStorage.getItem("userToken");
+
+  //EXTRAS
+
+  const [videos, setVideos] = useState("");
+  const [thumbnails, setThumbnails] = useState();
+  const [Titles, setTitles] = useState();
+  const [Uploader, setUploader] = useState();
+  const [ProfilePic, setProfilePic] = useState();
+  const [duration, setDuration] = useState();
+  const [VideoID, setVideoID] = useState();
 
   useEffect(() => {
     setEmail(jwtDecode(token).email);
@@ -56,6 +67,34 @@ function VideoSection() {
 
     getVideoData();
   }, [id]);
+
+  useEffect(() => {
+    const getVideos = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/getvideos");
+        const {
+          videoURLs,
+          thumbnailURLs,
+          titles,
+          Uploader,
+          Profile,
+          Duration,
+          videoID,
+        } = await response.json();
+        setVideos(videoURLs);
+        setThumbnails(thumbnailURLs);
+        setTitles(titles);
+        setUploader(Uploader);
+        setProfilePic(Profile);
+        setDuration(Duration);
+        setVideoID(videoID);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
+    getVideos();
+  }, []);
 
   useEffect(() => {
     const initializePlyr = () => {
@@ -211,9 +250,55 @@ function VideoSection() {
               <p style={{ marginTop: "10px" }}>{Description}</p>
             </div>
           </div>
-          <div className="comments-section"></div>
+          <div className="comments-section">
+            <div className="total-comments">
+              <p>10 Comments</p>
+              <div className="sorting">
+                <SortOutlinedIcon
+                  fontSize="medium"
+                  style={{ color: "white" }}
+                />
+                <p style={{ marginLeft: "15px" }}>Sort by</p>
+              </div>
+            </div>
+            <div className="my-comment-area">
+              <img src={ChannelProfile} alt="channelDP" className="channelDP" />
+              <input
+                className="comment-input"
+                type="text"
+                name="myComment"
+                placeholder="Add a comment..."
+              />
+            </div>
+          </div>
         </div>
-        <div className="recommended-section"></div>
+        <div className="recommended-section">
+          <div className="recommend-tags">
+            <div className="top-tags tag-one">
+              <p>All</p>
+            </div>
+            <div className="top-tags tag-two" style={{marginLeft:"10px"}}>
+              <p>From {uploader}</p>
+            </div>
+          </div>
+          <div className="video-section2">
+            {thumbnails &&
+              thumbnails.map((element, index) => {
+                return (
+                  <div className="video-data12" key={index}>
+                    <div className="video-left-side">
+                      <img
+                        src={element}
+                        alt=""
+                        className="recommend-thumbnails"
+                      />
+                    </div>
+                    <div className="video-right-side"></div>
+                  </div>
+                );
+              })}
+          </div>
+        </div>
       </div>
     </>
   );

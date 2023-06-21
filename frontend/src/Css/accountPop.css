@@ -34,7 +34,7 @@
   display: flex;
   align-items: center;
   line-height: 45px;
-  padding-left: 35px;
+  padding-left: 28px;
   transition: all 0.15s ease;
 }
 
@@ -43,7 +43,7 @@
 }
 
 .c-sec > p {
-  margin-left: 15px;
+  margin-left: 28px;
 }
 
 .open {
