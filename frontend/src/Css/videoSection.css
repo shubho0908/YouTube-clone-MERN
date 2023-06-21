@@ -1,6 +1,5 @@
 .videoframe {
-  width: 1280px;
-  height: 720px;
+  width: inherit;
 }
 
 /* PLAYER CONTROLS */
@@ -21,8 +20,7 @@
 }
 
 .plyr {
-  width: 1280px !important;
-  height: 720px !important;
+  width: inherit;
 }
 
 .plyr__control:hover {
@@ -54,7 +52,7 @@
 .vid-title {
   margin-top: 25px;
   color: white;
-  font-size: 25px;
+  font-size: 22px;
 }
 
 .channelDP {
@@ -148,7 +146,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 1280px;
+  width: inherit;
 }
 
 .share {
@@ -212,8 +210,12 @@
   margin-top: 20px;
   background-color: #272727;
   color: white;
-  width: 1265px;
+  width: inherit;
   padding: 10px;
   border-radius: 10px;
   height: fit-content;
+}
+
+.left-video-section {
+  width: 72vw;
 }

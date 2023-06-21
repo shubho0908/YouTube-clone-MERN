@@ -17,8 +17,24 @@ function Browse() {
   const [duration, setDuration] = useState();
   const [VideoID, setVideoID] = useState();
   const [menuClicked, setMenuClicked] = useState(false);
+  const [scrollPosition, setScrollPosition] = useState(0);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentPosition =
+        window.pageYOffset || document.documentElement.scrollTop;
+
+      setScrollPosition(currentPosition);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   useEffect(() => {
     const handleMenuButtonClick = () => {
@@ -117,10 +133,8 @@ function Browse() {
             <div
               className="video-section"
               style={{
-                ...(thumbnails ? { height: "auto" } : { height: "100vh" }),
-                ...(menuClicked === true
-                  ? { marginLeft: "40px" }
-                  : { marginLeft: "80px" }),
+                height: scrollPosition > 110 ? "auto" : "100vh",
+                marginLeft: menuClicked ? "40px" : "80px",
               }}
             >
               <div

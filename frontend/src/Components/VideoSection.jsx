@@ -21,7 +21,6 @@ function VideoSection() {
   const [email, setEmail] = useState();
   const [channelName, setChannelName] = useState();
   const [plyrInitialized, setPlyrInitialized] = useState(false);
-  const [buttonDisabled, setButtonDisabled] = useState(false);
   const videoRef = useRef(null);
   const token = localStorage.getItem("userToken");
 
@@ -32,7 +31,9 @@ function VideoSection() {
   useEffect(() => {
     const checkChannel = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/checkchannel/${email}`);
+        const response = await fetch(
+          `http://localhost:3000/checkchannel/${email}`
+        );
         const channel = await response.json();
         setChannelName(channel);
       } catch (error) {
@@ -152,20 +153,32 @@ function VideoSection() {
             </div>
             <div className="channel-right-data">
               <div className="like-dislike">
-                <div className="like-data">
-                  <ThumbUpAltOutlinedIcon
-                    fontSize="medium"
-                    style={{ color: "white" }}
-                  />
-                  <p className="like-count">250K</p>
-                </div>
+                <Tooltip
+                  TransitionComponent={Zoom}
+                  title="I like this"
+                  placement="top"
+                >
+                  <div className="like-data">
+                    <ThumbUpAltOutlinedIcon
+                      fontSize="medium"
+                      style={{ color: "white" }}
+                    />
+                    <p className="like-count">250K</p>
+                  </div>
+                </Tooltip>
                 <div className="vl"></div>
-                <div className="dislike-data">
-                  <ThumbDownOutlinedIcon
-                    fontSize="medium"
-                    style={{ color: "white" }}
-                  />
-                </div>
+                <Tooltip
+                  TransitionComponent={Zoom}
+                  title="I dislike this"
+                  placement="top"
+                >
+                  <div className="dislike-data">
+                    <ThumbDownOutlinedIcon
+                      fontSize="medium"
+                      style={{ color: "white" }}
+                    />
+                  </div>
+                </Tooltip>
               </div>
               <div className="share">
                 <ReplyIcon
@@ -198,6 +211,7 @@ function VideoSection() {
               <p style={{ marginTop: "10px" }}>{Description}</p>
             </div>
           </div>
+          <div className="comments-section"></div>
         </div>
         <div className="recommended-section"></div>
       </div>
