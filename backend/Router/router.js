@@ -145,6 +145,7 @@ router.post("/publish", async (req, res) => {
       thumbnailLink,
       video_duration,
       email,
+      publishDate
     } = req.body;
 
     const user = await userData.findOne({ email });
@@ -168,6 +169,7 @@ router.post("/publish", async (req, res) => {
               Description: videoDescription,
               Tags: tags,
               videoLength: video_duration,
+              uploaded_date: publishDate
             },
           ],
         });
@@ -181,6 +183,7 @@ router.post("/publish", async (req, res) => {
           Description: videoDescription,
           Tags: tags,
           videoLength: video_duration,
+          uploaded_date: publishDate
         });
       }
 
@@ -224,6 +227,15 @@ router.get("/getvideos", async (req, res) => {
     const comments = videos.flatMap((video) =>
       video.VideoData.map((data) => data.comments)
     );
+    const views = videos.flatMap((video) =>
+      video.VideoData.map((data) => data.views)
+    );
+    const uploadDate = videos.flatMap((video) =>
+      video.VideoData.map((data) => data.uploaded_date)
+    );
+    const Likes = videos.flatMap((video) =>
+      video.VideoData.map((data) => data.likes)
+    );
 
     res.json({
       thumbnailURLs,
@@ -233,7 +245,10 @@ router.get("/getvideos", async (req, res) => {
       Profile,
       Duration,
       videoID,
-      comments
+      comments,
+      views,
+      Likes,
+      uploadDate,
     });
   } catch (error) {
     res.status(500).json({ message: "An error occurred" });

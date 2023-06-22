@@ -378,6 +378,7 @@ function Studio() {
         setLoading(true);
         // Upload the thumbnail
         const thumbnailURL = await uploadThumbnail();
+        const currentDate = new Date().toISOString();
         // Proceed with saving the data
         const data = {
           videoTitle: videoName,
@@ -387,6 +388,7 @@ function Studio() {
           thumbnailLink: thumbnailURL,
           email: email,
           video_duration: duration,
+          publishDate: currentDate,
         };
         // Send the POST request
         const response = await fetch("http://localhost:3000/publish", {

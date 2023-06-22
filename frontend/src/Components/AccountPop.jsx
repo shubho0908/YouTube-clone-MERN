@@ -10,6 +10,8 @@ import TranslateOutlinedIcon from "@mui/icons-material/TranslateOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 import DoneOutlinedIcon from "@mui/icons-material/DoneOutlined";
+import Tooltip from "@mui/material/Tooltip";
+import Zoom from "@mui/material/Zoom";
 
 function AccountPop() {
   const [name, setName] = useState("");
@@ -66,7 +68,16 @@ function AccountPop() {
           </div>
           <div className="right-part">
             <p>{name}</p>
-            <p>{email}</p>
+            <Tooltip
+              TransitionComponent={Zoom}
+              title={email}
+              placement="bottom"
+            >
+              <p>
+                {email.slice(0, 12)}
+                {email.length > 12 ? "..." : ""}
+              </p>
+            </Tooltip>
           </div>
         </div>
         <hr className="seperate" />

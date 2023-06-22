@@ -18,6 +18,9 @@ function Browse() {
   const [VideoID, setVideoID] = useState();
   const [menuClicked, setMenuClicked] = useState(false);
   const [scrollPosition, setScrollPosition] = useState(0);
+  const [VideoViews, setVideoViews] = useState(0);
+  const [Likes, setLikes] = useState(0);
+  const [publishDate, setPublishDate] = useState();
 
   const navigate = useNavigate();
 
@@ -100,6 +103,9 @@ function Browse() {
         Profile,
         Duration,
         videoID,
+        views,
+        Likes,
+        uploadDate,
       } = await response.json();
       setVideos(videoURLs);
       setThumbnails(thumbnailURLs);
@@ -108,6 +114,9 @@ function Browse() {
       setProfilePic(Profile);
       setDuration(Duration);
       setVideoID(videoID);
+      setVideoViews(views);
+      setLikes(Likes);
+      setPublishDate(uploadDate);
     } catch (error) {
       console.log(error.message);
     }
@@ -205,12 +214,47 @@ function Browse() {
                               </Tooltip>
                             </div>
                             <div className="view-time">
-                              <p className="views">1M views</p>
+                              <p className="views">
+                                {VideoViews[index] + " views"}
+                              </p>
                               <p
                                 className="upload-time"
                                 style={{ marginLeft: "4px" }}
                               >
-                                &#x2022; 5 hours ago
+                                &#x2022;{" "}
+                                {(() => {
+                                  const timeDifference =
+                                    new Date() - new Date(publishDate[index]);
+                                  const minutes = Math.floor(
+                                    timeDifference / 60000
+                                  );
+                                  const hours = Math.floor(
+                                    timeDifference / 3600000
+                                  );
+                                  const days = Math.floor(
+                                    timeDifference / 86400000
+                                  );
+                                  const weeks = Math.floor(
+                                    timeDifference / 604800000
+                                  );
+                                  const years = Math.floor(
+                                    timeDifference / 31536000000
+                                  );
+
+                                  if (minutes < 1) {
+                                    return "just now";
+                                  } else if (minutes < 60) {
+                                    return `${minutes} mins ago`;
+                                  } else if (hours < 24) {
+                                    return `${hours} hours ago`;
+                                  } else if (days < 7) {
+                                    return `${days} days ago`;
+                                  } else if (weeks < 52) {
+                                    return `${weeks} weeks ago`;
+                                  } else {
+                                    return `${years} years ago`;
+                                  }
+                                })()}
                               </p>
                             </div>
                           </div>
