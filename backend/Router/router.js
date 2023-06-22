@@ -276,4 +276,56 @@ router.get("/checkchannel/:email", async (req, res) => {
   }
 });
 
+router.post("/comments/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { comment, email } = req.body;
+
+    const video = await videodata.find({});
+
+    if (!video) {
+      return res.status(404).json({ error: "Video not found" });
+    }
+
+    const user = await userData.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const vid = video.find((vidData) =>
+      vidData.VideoData.some((data) => data._id.toString() === id)
+    );
+
+    if (!vid) {
+      return res.status(404).json({ error: "Video not found" });
+    }
+
+    const videoIndex = vid.VideoData.findIndex(
+      (data) => data._id.toString() === id
+    );
+
+    if (videoIndex === -1) {
+      return res.status(404).json({ error: "Video not found" });
+    }
+
+    const newComment = {
+      username: user.channelName,
+      user_profile: user.profilePic,
+      comment: comment,
+      time: new Date().toISOString(),
+      likes: 0,
+      replies: [],
+    };
+
+    vid.VideoData[videoIndex].comments.push(newComment);
+
+    await vid.save();
+
+    res.json(vid);
+  } catch (error) {
+    res.json(error.message);
+  }
+});
+
 module.exports = router;

@@ -1,6 +1,43 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
 
+const ReplyComment = new mongoose.Schema({
+  username: {
+    type: String,
+  },
+  user_profile: {
+    type: String,
+  },
+  comment: {
+    type: String,
+  },
+  time: {
+    type: String,
+  },
+  likes: {
+    type: Number,
+  },
+});
+
+const Comment = new mongoose.Schema({
+  username: {
+    type: String,
+  },
+  user_profile: {
+    type: String,
+  },
+  comment: {
+    type: String,
+  },
+  time: {
+    type: String,
+  },
+  likes: {
+    type: Number,
+  },
+  replies: [ReplyComment],
+});
+
 const VideoData = new mongoose.Schema({
   email: {
     type: String,
@@ -11,7 +48,6 @@ const VideoData = new mongoose.Schema({
       }
     },
   },
-
   VideoData: [
     {
       thumbnailURL: {
@@ -44,12 +80,22 @@ const VideoData = new mongoose.Schema({
       },
       videoLength: {
         type: Number,
-        required:true
+        required: true,
       },
+      views: {
+        type: Number,
+      },
+      uploaded_date: {
+        type: String,
+      },
+      likes: {
+        type: Number,
+      },
+      comments: [Comment],
     },
   ],
 });
 
-const videodata = mongoose.model("videodata", VideoData);
+const VideoDataModel = mongoose.model("VideoData", VideoData);
 
-module.exports = videodata;
+module.exports = VideoDataModel;

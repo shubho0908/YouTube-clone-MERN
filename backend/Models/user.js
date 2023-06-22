@@ -57,6 +57,16 @@ const UserData = new mongoose.Schema({
       },
     },
   ],
+  channelData: [
+    {
+      subscribers: {
+        type: Number,
+      },
+      totalVideos: {
+        type: Number,
+      },
+    },
+  ],
 });
 
 const user = mongoose.model("userData", UserData);

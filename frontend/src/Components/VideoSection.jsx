@@ -23,6 +23,8 @@ function VideoSection() {
   const [email, setEmail] = useState();
   const [channelName, setChannelName] = useState();
   const [plyrInitialized, setPlyrInitialized] = useState(false);
+  const [Display, setDisplay] = useState("none");
+  const [comment, setComment] = useState();
   const videoRef = useRef(null);
   const token = localStorage.getItem("userToken");
 
@@ -37,6 +39,7 @@ function VideoSection() {
   const [ProfilePic, setProfilePic] = useState();
   const [duration, setDuration] = useState();
   const [VideoID, setVideoID] = useState();
+  const [videoComments, setVideoComments] = useState();
 
   useEffect(() => {
     setEmail(jwtDecode(token).email);
@@ -115,6 +118,27 @@ function VideoSection() {
     }
   }, [plyrInitialized, videoData]);
 
+  const uploadComment = async () => {
+    try {
+      const data = {
+        comment,
+        email,
+      };
+      const response = await fetch(`http://localhost:3000/comments/${id}`, {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const result = await response.json();
+      console.log(result);
+      setVideoComments(result);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   if (!videoData) {
     return (
       <>
@@ -159,6 +183,7 @@ function VideoSection() {
     ChannelProfile,
     uploader,
     Description,
+    comments,
   } = matchedVideo;
 
   return (
@@ -284,8 +309,32 @@ function VideoSection() {
                 type="text"
                 name="myComment"
                 placeholder="Add a comment..."
+                onClick={() => {
+                  setDisplay((prevDisplay) =>
+                    prevDisplay === "none" ? "block" : "none"
+                  );
+                }}
+                onChange={(e) => {
+                  setComment(e.target.value);
+                }}
               />
             </div>
+            <div className="comment-btns" style={{ display: Display }}>
+              <button
+                className="cancel-comment"
+                onClick={() => {
+                  setDisplay((prevDisplay) =>
+                    prevDisplay === "none" ? "block" : "none"
+                  );
+                }}
+              >
+                Cancel
+              </button>
+              <button className="upload-comment" onClick={uploadComment}>
+                Comment
+              </button>
+            </div>
+            <div className="video-comments"></div>
           </div>
         </div>
         <div className="recommended-section">

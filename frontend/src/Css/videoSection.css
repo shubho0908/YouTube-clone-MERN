@@ -269,7 +269,7 @@
   left: 25px;
 }
 
-.video-section2{
+.video-section2 {
   margin-top: 20px;
 }
 
@@ -295,20 +295,43 @@
   align-items: center;
 }
 
-.video-right-side{
+.video-right-side {
   display: flex;
   flex-direction: column;
   margin-left: 8px;
 }
 
-.duration2{
+.duration2 {
   left: 150px;
   bottom: 32px;
   padding: 3px;
 }
 
-.recommend-uploader{
+.recommend-uploader {
   display: flex;
   margin-top: 8px;
   align-items: center;
+}
+
+.upload-comment {
+  border-radius: 20px;
+  padding-left: 18px;
+  padding-right: 18px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border: none;
+  background-color: white;
+  font-size: 15px;
+  margin-left: 25px;
+}
+
+.cancel-comment {
+  background-color: #0f0f0f00;
+  color: white;
+  border: none;
+}
+.comment-btns {
+  position: relative;
+  float: right;
+  margin-top: 15px;
 }
