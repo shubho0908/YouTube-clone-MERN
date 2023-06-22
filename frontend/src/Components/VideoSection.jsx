@@ -15,6 +15,7 @@ import { TfiDownload } from "react-icons/Tfi";
 import BookmarkAddOutlinedIcon from "@mui/icons-material/BookmarkAddOutlined";
 import SortOutlinedIcon from "@mui/icons-material/SortOutlined";
 import jwtDecode from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 
 function VideoSection() {
   const { id } = useParams();
@@ -25,9 +26,11 @@ function VideoSection() {
   const videoRef = useRef(null);
   const token = localStorage.getItem("userToken");
 
+  const navigate = useNavigate();
+
   //EXTRAS
 
-  const [videos, setVideos] = useState("");
+  const [videos, setVideos] = useState();
   const [thumbnails, setThumbnails] = useState();
   const [Titles, setTitles] = useState();
   const [Uploader, setUploader] = useState();
@@ -133,7 +136,20 @@ function VideoSection() {
   const matchedVideo = VideoData.find((item) => item._id === id);
 
   if (!matchedVideo) {
-    return <div>Video not found</div>;
+    return (
+      <>
+        <div className="main-video-section2">
+          <div className="spin2" style={{ height: "100vh" }}>
+            <ReactLoading
+              type={"spin"}
+              color={"white"}
+              height={50}
+              width={50}
+            />
+          </div>
+        </div>
+      </>
+    );
   }
 
   const {
@@ -277,7 +293,7 @@ function VideoSection() {
             <div className="top-tags tag-one">
               <p>All</p>
             </div>
-            <div className="top-tags tag-two" style={{marginLeft:"10px"}}>
+            <div className="top-tags tag-two" style={{ marginLeft: "10px" }}>
               <p>From {uploader}</p>
             </div>
           </div>
@@ -285,15 +301,63 @@ function VideoSection() {
             {thumbnails &&
               thumbnails.map((element, index) => {
                 return (
-                  <div className="video-data12" key={index}>
+                  <div
+                    className="video-data12"
+                    style={
+                      element === thumbnailURL
+                        ? { display: "none" }
+                        : { display: "flex" }
+                    }
+                    key={index}
+                    onClick={() => {
+                      navigate(`/${VideoID[index]}`);
+                      window.location.reload();
+                    }}
+                  >
                     <div className="video-left-side">
                       <img
                         src={element}
                         alt=""
                         className="recommend-thumbnails"
                       />
+                      <p className="duration duration2">
+                        {Math.floor(duration[index] / 60) +
+                          ":" +
+                          (Math.round(duration[index] % 60) < 10
+                            ? "0" + Math.round(duration[index] % 60)
+                            : Math.round(duration[index] % 60))}
+                      </p>
                     </div>
-                    <div className="video-right-side"></div>
+                    <div className="video-right-side">
+                      <p className="recommend-vid-title">{Titles[index]}</p>
+                      <div className="recommend-uploader">
+                        <p className="recommend-vid-uploader uploader">
+                          {Uploader[index]}
+                        </p>
+                        <Tooltip
+                          TransitionComponent={Zoom}
+                          title="Verified"
+                          placement="right"
+                        >
+                          <CheckCircleIcon
+                            fontSize="100px"
+                            style={{
+                              color: "rgb(138, 138, 138)",
+                              marginLeft: "4px",
+                            }}
+                          />
+                        </Tooltip>
+                      </div>
+                      <div className="view-time">
+                        <p className="views">1M views</p>
+                        <p
+                          className="upload-time"
+                          style={{ marginLeft: "4px" }}
+                        >
+                          &#x2022; 5 hours ago
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 );
               })}

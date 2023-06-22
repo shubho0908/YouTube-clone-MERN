@@ -212,7 +212,7 @@
   margin-top: 20px;
   background-color: #272727;
   color: white;
-  width: inherit;
+  width: 98%;
   padding: 10px;
   border-radius: 10px;
   height: fit-content;
@@ -265,7 +265,7 @@
 .recommended-section {
   color: white;
   position: relative;
-  top: 90px;
+  top: 100px;
   left: 25px;
 }
 
@@ -274,11 +274,12 @@
 }
 
 .video-data12 {
-  margin-top: 10px;
+  display: flex;
+  cursor: pointer;
 }
 
 .recommend-thumbnails {
-  width: 200px;
+  width: 190px;
   border-radius: 8px;
 }
 
@@ -291,5 +292,23 @@
 
 .recommend-tags {
   display: flex;
+  align-items: center;
+}
+
+.video-right-side{
+  display: flex;
+  flex-direction: column;
+  margin-left: 8px;
+}
+
+.duration2{
+  left: 150px;
+  bottom: 32px;
+  padding: 3px;
+}
+
+.recommend-uploader{
+  display: flex;
+  margin-top: 8px;
   align-items: center;
 }
