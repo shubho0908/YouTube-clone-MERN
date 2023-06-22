@@ -22,6 +22,10 @@ function Browse() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     const handleScroll = () => {
       const currentPosition =
         window.pageYOffset || document.documentElement.scrollTop;

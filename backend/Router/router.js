@@ -221,6 +221,9 @@ router.get("/getvideos", async (req, res) => {
     const videoID = videos.flatMap((video) =>
       video.VideoData.map((data) => data.id)
     );
+    const comments = videos.flatMap((video) =>
+      video.VideoData.map((data) => data.comments)
+    );
 
     res.json({
       thumbnailURLs,
@@ -230,6 +233,7 @@ router.get("/getvideos", async (req, res) => {
       Profile,
       Duration,
       videoID,
+      comments
     });
   } catch (error) {
     res.status(500).json({ message: "An error occurred" });

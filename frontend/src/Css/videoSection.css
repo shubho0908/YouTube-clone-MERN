@@ -335,3 +335,44 @@
   float: right;
   margin-top: 15px;
 }
+
+.commentDP {
+  width: 42px;
+  height: 42px;
+  object-fit: cover;
+  border-radius: 100%;
+}
+
+.video-comments {
+  margin-top: 30px;
+  font-size: 14px;
+}
+
+.comment-data {
+  color: white;
+  display: flex;
+  margin-bottom: 45px;
+}
+.comment-right-data {
+  margin-left: 20px;
+}
+.comment-row1 {
+  display: flex;
+  align-items: center;
+}
+.comment-time {
+  margin-left: 8px;
+  color: gray;
+}
+
+.main-comment {
+  margin-top: 6px;
+}
+
+.comment-interaction {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  width: 150px;
+  justify-content: space-between;
+}

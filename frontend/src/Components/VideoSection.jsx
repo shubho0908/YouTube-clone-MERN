@@ -39,15 +39,21 @@ function VideoSection() {
   const [ProfilePic, setProfilePic] = useState();
   const [duration, setDuration] = useState();
   const [VideoID, setVideoID] = useState();
-  const [videoComments, setVideoComments] = useState();
 
   useEffect(() => {
-    setEmail(jwtDecode(token).email);
+    if (token) {
+      setEmail(jwtDecode(token).email);
+    }
   }, [token]);
 
   useEffect(() => {
     const checkChannel = async () => {
       try {
+        if (!email) {
+          setChannelName(null);
+          return;
+        }
+
         const response = await fetch(
           `http://localhost:3000/checkchannel/${email}`
         );
@@ -57,8 +63,9 @@ function VideoSection() {
         console.log(error.message);
       }
     };
+
     checkChannel();
-  });
+  }, [email]);
 
   useEffect(() => {
     const getVideoData = async () => {
@@ -131,9 +138,8 @@ function VideoSection() {
           "Content-Type": "application/json",
         },
       });
-      const result = await response.json();
-      console.log(result);
-      setVideoComments(result);
+      await response.json();
+      window.location.reload();
     } catch (error) {
       console.log(error.message);
     }
@@ -311,7 +317,7 @@ function VideoSection() {
                 placeholder="Add a comment..."
                 onClick={() => {
                   setDisplay((prevDisplay) =>
-                    prevDisplay === "none" ? "block" : "none"
+                    prevDisplay === "none" ? "block" : "block"
                   );
                 }}
                 onChange={(e) => {
@@ -330,11 +336,90 @@ function VideoSection() {
               >
                 Cancel
               </button>
-              <button className="upload-comment" onClick={uploadComment}>
+              <button
+                className="upload-comment"
+                onClick={() => {
+                  if (token) {
+                    uploadComment();
+                  } else {
+                    alert("Login First");
+                  }
+                }}
+              >
                 Comment
               </button>
             </div>
-            <div className="video-comments"></div>
+
+            <div className="video-comments">
+              {comments.map((element, index) => {
+                return (
+                  <>
+                    <div className="comment-data" key={index}>
+                      <div className="comment-left-data">
+                        <img
+                          src={element.user_profile}
+                          alt="commentDP"
+                          className="commentDP"
+                        />
+                      </div>
+                      <div className="comment-right-data">
+                        <div className="comment-row1">
+                          <p>{element.username}</p>
+                          <p className="comment-time">
+                            {(() => {
+                              const timeDifference =
+                                new Date() - new Date(element.time);
+                              const minutes = Math.floor(
+                                timeDifference / 60000
+                              );
+                              const hours = Math.floor(
+                                timeDifference / 3600000
+                              );
+                              const days = Math.floor(
+                                timeDifference / 86400000
+                              );
+                              const weeks = Math.floor(
+                                timeDifference / 604800000
+                              );
+                              const years = Math.floor(
+                                timeDifference / 31536000000
+                              );
+
+                              if (minutes < 1) {
+                                return "just now";
+                              } else if (minutes < 60) {
+                                return `${minutes} mins ago`;
+                              } else if (hours < 24) {
+                                return `${hours} hours ago`;
+                              } else if (days < 7) {
+                                return `${days} days ago`;
+                              } else if (weeks < 52) {
+                                return `${weeks} weeks ago`;
+                              } else {
+                                return `${years} years ago`;
+                              }
+                            })()}
+                          </p>
+                        </div>
+                        <p className="main-comment">{element.comment}</p>
+                        <div className="comment-interaction">
+                          <ThumbUpAltOutlinedIcon
+                            fontSize="small"
+                            style={{ color: "white" }}
+                          />
+                          <p>{element.likes}</p>
+                          <ThumbDownOutlinedIcon
+                            fontSize="small"
+                            style={{ color: "white" }}
+                          />
+                          <button className="reply-btn">Reply</button>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                );
+              })}
+            </div>
           </div>
         </div>
         <div className="recommended-section">
