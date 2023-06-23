@@ -42,7 +42,6 @@ function VideoSection() {
   const [Views, SetViews] = useState();
   const [publishdate, setPublishDate] = useState();
   const [VideoLikes, setVideoLikes] = useState();
-  const [countLike, setCountLike] = useState("first");
 
   useEffect(() => {
     if (token) {
@@ -144,7 +143,9 @@ function VideoSection() {
       }
     };
 
-    getLikes();
+    const interval = setInterval(getLikes, 200);
+
+    return () => clearInterval(interval);
   }, [id]);
 
   const uploadComment = async () => {
@@ -222,7 +223,6 @@ function VideoSection() {
         `http://localhost:3000/like/${id}/${email}`,
         {
           method: "POST",
-          body: JSON.stringify({ count: countLike }),
           headers: {
             "Content-Type": "application/json",
           },
@@ -286,17 +286,7 @@ function VideoSection() {
                   title="I like this"
                   placement="top"
                 >
-                  <div
-                    className="like-data"
-                    onClick={() => {
-                      if (countLike === "first") {
-                        setCountLike("second");
-                      } else if (countLike === "second") {
-                        setCountLike("first");
-                      }
-                      likeVideo(countLike);
-                    }}
-                  >
+                  <div className="like-data" onClick={likeVideo}>
                     <ThumbUpAltOutlinedIcon
                       fontSize="medium"
                       style={{ color: "white" }}

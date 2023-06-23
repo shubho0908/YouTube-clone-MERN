@@ -377,7 +377,6 @@ router.post("/updateview/:id", async (req, res) => {
 router.post("/like/:id/:email", async (req, res) => {
   try {
     const { id } = req.params;
-    const { count } = req.body;
     const email = req.params.email;
 
     const video = await videodata.findOne({ "VideoData._id": id });
@@ -399,29 +398,38 @@ router.post("/like/:id/:email", async (req, res) => {
       return res.status(404).json({ error: "Video not found" });
     }
 
-    if (count === "first") {
-      video.VideoData[videoIndex].likes += 1;
-    } else if (count === "second") {
-      video.VideoData[videoIndex].likes -= 1;
-    }
-    await video.save();
-
     const likedData = video.VideoData[videoIndex];
 
-    user.likedVideos.push({
-      videoURL: likedData.videoURL,
-      thumbnailURL: likedData.thumbnailURL,
-      uploader: likedData.uploader,
-      ChannelProfile: likedData.ChannelProfile,
-      Title: likedData.Title,
-      videoLength: likedData.videoLength,
-      views: likedData.views,
-      uploaded_date: likedData.uploaded_date,
-    });
+    const existingLikedVideo = user.likedVideos.find(
+      (likedVideo) => likedVideo.likedVideoID === likedData._id.toString()
+    );
+
+    if (!existingLikedVideo) {
+      user.likedVideos.push({
+        videoURL: likedData.videoURL,
+        thumbnailURL: likedData.thumbnailURL,
+        uploader: likedData.uploader,
+        ChannelProfile: likedData.ChannelProfile,
+        Title: likedData.Title,
+        videoLength: likedData.videoLength,
+        views: likedData.views,
+        uploaded_date: likedData.uploaded_date,
+        likedVideoID: likedData._id,
+      });
+      video.VideoData[videoIndex].likes += 1;
+    } else {
+      user.likedVideos = user.likedVideos.filter(
+        (likedVideo) => likedVideo.likedVideoID !== likedData._id.toString()
+      );
+      video.VideoData[videoIndex].likes -= 1;
+    }
 
     await user.save();
+    await video.save();
 
-    res.json(likedData);
+    const totalLikes = video.VideoData[videoIndex].likes;
+
+    res.json(totalLikes);
   } catch (error) {
     res.json(error.message);
   }

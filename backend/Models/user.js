@@ -57,7 +57,6 @@ const UserData = new mongoose.Schema({
       },
       videoLength: {
         type: Number,
-        required: true,
       },
       views: {
         type: Number,
@@ -68,15 +67,15 @@ const UserData = new mongoose.Schema({
       },
       ChannelProfile: {
         type: String,
-        required: true,
       },
       Title: {
         type: String,
-        required: true,
       },
       uploader: {
         type: String,
-        required: true,
+      },
+      likedVideoID: {
+        type: String,
       },
     },
   ],
