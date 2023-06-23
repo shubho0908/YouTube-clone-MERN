@@ -22,6 +22,8 @@ function Browse() {
   const [Likes, setLikes] = useState(0);
   const [publishDate, setPublishDate] = useState();
 
+  const token = localStorage.getItem("userToken");
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -183,7 +185,9 @@ function Browse() {
                         key={index}
                         onClick={() => {
                           navigate(`/${VideoID[index]}`);
-                          updateViews(VideoID[index]);
+                          if (token) {
+                            updateViews(VideoID[index]);
+                          }
                         }}
                       >
                         <img

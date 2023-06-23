@@ -204,8 +204,6 @@
 .views-date {
   display: flex;
   align-items: center;
-  width: 170px;
-  justify-content: space-between;
 }
 
 .description-section2 {

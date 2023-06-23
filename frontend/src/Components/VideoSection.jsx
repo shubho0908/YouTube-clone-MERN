@@ -39,6 +39,8 @@ function VideoSection() {
   const [ProfilePic, setProfilePic] = useState();
   const [duration, setDuration] = useState();
   const [VideoID, setVideoID] = useState();
+  const [Views, SetViews] = useState();
+  const [publishdate, setPublishDate] = useState();
 
   useEffect(() => {
     if (token) {
@@ -93,6 +95,8 @@ function VideoSection() {
           Profile,
           Duration,
           videoID,
+          views,
+          uploadDate,
         } = await response.json();
         setVideos(videoURLs);
         setThumbnails(thumbnailURLs);
@@ -101,6 +105,8 @@ function VideoSection() {
         setProfilePic(Profile);
         setDuration(Duration);
         setVideoID(videoID);
+        SetViews(views);
+        setPublishDate(uploadDate);
       } catch (error) {
         console.log(error.message);
       }
@@ -190,8 +196,9 @@ function VideoSection() {
     uploader,
     Description,
     comments,
+    views,
+    uploaded_date,
   } = matchedVideo;
-
 
   return (
     <>
@@ -291,8 +298,31 @@ function VideoSection() {
           </div>
           <div className="description-section2">
             <div className="views-date">
-              <p> views</p>
-              <p>3 days ago</p>
+              <p>{views} views</p>
+              <p style={{ marginLeft: "10px" }}>
+                {(() => {
+                  const timeDifference = new Date() - new Date(uploaded_date);
+                  const minutes = Math.floor(timeDifference / 60000);
+                  const hours = Math.floor(timeDifference / 3600000);
+                  const days = Math.floor(timeDifference / 86400000);
+                  const weeks = Math.floor(timeDifference / 604800000);
+                  const years = Math.floor(timeDifference / 31536000000);
+
+                  if (minutes < 1) {
+                    return "just now";
+                  } else if (minutes < 60) {
+                    return `${minutes} mins ago`;
+                  } else if (hours < 24) {
+                    return `${hours} hours ago`;
+                  } else if (days < 7) {
+                    return `${days} days ago`;
+                  } else if (weeks < 52) {
+                    return `${weeks} weeks ago`;
+                  } else {
+                    return `${years} years ago`;
+                  }
+                })()}
+              </p>
             </div>
             <div className="desc-data">
               <p style={{ marginTop: "10px" }}>{Description}</p>
@@ -484,12 +514,39 @@ function VideoSection() {
                         </Tooltip>
                       </div>
                       <div className="view-time">
-                        <p className="views">1M views</p>
+                        <p className="views">{Views[index]} views</p>
                         <p
                           className="upload-time"
                           style={{ marginLeft: "4px" }}
                         >
-                          &#x2022; 5 hours ago
+                          &#x2022;{" "}
+                          {(() => {
+                            const timeDifference =
+                              new Date() - new Date(publishdate[index]);
+                            const minutes = Math.floor(timeDifference / 60000);
+                            const hours = Math.floor(timeDifference / 3600000);
+                            const days = Math.floor(timeDifference / 86400000);
+                            const weeks = Math.floor(
+                              timeDifference / 604800000
+                            );
+                            const years = Math.floor(
+                              timeDifference / 31536000000
+                            );
+
+                            if (minutes < 1) {
+                              return "just now";
+                            } else if (minutes < 60) {
+                              return `${minutes} mins ago`;
+                            } else if (hours < 24) {
+                              return `${hours} hours ago`;
+                            } else if (days < 7) {
+                              return `${days} days ago`;
+                            } else if (weeks < 52) {
+                              return `${weeks} weeks ago`;
+                            } else {
+                              return `${years} years ago`;
+                            }
+                          })()}
                         </p>
                       </div>
                     </div>

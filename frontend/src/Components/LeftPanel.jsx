@@ -3,7 +3,6 @@ import HomeIcon from "@mui/icons-material/Home";
 import WhatshotOutlinedIcon from "@mui/icons-material/WhatshotOutlined";
 import SubscriptionsOutlinedIcon from "@mui/icons-material/SubscriptionsOutlined";
 import VideoLibraryOutlinedIcon from "@mui/icons-material/VideoLibraryOutlined";
-import HistoryOutlinedIcon from "@mui/icons-material/HistoryOutlined";
 import WatchLaterOutlinedIcon from "@mui/icons-material/WatchLaterOutlined";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import { useEffect, useState } from "react";
@@ -61,10 +60,7 @@ function LeftPanel() {
             />
             <p>Library</p>
           </div>
-          <div className="history sec-data">
-            <HistoryOutlinedIcon fontSize="medium" style={{ color: "white" }} />
-            <p>History</p>
-          </div>
+
           <div className="watch-later sec-data">
             <WatchLaterOutlinedIcon
               fontSize="medium"
@@ -77,15 +73,12 @@ function LeftPanel() {
             <p>Liked videos</p>
           </div>
         </div>
-        
       </div>
 
       {/* SHORT HAND  */}
       <div
         className="main-left-section main-2"
-        style={
-          menuClicked === true ? { display: "flex" } : { display: "none" }
-        }
+        style={menuClicked === true ? { display: "flex" } : { display: "none" }}
       >
         <div className="first-section ">
           <div className="home sec-data sec-data2">
