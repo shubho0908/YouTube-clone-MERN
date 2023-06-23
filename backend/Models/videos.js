@@ -84,6 +84,7 @@ const VideoData = new mongoose.Schema({
       },
       views: {
         type: Number,
+        default: 0,
       },
       uploaded_date: {
         type: String,

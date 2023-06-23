@@ -39,7 +39,6 @@ function VideoSection() {
   const [ProfilePic, setProfilePic] = useState();
   const [duration, setDuration] = useState();
   const [VideoID, setVideoID] = useState();
-  let [view, setView] = useState(0);
 
   useEffect(() => {
     if (token) {
@@ -193,18 +192,13 @@ function VideoSection() {
     comments,
   } = matchedVideo;
 
-  //VIEWS INCREMENT
-
-  const incrementView = () => {
-    setView(view + 1);
-  };
 
   return (
     <>
       <Navbar />
       <div className="main-video-section">
         <div className="left-video-section2">
-          <div className="videoframe" onClick={incrementView}>
+          <div className="videoframe">
             <video
               className="play-video"
               controls
@@ -297,7 +291,7 @@ function VideoSection() {
           </div>
           <div className="description-section2">
             <div className="views-date">
-              <p>{view} views</p>
+              <p> views</p>
               <p>3 days ago</p>
             </div>
             <div className="desc-data">

@@ -18,7 +18,7 @@ function Browse() {
   const [VideoID, setVideoID] = useState();
   const [menuClicked, setMenuClicked] = useState(false);
   const [scrollPosition, setScrollPosition] = useState(0);
-  const [VideoViews, setVideoViews] = useState(0);
+  const [VideoViews, setVideoViews] = useState();
   const [Likes, setLikes] = useState(0);
   const [publishDate, setPublishDate] = useState();
 
@@ -122,6 +122,23 @@ function Browse() {
     }
   };
 
+  //UPDATE VIEWS
+
+  const updateViews = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:3000/updateview/${id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const result = await response.json();
+      console.log(result);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   return (
     <>
       <Navbar />
@@ -164,7 +181,10 @@ function Browse() {
                       <div
                         className="video-data"
                         key={index}
-                        onClick={() => navigate(`/${VideoID[index]}`)}
+                        onClick={() => {
+                          navigate(`/${VideoID[index]}`);
+                          updateViews(VideoID[index]);
+                        }}
                       >
                         <img
                           style={{ width: "330px", borderRadius: "10px" }}

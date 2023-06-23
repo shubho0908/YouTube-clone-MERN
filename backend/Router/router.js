@@ -145,7 +145,7 @@ router.post("/publish", async (req, res) => {
       thumbnailLink,
       video_duration,
       email,
-      publishDate
+      publishDate,
     } = req.body;
 
     const user = await userData.findOne({ email });
@@ -169,7 +169,7 @@ router.post("/publish", async (req, res) => {
               Description: videoDescription,
               Tags: tags,
               videoLength: video_duration,
-              uploaded_date: publishDate
+              uploaded_date: publishDate,
             },
           ],
         });
@@ -183,7 +183,7 @@ router.post("/publish", async (req, res) => {
           Description: videoDescription,
           Tags: tags,
           videoLength: video_duration,
-          uploaded_date: publishDate
+          uploaded_date: publishDate,
         });
       }
 
@@ -342,6 +342,33 @@ router.post("/comments/:id", async (req, res) => {
     await vid.save();
 
     res.json(vid);
+  } catch (error) {
+    res.json(error.message);
+  }
+});
+
+router.post("/updateview/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const video = await videodata.findOne({ "VideoData._id": id });
+
+    if (!video) {
+      return res.status(404).json({ error: "Video not found" });
+    }
+
+    const videoIndex = video.VideoData.findIndex(
+      (data) => data._id.toString() === id
+    );
+
+    if (videoIndex === -1) {
+      return res.status(404).json({ error: "Video not found" });
+    }
+
+    video.VideoData[videoIndex].views += 1;
+    await video.save();
+
+    res.json(video);
   } catch (error) {
     res.json(error.message);
   }
