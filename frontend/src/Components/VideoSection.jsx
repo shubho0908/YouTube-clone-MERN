@@ -41,6 +41,8 @@ function VideoSection() {
   const [VideoID, setVideoID] = useState();
   const [Views, SetViews] = useState();
   const [publishdate, setPublishDate] = useState();
+  const [VideoLikes, setVideoLikes] = useState();
+  const [countLike, setCountLike] = useState("first");
 
   useEffect(() => {
     if (token) {
@@ -131,6 +133,20 @@ function VideoSection() {
     }
   }, [plyrInitialized, videoData]);
 
+  useEffect(() => {
+    const getLikes = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/getlike/${id}`);
+        const result = await response.json();
+        setVideoLikes(result);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
+    getLikes();
+  }, [id]);
+
   const uploadComment = async () => {
     try {
       const data = {
@@ -200,6 +216,24 @@ function VideoSection() {
     uploaded_date,
   } = matchedVideo;
 
+  const likeVideo = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/like/${id}/${email}`,
+        {
+          method: "POST",
+          body: JSON.stringify({ count: countLike }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      await response.json();
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   return (
     <>
       <Navbar />
@@ -252,12 +286,22 @@ function VideoSection() {
                   title="I like this"
                   placement="top"
                 >
-                  <div className="like-data">
+                  <div
+                    className="like-data"
+                    onClick={() => {
+                      if (countLike === "first") {
+                        setCountLike("second");
+                      } else if (countLike === "second") {
+                        setCountLike("first");
+                      }
+                      likeVideo(countLike);
+                    }}
+                  >
                     <ThumbUpAltOutlinedIcon
                       fontSize="medium"
                       style={{ color: "white" }}
                     />
-                    <p className="like-count">250K</p>
+                    <p className="like-count">{VideoLikes}</p>
                   </div>
                 </Tooltip>
                 <div className="vl"></div>
@@ -298,7 +342,16 @@ function VideoSection() {
           </div>
           <div className="description-section2">
             <div className="views-date">
-              <p>{views} views</p>
+              <p>
+                {views >= 1e9
+                  ? `${(views / 1e9).toFixed(1)}B`
+                  : views >= 1e6
+                  ? `${(views / 1e6).toFixed(1)}M`
+                  : views >= 1e3
+                  ? `${(views / 1e3).toFixed(1)}K`
+                  : views}{" "}
+                views
+              </p>
               <p style={{ marginLeft: "10px" }}>
                 {(() => {
                   const timeDifference = new Date() - new Date(uploaded_date);
@@ -514,7 +567,16 @@ function VideoSection() {
                         </Tooltip>
                       </div>
                       <div className="view-time">
-                        <p className="views">{Views[index]} views</p>
+                        <p className="views">
+                          {Views[index] >= 1e9
+                            ? `${(Views[index] / 1e9).toFixed(1)}B`
+                            : Views[index] >= 1e6
+                            ? `${(Views[index] / 1e6).toFixed(1)}M`
+                            : Views[index] >= 1e3
+                            ? `${(Views[index] / 1e3).toFixed(1)}K`
+                            : Views[index]}{" "}
+                          views
+                        </p>
                         <p
                           className="upload-time"
                           style={{ marginLeft: "4px" }}

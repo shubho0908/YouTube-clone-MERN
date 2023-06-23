@@ -52,8 +52,31 @@ const UserData = new mongoose.Schema({
       videoURL: {
         type: String,
       },
-      thumnailURL: {
+      thumbnailURL: {
         type: String,
+      },
+      videoLength: {
+        type: Number,
+        required: true,
+      },
+      views: {
+        type: Number,
+        default: 0,
+      },
+      uploaded_date: {
+        type: String,
+      },
+      ChannelProfile: {
+        type: String,
+        required: true,
+      },
+      Title: {
+        type: String,
+        required: true,
+      },
+      uploader: {
+        type: String,
+        required: true,
       },
     },
   ],

@@ -374,4 +374,83 @@ router.post("/updateview/:id", async (req, res) => {
   }
 });
 
+router.post("/like/:id/:email", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { count } = req.body;
+    const email = req.params.email;
+
+    const video = await videodata.findOne({ "VideoData._id": id });
+    const user = await userData.findOne({ email });
+
+    if (!video) {
+      return res.status(404).json({ error: "Video not found" });
+    }
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const videoIndex = video.VideoData.findIndex(
+      (data) => data._id.toString() === id
+    );
+
+    if (videoIndex === -1) {
+      return res.status(404).json({ error: "Video not found" });
+    }
+
+    if (count === "first") {
+      video.VideoData[videoIndex].likes += 1;
+    } else if (count === "second") {
+      video.VideoData[videoIndex].likes -= 1;
+    }
+    await video.save();
+
+    const likedData = video.VideoData[videoIndex];
+
+    user.likedVideos.push({
+      videoURL: likedData.videoURL,
+      thumbnailURL: likedData.thumbnailURL,
+      uploader: likedData.uploader,
+      ChannelProfile: likedData.ChannelProfile,
+      Title: likedData.Title,
+      videoLength: likedData.videoLength,
+      views: likedData.views,
+      uploaded_date: likedData.uploaded_date,
+    });
+
+    await user.save();
+
+    res.json(likedData);
+  } catch (error) {
+    res.json(error.message);
+  }
+});
+
+router.get("/getlike/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const video = await videodata.findOne({ "VideoData._id": id });
+
+    if (!video) {
+      return res.status(404).json({ error: "Video not found" });
+    }
+
+    const videoIndex = video.VideoData.findIndex(
+      (data) => data._id.toString() === id
+    );
+
+    if (videoIndex === -1) {
+      return res.status(404).json({ error: "Video not found" });
+    }
+
+    const likes = video.VideoData[videoIndex].likes;
+
+    res.json(likes);
+  } catch (error) {
+    res.json(error.message);
+  }
+});
+
 module.exports = router;

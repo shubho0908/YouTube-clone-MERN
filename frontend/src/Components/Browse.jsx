@@ -19,7 +19,6 @@ function Browse() {
   const [menuClicked, setMenuClicked] = useState(false);
   const [scrollPosition, setScrollPosition] = useState(0);
   const [VideoViews, setVideoViews] = useState();
-  const [Likes, setLikes] = useState(0);
   const [publishDate, setPublishDate] = useState();
 
   const token = localStorage.getItem("userToken");
@@ -106,7 +105,6 @@ function Browse() {
         Duration,
         videoID,
         views,
-        Likes,
         uploadDate,
       } = await response.json();
       setVideos(videoURLs);
@@ -117,7 +115,6 @@ function Browse() {
       setDuration(Duration);
       setVideoID(videoID);
       setVideoViews(views);
-      setLikes(Likes);
       setPublishDate(uploadDate);
     } catch (error) {
       console.log(error.message);
@@ -239,7 +236,14 @@ function Browse() {
                             </div>
                             <div className="view-time">
                               <p className="views">
-                                {VideoViews[index] + " views"}
+                                {VideoViews[index] >= 1e9
+                                  ? `${(VideoViews[index] / 1e9).toFixed(1)}B`
+                                  : VideoViews[index] >= 1e6
+                                  ? `${(VideoViews[index] / 1e6).toFixed(1)}M`
+                                  : VideoViews[index] >= 1e3
+                                  ? `${(VideoViews[index] / 1e3).toFixed(1)}K`
+                                  : VideoViews[index]}{" "}
+                                views
                               </p>
                               <p
                                 className="upload-time"

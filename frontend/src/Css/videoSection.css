@@ -211,9 +211,13 @@
   background-color: #272727;
   color: white;
   width: 98%;
-  padding: 10px;
+  padding: 15px;
   border-radius: 10px;
   height: fit-content;
+}
+
+.desc-data{
+  text-align: justify;
 }
 
 .left-video-section2 {
@@ -296,7 +300,8 @@
 .video-right-side {
   display: flex;
   flex-direction: column;
-  margin-left: 8px;
+  margin-left: 12px;
+  width: 280px;
 }
 
 .duration2 {

@@ -127,7 +127,13 @@ function AccountPop() {
             />
             <p>Language: English</p>
           </div>
-          <div className="exitout c-sec">
+          <div
+            className="exitout c-sec"
+            onClick={() => {
+              localStorage.removeItem("userToken");
+              window.location.reload();
+            }}
+          >
             <LogoutOutlinedIcon fontSize="medium" style={{ color: "white" }} />
             <p>Sign Out</p>
           </div>
