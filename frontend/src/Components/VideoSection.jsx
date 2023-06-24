@@ -44,6 +44,7 @@ function VideoSection() {
   const [publishdate, setPublishDate] = useState();
   const [VideoLikes, setVideoLikes] = useState();
   const [isLiked, setIsLiked] = useState();
+  const [IsCommentLiked, setIsCommentLiked] = useState();
 
   useEffect(() => {
     if (token) {
@@ -179,6 +180,32 @@ function VideoSection() {
     };
   }, [email, id]);
 
+  useEffect(() => {
+    const getLikeComments = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:3000/likecomment/${email}`
+        );
+        const result = await response.json();
+        if (result.length === 0) {
+          setIsCommentLiked(false);
+        } else {
+          setIsCommentLiked(true);
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
+    const interval = setInterval(getLikeComments, 100);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [email]);
+
+  //POST REQUESTS
+
   const uploadComment = async () => {
     try {
       const data = {
@@ -260,6 +287,24 @@ function VideoSection() {
         }
       );
       await response.json();
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const LikeComment = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/likecomment/${id}/${email}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      await response.json();
+      1;
     } catch (error) {
       console.log(error.message);
     }
@@ -412,7 +457,10 @@ function VideoSection() {
           </div>
           <div className="comments-section">
             <div className="total-comments">
-              <p>10 Comments</p>
+              <p>
+                {comments && comments.length}{" "}
+                {comments && comments.length > 1 ? "Comments" : "Comment"}
+              </p>
               <div className="sorting">
                 <SortOutlinedIcon
                   fontSize="medium"
@@ -516,16 +564,34 @@ function VideoSection() {
                         </div>
                         <p className="main-comment">{element.comment}</p>
                         <div className="comment-interaction">
-                          <ThumbUpAltOutlinedIcon
-                            fontSize="small"
-                            style={{ color: "white" }}
-                          />
-                          <p>{element.likes}</p>
+                          {IsCommentLiked === true ? (
+                            <ThumbUpIcon
+                              fontSize="small"
+                              style={{ color: "white" }}
+                              onClick={LikeComment}
+                            />
+                          ) : (
+                            <ThumbUpAltOutlinedIcon
+                              fontSize="small"
+                              style={{ color: "white" }}
+                              onClick={LikeComment}
+                            />
+                          )}
+                          <p style={{ marginLeft: "16px" }}>{element.likes}</p>
                           <ThumbDownOutlinedIcon
                             fontSize="small"
-                            style={{ color: "white" }}
+                            style={{ color: "white", marginLeft: "16px" }}
                           />
-                          <button className="reply-btn">Reply</button>
+                          {element.user_email === email ? (
+                            <button
+                              className="delete-comment-btn"
+                              style={{ marginLeft: "25px" }}
+                            >
+                              Delete
+                            </button>
+                          ) : (
+                            ""
+                          )}
                         </div>
                       </div>
                     </div>

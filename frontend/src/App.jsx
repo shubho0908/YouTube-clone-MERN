@@ -13,7 +13,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Browse />} />
           <Route path="/studio" element={token ? <Studio /> : <Error />} />
-          <Route path="/:id" element={<VideoSection />} />
+          <Route path="/video/:id" element={<VideoSection />} />
         </Routes>
       </BrowserRouter>
     </>

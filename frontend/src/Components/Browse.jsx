@@ -181,7 +181,7 @@ function Browse() {
                         className="video-data"
                         key={index}
                         onClick={() => {
-                          navigate(`/${VideoID[index]}`);
+                          navigate(`/video/${VideoID[index]}`);
                           window.location.reload();
                           if (token) {
                             updateViews(VideoID[index]);

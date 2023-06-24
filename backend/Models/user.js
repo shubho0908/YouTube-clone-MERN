@@ -79,6 +79,13 @@ const UserData = new mongoose.Schema({
       },
     },
   ],
+  likedComments: [
+    {
+      comment_ID: {
+        type: String,
+      },
+    },
+  ],
   channelData: [
     {
       subscribers: {

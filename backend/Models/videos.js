@@ -1,24 +1,6 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
 
-const ReplyComment = new mongoose.Schema({
-  username: {
-    type: String,
-  },
-  user_profile: {
-    type: String,
-  },
-  comment: {
-    type: String,
-  },
-  time: {
-    type: String,
-  },
-  likes: {
-    type: Number,
-  },
-});
-
 const Comment = new mongoose.Schema({
   username: {
     type: String,
@@ -35,7 +17,9 @@ const Comment = new mongoose.Schema({
   likes: {
     type: Number,
   },
-  replies: [ReplyComment],
+  user_email: {
+    type: String,
+  },
 });
 
 const VideoData = new mongoose.Schema({
