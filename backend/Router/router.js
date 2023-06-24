@@ -426,10 +426,6 @@ router.post("/like/:id/:email", async (req, res) => {
 
     await user.save();
     await video.save();
-
-    const totalLikes = video.VideoData[videoIndex].likes;
-
-    res.json(totalLikes);
   } catch (error) {
     res.json(error.message);
   }
@@ -444,7 +440,6 @@ router.get("/getlike/:id", async (req, res) => {
     if (!video) {
       return res.status(404).json({ error: "Video not found" });
     }
-
     const videoIndex = video.VideoData.findIndex(
       (data) => data._id.toString() === id
     );
@@ -456,6 +451,42 @@ router.get("/getlike/:id", async (req, res) => {
     const likes = video.VideoData[videoIndex].likes;
 
     res.json(likes);
+  } catch (error) {
+    res.json(error.message);
+  }
+});
+
+router.get("/getuserlikes/:id/:email", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const email = req.params.email;
+
+    const video = await videodata.findOne({ "VideoData._id": id });
+    const user = await userData.findOne({ email });
+
+    if (!video) {
+      return res.status(404).json({ error: "Video not found" });
+    }
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const videoIndex = video.VideoData.findIndex(
+      (data) => data._id.toString() === id
+    );
+
+    if (videoIndex === -1) {
+      return res.status(404).json({ error: "Video not found" });
+    }
+
+    const likedData = video.VideoData[videoIndex];
+
+    const existingLikedVideo = user.likedVideos.find(
+      (likedVideo) => likedVideo.likedVideoID === likedData._id.toString()
+    );
+
+    res.json({existingLikedVideo});
   } catch (error) {
     res.json(error.message);
   }

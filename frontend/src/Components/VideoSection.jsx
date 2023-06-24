@@ -9,6 +9,7 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
 import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbDownOutlinedIcon from "@mui/icons-material/ThumbDownOutlined";
 import ReplyIcon from "@mui/icons-material/Reply";
 import { TfiDownload } from "react-icons/Tfi";
@@ -42,6 +43,7 @@ function VideoSection() {
   const [Views, SetViews] = useState();
   const [publishdate, setPublishDate] = useState();
   const [VideoLikes, setVideoLikes] = useState();
+  const [isLiked, setIsLiked] = useState();
 
   useEffect(() => {
     if (token) {
@@ -135,9 +137,14 @@ function VideoSection() {
   useEffect(() => {
     const getLikes = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/getlike/${id}`);
-        const result = await response.json();
-        setVideoLikes(result);
+        const response = await fetch(`http://localhost:3000/getlike/${id}/`);
+        const likes = await response.json();
+        setVideoLikes(likes);
+        // if (!existingLikedVideo) {
+        //   setIsLiked(false);
+        // } else {
+        //   setIsLiked(true);
+        // }
       } catch (error) {
         console.log(error.message);
       }
@@ -147,6 +154,30 @@ function VideoSection() {
 
     return () => clearInterval(interval);
   }, [id]);
+
+  useEffect(() => {
+    const LikeExists = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:3000/getuserlikes/${id}/${email}`
+        );
+        const { existingLikedVideo } = await response.json();
+        if (!existingLikedVideo) {
+          setIsLiked(false);
+        } else {
+          setIsLiked(true);
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
+    const interval = setInterval(LikeExists, 100);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [email, id]);
 
   const uploadComment = async () => {
     try {
@@ -287,10 +318,18 @@ function VideoSection() {
                   placement="top"
                 >
                   <div className="like-data" onClick={likeVideo}>
-                    <ThumbUpAltOutlinedIcon
-                      fontSize="medium"
-                      style={{ color: "white" }}
-                    />
+                    {isLiked === true ? (
+                      <ThumbUpIcon
+                        fontSize="medium"
+                        style={{ color: "white" }}
+                      />
+                    ) : (
+                      <ThumbUpAltOutlinedIcon
+                        fontSize="medium"
+                        style={{ color: "white" }}
+                      />
+                    )}
+
                     <p className="like-count">{VideoLikes}</p>
                   </div>
                 </Tooltip>

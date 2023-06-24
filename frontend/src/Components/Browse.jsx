@@ -182,6 +182,7 @@ function Browse() {
                         key={index}
                         onClick={() => {
                           navigate(`/${VideoID[index]}`);
+                          window.location.reload();
                           if (token) {
                             updateViews(VideoID[index]);
                           }
