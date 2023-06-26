@@ -39,7 +39,6 @@ function VideoSection() {
   const [thumbnails, setThumbnails] = useState();
   const [Titles, setTitles] = useState();
   const [Uploader, setUploader] = useState();
-  const [ProfilePic, setProfilePic] = useState();
   const [duration, setDuration] = useState();
   const [VideoID, setVideoID] = useState();
   const [Views, SetViews] = useState();
@@ -47,6 +46,9 @@ function VideoSection() {
   const [VideoLikes, setVideoLikes] = useState();
   const [CommentLikes, setCommentLikes] = useState();
   const [isLiked, setIsLiked] = useState();
+  
+  //Signup user Profile Pic
+  const [userProfile, setUserProfile] = useState()
 
   useEffect(() => {
     if (token) {
@@ -81,8 +83,9 @@ function VideoSection() {
         const response = await fetch(
           `http://localhost:3000/getchannel/${email}`
         );
-        const { channel } = await response.json();
+        const { channel, profile } = await response.json();
         setisChannel(channel);
+        setUserProfile(profile)
       } catch (error) {
         console.log(error.message);
       }
@@ -113,7 +116,6 @@ function VideoSection() {
           thumbnailURLs,
           titles,
           Uploader,
-          Profile,
           Duration,
           videoID,
           views,
@@ -123,7 +125,6 @@ function VideoSection() {
         setThumbnails(thumbnailURLs);
         setTitles(titles);
         setUploader(Uploader);
-        setProfilePic(Profile);
         setDuration(Duration);
         setVideoID(videoID);
         SetViews(views);
@@ -200,6 +201,7 @@ function VideoSection() {
         );
         const result = await response.json();
         setCommentLikes(result);
+        console.log(result);
       } catch (error) {
         console.log(error.message);
       }
@@ -388,7 +390,7 @@ function VideoSection() {
                   placement="top"
                 >
                   <div className="like-data" onClick={likeVideo}>
-                    {isLiked === true ? (
+                    {isLiked === true && token ? (
                       <ThumbUpIcon
                         fontSize="medium"
                         style={{ color: "white" }}
@@ -496,7 +498,7 @@ function VideoSection() {
             </div>
             <div className="my-comment-area">
               <img
-                src={comments.user_profile ? comments.user_profile : avatar}
+                src={userProfile ? userProfile : avatar}
                 alt="channelDP"
                 className="channelDP"
               />

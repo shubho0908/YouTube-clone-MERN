@@ -116,28 +116,27 @@ Comments.post(
   }
 );
 
-Comments.get("/likecomment/:email", async (req, res) => {
-  try {
-    const email = req.params.email;
-    const user = await userData.findOne({  });
+// Comments.get("/likecomment/:email", async (req, res) => {
+//   try {
+//     const user = await userData.findOne({});
 
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
-    }
+//     if (!user) {
+//       return res.status(404).json({ error: "User not found" });
+//     }
 
-    const userLikedComment = user.likedComments;
+//     const userLikedComment = user.likedComments;
 
-    res.json(userLikedComment);
-  } catch (error) {
-    res.json(error.message);
-  }
-});
+//     res.json(userLikedComment);
+//   } catch (error) {
+//     res.json(error.message);
+//   }
+// });
 
 Comments.get("/likecomment/:videoId/:email", async (req, res) => {
   try {
     const { videoId, email } = req.params;
     const video = await videodata.findOne({ "VideoData._id": videoId });
-    const user = await userData.findOne({  });
+    const user = await userData.findOne({});
 
     if (!user) {
       return res.status(404).json({ error: "User not found" });
