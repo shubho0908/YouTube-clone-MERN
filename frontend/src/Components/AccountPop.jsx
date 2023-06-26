@@ -2,6 +2,7 @@ import jwtDecode from "jwt-decode";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../Css/accountPop.css";
+import avatar from "../img/avatar.png";
 import AccountBoxOutlinedIcon from "@mui/icons-material/AccountBoxOutlined";
 import OndemandVideoOutlinedIcon from "@mui/icons-material/OndemandVideoOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
@@ -64,7 +65,11 @@ function AccountPop() {
       >
         <div className="user-section">
           <div className="left-part">
-            <img src={profile} alt="channelIMG" className="channelIMG" />
+            <img
+              src={profile ? profile : avatar}
+              alt="channelIMG"
+              className="channelIMG"
+            />
           </div>
           <div className="right-part">
             <p>{name}</p>

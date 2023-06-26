@@ -57,65 +57,69 @@ Comments.post("/comments/:id", async (req, res) => {
   }
 });
 
-Comments.post("/likecomment/:videoId/:commentIndex/:email", async (req, res) => {
-  try {
-    const { videoId, commentIndex, email } = req.params;
+Comments.post(
+  "/likecomment/:videoId/:commentIndex/:email",
+  async (req, res) => {
+    try {
+      const { videoId, commentIndex, email } = req.params;
 
-    const video = await videodata.findOne({ "VideoData._id": videoId });
-    const user = await userData.findOne({ email });
+      const video = await videodata.findOne({ "VideoData._id": videoId });
+      const user = await userData.findOne({ email });
 
-    if (!video) {
-      return res.status(404).json({ error: "Video not found" });
-    }
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
-    }
+      if (!video) {
+        return res.status(404).json({ error: "Video not found" });
+      }
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
 
-    const videoIndex = video.VideoData.findIndex((data) => data._id.toString() === videoId);
-
-    if (videoIndex === -1) {
-      return res.status(404).json({ error: "Video not found" });
-    }
-
-    const comments = video.VideoData[videoIndex].comments;
-
-    if (commentIndex < 0 || commentIndex >= comments.length) {
-      return res.status(404).json({ error: "Comment not found" });
-    }
-
-    const commentID = comments[commentIndex]._id.toString();
-    const userLikedComment = user.likedComments;
-
-    if (!userLikedComment) {
-      user.likedComments = [{ comment_ID: commentID }];
-      comments[commentIndex].likes += 1;
-    } else {
-      const likedCommentIndex = userLikedComment.findIndex(
-        (likedComment) => likedComment.comment_ID === commentID
+      const videoIndex = video.VideoData.findIndex(
+        (data) => data._id.toString() === videoId
       );
 
-      if (likedCommentIndex === -1) {
-        user.likedComments.push({ comment_ID: commentID });
+      if (videoIndex === -1) {
+        return res.status(404).json({ error: "Video not found" });
+      }
+
+      const comments = video.VideoData[videoIndex].comments;
+
+      if (commentIndex < 0 || commentIndex >= comments.length) {
+        return res.status(404).json({ error: "Comment not found" });
+      }
+
+      const commentID = comments[commentIndex]._id.toString();
+      const userLikedComment = user.likedComments;
+
+      if (!userLikedComment) {
+        user.likedComments = [{ comment_ID: commentID }];
         comments[commentIndex].likes += 1;
       } else {
-        user.likedComments.splice(likedCommentIndex, 1);
-        comments[commentIndex].likes -= 1;
+        const likedCommentIndex = userLikedComment.findIndex(
+          (likedComment) => likedComment.comment_ID === commentID
+        );
+
+        if (likedCommentIndex === -1) {
+          user.likedComments.push({ comment_ID: commentID });
+          comments[commentIndex].likes += 1;
+        } else {
+          user.likedComments.splice(likedCommentIndex, 1);
+          comments[commentIndex].likes -= 1;
+        }
       }
+
+      await user.save();
+      await video.save();
+      res.status(200).json({ message: "Comment liked successfully" });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
     }
-
-    await user.save();
-    await video.save();
-    res.status(200).json({ message: "Comment liked successfully" });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
   }
-});
-
+);
 
 Comments.get("/likecomment/:email", async (req, res) => {
   try {
     const email = req.params.email;
-    const user = await userData.findOne({ email });
+    const user = await userData.findOne({  });
 
     if (!user) {
       return res.status(404).json({ error: "User not found" });
@@ -133,7 +137,7 @@ Comments.get("/likecomment/:videoId/:email", async (req, res) => {
   try {
     const { videoId, email } = req.params;
     const video = await videodata.findOne({ "VideoData._id": videoId });
-    const user = await userData.findOne({ email });
+    const user = await userData.findOne({  });
 
     if (!user) {
       return res.status(404).json({ error: "User not found" });
@@ -156,5 +160,58 @@ Comments.get("/likecomment/:videoId/:email", async (req, res) => {
     res.json(error.message);
   }
 });
+
+Comments.post(
+  "/deletecomment/:videoId/:commentIndex/:email",
+  async (req, res) => {
+    try {
+      const { videoId, commentIndex, email } = req.params;
+
+      const video = await videodata.findOne({ "VideoData._id": videoId });
+      const user = await userData.findOne({ email });
+
+      if (!video) {
+        return res.status(404).json({ error: "Video not found" });
+      }
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+
+      const videoIndex = video.VideoData.findIndex(
+        (data) => data._id.toString() === videoId
+      );
+
+      if (videoIndex === -1) {
+        return res.status(404).json({ error: "Video not found" });
+      }
+
+      const comments = video.VideoData[videoIndex].comments;
+
+      if (commentIndex < 0 || commentIndex >= comments.length) {
+        return res.status(404).json({ error: "Comment not found" });
+      }
+
+      const commentID = comments[commentIndex]._id.toString();
+
+      const existingCommentIndex = comments.findIndex(
+        (comment) => comment._id.toString() === commentID
+      );
+
+      if (existingCommentIndex !== -1) {
+        // Remove the comment from the comments array
+        comments.splice(existingCommentIndex, 1);
+
+        // Save the updated video document
+        await video.save();
+
+        res.json({ message: "Comment deleted successfully" });
+      } else {
+        return res.status(404).json({ error: "Comment not found" });
+      }
+    } catch (error) {
+      res.json(error.message);
+    }
+  }
+);
 
 module.exports = Comments;

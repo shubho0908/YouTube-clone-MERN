@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import Plyr from "plyr";
+import avatar from "../img/avatar.png";
 import Navbar from "./Navbar";
 import "../Css/videoSection.css";
 import ReactLoading from "react-loading";
@@ -26,6 +27,7 @@ function VideoSection() {
   const [plyrInitialized, setPlyrInitialized] = useState(false);
   const [Display, setDisplay] = useState("none");
   const [comment, setComment] = useState();
+  const [isChannel, setisChannel] = useState();
   const videoRef = useRef(null);
   const token = localStorage.getItem("userToken");
 
@@ -45,7 +47,6 @@ function VideoSection() {
   const [VideoLikes, setVideoLikes] = useState();
   const [CommentLikes, setCommentLikes] = useState();
   const [isLiked, setIsLiked] = useState();
-  const [IsCommentLiked, setIsCommentLiked] = useState();
 
   useEffect(() => {
     if (token) {
@@ -72,6 +73,21 @@ function VideoSection() {
     };
 
     checkChannel();
+  }, [email]);
+
+  useEffect(() => {
+    const getChannel = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:3000/getchannel/${email}`
+        );
+        const { channel } = await response.json();
+        setisChannel(channel);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    getChannel();
   }, [email]);
 
   useEffect(() => {
@@ -175,30 +191,6 @@ function VideoSection() {
       clearInterval(interval);
     };
   }, [email, id]);
-
-  useEffect(() => {
-    const getLikeComments = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:3000/likecomment/${email}`
-        );
-        const result = await response.json();
-        if (result.length === 0) {
-          setIsCommentLiked(false);
-        } else {
-          setIsCommentLiked(true);
-        }
-      } catch (error) {
-        console.log(error.message);
-      }
-    };
-
-    const interval = setInterval(getLikeComments, 100);
-
-    return () => {
-      clearInterval(interval);
-    };
-  }, [email]);
 
   useEffect(() => {
     const CommentLikes = async () => {
@@ -320,7 +312,24 @@ function VideoSection() {
         }
       );
       await response.json();
-      console.log(commentIndex);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const DeleteComment = async (commentIndex) => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/deletecomment/${id}/${commentIndex}/${email}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      await response.json();
+      window.location.reload();
     } catch (error) {
       console.log(error.message);
     }
@@ -486,7 +495,11 @@ function VideoSection() {
               </div>
             </div>
             <div className="my-comment-area">
-              <img src={ChannelProfile} alt="channelDP" className="channelDP" />
+              <img
+                src={comments.user_profile ? comments.user_profile : avatar}
+                alt="channelDP"
+                className="channelDP"
+              />
               <input
                 className="comment-input"
                 type="text"
@@ -516,8 +529,10 @@ function VideoSection() {
               <button
                 className="upload-comment"
                 onClick={() => {
-                  if (token) {
+                  if (token && isChannel === true) {
                     uploadComment();
+                  } else if (token && isChannel !== true) {
+                    alert("Create a channel first");
                   } else {
                     alert("Login First");
                   }
@@ -580,19 +595,11 @@ function VideoSection() {
                         </div>
                         <p className="main-comment">{element.comment}</p>
                         <div className="comment-interaction">
-                          {IsCommentLiked === true ? (
-                            <ThumbUpIcon
-                              fontSize="small"
-                              style={{ color: "white" }}
-                              onClick={() => LikeComment(index)}
-                            />
-                          ) : (
-                            <ThumbUpAltOutlinedIcon
-                              fontSize="small"
-                              style={{ color: "white" }}
-                              onClick={() => LikeComment(index)}
-                            />
-                          )}
+                          <ThumbUpAltOutlinedIcon
+                            fontSize="small"
+                            style={{ color: "white" }}
+                            onClick={() => LikeComment(index)}
+                          />
                           <p style={{ marginLeft: "16px" }}>
                             {CommentLikes && CommentLikes[index].likes}
                           </p>
@@ -604,6 +611,7 @@ function VideoSection() {
                             <button
                               className="delete-comment-btn"
                               style={{ marginLeft: "25px" }}
+                              onClick={() => DeleteComment(index)}
                             >
                               Delete
                             </button>

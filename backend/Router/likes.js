@@ -93,7 +93,7 @@ Likes.get("/getuserlikes/:id/:email", async (req, res) => {
     const email = req.params.email;
 
     const video = await videodata.findOne({ "VideoData._id": id });
-    const user = await userData.findOne({ email });
+    const user = await userData.findOne({  });
 
     if (!video) {
       return res.status(404).json({ error: "Video not found" });
