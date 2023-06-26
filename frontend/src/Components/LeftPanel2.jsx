@@ -43,13 +43,15 @@ function LeftPanel2() {
         setProfileIMG(profile);
         setChannel(ChannelName);
       } catch (error) {
-        alert(error.message);
+        console.log(error.message);
       }
     };
 
-    if (email) {
-      getData();
-    }
+    const interval = setInterval(getData, 100);
+
+    return () => {
+      clearInterval(interval);
+    };
   }, [email]);
 
   return (
@@ -91,7 +93,6 @@ function LeftPanel2() {
             <p>Comments</p>
           </div>
         </div>
-        
       </div>
     </>
   );

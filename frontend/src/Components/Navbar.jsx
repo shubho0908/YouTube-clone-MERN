@@ -42,13 +42,13 @@ function Navbar() {
         const { profile } = await response.json();
         setProfilePic(profile);
       } catch (error) {
-        alert(error.message);
+        console.log(error.message);
       }
     };
 
-    if (email) {
-      getData();
-    }
+    const interval = setInterval(getData, 200);
+
+    return () => clearInterval(interval);
   }, [email]);
 
   return (
@@ -120,16 +120,15 @@ function Navbar() {
             <p>Signin</p>
           </button>
           <img
-            src={profilePic ? profilePic : avatar}
+            src={profilePic && profilePic}
             alt=""
             className="profile-pic"
             style={token ? { display: "block" } : { display: "none" }}
             onClick={() => {
               if (showPop === false) {
                 setShowPop(true);
-              }
-              else{
-                setShowPop(false)
+              } else {
+                setShowPop(false);
               }
             }}
           />

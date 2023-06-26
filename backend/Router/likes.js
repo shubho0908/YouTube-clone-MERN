@@ -90,10 +90,10 @@ Likes.get("/getlike/:id", async (req, res) => {
 Likes.get("/getuserlikes/:id/:email", async (req, res) => {
   try {
     const { id } = req.params;
-    const email = req.params.email;
+    const email = req.params.email
 
     const video = await videodata.findOne({ "VideoData._id": id });
-    const user = await userData.findOne({  });
+    const user = await userData.findOne({email});
 
     if (!video) {
       return res.status(404).json({ error: "Video not found" });
@@ -122,5 +122,52 @@ Likes.get("/getuserlikes/:id/:email", async (req, res) => {
     res.json(error.message);
   }
 });
+
+Likes.post("/dislikevideo/:id/:email", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const email = req.params.email;
+    const video = await videodata.findOne({ "VideoData._id": id });
+    const user = await userData.findOne({ email });
+
+    if (!video) {
+      return res.status(404).json({ error: "Video not found" });
+    }
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const videoIndex = video.VideoData.findIndex(
+      (data) => data._id.toString() === id
+    );
+
+    if (videoIndex === -1) {
+      return res.status(404).json({ error: "Video not found" });
+    }
+
+    const likedData = video.VideoData[videoIndex];
+    const videoLikes = video.VideoData[videoIndex].likes;
+
+    const existingLikedVideo = user.likedVideos.find(
+      (likedVideo) => likedVideo.likedVideoID === likedData._id.toString()
+    );
+
+    if (videoLikes > 0 && existingLikedVideo) {
+      user.likedVideos = user.likedVideos.filter(
+        (likedVideo) => likedVideo.likedVideoID !== likedData._id.toString()
+      );
+      video.VideoData[videoIndex].likes -= 1;
+    }
+
+    await user.save(); // Save changes to the user object
+    await video.save(); // Save changes to the video object
+
+    res.json(videoLikes);
+  } catch (error) {
+    res.json(error.message);
+  }
+});
+
 
 module.exports = Likes;

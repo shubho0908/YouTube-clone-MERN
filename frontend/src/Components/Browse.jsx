@@ -90,36 +90,39 @@ function Browse() {
   ];
 
   useEffect(() => {
+
+    const getVideos = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/getvideos");
+        const {
+          videoURLs,
+          thumbnailURLs,
+          titles,
+          Uploader,
+          Profile,
+          Duration,
+          videoID,
+          views,
+          uploadDate,
+        } = await response.json();
+        setVideos(videoURLs);
+        setThumbnails(thumbnailURLs);
+        setTitles(titles);
+        setUploader(Uploader);
+        setProfilePic(Profile);
+        setDuration(Duration);
+        setVideoID(videoID);
+        setVideoViews(views);
+        setPublishDate(uploadDate);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
     getVideos();
   }, []);
 
-  const getVideos = async () => {
-    try {
-      const response = await fetch("http://localhost:3000/getvideos");
-      const {
-        videoURLs,
-        thumbnailURLs,
-        titles,
-        Uploader,
-        Profile,
-        Duration,
-        videoID,
-        views,
-        uploadDate,
-      } = await response.json();
-      setVideos(videoURLs);
-      setThumbnails(thumbnailURLs);
-      setTitles(titles);
-      setUploader(Uploader);
-      setProfilePic(Profile);
-      setDuration(Duration);
-      setVideoID(videoID);
-      setVideoViews(views);
-      setPublishDate(uploadDate);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+
 
   //UPDATE VIEWS
 

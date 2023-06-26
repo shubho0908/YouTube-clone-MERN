@@ -45,12 +45,6 @@ function Studio() {
   }, []);
 
   useEffect(() => {
-    if (email) {
-      ChannelAvailable();
-    }
-  });
-
-  useEffect(() => {
     const createBtn = document.querySelector(".create-btn");
 
     const handleClick = () => {
@@ -86,15 +80,25 @@ function Studio() {
 
   //GET CHANNEL'S DATA
 
-  const ChannelAvailable = async () => {
-    try {
-      const response = await fetch(`http://localhost:3000/getchannel/${email}`);
-      const { channel } = await response.json();
-      setisChannel(channel);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+  useEffect(() => {
+    const ChannelAvailable = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:3000/getchannel/${email}`
+        );
+        const { channel } = await response.json();
+        setisChannel(channel);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
+    const interval = setInterval(ChannelAvailable, 100);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [email]);
 
   //IMAGE UPLOAD
 

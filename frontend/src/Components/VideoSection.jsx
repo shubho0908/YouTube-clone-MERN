@@ -46,9 +46,9 @@ function VideoSection() {
   const [VideoLikes, setVideoLikes] = useState();
   const [CommentLikes, setCommentLikes] = useState();
   const [isLiked, setIsLiked] = useState();
-  
+
   //Signup user Profile Pic
-  const [userProfile, setUserProfile] = useState()
+  const [userProfile, setUserProfile] = useState();
 
   useEffect(() => {
     if (token) {
@@ -85,12 +85,14 @@ function VideoSection() {
         );
         const { channel, profile } = await response.json();
         setisChannel(channel);
-        setUserProfile(profile)
+        setUserProfile(profile);
       } catch (error) {
         console.log(error.message);
       }
     };
-    getChannel();
+    const interval = setInterval(getChannel, 100);
+
+    return () => clearInterval(interval);
   }, [email]);
 
   useEffect(() => {
@@ -185,12 +187,10 @@ function VideoSection() {
         console.log(error.message);
       }
     };
+    const interval = setInterval(LikeExists, 200);
 
-    const interval = setInterval(LikeExists, 100);
-
-    return () => {
-      clearInterval(interval);
-    };
+    return () => clearInterval(interval);
+   
   }, [email, id]);
 
   useEffect(() => {
@@ -201,17 +201,12 @@ function VideoSection() {
         );
         const result = await response.json();
         setCommentLikes(result);
-        console.log(result);
       } catch (error) {
         console.log(error.message);
       }
     };
 
-    const interval = setInterval(CommentLikes, 100);
-
-    return () => {
-      clearInterval(interval);
-    };
+    CommentLikes();
   }, [email, id]);
 
   //POST REQUESTS
@@ -337,6 +332,24 @@ function VideoSection() {
     }
   };
 
+  const DislikeVideo = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/dislikevideo/${id}/${email}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      await response.json();
+      console.log("disliked");
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   return (
     <>
       <Navbar />
@@ -411,7 +424,7 @@ function VideoSection() {
                   title="I dislike this"
                   placement="top"
                 >
-                  <div className="dislike-data">
+                  <div className="dislike-data" onClick={DislikeVideo}>
                     <ThumbDownOutlinedIcon
                       fontSize="medium"
                       style={{ color: "white" }}
@@ -498,7 +511,7 @@ function VideoSection() {
             </div>
             <div className="my-comment-area">
               <img
-                src={userProfile ? userProfile : avatar}
+                src={userProfile && userProfile}
                 alt="channelDP"
                 className="channelDP"
               />
@@ -651,7 +664,7 @@ function VideoSection() {
                     }
                     key={index}
                     onClick={() => {
-                      navigate(`/${VideoID[index]}`);
+                      navigate(`/video/${VideoID[index]}`);
                       window.location.reload();
                     }}
                   >

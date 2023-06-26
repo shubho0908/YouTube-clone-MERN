@@ -49,7 +49,8 @@
 
 .uploaded-videos {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(315px, 1fr));
+  /* grid-template-columns: repeat(auto-fit, minmax(315px, 1fr)); */
+  grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(4, 1fr);
   justify-content: center;
   grid-column-gap: 10px;
@@ -64,7 +65,8 @@
 
 .video-data {
   cursor: pointer;
-  width: 360px;
+  /* width: 360px; */
+  width: fit-content;
 }
 
 .title {
@@ -117,7 +119,7 @@
   background-color: #000000c9;
   padding: 5px;
   border-radius: 4px;
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .spinner {
@@ -128,7 +130,7 @@
   top: 150px;
 }
 
-.view-time{
+.view-time {
   display: flex;
   align-items: center;
   margin-top: 4px;
@@ -139,7 +141,7 @@
   color: rgb(130, 130, 130);
 }
 
-.video-uploader{
+.video-uploader {
   display: flex;
   align-items: center;
 }
