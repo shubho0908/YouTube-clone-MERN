@@ -43,6 +43,7 @@ function VideoSection() {
   const [Views, SetViews] = useState();
   const [publishdate, setPublishDate] = useState();
   const [VideoLikes, setVideoLikes] = useState();
+  const [CommentLikes, setCommentLikes] = useState();
   const [isLiked, setIsLiked] = useState();
   const [IsCommentLiked, setIsCommentLiked] = useState();
 
@@ -141,11 +142,6 @@ function VideoSection() {
         const response = await fetch(`http://localhost:3000/getlike/${id}/`);
         const likes = await response.json();
         setVideoLikes(likes);
-        // if (!existingLikedVideo) {
-        //   setIsLiked(false);
-        // } else {
-        //   setIsLiked(true);
-        // }
       } catch (error) {
         console.log(error.message);
       }
@@ -203,6 +199,26 @@ function VideoSection() {
       clearInterval(interval);
     };
   }, [email]);
+
+  useEffect(() => {
+    const CommentLikes = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:3000/likecomment/${id}/${email}`
+        );
+        const result = await response.json();
+        setCommentLikes(result);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
+    const interval = setInterval(CommentLikes, 100);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [email, id]);
 
   //POST REQUESTS
 
@@ -292,10 +308,10 @@ function VideoSection() {
     }
   };
 
-  const LikeComment = async () => {
+  const LikeComment = async (commentIndex) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/likecomment/${id}/${email}`,
+        `http://localhost:3000/likecomment/${id}/${commentIndex}/${email}`,
         {
           method: "POST",
           headers: {
@@ -304,7 +320,7 @@ function VideoSection() {
         }
       );
       await response.json();
-      1;
+      console.log(commentIndex);
     } catch (error) {
       console.log(error.message);
     }
@@ -568,16 +584,18 @@ function VideoSection() {
                             <ThumbUpIcon
                               fontSize="small"
                               style={{ color: "white" }}
-                              onClick={LikeComment}
+                              onClick={() => LikeComment(index)}
                             />
                           ) : (
                             <ThumbUpAltOutlinedIcon
                               fontSize="small"
                               style={{ color: "white" }}
-                              onClick={LikeComment}
+                              onClick={() => LikeComment(index)}
                             />
                           )}
-                          <p style={{ marginLeft: "16px" }}>{element.likes}</p>
+                          <p style={{ marginLeft: "16px" }}>
+                            {CommentLikes && CommentLikes[index].likes}
+                          </p>
                           <ThumbDownOutlinedIcon
                             fontSize="small"
                             style={{ color: "white", marginLeft: "16px" }}
