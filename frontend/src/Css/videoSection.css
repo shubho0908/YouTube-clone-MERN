@@ -86,6 +86,7 @@
 }
 
 .subscribe {
+  cursor: pointer;
   border-radius: 20px;
   padding-left: 22px;
   padding-right: 22px;
@@ -216,7 +217,7 @@
   height: fit-content;
 }
 
-.desc-data{
+.desc-data {
   text-align: justify;
 }
 
@@ -317,6 +318,7 @@
 }
 
 .upload-comment {
+  cursor: pointer;
   border-radius: 20px;
   padding-left: 18px;
   padding-right: 18px;
@@ -325,6 +327,19 @@
   border: none;
   background-color: white;
   font-size: 15px;
+  margin-left: 25px;
+}
+
+.delete-comment-btn {
+  cursor: pointer;
+  border-radius: 20px;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  border: none;
+  background-color: white;
+  font-size: 14px;
   margin-left: 25px;
 }
 

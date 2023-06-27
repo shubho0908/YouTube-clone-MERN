@@ -190,7 +190,6 @@ function VideoSection() {
     const interval = setInterval(LikeExists, 200);
 
     return () => clearInterval(interval);
-   
   }, [email, id]);
 
   useEffect(() => {
@@ -612,15 +611,21 @@ function VideoSection() {
                         <div className="comment-interaction">
                           <ThumbUpAltOutlinedIcon
                             fontSize="small"
-                            style={{ color: "white" }}
+                            style={{ color: "white", cursor: "pointer" }}
                             onClick={() => LikeComment(index)}
                           />
                           <p style={{ marginLeft: "16px" }}>
-                            {CommentLikes && CommentLikes[index].likes}
+                            {CommentLikes &&
+                              CommentLikes[index] &&
+                              CommentLikes[index].likes}
                           </p>
                           <ThumbDownOutlinedIcon
                             fontSize="small"
-                            style={{ color: "white", marginLeft: "16px" }}
+                            style={{
+                              color: "white",
+                              marginLeft: "16px",
+                              cursor: "pointer",
+                            }}
                           />
                           {element.user_email === email ? (
                             <button
