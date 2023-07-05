@@ -35,7 +35,9 @@ function Navbar2() {
       }
     };
 
-    getData();
+    const interval = setInterval(getData, 200);
+
+    return () => clearInterval(interval);
   }, [email]);
 
   return (

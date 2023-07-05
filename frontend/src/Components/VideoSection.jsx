@@ -1,8 +1,8 @@
 import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import Plyr from "plyr";
-import avatar from "../img/avatar.png";
 import Navbar from "./Navbar";
+import Share from "./Share";
 import "../Css/videoSection.css";
 import ReactLoading from "react-loading";
 import "plyr/dist/plyr.css";
@@ -28,6 +28,7 @@ function VideoSection() {
   const [Display, setDisplay] = useState("none");
   const [comment, setComment] = useState();
   const [isChannel, setisChannel] = useState();
+  const [shareClicked, setShareClicked] = useState(false);
   const videoRef = useRef(null);
   const token = localStorage.getItem("userToken");
 
@@ -55,6 +56,26 @@ function VideoSection() {
       setEmail(jwtDecode(token).email);
     }
   }, [token]);
+
+  useEffect(() => {
+    const handleClick = () => {
+      setShareClicked(false);
+      document.body.classList.remove("bg-css");
+    };
+
+    const cancelShare = document.querySelector(".cancel-share");
+
+    if (cancelShare) {
+      cancelShare.addEventListener("click", handleClick);
+    }
+
+    return () => {
+      if (cancelShare) {
+        cancelShare.removeEventListener("click", handleClick);
+      }
+    };
+  });
+
 
   useEffect(() => {
     const checkChannel = async () => {
@@ -205,7 +226,9 @@ function VideoSection() {
       }
     };
 
-    CommentLikes();
+    const interval = setInterval(CommentLikes, 200);
+
+    return () => clearInterval(interval);
   }, [email, id]);
 
   //POST REQUESTS
@@ -349,6 +372,13 @@ function VideoSection() {
     }
   };
 
+  const downloadVideo = () => {
+    const link = document.createElement("a");
+    link.href = videoURL;
+    link.download = "video.mp4";
+    link.click();
+  };
+
   return (
     <>
       <Navbar />
@@ -367,7 +397,12 @@ function VideoSection() {
           <p className="vid-title">{Title}</p>
           <div className="some-channel-data">
             <div className="channel-left-data">
-              <img src={ChannelProfile} alt="channelDP" className="channelDP" />
+              <img
+                src={ChannelProfile}
+                alt="channelDP"
+                className="channelDP"
+                loading="lazy"
+              />
               <div className="channel-data2">
                 <div className="creator">
                   <p style={{ fontSize: "17px" }}>{uploader}</p>
@@ -431,14 +466,25 @@ function VideoSection() {
                   </div>
                 </Tooltip>
               </div>
-              <div className="share">
+              <div
+                className="share"
+                onClick={() => {
+                  if (shareClicked === false) {
+                    setShareClicked(true);
+                    document.body.classList.add("bg-css");
+                  } else {
+                    setShareClicked(false);
+                    document.body.classList.remove("bg-css");
+                  }
+                }}
+              >
                 <ReplyIcon
                   fontSize="medium"
                   style={{ color: "white", transform: "rotateY(180deg)" }}
                 />
                 <p className="share-txt">Share</p>
               </div>
-              <div className="download-btn">
+              <div className="download-btn" onClick={downloadVideo}>
                 <h3>
                   <TfiDownload />
                 </h3>
@@ -459,10 +505,10 @@ function VideoSection() {
                 {views >= 1e9
                   ? `${(views / 1e9).toFixed(1)}B`
                   : views >= 1e6
-                  ? `${(views / 1e6).toFixed(1)}M`
-                  : views >= 1e3
-                  ? `${(views / 1e3).toFixed(1)}K`
-                  : views}{" "}
+                    ? `${(views / 1e6).toFixed(1)}M`
+                    : views >= 1e3
+                      ? `${(views / 1e3).toFixed(1)}K`
+                      : views}{" "}
                 views
               </p>
               <p style={{ marginLeft: "10px" }}>
@@ -513,6 +559,7 @@ function VideoSection() {
                 src={userProfile && userProfile}
                 alt="channelDP"
                 className="channelDP"
+                loading="lazy"
               />
               <input
                 className="comment-input"
@@ -566,6 +613,7 @@ function VideoSection() {
                           src={element.user_profile}
                           alt="commentDP"
                           className="commentDP"
+                          loading="lazy"
                         />
                       </div>
                       <div className="comment-right-data">
@@ -678,6 +726,7 @@ function VideoSection() {
                         src={element}
                         alt=""
                         className="recommend-thumbnails"
+                        loading="lazy"
                       />
                       <p className="duration duration2">
                         {Math.floor(duration[index] / 60) +
@@ -712,10 +761,10 @@ function VideoSection() {
                           {Views[index] >= 1e9
                             ? `${(Views[index] / 1e9).toFixed(1)}B`
                             : Views[index] >= 1e6
-                            ? `${(Views[index] / 1e6).toFixed(1)}M`
-                            : Views[index] >= 1e3
-                            ? `${(Views[index] / 1e3).toFixed(1)}K`
-                            : Views[index]}{" "}
+                              ? `${(Views[index] / 1e6).toFixed(1)}M`
+                              : Views[index] >= 1e3
+                                ? `${(Views[index] / 1e3).toFixed(1)}K`
+                                : Views[index]}{" "}
                           views
                         </p>
                         <p
@@ -758,6 +807,14 @@ function VideoSection() {
               })}
           </div>
         </div>
+      </div>
+      <div
+        className="share-clicked"
+        style={
+          shareClicked === true ? { display: "block" } : { display: "none" }
+        }
+      >
+        <Share />
       </div>
     </>
   );

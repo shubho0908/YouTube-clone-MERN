@@ -1,0 +1,79 @@
+.social-handles {
+  cursor: pointer;
+  width: 70px;
+  border-radius: 100%;
+}
+
+.share-section {
+  background-color: #212121;
+  color: white;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 12;
+  padding: 20px;
+  border-radius: 10px;
+  animation: fadeUp 0.35s ease forwards;
+}
+
+@keyframes fadeUp {
+  from {
+    transform: translate(-50%, -50%) translateY(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+  }
+}
+
+.share-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.share-social,
+.share-link {
+  padding-top: 30px;
+}
+
+.share-social {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.link-area {
+  display: flex;
+  align-items: center;
+  background-color: #0f0f0f;
+  padding: 15px;
+  border: 1px solid rgb(80, 80, 80);
+  border-radius: 8px;
+}
+
+.copy-link-btn {
+  cursor: pointer;
+  margin-left: 15px;
+  border-radius: 20px;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border: none;
+  background-color: white;
+}
+
+.cancel-share {
+  cursor: pointer;
+  transition: all 0.15s ease;
+  padding: 5px;
+}
+
+.cancel-share:hover {
+  color: white !important;
+  background-color: rgba(128, 128, 128, 0.306);
+  border-radius: 50%;
+}

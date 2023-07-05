@@ -63,9 +63,11 @@ function Navbar() {
           <img
             src={Logo}
             alt="logo"
+            loading="lazy"
             className="youtubeLogo"
             onClick={() => {
               navigate("/");
+              window.location.reload();
             }}
           />
         </div>
@@ -121,7 +123,8 @@ function Navbar() {
           </button>
           <img
             src={profilePic && profilePic}
-            alt=""
+            alt="user profile pic"
+            loading="lazy"
             className="profile-pic"
             style={token ? { display: "block" } : { display: "none" }}
             onClick={() => {

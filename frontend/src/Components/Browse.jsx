@@ -90,7 +90,6 @@ function Browse() {
   ];
 
   useEffect(() => {
-
     const getVideos = async () => {
       try {
         const response = await fetch("http://localhost:3000/getvideos");
@@ -121,8 +120,6 @@ function Browse() {
 
     getVideos();
   }, []);
-
-
 
   //UPDATE VIEWS
 
@@ -194,7 +191,8 @@ function Browse() {
                         <img
                           style={{ width: "330px", borderRadius: "10px" }}
                           src={element}
-                          alt="temp"
+                          loading="lazy"
+                          alt="thumbnails"
                         />
                         <p className="duration">
                           {Math.floor(duration[index] / 60) +
