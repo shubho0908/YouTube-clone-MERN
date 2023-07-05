@@ -28,7 +28,6 @@ function LeftPanel() {
 
   const selected = localStorage.getItem("selected");
 
-
   useEffect(() => {
     const currentUrl = location.pathname;
     let selected = "";
@@ -64,6 +63,7 @@ function LeftPanel() {
             onClick={() => {
               localStorage.setItem("selected", "home");
               navigate("/");
+              window.location.reload();
             }}
           >
             <HomeIcon fontSize="medium" style={{ color: "white" }} />
@@ -111,8 +111,7 @@ function LeftPanel() {
                 : "library sec-data"
             }
             onClick={() => {
-              localStorage.setItem("selected", "library")
-
+              localStorage.setItem("selected", "library");
             }}
           >
             <VideoLibraryOutlinedIcon
@@ -129,8 +128,7 @@ function LeftPanel() {
                 : "watch-later sec-data"
             }
             onClick={() => {
-              localStorage.setItem("selected", "watch-later")
-
+              localStorage.setItem("selected", "watch-later");
             }}
           >
             <WatchLaterOutlinedIcon
@@ -146,9 +144,10 @@ function LeftPanel() {
                 : "liked-video sec-data"
             }
             onClick={() => {
-              localStorage.setItem("selected", "liked-video")
+              localStorage.setItem("selected", "liked-video");
 
               navigate("/likedVideos");
+              window.location.reload();
             }}
           >
             <ThumbUpOutlinedIcon fontSize="medium" style={{ color: "white" }} />
@@ -163,16 +162,47 @@ function LeftPanel() {
         style={menuClicked === true ? { display: "flex" } : { display: "none" }}
       >
         <div className="first-section ">
-          <div className="home sec-data sec-data2">
+          <div
+            className={
+              selected === "home"
+                ? "home sec-data sec-data2 changeBG"
+                : "home sec-data sec-data2"
+            }
+            onClick={() => {
+              localStorage.setItem("selected", "home");
+
+              navigate("/");
+              window.location.reload();
+            }}
+          >
             <HomeIcon fontSize="medium" style={{ color: "white" }} />
           </div>
-          <div className="trending trending2 sec-data sec-data2">
+          <div
+            className={
+              selected === "trending"
+                ? "trending trending2 sec-data sec-data2 changeBG"
+                : "trending trending2 sec-data sec-data2"
+            }
+            onClick={() => {
+              localStorage.setItem("selected", "trending");
+
+              navigate("/trending");
+              window.location.reload();
+            }}
+          >
             <WhatshotOutlinedIcon
               fontSize="medium"
               style={{ color: "white" }}
             />
           </div>
-          <div className="subscription subscription2 sec-data sec-data2">
+          <div className={selected === "subscription" ? "subscription subscription2 sec-data sec-data2 changeBG" : "subscription subscription2 sec-data sec-data2"}
+            onClick={() => {
+              localStorage.setItem("selected", "subscription");
+
+              navigate("/subscription");
+              window.location.reload();
+            }}
+          >
             <SubscriptionsOutlinedIcon
               fontSize="medium"
               style={{ color: "white" }}
@@ -183,6 +213,25 @@ function LeftPanel() {
         <div className="second-section">
           <div className="library library2 sec-data sec-data2">
             <VideoLibraryOutlinedIcon
+              fontSize="medium"
+              style={{ color: "white" }}
+            />
+          </div>
+          <div className="watch-later watch-later2 sec-data sec-data2">
+            <WatchLaterOutlinedIcon
+              fontSize="medium"
+              style={{ color: "white" }}
+            />
+          </div>
+          <div className={selected === "liked-video" ? "liked-video liked-video2 sec-data sec-data2 changeBG" : "liked-video liked-video2 sec-data sec-data2"}
+           onClick={() => {
+            localStorage.setItem("selected", "liked-video");
+
+            navigate("/likedVideos");
+            window.location.reload();
+          }}
+          >
+            <ThumbUpOutlinedIcon
               fontSize="medium"
               style={{ color: "white" }}
             />

@@ -53,6 +53,6 @@
 
 .trending2,
 .subscription2,
-.library2 {
+.library2, .watch-later2, .liked-video2 {
   margin-top: 15px;
 }

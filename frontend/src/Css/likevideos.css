@@ -1,10 +1,13 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap");
+
 .like-video-sections {
   position: relative;
   top: 70px;
   display: flex;
   color: white;
-  padding-left: 20px;
+  padding-left: 30px;
   padding-top: 20px;
+  width: fit-content;
 }
 
 .liked-video-data {
@@ -34,7 +37,7 @@
 .page-cover {
   position: relative;
   z-index: 2;
-  height: 800px;
+  height: 750px;
 }
 
 .page-cover::before {
@@ -43,7 +46,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 880px;
+  height: 810px;
   border-radius: 15px;
   backdrop-filter: blur(18px);
   z-index: -1;
@@ -51,6 +54,8 @@
 
 .firstvideo-thumbnail {
   padding: 80px;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 
 .first-thumbnail {
@@ -61,7 +66,6 @@
 .like-right-section {
   position: relative;
   left: 420px;
-  width: 1100px;
 }
 
 .liked-all-videos {
@@ -91,4 +95,45 @@
   font-size: 14px;
   color: rgb(130, 130, 130);
   margin-top: 10px;
+}
+
+.like-head {
+  font-size: 26px;
+  font-family: "Open Sans", sans-serif;
+}
+
+.like-username {
+  font-size: 15px;
+}
+.playvideo-btn {
+  background-color: white;
+  color: black;
+  margin-left: 25px;
+  margin-right: 25px;
+  margin-top: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border-radius: 30px;
+  transition: all 0.15s ease;
+}
+
+.playvideo-btn:hover {
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.758);
+}
+
+.last-like-section {
+  padding-left: 30px;
+}
+
+.last-like2 {
+  margin-top: 15px;
+}
+
+.last-like2 > p:nth-child(2) {
+  font-size: 14px;
+  margin-top: 5px;
+  color: rgba(255, 255, 255, 0.654);
 }
