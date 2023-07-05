@@ -1,10 +1,53 @@
 img {
   width: 150px;
+  border-radius: 10px;
 }
 
 .like-video-sections {
   position: relative;
   top: 70px;
+  display: flex;
+  color: white;
+  padding-left: 20px;
+  padding-top: 20px;
+}
+
+.liked-video-data {
   background-color: #0f0f0f;
   height: 100vh;
+}
+
+.like-left-section {
+  position: relative;
+  background-size: cover;
+  border-radius: 10px;
+}
+
+.like-left-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.41);
+  z-index: 1;
+}
+
+.page-cover {
+  padding: 100px;
+  position: relative;
+  z-index: 2;
+}
+
+.page-cover::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+  backdrop-filter: blur(18px);
+  z-index: -1;
 }
