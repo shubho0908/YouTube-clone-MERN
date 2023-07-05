@@ -1,0 +1,10 @@
+img {
+  width: 150px;
+}
+
+.like-video-sections {
+  position: relative;
+  top: 70px;
+  background-color: #0f0f0f;
+  height: 100vh;
+}

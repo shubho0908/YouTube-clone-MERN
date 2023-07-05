@@ -6,9 +6,11 @@ import VideoLibraryOutlinedIcon from "@mui/icons-material/VideoLibraryOutlined";
 import WatchLaterOutlinedIcon from "@mui/icons-material/WatchLaterOutlined";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function LeftPanel() {
   const [menuClicked, setMenuClicked] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleMenuButtonClick = () => {
@@ -23,6 +25,8 @@ function LeftPanel() {
     };
   }, []);
 
+  const selected = localStorage.getItem("selected");
+
   return (
     <>
       <div
@@ -32,18 +36,44 @@ function LeftPanel() {
         }
       >
         <div className="first-section ">
-          <div className="home sec-data">
+          <div
+            className={
+              selected === "home" ? "home sec-data changeBG" : "home sec-data"
+            }
+            onClick={() => {
+              localStorage.setItem("selected", "home");
+              navigate("/");
+            }}
+          >
             <HomeIcon fontSize="medium" style={{ color: "white" }} />
             <p>Home</p>
           </div>
-          <div className="trending sec-data">
+          <div
+            className={
+              selected === "trending"
+                ? "trending sec-data changeBG"
+                : "trending sec-data"
+            }
+            onClick={() => {
+              localStorage.setItem("selected", "trending");
+            }}
+          >
             <WhatshotOutlinedIcon
               fontSize="medium"
               style={{ color: "white" }}
             />
             <p>Trending</p>
           </div>
-          <div className="subscription sec-data">
+          <div
+            className={
+              selected === "subscription"
+                ? "subscription sec-data changeBG"
+                : "subscription sec-data"
+            }
+            onClick={() => {
+              localStorage.setItem("selected", "subscription");
+            }}
+          >
             <SubscriptionsOutlinedIcon
               fontSize="medium"
               style={{ color: "white" }}
@@ -53,7 +83,17 @@ function LeftPanel() {
         </div>
         <hr className="seperate" />
         <div className="second-section">
-          <div className="library sec-data">
+          <div
+            className={
+              selected === "library"
+                ? "library sec-data changeBG"
+                : "library sec-data"
+            }
+            onClick={() => {
+              localStorage.setItem("selected", "library")
+
+            }}
+          >
             <VideoLibraryOutlinedIcon
               fontSize="medium"
               style={{ color: "white" }}
@@ -61,14 +101,35 @@ function LeftPanel() {
             <p>Library</p>
           </div>
 
-          <div className="watch-later sec-data">
+          <div
+            className={
+              selected === "watch-later"
+                ? "watch-later sec-data changeBG"
+                : "watch-later sec-data"
+            }
+            onClick={() => {
+              localStorage.setItem("selected", "watch-later")
+
+            }}
+          >
             <WatchLaterOutlinedIcon
               fontSize="medium"
               style={{ color: "white" }}
             />
             <p>Watch later</p>
           </div>
-          <div className="liked-video sec-data">
+          <div
+            className={
+              selected === "liked-video"
+                ? "liked-video sec-data changeBG"
+                : "liked-video sec-data"
+            }
+            onClick={() => {
+              localStorage.setItem("selected", "liked-video")
+
+              navigate("/likedVideos");
+            }}
+          >
             <ThumbUpOutlinedIcon fontSize="medium" style={{ color: "white" }} />
             <p>Liked videos</p>
           </div>

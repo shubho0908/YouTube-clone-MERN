@@ -3,6 +3,7 @@ import Studio from "./Components/Studio";
 import Error from "./Components/Error";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import VideoSection from "./Components/VideoSection";
+import LikeVideos from "./Components/LikeVideos";
 
 function App() {
   const token = localStorage.getItem("userToken");
@@ -13,6 +14,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Browse />} />
           <Route path="/studio" element={token ? <Studio /> : <Error />} />
+          <Route path="/likedVideos" element={token ? <LikeVideos /> : <Error />} />
           <Route path="/video/:id" element={<VideoSection />} />
         </Routes>
       </BrowserRouter>

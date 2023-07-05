@@ -7,9 +7,9 @@
   padding: 16px;
   width: 225px;
   line-height: 48px;
+  z-index: 1;
 }
-
-.home {
+.changeBG {
   background-color: #3d3f4365;
   border-radius: 8px;
 }

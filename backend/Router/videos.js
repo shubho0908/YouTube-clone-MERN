@@ -181,4 +181,18 @@ Videos.post("/updateview/:id", async (req, res) => {
   }
 });
 
+Videos.get("/getlikevideos/:email", async (req, res) => {
+  try {
+    const email = req.params.email;
+    const user = await userData.findOne({ email });
+    if (!user) {
+      return res.json("USER DOESN'T EXISTS");
+    }
+    const LikedData = user.likedVideos;
+    res.json(LikedData);
+  } catch (error) {
+    res.json(error.message);
+  }
+});
+
 module.exports = Videos;
