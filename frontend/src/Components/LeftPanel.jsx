@@ -6,11 +6,12 @@ import VideoLibraryOutlinedIcon from "@mui/icons-material/VideoLibraryOutlined";
 import WatchLaterOutlinedIcon from "@mui/icons-material/WatchLaterOutlined";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 function LeftPanel() {
   const [menuClicked, setMenuClicked] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handleMenuButtonClick = () => {
@@ -26,6 +27,26 @@ function LeftPanel() {
   }, []);
 
   const selected = localStorage.getItem("selected");
+
+
+  useEffect(() => {
+    const currentUrl = location.pathname;
+    let selected = "";
+
+    if (currentUrl.includes("likedVideos")) {
+      selected = "liked-video";
+    } else if (currentUrl.includes("trending")) {
+      selected = "trending";
+    } else if (currentUrl.includes("/")) {
+      selected = "home";
+    } else if (currentUrl.includes("watchlater")) {
+      selected = "watchlater";
+    } else {
+      selected = "other";
+    }
+
+    localStorage.setItem("selected", selected);
+  }, [location]);
 
   return (
     <>

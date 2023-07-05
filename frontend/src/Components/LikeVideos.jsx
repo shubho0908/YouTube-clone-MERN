@@ -3,6 +3,7 @@ import LeftPanel from "./LeftPanel";
 import { useEffect, useState } from "react";
 import jwtDecode from "jwt-decode";
 import ReactLoading from "react-loading";
+import { useNavigate } from "react-router-dom";
 import "../Css/likevideos.css";
 
 function LikeVideos() {
@@ -10,6 +11,10 @@ function LikeVideos() {
     const [name, setName] = useState();
     const [menuClicked, setMenuClicked] = useState(false);
     const [videolike, setLikedVideos] = useState([]);
+    const [VideoViews, setVideoViews] = useState();
+
+    const navigate = useNavigate();
+    const token = localStorage.getItem("userToken");
 
     useEffect(() => {
         const token = localStorage.getItem("userToken");
@@ -48,6 +53,40 @@ function LikeVideos() {
         };
     }, []);
 
+    useEffect(() => {
+        const getVideos = async () => {
+            try {
+                const response = await fetch("http://localhost:3000/getvideos");
+                const {
+
+                    views
+                } = await response.json();
+
+                setVideoViews(views);
+            } catch (error) {
+                console.log(error.message);
+            }
+        };
+
+        getVideos();
+    }, []);
+
+
+    const updateViews = async (id) => {
+        try {
+            const response = await fetch(`http://localhost:3000/updateview/${id}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            const result = await response.json();
+            console.log(result);
+        } catch (error) {
+            console.log(error.message);
+        }
+    };
+
     return (
         <>
             <Navbar />
@@ -63,7 +102,7 @@ function LikeVideos() {
                         <div
                             className="like-left-section"
                             style={{
-                                backgroundImage: `url(${videolike[0]?.thumbnailURL})`
+                                backgroundImage: `url(${videolike[0]?.thumbnailURL})`,
                             }}
                         >
                             <div className="page-cover">
@@ -72,6 +111,8 @@ function LikeVideos() {
                                         <img
                                             src={videolike[0].thumbnailURL}
                                             alt="first-like-thumbnail"
+                                            className="first-thumbnail"
+                                            loading="lazy"
                                         />
                                     </div>
                                 )}
@@ -82,16 +123,45 @@ function LikeVideos() {
                             </div>
                         </div>
                         <div className="like-right-section">
-                            {videolike.length > 0 ? videolike.map((element, index) => {
-                                return (
-                                    <div className="firstvideo-thumbnail" key={index}>
-                                        <img
-                                            src={element.thumbnailURL}
-                                            alt="first-like-thumbnail"
-                                        />
-                                    </div>
-                                )
-                            }) : ""}
+                            {videolike.length > 0
+                                ? videolike.map((element, index) => {
+                                    return (
+                                        <div className="liked-all-videos" key={index}>
+                                            <p style={{ color: "#aaa" }}>{index + 1}</p>
+                                            <div
+                                                className="liked-videos-all-data"
+                                                onClick={() => {
+                                                    navigate(`/video/${element.likedVideoID}`);
+                                                    window.location.reload();
+                                                    if (token) {
+                                                        updateViews(element.likedVideoID);
+                                                    }
+                                                }}
+                                            >
+                                                <img
+                                                    src={element.thumbnailURL}
+                                                    alt="first-like-thumbnail"
+                                                    loading="lazy"
+                                                />
+                                                <div className="its-content">
+                                                    <p>{element.Title}</p>
+                                                    <p>
+                                                        {element.uploader} &#x2022;{" "}
+                                                        {VideoViews[index] >= 1e9
+                                                            ? `${(VideoViews[index] / 1e9).toFixed(1)}B`
+                                                            : VideoViews[index] >= 1e6
+                                                                ? `${(VideoViews[index] / 1e6).toFixed(1)}M`
+                                                                : VideoViews[index] >= 1e3
+                                                                    ? `${(VideoViews[index] / 1e3).toFixed(1)}K`
+                                                                    : VideoViews[index]}{" "}
+                                                        views
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    );
+                                })
+                                : ""}
                         </div>
                     </div>
                 ) : (

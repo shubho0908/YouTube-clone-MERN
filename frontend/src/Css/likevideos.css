@@ -1,8 +1,3 @@
-img {
-  width: 150px;
-  border-radius: 10px;
-}
-
 .like-video-sections {
   position: relative;
   top: 70px;
@@ -18,9 +13,9 @@ img {
 }
 
 .like-left-section {
-  position: relative;
+  position: fixed;
   background-size: cover;
-  border-radius: 10px;
+  border-radius: 15px;
 }
 
 .like-left-section::before {
@@ -31,13 +26,15 @@ img {
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.41);
+  border-radius: 15px;
+
   z-index: 1;
 }
 
 .page-cover {
-  padding: 100px;
   position: relative;
   z-index: 2;
+  height: 800px;
 }
 
 .page-cover::before {
@@ -46,8 +43,52 @@ img {
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 880px;
   border-radius: 15px;
   backdrop-filter: blur(18px);
   z-index: -1;
+}
+
+.firstvideo-thumbnail {
+  padding: 80px;
+}
+
+.first-thumbnail {
+  border-radius: 10px;
+  width: 220px;
+}
+
+.like-right-section {
+  position: relative;
+  left: 420px;
+  width: 1100px;
+}
+
+.liked-all-videos {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+.liked-all-videos:hover {
+  cursor: pointer;
+  background-color: #272727;
+  border-radius: 10px;
+}
+
+.liked-videos-all-data {
+  display: flex;
+}
+
+.liked-videos-all-data > img {
+  border-radius: 8px;
+  width: 180px;
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.its-content > p:nth-child(2) {
+  font-size: 14px;
+  color: rgb(130, 130, 130);
+  margin-top: 10px;
 }
