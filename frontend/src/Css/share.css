@@ -64,6 +64,11 @@
   padding-bottom: 10px;
   border: none;
   background-color: white;
+  transition: all 0.25s ease;
+}
+
+.copy-link-btn:active {
+  transform: scale(0.9);
 }
 
 .cancel-share {

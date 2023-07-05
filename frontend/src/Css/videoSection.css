@@ -392,3 +392,19 @@
   display: flex;
   align-items: center;
 }
+
+.like-data,
+.dislike-data,
+.share,
+.download-btn,
+.save-later {
+  transition: all 0.25s ease;
+}
+
+.like-data:active,
+.dislike-data:active,
+.share:active,
+.download-btn:active,
+.save-later:active {
+  transform: scale(0.8);
+}

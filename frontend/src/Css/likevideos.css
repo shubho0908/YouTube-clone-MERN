@@ -1,5 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap");
 
+body {
+  background-color: #0f0f0f;
+}
+
 .like-video-sections {
   position: relative;
   top: 70px;
@@ -59,9 +63,29 @@
 }
 
 .first-thumbnail {
+  cursor: pointer;
   border-radius: 10px;
   width: 220px;
+  transition: all 0.25s ease;
+  position: relative;
 }
+
+.sample-play {
+  opacity: 0;
+  position: absolute;
+  top: 85px;
+  transition: all 0.25s ease;
+  left: 145px;
+}
+
+.first-thumbnail:hover {
+  filter: brightness(0.4);
+}
+
+.first-thumbnail:hover ~ .sample-play {
+  opacity: 1;
+}
+
 
 .like-right-section {
   position: relative;
@@ -103,6 +127,7 @@
 }
 
 .like-username {
+  cursor: pointer;
   font-size: 15px;
 }
 .playvideo-btn {

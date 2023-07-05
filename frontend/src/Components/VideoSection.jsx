@@ -441,11 +441,13 @@ function VideoSection() {
                       <ThumbUpIcon
                         fontSize="medium"
                         style={{ color: "white" }}
+                        className="like-icon"
                       />
                     ) : (
                       <ThumbUpAltOutlinedIcon
                         fontSize="medium"
                         style={{ color: "white" }}
+                        className="like-icon"
                       />
                     )}
 
@@ -466,37 +468,55 @@ function VideoSection() {
                   </div>
                 </Tooltip>
               </div>
-              <div
-                className="share"
-                onClick={() => {
-                  if (shareClicked === false) {
-                    setShareClicked(true);
-                    document.body.classList.add("bg-css");
-                  } else {
-                    setShareClicked(false);
-                    document.body.classList.remove("bg-css");
-                  }
-                }}
+              <Tooltip
+                TransitionComponent={Zoom}
+                title="Share this video"
+                placement="top"
               >
-                <ReplyIcon
-                  fontSize="medium"
-                  style={{ color: "white", transform: "rotateY(180deg)" }}
-                />
-                <p className="share-txt">Share</p>
-              </div>
-              <div className="download-btn" onClick={downloadVideo}>
-                <h3>
-                  <TfiDownload />
-                </h3>
-                <p>Download</p>
-              </div>
-              <div className="save-later">
-                <BookmarkAddOutlinedIcon
-                  fontSize="medium"
-                  style={{ color: "white" }}
-                />
-                <p>Save</p>
-              </div>
+                <div
+                  className="share"
+                  onClick={() => {
+                    if (shareClicked === false) {
+                      setShareClicked(true);
+                      document.body.classList.add("bg-css");
+                    } else {
+                      setShareClicked(false);
+                      document.body.classList.remove("bg-css");
+                    }
+                  }}
+                >
+                  <ReplyIcon
+                    fontSize="medium"
+                    style={{ color: "white", transform: "rotateY(180deg)" }}
+                  />
+                  <p className="share-txt">Share</p>
+                </div>
+              </Tooltip>
+              <Tooltip
+                TransitionComponent={Zoom}
+                title="Download this video"
+                placement="top"
+              >
+                <div className="download-btn" onClick={downloadVideo}>
+                  <h3>
+                    <TfiDownload />
+                  </h3>
+                  <p>Download</p>
+                </div>
+              </Tooltip>
+              <Tooltip
+                TransitionComponent={Zoom}
+                title="Watch Later"
+                placement="top"
+              >
+                <div className="save-later">
+                  <BookmarkAddOutlinedIcon
+                    fontSize="medium"
+                    style={{ color: "white" }}
+                  />
+                  <p>Save</p>
+                </div>
+              </Tooltip>
             </div>
           </div>
           <div className="description-section2">
