@@ -120,7 +120,7 @@ Comments.get("/likecomment/:videoId/:email", async (req, res) => {
   try {
     const { videoId, email } = req.params;
     const video = await videodata.findOne({ "VideoData._id": videoId });
-    const user = await userData.findOne({email});
+    const user = await userData.findOne({ email });
 
     if (!user) {
       return res.status(404).json({ error: "User not found" });
@@ -139,6 +139,27 @@ Comments.get("/likecomment/:videoId/:email", async (req, res) => {
     const comments = video.VideoData[videoIndex].comments;
 
     res.json(comments);
+  } catch (error) {
+    res.json(error.message);
+  }
+});
+
+Comments.get("/getcomments/:id", async (req, res) => {
+  try {
+    const {id} = req.params;
+    const video = await videodata.findOne({ "VideoData._id": id });
+    if (!video) {
+      return res.status(404).json({ error: "Video not found" });
+    }
+    const videoIndex = video.VideoData.findIndex(
+      (data) => data._id.toString() === id
+    );
+
+    if (videoIndex === -1) {
+      return res.status(404).json({ error: "Video not found" });
+    }
+    const comments = video.VideoData[videoIndex].comments;
+    res.json(comments)
   } catch (error) {
     res.json(error.message);
   }

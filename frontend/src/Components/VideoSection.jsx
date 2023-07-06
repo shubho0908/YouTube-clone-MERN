@@ -28,6 +28,7 @@ function VideoSection() {
   const [plyrInitialized, setPlyrInitialized] = useState(false);
   const [Display, setDisplay] = useState("none");
   const [comment, setComment] = useState();
+  const [comments, setComments] = useState([]);
   const [isChannel, setisChannel] = useState();
   const [shareClicked, setShareClicked] = useState(false);
   const videoRef = useRef(null);
@@ -254,6 +255,21 @@ function VideoSection() {
     return () => clearInterval(interval);
   }, [id, email]);
 
+  useEffect(() => {
+    const getComments = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/getcomments/${id}`);
+        const result = await response.json();
+        setComments(result);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    const interval = setInterval(getComments, 200);
+
+    return () => clearInterval(interval);
+  }, [id]);
+
   //POST REQUESTS
 
   const uploadComment = async () => {
@@ -270,7 +286,6 @@ function VideoSection() {
         },
       });
       await response.json();
-      window.location.reload();
     } catch (error) {
       console.log(error.message);
     }
@@ -320,7 +335,6 @@ function VideoSection() {
     ChannelProfile,
     uploader,
     Description,
-    comments,
     views,
     uploaded_date,
   } = matchedVideo;
@@ -371,7 +385,7 @@ function VideoSection() {
         }
       );
       await response.json();
-      window.location.reload();
+      // window.location.reload();
     } catch (error) {
       console.log(error.message);
     }
@@ -658,6 +672,7 @@ function VideoSection() {
                 className="upload-comment"
                 onClick={() => {
                   if (token && isChannel === true) {
+                    setComment(" ")
                     uploadComment();
                   } else if (token && isChannel !== true) {
                     alert("Create a channel first");

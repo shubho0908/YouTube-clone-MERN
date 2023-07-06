@@ -344,6 +344,7 @@
 }
 
 .cancel-comment {
+  cursor: pointer;
   background-color: #0f0f0f00;
   color: white;
   border: none;
