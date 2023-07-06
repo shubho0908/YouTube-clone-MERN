@@ -328,6 +328,7 @@
   background-color: white;
   font-size: 15px;
   margin-left: 25px;
+  transition: all 0.1s ease;
 }
 
 .delete-comment-btn {
@@ -341,6 +342,27 @@
   background-color: white;
   font-size: 14px;
   margin-left: 25px;
+  transition: all 0.1s ease;
+}
+
+.delete-comment-btn:active,
+.upload-comment:active {
+  transform: scale(0.9);
+}
+
+.comment-like,
+.comment-dislike {
+  transition: all 0.2s ease;
+}
+
+.comment-like:hover,
+.comment-dislike:hover {
+  transform: scale(1.05);
+}
+
+.comment-like:active,
+.comment-dislike:active {
+  transform: scale(0.9);
 }
 
 .cancel-comment {

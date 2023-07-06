@@ -633,6 +633,9 @@ function VideoSection() {
                   style={{ color: "white" }}
                 />
                 <p style={{ marginLeft: "15px" }}>Sort by</p>
+                <div className="sort-comments-pop">
+                  
+                </div>
               </div>
             </div>
             <div className="my-comment-area">
@@ -743,6 +746,7 @@ function VideoSection() {
                             fontSize="small"
                             style={{ color: "white", cursor: "pointer" }}
                             onClick={() => LikeComment(index)}
+                            className="comment-like"
                           />
                           <p style={{ marginLeft: "16px" }}>
                             {CommentLikes &&
@@ -751,6 +755,8 @@ function VideoSection() {
                           </p>
                           <ThumbDownOutlinedIcon
                             fontSize="small"
+                            className="comment-dislike"
+
                             style={{
                               color: "white",
                               marginLeft: "16px",
