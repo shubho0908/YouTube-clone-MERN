@@ -195,4 +195,74 @@ Videos.get("/getlikevideos/:email", async (req, res) => {
   }
 });
 
+Videos.post("/watchlater/:id/:email", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const email = req.params.email;
+
+    const video = await videodata.findOne({ "VideoData._id": id });
+    const user = await userData.findOne({ email });
+
+    if (!video) {
+      return res.status(404).json({ error: "Video not found" });
+    }
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const videoIndex = video.VideoData.findIndex(
+      (data) => data._id.toString() === id
+    );
+
+    if (videoIndex === -1) {
+      return res.status(404).json({ error: "Video not found" });
+    }
+
+    const WatchLater = video.VideoData[videoIndex];
+
+    const existingSavedVideo = user.watchLater.find(
+      (savedVideo) => savedVideo.savedVideoID === WatchLater._id.toString()
+    );
+
+    if (!existingSavedVideo) {
+      user.watchLater.push({
+        videoURL: WatchLater.videoURL,
+        thumbnailURL: WatchLater.thumbnailURL,
+        uploader: WatchLater.uploader,
+        ChannelProfile: WatchLater.ChannelProfile,
+        Title: WatchLater.Title,
+        videoLength: WatchLater.videoLength,
+        views: WatchLater.views,
+        uploaded_date: WatchLater.uploaded_date,
+        savedVideoID: WatchLater._id,
+      });
+    } else {
+      user.watchLater = user.watchLater.filter(
+        (savedVideo) => savedVideo.savedVideoID !== WatchLater._id.toString()
+      );
+    }
+
+    await user.save();
+    await video.save();
+  } catch (error) {
+    res.json(error.message);
+  }
+});
+
+Videos.get("/getwatchlater/:email", async (req, res) => {
+  try {
+    const email = req.params.email;
+    const user = await userData.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ error: "User doesn't exist" });
+    }
+    const savedData = user.watchLater;
+    res.json(savedData);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
 module.exports = Videos;

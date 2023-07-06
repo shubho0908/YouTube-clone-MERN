@@ -86,6 +86,38 @@ const UserData = new mongoose.Schema({
       },
     },
   ],
+  watchLater: [
+    {
+      videoURL: {
+        type: String,
+      },
+      thumbnailURL: {
+        type: String,
+      },
+      videoLength: {
+        type: Number,
+      },
+      views: {
+        type: Number,
+        default: 0,
+      },
+      uploaded_date: {
+        type: String,
+      },
+      ChannelProfile: {
+        type: String,
+      },
+      Title: {
+        type: String,
+      },
+      uploader: {
+        type: String,
+      },
+      savedVideoID: {
+        type: String,
+      },
+    },
+  ],
   channelData: [
     {
       subscribers: {

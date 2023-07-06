@@ -15,6 +15,7 @@ import ThumbDownOutlinedIcon from "@mui/icons-material/ThumbDownOutlined";
 import ReplyIcon from "@mui/icons-material/Reply";
 import { TfiDownload } from "react-icons/Tfi";
 import BookmarkAddOutlinedIcon from "@mui/icons-material/BookmarkAddOutlined";
+import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
 import SortOutlinedIcon from "@mui/icons-material/SortOutlined";
 import jwtDecode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
@@ -47,6 +48,7 @@ function VideoSection() {
   const [VideoLikes, setVideoLikes] = useState();
   const [CommentLikes, setCommentLikes] = useState();
   const [isLiked, setIsLiked] = useState();
+  const [isSaved, setIsSaved] = useState();
 
   //Signup user Profile Pic
   const [userProfile, setUserProfile] = useState();
@@ -75,7 +77,6 @@ function VideoSection() {
       }
     };
   });
-
 
   useEffect(() => {
     const checkChannel = async () => {
@@ -231,6 +232,29 @@ function VideoSection() {
     return () => clearInterval(interval);
   }, [email, id]);
 
+  
+  useEffect(() => {
+    const getWatchlater = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/getwatchlater/${email}`);
+        const result = await response.json();
+        console.log(result);
+        if (result.length === 0) {
+          setIsSaved(false);
+        } else {
+          setIsSaved(true);
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+  
+    const interval = setInterval(getWatchlater, 200);
+  
+    return () => clearInterval(interval);
+  }, [email]);
+  
+
   //POST REQUESTS
 
   const uploadComment = async () => {
@@ -379,6 +403,23 @@ function VideoSection() {
     link.click();
   };
 
+  const saveVideo = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/watchlater/${id}/${email}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      await response.json();
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   return (
     <>
       <Navbar />
@@ -509,11 +550,18 @@ function VideoSection() {
                 title="Watch Later"
                 placement="top"
               >
-                <div className="save-later">
-                  <BookmarkAddOutlinedIcon
-                    fontSize="medium"
-                    style={{ color: "white" }}
-                  />
+                <div className="save-later" onClick={saveVideo}>
+                  {isSaved === true ? (
+                    <BookmarkAddedIcon
+                      fontSize="medium"
+                      style={{ color: "white" }}
+                    />
+                  ) : (
+                    <BookmarkAddOutlinedIcon
+                      fontSize="medium"
+                      style={{ color: "white" }}
+                    />
+                  )}
                   <p>Save</p>
                 </div>
               </Tooltip>
