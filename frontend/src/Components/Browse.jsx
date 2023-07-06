@@ -16,7 +16,10 @@ function Browse() {
   const [ProfilePic, setProfilePic] = useState();
   const [duration, setDuration] = useState();
   const [VideoID, setVideoID] = useState();
-  const [menuClicked, setMenuClicked] = useState(false);
+  const [menuClicked, setMenuClicked] = useState(() => {
+    const menu = localStorage.getItem("menuClicked");
+    return menu ? JSON.parse(menu) : false;
+  });
   const [scrollPosition, setScrollPosition] = useState(0);
   const [VideoViews, setVideoViews] = useState();
   const [publishDate, setPublishDate] = useState();
@@ -56,6 +59,10 @@ function Browse() {
       menuButton.removeEventListener("click", handleMenuButtonClick);
     };
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem("menuClicked", JSON.stringify(menuClicked));
+  }, [menuClicked]);
 
   const Tags = [
     "All",
@@ -146,7 +153,9 @@ function Browse() {
         <div
           className="browse-data"
           style={
-            menuClicked ? { left: "80px", width: "100%" } : { left: "250px" }
+            menuClicked === false
+              ? { left: "80px", width: "100%" }
+              : { left: "250px" }
           }
         >
           <div className="popular-categories">

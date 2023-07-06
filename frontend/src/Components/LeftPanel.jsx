@@ -9,7 +9,10 @@ import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 function LeftPanel() {
-  const [menuClicked, setMenuClicked] = useState(false);
+  const [menuClicked, setMenuClicked] = useState(() => {
+    const menu = localStorage.getItem("menuClicked");
+    return menu ? JSON.parse(menu) : false;
+  });
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -26,20 +29,24 @@ function LeftPanel() {
     };
   }, []);
 
+  useEffect(() => {
+    localStorage.setItem("menuClicked", JSON.stringify(menuClicked));
+  }, [menuClicked]);
+
   const selected = localStorage.getItem("selected");
 
   useEffect(() => {
     const currentUrl = location.pathname;
     let selected = "";
 
-    if (currentUrl.includes("likedVideos")) {
-      selected = "liked-video";
-    } else if (currentUrl.includes("trending")) {
-      selected = "trending";
-    } else if (currentUrl.includes("/")) {
+    if (currentUrl === "/") {
       selected = "home";
-    } else if (currentUrl.includes("watchlater")) {
-      selected = "watchlater";
+    } else if (currentUrl === "/trending") {
+      selected = "trending";
+    } else if (currentUrl === "/watchlater") {
+      selected = "watch-later";
+    } else if (currentUrl === "/likedVideos") {
+      selected = "liked-video";
     } else {
       selected = "other";
     }
@@ -51,9 +58,7 @@ function LeftPanel() {
     <>
       <div
         className="main-left-section"
-        style={
-          menuClicked === true ? { display: "none" } : { display: "block" }
-        }
+        style={menuClicked === false ? { display: "none" } : { display: "block" }}
       >
         <div className="first-section ">
           <div
@@ -129,6 +134,8 @@ function LeftPanel() {
             }
             onClick={() => {
               localStorage.setItem("selected", "watch-later");
+              navigate("/watchlater");
+              window.location.reload();
             }}
           >
             <WatchLaterOutlinedIcon
@@ -159,7 +166,7 @@ function LeftPanel() {
       {/* SHORT HAND  */}
       <div
         className="main-left-section main-2"
-        style={menuClicked === true ? { display: "flex" } : { display: "none" }}
+        style={menuClicked === false ? { display: "flex" } : { display: "none" }}
       >
         <div className="first-section ">
           <div
@@ -195,7 +202,12 @@ function LeftPanel() {
               style={{ color: "white" }}
             />
           </div>
-          <div className={selected === "subscription" ? "subscription subscription2 sec-data sec-data2 changeBG" : "subscription subscription2 sec-data sec-data2"}
+          <div
+            className={
+              selected === "subscription"
+                ? "subscription subscription2 sec-data sec-data2 changeBG"
+                : "subscription subscription2 sec-data sec-data2"
+            }
             onClick={() => {
               localStorage.setItem("selected", "subscription");
 
@@ -217,24 +229,37 @@ function LeftPanel() {
               style={{ color: "white" }}
             />
           </div>
-          <div className="watch-later watch-later2 sec-data sec-data2">
+          <div
+            className={
+              selected === "watch-later"
+                ? "watch-later watch-later2 sec-data sec-data2 changeBG"
+                : "watch-later watch-later2 sec-data sec-data2"
+            }
+            onClick={() => {
+              localStorage.setItem("selected", "watch-later");
+              navigate("/watchlater");
+              window.location.reload();
+            }}
+          >
             <WatchLaterOutlinedIcon
               fontSize="medium"
               style={{ color: "white" }}
             />
           </div>
-          <div className={selected === "liked-video" ? "liked-video liked-video2 sec-data sec-data2 changeBG" : "liked-video liked-video2 sec-data sec-data2"}
-           onClick={() => {
-            localStorage.setItem("selected", "liked-video");
+          <div
+            className={
+              selected === "liked-video"
+                ? "liked-video liked-video2 sec-data sec-data2 changeBG"
+                : "liked-video liked-video2 sec-data sec-data2"
+            }
+            onClick={() => {
+              localStorage.setItem("selected", "liked-video");
 
-            navigate("/likedVideos");
-            window.location.reload();
-          }}
+              navigate("/likedVideos");
+              window.location.reload();
+            }}
           >
-            <ThumbUpOutlinedIcon
-              fontSize="medium"
-              style={{ color: "white" }}
-            />
+            <ThumbUpOutlinedIcon fontSize="medium" style={{ color: "white" }} />
           </div>
         </div>
       </div>

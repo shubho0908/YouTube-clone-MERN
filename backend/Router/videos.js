@@ -250,19 +250,45 @@ Videos.post("/watchlater/:id/:email", async (req, res) => {
   }
 });
 
+Videos.get("/checkwatchlater/:id/:email", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const email = req.params.email;
+    const user = await userData.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ error: "User doesn't exist" });
+    }
+
+    const userIndex = user.watchLater.findIndex(
+      (data) => data.savedVideoID.toString() === id
+    );
+
+    if (userIndex === -1) {
+      return res.status(404).json({ error: "Video not found" });
+    }
+
+    const savedID = user.watchLater[userIndex].savedVideoID;
+
+    res.json(savedID);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 Videos.get("/getwatchlater/:email", async (req, res) => {
   try {
+    const { id } = req.params;
     const email = req.params.email;
     const user = await userData.findOne({ email });
     if (!user) {
       return res.status(404).json({ error: "User doesn't exist" });
     }
     const savedData = user.watchLater;
+
     res.json(savedData);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
-
 
 module.exports = Videos;

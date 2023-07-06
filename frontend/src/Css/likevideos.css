@@ -57,7 +57,7 @@ body {
 }
 
 .firstvideo-thumbnail {
-  padding: 80px;
+  padding: 30px;
   padding-top: 30px;
   padding-bottom: 30px;
 }
@@ -65,7 +65,7 @@ body {
 .first-thumbnail {
   cursor: pointer;
   border-radius: 10px;
-  width: 220px;
+  width: 310px;
   transition: all 0.25s ease;
   position: relative;
 }
@@ -73,13 +73,13 @@ body {
 .sample-play {
   opacity: 0;
   position: absolute;
-  top: 85px;
+  top: 110px;
   transition: all 0.25s ease;
-  left: 145px;
+  left: 135px;
 }
 
 .first-thumbnail:hover {
-  filter: brightness(0.4);
+  filter: brightness(0.35);
 }
 
 .first-thumbnail:hover ~ .sample-play {
