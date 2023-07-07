@@ -240,10 +240,10 @@ function VideoSection() {
           `http://localhost:3000/checkwatchlater/${id}/${email}`
         );
         const savedID = await response.json();
-        if (savedID.length === 0) {
-          setIsSaved(false);
-        } else if (savedID.length > 0 && savedID === id) {
+        if (savedID === id) {
           setIsSaved(true);
+        } else if (savedID !== id) {
+          setIsSaved(false);
         }
       } catch (error) {
         console.log(error.message);
@@ -253,7 +253,7 @@ function VideoSection() {
     const interval = setInterval(getWatchlater, 200);
 
     return () => clearInterval(interval);
-  }, [id, email]);
+  });
 
   useEffect(() => {
     const getComments = async () => {

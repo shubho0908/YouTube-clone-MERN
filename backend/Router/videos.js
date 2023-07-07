@@ -125,11 +125,11 @@ Videos.get("/getvideos", async (req, res) => {
   }
 });
 
-Videos.get("/getuserdata/:email", async (req, res) => {
+Videos.get("/getuserimage/:email", async (req, res) => {
   try {
     const email = req.params.email;
-    const videos = await videodata.findOne({ email });
-    const channelIMG = videos.VideoData.map((data) => data.ChannelProfile);
+    const user = await userData.findOne({ email });
+    const channelIMG = user.profilePic
     res.json({ channelIMG });
   } catch (error) {
     console.error(error);

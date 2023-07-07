@@ -19,6 +19,7 @@ function AccountPop() {
   const [email, setEmail] = useState("");
   const [profile, setProfile] = useState("");
   const [theme, setTheme] = useState("Dark");
+  const [ChannelID, setChannelID] = useState()
   const [isBtnClicked, setIsBtnClicked] = useState(false);
 
   const navigate = useNavigate();
@@ -42,7 +43,7 @@ function AccountPop() {
       try {
         if (email) {
           const response = await fetch(
-            `http://localhost:3000/getuserdata/${email}`
+            `http://localhost:3000/getuserimage/${email}`
           );
           const { channelIMG } = await response.json();
           setProfile(channelIMG);
@@ -53,6 +54,24 @@ function AccountPop() {
     };
 
     getUserData();
+  }, [email]);
+
+  useEffect(() => {
+    const getChannelID = async () => {
+      try {
+        if (email) {
+          const response = await fetch(
+            `http://localhost:3000/getchannel/${email}`
+          );
+          const { channelID } = await response.json();
+          setChannelID(channelID);
+        }
+      } catch (error) {
+        console.log("Error fetching user data:", error.message);
+      }
+    };
+
+    getChannelID();
   }, [email]);
 
   return (
@@ -87,7 +106,7 @@ function AccountPop() {
         </div>
         <hr className="seperate" />
         <div className="about-channel-section">
-          <div className="yourchannel c-sec">
+          <div className="yourchannel c-sec" onClick={() => navigate(`/mychannel/${ChannelID}`)}>
             <AccountBoxOutlinedIcon
               fontSize="medium"
               style={{ color: "white" }}

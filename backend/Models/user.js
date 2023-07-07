@@ -123,8 +123,17 @@ const UserData = new mongoose.Schema({
       subscribers: {
         type: Number,
       },
-      totalVideos: {
-        type: Number,
+      channelName: {
+        type: String,
+      },
+      channelDescription: {
+        type: String,
+      },
+      channelProfile: {
+        type: String,
+      },
+      joinedDate: {
+        type: String,
       },
     },
   ],

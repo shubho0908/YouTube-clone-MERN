@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import VideoSection from "./Components/VideoSection";
 import LikeVideos from "./Components/LikeVideos";
 import WatchLater from "./Components/WatchLater";
+import ChannelTop from "./Components/Channel/ChannelTop";
 
 function App() {
   const token = localStorage.getItem("userToken");
@@ -22,6 +23,10 @@ function App() {
           <Route
             path="/watchlater"
             element={token ? <WatchLater /> : <Error />}
+          />
+          <Route
+            path="/mychannel/:id"
+            element={token ? <ChannelTop /> : <Error />}
           />
           <Route path="/video/:id" element={<VideoSection />} />
         </Routes>
