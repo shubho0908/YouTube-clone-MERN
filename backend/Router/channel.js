@@ -2,6 +2,7 @@ require("dotenv").config();
 require("../Database/database");
 const express = require("express");
 const userData = require("../Models/user");
+const videodata = require("../Models/videos");
 const Channel = express.Router();
 
 Channel.get("/getchannel/:email", async (req, res) => {
@@ -16,8 +17,8 @@ Channel.get("/getchannel/:email", async (req, res) => {
       const channel = user.hasChannel;
       const profile = user.profilePic;
       const ChannelName = user.channelName;
-      const channelID = user.channelData[0]._id
-      res.json({ channel, profile, ChannelName,channelID });
+      const channelID = user.channelData[0]._id;
+      res.json({ channel, profile, ChannelName, channelID });
     }
   } catch (error) {
     res.json({
@@ -69,6 +70,25 @@ Channel.get("/checkchannel/:email", async (req, res) => {
     const user = await userData.findOne({ email });
     const channel = user.channelName;
     res.json(channel);
+  } catch (error) {
+    res.json(error.message);
+  }
+});
+
+// PERSONAL CHANNEL DATA
+
+Channel.get("/getuservideos/:email", async (req, res) => {
+  try {
+    const email = req.params.email;
+    const videos = await videodata.findOne({ email });
+    if (!videos) {
+      return res.json({
+        message: "USER DOESN'T EXIST",
+      });
+    }
+
+    const myvideos = videos.VideoData;
+    res.json(myvideos);
   } catch (error) {
     res.json(error.message);
   }

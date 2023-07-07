@@ -37,10 +37,10 @@ function Navbar() {
     const getData = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/getchannel/${email}`
+          `http://localhost:3000/getuserimage/${email}`
         );
-        const { profile } = await response.json();
-        setProfilePic(profile);
+        const { channelIMG } = await response.json();
+        setProfilePic(channelIMG);
       } catch (error) {
         console.log(error.message);
       }

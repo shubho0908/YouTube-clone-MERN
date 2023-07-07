@@ -4,11 +4,11 @@
         "colId": "history",
         "containerId": "",
         "name": "http://localhost:3000/getvideos",
-        "url": "http://localhost:3000/getcomments/64a53f3c8f009b64fe5ef118",
+        "url": "http://localhost:3000/getuservideos/shubho@gmail.com",
         "method": "GET",
         "sortNum": 0,
         "created": "2023-06-18T13:58:12.195Z",
-        "modified": "2023-07-06T11:50:12.361Z",
+        "modified": "2023-07-07T14:38:46.917Z",
         "headers": [],
         "params": [],
         "tests": []

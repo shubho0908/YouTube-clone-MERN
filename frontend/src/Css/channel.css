@@ -1,56 +1,152 @@
-.channel_profile{
-    width: 130px;
-    border-radius: 100%;
+.channel_profile {
+  width: 130px;
+  border-radius: 100%;
 }
 
-.channel-main-content{
-    position: relative;
-    /* width: fit-content; */
-    left: 70px;
-    top: 90px;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
+.channel-main-content {
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  width: max-content;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  margin-top: 110px;
 }
 
-.channel-left-content{
-    display: flex;
-    align-items: center;
+.channel-top-content {
+  position: relative;
+  top: 90px;
+  color: white;
+  display: flex;
+  align-items: center;
 }
 
-.channelname{
-    font-size: 24px;
+.channel-left-content {
+  display: flex;
+  align-items: center;
 }
 
-.channel-extra,.more-about{
-    color: #aaa;
-    display: flex;
-    align-items: center;
-    font-size: 15px;
-    margin-top: 4px;
+.channelname {
+  font-size: 24px;
 }
 
-.more-about{
-    margin-top: 15px;
+.myvideo-title {
+  font-size: 18px;
 }
 
-.channel-extra>p{
-    margin-right: 10px;
+.channel-extra,
+.more-about {
+  color: #aaa;
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+  margin-top: 4px;
 }
 
-.channel-left{
-    padding-left: 25px;
+.more-about {
+  margin-top: 15px;
 }
 
-.customize-channel, .manage-videos{
-    background-color: #242424;
-    color: white;
-    border: none;
-    padding: 12px;
-    padding-left: 16px;
-    padding-right: 16px;
-    border-radius: 35px;
-    font-size: 15px;
-    margin-right: 15px;
+.channel-extra > p {
+  margin-right: 10px;
+}
+
+.channel-left {
+  padding-left: 25px;
+}
+
+.channel-right-content {
+  margin-left: 250px;
+}
+
+.customize-channel,
+.manage-videos {
+  background-color: #242424;
+  color: white;
+  border: none;
+  padding: 12px;
+  padding-left: 16px;
+  padding-right: 16px;
+  border-radius: 35px;
+  font-size: 15px;
+  margin-right: 15px;
+}
+
+.channel-mid-content {
+  position: relative;
+  top: 120px;
+}
+
+.different-sections {
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-left: 30px;
+}
+
+.different-sections > p {
+  cursor: pointer;
+  margin-right: 85px;
+  font-size: 15px;
+  color: #aaa;
+  transition: all 0.1s ease;
+}
+
+.different-sections > p:hover {
+  transform: scale(1.02);
+  color: white;
+}
+
+.seperate-new {
+  position: relative;
+  top: 100px;
+}
+
+.myvideos-section {
+  position: absolute;
+  top: 310px;
+  color: white;
+}
+
+.user-video {
+  cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+}
+
+.video-metadata {
+  margin-left: 15px;
+}
+
+.video-oneliner-data {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  margin-top: 6px;
+  color: #aaa;
+}
+
+.myvideo-description {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  margin-top: 12px;
+  color: #aaa;
+}
+
+.view-time2 {
+  display: flex;
+  align-items: center;
+  margin-left: 12px;
+}
+
+.video_published-date {
+  margin-left: 6px;
+}
+
+.myvideos-thumbnail {
+  width: 250px;
+  border-radius: 10px;
 }
