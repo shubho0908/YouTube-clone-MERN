@@ -7,6 +7,7 @@ import "../../Css/channel.css";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ChannelHome from "./ChannelHome";
 import ReactLoading from "react-loading";
+import ChannelVideos from "./ChannelVideos";
 
 function ChannelTop() {
   const { id } = useParams();
@@ -15,7 +16,7 @@ function ChannelTop() {
   const [ChannelProfile, setChannelProfile] = useState();
   const [myVideos, setMyVideos] = useState([]);
   const token = localStorage.getItem("userToken");
-
+  const Section = localStorage.getItem("Section");
 
   useEffect(() => {
     if (token) {
@@ -43,7 +44,6 @@ function ChannelTop() {
     return () => clearInterval(interval);
   }, [Email]);
 
-
   useEffect(() => {
     const getUserVideos = async () => {
       try {
@@ -62,7 +62,6 @@ function ChannelTop() {
     return () => clearInterval(interval);
   }, [Email]);
 
-
   const getUsername = (email) => {
     return email.split("@")[0];
   };
@@ -72,14 +71,9 @@ function ChannelTop() {
   if (!ChannelProfile) {
     return (
       <div className="spinner" style={{ height: "100vh" }}>
-        <ReactLoading
-          type={"spin"}
-          color={"white"}
-          height={50}
-          width={50}
-        />
+        <ReactLoading type={"spin"} color={"white"} height={50} width={50} />
       </div>
-    )
+    );
   }
 
   return (
@@ -99,7 +93,9 @@ function ChannelTop() {
               <div className="channel-extra">
                 <p className="channeluser">@{username}</p>
                 <p className="my-subs">100 subscribers</p>
-                <p className="my-videoscount">{myVideos && myVideos.length} videos</p>
+                <p className="my-videoscount">
+                  {myVideos && myVideos.length} videos
+                </p>
               </div>
               <div className="more-about">
                 <p className="more-text">More about this channel</p>
@@ -117,17 +113,130 @@ function ChannelTop() {
         </div>
         <div className="channel-mid-content">
           <div className="different-sections">
-            <p className="channel-home">HOME</p>
-            <p className="channel-videos">VIDEOS</p>
-            <p className="channel-playlists">PLAYLISTS</p>
-            <p className="channel-subscriptions">CHANNELS</p>
-            <p className="channel-about">ABOUT</p>
+            {Section === "Home" ? (
+              <p
+                className="channel-home1"
+                onClick={() => {
+                  localStorage.setItem("Section", "Home");
+                  window.location.reload()
+                }}
+              >
+                HOME
+              </p>
+            ) : (
+              <p
+                className="channel-home"
+                onClick={() => {
+                  localStorage.setItem("Section", "Home");
+                  window.location.reload()
+                }}
+              >
+                HOME
+              </p>
+            )
+            }
+            {
+              Section === "Videos" ? (
+                <p
+                  className="channel-videos1"
+                  onClick={() => {
+                    localStorage.setItem("Section", "Videos");
+                    window.location.reload()
+                  }}
+                >
+                  VIDEOS
+                </p>
+              ) : (
+                <p
+                  className="channel-videos"
+                  onClick={() => {
+                    localStorage.setItem("Section", "Videos");
+                    window.location.reload()
+                  }}
+                >
+                  VIDEOS
+                </p>
+              )
+            }
+            {
+              Section === "Playlists" ? (
+                <p
+                  className="channel-playlists1"
+                  onClick={() => {
+                    localStorage.setItem("Section", "Playlists");
+                    window.location.reload()
+                  }}
+                >
+                  PLAYLISTS
+                </p>
+              ) : (
+                <p
+                  className="channel-playlists"
+                  onClick={() => {
+                    localStorage.setItem("Section", "Playlists");
+                    window.location.reload()
+                  }}
+                >
+                  PLAYLISTS
+                </p>
+              )
+            }
+            {
+              Section === "Subscriptions" ? (
+                <p
+                  className="channel-subscriptions1"
+                  onClick={() => {
+                    localStorage.setItem("Section", "Subscriptions");
+                    window.location.reload()
+                  }}
+                >
+                  CHANNELS
+                </p>
+              ) : (
+                <p
+                  className="channel-subscriptions"
+                  onClick={() => {
+                    localStorage.setItem("Section", "Subscriptions");
+                    window.location.reload()
+                  }}
+                >
+                  CHANNELS
+                </p>
+              )
+            }
+            {
+              Section === "About" ? (
+                <p
+                  className="channel-about1"
+                  onClick={() => {
+                    localStorage.setItem("Section", "About");
+                    window.location.reload()
+                  }}
+                >
+                  ABOUT
+                </p>
+              ) : (
+                <p
+                  className="channel-about"
+                  onClick={() => {
+                    localStorage.setItem("Section", "About");
+                    window.location.reload()
+                  }}
+                >
+                  ABOUT
+                </p>
+              )
+            }
           </div>
         </div>
         <br />
         <hr className="seperate seperate-new" />
-        <ChannelHome />
-
+        {
+          Section === "Home" ? <ChannelHome /> : ""
+        }
+        {
+          Section === "Videos" ? <ChannelVideos /> : ""
+        }
       </div>
     </>
   );
