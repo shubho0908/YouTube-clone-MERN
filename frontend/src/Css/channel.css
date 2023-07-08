@@ -6,12 +6,11 @@
 .channel-main-content {
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
   width: max-content;
   position: absolute;
   transform: translate(-50%, -50%);
   left: 50%;
-  margin-top: 110px;
+  margin-top: 120px;
 }
 
 .channel-top-content {
@@ -33,6 +32,11 @@
 
 .myvideo-title {
   font-size: 18px;
+}
+
+.video-metadata {
+  position: relative;
+  right: 20px;
 }
 
 .channel-extra,
@@ -104,6 +108,11 @@
   top: 100px;
 }
 
+.seperate-new1 {
+  position: relative;
+  top: 240px;
+}
+
 .myvideos-section {
   position: absolute;
   top: 310px;
@@ -114,10 +123,6 @@
   cursor: pointer;
   display: flex;
   align-items: flex-start;
-}
-
-.video-metadata {
-  margin-left: 15px;
 }
 
 .video-oneliner-data {
@@ -142,6 +147,14 @@
   margin-left: 12px;
 }
 
+.views-and-time {
+  display: flex;
+  color: #aaa;
+  font-size: 14px;
+  margin-top: 6px;
+  align-items: center;
+}
+
 .video_published-date {
   margin-left: 6px;
 }
@@ -149,4 +162,58 @@
 .myvideos-thumbnail {
   width: 250px;
   border-radius: 10px;
+}
+
+.myuploaded-videos {
+  color: white;
+
+  position: absolute;
+  top: 500px;
+}
+
+.section-headtxt,
+.playall-videos {
+  display: flex;
+  align-items: center;
+}
+
+.playall-videos {
+  margin-left: 15px;
+}
+
+.my-all-videos-list {
+  margin-top: 25px;
+}
+
+.myvideos-thumbnail2 {
+  width: 220px;
+  border-radius: 7px;
+}
+
+.myvideo-duration {
+  width: fit-content;
+  position: relative;
+  top: 110px;
+  right: 43px;
+  background-color: #000000c9;
+  padding: 5px;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+.myvideo-duration2 {
+  width: fit-content;
+  position: relative;
+  bottom: 33px;
+  left: 180px;
+  background-color: #000000c9;
+  padding: 5px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.video-metadata2 {
+  width: 220px;
+  position: relative;
+  bottom: 15px;
 }

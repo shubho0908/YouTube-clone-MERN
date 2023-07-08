@@ -122,6 +122,7 @@ const UserData = new mongoose.Schema({
     {
       subscribers: {
         type: Number,
+        default: 0,
       },
       channelName: {
         type: String,

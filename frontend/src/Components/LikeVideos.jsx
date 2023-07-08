@@ -15,7 +15,6 @@ function LikeVideos() {
     return menu ? JSON.parse(menu) : false;
   });
   const [videolike, setLikedVideos] = useState([]);
-  const [VideoViews, setVideoViews] = useState();
 
   const navigate = useNavigate();
   const token = localStorage.getItem("userToken");
@@ -61,20 +60,6 @@ function LikeVideos() {
     };
   }, []);
 
-  useEffect(() => {
-    const getVideos = async () => {
-      try {
-        const response = await fetch("http://localhost:3000/getvideos");
-        const { views } = await response.json();
-
-        setVideoViews(views);
-      } catch (error) {
-        console.log(error.message);
-      }
-    };
-
-    getVideos();
-  }, []);
 
   const updateViews = async (id) => {
     try {
@@ -181,13 +166,13 @@ function LikeVideos() {
                             <p>{element.Title}</p>
                             <p>
                               {element.uploader} &#x2022;{" "}
-                              {VideoViews[index] >= 1e9
-                                ? `${(VideoViews[index] / 1e9).toFixed(1)}B`
-                                : VideoViews[index] >= 1e6
-                                ? `${(VideoViews[index] / 1e6).toFixed(1)}M`
-                                : VideoViews[index] >= 1e3
-                                ? `${(VideoViews[index] / 1e3).toFixed(1)}K`
-                                : VideoViews[index]}{" "}
+                              {element.views >= 1e9
+                                ? `${(element.views / 1e9).toFixed(1)}B`
+                                : element.views >= 1e6
+                                ? `${(element.views / 1e6).toFixed(1)}M`
+                                : element.views >= 1e3
+                                ? `${(element.views / 1e3).toFixed(1)}K`
+                                : element.views}{" "}
                               views
                             </p>
                           </div>
