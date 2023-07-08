@@ -13,6 +13,7 @@ function ChannelTop() {
   const [Email, setEmail] = useState();
   const [channelName, setChannelname] = useState();
   const [ChannelProfile, setChannelProfile] = useState();
+  const [myVideos, setMyVideos] = useState([]);
   const token = localStorage.getItem("userToken");
 
 
@@ -41,6 +42,26 @@ function ChannelTop() {
 
     return () => clearInterval(interval);
   }, [Email]);
+
+
+  useEffect(() => {
+    const getUserVideos = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:3000/getuservideos/${Email}`
+        );
+        const myvideos = await response.json();
+        setMyVideos(myvideos);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
+    const interval = setInterval(getUserVideos, 200);
+
+    return () => clearInterval(interval);
+  }, [Email]);
+
 
   const getUsername = (email) => {
     return email.split("@")[0];
@@ -78,7 +99,7 @@ function ChannelTop() {
               <div className="channel-extra">
                 <p className="channeluser">@{username}</p>
                 <p className="my-subs">100 subscribers</p>
-                <p className="my-videoscount">5 videos</p>
+                <p className="my-videoscount">{myVideos && myVideos.length} videos</p>
               </div>
               <div className="more-about">
                 <p className="more-text">More about this channel</p>
@@ -105,8 +126,8 @@ function ChannelTop() {
         </div>
         <br />
         <hr className="seperate seperate-new" />
-       <ChannelHome/>
-       
+        <ChannelHome />
+
       </div>
     </>
   );

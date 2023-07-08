@@ -167,7 +167,15 @@ function ChannelHome() {
           {myVideos &&
             myVideos.map((element, index) => {
               return (
-                <div className="uploadedvideo-alldata" key={index}>
+                <div className="uploadedvideo-alldata" key={index}
+                onClick={() => {
+                    navigate(`/video/${element._id}`);
+                    window.location.reload();
+                    if (token) {
+                      updateViews(element._id);
+                    }
+                  }}
+                >
                   <img
                     src={element.thumbnailURL}
                     alt="thumbnails"
