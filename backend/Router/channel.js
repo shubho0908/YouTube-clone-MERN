@@ -94,4 +94,50 @@ Channel.get("/getuservideos/:email", async (req, res) => {
   }
 });
 
+Channel.get("/otherchannel/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const video = await videodata.findOne({ "VideoData._id": id });
+
+    if (!video) {
+      return res.status(404).json({ error: "Video not found" });
+    }
+
+    const userEmail = video.email;
+
+    res.json(userEmail);
+  } catch (error) {
+    res.json(error.message);
+  }
+});
+
+Channel.get("/getotherchannel/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const user = await userData.findOne({ "channelData._id": id });
+
+    if (!user) {
+      console.log("User not found");
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const channelData = user.channelData.find((channel) => channel._id.toString() === id);
+
+    if (!channelData) {
+      console.log("Channel not found");
+      return res.status(404).json({ error: "Channel not found" });
+    }
+
+    const userEmail = user.email;
+
+    res.json(userEmail);
+  } catch (error) {
+    console.log("Error:", error.message);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
 module.exports = Channel;

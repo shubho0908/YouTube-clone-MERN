@@ -36,11 +36,13 @@ function Navbar() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:3000/getuserimage/${email}`
-        );
-        const { channelIMG } = await response.json();
-        setProfilePic(channelIMG);
+        if (email) {
+          const response = await fetch(
+            `http://localhost:3000/getuserimage/${email}`
+          );
+          const { channelIMG } = await response.json();
+          setProfilePic(channelIMG);
+        }
       } catch (error) {
         console.log(error.message);
       }

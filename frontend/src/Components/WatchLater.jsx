@@ -178,15 +178,7 @@ function WatchLater() {
                           <div className="its-content">
                             <p>{element.Title}</p>
                             <p>
-                              {element.uploader} &#x2022;{" "}
-                              {VideoViews[index] >= 1e9
-                                ? `${(VideoViews[index] / 1e9).toFixed(1)}B`
-                                : VideoViews[index] >= 1e6
-                                ? `${(VideoViews[index] / 1e6).toFixed(1)}M`
-                                : VideoViews[index] >= 1e3
-                                ? `${(VideoViews[index] / 1e3).toFixed(1)}K`
-                                : VideoViews[index]}{" "}
-                              views
+                              {element.uploader}
                             </p>
                           </div>
                         </div>

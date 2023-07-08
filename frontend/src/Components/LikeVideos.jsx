@@ -165,15 +165,7 @@ function LikeVideos() {
                           <div className="its-content">
                             <p>{element.Title}</p>
                             <p>
-                              {element.uploader} &#x2022;{" "}
-                              {element.views >= 1e9
-                                ? `${(element.views / 1e9).toFixed(1)}B`
-                                : element.views >= 1e6
-                                ? `${(element.views / 1e6).toFixed(1)}M`
-                                : element.views >= 1e3
-                                ? `${(element.views / 1e3).toFixed(1)}K`
-                                : element.views}{" "}
-                              views
+                              {element.uploader}
                             </p>
                           </div>
                         </div>
