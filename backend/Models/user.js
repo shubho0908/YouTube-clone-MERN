@@ -138,6 +138,19 @@ const UserData = new mongoose.Schema({
       },
     },
   ],
+  subscribedChannels: [
+    {
+      channelname: {
+        type: String,
+      },
+      channelProfile: {
+        type: String,
+      },
+      channelID: {
+        type: String,
+      },
+    },
+  ],
 });
 
 const user = mongoose.model("userData", UserData);

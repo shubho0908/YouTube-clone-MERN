@@ -7,7 +7,7 @@ import jwtDecode from "jwt-decode";
 import ReactLoading from "react-loading";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 
-function ChannelHome() {
+function ChannelHome(prop) {
   const [myVideos, setMyVideos] = useState([]);
   const [Email, setEmail] = useState();
   const navigate = useNavigate();
@@ -22,11 +22,20 @@ function ChannelHome() {
   useEffect(() => {
     const getUserVideos = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:3000/getuservideos/${Email}`
-        );
-        const myvideos = await response.json();
-        setMyVideos(myvideos);
+        if (Email) {
+          const response = await fetch(
+            `http://localhost:3000/getuservideos/${Email}`
+          );
+          const myvideos = await response.json();
+          setMyVideos(myvideos);
+        }
+        else if (!Email) {
+          const response = await fetch(
+            `http://localhost:3000/getuservideos/${prop.newmail}`
+          );
+          const myvideos = await response.json();
+          setMyVideos(myvideos);
+        }
       } catch (error) {
         console.log(error.message);
       }
@@ -35,7 +44,7 @@ function ChannelHome() {
     const interval = setInterval(getUserVideos, 200);
 
     return () => clearInterval(interval);
-  }, [Email]);
+  }, [Email, prop.newmail]);
 
   const updateViews = async (id) => {
     try {
@@ -78,6 +87,7 @@ function ChannelHome() {
               src={myVideos[0].thumbnailURL}
               alt="user-videos"
               className="myvideos-thumbnail"
+              loading="lazy"
             />
             <p className="myvideo-duration">
               {Math.floor(myVideos[0].videoLength / 60) +
@@ -164,11 +174,13 @@ function ChannelHome() {
           </div>
         </div>
         <div className="my-all-videos-list">
-          {myVideos &&
+          {myVideos.length > 0 &&
             myVideos.map((element, index) => {
               return (
-                <div className="uploadedvideo-alldata" key={index}
-                onClick={() => {
+                <div
+                  className="uploadedvideo-alldata"
+                  key={index}
+                  onClick={() => {
                     navigate(`/video/${element._id}`);
                     window.location.reload();
                     if (token) {
@@ -180,6 +192,7 @@ function ChannelHome() {
                     src={element.thumbnailURL}
                     alt="thumbnails"
                     className="myvideos-thumbnail myvideos-thumbnail2"
+                    loading="lazy"
                   />
                   <p className="myvideo-duration2">
                     {Math.floor(element.videoLength / 60) +

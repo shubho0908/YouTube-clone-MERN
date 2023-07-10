@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import jwtDecode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 
-function ChannelVideos() {
+function ChannelVideos(prop) {
   const [myVideos, setMyVideos] = useState([]);
   const [Email, setEmail] = useState();
+  const [videosort, setVideoSort] = useState();
   const token = localStorage.getItem("userToken");
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (token) {
@@ -18,20 +19,26 @@ function ChannelVideos() {
   useEffect(() => {
     const getUserVideos = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:3000/getuservideos/${Email}`
-        );
-        const myvideos = await response.json();
-        setMyVideos(myvideos);
+        if (Email) {
+          const response = await fetch(
+            `http://localhost:3000/getuservideos/${Email}`
+          );
+          const myvideos = await response.json();
+          setMyVideos(myvideos);
+        } else if (!Email) {
+          const response = await fetch(
+            `http://localhost:3000/getuservideos/${prop.newmail}`
+          );
+          const myvideos = await response.json();
+          setMyVideos(myvideos);
+        }
       } catch (error) {
         console.log(error.message);
       }
     };
 
-    const interval = setInterval(getUserVideos, 200);
-
-    return () => clearInterval(interval);
-  }, [Email]);
+    getUserVideos()
+  }, [Email, prop.newmail]);
 
   const updateViews = async (id) => {
     try {
@@ -48,20 +55,79 @@ function ChannelVideos() {
     }
   };
 
+  useEffect(() => {
+    const sortVideos = () => {
+      switch (videosort) {
+        case "Latest":
+          setMyVideos((prevVideos) =>
+            [...prevVideos].sort(
+              (a, b) => new Date(b.uploaded_date) - new Date(a.uploaded_date)
+            )
+          );
+          break;
+        case "Popular":
+          setMyVideos((prevVideos) =>
+            [...prevVideos].sort((a, b) => b.views - a.views)
+          );
+          break;
+        case "Oldest":
+          setMyVideos((prevVideos) =>
+            [...prevVideos].sort(
+              (a, b) => new Date(a.uploaded_date) - new Date(b.uploaded_date)
+            )
+          );
+          break;
+        default:
+          break;
+      }
+    };
+
+    sortVideos();
+  }, [videosort]);
+
   return (
     <>
       <div className="allvideo-sectionn">
         <div className="video-sorting">
-          <button className="latest-video">Latest</button>
-          <button className="Popular-video">Popular</button>
-          <button className="Oldest-video">Oldest</button>
+          <button
+            className={
+              videosort === "Latest" ? "latest-video active" : "latest-video"
+            }
+            onClick={() => {
+              setVideoSort("Latest");
+            }}
+          >
+            Latest
+          </button>
+          <button
+            className={
+              videosort === "Popular" ? "Popular-video active" : "Popular-video"
+            }
+            onClick={() => {
+              setVideoSort("Popular");
+            }}
+          >
+            Popular
+          </button>
+          <button
+            className={
+              videosort === "Oldest" ? "Oldest-video active" : "Oldest-video"
+            }
+            onClick={() => {
+              setVideoSort("Oldest");
+            }}
+          >
+            Oldest
+          </button>
         </div>
         <div className="uploadedvideos-sectionall">
-          {myVideos &&
+          {myVideos.length > 0 &&
             myVideos.map((element, index) => {
               return (
-                <div className="uploaded-video-contents" key={index} 
-                onClick={() => {
+                <div
+                  className="uploaded-video-contents"
+                  key={index}
+                  onClick={() => {
                     navigate(`/video/${element._id}`);
                     window.location.reload();
                     if (token) {
@@ -73,6 +139,7 @@ function ChannelVideos() {
                     src={element.thumbnailURL}
                     alt="Thumbnail"
                     className="myvidthumbnail"
+                    loading="lazy"
                   />
                   <p className="myvideo-duration2 duration-new">
                     {Math.floor(element.videoLength / 60) +
@@ -88,10 +155,10 @@ function ChannelVideos() {
                         {element.views >= 1e9
                           ? `${(element.views / 1e9).toFixed(1)}B`
                           : element.views >= 1e6
-                          ? `${(element.views / 1e6).toFixed(1)}M`
-                          : element.views >= 1e3
-                          ? `${(element.views / 1e3).toFixed(1)}K`
-                          : element.views}{" "}
+                            ? `${(element.views / 1e6).toFixed(1)}M`
+                            : element.views >= 1e3
+                              ? `${(element.views / 1e3).toFixed(1)}K`
+                              : element.views}{" "}
                         views
                       </p>
                       <p className="video_published-date">

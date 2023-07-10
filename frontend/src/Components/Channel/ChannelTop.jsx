@@ -70,7 +70,7 @@ function ChannelTop() {
 
   if (!ChannelProfile) {
     return (
-      <div className="spinner" style={{ height: "100vh" }}>
+      <div className="spinner" style={{ height: "auto" }}>
         <ReactLoading type={"spin"} color={"white"} height={50} width={50} />
       </div>
     );
@@ -87,6 +87,7 @@ function ChannelTop() {
               src={ChannelProfile}
               alt="channelDP"
               className="channel_profile"
+              loading="lazy"
             />
             <div className="channel-left">
               <p className="channelname">{channelName}</p>
