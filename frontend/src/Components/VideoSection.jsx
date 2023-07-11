@@ -31,8 +31,8 @@ function VideoSection() {
   const [comments, setComments] = useState([]);
   const [isChannel, setisChannel] = useState();
   const [shareClicked, setShareClicked] = useState(false);
-  const [usermail, setUserMail] = useState()
-  const [channelID, setChannelID] = useState()
+  const [usermail, setUserMail] = useState();
+  const [channelID, setChannelID] = useState();
   const videoRef = useRef(null);
   const token = localStorage.getItem("userToken");
 
@@ -52,6 +52,11 @@ function VideoSection() {
   const [CommentLikes, setCommentLikes] = useState();
   const [isLiked, setIsLiked] = useState();
   const [isSaved, setIsSaved] = useState();
+
+  //Get Channel Data
+  const [youtuberName, setyoutuberName] = useState();
+  const [youtuberProfile, setyoutuberProfile] = useState();
+  const [youtubeChannelID, setyoutubeChannelID] = useState();
 
   //Signup user Profile Pic
   const [userProfile, setUserProfile] = useState();
@@ -310,6 +315,26 @@ function VideoSection() {
     return () => clearInterval(interval);
   }, [usermail]);
 
+  useEffect(() => {
+    const GetChannelData = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:3000/subscribe/${usermail}`
+        );
+        const { channel, profile, channelid } = await response.json();
+        setyoutuberName(channel);
+        setyoutuberProfile(profile);
+        setyoutubeChannelID(channelid);
+      } catch (error) {
+        console.log("Error fetching user data:", error.message);
+      }
+    };
+
+    const interval = setInterval(GetChannelData, 100);
+
+    return () => clearInterval(interval);
+  }, [usermail]);
+
   //POST REQUESTS
 
   const uploadComment = async () => {
@@ -473,6 +498,27 @@ function VideoSection() {
     }
   };
 
+  const SubscribeChannel = async () => {
+    try {
+      const channelData = {
+        youtuberName,
+        youtuberProfile,
+        youtubeChannelID,
+      };
+      const response = await fetch(`http://localhost:3000/subscribe/${email}`, {
+        method: "POST",
+        body: JSON.stringify(channelData),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const result = await response.json();
+      console.log(result);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   return (
     <>
       <Navbar />
@@ -499,15 +545,18 @@ function VideoSection() {
               />
               <div className="channel-data2">
                 <div className="creator">
-                  <p style={{ fontSize: "17px" }}
+                  <p
+                    style={{ fontSize: "17px", cursor: "pointer" }}
                     onClick={() => {
                       console.log(channelID);
                       console.log(usermail);
                       if (channelID !== undefined) {
-                        navigate(`/channel/${channelID}`)
+                        navigate(`/channel/${channelID}`);
                       }
                     }}
-                  >{uploader}</p>
+                  >
+                    {uploader}
+                  </p>
                   <Tooltip
                     TransitionComponent={Zoom}
                     title="Verified"
@@ -527,6 +576,7 @@ function VideoSection() {
               <button
                 className="subscribe"
                 disabled={uploader === channelName ? true : false}
+                onClick={SubscribeChannel}
               >
                 Subscribe
               </button>
@@ -634,10 +684,10 @@ function VideoSection() {
                 {views >= 1e9
                   ? `${(views / 1e9).toFixed(1)}B`
                   : views >= 1e6
-                    ? `${(views / 1e6).toFixed(1)}M`
-                    : views >= 1e3
-                      ? `${(views / 1e3).toFixed(1)}K`
-                      : views}{" "}
+                  ? `${(views / 1e6).toFixed(1)}M`
+                  : views >= 1e3
+                  ? `${(views / 1e3).toFixed(1)}K`
+                  : views}{" "}
                 views
               </p>
               <p style={{ marginLeft: "10px" }}>
@@ -681,9 +731,7 @@ function VideoSection() {
                   style={{ color: "white" }}
                 />
                 <p style={{ marginLeft: "15px" }}>Sort by</p>
-                <div className="sort-comments-pop">
-
-                </div>
+                <div className="sort-comments-pop"></div>
               </div>
             </div>
             <div className="my-comment-area">
@@ -723,7 +771,7 @@ function VideoSection() {
                 className="upload-comment"
                 onClick={() => {
                   if (token && isChannel === true) {
-                    setComment(" ")
+                    setComment(" ");
                     uploadComment();
                   } else if (token && isChannel !== true) {
                     alert("Create a channel first");
@@ -804,7 +852,6 @@ function VideoSection() {
                           <ThumbDownOutlinedIcon
                             fontSize="small"
                             className="comment-dislike"
-
                             style={{
                               color: "white",
                               marginLeft: "16px",
@@ -897,10 +944,10 @@ function VideoSection() {
                           {Views[index] >= 1e9
                             ? `${(Views[index] / 1e9).toFixed(1)}B`
                             : Views[index] >= 1e6
-                              ? `${(Views[index] / 1e6).toFixed(1)}M`
-                              : Views[index] >= 1e3
-                                ? `${(Views[index] / 1e3).toFixed(1)}K`
-                                : Views[index]}{" "}
+                            ? `${(Views[index] / 1e6).toFixed(1)}M`
+                            : Views[index] >= 1e3
+                            ? `${(Views[index] / 1e3).toFixed(1)}K`
+                            : Views[index]}{" "}
                           views
                         </p>
                         <p

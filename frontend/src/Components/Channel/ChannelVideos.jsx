@@ -19,25 +19,18 @@ function ChannelVideos(prop) {
   useEffect(() => {
     const getUserVideos = async () => {
       try {
-        if (Email) {
-          const response = await fetch(
-            `http://localhost:3000/getuservideos/${Email}`
-          );
-          const myvideos = await response.json();
-          setMyVideos(myvideos);
-        } else if (!Email) {
-          const response = await fetch(
-            `http://localhost:3000/getuservideos/${prop.newmail}`
-          );
-          const myvideos = await response.json();
-          setMyVideos(myvideos);
-        }
+        const response = await fetch(
+          `http://localhost:3000/getuservideos/${Email || prop.newmail}`
+        );
+
+        const myvideos = await response.json();
+        setMyVideos(myvideos);
       } catch (error) {
         console.log(error.message);
       }
     };
 
-    getUserVideos()
+    getUserVideos();
   }, [Email, prop.newmail]);
 
   const updateViews = async (id) => {
@@ -155,10 +148,10 @@ function ChannelVideos(prop) {
                         {element.views >= 1e9
                           ? `${(element.views / 1e9).toFixed(1)}B`
                           : element.views >= 1e6
-                            ? `${(element.views / 1e6).toFixed(1)}M`
-                            : element.views >= 1e3
-                              ? `${(element.views / 1e3).toFixed(1)}K`
-                              : element.views}{" "}
+                          ? `${(element.views / 1e6).toFixed(1)}M`
+                          : element.views >= 1e3
+                          ? `${(element.views / 1e3).toFixed(1)}K`
+                          : element.views}{" "}
                         views
                       </p>
                       <p className="video_published-date">

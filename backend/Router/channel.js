@@ -123,7 +123,9 @@ Channel.get("/getotherchannel/:id", async (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
 
-    const channelData = user.channelData.find((channel) => channel._id.toString() === id);
+    const channelData = user.channelData.find(
+      (channel) => channel._id.toString() === id
+    );
 
     if (!channelData) {
       console.log("Channel not found");
@@ -139,5 +141,55 @@ Channel.get("/getotherchannel/:id", async (req, res) => {
   }
 });
 
+Channel.get("/subscribe/:email", async (req, res) => {
+  try {
+    const email = req.params.email;
+    const user = await userData.findOne({ email });
+
+    if (!user) {
+      console.log("User not found");
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const mainChannelData = user.channelData[0];
+    const channel = mainChannelData.channelName;
+    const profile = mainChannelData.channelProfile;
+    const channelid = mainChannelData._id;
+
+    const YoutuberData = {
+      channel,
+      profile,
+      channelid,
+    };
+
+    res.json(YoutuberData);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+Channel.post("/subscribe/:email", async (req, res) => {
+  try {
+    const email = req.params.email;
+    const { youtuberName, youtuberProfile, youtubeChannelID } = req.body;
+    const user = await userData.findOne({ email });
+
+    if (!user) {
+      console.log("User not found");
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    user.subscribedChannels.push({
+      channelname: youtuberName,
+      channelProfile: youtuberProfile,
+      channelID: youtubeChannelID,
+    });
+    await user.save();
+
+    res.json("SUBSCRIBED CHANNEL");
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
 module.exports = Channel;
