@@ -57,6 +57,7 @@ function VideoSection() {
   const [youtuberName, setyoutuberName] = useState();
   const [youtuberProfile, setyoutuberProfile] = useState();
   const [youtubeChannelID, setyoutubeChannelID] = useState();
+  const [isSubscribed, setIsSubscribed] = useState();
 
   //Signup user Profile Pic
   const [userProfile, setUserProfile] = useState();
@@ -335,6 +336,26 @@ function VideoSection() {
     return () => clearInterval(interval);
   }, [usermail]);
 
+  useEffect(() => {
+    const checkSubscription = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:3000/checksubscription/${channelID}/${email}`
+        );
+        const { existingChannelID } = await response.json();
+        if (existingChannelID !== undefined) {
+          setIsSubscribed(true);
+        } else {
+          setIsSubscribed(false);
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
+    checkSubscription();
+  }, [channelID, email]);
+
   //POST REQUESTS
 
   const uploadComment = async () => {
@@ -505,15 +526,17 @@ function VideoSection() {
         youtuberProfile,
         youtubeChannelID,
       };
-      const response = await fetch(`http://localhost:3000/subscribe/${email}`, {
-        method: "POST",
-        body: JSON.stringify(channelData),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const result = await response.json();
-      console.log(result);
+      const response = await fetch(
+        `http://localhost:3000/subscribe/${channelID}/${email}`,
+        {
+          method: "POST",
+          body: JSON.stringify(channelData),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      await response.json();
     } catch (error) {
       console.log(error.message);
     }
@@ -548,8 +571,6 @@ function VideoSection() {
                   <p
                     style={{ fontSize: "17px", cursor: "pointer" }}
                     onClick={() => {
-                      console.log(channelID);
-                      console.log(usermail);
                       if (channelID !== undefined) {
                         navigate(`/channel/${channelID}`);
                       }
@@ -573,13 +594,33 @@ function VideoSection() {
                 </div>
                 <p className="channel-subs">10M subscribers</p>
               </div>
-              <button
-                className="subscribe"
-                disabled={uploader === channelName ? true : false}
-                onClick={SubscribeChannel}
-              >
-                Subscribe
-              </button>
+              {isSubscribed === false ? (
+                <button
+                  className="subscribe"
+                  disabled={uploader === channelName ? true : false}
+                  onClick={() => {
+                    SubscribeChannel();
+                    setTimeout(() => {
+                      window.location.reload();
+                    }, 600);
+                  }}
+                >
+                  Subscribe
+                </button>
+              ) : (
+                <button
+                  className="subscribe subscribe2"
+                  disabled={uploader === channelName ? true : false}
+                  onClick={() => {
+                    SubscribeChannel();
+                    setTimeout(() => {
+                      window.location.reload();
+                    }, 600);
+                  }}
+                >
+                  Subscribed
+                </button>
+              )}
             </div>
             <div className="channel-right-data">
               <div className="like-dislike">

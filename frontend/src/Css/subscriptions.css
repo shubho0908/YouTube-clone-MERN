@@ -9,6 +9,7 @@
 }
 
 .sub-channels{
+    cursor: pointer;
     margin-top: 25px;
     display: flex;
     flex-direction: column;
@@ -37,6 +38,10 @@
 
 .subscribed-videos{
     margin-top: 35px;
+}
+
+.subs-video-data{
+    cursor: pointer;
 }
 
 .subs-videos-all{

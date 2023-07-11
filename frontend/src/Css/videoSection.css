@@ -87,14 +87,25 @@
 
 .subscribe {
   cursor: pointer;
-  border-radius: 20px;
+  border-radius: 25px;
   padding-left: 22px;
   padding-right: 22px;
   border: none;
   background-color: white;
   font-size: 15px;
   margin-left: 25px;
+  transition: all 0.1s ease;
 }
+
+.subscribe:active {
+  transform: scale(0.92);
+}
+
+.subscribe2 {
+  background-color: #272727;
+  color: white;
+}
+
 .vl {
   border-left: 1px solid rgba(128, 128, 128, 0.506);
   height: 30px;

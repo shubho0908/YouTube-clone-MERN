@@ -6,6 +6,8 @@ import "../Css/subscriptions.css";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import ReactLoading from "react-loading";
+import { useNavigate } from "react-router-dom";
 
 function Subscriptions() {
   const [email, setEmail] = useState();
@@ -13,6 +15,9 @@ function Subscriptions() {
   const [subscribedChannelID, setsubscribedChannelID] = useState();
   const [youtuberEmail, setYoutuberEmail] = useState();
   const [subsVideos, setSubsVideos] = useState([]);
+
+  const navigate = useNavigate();
+  const token = localStorage.getItem("userToken");
 
   useEffect(() => {
     const token = localStorage.getItem("userToken");
@@ -90,6 +95,24 @@ function Subscriptions() {
     return () => clearInterval(interval);
   }, [youtuberEmail]);
 
+  //UPDATE VIEWS
+
+  const updateViews = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:3000/updateview/${id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const result = await response.json();
+      console.log(result);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+
   return (
     <>
       <Navbar />
@@ -100,7 +123,14 @@ function Subscriptions() {
           {subscriptions.length > 0 &&
             subscriptions.map((element, index) => {
               return (
-                <div className="sub-channels" key={index}>
+                <div
+                  className="sub-channels"
+                  key={index}
+                  onClick={() => {
+                    navigate(`/channel/${subscribedChannelID}`);
+                    window.location.reload();
+                  }}
+                >
                   <img
                     src={element.channelProfile}
                     alt="channelDP"
@@ -117,7 +147,17 @@ function Subscriptions() {
             {subsVideos.length > 0 &&
               subsVideos.map((element, index) => {
                 return (
-                  <div className="subs-video-data" key={index}>
+                  <div
+                    className="subs-video-data"
+                    key={index}
+                    onClick={() => {
+                      navigate(`/video/${element._id}`);
+                      window.location.reload();
+                      if (token) {
+                        updateViews(element._id);
+                      }
+                    }}
+                  >
                     <img
                       src={element.thumbnailURL}
                       alt="thumbnail"

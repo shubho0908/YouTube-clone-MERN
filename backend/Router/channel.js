@@ -119,7 +119,6 @@ Channel.get("/getotherchannel/:id", async (req, res) => {
     const user = await userData.findOne({ "channelData._id": id });
 
     if (!user) {
-      console.log("User not found");
       return res.status(404).json({ error: "User not found" });
     }
 
@@ -168,8 +167,9 @@ Channel.get("/subscribe/:email", async (req, res) => {
   }
 });
 
-Channel.post("/subscribe/:email", async (req, res) => {
+Channel.post("/subscribe/:channelID/:email", async (req, res) => {
   try {
+    const { channelID } = req.params;
     const email = req.params.email;
     const { youtuberName, youtuberProfile, youtubeChannelID } = req.body;
     const user = await userData.findOne({ email });
@@ -179,11 +179,20 @@ Channel.post("/subscribe/:email", async (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
 
-    user.subscribedChannels.push({
-      channelname: youtuberName,
-      channelProfile: youtuberProfile,
-      channelID: youtubeChannelID,
-    });
+    const existingChannelIndex = user.subscribedChannels.findIndex(
+      (channel) => channel.channelID.toString() === channelID.toString()
+    );
+
+    if (existingChannelIndex === -1) {
+      user.subscribedChannels.push({
+        channelname: youtuberName,
+        channelProfile: youtuberProfile,
+        channelID: youtubeChannelID.toString(),
+      });
+    } else {
+      user.subscribedChannels.splice(existingChannelIndex, 1);
+    }
+
     await user.save();
 
     res.json("SUBSCRIBED CHANNEL");
@@ -225,6 +234,27 @@ Channel.get("/getsubscriptionid/:email", async (req, res) => {
       const channelID = channel.channelID;
       res.status(200).json(channelID);
     }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+Channel.get("/checksubscription/:channelID/:email", async (req, res) => {
+  try {
+    const { channelID } = req.params;
+    const email = req.params.email;
+    const user = await userData.findOne({ email });
+
+    if (!user) {
+      console.log("User not found");
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const existingChannelID = user.subscribedChannels.find(
+      (channel) => channel.channelID.toString() === channelID
+    );
+
+    res.json({existingChannelID});
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
