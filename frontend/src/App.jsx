@@ -7,6 +7,7 @@ import LikeVideos from "./Components/LikeVideos";
 import WatchLater from "./Components/WatchLater";
 import ChannelTop from "./Components/Channel/ChannelTop";
 import OtherChannel from "./Components/Channel/OtherChannel";
+import Subscriptions from "./Components/Subscriptions";
 
 function App() {
   const token = localStorage.getItem("userToken");
@@ -32,6 +33,10 @@ function App() {
           <Route
             path="/channel/:id"
             element={<OtherChannel />}
+          />
+          <Route
+            path="/subscriptions"
+            element={token ? <Subscriptions /> : <Error />}
           />
           <Route path="/video/:id" element={<VideoSection />} />
         </Routes>

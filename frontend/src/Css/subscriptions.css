@@ -1,0 +1,51 @@
+.sub-channelDP {
+  width: 100px;
+  border-radius: 100%;
+  object-fit: cover;
+}
+
+.main-txxt{
+    font-size: 22px;
+}
+
+.sub-channels{
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+}
+
+.subscription-content {
+  position: relative;
+  left: 300px;
+  width: fit-content;
+  top: 100px;
+  color: white;
+}
+
+.sub-channelname{
+    margin-top: 12px;
+    color: #aaa;
+    width: 70%;
+    text-align: center;
+}
+
+.sub-thumbnail{
+    width: 300px;
+    border-radius: 8px;
+}
+
+.subscribed-videos{
+    margin-top: 35px;
+}
+
+.subs-videos-all{
+    margin-top: 15px;
+    display: grid;
+    /* grid-template-columns: repeat(auto-fit, minmax(315px, 1fr)); */
+    grid-template-columns: repeat(4, 1fr);
+    /* grid-template-rows: repeat(4, 1fr); */
+    justify-content: center;
+    grid-column-gap: 10px;
+    grid-row-gap: 18px;
+}

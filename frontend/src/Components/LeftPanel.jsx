@@ -45,6 +45,8 @@ function LeftPanel() {
       selected = "trending";
     } else if (currentUrl === "/watchlater") {
       selected = "watch-later";
+    } else if (currentUrl === "/subscriptions") {
+      selected = "subscription";
     } else if (currentUrl === "/likedVideos") {
       selected = "liked-video";
     } else {
@@ -58,7 +60,9 @@ function LeftPanel() {
     <>
       <div
         className="main-left-section"
-        style={menuClicked === false ? { display: "none" } : { display: "block" }}
+        style={
+          menuClicked === false ? { display: "none" } : { display: "block" }
+        }
       >
         <div className="first-section ">
           <div
@@ -98,6 +102,8 @@ function LeftPanel() {
             }
             onClick={() => {
               localStorage.setItem("selected", "subscription");
+              navigate("/subscriptions");
+              window.location.reload();
             }}
           >
             <SubscriptionsOutlinedIcon
@@ -166,7 +172,9 @@ function LeftPanel() {
       {/* SHORT HAND  */}
       <div
         className="main-left-section main-2"
-        style={menuClicked === false ? { display: "flex" } : { display: "none" }}
+        style={
+          menuClicked === false ? { display: "flex" } : { display: "none" }
+        }
       >
         <div className="first-section ">
           <div

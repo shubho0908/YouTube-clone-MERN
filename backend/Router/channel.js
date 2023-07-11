@@ -192,4 +192,42 @@ Channel.post("/subscribe/:email", async (req, res) => {
   }
 });
 
+Channel.get("/getsubscriptions/:email", async (req, res) => {
+  try {
+    const email = req.params.email;
+    const user = await userData.findOne({ email });
+
+    if (!user) {
+      console.log("User not found");
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const subscribedData = user.subscribedChannels;
+    res.json(subscribedData);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+Channel.get("/getsubscriptionid/:email", async (req, res) => {
+  try {
+    const email = req.params.email;
+    const user = await userData.findOne({ email });
+
+    if (!user) {
+      console.log("User not found");
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const subscribedChannels = user.subscribedChannels;
+    for (let i = 0; i < subscribedChannels.length; i++) {
+      const channel = subscribedChannels[i];
+      const channelID = channel.channelID;
+      res.status(200).json(channelID);
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 module.exports = Channel;
