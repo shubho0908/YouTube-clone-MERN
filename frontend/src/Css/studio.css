@@ -116,20 +116,20 @@
   padding-right: 12px;
   border-radius: 8px;
   width: fit-content;
-  position: absolute;
-  bottom: 118px;
-  left: 170px;
+  position: relative;
+  bottom: 47px;
+  left: 54px;
   animation: fadeinanimation 0.2s ease;
 }
 
 @keyframes fadeinanimation {
   0% {
     opacity: 0;
-    left: 140px;
+    left: 40px;
   }
   100% {
     opacity: 1;
-    left: 170px;
+    left: 54px;
   }
 }
 
@@ -147,7 +147,7 @@
 }
 
 .save-data {
-  margin-top: 35px;
+  margin-top: 22px;
   cursor: pointer;
   color: #282828;
   background-color: #3ea6ff;
@@ -460,4 +460,62 @@
   100% {
     color: gray;
   } /* Transition back to gray color */
+}
+
+.edit-links{
+  position: relative;
+  bottom: 25px;
+}
+
+.fb-link,
+.insta-link,
+.twitter-link,
+.website-link {
+  display: flex;
+  position: relative;
+  align-items: center;
+  animation: fadedownanimation 0.2s ease;
+}
+
+@keyframes fadedownanimation {
+  0% {
+    opacity: 0;
+    bottom: 30px;
+  }
+
+  100% {
+    opacity: 1;
+    bottom: 0;
+  }
+}
+
+.fb-input-icon,
+.insta-input-icon,
+.twitter-input-icon,
+.website-input-icon {
+  background-color: #60636759;
+  padding: 6px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-top-left-radius: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.27);
+  border-right: none;
+  border-bottom-left-radius: 5px;
+}
+
+.fb-input,
+.insta-input,
+.twitter-input,
+.website-input {
+  background-color: #3d3f4359;
+  outline: none;
+  height: 27px;
+  width: 100%;
+  padding: 10px;
+  color: white;
+  font-size: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.27);
+  border-left: none;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
 }

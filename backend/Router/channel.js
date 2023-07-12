@@ -47,7 +47,16 @@ Channel.get("/getchannelid/:email", async (req, res) => {
 
 Channel.post("/savechannel", async (req, res) => {
   try {
-    const { email, ChannelName, ChannelAbout, profileURL } = req.body;
+    const {
+      email,
+      ChannelName,
+      ChannelAbout,
+      fblink,
+      instalink,
+      twitterlink,
+      websitelink,
+      profileURL,
+    } = req.body;
     const user = await userData.findOneAndUpdate(
       { email },
       {
@@ -60,6 +69,14 @@ Channel.post("/savechannel", async (req, res) => {
               channelName: ChannelName,
               channelProfile: profileURL,
               channelDescription: ChannelAbout,
+              socialLinks: [
+                {
+                  facebook: fblink,
+                  instagram: instalink,
+                  twitter: twitterlink,
+                  website: websitelink,
+                },
+              ],
             },
           ],
         },

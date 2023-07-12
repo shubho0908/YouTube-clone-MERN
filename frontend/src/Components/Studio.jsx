@@ -48,6 +48,11 @@ function Studio() {
   const [loading, setLoading] = useState(false);
   const [duration, setDuration] = useState(null);
   const [linksClicked, setLinksClicked] = useState(false);
+  const [iconClicked, setIconClicked] = useState("");
+  const [fblink, setfblink] = useState()
+  const [instalink, setinstalink] = useState()
+  const [twitterlink, settwitterlink] = useState()
+  const [websitelink, setwebsitelink] = useState()
 
   const [videoLink, setVideoLink] = useState("https://www.youtube.com");
 
@@ -128,6 +133,22 @@ function Studio() {
 
   const handleChannelabout = (e) => {
     setChannelAbout(e.target.value);
+  };
+
+  const handleFacebookLink = (e) => {
+    setfblink(e.target.value);
+  };
+
+  const handleTwitterLink = (e) => {
+    settwitterlink(e.target.value);
+  };
+
+  const handleInstagramLink = (e) => {
+    setinstalink(e.target.value);
+  };
+
+  const handleWebsiteLink = (e) => {
+    setwebsitelink(e.target.value);
   };
 
   const uploadPic = async () => {
@@ -260,6 +281,7 @@ function Studio() {
         profileURL: downloadURL,
         ChannelName,
         ChannelAbout,
+        fblink, instalink, twitterlink, websitelink,
         email,
       };
 
@@ -501,23 +523,145 @@ function Studio() {
                 }
               >
                 <FacebookIcon
-                  fontSize="large" className="social_links"
+                  fontSize="large"
+                  className="social_links"
                   style={{ color: "white", marginRight: "15px" }}
+                  onClick={() => {
+                    if (iconClicked !== "Facebook") {
+                      setIconClicked("Facebook");
+                    } else {
+                      setIconClicked("");
+                    }
+                  }}
                 />
                 <InstagramIcon
-                  fontSize="large" className="social_links"
+                  fontSize="large"
+                  className="social_links"
                   style={{ color: "white", marginRight: "15px" }}
+                  onClick={() => {
+                    if (iconClicked !== "Instagram") {
+                      setIconClicked("Instagram");
+                    } else {
+                      setIconClicked("");
+                    }
+                  }}
                 />
                 <TwitterIcon
-                  fontSize="large" className="social_links"
+                  fontSize="large"
+                  className="social_links"
                   style={{ color: "white", marginRight: "15px" }}
+                  onClick={() => {
+                    if (iconClicked !== "Twitter") {
+                      setIconClicked("Twitter");
+                    } else {
+                      setIconClicked("");
+                    }
+                  }}
                 />
-                <LanguageIcon fontSize="large" className="social_links" style={{ color: "white" }} />
+                <LanguageIcon
+                  fontSize="large"
+                  className="social_links"
+                  style={{ color: "white" }}
+                  onClick={() => {
+                    if (iconClicked !== "Website") {
+                      setIconClicked("Website");
+                    } else {
+                      setIconClicked("");
+                    }
+                  }}
+                />
+              </div>
+              <div
+                className="edit-links"
+                style={
+                  linksClicked === true
+                    ? { display: "block" }
+                    : { display: "none" }
+                }
+              >
+                <div
+                  className="fb-link"
+                  style={
+                    iconClicked === "Facebook"
+                      ? { display: "flex" }
+                      : { display: "none" }
+                  }
+                >
+                  <FacebookIcon
+                    fontSize="large"
+                    style={{ color: "white" }}
+                    className="fb-input-icon"
+                  />
+                  <input type="text" name="fb-link" className="fb-input" onChange={handleFacebookLink} />
+                </div>
+                <div
+                  className="insta-link"
+                  style={
+                    iconClicked === "Instagram"
+                      ? { display: "flex" }
+                      : { display: "none" }
+                  }
+                >
+                  <InstagramIcon
+                    fontSize="large"
+                    style={{ color: "white" }}
+                    className="insta-input-icon"
+                  />
+                  <input
+                    type="text"
+                    name="insta-link"
+                    className="insta-input"
+                    onChange={handleInstagramLink}
+                  />
+                </div>
+                <div
+                  className="twitter-link"
+                  style={
+                    iconClicked === "Twitter"
+                      ? { display: "flex" }
+                      : { display: "none" }
+                  }
+                >
+                  <TwitterIcon
+                    fontSize="large"
+                    style={{ color: "white" }}
+                    className="twitter-input-icon"
+                  />
+                  <input
+                    type="text"
+                    name="twitter-link"
+                    className="twitter-input"
+                    onChange={handleTwitterLink}
+                  />
+                </div>
+                <div
+                  className="website-link"
+                  style={
+                    iconClicked === "Website"
+                      ? { display: "flex" }
+                      : { display: "none" }
+                  }
+                >
+                  <LanguageIcon
+                    fontSize="large"
+                    style={{ color: "white" }}
+                    className="website-input-icon"
+                  />
+                  <input
+                    type="text"
+                    name="website-link"
+                    className="website-input"
+                    onChange={handleWebsiteLink}
+                  />
+                </div>
               </div>
             </div>
             <button
               className="save-data"
               type="submit"
+              style={
+                linksClicked === true ? { marginTop: 0 } : { marginTop: "22px" }
+              }
               disabled={isLoading ? true : false}
             >
               {isLoading ? "LOADING..." : "SAVE"}
@@ -756,11 +900,11 @@ function Studio() {
                   style={
                     Progress === 100
                       ? {
-                          display: "block",
-                          color: "#3ea6ff",
-                          marginRight: "6px",
-                          animation: "none",
-                        }
+                        display: "block",
+                        color: "#3ea6ff",
+                        marginRight: "6px",
+                        animation: "none",
+                      }
                       : { display: "none" }
                   }
                 />
@@ -770,11 +914,11 @@ function Studio() {
                   style={
                     Progress >= 60
                       ? {
-                          display: "block",
-                          color: "#3ea6ff",
-                          marginLeft: "6px",
-                          animation: "none",
-                        }
+                        display: "block",
+                        color: "#3ea6ff",
+                        marginLeft: "6px",
+                        animation: "none",
+                      }
                       : { display: "none" }
                   }
                 />
