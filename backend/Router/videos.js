@@ -292,4 +292,24 @@ Videos.get("/getwatchlater/:email", async (req, res) => {
   }
 });
 
+Videos.get("/totalviews/:email", async (req, res) => {
+  try {
+    const email = req.params.email;
+    const video = await videodata.findOne({ email });
+    if (!video) {
+      return res.status(404).json({ error: "User doesn't exist" });
+    }
+
+    let totalViews = 0;
+
+    video.VideoData.forEach((video) => {
+      totalViews += video.views;
+    });
+
+    res.json(totalViews)
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 module.exports = Videos;

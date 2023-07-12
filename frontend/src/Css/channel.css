@@ -391,7 +391,8 @@
 }
 
 .main-links {
-  margin-top: 20px;
+  margin-top: 12px;
+  margin-bottom: 25px;
   display: flex;
   flex-direction: column;
 }

@@ -4,6 +4,8 @@ function ChannelAbout(prop) {
   const [Email, setEmail] = useState();
   const [description, setDescription] = useState();
   const [links, setLinks] = useState();
+  const [joinedDate, setjoinedDate] = useState()
+  const [TotalViews, setTotalViews] = useState()
 
   useEffect(() => {
     const getUserMail = async () => {
@@ -26,11 +28,13 @@ function ChannelAbout(prop) {
   useEffect(() => {
     const GetAboutData = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/getabout/${Email}`);
-        const { description, sociallinks } = await response.json();
-        setDescription(description);
-        setLinks(sociallinks);
-        console.log(sociallinks);
+        if (Email !== undefined) {
+          const response = await fetch(`http://localhost:3000/getabout/${Email}`);
+          const { description, sociallinks, joining } = await response.json();
+          setDescription(description);
+          setLinks(sociallinks);
+          setjoinedDate(joining)
+        }
       } catch (error) {
         console.log(error.message);
       }
@@ -40,6 +44,26 @@ function ChannelAbout(prop) {
 
     return () => clearInterval(interval);
   }, [Email]);
+
+  useEffect(() => {
+    const GetTotalViews = async () => {
+      try {
+        if (Email !== undefined) {
+          const response = await fetch(`http://localhost:3000/totalviews/${Email}`);
+          const totalViews = await response.json();
+          setTotalViews(totalViews)
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
+    const interval = setInterval(GetTotalViews, 200);
+
+    return () => clearInterval(interval);
+  }, [Email]);
+
+  const joined = new Date(joinedDate);
 
   return (
     <>
@@ -123,9 +147,9 @@ function ChannelAbout(prop) {
         <div className="right-about-section">
           <p>Stats</p>
           <hr className="seperate-three seperate" />
-          <p style={{ fontSize: "15px" }}>Joined Aug 11, 2020</p>
+          {joinedDate ? (<p style={{ fontSize: "15px" }}>{joined.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>) : (<p style={{ fontSize: "15px" }}>No data</p>)}
           <hr className="seperate-three seperate" />
-          <p>3,52,544 views</p>
+          <p>{TotalViews && TotalViews} views</p>
           <hr className="seperate-three seperate" />
         </div>
       </div>

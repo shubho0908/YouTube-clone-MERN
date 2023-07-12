@@ -303,8 +303,8 @@ Channel.get("/getabout/:email", async (req, res) => {
     const channeldata = user.channelData[0];
     const description = channeldata.channelDescription;
     const sociallinks = channeldata.socialLinks;
-
-    res.json({ description, sociallinks });
+    const joining = channeldata.joinedDate
+    res.json({ description, sociallinks, joining });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
