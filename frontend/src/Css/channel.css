@@ -281,7 +281,7 @@
   font-size: 15px;
 }
 
-.active{
+.active {
   background-color: white;
   color: #242424;
 }
@@ -320,12 +320,12 @@
   font-size: 14px;
 }
 
-.newspinner{
+.newspinner {
   position: absolute;
   left: 50%;
 }
 
-.subscribethis-channel{
+.subscribethis-channel {
   cursor: pointer;
   border-radius: 20px;
   padding-left: 22px;
@@ -336,4 +336,74 @@
   background-color: white;
   font-size: 15px;
   margin-left: 25px;
+}
+
+.subscribethis-channel2 {
+  cursor: pointer;
+  border-radius: 20px;
+  padding-left: 22px;
+  padding-right: 22px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border: none;
+  background-color: #272727;
+  color: white;
+  font-size: 15px;
+  margin-left: 25px;
+}
+
+.channel-desc {
+  max-width: 800px;
+  font-size: 15px;
+  margin-top: 30px;
+}
+
+.channel-about-section {
+  color: #f1f1f1;
+  position: absolute;
+  top: 320px;
+  display: flex;
+}
+
+.seperate-two {
+  margin-top: 40px;
+}
+
+.channel-details,
+.channel-links {
+  margin-top: 30px;
+}
+
+.enquiries {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  margin-top: 25px;
+}
+
+.enquiries > p:nth-child(1) {
+  color: #aaa;
+}
+
+.channel-email {
+  margin-left: 15px;
+  color: #3ea6ff;
+}
+
+.main-links {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-links > a {
+  color: #3ea6ff;
+  font-size: 14px;
+  margin-top: 15px;
+}
+
+.right-about-section{
+  margin-left: 60px;
+  max-width: 230px;
+  min-width: 180px;
 }

@@ -17,8 +17,7 @@ Channel.get("/getchannel/:email", async (req, res) => {
       const channel = user.hasChannel;
       const profile = user.profilePic;
       const ChannelName = user.channelName;
-      const channelID = user.channelData[0]._id
-      res.json({ channel, profile, ChannelName,channelID });
+      res.json({ channel, profile, ChannelName });
     }
   } catch (error) {
     res.json({
@@ -57,6 +56,7 @@ Channel.post("/savechannel", async (req, res) => {
       twitterlink,
       websitelink,
       profileURL,
+      currentDate,
     } = req.body;
     const user = await userData.findOneAndUpdate(
       { email },
@@ -70,6 +70,7 @@ Channel.post("/savechannel", async (req, res) => {
               channelName: ChannelName,
               channelProfile: profileURL,
               channelDescription: ChannelAbout,
+              joinedDate: currentDate,
               socialLinks: [
                 {
                   facebook: fblink,
@@ -285,6 +286,25 @@ Channel.get("/checksubscription/:channelID/:email", async (req, res) => {
     );
 
     res.json({ existingChannelID });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+Channel.get("/getabout/:email", async (req, res) => {
+  try {
+    const email = req.params.email;
+    const user = await userData.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const channeldata = user.channelData[0];
+    const description = channeldata.channelDescription;
+    const sociallinks = channeldata.socialLinks;
+
+    res.json({ description, sociallinks });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

@@ -61,7 +61,7 @@ function AccountPop() {
       try {
         if (email) {
           const response = await fetch(
-            `http://localhost:3000/getchannel/${email}`
+            `http://localhost:3000/getchannelid/${email}`
           );
           const { channelID } = await response.json();
           setChannelID(channelID);

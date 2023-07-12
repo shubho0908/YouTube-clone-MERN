@@ -277,11 +277,13 @@ function Studio() {
         return; // Handle the case when no image is selected
       }
 
+      const currentDate = new Date().toISOString();
+
       const data = {
         profileURL: downloadURL,
         ChannelName,
         ChannelAbout,
-        fblink, instalink, twitterlink, websitelink,
+        fblink, instalink, twitterlink, websitelink,currentDate,
         email,
       };
 

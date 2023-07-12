@@ -4,11 +4,11 @@
         "colId": "history",
         "containerId": "",
         "name": "http://localhost:3000/getvideos",
-        "url": "http://localhost:3000/getchannel/shubhobera98@gmail.com",
+        "url": "http://localhost:3000/getabout/shubhobera98@gmail.com",
         "method": "GET",
         "sortNum": 0,
         "created": "2023-06-18T13:58:12.195Z",
-        "modified": "2023-07-11T14:05:52.417Z",
+        "modified": "2023-07-12T10:42:55.433Z",
         "headers": [],
         "params": [],
         "tests": []
