@@ -117,7 +117,6 @@ function VideoSection() {
         const { channel, profile } = await response.json();
         setisChannel(channel);
         setUserProfile(profile);
-        console.log(profile);
       } catch (error) {
         console.log(error.message);
       }

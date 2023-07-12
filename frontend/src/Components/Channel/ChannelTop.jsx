@@ -233,10 +233,10 @@ function ChannelTop() {
         <br />
         <hr className="seperate seperate-new" />
         {
-          Section === "Home" ? <ChannelHome /> : ""
+          Section === "Home" ? <ChannelHome newmail={Email}/> : ""
         }
         {
-          Section === "Videos" ? <ChannelVideos /> : ""
+          Section === "Videos" ? <ChannelVideos newmail={Email}/> : ""
         }
       </div>
     </>

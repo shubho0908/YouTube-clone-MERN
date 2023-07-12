@@ -22,11 +22,21 @@ function ChannelHome(prop) {
   useEffect(() => {
     const getUserVideos = async () => {
       try {
+       if (Email === prop.newmail) {
         const response = await fetch(
-          `http://localhost:3000/getuservideos/${Email || prop.newmail}`
+          `http://localhost:3000/getuservideos/${Email}`
         );
         const myvideos = await response.json();
         setMyVideos(myvideos);
+       }
+       else{
+        const response = await fetch(
+          `http://localhost:3000/getuservideos/${prop.newmail}`
+        );
+        const myvideos = await response.json();
+        setMyVideos(myvideos);
+        console.log(prop.newmail);
+       }
       } catch (error) {
         console.log(error.message);
       }

@@ -129,7 +129,7 @@ Videos.get("/getuserimage/:email", async (req, res) => {
   try {
     const email = req.params.email;
     const user = await userData.findOne({ email });
-    const channelIMG = user.profilePic
+    const channelIMG = user.profilePic;
     res.json({ channelIMG });
   } catch (error) {
     console.error(error);
@@ -173,6 +173,7 @@ Videos.post("/updateview/:id", async (req, res) => {
     }
 
     video.VideoData[videoIndex].views += 1;
+    console.log("Views updated");
     await video.save();
 
     res.json(video);

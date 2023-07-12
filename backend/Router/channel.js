@@ -17,7 +17,8 @@ Channel.get("/getchannel/:email", async (req, res) => {
       const channel = user.hasChannel;
       const profile = user.profilePic;
       const ChannelName = user.channelName;
-      res.json({ channel, profile, ChannelName });
+      const channelID = user.channelData[0]._id
+      res.json({ channel, profile, ChannelName,channelID });
     }
   } catch (error) {
     res.json({
@@ -163,7 +164,6 @@ Channel.get("/getotherchannel/:id", async (req, res) => {
     );
 
     if (!channelData) {
-      console.log("Channel not found");
       return res.status(404).json({ error: "Channel not found" });
     }
 
@@ -171,7 +171,6 @@ Channel.get("/getotherchannel/:id", async (req, res) => {
 
     res.json(userEmail);
   } catch (error) {
-    console.log("Error:", error.message);
     res.status(500).json({ error: error.message });
   }
 });
@@ -182,7 +181,6 @@ Channel.get("/subscribe/:email", async (req, res) => {
     const user = await userData.findOne({ email });
 
     if (!user) {
-      console.log("User not found");
       return res.status(404).json({ error: "User not found" });
     }
 
@@ -211,7 +209,6 @@ Channel.post("/subscribe/:channelID/:email", async (req, res) => {
     const user = await userData.findOne({ email });
 
     if (!user) {
-      console.log("User not found");
       return res.status(404).json({ error: "User not found" });
     }
 
@@ -243,7 +240,6 @@ Channel.get("/getsubscriptions/:email", async (req, res) => {
     const user = await userData.findOne({ email });
 
     if (!user) {
-      console.log("User not found");
       return res.status(404).json({ error: "User not found" });
     }
 
@@ -260,7 +256,6 @@ Channel.get("/getsubscriptionid/:email", async (req, res) => {
     const user = await userData.findOne({ email });
 
     if (!user) {
-      console.log("User not found");
       return res.status(404).json({ error: "User not found" });
     }
 
@@ -282,7 +277,6 @@ Channel.get("/checksubscription/:channelID/:email", async (req, res) => {
     const user = await userData.findOne({ email });
 
     if (!user) {
-      console.log("User not found");
       return res.status(404).json({ error: "User not found" });
     }
 
