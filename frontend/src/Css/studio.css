@@ -71,9 +71,12 @@
 
 .channel-name {
   margin-top: 30px;
+  display: flex;
+  flex-direction: column;
 }
 
-.channelName {
+.channelName,
+.channelAbout {
   background-color: #3d3f4359;
   outline: none;
   height: 28px;
@@ -86,12 +89,65 @@
   border-radius: 5px;
 }
 
+.add-links {
+  cursor: pointer;
+  background-color: #3d3f4359;
+  color: white;
+  padding: 8px;
+  margin-top: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.27);
+  width: fit-content;
+  border-radius: 5px;
+  transition: all 0.1s ease;
+}
+
+.add-links:hover {
+  background-color: #60636759;
+}
+
+.add-links:active {
+  transform: scale(0.92);
+}
+
+.social-icons-links {
+  background-color: #60636759;
+  padding: 5px;
+  padding-left: 12px;
+  padding-right: 12px;
+  border-radius: 8px;
+  width: fit-content;
+  position: absolute;
+  bottom: 118px;
+  left: 170px;
+  animation: fadeinanimation 0.2s ease;
+}
+
+@keyframes fadeinanimation {
+  0% {
+    opacity: 0;
+    left: 140px;
+  }
+  100% {
+    opacity: 1;
+    left: 170px;
+  }
+}
+
+.social_links {
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.social_links:hover {
+  color: rgba(255, 255, 255, 0.699) !important;
+}
+
 .channel-deatils {
   margin-top: 0px;
 }
 
 .save-data {
-  margin-top: 15px;
+  margin-top: 35px;
   cursor: pointer;
   color: #282828;
   background-color: #3ea6ff;

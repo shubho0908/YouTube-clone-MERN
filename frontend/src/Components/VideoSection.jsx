@@ -117,6 +117,7 @@ function VideoSection() {
         const { channel, profile } = await response.json();
         setisChannel(channel);
         setUserProfile(profile);
+        console.log(profile);
       } catch (error) {
         console.log(error.message);
       }
@@ -301,7 +302,7 @@ function VideoSection() {
       try {
         if (usermail) {
           const response = await fetch(
-            `http://localhost:3000/getchannel/${usermail}`
+            `http://localhost:3000/getchannelid/${usermail}`
           );
           const { channelID } = await response.json();
           setChannelID(channelID);

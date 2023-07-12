@@ -17,8 +17,26 @@ Channel.get("/getchannel/:email", async (req, res) => {
       const channel = user.hasChannel;
       const profile = user.profilePic;
       const ChannelName = user.channelName;
+      res.json({ channel, profile, ChannelName });
+    }
+  } catch (error) {
+    res.json({
+      message: error.message,
+    });
+  }
+});
+
+Channel.get("/getchannelid/:email", async (req, res) => {
+  try {
+    const email = req.params.email;
+    const user = await userData.findOne({ email });
+    if (!user) {
+      return res.json({
+        message: "USER DOESN'T EXIST",
+      });
+    } else {
       const channelID = user.channelData[0]._id;
-      res.json({ channel, profile, ChannelName, channelID });
+      res.json({ channelID });
     }
   } catch (error) {
     res.json({
@@ -29,7 +47,7 @@ Channel.get("/getchannel/:email", async (req, res) => {
 
 Channel.post("/savechannel", async (req, res) => {
   try {
-    const { email, ChannelName, profileURL } = req.body;
+    const { email, ChannelName, ChannelAbout, profileURL } = req.body;
     const user = await userData.findOneAndUpdate(
       { email },
       {
@@ -41,6 +59,7 @@ Channel.post("/savechannel", async (req, res) => {
             {
               channelName: ChannelName,
               channelProfile: profileURL,
+              channelDescription: ChannelAbout,
             },
           ],
         },
@@ -254,7 +273,7 @@ Channel.get("/checksubscription/:channelID/:email", async (req, res) => {
       (channel) => channel.channelID.toString() === channelID
     );
 
-    res.json({existingChannelID});
+    res.json({ existingChannelID });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

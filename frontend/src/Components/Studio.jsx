@@ -14,6 +14,16 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import SdIcon from "@mui/icons-material/Sd";
 import HdIcon from "@mui/icons-material/Hd";
 import CloudDoneRoundedIcon from "@mui/icons-material/CloudDoneRounded";
+import LinkIcon from "@mui/icons-material/Link";
+import Tooltip from "@mui/material/Tooltip";
+import Zoom from "@mui/material/Zoom";
+
+//SOCIALS
+
+import FacebookIcon from "@mui/icons-material/Facebook";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import TwitterIcon from "@mui/icons-material/Twitter";
+import LanguageIcon from "@mui/icons-material/Language";
 
 function Studio() {
   const [email, setEmail] = useState("");
@@ -24,6 +34,7 @@ function Studio() {
   const [previewImage, setPreviewImage] = useState(avatar);
   const [previewThumbnail, setPreviewThumbnail] = useState(null);
   const [ChannelName, setChannelName] = useState();
+  const [ChannelAbout, setChannelAbout] = useState();
   const [isLoading, setisLoading] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const [isVideoSelected, setIsVideoSelected] = useState(false);
@@ -36,6 +47,7 @@ function Studio() {
   const [videoTags, setVideoTags] = useState("");
   const [loading, setLoading] = useState(false);
   const [duration, setDuration] = useState(null);
+  const [linksClicked, setLinksClicked] = useState(false);
 
   const [videoLink, setVideoLink] = useState("https://www.youtube.com");
 
@@ -112,6 +124,10 @@ function Studio() {
 
   const handleChannelname = (e) => {
     setChannelName(e.target.value);
+  };
+
+  const handleChannelabout = (e) => {
+    setChannelAbout(e.target.value);
   };
 
   const uploadPic = async () => {
@@ -243,6 +259,7 @@ function Studio() {
       const data = {
         profileURL: downloadURL,
         ChannelName,
+        ChannelAbout,
         email,
       };
 
@@ -449,6 +466,54 @@ function Studio() {
                 placeholder="Channel Name"
                 onChange={handleChannelname}
               />
+              <textarea
+                className="channelAbout"
+                type="text"
+                name="channelAbout"
+                placeholder="About channel"
+                onChange={handleChannelabout}
+                style={{ width: "93%", resize: "vertical" }}
+              />
+              <Tooltip
+                TransitionComponent={Zoom}
+                title="Add links"
+                placement="top"
+              >
+                <div
+                  className="add-links"
+                  onClick={() => {
+                    if (linksClicked === false) {
+                      setLinksClicked(true);
+                    } else {
+                      setLinksClicked(false);
+                    }
+                  }}
+                >
+                  <LinkIcon fontSize="medium" style={{ color: "white" }} />
+                </div>
+              </Tooltip>
+              <div
+                className="social-icons-links"
+                style={
+                  linksClicked === true
+                    ? { display: "block" }
+                    : { display: "none" }
+                }
+              >
+                <FacebookIcon
+                  fontSize="large" className="social_links"
+                  style={{ color: "white", marginRight: "15px" }}
+                />
+                <InstagramIcon
+                  fontSize="large" className="social_links"
+                  style={{ color: "white", marginRight: "15px" }}
+                />
+                <TwitterIcon
+                  fontSize="large" className="social_links"
+                  style={{ color: "white", marginRight: "15px" }}
+                />
+                <LanguageIcon fontSize="large" className="social_links" style={{ color: "white" }} />
+              </div>
             </div>
             <button
               className="save-data"

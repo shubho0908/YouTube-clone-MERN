@@ -133,9 +133,28 @@ const UserData = new mongoose.Schema({
       channelProfile: {
         type: String,
       },
+      channelCoverImg: {
+        type: String,
+      },
       joinedDate: {
         type: String,
       },
+      socialLinks: [
+        {
+          facebook: {
+            type: String,
+          },
+          instagram: {
+            type: String,
+          },
+          twitter: {
+            type: String,
+          },
+          website: {
+            type: String,
+          },
+        },
+      ],
     },
   ],
   subscribedChannels: [
