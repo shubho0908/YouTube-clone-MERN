@@ -69,8 +69,7 @@ function LikeVideos() {
           "Content-Type": "application/json",
         },
       });
-      const result = await response.json();
-      console.log(result);
+   await response.json();
     } catch (error) {
       console.log(error.message);
     }

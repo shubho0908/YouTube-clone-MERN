@@ -84,8 +84,7 @@ function WatchLater() {
           "Content-Type": "application/json",
         },
       });
-      const result = await response.json();
-      console.log(result);
+      await response.json();
     } catch (error) {
       console.log(error.message);
     }
@@ -157,34 +156,34 @@ function WatchLater() {
             <div className="like-right-section">
               {watchlater.length > 0
                 ? watchlater.map((element, index) => {
-                    return (
-                      <div className="liked-all-videos" key={index}>
-                        <p style={{ color: "#aaa" }}>{index + 1}</p>
-                        <div
-                          className="liked-videos-all-data"
-                          onClick={() => {
-                            navigate(`/video/${element.savedVideoID}`);
-                            window.location.reload();
-                            if (token) {
-                              updateViews(element.savedVideoID);
-                            }
-                          }}
-                        >
-                          <img
-                            src={element.thumbnailURL}
-                            alt="first-like-thumbnail"
-                            loading="lazy"
-                          />
-                          <div className="its-content">
-                            <p>{element.Title}</p>
-                            <p>
-                              {element.uploader}
-                            </p>
-                          </div>
+                  return (
+                    <div className="liked-all-videos" key={index}>
+                      <p style={{ color: "#aaa" }}>{index + 1}</p>
+                      <div
+                        className="liked-videos-all-data"
+                        onClick={() => {
+                          navigate(`/video/${element.savedVideoID}`);
+                          window.location.reload();
+                          if (token) {
+                            updateViews(element.savedVideoID);
+                          }
+                        }}
+                      >
+                        <img
+                          src={element.thumbnailURL}
+                          alt="first-like-thumbnail"
+                          loading="lazy"
+                        />
+                        <div className="its-content">
+                          <p>{element.Title}</p>
+                          <p>
+                            {element.uploader}
+                          </p>
                         </div>
                       </div>
-                    );
-                  })
+                    </div>
+                  );
+                })
                 : ""}
             </div>
           </div>

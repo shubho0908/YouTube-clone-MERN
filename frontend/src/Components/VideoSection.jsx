@@ -357,7 +357,9 @@ function VideoSection() {
       }
     };
 
-    checkSubscription();
+    const interval = setInterval(checkSubscription, 100);
+
+    return () => clearInterval(interval);
   }, [channelID, email]);
 
   useEffect(() => {
@@ -616,7 +618,7 @@ function VideoSection() {
               {isSubscribed === false ? (
                 <button
                   className="subscribe"
-                  disabled={uploader === channelName ? true : false}
+                  disabled={email === usermail ? true : false}
                   onClick={() => {
                     SubscribeChannel();
                   }}
@@ -626,7 +628,7 @@ function VideoSection() {
               ) : (
                 <button
                   className="subscribe subscribe2"
-                  disabled={uploader === channelName ? true : false}
+                  disabled={email === usermail ? true : false}
                   onClick={() => {
                     SubscribeChannel();
                   }}
@@ -738,10 +740,10 @@ function VideoSection() {
                 {views >= 1e9
                   ? `${(views / 1e9).toFixed(1)}B`
                   : views >= 1e6
-                  ? `${(views / 1e6).toFixed(1)}M`
-                  : views >= 1e3
-                  ? `${(views / 1e3).toFixed(1)}K`
-                  : views}{" "}
+                    ? `${(views / 1e6).toFixed(1)}M`
+                    : views >= 1e3
+                      ? `${(views / 1e3).toFixed(1)}K`
+                      : views}{" "}
                 views
               </p>
               <p style={{ marginLeft: "10px" }}>
@@ -998,10 +1000,10 @@ function VideoSection() {
                           {Views[index] >= 1e9
                             ? `${(Views[index] / 1e9).toFixed(1)}B`
                             : Views[index] >= 1e6
-                            ? `${(Views[index] / 1e6).toFixed(1)}M`
-                            : Views[index] >= 1e3
-                            ? `${(Views[index] / 1e3).toFixed(1)}K`
-                            : Views[index]}{" "}
+                              ? `${(Views[index] / 1e6).toFixed(1)}M`
+                              : Views[index] >= 1e3
+                                ? `${(Views[index] / 1e3).toFixed(1)}K`
+                                : Views[index]}{" "}
                           views
                         </p>
                         <p

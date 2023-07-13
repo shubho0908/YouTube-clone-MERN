@@ -160,6 +160,7 @@ Videos.post("/updateview/:id", async (req, res) => {
     const { id } = req.params;
 
     const video = await videodata.findOne({ "VideoData._id": id });
+    const trending = await TrendingData.findOne({ videoid: id });
 
     if (!video) {
       return res.status(404).json({ error: "Video not found" });
@@ -174,10 +175,14 @@ Videos.post("/updateview/:id", async (req, res) => {
     }
 
     video.VideoData[videoIndex].views += 1;
-    console.log("Views updated");
     await video.save();
 
-    res.json(video);
+    if (!trending) {
+      return res.status(404).json({ error: "Video not found" });
+    }
+    trending.views += 1;
+    await trending.save();
+
   } catch (error) {
     res.json(error.message);
   }
