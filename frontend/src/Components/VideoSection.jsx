@@ -59,7 +59,7 @@ function VideoSection() {
   const [youtuberProfile, setyoutuberProfile] = useState();
   const [youtubeChannelID, setyoutubeChannelID] = useState();
   const [isSubscribed, setIsSubscribed] = useState();
-  const [Subscribers, setSubscribers] = useState()
+  const [Subscribers, setSubscribers] = useState();
 
   //Signup user Profile Pic
   const [userProfile, setUserProfile] = useState();
@@ -309,7 +309,7 @@ function VideoSection() {
           );
           const { channelID, subscribers } = await response.json();
           setChannelID(channelID);
-          setSubscribers(subscribers)
+          setSubscribers(subscribers);
         }
       } catch (error) {
         console.log("Error fetching user data:", error.message);
@@ -427,7 +427,7 @@ function VideoSection() {
     return (
       <>
         <div className="main-video-section2">
-          <div className="spin2" style={{ height: "100vh" }}>
+          <div className="spin2" style={{ height: "auto" }}>
             <ReactLoading
               type={"spin"}
               color={"white"}
@@ -524,9 +524,11 @@ function VideoSection() {
   const downloadVideo = () => {
     const link = document.createElement("a");
     link.href = videoURL;
+    link.target = "_blank"
     link.download = "video.mp4";
     link.click();
   };
+
 
   const saveVideo = async () => {
     try {

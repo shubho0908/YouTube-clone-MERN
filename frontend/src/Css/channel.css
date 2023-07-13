@@ -403,8 +403,16 @@
   margin-top: 15px;
 }
 
-.right-about-section{
+.right-about-section {
   margin-left: 60px;
   max-width: 230px;
   min-width: 180px;
+}
+
+.share-clicked2 {
+  position: fixed;
+  left: 50%;
+  top: inherit;
+  transform: translate(-50%, -50%);
+  z-index: 10;
 }

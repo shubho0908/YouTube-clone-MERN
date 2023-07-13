@@ -111,6 +111,22 @@ function Subscriptions() {
     }
   };
 
+  if (subsVideos.length === 0) {
+    return (
+      <>
+        <div className="main-trending-section">
+          <div className="spin2" style={{ height: "auto" }}>
+            <ReactLoading
+              type={"spin"}
+              color={"white"}
+              height={50}
+              width={50}
+            />
+          </div>
+        </div>
+      </>
+    );
+  }
 
   return (
     <>

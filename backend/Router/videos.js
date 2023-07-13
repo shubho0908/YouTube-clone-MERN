@@ -348,7 +348,7 @@ Videos.get("/checktrending/:videoID", async (req, res) => {
       videoid: videoID,
     });
 
-    if (timeDiffHours < 24 && Views >= 5 && !trendingVideo) {
+    if (timeDiffHours < 24 && Views === 5 && !trendingVideo) {
       const trending = new TrendingData({
         thumbnailURL: mainVideo.thumbnailURL,
         uploader: mainVideo.uploader,

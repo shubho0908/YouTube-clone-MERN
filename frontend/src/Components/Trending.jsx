@@ -8,6 +8,7 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import jwtDecode from "jwt-decode";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
+import ReactLoading from "react-loading";
 
 function Trending() {
   const [Email, setEmail] = useState();
@@ -57,6 +58,23 @@ function Trending() {
     }
   };
 
+  if (trendingVideos.length === 0) {
+    return (
+      <>
+        <div className="main-trending-section">
+          <div className="spin2" style={{ height: "auto" }}>
+            <ReactLoading
+              type={"spin"}
+              color={"white"}
+              height={50}
+              width={50}
+            />
+          </div>
+        </div>
+      </>
+    );
+  }
+
   return (
     <>
       <Navbar />
@@ -96,7 +114,7 @@ function Trending() {
                         : Math.round(element.videoLength % 60))}
                   </p>
                   <div className="trending-video-texts">
-                  <p className="trending-batch">TRENDING #{index+1}</p>
+                    <p className="trending-batch">TRENDING #{index + 1}</p>
                     <p className="trending-title">{element.Title}</p>
                     <div className="trending-oneliner">
                       <p className="t-channelname">{element.uploader}</p>
@@ -152,7 +170,6 @@ function Trending() {
                           }
                         })()}
                       </p>
-                      
                     </div>
                     <p className="trending-desc">
                       {element.Description.length <= 140
