@@ -15,6 +15,7 @@ import ThumbDownOutlinedIcon from "@mui/icons-material/ThumbDownOutlined";
 import ReplyIcon from "@mui/icons-material/Reply";
 import { TfiDownload } from "react-icons/Tfi";
 import BookmarkAddOutlinedIcon from "@mui/icons-material/BookmarkAddOutlined";
+import avatar from "../img/avatar.png";
 import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
 import SortOutlinedIcon from "@mui/icons-material/SortOutlined";
 import jwtDecode from "jwt-decode";
@@ -58,6 +59,7 @@ function VideoSection() {
   const [youtuberProfile, setyoutuberProfile] = useState();
   const [youtubeChannelID, setyoutubeChannelID] = useState();
   const [isSubscribed, setIsSubscribed] = useState();
+  const [Subscribers, setSubscribers] = useState()
 
   //Signup user Profile Pic
   const [userProfile, setUserProfile] = useState();
@@ -244,14 +246,16 @@ function VideoSection() {
   useEffect(() => {
     const getWatchlater = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:3000/checkwatchlater/${id}/${email}`
-        );
-        const savedID = await response.json();
-        if (savedID === id) {
-          setIsSaved(true);
-        } else if (savedID !== id) {
-          setIsSaved(false);
+        if (id !== undefined && email !== undefined) {
+          const response = await fetch(
+            `http://localhost:3000/checkwatchlater/${id}/${email}`
+          );
+          const savedID = await response.json();
+          if (savedID === id) {
+            setIsSaved(true);
+          } else if (savedID !== id) {
+            setIsSaved(false);
+          }
         }
       } catch (error) {
         console.log(error.message);
@@ -303,8 +307,9 @@ function VideoSection() {
           const response = await fetch(
             `http://localhost:3000/getchannelid/${usermail}`
           );
-          const { channelID } = await response.json();
+          const { channelID, subscribers } = await response.json();
           setChannelID(channelID);
+          setSubscribers(subscribers)
         }
       } catch (error) {
         console.log("Error fetching user data:", error.message);
@@ -613,7 +618,7 @@ function VideoSection() {
                     />
                   </Tooltip>
                 </div>
-                <p className="channel-subs">10M subscribers</p>
+                <p className="channel-subs">{Subscribers} subscribers</p>
               </div>
               {isSubscribed === false ? (
                 <button
@@ -792,7 +797,7 @@ function VideoSection() {
             </div>
             <div className="my-comment-area">
               <img
-                src={userProfile && userProfile}
+                src={userProfile ? userProfile : avatar}
                 alt="channelDP"
                 className="channelDP"
                 loading="lazy"

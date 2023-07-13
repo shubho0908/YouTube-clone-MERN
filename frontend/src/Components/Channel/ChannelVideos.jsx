@@ -138,7 +138,7 @@ function ChannelVideos(prop) {
                     {Math.floor(element.videoLength / 60) +
                       ":" +
                       (Math.round(element.videoLength % 60) < 10
-                        ? "0" + Math.round(element.duration % 60)
+                        ? "0" + Math.round(element.videoLength % 60)
                         : Math.round(element.videoLength % 60))}
                   </p>
                   <div className="videos-metadataa">

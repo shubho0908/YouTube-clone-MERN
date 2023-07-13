@@ -17,6 +17,7 @@ function ChannelTop() {
   const [ChannelProfile, setChannelProfile] = useState();
   const [myVideos, setMyVideos] = useState([]);
   const token = localStorage.getItem("userToken");
+  const [Subscribers, setSubscribers] = useState();
   const Section = localStorage.getItem("Section");
 
   useEffect(() => {
@@ -41,6 +42,24 @@ function ChannelTop() {
     };
 
     const interval = setInterval(getChannelData, 200);
+
+    return () => clearInterval(interval);
+  }, [Email]);
+
+  useEffect(() => {
+    const getSubscribers = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:3000/getchannelid/${Email}`
+        );
+        const { subscribers } = await response.json();
+        setSubscribers(subscribers);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
+    const interval = setInterval(getSubscribers, 200);
 
     return () => clearInterval(interval);
   }, [Email]);
@@ -91,10 +110,10 @@ function ChannelTop() {
               loading="lazy"
             />
             <div className="channel-left">
-              <p className="channelname">{channelName}</p>
+              <p className="channelname">{channelName && channelName}</p>
               <div className="channel-extra">
-                <p className="channeluser">@{username}</p>
-                <p className="my-subs">100 subscribers</p>
+                <p className="channeluser">@{username && username}</p>
+                <p className="my-subs">{Subscribers && Subscribers} subscribers</p>
                 <p className="my-videoscount">
                   {myVideos && myVideos.length} videos
                 </p>

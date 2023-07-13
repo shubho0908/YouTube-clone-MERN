@@ -35,7 +35,6 @@ function ChannelHome(prop) {
         );
         const myvideos = await response.json();
         setMyVideos(myvideos);
-        console.log(prop.newmail);
        }
       } catch (error) {
         console.log(error.message);
@@ -199,7 +198,7 @@ function ChannelHome(prop) {
                     {Math.floor(element.videoLength / 60) +
                       ":" +
                       (Math.round(element.videoLength % 60) < 10
-                        ? "0" + Math.round(element.duration % 60)
+                        ? "0" + Math.round(element.videoLength % 60)
                         : Math.round(element.videoLength % 60))}
                   </p>
                   <div className="video-metadata2">

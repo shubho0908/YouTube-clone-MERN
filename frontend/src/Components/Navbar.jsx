@@ -124,7 +124,7 @@ function Navbar() {
             <p>Signin</p>
           </button>
           <img
-            src={profilePic && profilePic}
+            src={profilePic ? profilePic : avatar}
             alt="user profile pic"
             loading="lazy"
             className="profile-pic"

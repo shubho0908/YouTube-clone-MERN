@@ -25,7 +25,7 @@
 }
 
 .seperate-three {
-  margin-top: 30px;
+  margin-top: 24px;
 }
 .trending-videos-section {
   position: absolute;
@@ -48,6 +48,7 @@
   font-size: 13px;
 }
 .trending-video-data {
+  cursor: pointer;
   display: flex;
   align-items: flex-start;
   margin-bottom: 18px;
@@ -74,4 +75,10 @@
 .t-views,
 .t-uploaded-date {
   margin-left: 6px;
+}
+
+.trending-batch {
+  margin-bottom: 5px;
+  font-size: 14.5px;
+  color: #3ea6ff;
 }

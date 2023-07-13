@@ -96,6 +96,7 @@ function Trending() {
                         : Math.round(element.videoLength % 60))}
                   </p>
                   <div className="trending-video-texts">
+                  <p className="trending-batch">TRENDING #{index+1}</p>
                     <p className="trending-title">{element.Title}</p>
                     <div className="trending-oneliner">
                       <p className="t-channelname">{element.uploader}</p>
@@ -151,11 +152,12 @@ function Trending() {
                           }
                         })()}
                       </p>
+                      
                     </div>
                     <p className="trending-desc">
-                      {element.Description.length <= 180
+                      {element.Description.length <= 140
                         ? element.Description
-                        : `${element.Description.slice(0, 180)}...`}
+                        : `${element.Description.slice(0, 140)}...`}
                     </p>
                   </div>
                 </div>

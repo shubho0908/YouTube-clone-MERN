@@ -33,11 +33,13 @@ function WatchLater() {
   useEffect(() => {
     const getWatchLater = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:3000/getwatchlater/${email}`
-        );
-        const savedData = await response.json();
-        setWatchLater(savedData);
+        if (email !== undefined) {
+          const response = await fetch(
+            `http://localhost:3000/getwatchlater/${email}`
+          );
+          const savedData = await response.json();
+          setWatchLater(savedData);
+        }
       } catch (error) {
         console.log(error.message);
       }

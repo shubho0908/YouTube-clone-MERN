@@ -20,6 +20,7 @@ function OtherChannel() {
   const Section = localStorage.getItem("Section") || "Home";
   const token = localStorage.getItem("userToken");
   const [isSubscribed, setIsSubscribed] = useState();
+  const [Subscribers, setSubscribers] = useState();
 
   useEffect(() => {
     if (token) {
@@ -61,6 +62,24 @@ function OtherChannel() {
     };
 
     const interval = setInterval(getChannelData, 200);
+
+    return () => clearInterval(interval);
+  }, [Email]);
+
+  useEffect(() => {
+    const getSubscribers = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:3000/getchannelid/${Email}`
+        );
+        const { subscribers } = await response.json();
+        setSubscribers(subscribers);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
+    const interval = setInterval(getSubscribers, 200);
 
     return () => clearInterval(interval);
   }, [Email]);
@@ -133,10 +152,12 @@ function OtherChannel() {
               loading="lazy"
             />
             <div className="channel-left">
-              <p className="channelname">{channelName}</p>
+              <p className="channelname">{channelName && channelName}</p>
               <div className="channel-extra">
-                <p className="channeluser">@{username}</p>
-                <p className="my-subs">100 subscribers</p>
+                <p className="channeluser">@{username && username}</p>
+                <p className="my-subs">
+                  {Subscribers && Subscribers} subscribers
+                </p>
                 <p className="my-videoscount">
                   {myVideos && myVideos.length} videos
                 </p>
@@ -157,8 +178,26 @@ function OtherChannel() {
             </div>
           ) : (
             <div className="channel-right-content">
-              <button className="subscribethis-channel" style={isSubscribed === true ? {display:"none"}:{display:"block"}}>Subscribe</button>
-              <button className="subscribethis-channel2" style={isSubscribed === true ? {display:"block"}:{display:"none"}}>Subscribed</button>
+              <button
+                className="subscribethis-channel"
+                style={
+                  isSubscribed === true
+                    ? { display: "none" }
+                    : { display: "block" }
+                }
+              >
+                Subscribe
+              </button>
+              <button
+                className="subscribethis-channel2"
+                style={
+                  isSubscribed === true
+                    ? { display: "block" }
+                    : { display: "none" }
+                }
+              >
+                Subscribed
+              </button>
             </div>
           )}
         </div>
@@ -275,7 +314,11 @@ function OtherChannel() {
         <hr className="seperate seperate-new" />
         {Section === "Home" ? <ChannelHome newmail={Email} /> : ""}
         {Section === "Videos" ? <ChannelVideos newmail={Email} /> : ""}
-        {Section === "About" ? <ChannelAbout newmail={Email} channelid={id}/> : ""}
+        {Section === "About" ? (
+          <ChannelAbout newmail={Email} channelid={id} />
+        ) : (
+          ""
+        )}
       </div>
     </>
   );
