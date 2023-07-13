@@ -3,6 +3,7 @@ require("../Database/database");
 const express = require("express");
 const userData = require("../Models/user");
 const videodata = require("../Models/videos");
+const TrendingData = require("../Models/trending");
 const Videos = express.Router();
 
 Videos.post("/publish", async (req, res) => {
@@ -306,7 +307,66 @@ Videos.get("/totalviews/:email", async (req, res) => {
       totalViews += video.views;
     });
 
-    res.json(totalViews)
+    res.json(totalViews);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+Videos.get("/checktrending/:videoID", async (req, res) => {
+  try {
+    const { videoID } = req.params;
+    const video = await videodata.findOne({ "VideoData._id": videoID });
+    if (!video) {
+      return res.status(404).json({ error: "Video doesn't exist" });
+    }
+
+    const videoIndex = video.VideoData.findIndex(
+      (data) => data._id.toString() === videoID
+    );
+
+    if (videoIndex === -1) {
+      return res.status(404).json({ error: "Video not found" });
+    }
+
+    const mainVideo = video.VideoData[videoIndex];
+    const Views = video.VideoData[videoIndex].views;
+    const publish = video.VideoData[videoIndex].uploaded_date;
+
+    const currentDate = new Date();
+    const publishDate = new Date(publish);
+    const timeDiffMs = currentDate - publishDate;
+
+    const timeDiffHours = Math.round(timeDiffMs / (1000 * 60 * 60)); // Convert ms to hours
+
+    const trendingVideo = await TrendingData.findOne({
+      videoid: videoID,
+    });
+
+    if (timeDiffHours < 24 && Views >= 5 && !trendingVideo) {
+      const trending = new TrendingData({
+        thumbnailURL: mainVideo.thumbnailURL,
+        uploader: mainVideo.uploader,
+        videoURL: mainVideo.videoURL,
+        ChannelProfile: mainVideo.ChannelProfile,
+        Title: mainVideo.Title,
+        Description: mainVideo.Description,
+        videoLength: mainVideo.videoLength,
+        views: mainVideo.views,
+        uploaded_date: mainVideo.uploaded_date,
+        videoid: mainVideo._id,
+      });
+      return await trending.save();
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+Videos.get("/gettrending", async (req, res) => {
+  try {
+    const trending = await TrendingData.find();
+    res.json(trending);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

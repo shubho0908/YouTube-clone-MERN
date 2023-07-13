@@ -8,6 +8,7 @@ import WatchLater from "./Components/WatchLater";
 import ChannelTop from "./Components/Channel/ChannelTop";
 import OtherChannel from "./Components/Channel/OtherChannel";
 import Subscriptions from "./Components/Subscriptions";
+import Trending from "./Components/Trending";
 
 function App() {
   const token = localStorage.getItem("userToken");
@@ -33,6 +34,10 @@ function App() {
           <Route
             path="/channel/:id"
             element={<OtherChannel />}
+          />
+          <Route
+            path="/trending"
+            element={<Trending />}
           />
           <Route
             path="/subscriptions"

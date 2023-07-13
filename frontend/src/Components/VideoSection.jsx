@@ -356,6 +356,20 @@ function VideoSection() {
     checkSubscription();
   }, [channelID, email]);
 
+  useEffect(() => {
+    const GetTrending = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/checktrending/${id}`)
+        const trendingData = await response.json()
+        console.log(trendingData);
+      } catch (error) {
+        console.log(error.message);
+      }
+    }
+    GetTrending()
+  }, [id])
+
+
   //POST REQUESTS
 
   const uploadComment = async () => {
@@ -725,10 +739,10 @@ function VideoSection() {
                 {views >= 1e9
                   ? `${(views / 1e9).toFixed(1)}B`
                   : views >= 1e6
-                  ? `${(views / 1e6).toFixed(1)}M`
-                  : views >= 1e3
-                  ? `${(views / 1e3).toFixed(1)}K`
-                  : views}{" "}
+                    ? `${(views / 1e6).toFixed(1)}M`
+                    : views >= 1e3
+                      ? `${(views / 1e3).toFixed(1)}K`
+                      : views}{" "}
                 views
               </p>
               <p style={{ marginLeft: "10px" }}>
@@ -985,10 +999,10 @@ function VideoSection() {
                           {Views[index] >= 1e9
                             ? `${(Views[index] / 1e9).toFixed(1)}B`
                             : Views[index] >= 1e6
-                            ? `${(Views[index] / 1e6).toFixed(1)}M`
-                            : Views[index] >= 1e3
-                            ? `${(Views[index] / 1e3).toFixed(1)}K`
-                            : Views[index]}{" "}
+                              ? `${(Views[index] / 1e6).toFixed(1)}M`
+                              : Views[index] >= 1e3
+                                ? `${(Views[index] / 1e3).toFixed(1)}K`
+                                : Views[index]}{" "}
                           views
                         </p>
                         <p

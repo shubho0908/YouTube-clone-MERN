@@ -86,6 +86,8 @@ function LeftPanel() {
             }
             onClick={() => {
               localStorage.setItem("selected", "trending");
+              navigate("/trending");
+              window.location.reload();
             }}
           >
             <WhatshotOutlinedIcon

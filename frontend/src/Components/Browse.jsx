@@ -20,7 +20,6 @@ function Browse() {
     const menu = localStorage.getItem("menuClicked");
     return menu ? JSON.parse(menu) : false;
   });
-  const [scrollPosition, setScrollPosition] = useState(0);
   const [VideoViews, setVideoViews] = useState();
   const [publishDate, setPublishDate] = useState();
 
@@ -30,21 +29,6 @@ function Browse() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, []);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentPosition =
-        window.pageYOffset || document.documentElement.scrollTop;
-
-      setScrollPosition(currentPosition);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
   }, []);
 
   useEffect(() => {
@@ -171,7 +155,6 @@ function Browse() {
             <div
               className="video-section"
               style={{
-                height: scrollPosition > 110 ? "auto" : "100vh",
                 marginLeft: menuClicked ? "40px" : "80px",
               }}
             >
