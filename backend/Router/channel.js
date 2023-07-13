@@ -106,7 +106,7 @@ Channel.get("/checkchannel/:email", async (req, res) => {
   try {
     const email = req.params.email;
     const user = await userData.findOne({ email });
-    const channel = user.channelName;
+    const { channel } = user.channelName;
     res.json(channel);
   } catch (error) {
     res.json(error.message);
@@ -202,14 +202,18 @@ Channel.get("/subscribe/:email", async (req, res) => {
   }
 });
 
-Channel.post("/subscribe/:channelID/:email", async (req, res) => {
+Channel.post("/subscribe/:channelID/:email/:email2", async (req, res) => {
   try {
-    const { channelID } = req.params;
-    const email = req.params.email;
+    const { channelID, email, email2 } = req.params;
     const { youtuberName, youtuberProfile, youtubeChannelID } = req.body;
     const user = await userData.findOne({ email });
+    const user2 = await userData.findOne({ email: email2 });
 
     if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    if (!user2) {
       return res.status(404).json({ error: "User not found" });
     }
 
@@ -223,11 +227,14 @@ Channel.post("/subscribe/:channelID/:email", async (req, res) => {
         channelProfile: youtuberProfile,
         channelID: youtubeChannelID.toString(),
       });
+      user2.channelData[0].subscribers += 1;
     } else {
       user.subscribedChannels.splice(existingChannelIndex, 1);
+      user2.channelData[0].subscribers -= 1;
     }
 
     await user.save();
+    await user2.save();
 
     res.json("SUBSCRIBED CHANNEL");
   } catch (error) {
@@ -303,7 +310,7 @@ Channel.get("/getabout/:email", async (req, res) => {
     const channeldata = user.channelData[0];
     const description = channeldata.channelDescription;
     const sociallinks = channeldata.socialLinks;
-    const joining = channeldata.joinedDate
+    const joining = channeldata.joinedDate;
     res.json({ description, sociallinks, joining });
   } catch (error) {
     res.status(500).json({ error: error.message });

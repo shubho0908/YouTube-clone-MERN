@@ -4,13 +4,18 @@
         "colId": "history",
         "containerId": "",
         "name": "http://localhost:3000/getvideos",
-        "url": "http://localhost:3000/gettrending",
-        "method": "GET",
+        "url": "http://localhost:3000/subscribe/64aeb43dc7f94bd6ab1db87c/shubho@gmail.com/shubhobera98@gmail.com",
+        "method": "POST",
         "sortNum": 0,
         "created": "2023-06-18T13:58:12.195Z",
-        "modified": "2023-07-13T06:33:35.899Z",
+        "modified": "2023-07-13T07:03:52.624Z",
         "headers": [],
         "params": [],
+        "body": {
+            "type": "json",
+            "raw": "{\n  \"youtuberName\":\"RAAM\",\n  \"youtuberProfile\":\"dp.png\",\n  \"youtubeChannelID\":\"64aeb43dc7f94bd6ab1db87c\"\n}",
+            "form": []
+        },
         "tests": []
     }
 ]

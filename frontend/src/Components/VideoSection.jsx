@@ -98,7 +98,7 @@ function VideoSection() {
         const response = await fetch(
           `http://localhost:3000/checkchannel/${email}`
         );
-        const channel = await response.json();
+        const { channel } = await response.json();
         setChannelName(channel);
       } catch (error) {
         console.log(error.message);
@@ -319,13 +319,15 @@ function VideoSection() {
   useEffect(() => {
     const GetChannelData = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:3000/subscribe/${usermail}`
-        );
-        const { channel, profile, channelid } = await response.json();
-        setyoutuberName(channel);
-        setyoutuberProfile(profile);
-        setyoutubeChannelID(channelid);
+        if (usermail !== undefined) {
+          const response = await fetch(
+            `http://localhost:3000/subscribe/${usermail}`
+          );
+          const { channel, profile, channelid } = await response.json();
+          setyoutuberName(channel);
+          setyoutuberProfile(profile);
+          setyoutubeChannelID(channelid);
+        }
       } catch (error) {
         console.log("Error fetching user data:", error.message);
       }
@@ -339,14 +341,16 @@ function VideoSection() {
   useEffect(() => {
     const checkSubscription = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:3000/checksubscription/${channelID}/${email}`
-        );
-        const { existingChannelID } = await response.json();
-        if (existingChannelID !== undefined) {
-          setIsSubscribed(true);
-        } else {
-          setIsSubscribed(false);
+        if (email !== undefined && channelID !== undefined) {
+          const response = await fetch(
+            `http://localhost:3000/checksubscription/${channelID}/${email}`
+          );
+          const { existingChannelID } = await response.json();
+          if (existingChannelID !== undefined) {
+            setIsSubscribed(true);
+          } else {
+            setIsSubscribed(false);
+          }
         }
       } catch (error) {
         console.log(error.message);
@@ -359,16 +363,17 @@ function VideoSection() {
   useEffect(() => {
     const GetTrending = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/checktrending/${id}`)
-        const trendingData = await response.json()
+        const response = await fetch(
+          `http://localhost:3000/checktrending/${id}`
+        );
+        const trendingData = await response.json();
         console.log(trendingData);
       } catch (error) {
         console.log(error.message);
       }
-    }
-    GetTrending()
-  }, [id])
-
+    };
+    GetTrending();
+  }, [id]);
 
   //POST REQUESTS
 
@@ -541,7 +546,7 @@ function VideoSection() {
         youtubeChannelID,
       };
       const response = await fetch(
-        `http://localhost:3000/subscribe/${channelID}/${email}`,
+        `http://localhost:3000/subscribe/${channelID}/${email}/${usermail}`,
         {
           method: "POST",
           body: JSON.stringify(channelData),
@@ -614,9 +619,6 @@ function VideoSection() {
                   disabled={uploader === channelName ? true : false}
                   onClick={() => {
                     SubscribeChannel();
-                    setTimeout(() => {
-                      window.location.reload();
-                    }, 600);
                   }}
                 >
                   Subscribe
@@ -627,9 +629,6 @@ function VideoSection() {
                   disabled={uploader === channelName ? true : false}
                   onClick={() => {
                     SubscribeChannel();
-                    setTimeout(() => {
-                      window.location.reload();
-                    }, 600);
                   }}
                 >
                   Subscribed
@@ -739,10 +738,10 @@ function VideoSection() {
                 {views >= 1e9
                   ? `${(views / 1e9).toFixed(1)}B`
                   : views >= 1e6
-                    ? `${(views / 1e6).toFixed(1)}M`
-                    : views >= 1e3
-                      ? `${(views / 1e3).toFixed(1)}K`
-                      : views}{" "}
+                  ? `${(views / 1e6).toFixed(1)}M`
+                  : views >= 1e3
+                  ? `${(views / 1e3).toFixed(1)}K`
+                  : views}{" "}
                 views
               </p>
               <p style={{ marginLeft: "10px" }}>
@@ -999,10 +998,10 @@ function VideoSection() {
                           {Views[index] >= 1e9
                             ? `${(Views[index] / 1e9).toFixed(1)}B`
                             : Views[index] >= 1e6
-                              ? `${(Views[index] / 1e6).toFixed(1)}M`
-                              : Views[index] >= 1e3
-                                ? `${(Views[index] / 1e3).toFixed(1)}K`
-                                : Views[index]}{" "}
+                            ? `${(Views[index] / 1e6).toFixed(1)}M`
+                            : Views[index] >= 1e3
+                            ? `${(Views[index] / 1e3).toFixed(1)}K`
+                            : Views[index]}{" "}
                           views
                         </p>
                         <p

@@ -6,6 +6,9 @@ function Trending() {
         <>
             <Navbar />
             <LeftPanel />
+            <div className="main-trending-section">
+                
+            </div>
         </>
     )
 }
