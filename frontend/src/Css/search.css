@@ -1,0 +1,62 @@
+.channel-img {
+  width: 130px;
+  border-radius: 100%;
+}
+
+.searched-content {
+  position: absolute;
+  /* top: 95px; */
+  /* left: 450px; */
+  width: -webkit-fill-available;
+  color: white;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 200px;
+}
+
+.search-channel {
+  display: flex;
+  align-items: center;
+}
+
+.channel-liner {
+  display: flex;
+  align-items: center;
+}
+
+.channel-extra-content {
+  position: relative;
+  left: 60px;
+}
+
+.new-title {
+  font-size: 20px;
+}
+
+.new-subs {
+  margin-top: 10px;
+  margin-left: 10px;
+  font-size: 14px;
+  color: #aaa;
+}
+
+.new-email {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #aaa;
+}
+
+.new-desc {
+  margin-top: 6px;
+  font-size: 14px;
+  color: #aaa;
+}
+
+.sep2{
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.thischannel-videos-section{
+  position: absolute;
+}

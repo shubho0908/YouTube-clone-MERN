@@ -2,7 +2,6 @@
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import VideoCallOutlinedIcon from "@mui/icons-material/VideoCallOutlined";
-import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import ClearRoundedIcon from "@mui/icons-material/ClearRounded";
 import AccountPop from "./AccountPop";
@@ -115,11 +114,7 @@ function Navbar() {
               navigate("/studio");
             }}
           />
-          <NotificationsNoneOutlinedIcon
-            className="icon-btns"
-            fontSize="large"
-            style={{ color: "rgb(160, 160, 160)" }}
-          />
+        
           <button
             onClick={() => {
               if (isbtnClicked === false) {
