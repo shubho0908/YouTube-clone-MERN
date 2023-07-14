@@ -60,7 +60,6 @@ function LikeVideos() {
     };
   }, []);
 
-
   const updateViews = async (id) => {
     try {
       const response = await fetch(`http://localhost:3000/updateview/${id}`, {
@@ -69,7 +68,7 @@ function LikeVideos() {
           "Content-Type": "application/json",
         },
       });
-   await response.json();
+      await response.json();
     } catch (error) {
       console.log(error.message);
     }
@@ -163,9 +162,7 @@ function LikeVideos() {
                           />
                           <div className="its-content">
                             <p>{element.Title}</p>
-                            <p>
-                              {element.uploader}
-                            </p>
+                            <p>{element.uploader}</p>
                           </div>
                         </div>
                       </div>
@@ -175,13 +172,18 @@ function LikeVideos() {
             </div>
           </div>
         ) : (
-          <div className="spinner" style={{ height: "100vh" }}>
-            <ReactLoading
-              type={"spin"}
-              color={"white"}
-              height={50}
-              width={50}
-            />
+          <div className="main-trending-section">
+            <div className="spin2" style={{ height: "auto" }}>
+              <ReactLoading
+                type={"spin"}
+                color={"white"}
+                height={50}
+                width={50}
+              />
+              <p style={{ marginTop: "15px" }}>
+                Fetching the data, Hang tight...{" "}
+              </p>
+            </div>
           </div>
         )}
       </div>

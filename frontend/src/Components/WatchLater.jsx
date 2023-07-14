@@ -101,7 +101,9 @@ function WatchLater() {
           <div
             className="like-video-sections"
             style={
-              menuClicked === false ? { left: "80px", width: "100%" } : { left: "255px" }
+              menuClicked === false
+                ? { left: "80px", width: "100%" }
+                : { left: "255px" }
             }
           >
             <div
@@ -158,45 +160,48 @@ function WatchLater() {
             <div className="like-right-section">
               {watchlater.length > 0
                 ? watchlater.map((element, index) => {
-                  return (
-                    <div className="liked-all-videos" key={index}>
-                      <p style={{ color: "#aaa" }}>{index + 1}</p>
-                      <div
-                        className="liked-videos-all-data"
-                        onClick={() => {
-                          navigate(`/video/${element.savedVideoID}`);
-                          window.location.reload();
-                          if (token) {
-                            updateViews(element.savedVideoID);
-                          }
-                        }}
-                      >
-                        <img
-                          src={element.thumbnailURL}
-                          alt="first-like-thumbnail"
-                          loading="lazy"
-                        />
-                        <div className="its-content">
-                          <p>{element.Title}</p>
-                          <p>
-                            {element.uploader}
-                          </p>
+                    return (
+                      <div className="liked-all-videos" key={index}>
+                        <p style={{ color: "#aaa" }}>{index + 1}</p>
+                        <div
+                          className="liked-videos-all-data"
+                          onClick={() => {
+                            navigate(`/video/${element.savedVideoID}`);
+                            window.location.reload();
+                            if (token) {
+                              updateViews(element.savedVideoID);
+                            }
+                          }}
+                        >
+                          <img
+                            src={element.thumbnailURL}
+                            alt="first-like-thumbnail"
+                            loading="lazy"
+                          />
+                          <div className="its-content">
+                            <p>{element.Title}</p>
+                            <p>{element.uploader}</p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  );
-                })
+                    );
+                  })
                 : ""}
             </div>
           </div>
         ) : (
-          <div className="spinner" style={{ height: "100vh" }}>
-            <ReactLoading
-              type={"spin"}
-              color={"white"}
-              height={50}
-              width={50}
-            />
+          <div className="main-trending-section">
+            <div className="spin2" style={{ height: "auto" }}>
+              <ReactLoading
+                type={"spin"}
+                color={"white"}
+                height={50}
+                width={50}
+              />
+              <p style={{ marginTop: "15px" }}>
+                Fetching the data, Hang tight...{" "}
+              </p>
+            </div>
           </div>
         )}
       </div>

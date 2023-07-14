@@ -9,6 +9,19 @@
   padding-bottom: 20px;
   border-radius: 10px;
   width: 280px;
+  animation: slowdown 0.2s ease;
+}
+
+@keyframes slowdown {
+  0% {
+    top: 35px;
+    opacity: 0;
+  }
+
+  100% {
+    top: 68px;
+    opacity: 1;
+  }
 }
 
 .channelIMG {

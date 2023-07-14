@@ -414,6 +414,9 @@ function VideoSection() {
               height={50}
               width={50}
             />
+            <p style={{ marginTop: "15px" }}>
+              Fetching the data, Hang tight...{" "}
+            </p>{" "}
           </div>
         </div>
       </>
@@ -434,6 +437,9 @@ function VideoSection() {
               height={50}
               width={50}
             />
+            <p style={{ marginTop: "15px" }}>
+              Fetching the data, Hang tight...{" "}
+            </p>
           </div>
         </div>
       </>
@@ -524,11 +530,10 @@ function VideoSection() {
   const downloadVideo = () => {
     const link = document.createElement("a");
     link.href = videoURL;
-    link.target = "_blank"
+    link.target = "_blank";
     link.download = "video.mp4";
     link.click();
   };
-
 
   const saveVideo = async () => {
     try {
@@ -747,10 +752,10 @@ function VideoSection() {
                 {views >= 1e9
                   ? `${(views / 1e9).toFixed(1)}B`
                   : views >= 1e6
-                    ? `${(views / 1e6).toFixed(1)}M`
-                    : views >= 1e3
-                      ? `${(views / 1e3).toFixed(1)}K`
-                      : views}{" "}
+                  ? `${(views / 1e6).toFixed(1)}M`
+                  : views >= 1e3
+                  ? `${(views / 1e3).toFixed(1)}K`
+                  : views}{" "}
                 views
               </p>
               <p style={{ marginLeft: "10px" }}>
@@ -1007,10 +1012,10 @@ function VideoSection() {
                           {Views[index] >= 1e9
                             ? `${(Views[index] / 1e9).toFixed(1)}B`
                             : Views[index] >= 1e6
-                              ? `${(Views[index] / 1e6).toFixed(1)}M`
-                              : Views[index] >= 1e3
-                                ? `${(Views[index] / 1e3).toFixed(1)}K`
-                                : Views[index]}{" "}
+                            ? `${(Views[index] / 1e6).toFixed(1)}M`
+                            : Views[index] >= 1e3
+                            ? `${(Views[index] / 1e3).toFixed(1)}K`
+                            : Views[index]}{" "}
                           views
                         </p>
                         <p
