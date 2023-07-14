@@ -116,15 +116,11 @@ Comments.post(
   }
 );
 
-Comments.get("/likecomment/:videoId/:email", async (req, res) => {
+Comments.get("/likecomment/:videoId", async (req, res) => {
   try {
     const { videoId, email } = req.params;
     const video = await videodata.findOne({ "VideoData._id": videoId });
-    const user = await userData.findOne({ email });
 
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
-    }
     if (!video) {
       return res.status(404).json({ error: "Video not found" });
     }
