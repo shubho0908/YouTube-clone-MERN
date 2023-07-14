@@ -132,7 +132,7 @@ function OtherChannel() {
 
   if (!ChannelProfile) {
     return (
-      <div className="spinner" style={{ height: "100vh" }}>
+      <div className="spinner" style={{ height: "auto" }}>
         <ReactLoading type={"spin"} color={"white"} height={50} width={50} />
       </div>
     );

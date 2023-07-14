@@ -37,7 +37,7 @@
 
 .main-video-section2 {
   background-color: #0f0f0f;
-  height: 150vh;
+  height: auto;
 }
 
 .left-video-section2 {
@@ -251,6 +251,7 @@
 }
 
 .sorting {
+  cursor: pointer;
   display: flex;
   align-items: center;
   margin-left: 35px;
@@ -445,4 +446,22 @@
 .download-btn:active,
 .save-later:active {
   transform: scale(0.8);
+}
+
+.sort-options {
+  position: absolute;
+  background-color: #272727;
+  left: 200px;
+  border-radius: 5px;
+  margin-top: 140px;
+}
+
+.sort-options > p {
+  cursor: pointer;
+  padding: 15px;
+  transition: all 0.15s ease;
+}
+
+.sort-options > p:hover {
+  background-color: gray;
 }

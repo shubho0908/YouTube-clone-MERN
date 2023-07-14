@@ -34,6 +34,8 @@ function VideoSection() {
   const [shareClicked, setShareClicked] = useState(false);
   const [usermail, setUserMail] = useState();
   const [channelID, setChannelID] = useState();
+  const [isSortClicked, setisSortClicked] = useState(false);
+  const [commentSort, setCommentSort] = useState("Top");
   const videoRef = useRef(null);
   const token = localStorage.getItem("userToken");
 
@@ -277,10 +279,24 @@ function VideoSection() {
         console.log(error.message);
       }
     };
-    const interval = setInterval(getComments, 200);
-
-    return () => clearInterval(interval);
+    getComments();
   }, [id]);
+
+  useEffect(() => {
+    const SortComments = () => {
+      if (commentSort === "Top") {
+        setComments((prevComment) =>
+          [...prevComment].sort((a, b) => new Date(a.time) - new Date(b.time))
+        );
+      } else if (commentSort === "New") {
+        setComments((prevComment) =>
+          [...prevComment].sort((a, b) => new Date(b.time) - new Date(a.time))
+        );
+      }
+    };
+
+    SortComments();
+  }, [commentSort]);
 
   useEffect(() => {
     const getOtherChannel = async () => {
@@ -407,7 +423,7 @@ function VideoSection() {
     return (
       <>
         <div className="main-video-section2">
-          <div className="spin2" style={{ height: "100vh" }}>
+          <div className="spin2" style={{ height: "auto" }}>
             <ReactLoading
               type={"spin"}
               color={"white"}
@@ -793,11 +809,43 @@ function VideoSection() {
                 {comments && comments.length}{" "}
                 {comments && comments.length > 1 ? "Comments" : "Comment"}
               </p>
-              <div className="sorting">
+              <div
+                className="sorting"
+                onClick={() => {
+                  if (isSortClicked === false) {
+                    setisSortClicked(true);
+                  } else {
+                    setisSortClicked(false);
+                  }
+                }}
+              >
                 <SortOutlinedIcon
                   fontSize="medium"
                   style={{ color: "white" }}
                 />
+                <div
+                  className="sort-options"
+                  style={
+                    isSortClicked === true
+                      ? { display: "block" }
+                      : { display: "none" }
+                  }
+                >
+                  <p
+                    onClick={() => {
+                      setCommentSort("Top");
+                    }}
+                  >
+                    Top comments
+                  </p>
+                  <p
+                    onClick={() => {
+                      setCommentSort("New");
+                    }}
+                  >
+                    Newest First
+                  </p>
+                </div>
                 <p style={{ marginLeft: "15px" }}>Sort by</p>
                 <div className="sort-comments-pop"></div>
               </div>
