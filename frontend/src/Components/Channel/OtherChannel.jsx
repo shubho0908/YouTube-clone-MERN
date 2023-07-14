@@ -130,19 +130,13 @@ function OtherChannel() {
 
   const username = Email && getUsername(Email);
 
-  if (!ChannelProfile) {
-    return (
-      <div className="spinner" style={{ height: "auto" }}>
-        <ReactLoading type={"spin"} color={"white"} height={50} width={50} />
-      </div>
-    );
-  }
-
   return (
     <>
       <Navbar />
       <LeftPanel />
-      <div className="channel-main-content">
+     {
+      ChannelProfile ? (
+        <div className="channel-main-content">
         <div className="channel-top-content">
           <div className="channel-left-content">
             <img
@@ -320,6 +314,22 @@ function OtherChannel() {
           ""
         )}
       </div>
+      ) : (
+        <div className="main-trending-section">
+        <div className="spin2" style={{ height: "auto" }}>
+          <ReactLoading
+            type={"spin"}
+            color={"white"}
+            height={50}
+            width={50}
+          />
+          <p style={{ marginTop: "15px" }}>
+            Fetching the data, Hang tight...{" "}
+          </p>
+        </div>
+      </div>
+      )
+     }
     </>
   );
 }

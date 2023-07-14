@@ -17,7 +17,6 @@ import { TfiDownload } from "react-icons/Tfi";
 import BookmarkAddOutlinedIcon from "@mui/icons-material/BookmarkAddOutlined";
 import avatar from "../img/avatar.png";
 import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
-import SortOutlinedIcon from "@mui/icons-material/SortOutlined";
 import jwtDecode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 
@@ -919,7 +918,7 @@ function VideoSection() {
                               cursor: "pointer",
                             }}
                           />
-                          {element.user_email === email ? (
+                          {element.user_email === email || email === usermail ? (
                             <button
                               className="delete-comment-btn"
                               style={{ marginLeft: "25px" }}
