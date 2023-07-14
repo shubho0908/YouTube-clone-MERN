@@ -23,6 +23,7 @@ function Navbar() {
   const [email, setEmail] = useState();
   const [profilePic, setProfilePic] = useState();
   const [showPop, setShowPop] = useState(false);
+  const [searchedData, setSearchedData] = useState();
 
   const navigate = useNavigate();
 
@@ -53,6 +54,11 @@ function Navbar() {
     return () => clearInterval(interval);
   }, [email]);
 
+  const handleSearch = (e) => {
+    setSearchedData(e.target.value);
+    console.log(searchedData);
+  };
+
   return (
     <>
       <div className="navbar">
@@ -75,11 +81,21 @@ function Navbar() {
         </div>
         <div className="middle-bar">
           <div className="search">
-            <input type="text" placeholder="Type to search" id="searchType" />
+            <input
+              type="text"
+              placeholder="Type to search"
+              id="searchType"
+              onChange={handleSearch}
+            />
             <SearchRoundedIcon
               className="search-icon"
               fontSize="large"
               style={{ color: "rgb(160, 160, 160)" }}
+              onClick={() => {
+                if (searchedData) {
+                  navigate(`/results/${searchedData}`);
+                }
+              }}
             />
           </div>
         </div>
@@ -207,6 +223,7 @@ function Navbar() {
       >
         <AccountPop />
       </div>
+
     </>
   );
 }

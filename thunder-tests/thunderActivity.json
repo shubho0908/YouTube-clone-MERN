@@ -4,18 +4,13 @@
         "colId": "history",
         "containerId": "",
         "name": "http://localhost:3000/getvideos",
-        "url": "http://localhost:3000/comments/64aeb4a9c7f94bd6ab1dc365",
-        "method": "POST",
+        "url": "http://localhost:3000/search/Ama",
+        "method": "GET",
         "sortNum": 0,
         "created": "2023-06-18T13:58:12.195Z",
-        "modified": "2023-07-14T06:06:11.267Z",
+        "modified": "2023-07-14T11:06:57.978Z",
         "headers": [],
         "params": [],
-        "body": {
-            "type": "json",
-            "raw": "{\n  \"comment\":\"Hello Bhai\",\n  \"email\":\"tarak@gmail.com\"\n}",
-            "form": []
-        },
         "tests": []
     }
 ]

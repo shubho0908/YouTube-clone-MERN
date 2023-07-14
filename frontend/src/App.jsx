@@ -9,6 +9,7 @@ import ChannelTop from "./Components/Channel/ChannelTop";
 import OtherChannel from "./Components/Channel/OtherChannel";
 import Subscriptions from "./Components/Subscriptions";
 import Trending from "./Components/Trending";
+import SearchResults from "./Components/SearchResults";
 
 function App() {
   const token = localStorage.getItem("userToken");
@@ -38,6 +39,10 @@ function App() {
           <Route
             path="/trending"
             element={<Trending />}
+          />
+          <Route
+            path="/results/:data"
+            element={<SearchResults />}
           />
           <Route
             path="/subscriptions"

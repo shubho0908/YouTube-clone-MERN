@@ -182,7 +182,6 @@ Videos.post("/updateview/:id", async (req, res) => {
     }
     trending.views += 1;
     await trending.save();
-
   } catch (error) {
     res.json(error.message);
   }
@@ -376,5 +375,43 @@ Videos.get("/gettrending", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+Videos.get("/search/:data", async (req, res) => {
+  try {
+    const { data } = req.params;
+    const video = await videodata.find();
+    const users = await userData.find({}, { channelData: 1 });
+
+    const filteredVideos = video.reduce((accumulator, element) => {
+      const filteredVideoData = element.VideoData.filter((item) =>
+        item.Title.toLowerCase().includes(data.toLowerCase())
+      );
+      if (filteredVideoData.length > 0) {
+        accumulator.push(...filteredVideoData);
+      }
+      return accumulator;
+    }, []);
+
+    const filteredChannels = users.filter((userData) =>
+      userData.channelData.some((channel) =>
+        channel.channelName.toLowerCase().includes(data.toLowerCase())
+      )
+    );
+
+    if (filteredVideos.length > 0 && filteredChannels.length > 0) {
+      res.json({ videoData: filteredVideos, channelData: filteredChannels[0].channelData });
+    } else if (filteredVideos.length > 0) {
+      res.json({ videoData: filteredVideos });
+    } else if (filteredChannels.length > 0) {
+      res.json({ channelData: filteredChannels[0].channelData });
+    } else {
+      res.json([]);
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
 
 module.exports = Videos;
