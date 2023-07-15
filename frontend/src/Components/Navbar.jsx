@@ -93,6 +93,7 @@ function Navbar() {
               onClick={() => {
                 if (searchedData) {
                   navigate(`/results/${searchedData}`);
+                  window.location.reload();
                 }
               }}
             />
@@ -114,7 +115,7 @@ function Navbar() {
               navigate("/studio");
             }}
           />
-        
+
           <button
             onClick={() => {
               if (isbtnClicked === false) {
@@ -218,7 +219,6 @@ function Navbar() {
       >
         <AccountPop />
       </div>
-
     </>
   );
 }
