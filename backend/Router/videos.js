@@ -291,7 +291,11 @@ Videos.get("/getwatchlater/:email", async (req, res) => {
     }
     const savedData = user.watchLater;
 
-    res.json(savedData);
+    if (savedData && savedData.length > 0) {
+      res.json(savedData);
+    } else {
+      res.json({ savedData: "NO DATA" });
+    }
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

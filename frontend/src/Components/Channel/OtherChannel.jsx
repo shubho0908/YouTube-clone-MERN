@@ -130,206 +130,238 @@ function OtherChannel() {
 
   const username = Email && getUsername(Email);
 
+  //POST REQUESTS
+
+  const SubscribeChannel = async () => {
+    try {
+      const channelData = {
+        youtuberName: channelName,
+        youtuberProfile: ChannelProfile,
+        youtubeChannelID: id,
+      };
+
+      const response = await fetch(
+        `http://localhost:3000/subscribe/${id}/${newEmail}/${Email}`,
+        {
+          method: "POST",
+          body: JSON.stringify(channelData),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(channelData);
+      await response.json();
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   return (
     <>
       <Navbar />
       <LeftPanel />
-     {
-      ChannelProfile ? (
+      {ChannelProfile ? (
         <div className="channel-main-content">
-        <div className="channel-top-content">
-          <div className="channel-left-content">
-            <img
-              src={ChannelProfile}
-              alt="channelDP"
-              className="channel_profile"
-              loading="lazy"
-            />
-            <div className="channel-left">
-              <p className="channelname">{channelName && channelName}</p>
-              <div className="channel-extra">
-                <p className="channeluser">@{username && username}</p>
-                <p className="my-subs">
-                  {Subscribers && Subscribers} subscribers
-                </p>
-                <p className="my-videoscount">
-                  {myVideos && myVideos.length} videos
-                </p>
+          <div className="channel-top-content">
+            <div className="channel-left-content">
+              <img
+                src={ChannelProfile}
+                alt="channelDP"
+                className="channel_profile"
+                loading="lazy"
+              />
+              <div className="channel-left">
+                <p className="channelname">{channelName && channelName}</p>
+                <div className="channel-extra">
+                  <p className="channeluser">@{username && username}</p>
+                  <p className="my-subs">
+                    {Subscribers && Subscribers} subscribers
+                  </p>
+                  <p className="my-videoscount">
+                    {myVideos && myVideos.length} videos
+                  </p>
+                </div>
+                <div className="more-about"
+                  onClick={() => {
+                    localStorage.setItem("Section", "About");
+                    window.location.reload();
+                  }}
+                >
+                  <p className="more-text">More about this channel</p>
+                  <ArrowForwardIosIcon
+                    fontSize="15px"
+                    style={{ color: "#aaa", marginLeft: "7px" }}
+                  />
+                </div>
               </div>
-              <div className="more-about">
-                <p className="more-text">More about this channel</p>
-                <ArrowForwardIosIcon
-                  fontSize="15px"
-                  style={{ color: "#aaa", marginLeft: "7px" }}
-                />
+            </div>
+            {newEmail === Email ? (
+              <div className="channel-right-content">
+                <button className="customize-channel">Customize channel</button>
+                <button className="manage-videos">Manage videos</button>
               </div>
+            ) : (
+              <div className="channel-right-content">
+                <button
+                  className="subscribethis-channel"
+                  style={
+                    isSubscribed === true
+                      ? { display: "none" }
+                      : { display: "block" }
+                  }
+                  onClick={() => SubscribeChannel()}
+                >
+                  Subscribe
+                </button>
+                <button
+                  className="subscribethis-channel2"
+                  style={
+                    isSubscribed === true
+                      ? { display: "block" }
+                      : { display: "none" }
+                  }
+                  onClick={() => SubscribeChannel()}
+                >
+                  Subscribed
+                </button>
+              </div>
+            )}
+          </div>
+          <div className="channel-mid-content">
+            <div className="different-sections">
+              {Section === "Home" ? (
+                <p
+                  className="channel-home1"
+                  onClick={() => {
+                    localStorage.setItem("Section", "Home");
+                    window.location.reload();
+                  }}
+                >
+                  HOME
+                </p>
+              ) : (
+                <p
+                  className="channel-home"
+                  onClick={() => {
+                    localStorage.setItem("Section", "Home");
+                    window.location.reload();
+                  }}
+                >
+                  HOME
+                </p>
+              )}
+              {Section === "Videos" ? (
+                <p
+                  className="channel-videos1"
+                  onClick={() => {
+                    localStorage.setItem("Section", "Videos");
+                    window.location.reload();
+                  }}
+                >
+                  VIDEOS
+                </p>
+              ) : (
+                <p
+                  className="channel-videos"
+                  onClick={() => {
+                    localStorage.setItem("Section", "Videos");
+                    window.location.reload();
+                  }}
+                >
+                  VIDEOS
+                </p>
+              )}
+              {Section === "Playlists" ? (
+                <p
+                  className="channel-playlists1"
+                  onClick={() => {
+                    localStorage.setItem("Section", "Playlists");
+                    window.location.reload();
+                  }}
+                >
+                  PLAYLISTS
+                </p>
+              ) : (
+                <p
+                  className="channel-playlists"
+                  onClick={() => {
+                    localStorage.setItem("Section", "Playlists");
+                    window.location.reload();
+                  }}
+                >
+                  PLAYLISTS
+                </p>
+              )}
+              {Section === "Subscriptions" ? (
+                <p
+                  className="channel-subscriptions1"
+                  onClick={() => {
+                    localStorage.setItem("Section", "Subscriptions");
+                    window.location.reload();
+                  }}
+                >
+                  CHANNELS
+                </p>
+              ) : (
+                <p
+                  className="channel-subscriptions"
+                  onClick={() => {
+                    localStorage.setItem("Section", "Subscriptions");
+                    window.location.reload();
+                  }}
+                >
+                  CHANNELS
+                </p>
+              )}
+              {Section === "About" ? (
+                <p
+                  className="channel-about1"
+                  onClick={() => {
+                    localStorage.setItem("Section", "About");
+                    window.location.reload();
+                  }}
+                >
+                  ABOUT
+                </p>
+              ) : (
+                <p
+                  className="channel-about"
+                  onClick={() => {
+                    localStorage.setItem("Section", "About");
+                    window.location.reload();
+                  }}
+                >
+                  ABOUT
+                </p>
+              )}
             </div>
           </div>
-          {newEmail === Email ? (
-            <div className="channel-right-content">
-              <button className="customize-channel">Customize channel</button>
-              <button className="manage-videos">Manage videos</button>
-            </div>
+          <br />
+          <hr className="seperate seperate-new" />
+          {Section === "Home" ? <ChannelHome newmail={Email} /> : ""}
+          {Section === "Videos" ? <ChannelVideos newmail={Email} /> : ""}
+          {Section === "About" ? (
+            <ChannelAbout newmail={Email} channelid={id} />
           ) : (
-            <div className="channel-right-content">
-              <button
-                className="subscribethis-channel"
-                style={
-                  isSubscribed === true
-                    ? { display: "none" }
-                    : { display: "block" }
-                }
-              >
-                Subscribe
-              </button>
-              <button
-                className="subscribethis-channel2"
-                style={
-                  isSubscribed === true
-                    ? { display: "block" }
-                    : { display: "none" }
-                }
-              >
-                Subscribed
-              </button>
-            </div>
+            ""
           )}
         </div>
-        <div className="channel-mid-content">
-          <div className="different-sections">
-            {Section === "Home" ? (
-              <p
-                className="channel-home1"
-                onClick={() => {
-                  localStorage.setItem("Section", "Home");
-                  window.location.reload();
-                }}
-              >
-                HOME
-              </p>
-            ) : (
-              <p
-                className="channel-home"
-                onClick={() => {
-                  localStorage.setItem("Section", "Home");
-                  window.location.reload();
-                }}
-              >
-                HOME
-              </p>
-            )}
-            {Section === "Videos" ? (
-              <p
-                className="channel-videos1"
-                onClick={() => {
-                  localStorage.setItem("Section", "Videos");
-                  window.location.reload();
-                }}
-              >
-                VIDEOS
-              </p>
-            ) : (
-              <p
-                className="channel-videos"
-                onClick={() => {
-                  localStorage.setItem("Section", "Videos");
-                  window.location.reload();
-                }}
-              >
-                VIDEOS
-              </p>
-            )}
-            {Section === "Playlists" ? (
-              <p
-                className="channel-playlists1"
-                onClick={() => {
-                  localStorage.setItem("Section", "Playlists");
-                  window.location.reload();
-                }}
-              >
-                PLAYLISTS
-              </p>
-            ) : (
-              <p
-                className="channel-playlists"
-                onClick={() => {
-                  localStorage.setItem("Section", "Playlists");
-                  window.location.reload();
-                }}
-              >
-                PLAYLISTS
-              </p>
-            )}
-            {Section === "Subscriptions" ? (
-              <p
-                className="channel-subscriptions1"
-                onClick={() => {
-                  localStorage.setItem("Section", "Subscriptions");
-                  window.location.reload();
-                }}
-              >
-                CHANNELS
-              </p>
-            ) : (
-              <p
-                className="channel-subscriptions"
-                onClick={() => {
-                  localStorage.setItem("Section", "Subscriptions");
-                  window.location.reload();
-                }}
-              >
-                CHANNELS
-              </p>
-            )}
-            {Section === "About" ? (
-              <p
-                className="channel-about1"
-                onClick={() => {
-                  localStorage.setItem("Section", "About");
-                  window.location.reload();
-                }}
-              >
-                ABOUT
-              </p>
-            ) : (
-              <p
-                className="channel-about"
-                onClick={() => {
-                  localStorage.setItem("Section", "About");
-                  window.location.reload();
-                }}
-              >
-                ABOUT
-              </p>
-            )}
-          </div>
-        </div>
-        <br />
-        <hr className="seperate seperate-new" />
-        {Section === "Home" ? <ChannelHome newmail={Email} /> : ""}
-        {Section === "Videos" ? <ChannelVideos newmail={Email} /> : ""}
-        {Section === "About" ? (
-          <ChannelAbout newmail={Email} channelid={id} />
-        ) : (
-          ""
-        )}
-      </div>
       ) : (
         <div className="main-trending-section">
-        <div className="spin2" style={{ height: "auto" }}>
-          <ReactLoading
-            type={"spin"}
-            color={"white"}
-            height={50}
-            width={50}
-          />
-          <p style={{ marginTop: "15px" }}>
-            Fetching the data, Hang tight...{" "}
-          </p>
+          <div className="spin2" style={{ height: "auto" }}>
+            <ReactLoading
+              type={"spin"}
+              color={"white"}
+              height={50}
+              width={50}
+            />
+            <p style={{ marginTop: "15px" }}>
+              Fetching the data, Hang tight...{" "}
+            </p>
+          </div>
         </div>
-      </div>
-      )
-     }
+      )}
     </>
   );
 }

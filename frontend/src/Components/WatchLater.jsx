@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import jwtDecode from "jwt-decode";
 import ReactLoading from "react-loading";
 import { useNavigate } from "react-router-dom";
+import nothing from "../img/nothing.png";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import "../Css/likevideos.css";
 
@@ -91,6 +92,19 @@ function WatchLater() {
       console.log(error.message);
     }
   };
+
+  if (watchlater.savedData === "NO DATA") {
+    return (
+      <>
+        <Navbar />
+        <LeftPanel />
+        <div className="searched-content">
+          <img src={nothing} alt="no results" className="nothing-found" />
+          <p className="no-results">No videos found!</p>
+        </div>
+      </>
+    );
+  }
 
   return (
     <>

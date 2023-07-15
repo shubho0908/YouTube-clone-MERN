@@ -104,7 +104,7 @@ function Navbar() {
           style={
             token
               ? { justifyContent: "space-evenly", paddingRight: "0px" }
-              : { justifyContent: "space-between", paddingRight: "25px" }
+              : { justifyContent: "space-evenly", paddingRight: "25px" }
           }
         >
           <VideoCallOutlinedIcon
