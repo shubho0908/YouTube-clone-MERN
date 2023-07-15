@@ -383,9 +383,15 @@ Videos.get("/search/:data", async (req, res) => {
     const users = await userData.find({}, { channelData: 1 });
 
     const filteredVideos = video.reduce((accumulator, element) => {
-      const filteredVideoData = element.VideoData.filter((item) =>
-        item.Title.toLowerCase().includes(data.toLowerCase())
-      );
+      const filteredVideoData = element.VideoData.filter((item) => {
+        const includesTitle = item.Title.toLowerCase().includes(
+          data.toLowerCase()
+        );
+        const includesTags = item.Tags.toLowerCase().includes(
+          data.toLowerCase()
+        );
+        return includesTitle || includesTags;
+      });
       if (filteredVideoData.length > 0) {
         accumulator.push(...filteredVideoData);
       }
@@ -399,19 +405,20 @@ Videos.get("/search/:data", async (req, res) => {
     );
 
     if (filteredVideos.length > 0 && filteredChannels.length > 0) {
-      res.json({ videoData: filteredVideos, channelData: filteredChannels[0].channelData });
+      res.json({
+        videoData: filteredVideos,
+        channelData: filteredChannels[0].channelData,
+      });
     } else if (filteredVideos.length > 0) {
       res.json({ videoData: filteredVideos });
     } else if (filteredChannels.length > 0) {
       res.json({ channelData: filteredChannels[0].channelData });
     } else {
-      res.json([]);
+      res.json({ videoData: "NO DATA", channelData: "NO DATA" });
     }
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
-
-
 
 module.exports = Videos;

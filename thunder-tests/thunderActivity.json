@@ -4,11 +4,11 @@
         "colId": "history",
         "containerId": "",
         "name": "http://localhost:3000/getvideos",
-        "url": "http://localhost:3000/otherchannel/64b003e2e90be86c6e1eae3b",
+        "url": "http://localhost:3000/search/comedy",
         "method": "GET",
         "sortNum": 0,
         "created": "2023-06-18T13:58:12.195Z",
-        "modified": "2023-07-14T14:19:59.654Z",
+        "modified": "2023-07-15T11:04:52.041Z",
         "headers": [],
         "params": [],
         "tests": []

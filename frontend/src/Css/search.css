@@ -1,4 +1,5 @@
 .channel-img {
+  cursor: pointer;
   width: 130px;
   border-radius: 100%;
 }
@@ -25,6 +26,7 @@
 }
 
 .channel-extra-content {
+  cursor: pointer;
   position: relative;
   left: 60px;
 }
@@ -33,7 +35,7 @@
   font-size: 20px;
 }
 
-.subscribe-btnss{
+.subscribe-btnss {
   position: relative;
   left: 100px;
 }
@@ -123,4 +125,40 @@
 
 .thisvideo-onliner > p:nth-child(2) {
   margin-left: 5px;
+}
+
+.subscribethis-channel,
+.subscribethis-channel2 {
+  transition: all 0.15s ease;
+}
+
+.subscribethis-channel:active,
+.subscribethis-channel2:active {
+  transform: scale(0.92);
+}
+
+.searched-videos-section {
+  position: absolute;
+}
+
+.searched-video-alldata {
+  cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+}
+
+.nothing-found{
+  width: 450px;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 180px;
+}
+
+.no-results{
+  position: absolute;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 320px;
+  font-size: 20px;
 }
