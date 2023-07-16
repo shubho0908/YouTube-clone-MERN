@@ -16,6 +16,10 @@ function Subscriptions() {
   const [subscribedChannelID, setsubscribedChannelID] = useState();
   const [youtuberEmail, setYoutuberEmail] = useState();
   const [subsVideos, setSubsVideos] = useState([]);
+  const [menuClicked, setMenuClicked] = useState(() => {
+    const menu = localStorage.getItem("menuClicked");
+    return menu ? JSON.parse(menu) : false;
+  });
 
   const navigate = useNavigate();
   const token = localStorage.getItem("userToken");
@@ -24,6 +28,10 @@ function Subscriptions() {
     const token = localStorage.getItem("userToken");
     setEmail(jwtDecode(token).email);
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem("menuClicked", JSON.stringify(menuClicked));
+  }, [menuClicked]);
 
   useEffect(() => {
     const getSubscriptions = async () => {
@@ -96,6 +104,19 @@ function Subscriptions() {
     return () => clearInterval(interval);
   }, [youtuberEmail]);
 
+  useEffect(() => {
+    const handleMenuButtonClick = () => {
+      setMenuClicked((prevMenuClicked) => !prevMenuClicked);
+    };
+
+    const menuButton = document.querySelector(".menu");
+    menuButton.addEventListener("click", handleMenuButtonClick);
+
+    return () => {
+      menuButton.removeEventListener("click", handleMenuButtonClick);
+    };
+  }, []);
+
   //UPDATE VIEWS
 
   const updateViews = async (id) => {
@@ -122,7 +143,7 @@ function Subscriptions() {
           <p className="no-results">No subscriptions found!</p>
         </div>
       </>
-    )
+    );
   }
 
   return (
@@ -130,7 +151,10 @@ function Subscriptions() {
       <Navbar />
       <LeftPanel />
       {subsVideos.length > 0 ? (
-        <div className="subscription-content">
+        <div
+          className="subscription-content"
+          style={menuClicked === false ? { left: "150px" } : { left: "300px" }}
+        >
           <div className="subscribed-channels">
             <p className="main-txxt">Channels</p>
             {subscriptions.length > 0 &&
@@ -223,10 +247,10 @@ function Subscriptions() {
                               {element.views >= 1e9
                                 ? `${(element.views / 1e9).toFixed(1)}B`
                                 : element.views >= 1e6
-                                  ? `${(element.views / 1e6).toFixed(1)}M`
-                                  : element.views >= 1e3
-                                    ? `${(element.views / 1e3).toFixed(1)}K`
-                                    : element.views}{" "}
+                                ? `${(element.views / 1e6).toFixed(1)}M`
+                                : element.views >= 1e3
+                                ? `${(element.views / 1e3).toFixed(1)}K`
+                                : element.views}{" "}
                               views
                             </p>
                             <p

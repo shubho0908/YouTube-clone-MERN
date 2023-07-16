@@ -14,6 +14,10 @@ function Trending() {
   const [Email, setEmail] = useState();
   const [trendingVideos, setTrendingVideos] = useState([]);
   const navigate = useNavigate();
+  const [menuClicked, setMenuClicked] = useState(() => {
+    const menu = localStorage.getItem("menuClicked");
+    return menu ? JSON.parse(menu) : false;
+  });
   const token = localStorage.getItem("userToken");
 
   useEffect(() => {
@@ -21,6 +25,10 @@ function Trending() {
       setEmail(jwtDecode(token).email);
     }
   }, [token]);
+
+  useEffect(() => {
+    localStorage.setItem("menuClicked", JSON.stringify(menuClicked));
+  }, [menuClicked]);
 
   useEffect(() => {
     const getTrending = async () => {
@@ -40,6 +48,19 @@ function Trending() {
     const interval = setInterval(getTrending, 100);
 
     return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const handleMenuButtonClick = () => {
+      setMenuClicked((prevMenuClicked) => !prevMenuClicked);
+    };
+
+    const menuButton = document.querySelector(".menu");
+    menuButton.addEventListener("click", handleMenuButtonClick);
+
+    return () => {
+      menuButton.removeEventListener("click", handleMenuButtonClick);
+    };
   }, []);
 
   //Update Views
@@ -64,7 +85,13 @@ function Trending() {
       <Navbar />
       <LeftPanel />
       {trendingVideos.length > 0 ? (
-        <div className="main-trending-section">
+        <div className="main-trending-section"
+        style={
+              menuClicked === false
+                ? { left: "40%" }
+                : { left: "50%" }
+            }
+        >
           <div className="trending-top">
             <img src={trending} alt="trending" className="trendingIMG" />
             <p>Trending</p>

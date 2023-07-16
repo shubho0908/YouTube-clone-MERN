@@ -19,7 +19,7 @@
 .subscription-content {
   position: relative;
   left: 300px;
-  width: fit-content;
+  width: min-content;
   top: 100px;
   color: white;
 }
