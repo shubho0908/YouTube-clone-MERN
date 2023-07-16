@@ -195,7 +195,11 @@ Videos.get("/getlikevideos/:email", async (req, res) => {
       return res.json("USER DOESN'T EXISTS");
     }
     const LikedData = user.likedVideos;
-    res.json(LikedData);
+    if (LikedData.length > 0) {
+      res.json(LikedData);
+    } else {
+      res.json("NO DATA");
+    }
   } catch (error) {
     res.json(error.message);
   }

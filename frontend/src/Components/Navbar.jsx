@@ -113,6 +113,7 @@ function Navbar() {
             style={{ color: "rgb(160, 160, 160)" }}
             onClick={() => {
               navigate("/studio");
+              window.location.reload();
             }}
           />
 
