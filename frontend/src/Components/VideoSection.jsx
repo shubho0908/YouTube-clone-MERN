@@ -52,7 +52,6 @@ function VideoSection() {
   const [CommentLikes, setCommentLikes] = useState();
   const [isLiked, setIsLiked] = useState();
   const [isSaved, setIsSaved] = useState();
-  const [iscommentLiked, setIsCommentLiked] = useState();
 
   //Get Channel Data
   const [youtuberName, setyoutuberName] = useState();
@@ -380,29 +379,6 @@ function VideoSection() {
     GetTrending();
   }, [id]);
 
-  useEffect(() => {
-    const checkLikedComment = async () => {
-      try {
-        if (id !== undefined && email !== undefined) {
-          const response = await fetch(
-            `http://localhost:3000/checkcommentliked/${id}/${email}`
-          );
-          const { isCommentLiked } = await response.json();
-          if (isCommentLiked && isCommentLiked.comment_ID) {
-            setIsCommentLiked(true);
-          } else {
-            setIsCommentLiked(false);
-          }
-        }
-      } catch (error) {
-        console.log(error.message);
-      }
-    };
-    const interval = setInterval(checkLikedComment, 100);
-
-    return () => clearInterval(interval);
-  }, [id, email]);
-
   //POST REQUESTS
 
   const uploadComment = async () => {
@@ -655,6 +631,11 @@ function VideoSection() {
                   onClick={() => {
                     SubscribeChannel();
                   }}
+                  style={
+                    email === usermail
+                      ? { cursor: "not-allowed" }
+                      : { cursor: "pointer" }
+                  }
                 >
                   Subscribe
                 </button>
@@ -919,21 +900,13 @@ function VideoSection() {
                         </div>
                         <p className="main-comment">{element.comment}</p>
                         <div className="comment-interaction">
-                          {iscommentLiked === true && token ? (
-                            <ThumbUpIcon
-                              fontSize="small"
-                              style={{ color: "white", cursor: "pointer" }}
-                              onClick={() => LikeComment(index)}
-                              className="comment-like"
-                            />
-                          ) : (
-                            <ThumbUpAltOutlinedIcon
-                              fontSize="small"
-                              style={{ color: "white", cursor: "pointer" }}
-                              onClick={() => LikeComment(index)}
-                              className="comment-like"
-                            />
-                          )}
+                          <ThumbUpIcon
+                            fontSize="small"
+                            style={{ color: "white", cursor: "pointer" }}
+                            onClick={() => LikeComment(index)}
+                            className="comment-like"
+                          />
+
                           <p style={{ marginLeft: "16px" }}>
                             {CommentLikes &&
                               CommentLikes[index] &&

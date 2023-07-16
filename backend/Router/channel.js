@@ -36,7 +36,7 @@ Channel.get("/getchannelid/:email", async (req, res) => {
       });
     } else {
       const channelID = user.channelData[0]._id;
-      const subscribers = user.channelData[0].subscribers
+      const subscribers = user.channelData[0].subscribers;
       res.json({ channelID, subscribers });
     }
   } catch (error) {
@@ -253,7 +253,11 @@ Channel.get("/getsubscriptions/:email", async (req, res) => {
     }
 
     const subscribedData = user.subscribedChannels;
-    res.json(subscribedData);
+    if (subscribedData.length > 0) {
+      res.json(subscribedData);
+    } else {
+      res.json({ subscribedData: "NO DATA" });
+    }
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

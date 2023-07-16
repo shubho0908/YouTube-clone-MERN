@@ -231,9 +231,9 @@ function SearchResults() {
                       </div>
                       <p className="new-desc">
                         {" "}
-                        {element.channelDescription.length <= 140
+                        {element.channelDescription.length <= 100
                           ? element.channelDescription
-                          : `${element.channelDescription.slice(0, 140)}...`}
+                          : `${element.channelDescription.slice(0, 100)}...`}
                       </p>
                     </div>
                     <div className="subscribe-btnss">
@@ -516,7 +516,9 @@ function SearchResults() {
   } else if (
     searchedChannelData &&
     searchedChannelData.length > 0 &&
+    searchedChannelData !== "NO DATA" &&
     searchedVideoData &&
+    searchedVideoData !== "NO DATA" &&
     searchedVideoData.length > 0
   ) {
     return (
@@ -583,9 +585,9 @@ function SearchResults() {
                       </div>
                       <p className="new-desc">
                         {" "}
-                        {element.channelDescription.length <= 140
+                        {element.channelDescription.length <= 100
                           ? element.channelDescription
-                          : `${element.channelDescription.slice(0, 140)}...`}
+                          : `${element.channelDescription.slice(0, 100)}...`}
                       </p>
                     </div>
                     <div className="subscribe-btnss">

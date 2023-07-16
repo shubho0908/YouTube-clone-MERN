@@ -5,6 +5,7 @@ import jwtDecode from "jwt-decode";
 import "../Css/subscriptions.css";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
+import nothing from "../img/nothing.png";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import ReactLoading from "react-loading";
 import { useNavigate } from "react-router-dom";
@@ -111,6 +112,19 @@ function Subscriptions() {
     }
   };
 
+  if (subscriptions.subscribedData === "NO DATA") {
+    return (
+      <>
+        <Navbar />
+        <LeftPanel />
+        <div className="searched-content">
+          <img src={nothing} alt="no results" className="nothing-found" />
+          <p className="no-results">No subscriptions found!</p>
+        </div>
+      </>
+    )
+  }
+
   return (
     <>
       <Navbar />
@@ -209,10 +223,10 @@ function Subscriptions() {
                               {element.views >= 1e9
                                 ? `${(element.views / 1e9).toFixed(1)}B`
                                 : element.views >= 1e6
-                                ? `${(element.views / 1e6).toFixed(1)}M`
-                                : element.views >= 1e3
-                                ? `${(element.views / 1e3).toFixed(1)}K`
-                                : element.views}{" "}
+                                  ? `${(element.views / 1e6).toFixed(1)}M`
+                                  : element.views >= 1e3
+                                    ? `${(element.views / 1e3).toFixed(1)}K`
+                                    : element.views}{" "}
                               views
                             </p>
                             <p

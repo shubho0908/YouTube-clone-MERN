@@ -29,6 +29,7 @@
   cursor: pointer;
   position: relative;
   left: 60px;
+  width: 62%;
 }
 
 .new-title {
@@ -57,6 +58,7 @@
   margin-top: 6px;
   font-size: 14px;
   color: #aaa;
+
 }
 
 .sep2 {
