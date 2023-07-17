@@ -59,25 +59,6 @@ function Browse() {
     "Travel",
     "Food",
     "Fashion",
-    "Tutorial",
-    "Vlog",
-    "Gaming",
-    "Comedy",
-    "Beauty",
-    "Travel",
-    "Food",
-    "Fashion",
-    "Travel",
-    "Food",
-    "Fashion",
-    "Tutorial",
-    "Vlog",
-    "Gaming",
-    "Comedy",
-    "Beauty",
-    "Travel",
-    "Food",
-    "Fashion",
   ];
 
   useEffect(() => {
@@ -232,10 +213,10 @@ function Browse() {
                                 {VideoViews[index] >= 1e9
                                   ? `${(VideoViews[index] / 1e9).toFixed(1)}B`
                                   : VideoViews[index] >= 1e6
-                                    ? `${(VideoViews[index] / 1e6).toFixed(1)}M`
-                                    : VideoViews[index] >= 1e3
-                                      ? `${(VideoViews[index] / 1e3).toFixed(1)}K`
-                                      : VideoViews[index]}{" "}
+                                  ? `${(VideoViews[index] / 1e6).toFixed(1)}M`
+                                  : VideoViews[index] >= 1e3
+                                  ? `${(VideoViews[index] / 1e3).toFixed(1)}K`
+                                  : VideoViews[index]}{" "}
                                 views
                               </p>
                               <p
@@ -293,7 +274,6 @@ function Browse() {
                 height={50}
                 width={50}
               />
-              
             </div>
           )}
         </div>

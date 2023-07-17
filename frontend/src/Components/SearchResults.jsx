@@ -284,6 +284,7 @@ function SearchResults() {
             <hr className="seperate sep2" />
           </div>
           <div className="thischannel-videos-section">
+            <p style={{position:"relative", bottom:"20px"}}>Latest from {searchedChannelData && searchedChannelData[0].channelName}</p>
             {searchedChannelData &&
               searchedChannelData.length > 0 &&
               userVideos &&

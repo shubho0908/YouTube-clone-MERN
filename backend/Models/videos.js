@@ -73,6 +73,10 @@ const VideoData = new mongoose.Schema({
       uploaded_date: {
         type: String,
       },
+      visibility: {
+        type: String,
+        default: "Public",
+      },
       likes: {
         type: Number,
         default: 0,

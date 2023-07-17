@@ -8,7 +8,6 @@ import { storage } from "../Firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import Upload from "../img/upload.png";
-import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined";
 import AddPhotoAlternateOutlinedIcon from "@mui/icons-material/AddPhotoAlternateOutlined";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import SdIcon from "@mui/icons-material/Sd";
@@ -17,6 +16,7 @@ import CloudDoneRoundedIcon from "@mui/icons-material/CloudDoneRounded";
 import LinkIcon from "@mui/icons-material/Link";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
+import ArrowDropDownRoundedIcon from "@mui/icons-material/ArrowDropDownRounded";
 
 //SOCIALS
 
@@ -49,12 +49,12 @@ function Studio() {
   const [duration, setDuration] = useState(null);
   const [linksClicked, setLinksClicked] = useState(false);
   const [iconClicked, setIconClicked] = useState("");
-  const [fblink, setfblink] = useState()
-  const [instalink, setinstalink] = useState()
-  const [twitterlink, settwitterlink] = useState()
-  const [websitelink, setwebsitelink] = useState()
-
-  const [videoLink, setVideoLink] = useState("https://www.youtube.com");
+  const [fblink, setfblink] = useState();
+  const [instalink, setinstalink] = useState();
+  const [twitterlink, settwitterlink] = useState();
+  const [websitelink, setwebsitelink] = useState();
+  const [visibility, setVisibility] = useState("Public");
+  const [isVisibilityClicked, setisVisibilityClicked] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("userToken");
@@ -283,7 +283,11 @@ function Studio() {
         profileURL: downloadURL,
         ChannelName,
         ChannelAbout,
-        fblink, instalink, twitterlink, websitelink,currentDate,
+        fblink,
+        instalink,
+        twitterlink,
+        websitelink,
+        currentDate,
         email,
       };
 
@@ -336,18 +340,6 @@ function Studio() {
   const handleTitleChange = (e) => {
     setVideoName(e.target.value);
   };
-
-  const handleCopyLink = () => {
-    navigator.clipboard
-      .writeText(videoLink)
-      .then(() => {
-        alert("Link Copied!");
-      })
-      .catch((error) => {
-        console.log("Error copying link to clipboard:", error);
-      });
-  };
-
   //UPLOAD THUMBNAIL
 
   const handleThumbnailChange = (event) => {
@@ -434,6 +426,7 @@ function Studio() {
           email: email,
           video_duration: duration,
           publishDate: currentDate,
+          Visibility: visibility
         };
         // Send the POST request
         const response = await fetch("http://localhost:3000/publish", {
@@ -594,7 +587,12 @@ function Studio() {
                     style={{ color: "white" }}
                     className="fb-input-icon"
                   />
-                  <input type="text" name="fb-link" className="fb-input" onChange={handleFacebookLink} />
+                  <input
+                    type="text"
+                    name="fb-link"
+                    className="fb-input"
+                    onChange={handleFacebookLink}
+                  />
                 </div>
                 <div
                   className="insta-link"
@@ -846,24 +844,65 @@ function Studio() {
               </div>
 
               <div className="preview-bottom">
-                <div className="link-details">
-                  <div className="vid-link">
-                    <p>Video link</p>
-                    <a href="https://www.youtube.com/">
-                      https://www.youtube.com
-                    </a>
-                  </div>
-                  <ContentCopyOutlinedIcon
-                    className="copy-btn"
-                    fontSize="medium"
-                    style={{ color: "gray" }}
-                    onClick={handleCopyLink}
-                  />
-                </div>
                 <div className="file-details">
                   <p>Filename</p>
                   <p>{videoName}</p>
                 </div>
+              </div>
+
+              <div className="video-visibility">
+                <p>Visibility</p>
+                <div
+                  className="selected-visibility"
+                  onClick={() => {
+                    if (isVisibilityClicked === false) {
+                      setisVisibilityClicked(true);
+                    } else {
+                      setisVisibilityClicked(false);
+                    }
+                  }}
+                >
+                  <p>{visibility}</p>
+                  <ArrowDropDownRoundedIcon
+                    fontSize="large"
+                    style={{ color: "white" }}
+                  />
+                </div>
+                {isVisibilityClicked === true ? (
+                  <div className="show-visibility">
+                    <p
+                      className="public"
+                      style={
+                        visibility === "Public"
+                          ? { backgroundColor: "rgba(255, 255, 255, 0.134)" }
+                          : { backgroundColor: "rgba(255, 255, 255, 0)" }
+                      }
+                      onClick={() => {
+                        setVisibility("Public");
+                        setisVisibilityClicked(false);
+                      }}
+                    >
+                      Public
+                    </p>
+                    <hr className="seperatee" />
+                    <p
+                      className="private"
+                      style={
+                        visibility === "Private"
+                          ? { backgroundColor: "rgba(255, 255, 255, 0.134)" }
+                          : { backgroundColor: "rgba(255, 255, 255, 0)" }
+                      }
+                      onClick={() => {
+                        setVisibility("Private");
+                        setisVisibilityClicked(false);
+                      }}
+                    >
+                      Private
+                    </p>
+                  </div>
+                ) : (
+                  ""
+                )}
               </div>
             </div>
           </div>
@@ -902,11 +941,11 @@ function Studio() {
                   style={
                     Progress === 100
                       ? {
-                        display: "block",
-                        color: "#3ea6ff",
-                        marginRight: "6px",
-                        animation: "none",
-                      }
+                          display: "block",
+                          color: "#3ea6ff",
+                          marginRight: "6px",
+                          animation: "none",
+                        }
                       : { display: "none" }
                   }
                 />
@@ -916,11 +955,11 @@ function Studio() {
                   style={
                     Progress >= 60
                       ? {
-                        display: "block",
-                        color: "#3ea6ff",
-                        marginLeft: "6px",
-                        animation: "none",
-                      }
+                          display: "block",
+                          color: "#3ea6ff",
+                          marginLeft: "6px",
+                          animation: "none",
+                        }
                       : { display: "none" }
                   }
                 />

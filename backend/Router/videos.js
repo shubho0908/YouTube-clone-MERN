@@ -17,6 +17,7 @@ Videos.post("/publish", async (req, res) => {
       video_duration,
       email,
       publishDate,
+      Visibility,
     } = req.body;
 
     const user = await userData.findOne({ email });
@@ -41,6 +42,7 @@ Videos.post("/publish", async (req, res) => {
               Tags: tags,
               videoLength: video_duration,
               uploaded_date: publishDate,
+              visibility: Visibility,
             },
           ],
         });
@@ -55,6 +57,7 @@ Videos.post("/publish", async (req, res) => {
           Tags: tags,
           videoLength: video_duration,
           uploaded_date: publishDate,
+          visibility: Visibility,
         });
       }
 
