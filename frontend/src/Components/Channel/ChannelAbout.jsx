@@ -4,8 +4,8 @@ function ChannelAbout(prop) {
   const [Email, setEmail] = useState();
   const [description, setDescription] = useState();
   const [links, setLinks] = useState();
-  const [joinedDate, setjoinedDate] = useState()
-  const [TotalViews, setTotalViews] = useState()
+  const [joinedDate, setjoinedDate] = useState();
+  const [TotalViews, setTotalViews] = useState();
 
   useEffect(() => {
     const getUserMail = async () => {
@@ -29,11 +29,13 @@ function ChannelAbout(prop) {
     const GetAboutData = async () => {
       try {
         if (Email !== undefined) {
-          const response = await fetch(`http://localhost:3000/getabout/${Email}`);
+          const response = await fetch(
+            `http://localhost:3000/getabout/${Email}`
+          );
           const { description, sociallinks, joining } = await response.json();
           setDescription(description);
           setLinks(sociallinks);
-          setjoinedDate(joining)
+          setjoinedDate(joining);
         }
       } catch (error) {
         console.log(error.message);
@@ -49,9 +51,11 @@ function ChannelAbout(prop) {
     const GetTotalViews = async () => {
       try {
         if (Email !== undefined) {
-          const response = await fetch(`http://localhost:3000/totalviews/${Email}`);
+          const response = await fetch(
+            `http://localhost:3000/totalviews/${Email}`
+          );
           const totalViews = await response.json();
-          setTotalViews(totalViews)
+          setTotalViews(totalViews);
         }
       } catch (error) {
         console.log(error.message);
@@ -147,7 +151,17 @@ function ChannelAbout(prop) {
         <div className="right-about-section">
           <p>Stats</p>
           <hr className="seperate-three seperate" />
-          {joinedDate ? (<p style={{ fontSize: "15px" }}>{joined.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>) : (<p style={{ fontSize: "15px" }}>No data</p>)}
+          {joinedDate ? (
+            <p style={{ fontSize: "15px" }}>
+              {joined.toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </p>
+          ) : (
+            <p style={{ fontSize: "15px" }}>No data</p>
+          )}
           <hr className="seperate-three seperate" />
           <p>{TotalViews && TotalViews.toLocaleString()} views</p>
           <hr className="seperate-three seperate" />

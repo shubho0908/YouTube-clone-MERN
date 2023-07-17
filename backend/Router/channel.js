@@ -228,7 +228,7 @@ Channel.post("/subscribe/:channelID/:email/:email2", async (req, res) => {
         channelProfile: youtuberProfile,
         channelID: youtubeChannelID.toString(),
       });
-      user2.channelData[0].subscribers += 1;
+     return user2.channelData[0].subscribers += 1;
     } else {
       user.subscribedChannels.splice(existingChannelIndex, 1);
       user2.channelData[0].subscribers -= 1;
@@ -254,7 +254,7 @@ Channel.get("/getsubscriptions/:email", async (req, res) => {
 
     const subscribedData = user.subscribedChannels;
     if (subscribedData.length > 0) {
-      res.json(subscribedData);
+     return res.json(subscribedData);
     } else {
       res.json({ subscribedData: "NO DATA" });
     }

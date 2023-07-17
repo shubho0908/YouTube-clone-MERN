@@ -13,8 +13,6 @@ import { useNavigate } from "react-router-dom";
 function Subscriptions() {
   const [email, setEmail] = useState();
   const [subscriptions, setSubscriptions] = useState([]);
-  const [subscribedChannelID, setsubscribedChannelID] = useState();
-  const [youtuberEmail, setYoutuberEmail] = useState();
   const [subsVideos, setSubsVideos] = useState([]);
   const [menuClicked, setMenuClicked] = useState(() => {
     const menu = localStorage.getItem("menuClicked");
@@ -51,58 +49,33 @@ function Subscriptions() {
   }, [email]);
 
   useEffect(() => {
-    const getChannelID = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:3000/getsubscriptionid/${email}`
-        );
-        const result = await response.json();
-        setsubscribedChannelID(result);
-      } catch (error) {
-        console.log(error.message);
-      }
-    };
-    const interval = setInterval(getChannelID, 100);
-
-    return () => clearInterval(interval);
-  }, [email]);
-
-  useEffect(() => {
     const getUserMail = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:3000/getotherchannel/${subscribedChannelID}`
-        );
-        const userEmail = await response.json();
-        setYoutuberEmail(userEmail);
+        if (subscriptions && subscriptions.length > 0) {
+          const newSubsVideos = [];
+          for (const element of subscriptions) {
+            const response = await fetch(
+              `http://localhost:3000/getotherchannel/${element.channelID}`
+            );
+            const userEmail = await response.json();
+            const response2 = await fetch(
+              `http://localhost:3000/getuservideos/${userEmail}`
+            );
+            const myvideos = await response2.json();
+            newSubsVideos.push(...myvideos);
+          }
+          setSubsVideos(newSubsVideos);
+        }
       } catch (error) {
         console.log(error.message);
       }
     };
-
+  
     const interval = setInterval(getUserMail, 200);
-
+  
     return () => clearInterval(interval);
-  }, [subscribedChannelID]);
-
-  useEffect(() => {
-    const getUserVideos = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:3000/getuservideos/${youtuberEmail}`
-        );
-        const myvideos = await response.json();
-        setSubsVideos(myvideos);
-        console.log(myvideos);
-      } catch (error) {
-        console.log(error.message);
-      }
-    };
-
-    const interval = setInterval(getUserVideos, 200);
-
-    return () => clearInterval(interval);
-  }, [youtuberEmail]);
+  }, [subscriptions]);
+  
 
   useEffect(() => {
     const handleMenuButtonClick = () => {
@@ -157,6 +130,7 @@ function Subscriptions() {
         >
           <div className="subscribed-channels">
             <p className="main-txxt">Channels</p>
+            <div className="channels-full-list">
             {subscriptions.length > 0 &&
               subscriptions.map((element, index) => {
                 return (
@@ -164,7 +138,7 @@ function Subscriptions() {
                     className="sub-channels"
                     key={index}
                     onClick={() => {
-                      navigate(`/channel/${subscribedChannelID}`);
+                      navigate(`/channel/${element.channelID}`);
                       window.location.reload();
                     }}
                   >
@@ -177,6 +151,7 @@ function Subscriptions() {
                   </div>
                 );
               })}
+            </div>
           </div>
           <div className="subscribed-videos">
             <p className="main-txxt">Videos</p>

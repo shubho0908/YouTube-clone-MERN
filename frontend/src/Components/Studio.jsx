@@ -426,7 +426,7 @@ function Studio() {
           email: email,
           video_duration: duration,
           publishDate: currentDate,
-          Visibility: visibility
+          Visibility: visibility,
         };
         // Send the POST request
         const response = await fetch("http://localhost:3000/publish", {
@@ -679,7 +679,9 @@ function Studio() {
           }
         >
           <div className="top-head">
-            <p>{videoName}</p>
+            {videoName.length <= 70
+              ? videoName
+              : `${videoName.slice(0, 70)}...`}{" "}
             <CloseRoundedIcon
               className="close"
               fontSize="large"

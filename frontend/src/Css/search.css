@@ -1,6 +1,8 @@
 .channel-img {
   cursor: pointer;
   width: 130px;
+  height: 130px;
+  object-fit: cover;
   border-radius: 100%;
 }
 

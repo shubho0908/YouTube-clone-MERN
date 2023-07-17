@@ -1,5 +1,6 @@
 .sub-channelDP {
   width: 100px;
+  height: 100px;
   border-radius: 100%;
   object-fit: cover;
 }
@@ -8,11 +9,17 @@
     font-size: 22px;
 }
 
+.channels-full-list{
+    display: flex;
+}
+
 .sub-channels{
     cursor: pointer;
     margin-top: 25px;
     display: flex;
+    align-items: center;
     flex-direction: column;
+    margin-right:10px;
     width: fit-content;
 }
 

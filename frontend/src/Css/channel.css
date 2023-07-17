@@ -1,5 +1,7 @@
 .channel_profile {
   width: 130px;
+  height: 130px;
+  object-fit: cover;
   border-radius: 100%;
 }
 
@@ -186,7 +188,7 @@
   border-radius: 20px;
 }
 
-.playall-videos:hover{
+.playall-videos:hover {
   background-color: #303030;
 }
 

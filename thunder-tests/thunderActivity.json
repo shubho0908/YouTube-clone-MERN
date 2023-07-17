@@ -4,11 +4,11 @@
         "colId": "history",
         "containerId": "",
         "name": "http://localhost:3000/getvideos",
-        "url": "http://localhost:3000/gettrending",
+        "url": "http://localhost:3000/getsubscriptions/chandan@gmail.com",
         "method": "GET",
         "sortNum": 0,
         "created": "2023-06-18T13:58:12.195Z",
-        "modified": "2023-07-17T14:07:35.426Z",
+        "modified": "2023-07-17T15:38:10.622Z",
         "headers": [],
         "params": [],
         "tests": []

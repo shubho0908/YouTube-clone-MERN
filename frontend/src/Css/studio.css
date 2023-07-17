@@ -428,7 +428,7 @@
   cursor: pointer;
   width: 176px;
   height: 100px;
-  margin-top: 18px;
+  margin-top: 12px;
   border-radius: 4px;
   object-fit: cover;
   transition: all 0.2s ease;
@@ -437,8 +437,8 @@
 
 .close2 {
   position: absolute;
-  left: 182px;
-  bottom: 160px;
+  left: 184px;
+  bottom: 150px;
   padding: 3px;
   z-index: 12;
 }

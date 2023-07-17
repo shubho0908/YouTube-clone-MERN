@@ -423,7 +423,15 @@ function SearchResults() {
               searchedVideoData.map((element, index) => {
                 <hr className="seperate sep2" />;
                 return (
-                  <div className="searched-video-alldata" key={index}>
+                  <div className="searched-video-alldata" key={index}
+                  onClick={() => {
+                    navigate(`/video/${element._id}`);
+                    window.location.reload();
+                    if (token) {
+                      updateViews(element._id);
+                    }
+                  }}
+                  >
                     <img
                       src={element.thumbnailURL}
                       alt="thumbnail"
@@ -644,7 +652,15 @@ function SearchResults() {
               searchedVideoData.map((element, index) => {
                 <hr className="seperate sep2" />;
                 return (
-                  <div className="searched-video-alldata" key={index}>
+                  <div className="searched-video-alldata" key={index}
+                  onClick={() => {
+                    navigate(`/video/${element._id}`);
+                    window.location.reload();
+                    if (token) {
+                      updateViews(element._id);
+                    }
+                  }}
+                  >
                     <img
                       src={element.thumbnailURL}
                       alt="thumbnail"
