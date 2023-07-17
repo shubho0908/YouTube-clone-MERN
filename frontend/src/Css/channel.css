@@ -179,7 +179,15 @@
 }
 
 .playall-videos {
+  cursor: pointer;
   margin-left: 15px;
+  padding: 5px;
+  padding-right: 10px;
+  border-radius: 20px;
+}
+
+.playall-videos:hover{
+  background-color: #303030;
 }
 
 .my-all-videos-list {

@@ -149,7 +149,7 @@ function ChannelAbout(prop) {
           <hr className="seperate-three seperate" />
           {joinedDate ? (<p style={{ fontSize: "15px" }}>{joined.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>) : (<p style={{ fontSize: "15px" }}>No data</p>)}
           <hr className="seperate-three seperate" />
-          <p>{TotalViews && TotalViews} views</p>
+          <p>{TotalViews && TotalViews.toLocaleString()} views</p>
           <hr className="seperate-three seperate" />
         </div>
       </div>

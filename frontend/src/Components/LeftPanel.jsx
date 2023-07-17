@@ -3,9 +3,12 @@ import HomeIcon from "@mui/icons-material/Home";
 import WhatshotOutlinedIcon from "@mui/icons-material/WhatshotOutlined";
 import SubscriptionsOutlinedIcon from "@mui/icons-material/SubscriptionsOutlined";
 import VideoLibraryOutlinedIcon from "@mui/icons-material/VideoLibraryOutlined";
+import ClearRoundedIcon from "@mui/icons-material/ClearRounded";
 import WatchLaterOutlinedIcon from "@mui/icons-material/WatchLaterOutlined";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import { useEffect, useState } from "react";
+import Signup from "./Signup";
+import Signin from "./Signin";
 import { useNavigate, useLocation } from "react-router-dom";
 
 function LeftPanel() {
@@ -15,6 +18,9 @@ function LeftPanel() {
   });
   const navigate = useNavigate();
   const location = useLocation();
+  const [isbtnClicked, setisbtnClicked] = useState(false);
+  const token = localStorage.getItem("userToken");
+  const [isSwitch, setisSwitched] = useState(false);
 
   useEffect(() => {
     const handleMenuButtonClick = () => {
@@ -103,9 +109,14 @@ function LeftPanel() {
                 : "subscription sec-data"
             }
             onClick={() => {
-              localStorage.setItem("selected", "subscription");
-              navigate("/subscriptions");
-              window.location.reload();
+              if (token) {
+                localStorage.setItem("selected", "subscription");
+                navigate("/subscriptions");
+                window.location.reload();
+              } else {
+                setisbtnClicked(true);
+                document.body.classList.add("bg-css");
+              }
             }}
           >
             <SubscriptionsOutlinedIcon
@@ -124,7 +135,12 @@ function LeftPanel() {
                 : "library sec-data"
             }
             onClick={() => {
-              localStorage.setItem("selected", "library");
+              if (token) {
+                localStorage.setItem("selected", "library");
+              } else {
+                setisbtnClicked(true);
+                document.body.classList.add("bg-css");
+              }
             }}
           >
             <VideoLibraryOutlinedIcon
@@ -141,9 +157,14 @@ function LeftPanel() {
                 : "watch-later sec-data"
             }
             onClick={() => {
-              localStorage.setItem("selected", "watch-later");
-              navigate("/watchlater");
-              window.location.reload();
+              if (token) {
+                localStorage.setItem("selected", "watch-later");
+                navigate("/watchlater");
+                window.location.reload();
+              } else {
+                setisbtnClicked(true);
+                document.body.classList.add("bg-css");
+              }
             }}
           >
             <WatchLaterOutlinedIcon
@@ -159,10 +180,15 @@ function LeftPanel() {
                 : "liked-video sec-data"
             }
             onClick={() => {
-              localStorage.setItem("selected", "liked-video");
+              if (token) {
+                localStorage.setItem("selected", "liked-video");
 
-              navigate("/likedVideos");
-              window.location.reload();
+                navigate("/likedVideos");
+                window.location.reload();
+              } else {
+                setisbtnClicked(true);
+                document.body.classList.add("bg-css");
+              }
             }}
           >
             <ThumbUpOutlinedIcon fontSize="medium" style={{ color: "white" }} />
@@ -219,10 +245,14 @@ function LeftPanel() {
                 : "subscription subscription2 sec-data sec-data2"
             }
             onClick={() => {
-              localStorage.setItem("selected", "subscription");
-
-              navigate("/subscription");
-              window.location.reload();
+              if (token) {
+                localStorage.setItem("selected", "subscription");
+                navigate("/subscriptions");
+                window.location.reload();
+              } else {
+                setisbtnClicked(true);
+                document.body.classList.add("bg-css");
+              }
             }}
           >
             <SubscriptionsOutlinedIcon
@@ -246,9 +276,14 @@ function LeftPanel() {
                 : "watch-later watch-later2 sec-data sec-data2"
             }
             onClick={() => {
-              localStorage.setItem("selected", "watch-later");
-              navigate("/watchlater");
-              window.location.reload();
+              if (token) {
+                localStorage.setItem("selected", "watch-later");
+                navigate("/watchlater");
+                window.location.reload();
+              } else {
+                setisbtnClicked(true);
+                document.body.classList.add("bg-css");
+              }
             }}
           >
             <WatchLaterOutlinedIcon
@@ -263,13 +298,83 @@ function LeftPanel() {
                 : "liked-video liked-video2 sec-data sec-data2"
             }
             onClick={() => {
-              localStorage.setItem("selected", "liked-video");
+              if (token) {
+                localStorage.setItem("selected", "liked-video");
 
-              navigate("/likedVideos");
-              window.location.reload();
+                navigate("/likedVideos");
+                window.location.reload();
+              } else {
+                setisbtnClicked(true);
+                document.body.classList.add("bg-css");
+              }
             }}
           >
             <ThumbUpOutlinedIcon fontSize="medium" style={{ color: "white" }} />
+          </div>
+        </div>
+      </div>
+
+      {/* SIGNUP/SIGNIN  */}
+
+      <div
+        className="auth-popup"
+        style={
+          isbtnClicked === true ? { display: "block" } : { display: "none" }
+        }
+      >
+        <ClearRoundedIcon
+          onClick={() => {
+            if (isbtnClicked === false) {
+              setisbtnClicked(true);
+            } else {
+              setisbtnClicked(false);
+              document.body.classList.remove("bg-css");
+            }
+          }}
+          className="cancel"
+          fontSize="large"
+          style={{ color: "gray" }}
+        />
+        <div
+          className="signup-last"
+          style={
+            isSwitch === false ? { display: "block" } : { display: "none" }
+          }
+        >
+          <Signup />
+          <div className="already">
+            <p>Already have an account?</p>
+            <p
+              onClick={() => {
+                if (isSwitch === false) {
+                  setisSwitched(true);
+                } else {
+                  setisSwitched(false);
+                }
+              }}
+            >
+              Signin
+            </p>
+          </div>
+        </div>
+        <div
+          className="signin-last"
+          style={isSwitch === true ? { display: "block" } : { display: "none" }}
+        >
+          <Signin />
+          <div className="already">
+            <p>Don&apos;t have an account?</p>
+            <p
+              onClick={() => {
+                if (isSwitch === false) {
+                  setisSwitched(true);
+                } else {
+                  setisSwitched(false);
+                }
+              }}
+            >
+              Signup
+            </p>
           </div>
         </div>
       </div>

@@ -17,8 +17,11 @@ import { TfiDownload } from "react-icons/Tfi";
 import BookmarkAddOutlinedIcon from "@mui/icons-material/BookmarkAddOutlined";
 import avatar from "../img/avatar.png";
 import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
+import ClearRoundedIcon from "@mui/icons-material/ClearRounded";
 import jwtDecode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
+import Signin from "./Signin";
+import Signup from "./Signup";
 
 function VideoSection() {
   const { id } = useParams();
@@ -33,6 +36,8 @@ function VideoSection() {
   const [shareClicked, setShareClicked] = useState(false);
   const [usermail, setUserMail] = useState();
   const [channelID, setChannelID] = useState();
+  const [isSwitch, setisSwitched] = useState(false);
+  const [isbtnClicked, setisbtnClicked] = useState(false);
   const videoRef = useRef(null);
   const token = localStorage.getItem("userToken");
 
@@ -572,9 +577,9 @@ function VideoSection() {
     }
   };
 
-  const menu = document.querySelector(".menu")
+  const menu = document.querySelector(".menu");
   if (menu !== null) {
-    menu.style.display = "none"
+    menu.style.display = "none";
   }
 
   return (
@@ -631,12 +636,17 @@ function VideoSection() {
                 </div>
                 <p className="channel-subs">{Subscribers} subscribers</p>
               </div>
-              {isSubscribed === false ? (
+              {isSubscribed === false || !token ? (
                 <button
                   className="subscribe"
                   disabled={email === usermail ? true : false}
                   onClick={() => {
-                    SubscribeChannel();
+                    if (token) {
+                      SubscribeChannel();
+                    } else {
+                      setisbtnClicked(true);
+                      document.body.classList.add("bg-css");
+                    }
                   }}
                   style={
                     email === usermail
@@ -665,7 +675,17 @@ function VideoSection() {
                   title="I like this"
                   placement="top"
                 >
-                  <div className="like-data" onClick={likeVideo}>
+                  <div
+                    className="like-data"
+                    onClick={() => {
+                      if (token) {
+                        likeVideo();
+                      } else {
+                        setisbtnClicked(true);
+                        document.body.classList.add("bg-css");
+                      }
+                    }}
+                  >
                     {isLiked === true && token ? (
                       <ThumbUpIcon
                         fontSize="medium"
@@ -689,7 +709,17 @@ function VideoSection() {
                   title="I dislike this"
                   placement="top"
                 >
-                  <div className="dislike-data" onClick={DislikeVideo}>
+                  <div
+                    className="dislike-data"
+                    onClick={() => {
+                      if (token) {
+                        DislikeVideo();
+                      } else {
+                        setisbtnClicked(true);
+                        document.body.classList.add("bg-css");
+                      }
+                    }}
+                  >
                     <ThumbDownOutlinedIcon
                       fontSize="medium"
                       style={{ color: "white" }}
@@ -738,7 +768,17 @@ function VideoSection() {
                 title="Watch Later"
                 placement="top"
               >
-                <div className="save-later" onClick={saveVideo}>
+                <div
+                  className="save-later"
+                  onClick={() => {
+                    if (token) {
+                      saveVideo();
+                    } else {
+                      setisbtnClicked(true);
+                      document.body.classList.add("bg-css");
+                    }
+                  }}
+                >
                   {isSaved === true ? (
                     <BookmarkAddedIcon
                       fontSize="medium"
@@ -761,10 +801,10 @@ function VideoSection() {
                 {views >= 1e9
                   ? `${(views / 1e9).toFixed(1)}B`
                   : views >= 1e6
-                    ? `${(views / 1e6).toFixed(1)}M`
-                    : views >= 1e3
-                      ? `${(views / 1e3).toFixed(1)}K`
-                      : views}{" "}
+                  ? `${(views / 1e6).toFixed(1)}M`
+                  : views >= 1e3
+                  ? `${(views / 1e3).toFixed(1)}K`
+                  : views}{" "}
                 views
               </p>
               <p style={{ marginLeft: "10px" }}>
@@ -839,13 +879,15 @@ function VideoSection() {
               <button
                 className="upload-comment"
                 onClick={() => {
-                  if (token && isChannel === true) {
-                    setComment(" ");
+                  if (token && isChannel === true && comment !== "") {
                     uploadComment();
                   } else if (token && isChannel !== true) {
                     alert("Create a channel first");
+                  } else if (token && isChannel === true && comment === "") {
+                    alert("Comment can't be empty");
                   } else {
-                    alert("Login First");
+                    setisbtnClicked(true);
+                    document.body.classList.add("bg-css");
                   }
                 }}
               >
@@ -910,7 +952,14 @@ function VideoSection() {
                           <ThumbUpIcon
                             fontSize="small"
                             style={{ color: "white", cursor: "pointer" }}
-                            onClick={() => LikeComment(index)}
+                            onClick={() => {
+                              if (token) {
+                                LikeComment(index);
+                              } else {
+                                setisbtnClicked(true);
+                                document.body.classList.add("bg-css");
+                              }
+                            }}
                             className="comment-like"
                           />
 
@@ -921,7 +970,7 @@ function VideoSection() {
                           </p>
 
                           {element.user_email === email ||
-                            email === usermail ? (
+                          email === usermail ? (
                             <button
                               className="delete-comment-btn"
                               style={{ marginLeft: "25px" }}
@@ -1007,10 +1056,10 @@ function VideoSection() {
                           {Views[index] >= 1e9
                             ? `${(Views[index] / 1e9).toFixed(1)}B`
                             : Views[index] >= 1e6
-                              ? `${(Views[index] / 1e6).toFixed(1)}M`
-                              : Views[index] >= 1e3
-                                ? `${(Views[index] / 1e3).toFixed(1)}K`
-                                : Views[index]}{" "}
+                            ? `${(Views[index] / 1e6).toFixed(1)}M`
+                            : Views[index] >= 1e3
+                            ? `${(Views[index] / 1e3).toFixed(1)}K`
+                            : Views[index]}{" "}
                           views
                         </p>
                         <p
@@ -1061,6 +1110,71 @@ function VideoSection() {
         }
       >
         <Share />
+      </div>
+
+      {/* SIGNUP/SIGNIN  */}
+
+      <div
+        className="auth-popup"
+        style={
+          isbtnClicked === true ? { display: "block" } : { display: "none" }
+        }
+      >
+        <ClearRoundedIcon
+          onClick={() => {
+            if (isbtnClicked === false) {
+              setisbtnClicked(true);
+            } else {
+              setisbtnClicked(false);
+              document.body.classList.remove("bg-css");
+            }
+          }}
+          className="cancel"
+          fontSize="large"
+          style={{ color: "gray" }}
+        />
+        <div
+          className="signup-last"
+          style={
+            isSwitch === false ? { display: "block" } : { display: "none" }
+          }
+        >
+          <Signup />
+          <div className="already">
+            <p>Already have an account?</p>
+            <p
+              onClick={() => {
+                if (isSwitch === false) {
+                  setisSwitched(true);
+                } else {
+                  setisSwitched(false);
+                }
+              }}
+            >
+              Signin
+            </p>
+          </div>
+        </div>
+        <div
+          className="signin-last"
+          style={isSwitch === true ? { display: "block" } : { display: "none" }}
+        >
+          <Signin />
+          <div className="already">
+            <p>Don&apos;t have an account?</p>
+            <p
+              onClick={() => {
+                if (isSwitch === false) {
+                  setisSwitched(true);
+                } else {
+                  setisSwitched(false);
+                }
+              }}
+            >
+              Signup
+            </p>
+          </div>
+        </div>
       </div>
     </>
   );

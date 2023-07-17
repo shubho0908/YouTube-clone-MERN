@@ -112,8 +112,13 @@ function Navbar() {
             fontSize="large"
             style={{ color: "rgb(160, 160, 160)" }}
             onClick={() => {
-              navigate("/studio");
-              window.location.reload();
+              if (token) {
+                navigate("/studio");
+                window.location.reload();
+              } else {
+                setisbtnClicked(true);
+                document.body.classList.add("bg-css");
+              }
             }}
           />
 

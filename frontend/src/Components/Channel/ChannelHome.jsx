@@ -22,20 +22,19 @@ function ChannelHome(prop) {
   useEffect(() => {
     const getUserVideos = async () => {
       try {
-       if (Email === prop.newmail) {
-        const response = await fetch(
-          `http://localhost:3000/getuservideos/${Email}`
-        );
-        const myvideos = await response.json();
-        setMyVideos(myvideos);
-       }
-       else{
-        const response = await fetch(
-          `http://localhost:3000/getuservideos/${prop.newmail}`
-        );
-        const myvideos = await response.json();
-        setMyVideos(myvideos);
-       }
+        if (Email === prop.newmail) {
+          const response = await fetch(
+            `http://localhost:3000/getuservideos/${Email}`
+          );
+          const myvideos = await response.json();
+          setMyVideos(myvideos);
+        } else {
+          const response = await fetch(
+            `http://localhost:3000/getuservideos/${prop.newmail}`
+          );
+          const myvideos = await response.json();
+          setMyVideos(myvideos);
+        }
       } catch (error) {
         console.log(error.message);
       }
@@ -168,13 +167,23 @@ function ChannelHome(prop) {
       <div className="myuploaded-videos">
         <div className="section-headtxt">
           <p className="section-title">Videos</p>
-          <div className="playall-videos">
+          <div
+            className="playall-videos"
+            onClick={() => {
+              navigate(`/video/${myVideos[0]._id}`);
+              window.location.reload();
+              if (token) {
+                updateViews(myVideos[0]._id);
+              }
+            }}
+          >
             <PlayArrowIcon fontSize="medium" style={{ color: "white" }} />
             <p className="playall-txt">Play all</p>
           </div>
         </div>
         <div className="my-all-videos-list">
-          {myVideos.length > 0 &&
+          {myVideos &&
+            myVideos.length > 0 &&
             myVideos.map((element, index) => {
               return (
                 <div
