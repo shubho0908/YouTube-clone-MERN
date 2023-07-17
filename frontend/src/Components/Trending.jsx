@@ -8,6 +8,7 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import jwtDecode from "jwt-decode";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
+import nothing from "../img/nothing.png";
 import ReactLoading from "react-loading";
 
 function Trending() {
@@ -35,11 +36,15 @@ function Trending() {
       try {
         const response = await fetch("http://localhost:3000/gettrending");
         const trending = await response.json();
-        const sortedTrending = trending.sort(
-          (a, b) => new Date(b.uploaded_date) - new Date(a.uploaded_date)
-        );
+        if (trending !== "NO DATA") {
+          const sortedTrending = trending.sort(
+            (a, b) => new Date(b.uploaded_date) - new Date(a.uploaded_date)
+          );
 
-        setTrendingVideos(sortedTrending);
+          setTrendingVideos(sortedTrending);
+        } else {
+          setTrendingVideos(trending);
+        }
       } catch (error) {
         console.log(error.message);
       }
@@ -79,18 +84,27 @@ function Trending() {
     }
   };
 
+  if (trendingVideos === "NO DATA") {
+    return (
+      <>
+        <Navbar />
+        <LeftPanel />
+        <div className="searched-content">
+          <img src={nothing} alt="no results" className="nothing-found" />
+          <p className="no-results">No videos are currently trending!</p>
+        </div>
+      </>
+    );
+  }
 
   return (
     <>
       <Navbar />
       <LeftPanel />
       {trendingVideos.length > 0 ? (
-        <div className="main-trending-section"
-        style={
-              menuClicked === false
-                ? { left: "40%" }
-                : { left: "50%" }
-            }
+        <div
+          className="main-trending-section"
+          style={menuClicked === false ? { left: "40%" } : { left: "50%" }}
         >
           <div className="trending-top">
             <img src={trending} alt="trending" className="trendingIMG" />

@@ -744,11 +744,12 @@ function Studio() {
                     required
                     onChange={handleTitleChange}
                   />
-                  <input
+                  <textarea
                     type="text"
                     className="video-description"
                     placeholder="Description"
                     onChange={(e) => setVideoDescription(e.target.value)}
+                    spellCheck="true"
                   />
                   <input
                     type="text"

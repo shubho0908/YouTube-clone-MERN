@@ -381,7 +381,11 @@ Videos.get("/checktrending/:videoID", async (req, res) => {
 Videos.get("/gettrending", async (req, res) => {
   try {
     const trending = await TrendingData.find();
-    res.json(trending);
+    if (trending.length > 0) {
+      res.json(trending);
+    } else {
+      res.json("NO DATA");
+    }
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

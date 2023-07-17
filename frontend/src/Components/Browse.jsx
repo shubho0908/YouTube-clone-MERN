@@ -50,11 +50,11 @@ function Browse() {
 
   const Tags = [
     "All",
-    "Music",
-    "Tutorial",
-    "Vlog",
-    "Gaming",
+    "Artificial Intelligence",
     "Comedy",
+    "Coding",
+    "Gaming",
+    "Vlog",
     "Beauty",
     "Travel",
     "Food",

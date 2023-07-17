@@ -285,7 +285,7 @@
 
 .video-description {
   background-color: #282828;
-  height: 75px;
+  height: 70px;
   width: 380px;
   border: 2px solid rgba(128, 128, 128, 0.337);
   border-radius: 3px;
@@ -293,6 +293,8 @@
   margin-top: 20px;
   color: white;
   font-size: 17px;
+  resize: none;
+  padding-top: 30px;
 }
 
 .video-title:focus,
@@ -554,7 +556,7 @@
   border-radius: 5px;
   font-size: 15px;
   width: -webkit-fill-available;
-  animation: pulldown 0.2s ease;
+  animation: pulldown 0.16s ease;
 }
 
 @keyframes pulldown {
