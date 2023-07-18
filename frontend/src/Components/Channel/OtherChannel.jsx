@@ -9,6 +9,7 @@ import ReactLoading from "react-loading";
 import ChannelVideos from "./ChannelVideos";
 import jwtDecode from "jwt-decode";
 import ChannelAbout from "./ChannelAbout";
+import ChannelPlaylists from "./ChannelPlaylists";
 
 function OtherChannel() {
   const { id } = useParams();
@@ -341,6 +342,7 @@ function OtherChannel() {
           <hr className="seperate seperate-new" />
           {Section === "Home" ? <ChannelHome newmail={Email} /> : ""}
           {Section === "Videos" ? <ChannelVideos newmail={Email} /> : ""}
+          {Section === "Playlists" ? <ChannelPlaylists newmail={Email} /> : ""}
           {Section === "About" ? (
             <ChannelAbout newmail={Email} channelid={id} />
           ) : (

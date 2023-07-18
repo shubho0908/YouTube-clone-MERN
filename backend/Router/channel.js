@@ -218,6 +218,11 @@ Channel.post("/subscribe/:channelID/:email/:email2", async (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
 
+    // Add validation checks for youtubeChannelID and channelID
+    if (!youtubeChannelID || !channelID) {
+      return res.status(400).json({ error: "Invalid channel ID" });
+    }
+
     const existingChannelIndex = user.subscribedChannels.findIndex(
       (channel) => channel.channelID.toString() === channelID.toString()
     );
@@ -228,7 +233,7 @@ Channel.post("/subscribe/:channelID/:email/:email2", async (req, res) => {
         channelProfile: youtuberProfile,
         channelID: youtubeChannelID.toString(),
       });
-     return user2.channelData[0].subscribers += 1;
+      user2.channelData[0].subscribers += 1;
     } else {
       user.subscribedChannels.splice(existingChannelIndex, 1);
       user2.channelData[0].subscribers -= 1;
@@ -242,6 +247,7 @@ Channel.post("/subscribe/:channelID/:email/:email2", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
 
 Channel.get("/getsubscriptions/:email", async (req, res) => {
   try {
