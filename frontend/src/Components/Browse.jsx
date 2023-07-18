@@ -16,11 +16,13 @@ function Browse() {
   const [ProfilePic, setProfilePic] = useState();
   const [duration, setDuration] = useState();
   const [VideoID, setVideoID] = useState();
+  const [Visibility, setVisibility] = useState();
   const [menuClicked, setMenuClicked] = useState(() => {
     const menu = localStorage.getItem("menuClicked");
     return menu ? JSON.parse(menu) : false;
   });
   const [VideoViews, setVideoViews] = useState();
+  const [TagsSelected, setTagsSelected] = useState("All");
   const [publishDate, setPublishDate] = useState();
 
   const token = localStorage.getItem("userToken");
@@ -75,6 +77,7 @@ function Browse() {
           videoID,
           views,
           uploadDate,
+          Visibility,
         } = await response.json();
         setVideos(videoURLs);
         setThumbnails(thumbnailURLs);
@@ -85,6 +88,7 @@ function Browse() {
         setVideoID(videoID);
         setVideoViews(views);
         setPublishDate(uploadDate);
+        setVisibility(Visibility);
       } catch (error) {
         console.log(error.message);
       }
@@ -125,8 +129,13 @@ function Browse() {
           <div className="popular-categories">
             {Tags.map((element, index) => {
               return (
-                <div className={`top-tags tag-${index}`} key={index}>
-                  <p>{element}</p>
+                <div
+                  className={
+                    TagsSelected === element ? `top-tags tag-color` : `top-tags`
+                  }
+                  key={index}
+                >
+                  <p onClick={() => setTagsSelected(`${element}`)}>{element}</p>
                 </div>
               );
             })}
@@ -152,6 +161,11 @@ function Browse() {
                       <div
                         className="video-data"
                         key={index}
+                        style={
+                          Visibility[index] === "Public"
+                            ? { display: "block" }
+                            : { display: "none" }
+                        }
                         onClick={() => {
                           navigate(`/video/${VideoID[index]}`);
                           window.location.reload();

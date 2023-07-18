@@ -259,6 +259,8 @@
 
 .thumbnail-section {
   padding-top: 0px !important;
+  position: relative;
+    bottom: 12px;
 }
 
 .details-section > p,
@@ -438,7 +440,7 @@
 .close2 {
   position: absolute;
   left: 184px;
-  bottom: 150px;
+  bottom: 112px;
   padding: 3px;
   z-index: 12;
 }

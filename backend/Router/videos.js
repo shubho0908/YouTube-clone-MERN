@@ -80,6 +80,7 @@ Videos.get("/getvideos", async (req, res) => {
     const videoURLs = videos.flatMap((video) =>
       video.VideoData.map((data) => data.videoURL)
     );
+    const videoData = videos.flatMap((video) => video);
     const thumbnailURLs = videos.flatMap((video) =>
       video.VideoData.map((data) => data.thumbnailURL)
     );
@@ -110,6 +111,9 @@ Videos.get("/getvideos", async (req, res) => {
     const Likes = videos.flatMap((video) =>
       video.VideoData.map((data) => data.likes)
     );
+    const Visibility = videos.flatMap((video) =>
+      video.VideoData.map((data) => data.visibility)
+    );
 
     res.json({
       thumbnailURLs,
@@ -123,6 +127,8 @@ Videos.get("/getvideos", async (req, res) => {
       views,
       Likes,
       uploadDate,
+      Visibility,
+      videoData,
     });
   } catch (error) {
     res.status(500).json({ message: "An error occurred" });

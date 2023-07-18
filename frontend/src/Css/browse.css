@@ -24,12 +24,12 @@
   margin-left: 25px;
   transition: all 0.18s ease;
 }
-
+/* 
 .top-tags:hover {
   background-color: #3f3f3f;
-}
+} */
 
-.tag-0 {
+.tag-color {
   background-color: white;
   color: #0f0f0f;
 }
