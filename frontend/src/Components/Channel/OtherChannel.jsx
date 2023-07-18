@@ -10,6 +10,7 @@ import ChannelVideos from "./ChannelVideos";
 import jwtDecode from "jwt-decode";
 import ChannelAbout from "./ChannelAbout";
 import ChannelPlaylists from "./ChannelPlaylists";
+import FeaturedChannels from "./FeaturedChannels";
 
 function OtherChannel() {
   const { id } = useParams();
@@ -343,6 +344,8 @@ function OtherChannel() {
           {Section === "Home" ? <ChannelHome newmail={Email} /> : ""}
           {Section === "Videos" ? <ChannelVideos newmail={Email} /> : ""}
           {Section === "Playlists" ? <ChannelPlaylists newmail={Email} /> : ""}
+          {Section === "Subscriptions" ? <FeaturedChannels newmail={Email} /> : ""}
+
           {Section === "About" ? (
             <ChannelAbout newmail={Email} channelid={id} />
           ) : (

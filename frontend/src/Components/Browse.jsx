@@ -199,11 +199,13 @@ function Browse() {
                             : { display: "none" }
                         }
                         onClick={() => {
-                          navigate(`/video/${VideoID[index]}`);
-                          window.location.reload();
                           if (token) {
                             updateViews(VideoID[index]);
+                            navigate(`/video/${VideoID[index]}`);
+                            window.location.reload();
                           }
+                          navigate(`/video/${VideoID[index]}`);
+                          window.location.reload();
                         }}
                       >
                         <img
@@ -337,11 +339,13 @@ function Browse() {
                             : { display: "none" }
                         }
                         onClick={() => {
-                          navigate(`/video/${element._id}`);
-                          window.location.reload();
                           if (token) {
                             updateViews(element._id);
+                            navigate(`/video/${element._id}`);
+                            window.location.reload();
                           }
+                          navigate(`/video/${element._id}`);
+                          window.location.reload();
                         }}
                       >
                         <img

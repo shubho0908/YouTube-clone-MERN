@@ -120,11 +120,13 @@ function Trending() {
                     className="trending-video-data"
                     key={index}
                     onClick={() => {
-                      navigate(`/video/${element.videoid}`);
-                      window.location.reload();
                       if (token) {
                         updateViews(element.videoid);
+                        navigate(`/video/${element.videoid}`);
+                        window.location.reload();
                       }
+                      navigate(`/video/${element.videoid}`);
+                      window.location.reload();
                     }}
                   >
                     <img

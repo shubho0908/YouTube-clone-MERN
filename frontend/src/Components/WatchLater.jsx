@@ -131,11 +131,13 @@ function WatchLater() {
                   <div
                     className="firstvideo-thumbnail"
                     onClick={() => {
-                      navigate(`/video/${watchlater[0].savedVideoID}`);
-                      window.location.reload();
                       if (token) {
                         updateViews(watchlater[0].savedVideoID);
+                        navigate(`/video/${watchlater[0].savedVideoID}`);
+                      window.location.reload();
                       }
+                      navigate(`/video/${watchlater[0].savedVideoID}`);
+                      window.location.reload();
                     }}
                   >
                     <img
@@ -159,11 +161,13 @@ function WatchLater() {
                 <div
                   className="playvideo-btn"
                   onClick={() => {
-                    navigate(`/video/${watchlater[0].savedVideoID}`);
-                    window.location.reload();
                     if (token) {
                       updateViews(watchlater[0].savedVideoID);
+                      navigate(`/video/${watchlater[0].savedVideoID}`);
+                      window.location.reload();
                     }
+                    navigate(`/video/${watchlater[0].savedVideoID}`);
+                    window.location.reload();
                   }}
                 >
                   <PlayArrowIcon fontSize="medium" style={{ color: "black" }} />
@@ -180,11 +184,13 @@ function WatchLater() {
                         <div
                           className="liked-videos-all-data"
                           onClick={() => {
-                            navigate(`/video/${element.savedVideoID}`);
-                            window.location.reload();
                             if (token) {
                               updateViews(element.savedVideoID);
+                              navigate(`/video/${element.savedVideoID}`);
+                            window.location.reload();
                             }
+                            navigate(`/video/${element.savedVideoID}`);
+                            window.location.reload();
                           }}
                         >
                           <img

@@ -284,7 +284,10 @@ function SearchResults() {
             <hr className="seperate sep2" />
           </div>
           <div className="thischannel-videos-section">
-            <p style={{position:"relative", bottom:"20px"}}>Latest from {searchedChannelData && searchedChannelData[0].channelName}</p>
+            <p style={{ position: "relative", bottom: "20px" }}>
+              Latest from{" "}
+              {searchedChannelData && searchedChannelData[0].channelName}
+            </p>
             {searchedChannelData &&
               searchedChannelData.length > 0 &&
               userVideos &&
@@ -295,11 +298,13 @@ function SearchResults() {
                       className="thischannel-all-data"
                       key={index}
                       onClick={() => {
-                        navigate(`/video/${element._id}`);
-                        window.location.reload();
                         if (token) {
                           updateViews(element._id);
+                          navigate(`/video/${element._id}`);
+                          window.location.reload();
                         }
+                        navigate(`/video/${element._id}`);
+                        window.location.reload();
                       }}
                     >
                       <img
@@ -423,14 +428,18 @@ function SearchResults() {
               searchedVideoData.map((element, index) => {
                 <hr className="seperate sep2" />;
                 return (
-                  <div className="searched-video-alldata" key={index}
-                  onClick={() => {
-                    navigate(`/video/${element._id}`);
-                    window.location.reload();
-                    if (token) {
-                      updateViews(element._id);
-                    }
-                  }}
+                  <div
+                    className="searched-video-alldata"
+                    key={index}
+                    onClick={() => {
+                      if (token) {
+                        updateViews(element._id);
+                        navigate(`/video/${element._id}`);
+                        window.location.reload();
+                      }
+                      navigate(`/video/${element._id}`);
+                      window.location.reload();
+                    }}
                   >
                     <img
                       src={element.thumbnailURL}
@@ -652,14 +661,18 @@ function SearchResults() {
               searchedVideoData.map((element, index) => {
                 <hr className="seperate sep2" />;
                 return (
-                  <div className="searched-video-alldata" key={index}
-                  onClick={() => {
-                    navigate(`/video/${element._id}`);
-                    window.location.reload();
-                    if (token) {
-                      updateViews(element._id);
-                    }
-                  }}
+                  <div
+                    className="searched-video-alldata"
+                    key={index}
+                    onClick={() => {
+                      if (token) {
+                        updateViews(element._id);
+                        navigate(`/video/${element._id}`);
+                        window.location.reload();
+                      }
+                      navigate(`/video/${element._id}`);
+                      window.location.reload();
+                    }}
                   >
                     <img
                       src={element.thumbnailURL}

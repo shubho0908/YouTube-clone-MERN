@@ -449,7 +449,7 @@
   color: white;
   display: flex;
   align-items: center;
-  padding: 4px;
+  padding: 7px;
   padding-left: 12px;
   padding-right: 12px;
   border-radius: 20px;
@@ -467,4 +467,34 @@
 
 .create-playlist > p {
   margin-left: 10px;
+}
+
+.featured-channel-btn > p {
+  margin-left: 10px;
+}
+
+.featured-channels-sections {
+  position: absolute;
+  top: 300px;
+}
+
+.featured-channel-btn {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  color: white;
+  padding: 7px;
+  padding-left: 12px;
+  padding-right: 12px;
+  border-radius: 20px;
+  transition: all 0.15s ease;
+}
+
+.featured-channel-btn:hover {
+  background-color: #242424;
+}
+
+.featured-channel-btn:active {
+  background-color: #242424;
+  transform: scale(0.92);
 }

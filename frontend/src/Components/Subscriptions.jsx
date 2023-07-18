@@ -70,12 +70,11 @@ function Subscriptions() {
         console.log(error.message);
       }
     };
-  
+
     const interval = setInterval(getUserMail, 200);
-  
+
     return () => clearInterval(interval);
   }, [subscriptions]);
-  
 
   useEffect(() => {
     const handleMenuButtonClick = () => {
@@ -131,26 +130,26 @@ function Subscriptions() {
           <div className="subscribed-channels">
             <p className="main-txxt">Channels</p>
             <div className="channels-full-list">
-            {subscriptions.length > 0 &&
-              subscriptions.map((element, index) => {
-                return (
-                  <div
-                    className="sub-channels"
-                    key={index}
-                    onClick={() => {
-                      navigate(`/channel/${element.channelID}`);
-                      window.location.reload();
-                    }}
-                  >
-                    <img
-                      src={element.channelProfile}
-                      alt="channelDP"
-                      className="sub-channelDP"
-                    />
-                    <p className="sub-channelname">{element.channelname}</p>
-                  </div>
-                );
-              })}
+              {subscriptions.length > 0 &&
+                subscriptions.map((element, index) => {
+                  return (
+                    <div
+                      className="sub-channels"
+                      key={index}
+                      onClick={() => {
+                        navigate(`/channel/${element.channelID}`);
+                        window.location.reload();
+                      }}
+                    >
+                      <img
+                        src={element.channelProfile}
+                        alt="channelDP"
+                        className="sub-channelDP"
+                      />
+                      <p className="sub-channelname">{element.channelname}</p>
+                    </div>
+                  );
+                })}
             </div>
           </div>
           <div className="subscribed-videos">
@@ -163,11 +162,13 @@ function Subscriptions() {
                       className="subs-video-data"
                       key={index}
                       onClick={() => {
-                        navigate(`/video/${element._id}`);
-                        window.location.reload();
                         if (token) {
                           updateViews(element._id);
+                          navigate(`/video/${element._id}`);
+                          window.location.reload();
                         }
+                        navigate(`/video/${element._id}`);
+                        window.location.reload();
                       }}
                     >
                       <img

@@ -121,11 +121,13 @@ function ChannelVideos(prop) {
                   className="uploaded-video-contents"
                   key={index}
                   onClick={() => {
-                    navigate(`/video/${element._id}`);
-                    window.location.reload();
                     if (token) {
                       updateViews(element._id);
+                      navigate(`/video/${element._id}`);
+                      window.location.reload();
                     }
+                    navigate(`/video/${element._id}`);
+                    window.location.reload();
                   }}
                 >
                   <img

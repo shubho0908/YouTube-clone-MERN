@@ -75,11 +75,13 @@ function ChannelHome(prop) {
           <div
             className="user-video"
             onClick={() => {
-              navigate(`/video/${myVideos[0]._id}`);
-              window.location.reload();
               if (token) {
                 updateViews(myVideos[0]._id);
+                navigate(`/video/${myVideos[0]._id}`);
+                window.location.reload();
               }
+              navigate(`/video/${myVideos[0]._id}`);
+              window.location.reload();
             }}
           >
             <img
@@ -170,11 +172,13 @@ function ChannelHome(prop) {
           <div
             className="playall-videos"
             onClick={() => {
-              navigate(`/video/${myVideos[0]._id}`);
-              window.location.reload();
               if (token) {
                 updateViews(myVideos[0]._id);
+                navigate(`/video/${myVideos[0]._id}`);
+                window.location.reload();
               }
+              navigate(`/video/${myVideos[0]._id}`);
+              window.location.reload();
             }}
           >
             <PlayArrowIcon fontSize="medium" style={{ color: "white" }} />
@@ -190,11 +194,13 @@ function ChannelHome(prop) {
                   className="uploadedvideo-alldata"
                   key={index}
                   onClick={() => {
-                    navigate(`/video/${element._id}`);
-                    window.location.reload();
                     if (token) {
                       updateViews(element._id);
+                      navigate(`/video/${element._id}`);
+                      window.location.reload();
                     }
+                    navigate(`/video/${element._id}`);
+                    window.location.reload();
                   }}
                 >
                   <img

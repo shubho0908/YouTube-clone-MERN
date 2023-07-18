@@ -98,7 +98,7 @@ function VideoSection() {
   useEffect(() => {
     const checkChannel = async () => {
       try {
-        if (!email) {
+        if (email === undefined) {
           setChannelName(null);
           return;
         }
@@ -119,12 +119,14 @@ function VideoSection() {
   useEffect(() => {
     const getChannel = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:3000/getchannel/${email}`
-        );
-        const { channel, profile } = await response.json();
-        setisChannel(channel);
-        setUserProfile(profile);
+        if (email !== undefined) {
+          const response = await fetch(
+            `http://localhost:3000/getchannel/${email}`
+          );
+          const { channel, profile } = await response.json();
+          setisChannel(channel);
+          setUserProfile(profile);
+        }
       } catch (error) {
         console.log(error.message);
       }
@@ -137,9 +139,11 @@ function VideoSection() {
   useEffect(() => {
     const getVideoData = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/videodata/${id}`);
-        const video = await response.json();
-        setVideoData(video);
+        if (id !== undefined) {
+          const response = await fetch(`http://localhost:3000/videodata/${id}`);
+          const video = await response.json();
+          setVideoData(video);
+        }
       } catch (error) {
         console.log(error.message);
       }
@@ -197,9 +201,11 @@ function VideoSection() {
   useEffect(() => {
     const getLikes = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/getlike/${id}/`);
-        const likes = await response.json();
-        setVideoLikes(likes);
+        if (id !== undefined) {
+          const response = await fetch(`http://localhost:3000/getlike/${id}/`);
+          const likes = await response.json();
+          setVideoLikes(likes);
+        }
       } catch (error) {
         console.log(error.message);
       }
@@ -213,14 +219,16 @@ function VideoSection() {
   useEffect(() => {
     const LikeExists = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:3000/getuserlikes/${id}/${email}`
-        );
-        const { existingLikedVideo } = await response.json();
-        if (!existingLikedVideo) {
-          setIsLiked(false);
-        } else {
-          setIsLiked(true);
+        if (id !== undefined && email !== undefined) {
+          const response = await fetch(
+            `http://localhost:3000/getuserlikes/${id}/${email}`
+          );
+          const { existingLikedVideo } = await response.json();
+          if (!existingLikedVideo) {
+            setIsLiked(false);
+          } else {
+            setIsLiked(true);
+          }
         }
       } catch (error) {
         console.log(error.message);
@@ -234,9 +242,11 @@ function VideoSection() {
   useEffect(() => {
     const CommentLikes = async () => {
       try {
-        const response = await fetch(`http://localhost:3000/likecomment/${id}`);
+        if (id !== undefined) {
+          const response = await fetch(`http://localhost:3000/likecomment/${id}`);
         const result = await response.json();
         setCommentLikes(result);
+        }
       } catch (error) {
         console.log(error.message);
       }
@@ -274,9 +284,11 @@ function VideoSection() {
   useEffect(() => {
     const getComments = async () => {
       try {
+       if (id !== undefined) {
         const response = await fetch(`http://localhost:3000/getcomments/${id}`);
         const result = await response.json();
         setComments(result);
+       }
       } catch (error) {
         console.log(error.message);
       }
@@ -289,11 +301,13 @@ function VideoSection() {
   useEffect(() => {
     const getOtherChannel = async () => {
       try {
+       if (id !== undefined) {
         const response = await fetch(
           `http://localhost:3000/otherchannel/${id}`
         );
         const userEmail = await response.json();
         setUserMail(userEmail);
+       }
       } catch (error) {
         console.log(error.message);
       }
@@ -307,7 +321,7 @@ function VideoSection() {
   useEffect(() => {
     const getChannelID = async () => {
       try {
-        if (usermail) {
+        if (usermail !== undefined) {
           const response = await fetch(
             `http://localhost:3000/getchannelid/${usermail}`
           );
@@ -372,28 +386,15 @@ function VideoSection() {
   }, [channelID, email]);
 
   useEffect(() => {
-    const GetTrending = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:3000/checktrending/${id}`
-        );
-        const trendingData = await response.json();
-        console.log(trendingData);
-      } catch (error) {
-        console.log(error.message);
-      }
-    };
-    GetTrending();
-  }, [id]);
-
-  useEffect(() => {
     const GetUserVideos = async () => {
       try {
+       if (usermail !== undefined) {
         const response = await fetch(
           `http://localhost:3000/getuservideos/${usermail}`
         );
         const myvideos = await response.json();
         setUserVideos(myvideos);
+       }
       } catch (error) {
         console.log(error.message);
       }
