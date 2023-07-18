@@ -307,6 +307,11 @@
   padding-right: 15px;
 }
 
+.tag-color {
+  background-color: white;
+  color: #0f0f0f;
+}
+
 .recommend-tags {
   display: flex;
   align-items: center;

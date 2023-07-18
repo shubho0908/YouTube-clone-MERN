@@ -39,6 +39,8 @@ function VideoSection() {
   const [isSwitch, setisSwitched] = useState(false);
   const [isbtnClicked, setisbtnClicked] = useState(false);
   const videoRef = useRef(null);
+  const [TagSelected, setTagSelected] = useState("All");
+  const [userVideos, setUserVideos] = useState([]);
   const token = localStorage.getItem("userToken");
 
   const navigate = useNavigate();
@@ -383,6 +385,22 @@ function VideoSection() {
     };
     GetTrending();
   }, [id]);
+
+  useEffect(() => {
+    const GetUserVideos = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:3000/getuservideos/${usermail}`
+        );
+        const myvideos = await response.json();
+        setUserVideos(myvideos);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
+    GetUserVideos();
+  }, [usermail]);
 
   //POST REQUESTS
 
@@ -992,14 +1010,34 @@ function VideoSection() {
         </div>
         <div className="recommended-section">
           <div className="recommend-tags">
-            <div className="top-tags tag-one">
-              <p>All</p>
+            <div
+              className={
+                TagSelected === "All"
+                  ? `top-tags tag-one tag-color`
+                  : `top-tags tag-one`
+              }
+            >
+              <p onClick={() => setTagSelected("All")}>All</p>
             </div>
-            <div className="top-tags tag-two" style={{ marginLeft: "10px" }}>
-              <p>From {uploader}</p>
+            <div
+              className={
+                TagSelected === uploader
+                  ? `top-tags tag-two tag-color`
+                  : `top-tags tag-two`
+              }
+              style={{ marginLeft: "10px" }}
+            >
+              <p onClick={() => setTagSelected(`${uploader}`)}>
+                From {uploader}
+              </p>
             </div>
           </div>
-          <div className="video-section2">
+          <div
+            className="video-section2"
+            style={
+              TagSelected === "All" ? { display: "block" } : { display: "none" }
+            }
+          >
             {thumbnails &&
               thumbnails.map((element, index) => {
                 return (
@@ -1070,6 +1108,114 @@ function VideoSection() {
                           {(() => {
                             const timeDifference =
                               new Date() - new Date(publishdate[index]);
+                            const minutes = Math.floor(timeDifference / 60000);
+                            const hours = Math.floor(timeDifference / 3600000);
+                            const days = Math.floor(timeDifference / 86400000);
+                            const weeks = Math.floor(
+                              timeDifference / 604800000
+                            );
+                            const years = Math.floor(
+                              timeDifference / 31536000000
+                            );
+
+                            if (minutes < 1) {
+                              return "just now";
+                            } else if (minutes < 60) {
+                              return `${minutes} mins ago`;
+                            } else if (hours < 24) {
+                              return `${hours} hours ago`;
+                            } else if (days < 7) {
+                              return `${days} days ago`;
+                            } else if (weeks < 52) {
+                              return `${weeks} weeks ago`;
+                            } else {
+                              return `${years} years ago`;
+                            }
+                          })()}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+          </div>
+          <div
+            className="video-section2"
+            style={
+              TagSelected !== "All" ? { display: "block" } : { display: "none" }
+            }
+          >
+            {userVideos &&
+              userVideos.length > 0 &&
+              userVideos.map((element, index) => {
+                return (
+                  <div
+                    className="video-data12"
+                    style={
+                      element === thumbnailURL
+                        ? { display: "none" }
+                        : { display: "flex" }
+                    }
+                    key={index}
+                    onClick={() => {
+                      navigate(`/video/${element._id}`);
+                      window.location.reload();
+                    }}
+                  >
+                    <div className="video-left-side">
+                      <img
+                        src={element.thumbnailURL}
+                        alt=""
+                        className="recommend-thumbnails"
+                        loading="lazy"
+                      />
+                      <p className="duration duration2">
+                        {Math.floor(element.videoLength / 60) +
+                          ":" +
+                          (Math.round(element.videoLength % 60) < 10
+                            ? "0" + Math.round(element.videoLength % 60)
+                            : Math.round(element.videoLength % 60))}
+                      </p>
+                    </div>
+                    <div className="video-right-side">
+                      <p className="recommend-vid-title">{element.Title}</p>
+                      <div className="recommend-uploader">
+                        <p className="recommend-vid-uploader uploader">
+                          {element.uploader}
+                        </p>
+                        <Tooltip
+                          TransitionComponent={Zoom}
+                          title="Verified"
+                          placement="right"
+                        >
+                          <CheckCircleIcon
+                            fontSize="100px"
+                            style={{
+                              color: "rgb(138, 138, 138)",
+                              marginLeft: "4px",
+                            }}
+                          />
+                        </Tooltip>
+                      </div>
+                      <div className="view-time">
+                        <p className="views">
+                          {element.views >= 1e9
+                            ? `${(element.views / 1e9).toFixed(1)}B`
+                            : element.views >= 1e6
+                            ? `${(element.views / 1e6).toFixed(1)}M`
+                            : element.views >= 1e3
+                            ? `${(element.views / 1e3).toFixed(1)}K`
+                            : element.views}{" "}
+                          views
+                        </p>
+                        <p
+                          className="upload-time"
+                          style={{ marginLeft: "4px" }}
+                        >
+                          &#x2022;{" "}
+                          {(() => {
+                            const timeDifference =
+                              new Date() - new Date(element.uploaded_date);
                             const minutes = Math.floor(timeDifference / 60000);
                             const hours = Math.floor(timeDifference / 3600000);
                             const days = Math.floor(timeDifference / 86400000);
