@@ -21,6 +21,13 @@
     flex-direction: column;
     margin-right:10px;
     width: fit-content;
+    padding: 10px;
+    transition: all .1s ease;
+}
+
+
+.sub-channels:hover {
+  background-color: #3a3a3a;
 }
 
 .subscription-content {

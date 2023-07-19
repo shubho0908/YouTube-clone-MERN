@@ -248,7 +248,6 @@ Channel.post("/subscribe/:channelID/:email/:email2", async (req, res) => {
   }
 });
 
-
 Channel.get("/getsubscriptions/:email", async (req, res) => {
   try {
     const email = req.params.email;
@@ -260,7 +259,7 @@ Channel.get("/getsubscriptions/:email", async (req, res) => {
 
     const subscribedData = user.subscribedChannels;
     if (subscribedData.length > 0) {
-     return res.json(subscribedData);
+      return res.json(subscribedData);
     } else {
       res.json({ subscribedData: "NO DATA" });
     }
@@ -327,5 +326,82 @@ Channel.get("/getabout/:email", async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
+
+Channel.post("/savefeaturedchannel/:email", async (req, res) => {
+  try {
+    const email = req.params.email;
+    const user = await userData.findOne({ email });
+    const data = req.body;
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const featuredChannelData = user.featuredChannels;
+
+    const channelExists = featuredChannelData.some(
+      (channel) => channel.channelID === data.channelID
+    );
+
+    if (channelExists) {
+      return res.json("Channel added already");
+    }
+
+    featuredChannelData.push({
+      channelname: data.channelname,
+      channelProfile: data.channelProfile,
+      channelID: data.channelID,
+    });
+
+    await user.save();
+    res.json(featuredChannelData);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+Channel.get("/getfeaturedchannels/:email", async (req, res) => {
+  try {
+    const email = req.params.email;
+    const user = await userData.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const featuredChannelData = user.featuredChannels;
+
+    if (featuredChannelData.length > 0) {
+      res.json(featuredChannelData);
+    } else {
+      res.json("No channels");
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+Channel.post("/deletefeaturedchannel/:email/:channelid", async (req, res) => {
+  try {
+    const { email, channelid } = req.params;
+    const user = await userData.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const featuredChannelData = user.featuredChannels;
+    
+    const updatedFeaturedChannels = featuredChannelData.filter(channel => channel.channelID !== channelid);
+    
+    user.featuredChannels = updatedFeaturedChannels;
+    
+    await user.save();
+
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 
 module.exports = Channel;

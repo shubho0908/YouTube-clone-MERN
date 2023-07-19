@@ -170,6 +170,19 @@ const UserData = new mongoose.Schema({
       },
     },
   ],
+  featuredChannels: [
+    {
+      channelname: {
+        type: String,
+      },
+      channelProfile: {
+        type: String,
+      },
+      channelID: {
+        type: String,
+      },
+    },
+  ],
 });
 
 const user = mongoose.model("userData", UserData);
