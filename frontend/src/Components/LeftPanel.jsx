@@ -6,6 +6,7 @@ import VideoLibraryOutlinedIcon from "@mui/icons-material/VideoLibraryOutlined";
 import ClearRoundedIcon from "@mui/icons-material/ClearRounded";
 import WatchLaterOutlinedIcon from "@mui/icons-material/WatchLaterOutlined";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
+import jwtDecode from "jwt-decode";
 import { useEffect, useState } from "react";
 import Signup from "./Signup";
 import Signin from "./Signin";
@@ -17,10 +18,18 @@ function LeftPanel() {
     return menu ? JSON.parse(menu) : false;
   });
   const navigate = useNavigate();
+  const [Email, setEmail] = useState();
   const location = useLocation();
+  const [Subscriptions, setSubscriptions] = useState([]);
   const [isbtnClicked, setisbtnClicked] = useState(false);
   const token = localStorage.getItem("userToken");
   const [isSwitch, setisSwitched] = useState(false);
+
+  useEffect(() => {
+    if (token) {
+      setEmail(jwtDecode(token).email);
+    }
+  }, [token]);
 
   useEffect(() => {
     const handleMenuButtonClick = () => {
@@ -61,6 +70,25 @@ function LeftPanel() {
 
     localStorage.setItem("selected", selected);
   }, [location]);
+
+  useEffect(() => {
+    const getSubscriptions = async () => {
+      try {
+        if (Email !== undefined) {
+          const response = await fetch(
+            `http://localhost:3000/getsubscriptions/${Email}`
+          );
+          const result = await response.json();
+          setSubscriptions(result);
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    const interval = setInterval(getSubscriptions, 100);
+
+    return () => clearInterval(interval);
+  }, [Email]);
 
   return (
     <>
@@ -124,6 +152,40 @@ function LeftPanel() {
               style={{ color: "white" }}
             />
             <p>Subscription</p>
+          </div>
+          <div
+            className="subscribed-channels"
+            style={
+              Subscriptions && Subscriptions.length > 0
+                ? { display: "block" }
+                : { display: "none" }
+            }
+          >
+            {Subscriptions &&
+              Subscriptions.length > 0 &&
+              Subscriptions.map((element, index) => {
+                return (
+                  <div
+                    className="mysubscriptions"
+                    key={index}
+                    onClick={() => {
+                      navigate(`/channel/${element.channelID}`);
+                      window.location.reload();
+                    }}
+                  >
+                    <img
+                      src={element.channelProfile}
+                      alt="channel profile"
+                      className="channel-profilee"
+                    />
+                    <p className="sub-channelnamee">
+                      {element.channelname.length <= 7
+                        ? element.channelname
+                        : `${element.channelname.slice(0, 7)}..`}
+                    </p>
+                  </div>
+                );
+              })}
           </div>
         </div>
         <hr className="seperate" />
@@ -194,6 +256,7 @@ function LeftPanel() {
             <ThumbUpOutlinedIcon fontSize="medium" style={{ color: "white" }} />
             <p>Liked videos</p>
           </div>
+          <hr className="seperate" />
         </div>
       </div>
 

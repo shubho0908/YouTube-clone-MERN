@@ -5,29 +5,28 @@
   object-fit: cover;
 }
 
-.main-txxt{
-    font-size: 22px;
+.main-txxt {
+  font-size: 22px;
 }
 
-.channels-full-list{
-    display: flex;
+.channels-full-list {
+  display: flex;
 }
 
-.sub-channels{
-    cursor: pointer;
-    margin-top: 25px;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    margin-right:10px;
-    width: fit-content;
-    padding: 10px;
-    transition: all .1s ease;
+.sub-channels {
+  cursor: pointer;
+  margin-top: 25px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-right: 10px;
+  width: fit-content;
+  padding: 10px;
+  transition: all 0.1s ease;
 }
-
 
 .sub-channels:hover {
-  background-color: #3a3a3a;
+  background-color: #333333;
 }
 
 .subscription-content {
@@ -38,33 +37,33 @@
   color: white;
 }
 
-.sub-channelname{
-    margin-top: 12px;
-    color: #aaa;
-    width: 70%;
-    text-align: center;
+.sub-channelname {
+  margin-top: 12px;
+  color: #aaa;
+  width: 70%;
+  text-align: center;
 }
 
-.sub-thumbnail{
-    width: 300px;
-    border-radius: 8px;
+.sub-thumbnail {
+  width: 300px;
+  border-radius: 8px;
 }
 
-.subscribed-videos{
-    margin-top: 35px;
+.subscribed-videos {
+  margin-top: 35px;
 }
 
-.subs-video-data{
-    cursor: pointer;
+.subs-video-data {
+  cursor: pointer;
 }
 
-.subs-videos-all{
-    margin-top: 15px;
-    display: grid;
-    /* grid-template-columns: repeat(auto-fit, minmax(315px, 1fr)); */
-    grid-template-columns: repeat(5, 1fr);
-    /* grid-template-rows: repeat(4, 1fr); */
-    justify-content: center;
-    grid-column-gap: 10px;
-    grid-row-gap: 18px;
+.subs-videos-all {
+  margin-top: 15px;
+  display: grid;
+  /* grid-template-columns: repeat(auto-fit, minmax(315px, 1fr)); */
+  grid-template-columns: repeat(5, 1fr);
+  /* grid-template-rows: repeat(4, 1fr); */
+  justify-content: center;
+  grid-column-gap: 10px;
+  grid-row-gap: 18px;
 }

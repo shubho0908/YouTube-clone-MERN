@@ -300,11 +300,15 @@ function SearchResults() {
                       onClick={() => {
                         if (token) {
                           updateViews(element._id);
+                         setTimeout(() => {
                           navigate(`/video/${element._id}`);
                           window.location.reload();
+                         }, 400);
                         }
-                        navigate(`/video/${element._id}`);
+                        else{
+                          navigate(`/video/${element._id}`);
                         window.location.reload();
+                        }
                       }}
                     >
                       <img
@@ -434,11 +438,16 @@ function SearchResults() {
                     onClick={() => {
                       if (token) {
                         updateViews(element._id);
-                        navigate(`/video/${element._id}`);
+                        setTimeout(() => {
+                          navigate(`/video/${element._id}`);
                         window.location.reload();
+                        }, 400);
                       }
+                      else{
+                        
                       navigate(`/video/${element._id}`);
                       window.location.reload();
+                      }
                     }}
                   >
                     <img
@@ -667,11 +676,16 @@ function SearchResults() {
                     onClick={() => {
                       if (token) {
                         updateViews(element._id);
+                       setTimeout(() => {
                         navigate(`/video/${element._id}`);
                         window.location.reload();
+                       }, 400);
                       }
+                      else{
+                        
                       navigate(`/video/${element._id}`);
                       window.location.reload();
+                      }
                     }}
                   >
                     <img

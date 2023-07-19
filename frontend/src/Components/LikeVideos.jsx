@@ -115,11 +115,15 @@ function LikeVideos() {
                     onClick={() => {
                       if (token) {
                         updateViews(videolike[0].likedVideoID);
+                      setTimeout(() => {
                         navigate(`/video/${videolike[0].likedVideoID}`);
                         window.location.reload();
+                      }, 400);
                       }
-                      navigate(`/video/${videolike[0].likedVideoID}`);
+                      else{
+                        navigate(`/video/${videolike[0].likedVideoID}`);
                       window.location.reload();
+                      }
                     }}
                   >
                     <img
@@ -145,11 +149,14 @@ function LikeVideos() {
                   onClick={() => {
                     if (token) {
                       updateViews(videolike[0].likedVideoID);
+                      setTimeout(() => {
+                        navigate(`/video/${videolike[0].likedVideoID}`);
+                        window.location.reload();
+                      }, 400);
+                    } else {
                       navigate(`/video/${videolike[0].likedVideoID}`);
                       window.location.reload();
                     }
-                    navigate(`/video/${videolike[0].likedVideoID}`);
-                    window.location.reload();
                   }}
                 >
                   <PlayArrowIcon fontSize="medium" style={{ color: "black" }} />
@@ -168,11 +175,14 @@ function LikeVideos() {
                           onClick={() => {
                             if (token) {
                               updateViews(element.likedVideoID);
+                              setTimeout(() => {
+                                navigate(`/video/${element.likedVideoID}`);
+                                window.location.reload();
+                              }, 400);
+                            } else {
                               navigate(`/video/${element.likedVideoID}`);
                               window.location.reload();
                             }
-                            navigate(`/video/${element.likedVideoID}`);
-                            window.location.reload();
                           }}
                         >
                           <img

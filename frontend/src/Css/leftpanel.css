@@ -53,6 +53,33 @@
 
 .trending2,
 .subscription2,
-.library2, .watch-later2, .liked-video2 {
+.library2,
+.watch-later2,
+.liked-video2 {
   margin-top: 15px;
+}
+
+.channel-profilee {
+  width: 35px;
+  height: 35px;
+  object-fit: cover;
+  border-radius: 100%;
+}
+
+.mysubscriptions {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  padding-right: 80px;
+  transition: all 0.15s ease;
+}
+
+.mysubscriptions:hover {
+  background-color: #3d3f4365;
+  border-radius: 8px;
+}
+
+.sub-channelnamee {
+  padding-left: 20px;
 }

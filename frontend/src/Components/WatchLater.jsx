@@ -133,11 +133,15 @@ function WatchLater() {
                     onClick={() => {
                       if (token) {
                         updateViews(watchlater[0].savedVideoID);
+                        setTimeout(() => {
+                          navigate(`/video/${watchlater[0].savedVideoID}`);
+                      window.location.reload();
+                        }, 400);
+                      }
+                      else{
                         navigate(`/video/${watchlater[0].savedVideoID}`);
                       window.location.reload();
                       }
-                      navigate(`/video/${watchlater[0].savedVideoID}`);
-                      window.location.reload();
                     }}
                   >
                     <img
@@ -163,11 +167,15 @@ function WatchLater() {
                   onClick={() => {
                     if (token) {
                       updateViews(watchlater[0].savedVideoID);
+                     setTimeout(() => {
                       navigate(`/video/${watchlater[0].savedVideoID}`);
                       window.location.reload();
+                     }, 400);
                     }
+                   else{
                     navigate(`/video/${watchlater[0].savedVideoID}`);
                     window.location.reload();
+                   }
                   }}
                 >
                   <PlayArrowIcon fontSize="medium" style={{ color: "black" }} />
@@ -186,11 +194,15 @@ function WatchLater() {
                           onClick={() => {
                             if (token) {
                               updateViews(element.savedVideoID);
+                             setTimeout(() => {
                               navigate(`/video/${element.savedVideoID}`);
-                            window.location.reload();
+                              window.location.reload();
+                             }, 400);
                             }
+                           else{
                             navigate(`/video/${element.savedVideoID}`);
                             window.location.reload();
+                           }
                           }}
                         >
                           <img

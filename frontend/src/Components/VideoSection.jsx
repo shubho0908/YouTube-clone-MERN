@@ -243,9 +243,11 @@ function VideoSection() {
     const CommentLikes = async () => {
       try {
         if (id !== undefined) {
-          const response = await fetch(`http://localhost:3000/likecomment/${id}`);
-        const result = await response.json();
-        setCommentLikes(result);
+          const response = await fetch(
+            `http://localhost:3000/likecomment/${id}`
+          );
+          const result = await response.json();
+          setCommentLikes(result);
         }
       } catch (error) {
         console.log(error.message);
@@ -284,11 +286,13 @@ function VideoSection() {
   useEffect(() => {
     const getComments = async () => {
       try {
-       if (id !== undefined) {
-        const response = await fetch(`http://localhost:3000/getcomments/${id}`);
-        const result = await response.json();
-        setComments(result);
-       }
+        if (id !== undefined) {
+          const response = await fetch(
+            `http://localhost:3000/getcomments/${id}`
+          );
+          const result = await response.json();
+          setComments(result);
+        }
       } catch (error) {
         console.log(error.message);
       }
@@ -301,13 +305,13 @@ function VideoSection() {
   useEffect(() => {
     const getOtherChannel = async () => {
       try {
-       if (id !== undefined) {
-        const response = await fetch(
-          `http://localhost:3000/otherchannel/${id}`
-        );
-        const userEmail = await response.json();
-        setUserMail(userEmail);
-       }
+        if (id !== undefined) {
+          const response = await fetch(
+            `http://localhost:3000/otherchannel/${id}`
+          );
+          const userEmail = await response.json();
+          setUserMail(userEmail);
+        }
       } catch (error) {
         console.log(error.message);
       }
@@ -388,13 +392,13 @@ function VideoSection() {
   useEffect(() => {
     const GetUserVideos = async () => {
       try {
-       if (usermail !== undefined) {
-        const response = await fetch(
-          `http://localhost:3000/getuservideos/${usermail}`
-        );
-        const myvideos = await response.json();
-        setUserVideos(myvideos);
-       }
+        if (usermail !== undefined) {
+          const response = await fetch(
+            `http://localhost:3000/getuservideos/${usermail}`
+          );
+          const myvideos = await response.json();
+          setUserVideos(myvideos);
+        }
       } catch (error) {
         console.log(error.message);
       }
@@ -590,6 +594,20 @@ function VideoSection() {
           },
         }
       );
+      await response.json();
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const updateViews = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:3000/updateview/${id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       await response.json();
     } catch (error) {
       console.log(error.message);
@@ -1051,8 +1069,16 @@ function VideoSection() {
                     }
                     key={index}
                     onClick={() => {
-                      navigate(`/video/${VideoID[index]}`);
-                      window.location.reload();
+                      if (token) {
+                        updateViews(VideoID[index]);
+                        setTimeout(() => {
+                          navigate(`/video/${VideoID[index]}`);
+                          window.location.reload();
+                        }, 400);
+                      } else {
+                        navigate(`/video/${VideoID[index]}`);
+                        window.location.reload();
+                      }
                     }}
                   >
                     <div className="video-left-side">
@@ -1159,8 +1185,16 @@ function VideoSection() {
                     }
                     key={index}
                     onClick={() => {
-                      navigate(`/video/${element._id}`);
-                      window.location.reload();
+                      if (token) {
+                        updateViews(element._id);
+                        setTimeout(() => {
+                          navigate(`/video/${element._id}`);
+                          window.location.reload();
+                        }, 400);
+                      } else {
+                        navigate(`/video/${element._id}`);
+                        window.location.reload();
+                      }
                     }}
                   >
                     <div className="video-left-side">

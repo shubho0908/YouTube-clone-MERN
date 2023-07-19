@@ -26,11 +26,13 @@ function FeaturedChannels(prop) {
   useEffect(() => {
     const getSubscriptions = async () => {
       try {
+       if (prop.newmail !== undefined) {
         const response = await fetch(
           `http://localhost:3000/getsubscriptions/${prop.newmail}`
         );
         const result = await response.json();
         setSubscriptions(result);
+       }
       } catch (error) {
         console.log(error.message);
       }

@@ -122,11 +122,15 @@ function Trending() {
                     onClick={() => {
                       if (token) {
                         updateViews(element.videoid);
+                       setTimeout(() => {
                         navigate(`/video/${element.videoid}`);
                         window.location.reload();
+                       }, 400);
                       }
+                     else{
                       navigate(`/video/${element.videoid}`);
                       window.location.reload();
+                     }
                     }}
                   >
                     <img

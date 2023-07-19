@@ -164,11 +164,15 @@ function Subscriptions() {
                       onClick={() => {
                         if (token) {
                           updateViews(element._id);
+                         setTimeout(() => {
                           navigate(`/video/${element._id}`);
                           window.location.reload();
+                         }, 400);
                         }
+                       else{
                         navigate(`/video/${element._id}`);
                         window.location.reload();
+                       }
                       }}
                     >
                       <img
