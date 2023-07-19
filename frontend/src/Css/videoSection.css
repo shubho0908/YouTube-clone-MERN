@@ -208,11 +208,26 @@
   transition: all 0.15s ease;
 }
 
+.add-playlist {
+  color: white;
+  cursor: pointer;
+  display: flex;
+  width: 90px;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #272727;
+  padding: 8px;
+  border-radius: 25px;
+  margin-left: 20px;
+  transition: all 0.15s ease;
+}
+
 .like-data:hover,
 .dislike-data:hover,
 .save-later:hover,
 .download-btn:hover,
-.share:hover {
+.share:hover,
+.add-playlist:hover {
   background-color: #3f3f3f;
 }
 
@@ -439,7 +454,8 @@
 .dislike-data,
 .share,
 .download-btn,
-.save-later {
+.save-later,
+.add-playlist {
   transition: all 0.25s ease;
 }
 
@@ -447,6 +463,103 @@
 .dislike-data:active,
 .share:active,
 .download-btn:active,
-.save-later:active {
+.save-later:active,
+.add-playlist:active {
   transform: scale(0.8);
+}
+
+.playlist-pop {
+  color: white;
+  background-color: #212121;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  z-index: 10;
+  transform: translate(-50%, -50%);
+  width: 270px;
+  padding: 15px;
+  border-radius: 8px;
+  min-height: 200px;
+}
+
+.this-top-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.this-bottom-section {
+  position: absolute;
+  bottom: 18px;
+  display: flex;
+  align-items: center;
+}
+
+.create-playlist-section {
+  position: absolute;
+  bottom: 18px;
+  width: inherit;
+}
+
+.playlist-name {
+  background-color: #212121;
+  color: white;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid white;
+  margin-top: 4px;
+  font-size: 16px;
+  width: -webkit-fill-available;
+}
+
+.playlist-name::placeholder {
+  color: white;
+  font-size: 15px;
+}
+
+.first-que > p,
+.second-que > p,
+.combine2 > p {
+  font-size: 14px;
+}
+
+.second-que {
+  margin-top: 20px;
+}
+
+.combine2 {
+  margin-top: 5px;
+}
+
+.choose-privacy {
+  position: absolute;
+  background-color: #212121;
+  top: 55px;
+  left: 32px;
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+
+.first-privacy,
+.second-privacy {
+  display: flex;
+  align-items: center;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left: 20px;
+  padding-right: 20px;
+  cursor: pointer;
+transition: all .1s ease;
+}
+
+.first-privacy:hover, .second-privacy:hover{
+  background-color: #3c3c3c;
+}
+
+.right-privacy {
+  margin-left: 15px;
+}
+
+.right-privacy > p:nth-child(2) {
+  font-size: 14px;
+  color: #aaa;
 }

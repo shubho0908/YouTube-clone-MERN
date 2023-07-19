@@ -35,6 +35,7 @@ function ChannelAbout(prop) {
           const { description, sociallinks, joining } = await response.json();
           setDescription(description);
           setLinks(sociallinks);
+          console.log(sociallinks);
           setjoinedDate(joining);
         }
       } catch (error) {

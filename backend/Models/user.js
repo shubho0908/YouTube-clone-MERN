@@ -183,6 +183,7 @@ const UserData = new mongoose.Schema({
       },
     },
   ],
+  Playlists: [],
 });
 
 const user = mongoose.model("userData", UserData);

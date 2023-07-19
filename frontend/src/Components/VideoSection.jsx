@@ -8,6 +8,7 @@ import ReactLoading from "react-loading";
 import "plyr/dist/plyr.css";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import Tooltip from "@mui/material/Tooltip";
+import AddToPhotosOutlinedIcon from "@mui/icons-material/AddToPhotosOutlined";
 import Zoom from "@mui/material/Zoom";
 import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
@@ -18,10 +19,14 @@ import BookmarkAddOutlinedIcon from "@mui/icons-material/BookmarkAddOutlined";
 import avatar from "../img/avatar.png";
 import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
 import ClearRoundedIcon from "@mui/icons-material/ClearRounded";
+import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import jwtDecode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import Signin from "./Signin";
 import Signup from "./Signup";
+
+import PublicOutlinedIcon from "@mui/icons-material/PublicOutlined";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
 function VideoSection() {
   const { id } = useParams();
@@ -59,6 +64,8 @@ function VideoSection() {
   const [CommentLikes, setCommentLikes] = useState();
   const [isLiked, setIsLiked] = useState();
   const [isSaved, setIsSaved] = useState();
+  const [createPlaylistClicked, setcreatePlaylistClicked] = useState(false);
+  const [privacyClicked, setprivacyClicked] = useState(false);
 
   //Get Channel Data
   const [youtuberName, setyoutuberName] = useState();
@@ -257,7 +264,7 @@ function VideoSection() {
     const interval = setInterval(CommentLikes, 200);
 
     return () => clearInterval(interval);
-  }, [email, id]);
+  }, [id]);
 
   useEffect(() => {
     const getWatchlater = async () => {
@@ -830,6 +837,30 @@ function VideoSection() {
                   <p>Save</p>
                 </div>
               </Tooltip>
+              <Tooltip
+                TransitionComponent={Zoom}
+                title="Add to playlist"
+                placement="top"
+              >
+                <div
+                  className="add-playlist"
+                  onClick={() => {
+                    if (token) {
+                      // saveVideo();
+                    } else {
+                      setisbtnClicked(true);
+                      document.body.classList.add("bg-css");
+                    }
+                  }}
+                >
+                  <PlaylistAddIcon
+                    fontSize="medium"
+                    style={{ color: "white" }}
+                  />
+
+                  <p>Playlist</p>
+                </div>
+              </Tooltip>
             </div>
           </div>
           <div className="description-section2">
@@ -1354,6 +1385,99 @@ function VideoSection() {
             >
               Signup
             </p>
+          </div>
+        </div>
+      </div>
+
+      {/* PLAYLIST POPUP */}
+
+      <div
+        className="playlist-pop"
+        style={
+          createPlaylistClicked === false
+            ? { minHeight: "200px" }
+            : { minHeight: "320px" }
+        }
+      >
+        <div className="this-top-section">
+          <p>Save video to...</p>
+          <ClearRoundedIcon fontSize="large" style={{ color: "white" }} />
+        </div>
+        <div
+          className="this-bottom-section"
+          onClick={() => {
+            if (createPlaylistClicked === false) {
+              setcreatePlaylistClicked(true);
+            }
+          }}
+          style={
+            createPlaylistClicked === false
+              ? { display: "flex" }
+              : { display: "none" }
+          }
+        >
+          <AddToPhotosOutlinedIcon
+            fontSize="medium"
+            style={{ color: "white" }}
+          />
+          <p style={{ marginLeft: "12px" }}>Create new playlist</p>
+        </div>
+        <div
+          className="create-playlist-section"
+          style={
+            createPlaylistClicked === true
+              ? { display: "block" }
+              : { display: "none" }
+          }
+        >
+          <div className="first-que">
+            <p>Name</p>
+            <input
+              type="text"
+              name="playlist_name"
+              className="playlist-name"
+              placeholder="Enter playlist name..."
+            />
+          </div>
+          <div className="second-que">
+            <p>Privacy</p>
+            <div
+              className="combine2"
+              onClick={() => {
+                if (privacyClicked === false) {
+                  setprivacyClicked(true);
+                }
+              }}
+            >
+              <p>Private</p>
+              <hr className="bottom-line" />
+            </div>
+          </div>
+          <div
+            className="choose-privacy"
+            style={
+              privacyClicked === true
+                ? { display: "block" }
+                : { display: "none" }
+            }
+          >
+            <div className="first-privacy">
+              <PublicOutlinedIcon
+                fontSize="medium"
+                style={{ color: "white" }}
+              />
+              <div className="right-privacy">
+                <p>Public</p>
+                <p>Anyone can view</p>
+              </div>
+            </div>
+            <div className="second-privacy">
+              <LockOutlinedIcon fontSize="medium" style={{ color: "white" }} />
+              <div className="right-privacy">
+                <p>Private</p>
+                <p>Only you can view</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
