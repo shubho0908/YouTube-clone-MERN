@@ -480,6 +480,7 @@
   padding: 15px;
   border-radius: 8px;
   min-height: 200px;
+  animation: fadeUp 0.25s ease forwards;
 }
 
 .this-top-section {
@@ -489,10 +490,23 @@
 }
 
 .this-bottom-section {
+  cursor: pointer;
   position: absolute;
   bottom: 18px;
   display: flex;
   align-items: center;
+}
+
+.this-middle-section {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 10;
+  transform: translate(-50%, -50%);
+}
+
+.this-middle-section > p {
+  width: max-content;
 }
 
 .create-playlist-section {
@@ -548,10 +562,11 @@
   padding-left: 20px;
   padding-right: 20px;
   cursor: pointer;
-transition: all .1s ease;
+  transition: all 0.1s ease;
 }
 
-.first-privacy:hover, .second-privacy:hover{
+.first-privacy:hover,
+.second-privacy:hover {
   background-color: #3c3c3c;
 }
 

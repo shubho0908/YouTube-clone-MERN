@@ -66,6 +66,7 @@ function VideoSection() {
   const [isSaved, setIsSaved] = useState();
   const [createPlaylistClicked, setcreatePlaylistClicked] = useState(false);
   const [privacyClicked, setprivacyClicked] = useState(false);
+  const [playlistClicked, setPlaylistClicked] = useState(false);
 
   //Get Channel Data
   const [youtuberName, setyoutuberName] = useState();
@@ -116,7 +117,7 @@ function VideoSection() {
         const { channel } = await response.json();
         setChannelName(channel);
       } catch (error) {
-        console.log(error.message);
+        //console.log(error.message);
       }
     };
 
@@ -135,7 +136,7 @@ function VideoSection() {
           setUserProfile(profile);
         }
       } catch (error) {
-        console.log(error.message);
+        //console.log(error.message);
       }
     };
     const interval = setInterval(getChannel, 100);
@@ -152,7 +153,7 @@ function VideoSection() {
           setVideoData(video);
         }
       } catch (error) {
-        console.log(error.message);
+        //console.log(error.message);
       }
     };
 
@@ -182,7 +183,7 @@ function VideoSection() {
         SetViews(views);
         setPublishDate(uploadDate);
       } catch (error) {
-        console.log(error.message);
+        //console.log(error.message);
       }
     };
 
@@ -214,7 +215,7 @@ function VideoSection() {
           setVideoLikes(likes);
         }
       } catch (error) {
-        console.log(error.message);
+        //console.log(error.message);
       }
     };
 
@@ -238,7 +239,7 @@ function VideoSection() {
           }
         }
       } catch (error) {
-        console.log(error.message);
+        //console.log(error.message);
       }
     };
     const interval = setInterval(LikeExists, 200);
@@ -257,7 +258,7 @@ function VideoSection() {
           setCommentLikes(result);
         }
       } catch (error) {
-        console.log(error.message);
+        //console.log(error.message);
       }
     };
 
@@ -281,7 +282,7 @@ function VideoSection() {
           }
         }
       } catch (error) {
-        console.log(error.message);
+        //console.log(error.message);
       }
     };
 
@@ -301,7 +302,7 @@ function VideoSection() {
           setComments(result);
         }
       } catch (error) {
-        console.log(error.message);
+        //console.log(error.message);
       }
     };
     const interval = setInterval(getComments, 200);
@@ -320,7 +321,7 @@ function VideoSection() {
           setUserMail(userEmail);
         }
       } catch (error) {
-        console.log(error.message);
+        //console.log(error.message);
       }
     };
 
@@ -387,7 +388,7 @@ function VideoSection() {
           }
         }
       } catch (error) {
-        console.log(error.message);
+        //console.log(error.message);
       }
     };
 
@@ -407,7 +408,7 @@ function VideoSection() {
           setUserVideos(myvideos);
         }
       } catch (error) {
-        console.log(error.message);
+        //console.log(error.message);
       }
     };
 
@@ -431,7 +432,7 @@ function VideoSection() {
       });
       await response.json();
     } catch (error) {
-      console.log(error.message);
+      //console.log(error.message);
     }
   };
 
@@ -502,7 +503,7 @@ function VideoSection() {
       );
       await response.json();
     } catch (error) {
-      console.log(error.message);
+      //console.log(error.message);
     }
   };
 
@@ -519,7 +520,7 @@ function VideoSection() {
       );
       await response.json();
     } catch (error) {
-      console.log(error.message);
+      //console.log(error.message);
     }
   };
 
@@ -537,7 +538,7 @@ function VideoSection() {
       await response.json();
       // window.location.reload();
     } catch (error) {
-      console.log(error.message);
+      //console.log(error.message);
     }
   };
 
@@ -555,7 +556,7 @@ function VideoSection() {
       await response.json();
       console.log("disliked");
     } catch (error) {
-      console.log(error.message);
+      //console.log(error.message);
     }
   };
 
@@ -580,7 +581,7 @@ function VideoSection() {
       );
       await response.json();
     } catch (error) {
-      console.log(error.message);
+      //console.log(error.message);
     }
   };
 
@@ -603,7 +604,7 @@ function VideoSection() {
       );
       await response.json();
     } catch (error) {
-      console.log(error.message);
+      //console.log(error.message);
     }
   };
 
@@ -617,7 +618,7 @@ function VideoSection() {
       });
       await response.json();
     } catch (error) {
-      console.log(error.message);
+      //console.log(error.message);
     }
   };
 
@@ -845,9 +846,10 @@ function VideoSection() {
                 <div
                   className="add-playlist"
                   onClick={() => {
-                    if (token) {
-                      // saveVideo();
-                    } else {
+                    if (playlistClicked === false) {
+                      setPlaylistClicked(true);
+                      document.body.classList.add("bg-css");
+                    } else if (!token) {
                       setisbtnClicked(true);
                       document.body.classList.add("bg-css");
                     }
@@ -1393,15 +1395,29 @@ function VideoSection() {
 
       <div
         className="playlist-pop"
-        style={
-          createPlaylistClicked === false
-            ? { minHeight: "200px" }
-            : { minHeight: "320px" }
-        }
+        style={{
+          minHeight: createPlaylistClicked === false ? "200px" : "320px",
+          display: playlistClicked === true ? "block" : "none",
+        }}
       >
         <div className="this-top-section">
           <p>Save video to...</p>
-          <ClearRoundedIcon fontSize="large" style={{ color: "white" }} />
+          <ClearRoundedIcon
+            fontSize="large"
+            style={{ color: "white" }}
+            onClick={() => {
+              setPlaylistClicked(false);
+              document.body.classList.remove("bg-css");
+            }}
+          />
+        </div>
+        <div
+          className="this-middle-section"
+          style={
+            createPlaylistClicked === true ? { top: "40%" } : { top: "50%" }
+          }
+        >
+          <p>No Playlists available...</p>
         </div>
         <div
           className="this-bottom-section"
