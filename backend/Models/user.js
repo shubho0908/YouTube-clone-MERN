@@ -24,6 +24,9 @@ const Playlists = new mongoose.Schema({
       title: {
         type: String,
       },
+      videoID: {
+        type: String,
+      },
       description: {
         type: String,
       },

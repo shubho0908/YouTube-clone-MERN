@@ -201,8 +201,10 @@ function Browse() {
                         onClick={() => {
                           if (token) {
                             updateViews(VideoID[index]);
+                           setTimeout(() => {
                             navigate(`/video/${VideoID[index]}`);
                             window.location.reload();
+                           }, 400);
                           }
                           navigate(`/video/${VideoID[index]}`);
                           window.location.reload();
@@ -341,8 +343,10 @@ function Browse() {
                         onClick={() => {
                           if (token) {
                             updateViews(element._id);
+                           setTimeout(() => {
                             navigate(`/video/${element._id}`);
                             window.location.reload();
+                           }, 400);
                           }
                           navigate(`/video/${element._id}`);
                           window.location.reload();
