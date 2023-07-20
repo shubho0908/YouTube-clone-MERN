@@ -67,6 +67,7 @@ function VideoSection() {
   const [createPlaylistClicked, setcreatePlaylistClicked] = useState(false);
   const [privacyClicked, setprivacyClicked] = useState(false);
   const [playlistClicked, setPlaylistClicked] = useState(false);
+  const [privacy, setPrivacy] = useState("Public");
 
   //Get Channel Data
   const [youtuberName, setyoutuberName] = useState();
@@ -1396,17 +1397,19 @@ function VideoSection() {
       <div
         className="playlist-pop"
         style={{
-          minHeight: createPlaylistClicked === false ? "200px" : "320px",
+          minHeight: createPlaylistClicked === false ? "200px" : "420px",
           display: playlistClicked === true ? "block" : "none",
         }}
       >
         <div className="this-top-section">
           <p>Save video to...</p>
           <ClearRoundedIcon
-            fontSize="large"
-            style={{ color: "white" }}
+          className="close-playlist-pop"
+            fontSize="medium"
+            style={{ color: "white", cursor: "pointer" }}
             onClick={() => {
               setPlaylistClicked(false);
+              setcreatePlaylistClicked(false);
               document.body.classList.remove("bg-css");
             }}
           />
@@ -1414,7 +1417,7 @@ function VideoSection() {
         <div
           className="this-middle-section"
           style={
-            createPlaylistClicked === true ? { top: "40%" } : { top: "50%" }
+            createPlaylistClicked === true ? { top: "38%" } : { top: "50%" }
           }
         >
           <p>No Playlists available...</p>
@@ -1465,7 +1468,7 @@ function VideoSection() {
                 }
               }}
             >
-              <p>Private</p>
+              <p>{privacy}</p>
               <hr className="bottom-line" />
             </div>
           </div>
@@ -1477,7 +1480,13 @@ function VideoSection() {
                 : { display: "none" }
             }
           >
-            <div className="first-privacy">
+            <div
+              className="first-privacy"
+              onClick={() => {
+                setPrivacy("Public");
+                setprivacyClicked(false);
+              }}
+            >
               <PublicOutlinedIcon
                 fontSize="medium"
                 style={{ color: "white" }}
@@ -1487,13 +1496,22 @@ function VideoSection() {
                 <p>Anyone can view</p>
               </div>
             </div>
-            <div className="second-privacy">
+            <div
+              className="second-privacy"
+              onClick={() => {
+                setPrivacy("Private");
+                setprivacyClicked(false);
+              }}
+            >
               <LockOutlinedIcon fontSize="medium" style={{ color: "white" }} />
               <div className="right-privacy">
                 <p>Private</p>
                 <p>Only you can view</p>
               </div>
             </div>
+          </div>
+          <div className="playlist-create-btn">
+            <p>Create</p>
           </div>
         </div>
       </div>

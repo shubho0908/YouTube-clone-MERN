@@ -503,6 +503,8 @@
   top: 50%;
   z-index: 10;
   transform: translate(-50%, -50%);
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.742);
 }
 
 .this-middle-section > p {
@@ -538,10 +540,11 @@
 }
 
 .second-que {
-  margin-top: 20px;
+  margin-top: 25px;
 }
 
 .combine2 {
+  cursor: pointer;
   margin-top: 5px;
 }
 
@@ -577,4 +580,31 @@
 .right-privacy > p:nth-child(2) {
   font-size: 14px;
   color: #aaa;
+}
+
+.playlist-create-btn{
+  cursor: pointer;
+  color: #3ea6ff;
+  padding: 9px;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-top: 25px;
+  position: relative;
+  float: right;
+  transition: all .1s ease;
+}
+
+.playlist-create-btn:hover{
+  background-color: #3ea5ff46;
+  border-radius: 28px;
+}
+
+.close-playlist-pop{
+  padding: 4px;
+  transition: all .12s ease;
+}
+
+.close-playlist-pop:hover{
+  background-color: rgba(255, 255, 255, 0.135);
+  border-radius: 100%;
 }

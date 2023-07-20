@@ -1,6 +1,48 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
 
+const Playlists = new mongoose.Schema({
+  playlist_name: {
+    type: String,
+    required: true,
+  },
+  playlist_privacy: {
+    type: String,
+    required: true,
+  },
+  playlist_date: {
+    type: String,
+  },
+  playlist_owner: {
+    type: String,
+  },
+  playlist_videos: [
+    {
+      thumbnail: {
+        type: String,
+      },
+      title: {
+        type: String,
+      },
+      description: {
+        type: String,
+      },
+      videolength: {
+        type: String,
+      },
+      video_uploader: {
+        type: String,
+      },
+      video_date: {
+        type: String,
+      },
+      video_views: {
+        type: String,
+      },
+    },
+  ],
+});
+
 const UserData = new mongoose.Schema({
   name: {
     type: String,
@@ -183,7 +225,7 @@ const UserData = new mongoose.Schema({
       },
     },
   ],
-  Playlists: [],
+  Playlists: [Playlists],
 });
 
 const user = mongoose.model("userData", UserData);
