@@ -610,22 +610,25 @@
   border-radius: 100%;
 }
 
-.show-playlists {
-  margin-left: 10px;
-}
-
 .tick-box {
   cursor: pointer;
+  border-radius: 5px;
+}
+
+.tick-box:active {
+  background-color: rgba(255, 255, 255, 0.125);
 }
 
 .all-playlists {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
+  justify-content: space-between;
 }
 
 .all-playlists > p {
-  margin-left: 25px;
+  padding-right: 32px;
+  text-align: left;
 }
 
 .this-middle-section2 {
@@ -634,7 +637,7 @@
   height: 150px;
 }
 
-.new-privacy{
-  position: absolute;
-  right: 25px;
+.show-playlists {
+  padding-left: 12px;
+  padding-right: 12px;
 }

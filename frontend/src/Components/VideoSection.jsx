@@ -654,13 +654,15 @@ function VideoSection() {
 
   const updateViews = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3000/updateview/${id}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      await response.json();
+      if (id !== undefined) {
+        const response = await fetch(`http://localhost:3000/updateview/${id}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        await response.json();
+      }
     } catch (error) {
       //console.log(error.message);
     }
@@ -670,33 +672,35 @@ function VideoSection() {
 
   const AddPlaylist = async () => {
     try {
-      const currentDate = new Date().toISOString();
-      const data = {
-        playlist_name: playlistName,
-        playlist_privacy: privacy,
-        playlist_date: currentDate,
-        playlist_owner: channelName,
-        thumbnail: thumbnailURL,
-        title: Title,
-        videoID: id,
-        description: Description,
-        videolength: videoLength,
-        video_uploader: uploader,
-        video_date: uploaded_date,
-        video_views: views,
-      };
+      if (email !== undefined) {
+        const currentDate = new Date().toISOString();
+        const data = {
+          playlist_name: playlistName,
+          playlist_privacy: privacy,
+          playlist_date: currentDate,
+          playlist_owner: channelName,
+          thumbnail: thumbnailURL,
+          title: Title,
+          videoID: id,
+          description: Description,
+          videolength: videoLength,
+          video_uploader: uploader,
+          video_date: uploaded_date,
+          video_views: views,
+        };
 
-      const response = await fetch(
-        `http://localhost:3000/addplaylist/${email}`,
-        {
-          method: "POST",
-          body: JSON.stringify(data),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      await response.json();
+        const response = await fetch(
+          `http://localhost:3000/addplaylist/${email}`,
+          {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        await response.json();
+      }
     } catch (error) {
       //console.log(error.message);
     }
@@ -704,30 +708,32 @@ function VideoSection() {
 
   const AddVideoToExistingPlaylist = async (Id) => {
     try {
-      const data = {
-        Id,
-        thumbnail: thumbnailURL,
-        title: Title,
-        videoID: id,
-        description: Description,
-        videolength: videoLength,
-        video_uploader: uploader,
-        video_date: uploaded_date,
-        video_views: views,
-      };
+      if (email !== undefined && Id !== undefined) {
+        const data = {
+          Id,
+          thumbnail: thumbnailURL,
+          title: Title,
+          videoID: id,
+          description: Description,
+          videolength: videoLength,
+          video_uploader: uploader,
+          video_date: uploaded_date,
+          video_views: views,
+        };
 
-      const response = await fetch(
-        `http://localhost:3000/addvideotoplaylist/${email}`,
-        {
-          method: "POST",
-          body: JSON.stringify(data),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+        const response = await fetch(
+          `http://localhost:3000/addvideotoplaylist/${email}`,
+          {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
-      await response.json();
+        await response.json();
+      }
     } catch (error) {
       //console.log(error.message);
     }
@@ -737,16 +743,18 @@ function VideoSection() {
 
   const RemoveVideo = async (playlistID) => {
     try {
-      const response = await fetch(
-        `http://localhost:3000/removevideo/${email}/${id}/${playlistID}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      await response.json();
+      if (email !== undefined && id !== undefined && playlistID !== undefined) {
+        const response = await fetch(
+          `http://localhost:3000/removevideo/${email}/${id}/${playlistID}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        await response.json();
+      }
     } catch (error) {
       //console.log(error.message);
     }
@@ -976,7 +984,7 @@ function VideoSection() {
                 <div
                   className="add-playlist"
                   onClick={() => {
-                    if (playlistClicked === false) {
+                    if (playlistClicked === false && token) {
                       setPlaylistClicked(true);
                       document.body.classList.add("bg-css");
                     } else if (!token) {
@@ -1001,10 +1009,10 @@ function VideoSection() {
                 {views >= 1e9
                   ? `${(views / 1e9).toFixed(1)}B`
                   : views >= 1e6
-                  ? `${(views / 1e6).toFixed(1)}M`
-                  : views >= 1e3
-                  ? `${(views / 1e3).toFixed(1)}K`
-                  : views}{" "}
+                    ? `${(views / 1e6).toFixed(1)}M`
+                    : views >= 1e3
+                      ? `${(views / 1e3).toFixed(1)}K`
+                      : views}{" "}
                 views
               </p>
               <p style={{ marginLeft: "10px" }}>
@@ -1170,7 +1178,7 @@ function VideoSection() {
                           </p>
 
                           {element.user_email === email ||
-                          email === usermail ? (
+                            email === usermail ? (
                             <button
                               className="delete-comment-btn"
                               style={{ marginLeft: "25px" }}
@@ -1284,10 +1292,10 @@ function VideoSection() {
                           {Views[index] >= 1e9
                             ? `${(Views[index] / 1e9).toFixed(1)}B`
                             : Views[index] >= 1e6
-                            ? `${(Views[index] / 1e6).toFixed(1)}M`
-                            : Views[index] >= 1e3
-                            ? `${(Views[index] / 1e3).toFixed(1)}K`
-                            : Views[index]}{" "}
+                              ? `${(Views[index] / 1e6).toFixed(1)}M`
+                              : Views[index] >= 1e3
+                                ? `${(Views[index] / 1e3).toFixed(1)}K`
+                                : Views[index]}{" "}
                           views
                         </p>
                         <p
@@ -1400,10 +1408,10 @@ function VideoSection() {
                           {element.views >= 1e9
                             ? `${(element.views / 1e9).toFixed(1)}B`
                             : element.views >= 1e6
-                            ? `${(element.views / 1e6).toFixed(1)}M`
-                            : element.views >= 1e3
-                            ? `${(element.views / 1e3).toFixed(1)}K`
-                            : element.views}{" "}
+                              ? `${(element.views / 1e6).toFixed(1)}M`
+                              : element.views >= 1e3
+                                ? `${(element.views / 1e3).toFixed(1)}K`
+                                : element.views}{" "}
                           views
                         </p>
                         <p
@@ -1526,7 +1534,7 @@ function VideoSection() {
       <div
         className="playlist-pop"
         style={{
-          minHeight: createPlaylistClicked === false ? "250px" : "420px",
+          minHeight: createPlaylistClicked === false ? "262px" : "420px",
           display: playlistClicked === true ? "block" : "none",
           width:
             UserPlaylist && !UserPlaylist.includes("No playlists available...")
@@ -1554,7 +1562,7 @@ function VideoSection() {
           }
         >
           {!UserPlaylist ||
-          UserPlaylist.includes("No playlists available...") ? (
+            UserPlaylist.includes("No playlists available...") ? (
             <p>No Playlists available...</p>
           ) : (
             ""
@@ -1570,7 +1578,7 @@ function VideoSection() {
                     {(playlistID &&
                       playlistID.length > 0 &&
                       playlistID.includes(element._id) === false) ||
-                    playlistID === "Video doesn't exist in any playlist" ? (
+                      playlistID === "Video doesn't exist in any playlist" ? (
                       <CheckBoxOutlineBlankIcon
                         className="tick-box"
                         fontSize="medium"
