@@ -107,8 +107,8 @@ Channel.get("/checkchannel/:email", async (req, res) => {
   try {
     const email = req.params.email;
     const user = await userData.findOne({ email });
-    const { channel } = user.channelName;
-    res.json(channel);
+    const channelname  = user.channelName;
+    res.json(channelname);
   } catch (error) {
     res.json(error.message);
   }

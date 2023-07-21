@@ -442,4 +442,55 @@ Videos.get("/search/:data", async (req, res) => {
   }
 });
 
+Videos.post("/addplaylist/:email", async (req, res) => {
+  try {
+    const email = req.params.email;
+    const {
+      playlist_name,
+      playlist_privacy,
+      playlist_date,
+      playlist_owner,
+      thumbnail,
+      title,
+      videoID,
+      description,
+      videolength,
+      video_uploader,
+      video_date,
+      video_views,
+    } = req.body;
+
+    const user = await userData.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ error: "User doesn't exist" });
+    }
+
+    const myPlaylists = user.Playlists;
+    myPlaylists.push({
+      playlist_name,
+      playlist_privacy,
+      playlist_date,
+      playlist_owner,
+      playlist_videos: [
+        {
+          thumbnail,
+          title,
+          videoID,
+          description,
+          videolength,
+          video_uploader,
+          video_date,
+          video_views,
+        },
+      ],
+    });
+
+    user.save();
+
+    res.json(myPlaylists);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 module.exports = Videos;

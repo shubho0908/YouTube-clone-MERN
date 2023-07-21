@@ -35,7 +35,7 @@ function VideoSection() {
   const [channelName, setChannelName] = useState();
   const [plyrInitialized, setPlyrInitialized] = useState(false);
   const [Display, setDisplay] = useState("none");
-  const [comment, setComment] = useState();
+  const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
   const [isChannel, setisChannel] = useState();
   const [shareClicked, setShareClicked] = useState(false);
@@ -68,6 +68,7 @@ function VideoSection() {
   const [privacyClicked, setprivacyClicked] = useState(false);
   const [playlistClicked, setPlaylistClicked] = useState(false);
   const [privacy, setPrivacy] = useState("Public");
+  const [playlistName, setPlaylistName] = useState("");
 
   //Get Channel Data
   const [youtuberName, setyoutuberName] = useState();
@@ -107,16 +108,13 @@ function VideoSection() {
   useEffect(() => {
     const checkChannel = async () => {
       try {
-        if (email === undefined) {
-          setChannelName(null);
-          return;
+        if (email !== undefined) {
+          const response = await fetch(
+            `http://localhost:3000/checkchannel/${email}`
+          );
+          const channelname = await response.json();
+          setChannelName(channelname);
         }
-
-        const response = await fetch(
-          `http://localhost:3000/checkchannel/${email}`
-        );
-        const { channel } = await response.json();
-        setChannelName(channel);
       } catch (error) {
         //console.log(error.message);
       }
@@ -488,6 +486,7 @@ function VideoSection() {
     uploader,
     Description,
     views,
+    videoLength,
     uploaded_date,
   } = matchedVideo;
 
@@ -618,6 +617,43 @@ function VideoSection() {
         },
       });
       await response.json();
+    } catch (error) {
+      //console.log(error.message);
+    }
+  };
+
+  //ADD PLAYLIST
+
+  const AddPlaylist = async () => {
+    try {
+      const currentDate = new Date().toISOString();
+      const data = {
+        playlist_name: playlistName,
+        playlist_privacy: privacy,
+        playlist_date: currentDate,
+        playlist_owner: channelName,
+        thumbnail: thumbnailURL,
+        title: Title,
+        videoID: id,
+        description: Description,
+        videolength: videoLength,
+        video_uploader: uploader,
+        video_date: uploaded_date,
+        video_views: views,
+      };
+
+      const response = await fetch(
+        `http://localhost:3000/addplaylist/${email}`,
+        {
+          method: "POST",
+          body: JSON.stringify(data),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const result = await response.json();
+      console.log(result);
     } catch (error) {
       //console.log(error.message);
     }
@@ -872,10 +908,10 @@ function VideoSection() {
                 {views >= 1e9
                   ? `${(views / 1e9).toFixed(1)}B`
                   : views >= 1e6
-                  ? `${(views / 1e6).toFixed(1)}M`
-                  : views >= 1e3
-                  ? `${(views / 1e3).toFixed(1)}K`
-                  : views}{" "}
+                    ? `${(views / 1e6).toFixed(1)}M`
+                    : views >= 1e3
+                      ? `${(views / 1e3).toFixed(1)}K`
+                      : views}{" "}
                 views
               </p>
               <p style={{ marginLeft: "10px" }}>
@@ -1041,7 +1077,7 @@ function VideoSection() {
                           </p>
 
                           {element.user_email === email ||
-                          email === usermail ? (
+                            email === usermail ? (
                             <button
                               className="delete-comment-btn"
                               style={{ marginLeft: "25px" }}
@@ -1155,10 +1191,10 @@ function VideoSection() {
                           {Views[index] >= 1e9
                             ? `${(Views[index] / 1e9).toFixed(1)}B`
                             : Views[index] >= 1e6
-                            ? `${(Views[index] / 1e6).toFixed(1)}M`
-                            : Views[index] >= 1e3
-                            ? `${(Views[index] / 1e3).toFixed(1)}K`
-                            : Views[index]}{" "}
+                              ? `${(Views[index] / 1e6).toFixed(1)}M`
+                              : Views[index] >= 1e3
+                                ? `${(Views[index] / 1e3).toFixed(1)}K`
+                                : Views[index]}{" "}
                           views
                         </p>
                         <p
@@ -1271,10 +1307,10 @@ function VideoSection() {
                           {element.views >= 1e9
                             ? `${(element.views / 1e9).toFixed(1)}B`
                             : element.views >= 1e6
-                            ? `${(element.views / 1e6).toFixed(1)}M`
-                            : element.views >= 1e3
-                            ? `${(element.views / 1e3).toFixed(1)}K`
-                            : element.views}{" "}
+                              ? `${(element.views / 1e6).toFixed(1)}M`
+                              : element.views >= 1e3
+                                ? `${(element.views / 1e3).toFixed(1)}K`
+                                : element.views}{" "}
                           views
                         </p>
                         <p
@@ -1404,7 +1440,7 @@ function VideoSection() {
         <div className="this-top-section">
           <p>Save video to...</p>
           <ClearRoundedIcon
-          className="close-playlist-pop"
+            className="close-playlist-pop"
             fontSize="medium"
             style={{ color: "white", cursor: "pointer" }}
             onClick={() => {
@@ -1456,6 +1492,10 @@ function VideoSection() {
               name="playlist_name"
               className="playlist-name"
               placeholder="Enter playlist name..."
+              value={playlistName}
+              onChange={(e) => {
+                setPlaylistName(e.target.value);
+              }}
             />
           </div>
           <div className="second-que">
@@ -1510,7 +1550,17 @@ function VideoSection() {
               </div>
             </div>
           </div>
-          <div className="playlist-create-btn">
+          <div
+            className="playlist-create-btn"
+            onClick={() => {
+              if (playlistName === "" || privacy === "") {
+                alert("Input fileds can't be empty");
+              }
+              else {
+                AddPlaylist()
+              }
+            }}
+          >
             <p>Create</p>
           </div>
         </div>

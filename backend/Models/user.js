@@ -40,7 +40,7 @@ const Playlists = new mongoose.Schema({
         type: String,
       },
       video_views: {
-        type: String,
+        type: Number,
       },
     },
   ],
