@@ -72,15 +72,7 @@ function VideoSection() {
   const [privacy, setPrivacy] = useState("Public");
   const [playlistName, setPlaylistName] = useState("");
   const [UserPlaylist, setUserPlaylist] = useState([]);
-  const [playlistSelection, setPlaylistSelection] = useState(
-    new Array(UserPlaylist.length).fill(false)
-  );
-
-  const handlePlaylistSelect = (index) => {
-    const newPlaylistSelection = [...playlistSelection];
-    newPlaylistSelection[index] = !newPlaylistSelection[index];
-    setPlaylistSelection(newPlaylistSelection);
-  };
+  const [playlistID, setplaylistID] = useState([]);
 
   //Get Channel Data
   const [youtuberName, setyoutuberName] = useState();
@@ -429,11 +421,13 @@ function VideoSection() {
   useEffect(() => {
     const getPlaylists = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:3000/getplaylistdata/${email}`
-        );
-        const playlists = await response.json();
-        setUserPlaylist(playlists);
+        if (email !== undefined) {
+          const response = await fetch(
+            `http://localhost:3000/getplaylistdata/${email}`
+          );
+          const playlists = await response.json();
+          setUserPlaylist(playlists);
+        }
       } catch (error) {
         //console.log(error.message);
       }
@@ -443,6 +437,26 @@ function VideoSection() {
 
     return () => clearInterval(interval);
   }, [email]);
+
+  useEffect(() => {
+    const getVideoAvailableInPlaylist = async () => {
+      try {
+        if (id !== undefined && email !== undefined) {
+          const response = await fetch(
+            `http://localhost:3000/getvideodataplaylist/${email}/${id}`
+          );
+          const playlistIdsWithVideo = await response.json();
+          setplaylistID(playlistIdsWithVideo);
+        }
+      } catch (error) {
+        //console.log(error.message);
+      }
+    };
+
+    const interval = setInterval(getVideoAvailableInPlaylist, 100);
+
+    return () => clearInterval(interval);
+  }, [email, id]);
 
   //POST REQUESTS
 
@@ -1497,7 +1511,10 @@ function VideoSection() {
         style={{
           minHeight: createPlaylistClicked === false ? "250px" : "420px",
           display: playlistClicked === true ? "block" : "none",
-          width: UserPlaylist && UserPlaylist.length > 0 ? "240px" : "270px",
+          width:
+            UserPlaylist && !UserPlaylist.includes("No playlists available...")
+              ? "240px"
+              : "270px",
         }}
       >
         <div className="this-top-section">
@@ -1519,25 +1536,30 @@ function VideoSection() {
             createPlaylistClicked === true ? { top: "38%" } : { top: "50%" }
           }
         >
-          {!UserPlaylist ? <p>No Playlists available...</p> : ""}
+          {!UserPlaylist ||
+          UserPlaylist.includes("No playlists available...") ? (
+            <p>No Playlists available...</p>
+          ) : (
+            ""
+          )}
         </div>
         <div className="this-middle-section2">
           <div className="show-playlists">
             {UserPlaylist &&
+              !UserPlaylist.includes("No playlists available...") &&
               UserPlaylist.map((element, index) => {
-                const isPlaylistSelected = playlistSelection[index];
                 return (
                   <div className="all-playlists" key={index}>
-                    {!isPlaylistSelected ? (
+                    {(playlistID &&
+                      playlistID.length > 0 &&
+                      playlistID.includes(element._id) === false) ||
+                    playlistID === "Video doesn't exist in any playlist" ? (
                       <CheckBoxOutlineBlankIcon
                         className="tick-box"
                         fontSize="medium"
                         style={{ color: "white" }}
                         onClick={() => {
-                          handlePlaylistSelect(index);
-                          setTimeout(() => {
-                            AddVideoToExistingPlaylist(element._id);
-                          }, 300);
+                          AddVideoToExistingPlaylist(element._id);
                         }}
                       />
                     ) : (
@@ -1545,7 +1567,6 @@ function VideoSection() {
                         className="tick-box"
                         fontSize="medium"
                         style={{ color: "white" }}
-                        onClick={() => handlePlaylistSelect(index)}
                       />
                     )}
                     <p>{element.playlist_name}</p>

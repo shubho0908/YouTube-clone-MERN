@@ -579,24 +579,23 @@ Videos.get("/getvideodataplaylist/:email/:videoId", async (req, res) => {
       return res.status(404).json({ error: "User doesn't exist" });
     }
 
-    const videosid = user.Playlists.flatMap((item) =>
-      item.playlist_videos.flatMap((videos) => videos.videoID)
+    // Get an array of playlists that contain the specified videoId
+    const playlistsWithVideo = user.Playlists.filter((playlist) =>
+      playlist.playlist_videos.some((video) => video.videoID === videoId)
     );
 
-    if (!videosid) {
-      return res.status(404).json({ error: "Video doesn't exist" });
+    if (playlistsWithVideo.length === 0) {
+      return res.json("Video doesn't exist in any playlist");
     }
 
-    const existID = videosid.find((id) => id === videoId);
+    // Get an array of playlist IDs that contain the specified videoId
+    const playlistIdsWithVideo = playlistsWithVideo.map((playlist) => playlist._id);
 
-    if (existID) {
-      return res.json(true);
-    } else {
-      return res.json(false);
-    }
+    return res.json(playlistIdsWithVideo );
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
+
 
 module.exports = Videos;
