@@ -345,7 +345,7 @@ function VideoSection() {
           setSubscribers(subscribers);
         }
       } catch (error) {
-        console.log("Error fetching user data:", error.message);
+        // console.log("Error fetching user data:", error.message);
       }
     };
 
@@ -367,7 +367,7 @@ function VideoSection() {
           setyoutubeChannelID(channelid);
         }
       } catch (error) {
-        console.log("Error fetching user data:", error.message);
+        // console.log("Error fetching user data:", error.message);
       }
     };
 
@@ -598,7 +598,7 @@ function VideoSection() {
         }
       );
       await response.json();
-      console.log("disliked");
+      // console.log("disliked");
     } catch (error) {
       //console.log(error.message);
     }
@@ -696,8 +696,7 @@ function VideoSection() {
           },
         }
       );
-      const result = await response.json();
-      console.log(result);
+      await response.json();
     } catch (error) {
       //console.log(error.message);
     }
@@ -728,8 +727,26 @@ function VideoSection() {
         }
       );
 
-      const result = await response.json();
-      console.log(result);
+      await response.json();
+    } catch (error) {
+      //console.log(error.message);
+    }
+  };
+
+  //REMOVE VIDEO FROM PLAYLIST
+
+  const RemoveVideo = async (playlistID) => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/removevideo/${email}/${id}/${playlistID}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      await response.json();
     } catch (error) {
       //console.log(error.message);
     }
@@ -1567,6 +1584,7 @@ function VideoSection() {
                         className="tick-box"
                         fontSize="medium"
                         style={{ color: "white" }}
+                        onClick={() => RemoveVideo(element._id)}
                       />
                     )}
                     <p>{element.playlist_name}</p>

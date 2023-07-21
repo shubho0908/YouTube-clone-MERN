@@ -553,6 +553,7 @@
   background-color: #212121;
   top: 55px;
   left: 32px;
+  z-index: 5;
   box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
 
@@ -620,7 +621,7 @@
 .all-playlists {
   display: flex;
   align-items: center;
-  margin-bottom: 12px;
+  margin-bottom: 20px;
 }
 
 .all-playlists > p {
@@ -628,7 +629,7 @@
 }
 
 .this-middle-section2 {
-  margin-top: 18px;
+  margin-top: 25px;
   overflow: scroll;
   height: 150px;
 }
