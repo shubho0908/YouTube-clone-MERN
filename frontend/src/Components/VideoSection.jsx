@@ -20,6 +20,8 @@ import avatar from "../img/avatar.png";
 import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
 import ClearRoundedIcon from "@mui/icons-material/ClearRounded";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
+import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import jwtDecode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import Signin from "./Signin";
@@ -69,6 +71,16 @@ function VideoSection() {
   const [playlistClicked, setPlaylistClicked] = useState(false);
   const [privacy, setPrivacy] = useState("Public");
   const [playlistName, setPlaylistName] = useState("");
+  const [UserPlaylist, setUserPlaylist] = useState([]);
+  const [playlistSelection, setPlaylistSelection] = useState(
+    new Array(UserPlaylist.length).fill(false)
+  );
+
+  const handlePlaylistSelect = (index) => {
+    const newPlaylistSelection = [...playlistSelection];
+    newPlaylistSelection[index] = !newPlaylistSelection[index];
+    setPlaylistSelection(newPlaylistSelection);
+  };
 
   //Get Channel Data
   const [youtuberName, setyoutuberName] = useState();
@@ -414,6 +426,24 @@ function VideoSection() {
     GetUserVideos();
   }, [usermail]);
 
+  useEffect(() => {
+    const getPlaylists = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:3000/getplaylistdata/${email}`
+        );
+        const playlists = await response.json();
+        setUserPlaylist(playlists);
+      } catch (error) {
+        //console.log(error.message);
+      }
+    };
+
+    const interval = setInterval(getPlaylists, 100);
+
+    return () => clearInterval(interval);
+  }, [email]);
+
   //POST REQUESTS
 
   const uploadComment = async () => {
@@ -652,6 +682,38 @@ function VideoSection() {
           },
         }
       );
+      const result = await response.json();
+      console.log(result);
+    } catch (error) {
+      //console.log(error.message);
+    }
+  };
+
+  const AddVideoToExistingPlaylist = async (Id) => {
+    try {
+      const data = {
+        Id,
+        thumbnail: thumbnailURL,
+        title: Title,
+        videoID: id,
+        description: Description,
+        videolength: videoLength,
+        video_uploader: uploader,
+        video_date: uploaded_date,
+        video_views: views,
+      };
+
+      const response = await fetch(
+        `http://localhost:3000/addvideotoplaylist/${email}`,
+        {
+          method: "POST",
+          body: JSON.stringify(data),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
       const result = await response.json();
       console.log(result);
     } catch (error) {
@@ -908,10 +970,10 @@ function VideoSection() {
                 {views >= 1e9
                   ? `${(views / 1e9).toFixed(1)}B`
                   : views >= 1e6
-                    ? `${(views / 1e6).toFixed(1)}M`
-                    : views >= 1e3
-                      ? `${(views / 1e3).toFixed(1)}K`
-                      : views}{" "}
+                  ? `${(views / 1e6).toFixed(1)}M`
+                  : views >= 1e3
+                  ? `${(views / 1e3).toFixed(1)}K`
+                  : views}{" "}
                 views
               </p>
               <p style={{ marginLeft: "10px" }}>
@@ -1077,7 +1139,7 @@ function VideoSection() {
                           </p>
 
                           {element.user_email === email ||
-                            email === usermail ? (
+                          email === usermail ? (
                             <button
                               className="delete-comment-btn"
                               style={{ marginLeft: "25px" }}
@@ -1191,10 +1253,10 @@ function VideoSection() {
                           {Views[index] >= 1e9
                             ? `${(Views[index] / 1e9).toFixed(1)}B`
                             : Views[index] >= 1e6
-                              ? `${(Views[index] / 1e6).toFixed(1)}M`
-                              : Views[index] >= 1e3
-                                ? `${(Views[index] / 1e3).toFixed(1)}K`
-                                : Views[index]}{" "}
+                            ? `${(Views[index] / 1e6).toFixed(1)}M`
+                            : Views[index] >= 1e3
+                            ? `${(Views[index] / 1e3).toFixed(1)}K`
+                            : Views[index]}{" "}
                           views
                         </p>
                         <p
@@ -1307,10 +1369,10 @@ function VideoSection() {
                           {element.views >= 1e9
                             ? `${(element.views / 1e9).toFixed(1)}B`
                             : element.views >= 1e6
-                              ? `${(element.views / 1e6).toFixed(1)}M`
-                              : element.views >= 1e3
-                                ? `${(element.views / 1e3).toFixed(1)}K`
-                                : element.views}{" "}
+                            ? `${(element.views / 1e6).toFixed(1)}M`
+                            : element.views >= 1e3
+                            ? `${(element.views / 1e3).toFixed(1)}K`
+                            : element.views}{" "}
                           views
                         </p>
                         <p
@@ -1433,8 +1495,9 @@ function VideoSection() {
       <div
         className="playlist-pop"
         style={{
-          minHeight: createPlaylistClicked === false ? "200px" : "420px",
+          minHeight: createPlaylistClicked === false ? "250px" : "420px",
           display: playlistClicked === true ? "block" : "none",
+          width: UserPlaylist && UserPlaylist.length > 0 ? "240px" : "270px",
         }}
       >
         <div className="this-top-section">
@@ -1456,7 +1519,58 @@ function VideoSection() {
             createPlaylistClicked === true ? { top: "38%" } : { top: "50%" }
           }
         >
-          <p>No Playlists available...</p>
+          {!UserPlaylist ? <p>No Playlists available...</p> : ""}
+        </div>
+        <div className="this-middle-section2">
+          <div className="show-playlists">
+            {UserPlaylist &&
+              UserPlaylist.map((element, index) => {
+                const isPlaylistSelected = playlistSelection[index];
+                return (
+                  <div className="all-playlists" key={index}>
+                    {!isPlaylistSelected ? (
+                      <CheckBoxOutlineBlankIcon
+                        className="tick-box"
+                        fontSize="medium"
+                        style={{ color: "white" }}
+                        onClick={() => {
+                          handlePlaylistSelect(index);
+                          setTimeout(() => {
+                            AddVideoToExistingPlaylist(element._id);
+                          }, 300);
+                        }}
+                      />
+                    ) : (
+                      <CheckBoxIcon
+                        className="tick-box"
+                        fontSize="medium"
+                        style={{ color: "white" }}
+                        onClick={() => handlePlaylistSelect(index)}
+                      />
+                    )}
+                    <p>{element.playlist_name}</p>
+                    {element.playlist_privacy === "Public" ? (
+                      <PublicOutlinedIcon
+                        className="new-privacy"
+                        fontSize="medium"
+                        style={{ color: "white" }}
+                      />
+                    ) : (
+                      ""
+                    )}
+                    {element.playlist_privacy === "Private" ? (
+                      <LockOutlinedIcon
+                        className="new-privacy"
+                        fontSize="medium"
+                        style={{ color: "white" }}
+                      />
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                );
+              })}
+          </div>
         </div>
         <div
           className="this-bottom-section"
@@ -1555,9 +1669,8 @@ function VideoSection() {
             onClick={() => {
               if (playlistName === "" || privacy === "") {
                 alert("Input fileds can't be empty");
-              }
-              else {
-                AddPlaylist()
+              } else {
+                AddPlaylist();
               }
             }}
           >

@@ -493,4 +493,110 @@ Videos.post("/addplaylist/:email", async (req, res) => {
   }
 });
 
+Videos.get("/getplaylistdata/:email", async (req, res) => {
+  try {
+    const email = req.params.email;
+    const user = await userData.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ error: "User doesn't exist" });
+    }
+
+    const playlists = user.Playlists;
+
+    if (playlists && playlists.length > 0) {
+      res.json(playlists);
+    } else {
+      res.json("No playlists available...");
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+Videos.post("/addvideotoplaylist/:email", async (req, res) => {
+  try {
+    const email = req.params.email;
+    const {
+      Id,
+      thumbnail,
+      title,
+      videoID,
+      description,
+      videolength,
+      video_uploader,
+      video_date,
+      video_views,
+    } = req.body;
+
+    const user = await userData.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ error: "User doesn't exist" });
+    }
+    const playlistToUpdate = user.Playlists.find(
+      (playlist) => playlist._id.toString() === Id.toString()
+    );
+
+    if (!playlistToUpdate) {
+      return res.status(404).json({ error: "Playlist not found" });
+    }
+
+    const isVideoExists = playlistToUpdate.playlist_videos.some(
+      (video) => video.videoID === videoID
+    );
+
+    if (isVideoExists) {
+      return res
+        .status(409)
+        .json({ error: "Video already exists in the playlist" });
+    }
+
+    const newVideo = {
+      thumbnail,
+      title,
+      videoID,
+      description,
+      videolength,
+      video_uploader,
+      video_date,
+      video_views,
+    };
+
+    playlistToUpdate.playlist_videos.push(newVideo);
+    await user.save();
+
+    res.json(playlistToUpdate);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+Videos.get("/getvideodataplaylist/:email/:videoId", async (req, res) => {
+  try {
+    const { email, videoId } = req.params;
+    const user = await userData.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ error: "User doesn't exist" });
+    }
+
+    const videosid = user.Playlists.flatMap((item) =>
+      item.playlist_videos.flatMap((videos) => videos.videoID)
+    );
+
+    if (!videosid) {
+      return res.status(404).json({ error: "Video doesn't exist" });
+    }
+
+    const existID = videosid.find((id) => id === videoId);
+
+    if (existID) {
+      return res.json(true);
+    } else {
+      return res.json(false);
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 module.exports = Videos;

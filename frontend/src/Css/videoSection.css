@@ -582,7 +582,7 @@
   color: #aaa;
 }
 
-.playlist-create-btn{
+.playlist-create-btn {
   cursor: pointer;
   color: #3ea6ff;
   padding: 9px;
@@ -591,20 +591,49 @@
   margin-top: 25px;
   position: relative;
   float: right;
-  transition: all .1s ease;
+  transition: all 0.1s ease;
 }
 
-.playlist-create-btn:hover{
+.playlist-create-btn:hover {
   background-color: #3ea5ff46;
   border-radius: 28px;
 }
 
-.close-playlist-pop{
+.close-playlist-pop {
   padding: 4px;
-  transition: all .12s ease;
+  transition: all 0.12s ease;
 }
 
-.close-playlist-pop:hover{
+.close-playlist-pop:hover {
   background-color: rgba(255, 255, 255, 0.135);
   border-radius: 100%;
+}
+
+.show-playlists {
+  margin-left: 10px;
+}
+
+.tick-box {
+  cursor: pointer;
+}
+
+.all-playlists {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.all-playlists > p {
+  margin-left: 25px;
+}
+
+.this-middle-section2 {
+  margin-top: 18px;
+  overflow: scroll;
+  height: 150px;
+}
+
+.new-privacy{
+  position: absolute;
+  right: 25px;
 }

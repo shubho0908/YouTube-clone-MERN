@@ -4,18 +4,13 @@
         "colId": "history",
         "containerId": "",
         "name": "http://localhost:3000/getvideos",
-        "url": "http://localhost:3000/addplaylist/chandan@gmail.com",
-        "method": "POST",
+        "url": "http://localhost:3000/getvideodataplaylist/chandan@gmail.com/64b556dfe067a8591f0eba39",
+        "method": "GET",
         "sortNum": 0,
         "created": "2023-06-18T13:58:12.195Z",
-        "modified": "2023-07-21T04:59:27.012Z",
+        "modified": "2023-07-21T06:49:16.209Z",
         "headers": [],
         "params": [],
-        "body": {
-            "type": "json",
-            "raw": "{\n  \"playlist_name\": \"My Random Playlist\",\n  \"playlist_privacy\": \"public\",\n  \"playlist_date\": \"2023-07-21\",\n  \"playlist_owner\": \"Random User\",\n  \"thumbnail\": \"https://example.com/random_thumbnail.jpg\",\n  \"title\": \"Random Video Title\",\n  \"videoID\": \"random_video_id\",\n  \"description\": \"This is a randomly generated video description.\",\n  \"videolength\": \"00:10:30\",\n  \"video_uploader\": \"Random Uploader\",\n  \"video_date\": \"2023-07-21\",\n  \"video_views\": 55\n}",
-            "form": []
-        },
         "tests": []
     }
 ]
