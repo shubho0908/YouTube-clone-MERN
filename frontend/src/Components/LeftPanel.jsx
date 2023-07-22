@@ -8,6 +8,8 @@ import WatchLaterOutlinedIcon from "@mui/icons-material/WatchLaterOutlined";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import PlaylistPlayOutlinedIcon from "@mui/icons-material/PlaylistPlayOutlined";
 import jwtDecode from "jwt-decode";
+import Tooltip from "@mui/material/Tooltip";
+import Zoom from "@mui/material/Zoom";
 import { useEffect, useState } from "react";
 import Signup from "./Signup";
 import Signin from "./Signin";
@@ -199,11 +201,17 @@ function LeftPanel() {
                       alt="channel profile"
                       className="channel-profilee"
                     />
-                    <p className="sub-channelnamee">
-                      {element.channelname.length <= 7
-                        ? element.channelname
-                        : `${element.channelname.slice(0, 7)}..`}
-                    </p>
+                    <Tooltip
+                      TransitionComponent={Zoom}
+                      title={`${element.channelname}`}
+                      placement="right"
+                    >
+                      <p className="sub-channelnamee">
+                        {element.channelname.length <= 7
+                          ? element.channelname
+                          : `${element.channelname.slice(0, 7)}..`}
+                      </p>
+                    </Tooltip>
                   </div>
                 );
               })}
@@ -295,11 +303,17 @@ function LeftPanel() {
                       fontSize="medium"
                       style={{ color: "white" }}
                     />
-                    <p>
-                      {element.playlist_name.length <= 10
-                        ? element.playlist_name
-                        : `${element.playlist_name.slice(0, 10)}..`}
-                    </p>
+                    <Tooltip
+                      TransitionComponent={Zoom}
+                      title={`${element.playlist_name}`}
+                      placement="right"
+                    >
+                      <p>
+                        {element.playlist_name.length <= 8
+                          ? element.playlist_name
+                          : `${element.playlist_name.slice(0, 8)}..`}
+                      </p>
+                    </Tooltip>
                   </div>
                 );
               })}

@@ -9,7 +9,12 @@ import nothing from "../img/nothing.png";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import jwtDecode from "jwt-decode";
+import PublicOutlinedIcon from "@mui/icons-material/PublicOutlined";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Tooltip from "@mui/material/Tooltip";
+import Zoom from "@mui/material/Zoom";
 import "../Css/likevideos.css";
 
 function Playlists() {
@@ -22,7 +27,8 @@ function Playlists() {
   const [playlistsVideos, setPlaylistsVideos] = useState([]);
   const [playlistDetails, setplaylistDetails] = useState();
   const [isEditmode, setIsEditmode] = useState(false);
-
+  const [privacyClicked, setprivacyClicked] = useState(false);
+  const [channelID, setChannelID] = useState();
   const [PlaylistName, setPlaylistName] = useState("");
   const navigate = useNavigate();
   const token = localStorage.getItem("userToken");
@@ -84,6 +90,26 @@ function Playlists() {
     }
   };
 
+  useEffect(() => {
+    const getChannelID = async () => {
+      try {
+        if (playlistDetails.owner_email !== undefined) {
+          const response = await fetch(
+            `http://localhost:3000/getchannelid/${playlistDetails.owner_email}`
+          );
+          const { channelID } = await response.json();
+          setChannelID(channelID);
+        }
+      } catch (error) {
+        // console.log("Error fetching user data:", error.message);
+      }
+    };
+
+    const interval = setInterval(getChannelID, 100);
+
+    return () => clearInterval(interval);
+  });
+
   //POST REQUEST
 
   const saveEditData = async () => {
@@ -102,6 +128,52 @@ function Playlists() {
     }
   };
 
+  const DeletePlaylist = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/deleteplaylist/${id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      await response.json();
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const handleCopyLink = () => {
+    navigator.clipboard
+      .writeText(window.location.href)
+      .then(() => {
+        alert("Link Copied!");
+      })
+      .catch((error) => {
+        console.log("Error copying link to clipboard:", error);
+      });
+  };
+
+  const setPrivacy = async (privacy) => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/saveplaylistprivacy/${id}`,
+        {
+          method: "POST",
+          body: JSON.stringify({ privacy }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      await response.json();
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   if (playlistsVideos === "No Playlists Found") {
     return (
       <>
@@ -110,6 +182,24 @@ function Playlists() {
         <div className="searched-content">
           <img src={nothing} alt="no results" className="nothing-found" />
           <p className="no-results">No videos found!</p>
+        </div>
+      </>
+    );
+  }
+
+  if (
+    playlistDetails &&
+    playlistDetails.owner_email !== Email &&
+    playlistsVideos !== "No Playlists Found" &&
+    playlistDetails.playlist_privacy === "Private"
+  ) {
+    return (
+      <>
+        <Navbar />
+        <LeftPanel />
+        <div className="searched-content">
+          <img src={nothing} alt="no results" className="nothing-found" />
+          <p className="no-results">This playlist is private!</p>
         </div>
       </>
     );
@@ -165,17 +255,31 @@ function Playlists() {
                   <div
                     className="like-div"
                     style={
-                      isEditmode === false &&
-                      playlistDetails.owner_email === Email
+                      isEditmode === false
                         ? { display: "flex" }
                         : { display: "none" }
                     }
                   >
-                    <p className="like-head">{playlistDetails.playlist_name}</p>
+                    <Tooltip
+                      TransitionComponent={Zoom}
+                      title={`${playlistDetails.playlist_name}`}
+                      placement="top"
+                    >
+                      <p className="like-head">
+                        {/* {playlistDetails.playlist_name.length <= 15
+                          ? playlistDetails.playlist_name
+                          : `${playlistDetails.playlist_name.slice(0, 15)}..`} */}
+                          {playlistDetails.playlist_name}
+                      </p>
+                    </Tooltip>
                     <EditOutlinedIcon
                       className="edit-name-btn"
                       fontSize="medium"
-                      style={{ color: "white" }}
+                      style={
+                        playlistDetails.owner_email === Email
+                          ? { color: "white" }
+                          : { display: "none" }
+                      }
                       onClick={() => {
                         if (token) {
                           setIsEditmode(true);
@@ -196,6 +300,7 @@ function Playlists() {
                       name="playlist-name"
                       className="like-head like-head2"
                       value={PlaylistName}
+                      maxLength={50}
                       onChange={(e) => setPlaylistName(e.target.value)}
                     />
                     <div className="two-main-btns">
@@ -226,9 +331,90 @@ function Playlists() {
                         : { marginTop: "15px" }
                     }
                   >
-                    <p className="like-username">
+                    <p
+                      className="like-username"
+                      onClick={() => navigate(`/channel/${channelID}`)}
+                    >
                       {playlistDetails.playlist_owner}
                     </p>
+
+                    <div
+                      className="update-privacy"
+                      style={
+                        playlistDetails && playlistDetails.owner_email === Email
+                          ? { display: "block" }
+                          : { display: "none" }
+                      }
+                    >
+                      <div
+                        className="updateit-one"
+                        onClick={() => {
+                          if (privacyClicked === false) {
+                            setprivacyClicked(true);
+                          } else {
+                            setprivacyClicked(false);
+                          }
+                        }}
+                      >
+                        <p>{playlistDetails.playlist_privacy}</p>
+                        <KeyboardArrowDownIcon
+                          fontSize="medium"
+                          style={
+                            playlistDetails.owner_email === Email
+                              ? { color: "white" }
+                              : { display: "none" }
+                          }
+                        />
+                      </div>
+                      <div
+                        className="choose-privacy2"
+                        style={
+                          privacyClicked === true
+                            ? { display: "block" }
+                            : { display: "none" }
+                        }
+                      >
+                        <div
+                          className="first-privacy"
+                          onClick={() => {
+                            setprivacyClicked(false);
+                            setPrivacy("Public");
+                            setTimeout(() => {
+                              window.location.reload();
+                            }, 200);
+                          }}
+                        >
+                          <PublicOutlinedIcon
+                            fontSize="medium"
+                            style={{ color: "white" }}
+                          />
+                          <div className="right-privacy">
+                            <p>Public</p>
+                            <p>Anyone can view</p>
+                          </div>
+                        </div>
+                        <div
+                          className="second-privacy"
+                          onClick={() => {
+                            setprivacyClicked(false);
+                            setPrivacy("Private");
+                            setTimeout(() => {
+                              window.location.reload();
+                            }, 200);
+                          }}
+                        >
+                          <LockOutlinedIcon
+                            fontSize="medium"
+                            style={{ color: "white" }}
+                          />
+                          <div className="right-privacy">
+                            <p>Private</p>
+                            <p>Only you can view</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
                     <p className="like-total-videos">
                       {playlistsVideos.length} videos
                     </p>
@@ -239,6 +425,7 @@ function Playlists() {
                       className="share-playlist"
                       fontSize="medium"
                       style={{ color: "white" }}
+                      onClick={handleCopyLink}
                     />
                     <DeleteIcon
                       className="delete-playlist"
@@ -248,6 +435,13 @@ function Playlists() {
                           ? { color: "white" }
                           : { display: "none" }
                       }
+                      onClick={() => {
+                        DeletePlaylist();
+                        setTimeout(() => {
+                          navigate("/");
+                          window.location.reload();
+                        }, 300);
+                      }}
                     />
                   </div>
                 </div>

@@ -1009,10 +1009,10 @@ function VideoSection() {
                 {views >= 1e9
                   ? `${(views / 1e9).toFixed(1)}B`
                   : views >= 1e6
-                    ? `${(views / 1e6).toFixed(1)}M`
-                    : views >= 1e3
-                      ? `${(views / 1e3).toFixed(1)}K`
-                      : views}{" "}
+                  ? `${(views / 1e6).toFixed(1)}M`
+                  : views >= 1e3
+                  ? `${(views / 1e3).toFixed(1)}K`
+                  : views}{" "}
                 views
               </p>
               <p style={{ marginLeft: "10px" }}>
@@ -1178,7 +1178,7 @@ function VideoSection() {
                           </p>
 
                           {element.user_email === email ||
-                            email === usermail ? (
+                          email === usermail ? (
                             <button
                               className="delete-comment-btn"
                               style={{ marginLeft: "25px" }}
@@ -1292,10 +1292,10 @@ function VideoSection() {
                           {Views[index] >= 1e9
                             ? `${(Views[index] / 1e9).toFixed(1)}B`
                             : Views[index] >= 1e6
-                              ? `${(Views[index] / 1e6).toFixed(1)}M`
-                              : Views[index] >= 1e3
-                                ? `${(Views[index] / 1e3).toFixed(1)}K`
-                                : Views[index]}{" "}
+                            ? `${(Views[index] / 1e6).toFixed(1)}M`
+                            : Views[index] >= 1e3
+                            ? `${(Views[index] / 1e3).toFixed(1)}K`
+                            : Views[index]}{" "}
                           views
                         </p>
                         <p
@@ -1408,10 +1408,10 @@ function VideoSection() {
                           {element.views >= 1e9
                             ? `${(element.views / 1e9).toFixed(1)}B`
                             : element.views >= 1e6
-                              ? `${(element.views / 1e6).toFixed(1)}M`
-                              : element.views >= 1e3
-                                ? `${(element.views / 1e3).toFixed(1)}K`
-                                : element.views}{" "}
+                            ? `${(element.views / 1e6).toFixed(1)}M`
+                            : element.views >= 1e3
+                            ? `${(element.views / 1e3).toFixed(1)}K`
+                            : element.views}{" "}
                           views
                         </p>
                         <p
@@ -1538,7 +1538,7 @@ function VideoSection() {
           display: playlistClicked === true ? "block" : "none",
           width:
             UserPlaylist && !UserPlaylist.includes("No playlists available...")
-              ? "240px"
+              ? "270px"
               : "270px",
         }}
       >
@@ -1562,7 +1562,7 @@ function VideoSection() {
           }
         >
           {!UserPlaylist ||
-            UserPlaylist.includes("No playlists available...") ? (
+          UserPlaylist.includes("No playlists available...") ? (
             <p>No Playlists available...</p>
           ) : (
             ""
@@ -1578,7 +1578,7 @@ function VideoSection() {
                     {(playlistID &&
                       playlistID.length > 0 &&
                       playlistID.includes(element._id) === false) ||
-                      playlistID === "Video doesn't exist in any playlist" ? (
+                    playlistID === "Video doesn't exist in any playlist" ? (
                       <CheckBoxOutlineBlankIcon
                         className="tick-box"
                         fontSize="medium"
@@ -1718,6 +1718,7 @@ function VideoSection() {
                 alert("Input fileds can't be empty");
               } else {
                 AddPlaylist();
+               
               }
             }}
           >

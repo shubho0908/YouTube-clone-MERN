@@ -701,4 +701,50 @@ Videos.post("/saveplaylist/:playlistID", async (req, res) => {
   }
 });
 
+Videos.post("/deleteplaylist/:playlistID", async (req, res) => {
+  try {
+    const { playlistID } = req.params;
+    const user = await userData.findOne({ "Playlists._id": playlistID });
+
+    if (!user) {
+      return res.status(404).json({ error: "User doesn't exist" });
+    }
+    user.Playlists = user.Playlists.filter(
+      (item) => item._id.toString() !== playlistID.toString()
+    );
+    await user.save();
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+Videos.post("/saveplaylistprivacy/:playlistID", async(req, res)=>{
+  try {
+
+    const {playlistID} = req.params
+    const {privacy} = req.body
+    const user = await userData.findOne({ "Playlists._id": playlistID });
+
+    if (!user) {
+      return res.status(404).json({ error: "User doesn't exist" });
+    }
+
+    const playlistIndex = user.Playlists.findIndex(
+      (item) => item._id.toString() === playlistID.toString()
+    );
+
+    if (playlistIndex === -1) {
+      return res.status(404).json({ error: "Playlist not found" });
+    }
+
+    user.Playlists[playlistIndex].playlist_privacy = privacy;
+
+    await user.save();
+
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+    
+  }
+})
+
 module.exports = Videos;

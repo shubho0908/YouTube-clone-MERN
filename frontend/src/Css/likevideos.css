@@ -122,8 +122,10 @@ body {
 }
 
 .like-head {
+  cursor: pointer;
   font-size: 26px;
   font-family: "Open Sans", sans-serif;
+  max-width: 75%;
 }
 
 .like-username {
@@ -188,7 +190,6 @@ body {
 
 .like-div {
   display: flex;
-  align-items: center;
 }
 
 .edit-name-btn {
@@ -236,4 +237,43 @@ body {
 .cancel-edit:hover,
 .save-edit:hover {
   background-color: rgba(255, 255, 255, 0.163);
+}
+
+.update-privacy {
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+.like-total-videos {
+  font-size: 14px;
+  margin-top: 5px;
+  color: rgba(255, 255, 255, 0.654);
+}
+
+.updateit-one {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: 15px;
+}
+
+.choose-privacy2 {
+  position: absolute;
+  background-color: #212121;
+  left: 24px;
+  margin-top: 5px;
+  z-index: 5;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+  animation: fadeeinn 0.2s ease;
+}
+
+@keyframes fadeeinn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
