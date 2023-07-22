@@ -10,6 +10,7 @@ import OtherChannel from "./Components/Channel/OtherChannel";
 import Subscriptions from "./Components/Subscriptions";
 import Trending from "./Components/Trending";
 import SearchResults from "./Components/SearchResults";
+import Playlists from "./Components/Playlists";
 
 function App() {
   const token = localStorage.getItem("userToken");
@@ -43,6 +44,10 @@ function App() {
           <Route
             path="/results/:data"
             element={<SearchResults />}
+          />
+          <Route
+            path="/playlist/:id"
+            element={<Playlists />}
           />
           <Route
             path="/subscriptions"

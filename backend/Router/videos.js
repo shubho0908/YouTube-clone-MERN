@@ -606,13 +606,17 @@ Videos.post("/removevideo/:email/:videoID/:playlistID", async (req, res) => {
       return res.status(404).json({ error: "User doesn't exist" });
     }
 
-    const playlist = user.Playlists.find((playlist) => playlist._id.toString() === playlistID.toString());
+    const playlist = user.Playlists.find(
+      (playlist) => playlist._id.toString() === playlistID.toString()
+    );
 
     if (!playlist) {
       return res.json("Playlist not found");
     }
 
-    const videoIndex = playlist.playlist_videos.findIndex((video) => video.videoID === videoID);
+    const videoIndex = playlist.playlist_videos.findIndex(
+      (video) => video.videoID === videoID
+    );
 
     if (videoIndex === -1) {
       return res.json("Video doesn't exist in the playlist");
@@ -628,5 +632,28 @@ Videos.post("/removevideo/:email/:videoID/:playlistID", async (req, res) => {
   }
 });
 
+Videos.get("/getplaylists/:email/:playlistID", async (req, res) => {
+  try {
+    const { email, playlistID } = req.params;
+    const user = await userData.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ error: "User doesn't exist" });
+    }
+
+    const myPlaylists = user.Playlists.find(
+      (item) => item._id.toString() === playlistID.toString()
+    );
+    const playlistVideos = myPlaylists.playlist_videos;
+    if (playlistVideos && playlistVideos.length > 0) {
+      res.json(playlistVideos);
+    }
+    else{
+      res.json("No Playlists Found")
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
 module.exports = Videos;
