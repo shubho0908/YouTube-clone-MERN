@@ -634,7 +634,7 @@ Videos.post("/removevideo/:email/:videoID/:playlistID", async (req, res) => {
 
 Videos.get("/getplaylists/:playlistID", async (req, res) => {
   try {
-    const {playlistID} = req.params;
+    const { playlistID } = req.params;
     const user = await userData.findOne({ "Playlists._id": playlistID });
 
     if (!user) {
@@ -648,12 +648,27 @@ Videos.get("/getplaylists/:playlistID", async (req, res) => {
     if (playlistVideos && playlistVideos.length > 0) {
       res.json({ playlistVideos, myPlaylists });
     } else {
-      res.json("No Playlists Found");
+      res.json({ playlistVideos: "No Playlists Found" });
     }
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
+Videos.get("/getplaylistdata/:email", async (req, res) => {
+  try {
+    const email = req.params.email;
+    const user = await userData.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ error: "User doesn't exist" });
+    }
+
+    const playlistData = user.Playlists
+    res.json(playlistData)
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
 module.exports = Videos;

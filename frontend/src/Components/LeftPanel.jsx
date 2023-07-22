@@ -6,6 +6,7 @@ import VideoLibraryOutlinedIcon from "@mui/icons-material/VideoLibraryOutlined";
 import ClearRoundedIcon from "@mui/icons-material/ClearRounded";
 import WatchLaterOutlinedIcon from "@mui/icons-material/WatchLaterOutlined";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
+import PlaylistPlayOutlinedIcon from "@mui/icons-material/PlaylistPlayOutlined";
 import jwtDecode from "jwt-decode";
 import { useEffect, useState } from "react";
 import Signup from "./Signup";
@@ -21,6 +22,7 @@ function LeftPanel() {
   const [Email, setEmail] = useState();
   const location = useLocation();
   const [Subscriptions, setSubscriptions] = useState([]);
+  const [PlaylistData, setPlaylistData] = useState([]);
   const [isbtnClicked, setisbtnClicked] = useState(false);
   const token = localStorage.getItem("userToken");
   const [isSwitch, setisSwitched] = useState(false);
@@ -86,6 +88,25 @@ function LeftPanel() {
       }
     };
     const interval = setInterval(getSubscriptions, 100);
+
+    return () => clearInterval(interval);
+  }, [Email]);
+
+  useEffect(() => {
+    const getPlaylistData = async () => {
+      try {
+        if (Email !== undefined) {
+          const response = await fetch(
+            `http://localhost:3000/getplaylistdata/${Email}`
+          );
+          const playlistData = await response.json();
+          setPlaylistData(playlistData);
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    const interval = setInterval(getPlaylistData, 100);
 
     return () => clearInterval(interval);
   }, [Email]);
@@ -255,6 +276,32 @@ function LeftPanel() {
           >
             <ThumbUpOutlinedIcon fontSize="medium" style={{ color: "white" }} />
             <p>Liked videos</p>
+          </div>
+          <div className="my-playlists-sectionn">
+            {PlaylistData &&
+              PlaylistData.length > 0 &&
+              PlaylistData.map((element, index) => {
+                return (
+                  <div
+                    className="my-playlist-data"
+                    key={index}
+                    onClick={() => {
+                      navigate(`/playlist/${element._id}`);
+                      window.location.reload();
+                    }}
+                  >
+                    <PlaylistPlayOutlinedIcon
+                      fontSize="medium"
+                      style={{ color: "white" }}
+                    />
+                    <p>
+                      {element.playlist_name.length <= 10
+                        ? element.playlist_name
+                        : `${element.playlist_name.slice(0, 10)}..`}
+                    </p>
+                  </div>
+                );
+              })}
           </div>
           <hr className="seperate" />
         </div>

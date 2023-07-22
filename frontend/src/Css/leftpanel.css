@@ -83,3 +83,21 @@
 .sub-channelnamee {
   padding-left: 20px;
 }
+
+.my-playlist-data {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
+  padding-right: 80px;
+  transition: all 0.15s ease;
+}
+
+.my-playlist-data:hover {
+  background-color: #3d3f4365;
+  border-radius: 8px;
+}
+
+.my-playlist-data > p {
+  padding-left: 20px;
+}

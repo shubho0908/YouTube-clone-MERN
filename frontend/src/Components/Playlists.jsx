@@ -6,6 +6,9 @@ import ReactLoading from "react-loading";
 import { useNavigate } from "react-router-dom";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import nothing from "../img/nothing.png";
+import DeleteIcon from "@mui/icons-material/Delete";
+import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import "../Css/likevideos.css";
 
 function Playlists() {
@@ -16,6 +19,7 @@ function Playlists() {
   });
   const [playlistsVideos, setPlaylistsVideos] = useState([]);
   const [playlistDetails, setplaylistDetails] = useState();
+  const [isEditmode, setIsEditmode] = useState(false);
 
   const navigate = useNavigate();
   const token = localStorage.getItem("userToken");
@@ -79,7 +83,7 @@ function Playlists() {
         <LeftPanel />
         <div className="searched-content">
           <img src={nothing} alt="no results" className="nothing-found" />
-          <p className="no-results">No playlists found!</p>
+          <p className="no-results">No videos found!</p>
         </div>
       </>
     );
@@ -132,12 +136,60 @@ function Playlists() {
                   </div>
                 )}
                 <div className="last-like-section">
-                  <p className="like-head">{playlistDetails.playlist_name}</p>
+                  <div
+                    className="like-div"
+                    style={
+                      isEditmode === false
+                        ? { display: "flex" }
+                        : { display: "none" }
+                    }
+                  >
+                    <p className="like-head">{playlistDetails.playlist_name}</p>
+                    <EditOutlinedIcon
+                      className="edit-name-btn"
+                      fontSize="medium"
+                      style={{ color: "white" }}
+                      onClick={() => setIsEditmode(true)}
+                    />
+                  </div>
+                  <div
+                    className="like-div"
+                    style={
+                      isEditmode === true
+                        ? { display: "block" }
+                        : { display: "none" }
+                    }
+                  >
+                    <input
+                      type="text"
+                      name="playlist-name"
+                      className="like-head like-head2"
+                      value={playlistDetails.playlist_name}
+                    />
+                    <div className="two-main-btns">
+                      <button className="cancel-edit">Cancel</button>
+                      <button className="save-edit">Save</button>
+                    </div>
+                  </div>
                   <div className="last-like2">
-                    <p className="like-username">{playlistDetails.playlist_owner}</p>
+                    <p className="like-username">
+                      {playlistDetails.playlist_owner}
+                    </p>
                     <p className="like-total-videos">
                       {playlistsVideos.length} videos
                     </p>
+                  </div>
+                  <div className="playlist-btns">
+                    <ReplyOutlinedIcon
+                      className="share-playlist"
+                      fontSize="medium"
+                      style={{ color: "white" }}
+                    />
+                    <DeleteIcon
+                      className="delete-playlist"
+                      fontSize="medium"
+                      style={{ color: "white" }}
+                    />
                   </div>
                 </div>
                 <div

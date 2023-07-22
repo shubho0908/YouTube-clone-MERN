@@ -86,7 +86,6 @@ body {
   opacity: 1;
 }
 
-
 .like-right-section {
   position: relative;
   left: 400px;
@@ -161,4 +160,51 @@ body {
   font-size: 14px;
   margin-top: 5px;
   color: rgba(255, 255, 255, 0.654);
+}
+
+.playlist-btns {
+  margin-top: 20px;
+}
+
+.share-playlist,
+.delete-playlist {
+  cursor: pointer;
+  transform: rotateY(180deg);
+  background-color: rgba(255, 255, 255, 0.142);
+  padding: 8px;
+  border-radius: 100%;
+}
+
+.delete-playlist {
+  margin-left: 15px;
+}
+
+.share-playlist:hover,
+.delete-playlist:hover {
+  background-color: rgba(255, 255, 255, 0.238);
+}
+
+.like-div {
+  display: flex;
+  align-items: center;
+}
+
+.edit-name-btn {
+  cursor: pointer;
+  margin-left: 18px;
+  border-radius: 100%;
+  padding: 8px;
+}
+
+.edit-name-btn:hover {
+  background-color: rgba(255, 255, 255, 0.163);
+}
+
+.like-head2 {
+  background-color: #ffffff00;
+  color: white;
+  border: none;
+  outline: none;
+  border-bottom: 2px solid;
+  width: 80%;
 }
