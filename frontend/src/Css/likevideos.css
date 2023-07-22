@@ -42,6 +42,7 @@ body {
   position: relative;
   z-index: 2;
   height: 750px;
+  width: min-content;
 }
 
 .page-cover::before {
@@ -52,7 +53,7 @@ body {
   width: 100%;
   height: 810px;
   border-radius: 15px;
-  backdrop-filter: blur(18px);
+  backdrop-filter: blur(24px);
   z-index: -1;
 }
 
@@ -154,6 +155,7 @@ body {
 
 .last-like2 {
   margin-top: 15px;
+  width: fit-content;
 }
 
 .last-like2 > p:nth-child(2) {
@@ -207,4 +209,31 @@ body {
   outline: none;
   border-bottom: 2px solid;
   width: 80%;
+  font-size: 23px;
+}
+
+.two-main-btns {
+  position: relative;
+  float: right;
+  margin-top: 15px;
+  right: 50px;
+}
+
+.cancel-edit,
+.save-edit {
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0);
+  color: white;
+  border: none;
+  outline: none;
+  padding: 9px;
+  font-size: 14px;
+  border-radius: 25px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.cancel-edit:hover,
+.save-edit:hover {
+  background-color: rgba(255, 255, 255, 0.163);
 }

@@ -468,6 +468,7 @@ Videos.post("/addplaylist/:email", async (req, res) => {
     const myPlaylists = user.Playlists;
     myPlaylists.push({
       playlist_name,
+      owner_email: email,
       playlist_privacy,
       playlist_date,
       playlist_owner,
@@ -664,8 +665,37 @@ Videos.get("/getplaylistdata/:email", async (req, res) => {
       return res.status(404).json({ error: "User doesn't exist" });
     }
 
-    const playlistData = user.Playlists
-    res.json(playlistData)
+    const playlistData = user.Playlists;
+    res.json(playlistData);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+Videos.post("/saveplaylist/:playlistID", async (req, res) => {
+  try {
+    const { playlistID } = req.params;
+    const { playlist_name } = req.body;
+
+    const user = await userData.findOne({ "Playlists._id": playlistID });
+
+    if (!user) {
+      return res.status(404).json({ error: "User doesn't exist" });
+    }
+
+    const playlistIndex = user.Playlists.findIndex(
+      (item) => item._id.toString() === playlistID.toString()
+    );
+
+    if (playlistIndex === -1) {
+      return res.status(404).json({ error: "Playlist not found" });
+    }
+
+    user.Playlists[playlistIndex].playlist_name = playlist_name;
+
+    await user.save();
+
+    res.json(user.Playlists[playlistIndex]);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

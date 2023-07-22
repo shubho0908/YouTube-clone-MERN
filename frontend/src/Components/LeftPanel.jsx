@@ -279,6 +279,7 @@ function LeftPanel() {
           </div>
           <div className="my-playlists-sectionn">
             {PlaylistData &&
+              PlaylistData !== "No playlists available..." &&
               PlaylistData.length > 0 &&
               PlaylistData.map((element, index) => {
                 return (

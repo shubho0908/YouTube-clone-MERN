@@ -9,6 +9,7 @@ import nothing from "../img/nothing.png";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import jwtDecode from "jwt-decode";
 import "../Css/likevideos.css";
 
 function Playlists() {
@@ -17,12 +18,20 @@ function Playlists() {
     const menu = localStorage.getItem("menuClicked");
     return menu ? JSON.parse(menu) : false;
   });
+  const [Email, setEmail] = useState();
   const [playlistsVideos, setPlaylistsVideos] = useState([]);
   const [playlistDetails, setplaylistDetails] = useState();
   const [isEditmode, setIsEditmode] = useState(false);
 
+  const [PlaylistName, setPlaylistName] = useState("");
   const navigate = useNavigate();
   const token = localStorage.getItem("userToken");
+
+  useEffect(() => {
+    if (token) {
+      setEmail(jwtDecode(token).email);
+    }
+  }, [token]);
 
   useEffect(() => {
     localStorage.setItem("menuClicked", JSON.stringify(menuClicked));
@@ -38,15 +47,14 @@ function Playlists() {
           const { playlistVideos, myPlaylists } = await response.json();
           setPlaylistsVideos(playlistVideos);
           setplaylistDetails(myPlaylists);
+          setPlaylistName(myPlaylists.playlist_name);
         }
       } catch (error) {
         // console.log(error.message);
       }
     };
 
-    const interval = setInterval(getPlaylists, 100);
-
-    return () => clearInterval(interval);
+    getPlaylists();
   }, [id]);
 
   useEffect(() => {
@@ -70,6 +78,24 @@ function Playlists() {
           "Content-Type": "application/json",
         },
       });
+      await response.json();
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  //POST REQUEST
+
+  const saveEditData = async () => {
+    try {
+      const response = await fetch(`http://localhost:3000/saveplaylist/${id}`, {
+        method: "POST",
+        body: JSON.stringify({ playlist_name: PlaylistName }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
       await response.json();
     } catch (error) {
       console.log(error.message);
@@ -139,7 +165,8 @@ function Playlists() {
                   <div
                     className="like-div"
                     style={
-                      isEditmode === false
+                      isEditmode === false &&
+                      playlistDetails.owner_email === Email
                         ? { display: "flex" }
                         : { display: "none" }
                     }
@@ -149,7 +176,11 @@ function Playlists() {
                       className="edit-name-btn"
                       fontSize="medium"
                       style={{ color: "white" }}
-                      onClick={() => setIsEditmode(true)}
+                      onClick={() => {
+                        if (token) {
+                          setIsEditmode(true);
+                        }
+                      }}
                     />
                   </div>
                   <div
@@ -164,14 +195,37 @@ function Playlists() {
                       type="text"
                       name="playlist-name"
                       className="like-head like-head2"
-                      value={playlistDetails.playlist_name}
+                      value={PlaylistName}
+                      onChange={(e) => setPlaylistName(e.target.value)}
                     />
                     <div className="two-main-btns">
-                      <button className="cancel-edit">Cancel</button>
-                      <button className="save-edit">Save</button>
+                      <button
+                        className="cancel-edit"
+                        onClick={() => setIsEditmode(false)}
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        className="save-edit"
+                        onClick={() => {
+                          saveEditData();
+                          setTimeout(() => {
+                            window.location.reload();
+                          }, 300);
+                        }}
+                      >
+                        Save
+                      </button>
                     </div>
                   </div>
-                  <div className="last-like2">
+                  <div
+                    className="last-like2"
+                    style={
+                      isEditmode === true
+                        ? { marginTop: "65px" }
+                        : { marginTop: "15px" }
+                    }
+                  >
                     <p className="like-username">
                       {playlistDetails.playlist_owner}
                     </p>
@@ -179,6 +233,7 @@ function Playlists() {
                       {playlistsVideos.length} videos
                     </p>
                   </div>
+
                   <div className="playlist-btns">
                     <ReplyOutlinedIcon
                       className="share-playlist"
@@ -188,7 +243,11 @@ function Playlists() {
                     <DeleteIcon
                       className="delete-playlist"
                       fontSize="medium"
-                      style={{ color: "white" }}
+                      style={
+                        playlistDetails.owner_email === Email
+                          ? { color: "white" }
+                          : { display: "none" }
+                      }
                     />
                   </div>
                 </div>

@@ -6,6 +6,15 @@ const Playlists = new mongoose.Schema({
     type: String,
     required: true,
   },
+  owner_email: {
+    type: String,
+    required: true,
+    validate(value) {
+      if (!validator.isEmail(value)) {
+        throw new Error("Invalid email address");
+      }
+    },
+  },
   playlist_privacy: {
     type: String,
     required: true,
