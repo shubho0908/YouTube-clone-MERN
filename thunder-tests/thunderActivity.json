@@ -4,11 +4,11 @@
         "colId": "history",
         "containerId": "",
         "name": "http://localhost:3000/getvideos",
-        "url": "http://localhost:3000/getplaylists/chandan@gmail.com/64ba6647bc991294157a521d",
+        "url": "http://localhost:3000/getplaylists/64ba6647bc991294157a521d",
         "method": "GET",
         "sortNum": 0,
         "created": "2023-06-18T13:58:12.195Z",
-        "modified": "2023-07-22T04:15:34.797Z",
+        "modified": "2023-07-22T05:01:47.681Z",
         "headers": [],
         "params": [],
         "tests": []

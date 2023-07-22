@@ -2,7 +2,6 @@ import Navbar from "./Navbar";
 import LeftPanel from "./LeftPanel";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import jwtDecode from "jwt-decode";
 import ReactLoading from "react-loading";
 import { useNavigate } from "react-router-dom";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
@@ -11,22 +10,15 @@ import "../Css/likevideos.css";
 
 function Playlists() {
   const { id } = useParams();
-  const [email, setEmail] = useState();
-  const [name, setName] = useState();
   const [menuClicked, setMenuClicked] = useState(() => {
     const menu = localStorage.getItem("menuClicked");
     return menu ? JSON.parse(menu) : false;
   });
   const [playlistsVideos, setPlaylistsVideos] = useState([]);
+  const [playlistDetails, setplaylistDetails] = useState();
 
   const navigate = useNavigate();
   const token = localStorage.getItem("userToken");
-
-  useEffect(() => {
-    const token = localStorage.getItem("userToken");
-    setEmail(jwtDecode(token).email);
-    setName(jwtDecode(token).name);
-  }, []);
 
   useEffect(() => {
     localStorage.setItem("menuClicked", JSON.stringify(menuClicked));
@@ -35,12 +27,13 @@ function Playlists() {
   useEffect(() => {
     const getPlaylists = async () => {
       try {
-        if (email !== undefined && id !== undefined) {
+        if (id !== undefined) {
           const response = await fetch(
-            `http://localhost:3000/getplaylists/${email}/${id}`
+            `http://localhost:3000/getplaylists/${id}`
           );
-          const playlistVideos = await response.json();
+          const { playlistVideos, myPlaylists } = await response.json();
           setPlaylistsVideos(playlistVideos);
+          setplaylistDetails(myPlaylists);
         }
       } catch (error) {
         // console.log(error.message);
@@ -50,7 +43,7 @@ function Playlists() {
     const interval = setInterval(getPlaylists, 100);
 
     return () => clearInterval(interval);
-  }, [email, id]);
+  }, [id]);
 
   useEffect(() => {
     const handleMenuButtonClick = () => {
@@ -139,9 +132,9 @@ function Playlists() {
                   </div>
                 )}
                 <div className="last-like-section">
-                  <p className="like-head">Liked videos</p>
+                  <p className="like-head">{playlistDetails.playlist_name}</p>
                   <div className="last-like2">
-                    <p className="like-username">{name}</p>
+                    <p className="like-username">{playlistDetails.playlist_owner}</p>
                     <p className="like-total-videos">
                       {playlistsVideos.length} videos
                     </p>

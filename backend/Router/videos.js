@@ -632,10 +632,10 @@ Videos.post("/removevideo/:email/:videoID/:playlistID", async (req, res) => {
   }
 });
 
-Videos.get("/getplaylists/:email/:playlistID", async (req, res) => {
+Videos.get("/getplaylists/:playlistID", async (req, res) => {
   try {
-    const { email, playlistID } = req.params;
-    const user = await userData.findOne({ email });
+    const {playlistID} = req.params;
+    const user = await userData.findOne({ "Playlists._id": playlistID });
 
     if (!user) {
       return res.status(404).json({ error: "User doesn't exist" });
@@ -646,14 +646,14 @@ Videos.get("/getplaylists/:email/:playlistID", async (req, res) => {
     );
     const playlistVideos = myPlaylists.playlist_videos;
     if (playlistVideos && playlistVideos.length > 0) {
-      res.json(playlistVideos);
-    }
-    else{
-      res.json("No Playlists Found")
+      res.json({ playlistVideos, myPlaylists });
+    } else {
+      res.json("No Playlists Found");
     }
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
+
 
 module.exports = Videos;
