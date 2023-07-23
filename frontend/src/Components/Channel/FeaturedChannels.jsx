@@ -26,13 +26,13 @@ function FeaturedChannels(prop) {
   useEffect(() => {
     const getSubscriptions = async () => {
       try {
-       if (prop.newmail !== undefined) {
-        const response = await fetch(
-          `http://localhost:3000/getsubscriptions/${prop.newmail}`
-        );
-        const result = await response.json();
-        setSubscriptions(result);
-       }
+        if (prop.newmail !== undefined) {
+          const response = await fetch(
+            `http://localhost:3000/getsubscriptions/${prop.newmail}`
+          );
+          const result = await response.json();
+          setSubscriptions(result);
+        }
       } catch (error) {
         console.log(error.message);
       }
@@ -171,11 +171,24 @@ function FeaturedChannels(prop) {
             <PlaylistAddIcon fontSize="medium" style={{ color: "white" }} />
             <p>Add channels</p>
           </div>
+          <p
+            style={
+              prop.newmail !== Email
+                ? { color: "white", marginTop: "10px", marginBottom: "10px" }
+                : { display: "none" }
+            }
+          >
+            Featured channels
+          </p>
         </div>
 
         <div
           className="featured-channels-added"
-          style={token ? { top: "360px" } : { top: "300px" }}
+          style={
+            prop.newmail === Email
+              ? { top: "360px" }
+              : { top: "340px", left: "-12px" }
+          }
         >
           {featuredChannelsData &&
             featuredChannelsData.length > 0 &&

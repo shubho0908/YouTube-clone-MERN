@@ -1,7 +1,8 @@
 import nothing from "../../img/nothing.png";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import PlaylistPlayIcon from "@mui/icons-material/PlaylistPlay";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 
 function generateRandomColors(count) {
   const transparency = 0.7; // Adjust transparency as needed (0 to 1)
@@ -18,11 +19,9 @@ function generateRandomColors(count) {
 }
 
 function ChannelPlaylists(prop) {
-  const { id } = useParams();
   const [PlaylistData, setPlaylistData] = useState([]);
-  const token = localStorage.getItem("userToken");
-
   const [playlistColors, setPlaylistColors] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Generate colors based on the length of PlaylistData array
@@ -73,13 +72,34 @@ function ChannelPlaylists(prop) {
                       src={element.playlist_videos[0].thumbnail}
                       alt=""
                       className="playlist-thumbnail"
+                      onClick={() => {
+                        navigate(
+                          `/video/${element.playlist_videos[0].videoID}`
+                        );
+                      }}
                     />
-                   <div className="playy-all-btn">
-                    
-                   </div>
+                    <div
+                      className="playy-all-btn"
+                      onClick={() => {
+                        navigate(
+                          `/video/${element.playlist_videos[0].videoID}`
+                        );
+                      }}
+                    >
+                      <PlayArrowIcon
+                        fontSize="medium"
+                        style={{ color: "white" }}
+                      />
+                      <p>PLAY ALL</p>
+                    </div>
                     <div
                       className="playlist-element"
                       style={{ backgroundColor }}
+                      onClick={() => {
+                        navigate(
+                          `/video/${element.playlist_videos[0].videoID}`
+                        );
+                      }}
                     >
                       <PlaylistPlayIcon
                         fontSize="medium"
@@ -89,7 +109,9 @@ function ChannelPlaylists(prop) {
                     </div>
                     <div className="playlistt-details">
                       <p>{element.playlist_name}</p>
-                      <p>View full playlist</p>
+                      <p onClick={() => navigate(`/playlist/${element._id}`)}>
+                        View full playlist
+                      </p>
                     </div>
                   </div>
                 );

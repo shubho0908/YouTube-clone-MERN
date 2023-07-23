@@ -430,7 +430,7 @@
 
 .channel-playlist-section {
   position: absolute;
-  top: 320px;
+  top: 305px;
   color: white;
 }
 
@@ -626,7 +626,9 @@
 }
 
 .created-all-playlistss{
-  margin-top: 25px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: all .15s ease;
 }
 
 .playlist-thumbnail {
@@ -634,6 +636,7 @@
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
   border-bottom-left-radius: 6px;
+  transition: all .15s ease;
   border-bottom-right-radius: 6px;
 }
 
@@ -648,6 +651,7 @@
   backdrop-filter: blur(3px);
   font-size: 13px;
   padding-left: 10px;
+  transition: all .15s ease;
   padding-right: 10px;
 }
 
@@ -672,4 +676,27 @@
   margin-top: 15px;
   font-size: 13.5px;
   color: #aaa;
+}
+
+.playy-all-btn{
+  color: white;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  top: 95px;
+  padding-left: 60px;
+  transition: all .15s ease;
+  opacity: 0;
+}
+
+.created-all-playlistss:hover .playlist-thumbnail{
+  opacity: 0.2;
+}
+
+.created-all-playlistss:hover .playlist-element{
+  opacity: 0.2;
+}
+
+.created-all-playlistss:hover .playy-all-btn{
+  opacity: 1;
 }
