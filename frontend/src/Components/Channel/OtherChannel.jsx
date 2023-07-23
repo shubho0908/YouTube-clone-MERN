@@ -7,7 +7,10 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ChannelHome from "./ChannelHome";
 import ReactLoading from "react-loading";
 import ChannelVideos from "./ChannelVideos";
+import ClearRoundedIcon from "@mui/icons-material/ClearRounded";
 import jwtDecode from "jwt-decode";
+import Signup from "../Signup";
+import Signin from "../Signin";
 import ChannelAbout from "./ChannelAbout";
 import ChannelPlaylists from "./ChannelPlaylists";
 import FeaturedChannels from "./FeaturedChannels";
@@ -19,6 +22,8 @@ function OtherChannel() {
   const [channelName, setChannelname] = useState();
   const [ChannelProfile, setChannelProfile] = useState();
   const [myVideos, setMyVideos] = useState([]);
+  const [isbtnClicked, setisbtnClicked] = useState(false);
+  const [isSwitch, setisSwitched] = useState(false);
   const Section = localStorage.getItem("Section") || "Home";
   const token = localStorage.getItem("userToken");
   const [isSubscribed, setIsSubscribed] = useState();
@@ -184,7 +189,8 @@ function OtherChannel() {
                     {myVideos && myVideos.length} videos
                   </p>
                 </div>
-                <div className="more-about"
+                <div
+                  className="more-about"
                   onClick={() => {
                     localStorage.setItem("Section", "About");
                     window.location.reload();
@@ -212,7 +218,14 @@ function OtherChannel() {
                       ? { display: "none" }
                       : { display: "block" }
                   }
-                  onClick={() => SubscribeChannel()}
+                  onClick={() => {
+                    if (token) {
+                      SubscribeChannel();
+                    } else {
+                      setisbtnClicked(true);
+                      document.body.classList.add("bg-css");
+                    }
+                  }}
                 >
                   Subscribe
                 </button>
@@ -223,7 +236,14 @@ function OtherChannel() {
                       ? { display: "block" }
                       : { display: "none" }
                   }
-                  onClick={() => SubscribeChannel()}
+                  onClick={() => {
+                    if (token) {
+                      SubscribeChannel();
+                    } else {
+                      setisbtnClicked(true);
+                      document.body.classList.add("bg-css");
+                    }
+                  }}
                 >
                   Subscribed
                 </button>
@@ -344,7 +364,11 @@ function OtherChannel() {
           {Section === "Home" ? <ChannelHome newmail={Email} /> : ""}
           {Section === "Videos" ? <ChannelVideos newmail={Email} /> : ""}
           {Section === "Playlists" ? <ChannelPlaylists newmail={Email} /> : ""}
-          {Section === "Subscriptions" ? <FeaturedChannels newmail={Email} /> : ""}
+          {Section === "Subscriptions" ? (
+            <FeaturedChannels newmail={Email} />
+          ) : (
+            ""
+          )}
 
           {Section === "About" ? (
             <ChannelAbout newmail={Email} channelid={id} />
@@ -367,6 +391,71 @@ function OtherChannel() {
           </div>
         </div>
       )}
+
+      {/* SIGNUP/SIGNIN  */}
+
+      <div
+        className="auth-popup"
+        style={
+          isbtnClicked === true ? { display: "block" } : { display: "none" }
+        }
+      >
+        <ClearRoundedIcon
+          onClick={() => {
+            if (isbtnClicked === false) {
+              setisbtnClicked(true);
+            } else {
+              setisbtnClicked(false);
+              document.body.classList.remove("bg-css");
+            }
+          }}
+          className="cancel"
+          fontSize="large"
+          style={{ color: "gray" }}
+        />
+        <div
+          className="signup-last"
+          style={
+            isSwitch === false ? { display: "block" } : { display: "none" }
+          }
+        >
+          <Signup />
+          <div className="already">
+            <p>Already have an account?</p>
+            <p
+              onClick={() => {
+                if (isSwitch === false) {
+                  setisSwitched(true);
+                } else {
+                  setisSwitched(false);
+                }
+              }}
+            >
+              Signin
+            </p>
+          </div>
+        </div>
+        <div
+          className="signin-last"
+          style={isSwitch === true ? { display: "block" } : { display: "none" }}
+        >
+          <Signin />
+          <div className="already">
+            <p>Don&apos;t have an account?</p>
+            <p
+              onClick={() => {
+                if (isSwitch === false) {
+                  setisSwitched(true);
+                } else {
+                  setisSwitched(false);
+                }
+              }}
+            >
+              Signup
+            </p>
+          </div>
+        </div>
+      </div>
     </>
   );
 }

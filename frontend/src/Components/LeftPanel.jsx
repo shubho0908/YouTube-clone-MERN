@@ -388,7 +388,17 @@ function LeftPanel() {
         </div>
         {/* <hr className="seperate" /> */}
         <div className="second-section">
-          <div className="library library2 sec-data sec-data2">
+          <div
+            className="library library2 sec-data sec-data2"
+            onClick={() => {
+              if (token) {
+                localStorage.setItem("selected", "library");
+              } else {
+                setisbtnClicked(true);
+                document.body.classList.add("bg-css");
+              }
+            }}
+          >
             <VideoLibraryOutlinedIcon
               fontSize="medium"
               style={{ color: "white" }}

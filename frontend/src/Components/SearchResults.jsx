@@ -7,6 +7,9 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import Tooltip from "@mui/material/Tooltip";
 import ReactLoading from "react-loading";
 import jwtDecode from "jwt-decode";
+import Signup from "./Signup";
+import Signin from "./Signin";
+import ClearRoundedIcon from "@mui/icons-material/ClearRounded";
 import nothing from "../img/nothing.png";
 import Zoom from "@mui/material/Zoom";
 
@@ -17,6 +20,8 @@ function SearchResults() {
   const [searchedChannelData, setsearchedChannelData] = useState([]);
   const [channelID, setChannelID] = useState();
   const [userEmail, setUserEmail] = useState();
+  const [isbtnClicked, setisbtnClicked] = useState(false);
+  const [isSwitch, setisSwitched] = useState(false);
   const [userVideos, setUserVideos] = useState([]);
   const [isSubscribed, setIsSubscribed] = useState();
 
@@ -248,13 +253,18 @@ function SearchResults() {
                                 ? { display: "none" }
                                 : { display: "block" }
                             }
-                            onClick={() =>
-                              SubscribeChannel(
-                                element.channelName,
-                                element.channelProfile,
-                                element._id
-                              )
-                            }
+                            onClick={() => {
+                              if (token) {
+                                SubscribeChannel(
+                                  element.channelName,
+                                  element.channelProfile,
+                                  element._id
+                                );
+                              } else {
+                                setisbtnClicked(true);
+                                document.body.classList.add("bg-css");
+                              }
+                            }}
                           >
                             Subscribe
                           </button>
@@ -265,13 +275,18 @@ function SearchResults() {
                                 ? { display: "block" }
                                 : { display: "none" }
                             }
-                            onClick={() =>
-                              SubscribeChannel(
-                                element.channelName,
-                                element.channelProfile,
-                                element._id
-                              )
-                            }
+                            onClick={() => {
+                              if (token) {
+                                SubscribeChannel(
+                                  element.channelName,
+                                  element.channelProfile,
+                                  element._id
+                                );
+                              } else {
+                                setisbtnClicked(true);
+                                document.body.classList.add("bg-css");
+                              }
+                            }}
                           >
                             Subscribed
                           </button>
@@ -300,14 +315,13 @@ function SearchResults() {
                       onClick={() => {
                         if (token) {
                           updateViews(element._id);
-                         setTimeout(() => {
+                          setTimeout(() => {
+                            navigate(`/video/${element._id}`);
+                            window.location.reload();
+                          }, 400);
+                        } else {
                           navigate(`/video/${element._id}`);
                           window.location.reload();
-                         }, 400);
-                        }
-                        else{
-                          navigate(`/video/${element._id}`);
-                        window.location.reload();
                         }
                       }}
                     >
@@ -406,6 +420,72 @@ function SearchResults() {
               })}
           </div>
         </div>
+        {/* SIGNUP/SIGNIN  */}
+
+        <div
+          className="auth-popup"
+          style={
+            isbtnClicked === true ? { display: "block" } : { display: "none" }
+          }
+        >
+          <ClearRoundedIcon
+            onClick={() => {
+              if (isbtnClicked === false) {
+                setisbtnClicked(true);
+              } else {
+                setisbtnClicked(false);
+                document.body.classList.remove("bg-css");
+              }
+            }}
+            className="cancel"
+            fontSize="large"
+            style={{ color: "gray" }}
+          />
+          <div
+            className="signup-last"
+            style={
+              isSwitch === false ? { display: "block" } : { display: "none" }
+            }
+          >
+            <Signup />
+            <div className="already">
+              <p>Already have an account?</p>
+              <p
+                onClick={() => {
+                  if (isSwitch === false) {
+                    setisSwitched(true);
+                  } else {
+                    setisSwitched(false);
+                  }
+                }}
+              >
+                Signin
+              </p>
+            </div>
+          </div>
+          <div
+            className="signin-last"
+            style={
+              isSwitch === true ? { display: "block" } : { display: "none" }
+            }
+          >
+            <Signin />
+            <div className="already">
+              <p>Don&apos;t have an account?</p>
+              <p
+                onClick={() => {
+                  if (isSwitch === false) {
+                    setisSwitched(true);
+                  } else {
+                    setisSwitched(false);
+                  }
+                }}
+              >
+                Signup
+              </p>
+            </div>
+          </div>
+        </div>
       </>
     );
   } else if (
@@ -440,13 +520,11 @@ function SearchResults() {
                         updateViews(element._id);
                         setTimeout(() => {
                           navigate(`/video/${element._id}`);
-                        window.location.reload();
+                          window.location.reload();
                         }, 400);
-                      }
-                      else{
-                        
-                      navigate(`/video/${element._id}`);
-                      window.location.reload();
+                      } else {
+                        navigate(`/video/${element._id}`);
+                        window.location.reload();
                       }
                     }}
                   >
@@ -676,15 +754,13 @@ function SearchResults() {
                     onClick={() => {
                       if (token) {
                         updateViews(element._id);
-                       setTimeout(() => {
+                        setTimeout(() => {
+                          navigate(`/video/${element._id}`);
+                          window.location.reload();
+                        }, 400);
+                      } else {
                         navigate(`/video/${element._id}`);
                         window.location.reload();
-                       }, 400);
-                      }
-                      else{
-                        
-                      navigate(`/video/${element._id}`);
-                      window.location.reload();
                       }
                     }}
                   >
