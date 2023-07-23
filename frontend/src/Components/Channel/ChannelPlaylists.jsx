@@ -1,6 +1,7 @@
 import nothing from "../../img/nothing.png";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import jwtDecode from "jwt-decode";
 import PlaylistPlayIcon from "@mui/icons-material/PlaylistPlay";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 
@@ -20,8 +21,16 @@ function generateRandomColors(count) {
 
 function ChannelPlaylists(prop) {
   const [PlaylistData, setPlaylistData] = useState([]);
+  const [email, setEmail] = useState();
   const [playlistColors, setPlaylistColors] = useState([]);
   const navigate = useNavigate();
+  const token = localStorage.getItem("userToken");
+
+  useEffect(() => {
+    if (token) {
+      setEmail(jwtDecode(token).email);
+    }
+  }, [token]);
 
   useEffect(() => {
     // Generate colors based on the length of PlaylistData array
@@ -66,8 +75,18 @@ function ChannelPlaylists(prop) {
               PlaylistData.map((element, index) => {
                 const backgroundColor =
                   playlistColors[index] || playlistColors[0];
+
                 return (
-                  <div className="created-all-playlistss" key={index}>
+                  <div
+                    className="created-all-playlistss"
+                    key={index}
+                    style={
+                      prop.newmail !== email &&
+                      element.playlist_privacy === "Private"
+                        ? { display: "none" }
+                        : { display: "block" }
+                    }
+                  >
                     <img
                       src={element.playlist_videos[0].thumbnail}
                       alt=""

@@ -11,6 +11,7 @@ import Subscriptions from "./Components/Subscriptions";
 import Trending from "./Components/Trending";
 import SearchResults from "./Components/SearchResults";
 import Playlists from "./Components/Playlists";
+import Library from "./Components/Library";
 
 function App() {
   const token = localStorage.getItem("userToken");
@@ -32,6 +33,10 @@ function App() {
           <Route
             path="/mychannel/:id"
             element={token ? <ChannelTop /> : <Error />}
+          />
+          <Route
+            path="/library"
+            element={token ? <Library /> : <Error />}
           />
           <Route
             path="/channel/:id"

@@ -228,6 +228,8 @@ function LeftPanel() {
             onClick={() => {
               if (token) {
                 localStorage.setItem("selected", "library");
+                navigate("/library");
+                window.location.reload();
               } else {
                 setisbtnClicked(true);
                 document.body.classList.add("bg-css");
@@ -393,6 +395,8 @@ function LeftPanel() {
             onClick={() => {
               if (token) {
                 localStorage.setItem("selected", "library");
+                navigate("/library");
+                window.location.reload();
               } else {
                 setisbtnClicked(true);
                 document.body.classList.add("bg-css");

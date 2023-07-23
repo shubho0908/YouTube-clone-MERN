@@ -201,10 +201,10 @@ function Browse() {
                         onClick={() => {
                           if (token) {
                             updateViews(VideoID[index]);
-                           setTimeout(() => {
-                            navigate(`/video/${VideoID[index]}`);
-                            window.location.reload();
-                           }, 400);
+                            setTimeout(() => {
+                              navigate(`/video/${VideoID[index]}`);
+                              window.location.reload();
+                            }, 400);
                           }
                           navigate(`/video/${VideoID[index]}`);
                           window.location.reload();
@@ -234,7 +234,9 @@ function Browse() {
                           </div>
                           <div className="channel-text-data">
                             <p className="title" style={{ marginTop: "10px" }}>
-                              {Titles[index]}
+                              {Titles[index] && Titles[index].length <= 60
+                                ? Titles[index]
+                                : `${Titles[index].slice(0, 60)}..`}
                             </p>
                             <div className="video-uploader">
                               <p
@@ -343,10 +345,10 @@ function Browse() {
                         onClick={() => {
                           if (token) {
                             updateViews(element._id);
-                           setTimeout(() => {
-                            navigate(`/video/${element._id}`);
-                            window.location.reload();
-                           }, 400);
+                            setTimeout(() => {
+                              navigate(`/video/${element._id}`);
+                              window.location.reload();
+                            }, 400);
                           }
                           navigate(`/video/${element._id}`);
                           window.location.reload();
