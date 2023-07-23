@@ -4,6 +4,7 @@ import WatchLaterOutlinedIcon from "@mui/icons-material/WatchLaterOutlined";
 import { useNavigate } from "react-router-dom";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import jwtDecode from "jwt-decode";
+import nothing from "../img/nothing.png";
 import PlaylistPlayOutlinedIcon from "@mui/icons-material/PlaylistPlayOutlined";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
@@ -11,7 +12,7 @@ import ReactLoading from "react-loading";
 import { useState, useEffect } from "react";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import PlaylistPlayIcon from "@mui/icons-material/PlaylistPlay";
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import "../Css/library.css";
 
 function generateRandomColors(count) {
@@ -32,6 +33,8 @@ function Library() {
   const [watchlater, setWatchLater] = useState([]);
   const [PlaylistData, setPlaylistData] = useState([]);
   const [playlistColors, setPlaylistColors] = useState([]);
+  const [channelID, setChannelID] = useState();
+  const [videolike, setLikedVideos] = useState([]);
   const navigate = useNavigate();
   const [email, setEmail] = useState();
   const token = localStorage.getItem("userToken");
@@ -49,7 +52,7 @@ function Library() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 2500);
+    }, 1800);
 
     return () => clearTimeout(timer);
   }, [loading]);
@@ -91,6 +94,44 @@ function Library() {
     return () => clearInterval(interval);
   }, [email]);
 
+  useEffect(() => {
+    const getLikeVideos = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:3000/getlikevideos/${email}`
+        );
+        const result = await response.json();
+        setLikedVideos(result);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
+    const interval = setInterval(getLikeVideos, 100);
+
+    return () => clearInterval(interval);
+  }, [email]);
+
+  useEffect(() => {
+    const getChannelID = async () => {
+      try {
+        if (email !== undefined) {
+          const response = await fetch(
+            `http://localhost:3000/getchannelid/${email}`
+          );
+          const { channelID } = await response.json();
+          setChannelID(channelID);
+        }
+      } catch (error) {
+        // console.log("Error fetching user data:", error.message);
+      }
+    };
+
+    const interval = setInterval(getChannelID, 100);
+
+    return () => clearInterval(interval);
+  }, [email]);
+
   const watchLaterArray =
     watchlater && watchlater.length > 0
       ? watchlater.slice(0, 4) // Get the first four elements if available
@@ -100,6 +141,24 @@ function Library() {
     PlaylistData && PlaylistData.length > 0
       ? PlaylistData.slice(0, 4) // Get the first four elements if available
       : [];
+
+  const LikedVideosArray =
+    videolike && videolike.length > 0
+      ? videolike.slice(0, 4) // Get the first four elements if available
+      : [];
+
+  if (
+    PlaylistData === "No playlists available..." ||
+    watchlater.savedData === "NO DATA" ||
+    videolike === "NO DATA"
+  ) {
+    return (
+      <div className="no-playlists">
+        <img src={nothing} alt="no results" className="nothing-found" />
+        <p className="no-results">No playlists found!</p>
+      </div>
+    );
+  }
 
   if (loading === true) {
     return (
@@ -137,7 +196,15 @@ function Library() {
             <p>Watch later</p>
             <p>{watchlater && watchlater.length}</p>
             {watchLaterArray && watchLaterArray.length >= 4 ? (
-              <p className="see-all">See all</p>
+              <p
+                className="see-all"
+                onClick={() => {
+                  navigate(`/watchlater`);
+                  window.location.reload();
+                }}
+              >
+                See all
+              </p>
             ) : (
               ""
             )}
@@ -253,7 +320,16 @@ function Library() {
             />
             <p>Playlists</p>
             {PlaylistArray && PlaylistArray.length >= 4 ? (
-              <p className="see-all">See all</p>
+              <p
+                className="see-all"
+                onClick={() => {
+                  navigate(`/channel/${channelID}`);
+                  localStorage.setItem("Section", "Playlists");
+                  window.location.reload();
+                }}
+              >
+                See all
+              </p>
             ) : (
               ""
             )}
@@ -274,22 +350,10 @@ function Library() {
                         navigate(
                           `/video/${element.playlist_videos[0].videoID}`
                         );
+                        window.location.reload();
                       }}
                     />
-                    <div
-                      className="playy-all-btn2"
-                      onClick={() => {
-                        navigate(
-                          `/video/${element.playlist_videos[0].videoID}`
-                        );
-                      }}
-                    >
-                      <PlayArrowIcon
-                        fontSize="medium"
-                        style={{ color: "white" }}
-                      />
-                      <p>PLAY ALL</p>
-                    </div>
+
                     <div
                       className="playlist-element"
                       style={{ backgroundColor }}
@@ -307,23 +371,25 @@ function Library() {
                     </div>
                     <div className="playlistt-details">
                       <p>{element.playlist_name}</p>
-                      <p className="playlist-ownner">
-                        {element.playlist_owner}
-                      </p>
+                      <div className="extra-playlists-data">
+                        <p className="playlist-ownner">
+                          {element.playlist_owner}
+                        </p>
 
-                      <div
-                        className="private-privacyy"
-                        style={
-                          element.playlist_privacy === "Private"
-                            ? { display: "flex" }
-                            : { display: "none" }
-                        }
-                      >
-                        <LockOutlinedIcon
-                          fontSize="small"
-                          style={{ color: "#aaa" }}
-                        />
-                        <p>Private</p>
+                        <div
+                          className="private-privacyy"
+                          style={
+                            element.playlist_privacy === "Private"
+                              ? { display: "flex" }
+                              : { display: "none" }
+                          }
+                        >
+                          <LockOutlinedIcon
+                            fontSize="small"
+                            style={{ color: "#aaa" }}
+                          />
+                          <p>Private</p>
+                        </div>
                       </div>
                       <p
                         onClick={() => navigate(`/playlist/${element._id}`)}
@@ -339,7 +405,127 @@ function Library() {
         </div>
         <hr className="seperate" />
 
-        <div className="likedvideos-library"></div>
+        <div className="likedvideos-library">
+          <div className="top-watchlater-library">
+            <ThumbUpOutlinedIcon fontSize="medium" style={{ color: "white" }} />
+            <p>Liked videos</p>
+            <p>{videolike && videolike.length}</p>
+            {LikedVideosArray && LikedVideosArray.length >= 4 ? (
+              <p
+                className="see-all"
+                onClick={() => {
+                  navigate(`/likedVideos`);
+                  window.location.reload();
+                }}
+              >
+                See all
+              </p>
+            ) : (
+              ""
+            )}
+          </div>
+          <div className="watchlater-library-videos">
+            {LikedVideosArray &&
+              LikedVideosArray.map((element, index) => {
+                return (
+                  <div
+                    className="thiswatchlater-videoss"
+                    key={index}
+                    onClick={() => {
+                      navigate(`/video/${element.likedVideoID}`);
+                      window.location.reload();
+                    }}
+                  >
+                    <img
+                      src={element.thumbnailURL}
+                      alt="thumbnail"
+                      className="thiswatch-thumbnail"
+                    />
+                    <p className="thislibrary-duration">
+                      {Math.floor(element.videoLength / 60) +
+                        ":" +
+                        (Math.round(element.videoLength % 60) < 10
+                          ? "0" + Math.round(element.videoLength % 60)
+                          : Math.round(element.videoLength % 60))}
+                    </p>
+                    <div className="thislibrary-video-details">
+                      <p>
+                        {element.Title && element.Title.length <= 46
+                          ? element.Title
+                          : `${element.Title.slice(0, 46)}..`}
+                      </p>
+                      <div className="thisvideo-extra-daataa">
+                        <div className="thisvide-oneliner-1">
+                          <p>{element.uploader}</p>
+                          <Tooltip
+                            TransitionComponent={Zoom}
+                            title="Verified"
+                            placement="right"
+                          >
+                            <CheckCircleIcon
+                              fontSize="100px"
+                              style={{
+                                color: "rgb(138, 138, 138)",
+                                marginLeft: "4px",
+                              }}
+                            />
+                          </Tooltip>
+                        </div>
+                        <div className="thisvide-oneliner-2">
+                          <p>
+                            {element.views >= 1e9
+                              ? `${(element.views / 1e9).toFixed(1)}B`
+                              : element.views >= 1e6
+                              ? `${(element.views / 1e6).toFixed(1)}M`
+                              : element.views >= 1e3
+                              ? `${(element.views / 1e3).toFixed(1)}K`
+                              : element.views}{" "}
+                            views
+                          </p>
+                          <p className="thisvideo-uploaddate">
+                            &#x2022;{" "}
+                            {(() => {
+                              const timeDifference =
+                                new Date() - new Date(element.uploaded_date);
+                              const minutes = Math.floor(
+                                timeDifference / 60000
+                              );
+                              const hours = Math.floor(
+                                timeDifference / 3600000
+                              );
+                              const days = Math.floor(
+                                timeDifference / 86400000
+                              );
+                              const weeks = Math.floor(
+                                timeDifference / 604800000
+                              );
+                              const years = Math.floor(
+                                timeDifference / 31536000000
+                              );
+
+                              if (minutes < 1) {
+                                return "just now";
+                              } else if (minutes < 60) {
+                                return `${minutes} mins ago`;
+                              } else if (hours < 24) {
+                                return `${hours} hours ago`;
+                              } else if (days < 7) {
+                                return `${days} days ago`;
+                              } else if (weeks < 52) {
+                                return `${weeks} weeks ago`;
+                              } else {
+                                return `${years} years ago`;
+                              }
+                            })()}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+          </div>
+        </div>
       </div>
     </>
   );

@@ -5,7 +5,7 @@
   position: absolute;
   transform: translate(-50%, -50%);
   left: 50%;
-  top: 500px;
+  top: 575px;
   color: white;
 }
 
@@ -30,7 +30,7 @@
 
 .watchlater-library-videos {
   display: flex;
-  margin-top: 15px;
+  margin-top: 20px;
 }
 
 .thislibrary-duration {
@@ -55,9 +55,19 @@
 }
 
 .see-all {
+  cursor: pointer;
   position: absolute;
   right: 10px;
   color: #3ea6ff;
+  padding: 8px;
+  padding-left: 12px;
+  padding-right: 12px;
+  transition: all 0.15s ease;
+  border-radius: 24px;
+}
+
+.see-all:hover {
+  background-color: #0659a157;
 }
 
 .thisvide-oneliner-1 {
@@ -97,7 +107,7 @@
   display: flex;
   align-items: center;
   padding-left: 60px;
-  bottom: 190px;
+  bottom: 200px;
   transition: all 0.15s ease;
   opacity: 0;
 }
@@ -115,11 +125,11 @@
 }
 
 .created-all-playlistss2:hover .playlist-thumbnail {
-  opacity: 0.2;
+  opacity: 0.3;
 }
 
 .created-all-playlistss2:hover .playlist-element {
-  opacity: 0.2;
+  opacity: 0.3;
 }
 
 .created-all-playlistss2:hover .playy-all-btn {
@@ -132,7 +142,7 @@
 
 .view-playlist {
   margin-top: 8px;
-  font-size: 13.5px;
+  font-size: 13px;
   color: #aaa;
   transition: all 0.15s ease;
 }
@@ -156,15 +166,27 @@
   display: flex;
   align-items: center;
   background-color: #272727;
-  padding: 2.5px;
+  padding: 3.5px;
   width: fit-content;
-  padding-left: 4px;
-  padding-right: 4px;
+  padding-left: 4.5px;
+  padding-right: 4.5px;
   margin-top: 8px;
+  margin-left: 10px;
+  border-radius: 4px;
 }
 
 .private-privacyy > p {
   margin-left: 5px;
-  font-size: 14px;
+  font-size: 13.5px;
   color: #aaa;
+}
+
+.extra-playlists-data {
+  display: flex;
+  align-items: center;
+}
+
+.playlists-library,
+.likedvideos-library {
+  margin-top: 8px;
 }
