@@ -1595,7 +1595,9 @@ function VideoSection() {
                         onClick={() => RemoveVideo(element._id)}
                       />
                     )}
-                    <p>{element.playlist_name}</p>
+                     {element.playlist_name.length <= 16
+                          ? element.playlist_name
+                          : `${element.playlist_name.slice(0, 16)}..`}
                     {element.playlist_privacy === "Public" ? (
                       <PublicOutlinedIcon
                         className="new-privacy"

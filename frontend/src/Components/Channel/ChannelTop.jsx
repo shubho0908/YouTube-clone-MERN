@@ -116,7 +116,12 @@ function ChannelTop() {
                   </p>
                 </div>
                 <div className="more-about">
-                  <p className="more-text">More about this channel</p>
+                  <p className="more-text"
+                   onClick={() => {
+                    localStorage.setItem("Section", "About");
+                    window.location.reload();
+                  }}
+                  >More about this channel</p>
                   <ArrowForwardIosIcon
                     fontSize="15px"
                     style={{ color: "#aaa", marginLeft: "7px" }}
