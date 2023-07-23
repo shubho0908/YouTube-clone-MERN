@@ -1,86 +1,170 @@
 .library-section {
   display: flex;
   flex-direction: column;
-  width: -webkit-fill-available;
+  width: max-content;
   position: absolute;
   transform: translate(-50%, -50%);
   left: 50%;
-  top: 280px;
+  top: 500px;
   color: white;
 }
 
-.top-watchlater-library{
-    display: flex;
-    align-items: center;
+.top-watchlater-library {
+  display: flex;
+  align-items: center;
 }
 
-.top-watchlater-library>p{
-    margin-left: 15px;
+.top-watchlater-library > p {
+  margin-left: 15px;
 }
 
-.top-watchlater-library>p:nth-child(3){
-    margin-left: 15px;
-    color: #aaa;
+.top-watchlater-library > p:nth-child(3) {
+  margin-left: 15px;
+  color: #aaa;
 }
 
-.thiswatch-thumbnail{
-    width: 230px;
-    border-radius: 6px;
+.thiswatch-thumbnail {
+  width: 230px;
+  border-radius: 6px;
 }
 
-.watchlater-library-videos{
-    display: grid;
-  /* grid-template-columns: repeat(auto-fit, minmax(315px, 1fr)); */
-  grid-template-columns: repeat(4, 1fr);
-  /* grid-template-rows: repeat(4, 1fr); */
-  grid-column-gap: 10px;
-  grid-row-gap: 18px;
-  margin-top: 20px;
+.watchlater-library-videos {
+  display: flex;
+  margin-top: 15px;
 }
 
-.thislibrary-duration{
-    width: fit-content;
-    position: relative;
-    bottom: 33px;
-    left: 190px;
-    background-color: #000000c9;
-    padding: 5px;
-    border-radius: 4px;
-    font-size: 12.5px;
+.thislibrary-duration {
+  width: fit-content;
+  position: relative;
+  bottom: 33px;
+  left: 190px;
+  background-color: #000000c9;
+  padding: 5px;
+  border-radius: 4px;
+  font-size: 12.5px;
 }
 
-.thislibrary-video-details{
-    position: relative;
-    font-size: 14.6px;
-    bottom: 20px;
+.thislibrary-video-details {
+  position: relative;
+  font-size: 14.6px;
+  bottom: 20px;
 }
 
-.thislibrary-video-details>p{
-    width: 90%;
+.thislibrary-video-details > p {
+  width: 90%;
 }
 
-.see-all{
-    position: absolute;
-    right: 10px;
-    color: #3ea6ff;
+.see-all {
+  position: absolute;
+  right: 10px;
+  color: #3ea6ff;
 }
 
-.thisvide-oneliner-1{
-    font-size: 13.2px;
-    color: #aaa;
-    margin-top: 10px;
-    display: flex;
-    align-items: center;
+.thisvide-oneliner-1 {
+  font-size: 13.2px;
+  color: #aaa;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
 }
 
-.thisvide-oneliner-2{
-    font-size: 13.2px;
-    color: #aaa;
-    margin-top: 3px;
-    display: flex;
-    align-items: center;
+.thisvide-oneliner-2 {
+  font-size: 13.2px;
+  color: #aaa;
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
 }
 
-.thisvideo-uploaddate{
-    margin-left: 5px;
+.thisvideo-uploaddate {
+  margin-left: 5px;
+}
+
+.thiswatchlater-videoss {
+  cursor: pointer;
+  margin-right: 12px;
+  width: min-content;
+}
+
+.topplaylist-section {
+  display: flex;
+  align-items: center;
+}
+
+.playy-all-btn2 {
+  color: white;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  padding-left: 60px;
+  bottom: 190px;
+  transition: all 0.15s ease;
+  opacity: 0;
+}
+
+.created-all-playlistss2 {
+  margin-right: 12px;
+  width: min-content;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.thischannel-playlists2 {
+  display: flex;
+  margin-top: 15px;
+}
+
+.created-all-playlistss2:hover .playlist-thumbnail {
+  opacity: 0.2;
+}
+
+.created-all-playlistss2:hover .playlist-element {
+  opacity: 0.2;
+}
+
+.created-all-playlistss2:hover .playy-all-btn {
+  opacity: 1;
+}
+
+.created-all-playlistss2:hover .playy-all-btn2 {
+  opacity: 1;
+}
+
+.view-playlist {
+  margin-top: 8px;
+  font-size: 13.5px;
+  color: #aaa;
+  transition: all 0.15s ease;
+}
+
+.playlist-ownner {
+  margin-top: 10px !important;
+  font-size: 12.5px;
+  color: #aaa;
+  transition: all 0.15s ease;
+}
+
+.playlist-ownner:hover {
+  color: white;
+}
+
+.view-playlist:hover {
+  color: white;
+}
+
+.private-privacyy {
+  display: flex;
+  align-items: center;
+  background-color: #272727;
+  padding: 2.5px;
+  width: fit-content;
+  padding-left: 4px;
+  padding-right: 4px;
+  margin-top: 8px;
+}
+
+.private-privacyy > p {
+  margin-left: 5px;
+  font-size: 14px;
+  color: #aaa;
 }

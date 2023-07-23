@@ -4,20 +4,72 @@ import WatchLaterOutlinedIcon from "@mui/icons-material/WatchLaterOutlined";
 import { useNavigate } from "react-router-dom";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import jwtDecode from "jwt-decode";
+import PlaylistPlayOutlinedIcon from "@mui/icons-material/PlaylistPlayOutlined";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
+import ReactLoading from "react-loading";
 import { useState, useEffect } from "react";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import PlaylistPlayIcon from "@mui/icons-material/PlaylistPlay";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import "../Css/library.css";
+
+function generateRandomColors(count) {
+  const transparency = 0.5; // Adjust transparency as needed (0 to 1)
+  const colors = [];
+
+  for (let i = 0; i < count; i++) {
+    const r = Math.floor(Math.random() * 256);
+    const g = Math.floor(Math.random() * 256);
+    const b = Math.floor(Math.random() * 256);
+    colors.push(`rgba(${r}, ${g}, ${b}, ${transparency})`);
+  }
+
+  return colors;
+}
 
 function Library() {
   const [watchlater, setWatchLater] = useState([]);
+  const [PlaylistData, setPlaylistData] = useState([]);
+  const [playlistColors, setPlaylistColors] = useState([]);
   const navigate = useNavigate();
   const [email, setEmail] = useState();
   const token = localStorage.getItem("userToken");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setEmail(jwtDecode(token).email);
   }, [token]);
+
+  useEffect(() => {
+    const colors = generateRandomColors(Math.max(1, PlaylistData.length));
+    setPlaylistColors(colors);
+  }, [PlaylistData]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2500);
+
+    return () => clearTimeout(timer);
+  }, [loading]);
+
+  useEffect(() => {
+    const getPlaylistData = async () => {
+      try {
+        if (email !== undefined) {
+          const response = await fetch(
+            `http://localhost:3000/getplaylistdata/${email}`
+          );
+          const playlistData = await response.json();
+          setPlaylistData(playlistData);
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    getPlaylistData();
+  }, [email]);
 
   useEffect(() => {
     const getWatchLater = async () => {
@@ -44,6 +96,33 @@ function Library() {
       ? watchlater.slice(0, 4) // Get the first four elements if available
       : [];
 
+  const PlaylistArray =
+    PlaylistData && PlaylistData.length > 0
+      ? PlaylistData.slice(0, 4) // Get the first four elements if available
+      : [];
+
+  if (loading === true) {
+    return (
+      <>
+        <Navbar />
+        <LeftPanel />
+        <div className="main-trending-section">
+          <div className="spin2" style={{ height: "auto" }}>
+            <ReactLoading
+              type={"spin"}
+              color={"white"}
+              height={50}
+              width={50}
+            />
+            <p style={{ marginTop: "15px" }}>
+              Fetching the data, Hang tight...{" "}
+            </p>
+          </div>
+        </div>
+      </>
+    );
+  }
+
   return (
     <>
       <Navbar />
@@ -67,7 +146,14 @@ function Library() {
             {watchLaterArray &&
               watchLaterArray.map((element, index) => {
                 return (
-                  <div className="thiswatchlater-videoss" key={index}>
+                  <div
+                    className="thiswatchlater-videoss"
+                    key={index}
+                    onClick={() => {
+                      navigate(`/video/${element.savedVideoID}`);
+                      window.location.reload();
+                    }}
+                  >
                     <img
                       src={element.thumbnailURL}
                       alt="thumbnail"
@@ -159,7 +245,98 @@ function Library() {
           </div>
         </div>
         <hr className="seperate" />
-        <div className="playlists-library"></div>
+        <div className="playlists-library">
+          <div className="topplaylist-section">
+            <PlaylistPlayOutlinedIcon
+              fontSize="medium"
+              style={{ color: "white" }}
+            />
+            <p>Playlists</p>
+            {PlaylistArray && PlaylistArray.length >= 4 ? (
+              <p className="see-all">See all</p>
+            ) : (
+              ""
+            )}
+          </div>
+          <div className="thischannel-playlists2">
+            {PlaylistArray &&
+              PlaylistArray.map((element, index) => {
+                const backgroundColor =
+                  playlistColors[index] || playlistColors[0];
+
+                return (
+                  <div className="created-all-playlistss2" key={index}>
+                    <img
+                      src={element.playlist_videos[0].thumbnail}
+                      alt=""
+                      className="playlist-thumbnail"
+                      onClick={() => {
+                        navigate(
+                          `/video/${element.playlist_videos[0].videoID}`
+                        );
+                      }}
+                    />
+                    <div
+                      className="playy-all-btn2"
+                      onClick={() => {
+                        navigate(
+                          `/video/${element.playlist_videos[0].videoID}`
+                        );
+                      }}
+                    >
+                      <PlayArrowIcon
+                        fontSize="medium"
+                        style={{ color: "white" }}
+                      />
+                      <p>PLAY ALL</p>
+                    </div>
+                    <div
+                      className="playlist-element"
+                      style={{ backgroundColor }}
+                      onClick={() => {
+                        navigate(
+                          `/video/${element.playlist_videos[0].videoID}`
+                        );
+                      }}
+                    >
+                      <PlaylistPlayIcon
+                        fontSize="medium"
+                        style={{ color: "white" }}
+                      />
+                      <p>{element.playlist_videos.length} videos</p>
+                    </div>
+                    <div className="playlistt-details">
+                      <p>{element.playlist_name}</p>
+                      <p className="playlist-ownner">
+                        {element.playlist_owner}
+                      </p>
+
+                      <div
+                        className="private-privacyy"
+                        style={
+                          element.playlist_privacy === "Private"
+                            ? { display: "flex" }
+                            : { display: "none" }
+                        }
+                      >
+                        <LockOutlinedIcon
+                          fontSize="small"
+                          style={{ color: "#aaa" }}
+                        />
+                        <p>Private</p>
+                      </div>
+                      <p
+                        onClick={() => navigate(`/playlist/${element._id}`)}
+                        className="view-playlist"
+                      >
+                        View full playlist
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+          </div>
+        </div>
         <hr className="seperate" />
 
         <div className="likedvideos-library"></div>
