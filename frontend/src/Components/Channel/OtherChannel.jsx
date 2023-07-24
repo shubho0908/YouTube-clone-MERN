@@ -9,6 +9,9 @@ import ReactLoading from "react-loading";
 import ChannelVideos from "./ChannelVideos";
 import ClearRoundedIcon from "@mui/icons-material/ClearRounded";
 import jwtDecode from "jwt-decode";
+import Tooltip from "@mui/material/Tooltip";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import Zoom from "@mui/material/Zoom";
 import Signup from "../Signup";
 import Signin from "../Signin";
 import ChannelAbout from "./ChannelAbout";
@@ -179,7 +182,22 @@ function OtherChannel() {
                 loading="lazy"
               />
               <div className="channel-left">
-                <p className="channelname">{channelName && channelName}</p>
+                <div className="channel-name-verified">
+                  <p className="channelname">{channelName && channelName}</p>
+                  <Tooltip
+                    TransitionComponent={Zoom}
+                    title="Verified"
+                    placement="right"
+                  >
+                    <CheckCircleIcon
+                      fontSize="small"
+                      style={{
+                        color: "rgb(138, 138, 138)",
+                        marginLeft: "6px",
+                      }}
+                    />
+                  </Tooltip>
+                </div>
                 <div className="channel-extra">
                   <p className="channeluser">@{username && username}</p>
                   <p className="my-subs">

@@ -239,12 +239,18 @@ function Browse() {
                                 : `${Titles[index].slice(0, 60)}..`}
                             </p>
                             <div className="video-uploader">
+                            <Tooltip
+                                TransitionComponent={Zoom}
+                                title={uploader[index]}
+                                placement="top"
+                              >
                               <p
                                 className="uploader"
                                 style={{ marginTop: "10px" }}
                               >
                                 {uploader[index]}
                               </p>
+                              </Tooltip>
                               <Tooltip
                                 TransitionComponent={Zoom}
                                 title="Verified"

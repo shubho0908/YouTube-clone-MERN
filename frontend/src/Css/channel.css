@@ -15,6 +15,11 @@
   margin-top: 120px;
 }
 
+.channel-name-verified{
+  display: flex;
+  align-items: center;
+}
+
 .channel-top-content {
   position: relative;
   top: 90px;

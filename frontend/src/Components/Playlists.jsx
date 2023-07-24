@@ -260,32 +260,32 @@ function Playlists() {
                         : { display: "none" }
                     }
                   >
-                    <Tooltip
-                      TransitionComponent={Zoom}
-                      title={`${playlistDetails.playlist_name}`}
-                      placement="top"
-                    >
-                      <p className="like-head">
-                        {/* {playlistDetails.playlist_name.length <= 15
+                    <p className="like-head">
+                      {/* {playlistDetails.playlist_name.length <= 15
                           ? playlistDetails.playlist_name
                           : `${playlistDetails.playlist_name.slice(0, 15)}..`} */}
-                          {playlistDetails.playlist_name}
-                      </p>
-                    </Tooltip>
-                    <EditOutlinedIcon
-                      className="edit-name-btn"
-                      fontSize="medium"
-                      style={
-                        playlistDetails.owner_email === Email
-                          ? { color: "white" }
-                          : { display: "none" }
-                      }
-                      onClick={() => {
-                        if (token) {
-                          setIsEditmode(true);
+                      {playlistDetails.playlist_name}
+                    </p>
+                    <Tooltip
+                      TransitionComponent={Zoom}
+                      title="Edit"
+                      placement="bottom"
+                    >
+                      <EditOutlinedIcon
+                        className="edit-name-btn"
+                        fontSize="medium"
+                        style={
+                          playlistDetails.owner_email === Email
+                            ? { color: "white" }
+                            : { display: "none" }
                         }
-                      }}
-                    />
+                        onClick={() => {
+                          if (token) {
+                            setIsEditmode(true);
+                          }
+                        }}
+                      />
+                    </Tooltip>
                   </div>
                   <div
                     className="like-div"
@@ -421,28 +421,40 @@ function Playlists() {
                   </div>
 
                   <div className="playlist-btns">
-                    <ReplyOutlinedIcon
-                      className="share-playlist"
-                      fontSize="medium"
-                      style={{ color: "white" }}
-                      onClick={handleCopyLink}
-                    />
-                    <DeleteIcon
-                      className="delete-playlist"
-                      fontSize="medium"
-                      style={
-                        playlistDetails.owner_email === Email
-                          ? { color: "white" }
-                          : { display: "none" }
-                      }
-                      onClick={() => {
-                        DeletePlaylist();
-                        setTimeout(() => {
-                          navigate("/");
-                          window.location.reload();
-                        }, 300);
-                      }}
-                    />
+                    <Tooltip
+                      TransitionComponent={Zoom}
+                      title="Share"
+                      placement="bottom"
+                    >
+                      <ReplyOutlinedIcon
+                        className="share-playlist"
+                        fontSize="medium"
+                        style={{ color: "white" }}
+                        onClick={handleCopyLink}
+                      />
+                    </Tooltip>
+                    <Tooltip
+                      TransitionComponent={Zoom}
+                      title="Delete"
+                      placement="bottom"
+                    >
+                      <DeleteIcon
+                        className="delete-playlist"
+                        fontSize="medium"
+                        style={
+                          playlistDetails.owner_email === Email
+                            ? { color: "white" }
+                            : { display: "none" }
+                        }
+                        onClick={() => {
+                          DeletePlaylist();
+                          setTimeout(() => {
+                            navigate("/");
+                            window.location.reload();
+                          }, 300);
+                        }}
+                      />
+                    </Tooltip>
                   </div>
                 </div>
                 <div

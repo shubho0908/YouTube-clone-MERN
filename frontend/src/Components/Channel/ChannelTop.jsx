@@ -9,6 +9,9 @@ import ChannelHome from "./ChannelHome";
 import ReactLoading from "react-loading";
 import ChannelVideos from "./ChannelVideos";
 import ChannelAbout from "./ChannelAbout";
+import Tooltip from "@mui/material/Tooltip";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import Zoom from "@mui/material/Zoom";
 import ChannelPlaylists from "./ChannelPlaylists";
 import FeaturedChannels from "./FeaturedChannels";
 
@@ -105,7 +108,22 @@ function ChannelTop() {
                 loading="lazy"
               />
               <div className="channel-left">
-                <p className="channelname">{channelName && channelName}</p>
+                <div className="channel-name-verified">
+                  <p className="channelname">{channelName && channelName}</p>
+                  <Tooltip
+                    TransitionComponent={Zoom}
+                    title="Verified"
+                    placement="right"
+                  >
+                    <CheckCircleIcon
+                      fontSize="small"
+                      style={{
+                        color: "rgb(138, 138, 138)",
+                        marginLeft: "6px",
+                      }}
+                    />
+                  </Tooltip>
+                </div>
                 <div className="channel-extra">
                   <p className="channeluser">@{username && username}</p>
                   <p className="my-subs">
@@ -116,12 +134,15 @@ function ChannelTop() {
                   </p>
                 </div>
                 <div className="more-about">
-                  <p className="more-text"
-                   onClick={() => {
-                    localStorage.setItem("Section", "About");
-                    window.location.reload();
-                  }}
-                  >More about this channel</p>
+                  <p
+                    className="more-text"
+                    onClick={() => {
+                      localStorage.setItem("Section", "About");
+                      window.location.reload();
+                    }}
+                  >
+                    More about this channel
+                  </p>
                   <ArrowForwardIosIcon
                     fontSize="15px"
                     style={{ color: "#aaa", marginLeft: "7px" }}
@@ -248,7 +269,11 @@ function ChannelTop() {
           {Section === "Home" ? <ChannelHome newmail={Email} /> : ""}
           {Section === "Videos" ? <ChannelVideos newmail={Email} /> : ""}
           {Section === "Playlists" ? <ChannelPlaylists newmail={Email} /> : ""}
-          {Section === "Subscriptions" ? <FeaturedChannels newmail={Email} /> : ""}
+          {Section === "Subscriptions" ? (
+            <FeaturedChannels newmail={Email} />
+          ) : (
+            ""
+          )}
           {Section === "About" ? (
             <ChannelAbout newmail={Email} channelid={id} />
           ) : (
