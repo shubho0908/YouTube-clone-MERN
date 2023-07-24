@@ -4,6 +4,7 @@ import jwtDecode from "jwt-decode";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import VideoLibraryOutlinedIcon from "@mui/icons-material/VideoLibraryOutlined";
 import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
+import AutoFixHighOutlinedIcon from "@mui/icons-material/AutoFixHighOutlined";
 
 function LeftPanel2() {
   const [email, setEmail] = useState("");
@@ -91,6 +92,14 @@ function LeftPanel2() {
               style={{ color: "#A9A9A9" }}
             />
             <p>Comments</p>
+          </div>
+          <div className="customization panel">
+            <AutoFixHighOutlinedIcon
+              className="studio-icon"
+              fontSize="medium"
+              style={{ color: "#A9A9A9" }}
+            />
+            <p>Customization</p>
           </div>
         </div>
       </div>

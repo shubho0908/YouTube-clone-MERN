@@ -2,6 +2,10 @@ import { useState, useEffect } from "react";
 import Tooltip from "@mui/material/Tooltip";
 import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
 import Zoom from "@mui/material/Zoom";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import LanguageIcon from "@mui/icons-material/Language";
+import TwitterIcon from "@mui/icons-material/Twitter";
+import FacebookIcon from "@mui/icons-material/Facebook";
 
 function ChannelAbout(prop) {
   const [Email, setEmail] = useState();
@@ -23,7 +27,7 @@ function ChannelAbout(prop) {
       }
     };
 
-    getUserMail()
+    getUserMail();
   }, [prop.channelid]);
 
   useEffect(() => {
@@ -43,7 +47,7 @@ function ChannelAbout(prop) {
         console.log(error.message);
       }
     };
-    GetAboutData()
+    GetAboutData();
   }, [Email]);
 
   useEffect(() => {
@@ -61,7 +65,7 @@ function ChannelAbout(prop) {
       }
     };
 
-    GetTotalViews()
+    GetTotalViews();
   }, [Email]);
 
   const joined = new Date(joinedDate);
@@ -98,10 +102,7 @@ function ChannelAbout(prop) {
           </div>
           <hr className="seperate-two seperate" />
 
-          <div
-            className="channel-links"
-            
-          >
+          <div className="channel-links">
             <p>Links</p>
             <div className="channel-links-all">
               {links &&
@@ -109,47 +110,68 @@ function ChannelAbout(prop) {
                   return (
                     <div className="main-links" key={index}>
                       {element.instagram ? (
-                        <a
-                          href={`${element.instagram}`}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          Instagram
-                        </a>
+                        <div className="link-insta">
+                          <InstagramIcon
+                            fontSize="medium"
+                            style={{ color: "darkorchid" }}
+                          />
+                          <a
+                            href={`${element.instagram}`}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            Instagram
+                          </a>
+                        </div>
                       ) : (
                         ""
                       )}
 
                       {element.facebook ? (
-                        <a
-                          href={`${element.facebook}`}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          Facebook
-                        </a>
+                        <div className="link-fb">
+                          <FacebookIcon
+                            fontSize="medium"
+                            style={{ color: "#2d84d0" }}
+                          />
+                          <a
+                            href={`${element.facebook}`}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            Facebook
+                          </a>
+                        </div>
                       ) : (
                         ""
                       )}
                       {element.twitter ? (
-                        <a
+                        <div className="link-twitter">
+                          <TwitterIcon fontSize="medium" style={{color:"#00acee"}}/>
+                          <a
                           href={`${element.twitter}`}
                           target="_blank"
                           rel="noreferrer"
                         >
                           Twitter
                         </a>
+                        </div>
                       ) : (
                         ""
                       )}
                       {element.website ? (
-                        <a
-                          href={`${element.website}`}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          Website
-                        </a>
+                        <div className="link-web">
+                          <LanguageIcon
+                            fontSize="medium"
+                            style={{ color: "#aaa" }}
+                          />
+                          <a
+                            href={`${element.website}`}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            Website
+                          </a>
+                        </div>
                       ) : (
                         ""
                       )}

@@ -1,8 +1,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Geologica:wght@600&display=swap");
 
 .studio {
-  background-color: #151515;
+  background-color: #1f1f1f;
   height: 100vh;
+}
+
+.studio-icon {
+  padding-left: 30px !important;
 }
 
 .create-channel {
@@ -260,7 +264,7 @@
 .thumbnail-section {
   padding-top: 0px !important;
   position: relative;
-    bottom: 12px;
+  bottom: 12px;
 }
 
 .details-section > p,

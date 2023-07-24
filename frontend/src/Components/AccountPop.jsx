@@ -19,7 +19,7 @@ function AccountPop() {
   const [email, setEmail] = useState("");
   const [profile, setProfile] = useState("");
   const [theme, setTheme] = useState("Dark");
-  const [ChannelID, setChannelID] = useState()
+  const [ChannelID, setChannelID] = useState();
   const [isBtnClicked, setIsBtnClicked] = useState(false);
 
   const navigate = useNavigate();
@@ -106,14 +106,23 @@ function AccountPop() {
         </div>
         <hr className="seperate" />
         <div className="about-channel-section">
-          <div className="yourchannel c-sec" onClick={() => navigate(`/mychannel/${ChannelID}`)}>
+          <div
+            className="yourchannel c-sec"
+            onClick={() => navigate(`/mychannel/${ChannelID}`)}
+          >
             <AccountBoxOutlinedIcon
               fontSize="medium"
               style={{ color: "white" }}
             />
             <p>Your channel</p>
           </div>
-          <div className="yourstudio c-sec" onClick={() => navigate("/studio")}>
+          <div
+            className="yourstudio c-sec"
+            onClick={() => {
+              navigate("/studio");
+              window.location.reload();
+            }}
+          >
             <OndemandVideoOutlinedIcon
               fontSize="medium"
               style={{ color: "white" }}
@@ -155,7 +164,7 @@ function AccountPop() {
             className="exitout c-sec"
             onClick={() => {
               localStorage.removeItem("userToken");
-              navigate("/")
+              navigate("/");
               window.location.reload();
             }}
           >

@@ -413,10 +413,16 @@
   flex-direction: column;
 }
 
-.main-links > a {
+.link-insta, .link-fb, .link-web, .link-twitter{
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.link-insta > a, .link-fb>a, .link-web>a, .link-twitter>a {
   color: #3ea6ff;
   font-size: 14px;
-  margin-top: 15px;
+  margin-left: 10px;
 }
 
 .right-about-section {

@@ -24,6 +24,19 @@
     rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
 }
 
+.navbar2 {
+  padding: 10px;
+  padding-left: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #282828;
+  position: fixed;
+  z-index: 2;
+  width: -webkit-fill-available;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
 .left-bar,
 .middle-bar,
 .search,

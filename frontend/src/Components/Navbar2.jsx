@@ -42,7 +42,7 @@ function Navbar2() {
 
   return (
     <>
-      <div className="navbar">
+      <div className="navbar2">
         <div className="left-bar">
           <MenuRoundedIcon
             className="menu2"
