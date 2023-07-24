@@ -20,6 +20,10 @@ const Comment = new mongoose.Schema({
   user_email: {
     type: String,
   },
+  heartComment: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const VideoData = new mongoose.Schema({

@@ -11,6 +11,7 @@ import Tooltip from "@mui/material/Tooltip";
 import AddToPhotosOutlinedIcon from "@mui/icons-material/AddToPhotosOutlined";
 import Zoom from "@mui/material/Zoom";
 import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
+import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbDownOutlinedIcon from "@mui/icons-material/ThumbDownOutlined";
 import ReplyIcon from "@mui/icons-material/Reply";
@@ -18,6 +19,7 @@ import { TfiDownload } from "react-icons/Tfi";
 import BookmarkAddOutlinedIcon from "@mui/icons-material/BookmarkAddOutlined";
 import avatar from "../img/avatar.png";
 import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import ClearRoundedIcon from "@mui/icons-material/ClearRounded";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
@@ -73,6 +75,7 @@ function VideoSection() {
   const [playlistName, setPlaylistName] = useState("");
   const [UserPlaylist, setUserPlaylist] = useState([]);
   const [playlistID, setplaylistID] = useState([]);
+  const [isHeart, setIsHeart] = useState([]);
 
   //Get Channel Data
   const [youtuberName, setyoutuberName] = useState();
@@ -458,6 +461,26 @@ function VideoSection() {
     return () => clearInterval(interval);
   }, [email, id]);
 
+  useEffect(() => {
+    const getHeartComments = async () => {
+      try {
+        if (id !== undefined) {
+          const response = await fetch(
+            `http://localhost:3000/getheartcomment/${id}`
+          );
+          const heart = await response.json();
+          setIsHeart(heart);
+        }
+      } catch (error) {
+        //console.log(error.message);
+      }
+    };
+
+    const interval = setInterval(getHeartComments, 100);
+
+    return () => clearInterval(interval);
+  }, [email, id]);
+
   //POST REQUESTS
 
   const uploadComment = async () => {
@@ -563,6 +586,25 @@ function VideoSection() {
         }
       );
       await response.json();
+    } catch (error) {
+      //console.log(error.message);
+    }
+  };
+
+  const HeartComment = async (commentID) => {
+    try {
+      if (id !== undefined && channelID !== undefined) {
+        const response = await fetch(
+          `http://localhost:3000/heartcomment/${id}/${commentID}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        await response.json();
+      }
     } catch (error) {
       //console.log(error.message);
     }
@@ -1177,11 +1219,60 @@ function VideoSection() {
                               CommentLikes[index].likes}
                           </p>
 
+                          {isHeart[index] === false ? (
+                            <FavoriteBorderOutlinedIcon
+                              fontSize="small"
+                              style={
+                                email === usermail
+                                  ? {
+                                      color: "white",
+                                      marginLeft: "20px",
+                                      cursor: "pointer",
+                                    }
+                                  : { display: "none" }
+                              }
+                              className="heart-comment"
+                              onClick={() => {
+                                if (email === usermail) {
+                                  HeartComment(element._id);
+                                }
+                              }}
+                            />
+                          ) : (
+                            <Tooltip
+                              TransitionComponent={Zoom}
+                              title="Liked!"
+                              placement="bottom"
+                            >
+                              <div
+                                className="heart-liked"
+                                style={{ cursor: "pointer" }}
+                                onClick={() => {
+                                  if (email === usermail) {
+                                    HeartComment(element._id);
+                                  }
+                                }}
+                              >
+                                <img
+                                  src={ChannelProfile}
+                                  alt="commentDP"
+                                  className="heartDP"
+                                  loading="lazy"
+                                />
+                                <FavoriteIcon
+                                  fontSize="100px"
+                                  style={{ color: "rgb(220, 2, 2)" }}
+                                  className="comment-heart"
+                                />
+                              </div>
+                            </Tooltip>
+                          )}
+
                           {element.user_email === email ||
                           email === usermail ? (
                             <button
                               className="delete-comment-btn"
-                              style={{ marginLeft: "25px" }}
+                              style={{ marginLeft: "17px" }}
                               onClick={() => DeleteComment(index)}
                             >
                               Delete
@@ -1595,9 +1686,9 @@ function VideoSection() {
                         onClick={() => RemoveVideo(element._id)}
                       />
                     )}
-                     {element.playlist_name.length <= 16
-                          ? element.playlist_name
-                          : `${element.playlist_name.slice(0, 16)}..`}
+                    {element.playlist_name.length <= 16
+                      ? element.playlist_name
+                      : `${element.playlist_name.slice(0, 16)}..`}
                     {element.playlist_privacy === "Public" ? (
                       <PublicOutlinedIcon
                         className="new-privacy"
@@ -1716,11 +1807,13 @@ function VideoSection() {
           <div
             className="playlist-create-btn"
             onClick={() => {
-              if (playlistName === "" || privacy === "") {
-                alert("Input fileds can't be empty");
-              } else {
+              if (playlistName !== "" || privacy !== "") {
                 AddPlaylist();
-               
+                setTimeout(() => {
+                  window.location.reload();
+                }, 560);
+              } else {
+                alert("Input fileds can't be empty");
               }
             }}
           >

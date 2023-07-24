@@ -13,10 +13,11 @@ import { useState, useEffect } from "react";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import PlaylistPlayIcon from "@mui/icons-material/PlaylistPlay";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
+import deleteIMG from "../img/delete.jpg"
 import "../Css/library.css";
 
 function generateRandomColors(count) {
-  const transparency = 0.5; // Adjust transparency as needed (0 to 1)
+  const transparency = 0.65; // Adjust transparency as needed (0 to 1)
   const colors = [];
 
   for (let i = 0; i < count; i++) {
@@ -141,6 +142,7 @@ function Library() {
     PlaylistData && PlaylistData.length > 0
       ? PlaylistData.slice(0, 4) // Get the first four elements if available
       : [];
+
 
   const LikedVideosArray =
     videolike && videolike.length > 0
@@ -338,12 +340,19 @@ function Library() {
             {PlaylistArray &&
               PlaylistArray.map((element, index) => {
                 const backgroundColor =
-                  playlistColors[index] || playlistColors[0];
+                  playlistColors[index] || playlistColors[0];  
+
+                  const thumbnailURL =
+        element.playlist_videos &&
+        element.playlist_videos.length > 0 &&
+        element.playlist_videos[0].thumbnail
+          ? element.playlist_videos[0].thumbnail
+          : deleteIMG;
 
                 return (
                   <div className="created-all-playlistss2" key={index}>
                     <img
-                      src={element.playlist_videos[0].thumbnail}
+                      src={thumbnailURL}
                       alt=""
                       className="playlist-thumbnail"
                       onClick={() => {

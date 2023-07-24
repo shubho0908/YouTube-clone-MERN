@@ -34,7 +34,6 @@
   height: auto;
   display: flex;
   animation: FADEINN 1s ease;
-
 }
 
 .main-video-section2 {
@@ -377,7 +376,7 @@
   border: none;
   background-color: white;
   font-size: 14px;
-  margin-left: 25px;
+  margin-left: 17px;
   transition: all 0.1s ease;
 }
 
@@ -642,4 +641,28 @@
 .show-playlists {
   padding-left: 12px;
   padding-right: 12px;
+}
+
+.heartDP {
+  width: 25px;
+  border-radius: 100%;
+}
+
+.heart-liked {
+  margin-left: 20px;
+}
+
+.comment-heart {
+  position: relative;
+  right: 8px;
+  top: 2px;
+}
+
+.heart-comment {
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+
+.heart-comment:active {
+  transform: scale(0.93);
 }
