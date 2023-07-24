@@ -480,37 +480,38 @@ function Playlists() {
             <div className="like-right-section">
               {playlistsVideos.length > 0
                 ? playlistsVideos.map((element, index) => {
-                    return (
-                      <div className="liked-all-videos" key={index}>
-                        <p style={{ color: "#aaa" }}>{index + 1}</p>
-                        <div
-                          className="liked-videos-all-data"
-                          onClick={() => {
-                            if (token) {
-                              updateViews(element.videoID);
-                              setTimeout(() => {
-                                navigate(`/video/${element.videoID}`);
-                                window.location.reload();
-                              }, 400);
-                            } else {
+                  return (
+                    <div className="liked-all-videos" key={index}>
+                      <p style={{ color: "#aaa" }}>{index + 1}</p>
+                      <div
+                        className="liked-videos-all-data"
+                        onClick={() => {
+                          if (token) {
+                            updateViews(element.videoID);
+                            setTimeout(() => {
                               navigate(`/video/${element.videoID}`);
                               window.location.reload();
-                            }
-                          }}
-                        >
-                          <img
-                            src={element.thumbnail}
-                            alt="first-like-thumbnail"
-                            loading="lazy"
-                          />
-                          <div className="its-content">
-                            <p>{element.title}</p>
-                            <p>{element.video_uploader}</p>
-                          </div>
+                            }, 400);
+                          } else {
+                            navigate(`/video/${element.videoID}`);
+                            window.location.reload();
+                          }
+                        }}
+                      >
+                        <img
+                          src={element.thumbnail}
+                          alt="first-like-thumbnail"
+                          loading="lazy"
+                        />
+                        <div className="its-content">
+                          <p>{element.title}</p>
+
+                          <p>{element.video_uploader}</p>
                         </div>
                       </div>
-                    );
-                  })
+                    </div>
+                  );
+                })
                 : ""}
             </div>
           </div>

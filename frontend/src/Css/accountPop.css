@@ -1,5 +1,6 @@
 .account-pop {
-  background-color: #282828;
+  /* background-color: #282828; */
+  background-color: #282828db;
   position: fixed;
   color: white;
   z-index: 20;
@@ -9,6 +10,7 @@
   padding-bottom: 20px;
   border-radius: 10px;
   width: 280px;
+  backdrop-filter: blur(8px);
   animation: slowdown 0.2s ease;
 }
 

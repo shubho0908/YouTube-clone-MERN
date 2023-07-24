@@ -5,7 +5,7 @@
   position: absolute;
   transform: translate(-50%, -50%);
   left: 50%;
-  top: 575px;
+  top: 568px;
   color: white;
 }
 
@@ -21,6 +21,10 @@
 .top-watchlater-library > p:nth-child(3) {
   margin-left: 15px;
   color: #aaa;
+}
+
+.topplaylist-section>p{
+  margin-left: 15px;
 }
 
 .thiswatch-thumbnail {
