@@ -40,7 +40,7 @@ function ChannelHome(prop) {
       }
     };
 
-    getUserVideos()
+    getUserVideos();
   }, [Email, prop.newmail]);
 
   const updateViews = async (id) => {
@@ -57,6 +57,14 @@ function ChannelHome(prop) {
       console.log(error.message);
     }
   };
+
+  const sortByViews = (a, b) => b.views - a.views;
+  const sortByViews2 = (a, b) => a.views - b.views;
+
+  const AllVideos =
+    myVideos && myVideos.length > 0
+      ? myVideos.slice(0, 4) // Get the first four elements if available
+      : [];
 
   if (!myVideos) {
     return (
@@ -171,22 +179,35 @@ function ChannelHome(prop) {
             className="playall-videos"
             onClick={() => {
               if (token) {
-                updateViews(myVideos[0]._id);
-                navigate(`/video/${myVideos[0]._id}`);
+                updateViews(AllVideos.sort(sortByViews2)[0]._id);
+                navigate(`/video/${AllVideos.sort(sortByViews2)[0]._id}`);
                 window.location.reload();
               }
-              navigate(`/video/${myVideos[0]._id}`);
+              navigate(`/video/${AllVideos.sort(sortByViews2)[0]._id}`);
               window.location.reload();
             }}
           >
             <PlayArrowIcon fontSize="medium" style={{ color: "white" }} />
             <p className="playall-txt">Play all</p>
           </div>
+          {AllVideos && AllVideos.length >= 4 ? (
+            <p
+              className="see-all"
+              onClick={() => {
+                localStorage.setItem("Section", "Videos");
+                window.location.reload();
+              }}
+            >
+              See all
+            </p>
+          ) : (
+            ""
+          )}
         </div>
         <div className="my-all-videos-list">
-          {myVideos &&
-            myVideos.length > 0 &&
-            myVideos.map((element, index) => {
+          {AllVideos &&
+            AllVideos.length > 0 &&
+            AllVideos.sort(sortByViews2).map((element, index) => {
               return (
                 <div
                   className="uploadedvideo-alldata"
@@ -196,7 +217,122 @@ function ChannelHome(prop) {
                       updateViews(element._id);
                       setTimeout(() => {
                         navigate(`/video/${element._id}`);
+                        window.location.reload();
+                      }, 400);
+                    } else {
+                      navigate(`/video/${element._id}`);
                       window.location.reload();
+                    }
+                  }}
+                >
+                  <img
+                    src={element.thumbnailURL}
+                    alt="thumbnails"
+                    className="myvideos-thumbnail myvideos-thumbnail2"
+                    loading="lazy"
+                  />
+                  <p className="myvideo-duration2">
+                    {Math.floor(element.videoLength / 60) +
+                      ":" +
+                      (Math.round(element.videoLength % 60) < 10
+                        ? "0" + Math.round(element.videoLength % 60)
+                        : Math.round(element.videoLength % 60))}
+                  </p>
+                  <div className="video-metadata2">
+                    <p className="video-title2">{element.Title}</p>
+                    <div className="views-and-time">
+                      <p className="myviews">
+                        {element.views >= 1e9
+                          ? `${(element.views / 1e9).toFixed(1)}B`
+                          : element.views >= 1e6
+                          ? `${(element.views / 1e6).toFixed(1)}M`
+                          : element.views >= 1e3
+                          ? `${(element.views / 1e3).toFixed(1)}K`
+                          : element.views}{" "}
+                        views
+                      </p>
+                      <p className="video_published-date">
+                        &#x2022;{" "}
+                        {(() => {
+                          const timeDifference =
+                            new Date() - new Date(element.uploaded_date);
+                          const minutes = Math.floor(timeDifference / 60000);
+                          const hours = Math.floor(timeDifference / 3600000);
+                          const days = Math.floor(timeDifference / 86400000);
+                          const weeks = Math.floor(timeDifference / 604800000);
+                          const years = Math.floor(
+                            timeDifference / 31536000000
+                          );
+
+                          if (minutes < 1) {
+                            return "just now";
+                          } else if (minutes < 60) {
+                            return `${minutes} mins ago`;
+                          } else if (hours < 24) {
+                            return `${hours} hours ago`;
+                          } else if (days < 7) {
+                            return `${days} days ago`;
+                          } else if (weeks < 52) {
+                            return `${weeks} weeks ago`;
+                          } else {
+                            return `${years} years ago`;
+                          }
+                        })()}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+        </div>
+      </div>
+      <hr className="seperate seperate-new2" />
+      <div className="mypopular-videos">
+        <div className="section-headtxt">
+          <p className="section-title">Popular videos</p>
+          <div
+            className="playall-videos"
+            onClick={() => {
+              if (token) {
+                updateViews(AllVideos.sort(sortByViews)[0]._id);
+                navigate(`/video/${AllVideos.sort(sortByViews)[0]._id}`);
+                window.location.reload();
+              }
+              navigate(`/video/${AllVideos.sort(sortByViews)[0]._id}`);
+              window.location.reload();
+            }}
+          >
+            <PlayArrowIcon fontSize="medium" style={{ color: "white" }} />
+            <p className="playall-txt">Play all</p>
+          </div>
+          {AllVideos && AllVideos.length >= 4 ? (
+            <p
+              className="see-all"
+              onClick={() => {
+                localStorage.setItem("Section", "Videos");
+                window.location.reload();
+              }}
+            >
+              See all
+            </p>
+          ) : (
+            ""
+          )}
+        </div>
+        <div className="my-all-videos-list2">
+          {AllVideos &&
+            AllVideos.length > 0 &&
+            AllVideos.sort(sortByViews).map((element, index) => {
+              return (
+                <div
+                  className="uploadedvideo-alldata"
+                  key={index}
+                  onClick={() => {
+                    if (token) {
+                      updateViews(element._id);
+                      setTimeout(() => {
+                        navigate(`/video/${element._id}`);
+                        window.location.reload();
                       }, 400);
                     } else {
                       navigate(`/video/${element._id}`);

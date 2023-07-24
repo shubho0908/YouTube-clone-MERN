@@ -24,6 +24,7 @@ function ChannelTop() {
   const token = localStorage.getItem("userToken");
   const [Subscribers, setSubscribers] = useState();
   const Section = localStorage.getItem("Section");
+  const [margintop, setMarginTop] = useState("155px");
 
   useEffect(() => {
     if (token) {
@@ -70,6 +71,16 @@ function ChannelTop() {
   }, [Email]);
 
   useEffect(() => {
+    if (Section === "Home") {
+      setMarginTop("155px");
+    } else if (Section === "Videos") {
+      setMarginTop("135px");
+    } else {
+      setMarginTop("120px");
+    }
+  }, [Section])
+
+  useEffect(() => {
     const getUserVideos = async () => {
       try {
         const response = await fetch(
@@ -98,7 +109,7 @@ function ChannelTop() {
       <Navbar />
       <LeftPanel />
       {ChannelProfile ? (
-        <div className="channel-main-content">
+        <div className="channel-main-content" style={{ marginTop: margintop }}>
           <div className="channel-top-content">
             <div className="channel-left-content">
               <img

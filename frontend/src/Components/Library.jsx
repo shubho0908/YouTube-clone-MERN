@@ -13,7 +13,7 @@ import { useState, useEffect } from "react";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import PlaylistPlayIcon from "@mui/icons-material/PlaylistPlay";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
-import deleteIMG from "../img/delete.jpg"
+import deleteIMG from "../img/delete.jpg";
 import "../Css/library.css";
 
 function generateRandomColors(count) {
@@ -143,7 +143,6 @@ function Library() {
       ? PlaylistData.slice(0, 4) // Get the first four elements if available
       : [];
 
-
   const LikedVideosArray =
     videolike && videolike.length > 0
       ? videolike.slice(0, 4) // Get the first four elements if available
@@ -157,7 +156,7 @@ function Library() {
     return (
       <div className="no-playlists">
         <img src={nothing} alt="no results" className="nothing-found" />
-        <p className="no-results">No playlists found!</p>
+        <p className="no-results">No data found!</p>
       </div>
     );
   }
@@ -340,14 +339,14 @@ function Library() {
             {PlaylistArray &&
               PlaylistArray.map((element, index) => {
                 const backgroundColor =
-                  playlistColors[index] || playlistColors[0];  
+                  playlistColors[index] || playlistColors[0];
 
-                  const thumbnailURL =
-        element.playlist_videos &&
-        element.playlist_videos.length > 0 &&
-        element.playlist_videos[0].thumbnail
-          ? element.playlist_videos[0].thumbnail
-          : deleteIMG;
+                const thumbnailURL =
+                  element.playlist_videos &&
+                  element.playlist_videos.length > 0 &&
+                  element.playlist_videos[0].thumbnail
+                    ? element.playlist_videos[0].thumbnail
+                    : deleteIMG;
 
                 return (
                   <div className="created-all-playlistss2" key={index}>

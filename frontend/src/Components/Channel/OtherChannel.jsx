@@ -31,6 +31,7 @@ function OtherChannel() {
   const token = localStorage.getItem("userToken");
   const [isSubscribed, setIsSubscribed] = useState();
   const [Subscribers, setSubscribers] = useState();
+  const [margintop, setMarginTop] = useState("155px");
 
   useEffect(() => {
     if (token) {
@@ -71,7 +72,7 @@ function OtherChannel() {
       }
     };
 
-    getChannelData()
+    getChannelData();
   }, [Email]);
 
   useEffect(() => {
@@ -87,7 +88,7 @@ function OtherChannel() {
       }
     };
 
-    getSubscribers()
+    getSubscribers();
   }, [Email]);
 
   useEffect(() => {
@@ -102,8 +103,19 @@ function OtherChannel() {
         console.log(error.message);
       }
     };
-    getUserVideos()
+    getUserVideos();
   }, [Email]);
+
+  useEffect(() => {
+    if (Section === "Home") {
+      setMarginTop("155px");
+    } else if (Section === "Videos") {
+      setMarginTop("135px");
+    } else {
+      setMarginTop("120px");
+    }
+  }, [Section])
+  
 
   useEffect(() => {
     const checkSubscription = async () => {
@@ -160,12 +172,14 @@ function OtherChannel() {
     }
   };
 
+ 
+
   return (
     <>
       <Navbar />
       <LeftPanel />
       {ChannelProfile ? (
-        <div className="channel-main-content">
+        <div className="channel-main-content" style={{ marginTop: margintop }}>
           <div className="channel-top-content">
             <div className="channel-left-content">
               <img
