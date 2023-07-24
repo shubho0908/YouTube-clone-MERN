@@ -40,9 +40,7 @@ function ChannelHome(prop) {
       }
     };
 
-    const interval = setInterval(getUserVideos, 200);
-
-    return () => clearInterval(interval);
+    getUserVideos()
   }, [Email, prop.newmail]);
 
   const updateViews = async (id) => {

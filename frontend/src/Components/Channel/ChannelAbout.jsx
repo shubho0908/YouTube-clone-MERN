@@ -1,4 +1,7 @@
 import { useState, useEffect } from "react";
+import Tooltip from "@mui/material/Tooltip";
+import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
+import Zoom from "@mui/material/Zoom";
 
 function ChannelAbout(prop) {
   const [Email, setEmail] = useState();
@@ -20,9 +23,7 @@ function ChannelAbout(prop) {
       }
     };
 
-    const interval = setInterval(getUserMail, 200);
-
-    return () => clearInterval(interval);
+    getUserMail()
   }, [prop.channelid]);
 
   useEffect(() => {
@@ -42,10 +43,7 @@ function ChannelAbout(prop) {
         console.log(error.message);
       }
     };
-
-    const interval = setInterval(GetAboutData, 200);
-
-    return () => clearInterval(interval);
+    GetAboutData()
   }, [Email]);
 
   useEffect(() => {
@@ -63,12 +61,21 @@ function ChannelAbout(prop) {
       }
     };
 
-    const interval = setInterval(GetTotalViews, 200);
-
-    return () => clearInterval(interval);
+    GetTotalViews()
   }, [Email]);
 
   const joined = new Date(joinedDate);
+
+  const handleCopyLink = () => {
+    navigator.clipboard
+      .writeText(window.location.href)
+      .then(() => {
+        alert("Link Copied!");
+      })
+      .catch((error) => {
+        console.log("Error copying link to clipboard:", error);
+      });
+  };
 
   return (
     <>
@@ -91,7 +98,10 @@ function ChannelAbout(prop) {
           </div>
           <hr className="seperate-two seperate" />
 
-          <div className="channel-links">
+          <div
+            className="channel-links"
+            
+          >
             <p>Links</p>
             <div className="channel-links-all">
               {links &&
@@ -166,6 +176,18 @@ function ChannelAbout(prop) {
           <hr className="seperate-three seperate" />
           <p>{TotalViews && TotalViews.toLocaleString()} views</p>
           <hr className="seperate-three seperate" />
+          <Tooltip
+            TransitionComponent={Zoom}
+            title="Share channel"
+            placement="bottom"
+          >
+            <ReplyOutlinedIcon
+              className="share-playlist"
+              fontSize="medium"
+              style={{ color: "white" }}
+              onClick={handleCopyLink}
+            />
+          </Tooltip>
         </div>
       </div>
     </>

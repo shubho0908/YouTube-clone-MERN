@@ -4,11 +4,11 @@
         "colId": "history",
         "containerId": "",
         "name": "http://localhost:3000/getvideos",
-        "url": "http://localhost:3000/getvideos",
+        "url": "http://localhost:3000/getabout/chandan@gmail.com",
         "method": "GET",
         "sortNum": 0,
         "created": "2023-06-18T13:58:12.195Z",
-        "modified": "2023-07-24T03:46:15.183Z",
+        "modified": "2023-07-24T06:06:14.060Z",
         "headers": [],
         "params": [],
         "body": {

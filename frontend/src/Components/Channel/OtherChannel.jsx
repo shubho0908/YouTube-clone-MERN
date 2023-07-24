@@ -71,9 +71,7 @@ function OtherChannel() {
       }
     };
 
-    const interval = setInterval(getChannelData, 200);
-
-    return () => clearInterval(interval);
+    getChannelData()
   }, [Email]);
 
   useEffect(() => {
@@ -89,9 +87,7 @@ function OtherChannel() {
       }
     };
 
-    const interval = setInterval(getSubscribers, 200);
-
-    return () => clearInterval(interval);
+    getSubscribers()
   }, [Email]);
 
   useEffect(() => {
@@ -106,10 +102,7 @@ function OtherChannel() {
         console.log(error.message);
       }
     };
-
-    const interval = setInterval(getUserVideos, 200);
-
-    return () => clearInterval(interval);
+    getUserVideos()
   }, [Email]);
 
   useEffect(() => {

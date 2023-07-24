@@ -33,6 +33,8 @@
   background-color: #0f0f0f;
   height: auto;
   display: flex;
+  animation: FADEINN 1s ease;
+
 }
 
 .main-video-section2 {
