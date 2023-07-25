@@ -95,7 +95,13 @@
 .profile-update-section {
   position: relative;
   padding-left: 40px;
-  top: 25px;
+  top: 30px;
+}
+
+.cover-update-section {
+  position: relative;
+  padding-left: 40px;
+  top: 70px;
 }
 
 .pic-div {
@@ -110,33 +116,72 @@
 
 .channel-image {
   width: 140px;
+  height: 140px;
   border-radius: 100%;
   object-fit: cover;
 }
 
-.profile-head-txt {
+.banner-image {
+  width: inherit;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+}
+
+.profile-head-txt,
+.cover-head {
   font-size: 15px;
 }
 
-.profile-desc-txt, .pic-extra-content {
+.profile-desc-txt, .basic-name-desc {
   font-size: 13px;
-  margin-top: 5px;
+  margin-top: 8px;
+  color: #aaa;
+}
+.pic-extra-content,
+.banner-desc{
+  font-size: 13px;
   color: #aaa;
 }
 
-.picture-section{
-    display: flex;
-    margin-top: 15px;
+.picture-section,
+.banner-section {
+  display: flex;
+  margin-top: 20px;
 }
 
-.pic-extra-content{
-    display: flex;
-    flex-direction: column;
-    width: 350px;
-    margin-left: 25px;
-    line-height: 21px;
+.pic-extra-content {
+  display: flex;
+  flex-direction: column;
+  width: 350px;
+  margin-left: 25px;
+  line-height: 21px;
 }
 
-.change-image{
-    width: fit-content;
+.change-image {
+  cursor: pointer;
+  width: fit-content;
+  color: #3eaffe;
+  font-size: 15px;
+  margin-top: 12px;
+}
+
+.basic-info-section{
+  position: relative;
+  padding-left: 40px;
+  top: 30px;
+}
+
+.basic-name-head{
+  font-size: 15px;
+}
+
+.channel-name-inp{
+  width: -webkit-fill-available;
+  background-color: rgba(255, 255, 255, 0);
+  margin-top: 15px;
+  outline: none;
+  border: 1px solid #aaaaaa89;
+  height: 40px;
+  border-radius: 3px;
+  color: white;
 }

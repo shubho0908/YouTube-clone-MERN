@@ -3,10 +3,10 @@ import LeftPanel2 from "../LeftPanel2";
 import "../../Css/Studio/customize.css";
 import Branding from "./Branding";
 import { useState } from "react";
+import Basic from "./Basic";
 
 function Customization() {
   const [currentTab, setCurrentTab] = useState("branding");
- 
 
   return (
     <>
@@ -36,13 +36,14 @@ function Customization() {
               </p>
             </div>
             <div className="right-redirects">
+              <p>VIEW CHANNEL</p>
               <p>CANCEL</p>
               <button className="save-customize">PUBLISH</button>
             </div>
           </div>
           <hr className="breakk" />
           <div className="customize-data-section">
-            <Branding />
+            {currentTab === "branding" ? <Branding /> : <Basic/>}
           </div>
         </div>
       </div>
