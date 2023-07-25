@@ -12,6 +12,7 @@ import Trending from "./Components/Trending";
 import SearchResults from "./Components/SearchResults";
 import Playlists from "./Components/Playlists";
 import Library from "./Components/Library";
+import Customization from "./Components/Studio/Customization";
 
 function App() {
   const token = localStorage.getItem("userToken");
@@ -22,6 +23,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Browse />} />
           <Route path="/studio" element={token ? <Studio /> : <Error />} />
+          <Route path="/studio/customize" element={token ? <Customization /> : <Error />} />
           <Route
             path="/likedVideos"
             element={token ? <LikeVideos /> : <Error />}

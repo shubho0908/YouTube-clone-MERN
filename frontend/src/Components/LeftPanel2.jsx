@@ -5,6 +5,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import VideoLibraryOutlinedIcon from "@mui/icons-material/VideoLibraryOutlined";
 import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
 import AutoFixHighOutlinedIcon from "@mui/icons-material/AutoFixHighOutlined";
+import { useNavigate } from "react-router-dom";
 
 function LeftPanel2() {
   const [email, setEmail] = useState("");
@@ -12,6 +13,8 @@ function LeftPanel2() {
   const [profileIMG, setProfileIMG] = useState();
   const [channel, setChannel] = useState("");
   const [menuClicked, setMenuClicked] = useState(false);
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     const handleMenuButtonClick = () => {
@@ -71,9 +74,9 @@ function LeftPanel2() {
         <div className="second-panel">
           <div className="dashboard panel">
             <DashboardIcon
-              className="studio-icon"
+              className="studio-icon2"
               fontSize="medium"
-              style={{ color: "#A9A9A9" }}
+              style={{ color: "#A9A9A9", paddingLeft:"25px !important" }}
             />
             <p>Dashboard</p>
           </div>
@@ -93,7 +96,12 @@ function LeftPanel2() {
             />
             <p>Comments</p>
           </div>
-          <div className="customization panel">
+          <div className="customization panel"
+          onClick={()=> {
+            navigate("/studio/customize")
+            window.location.reload()
+          }}
+          >
             <AutoFixHighOutlinedIcon
               className="studio-icon"
               fontSize="medium"

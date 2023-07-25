@@ -1,0 +1,142 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap");
+
+.channel-customize {
+  background-color: #282828;
+  height: 100vh;
+}
+
+.channel-customize-section {
+  position: absolute;
+  left: 270px;
+  top: 100px;
+  color: white;
+  width: -webkit-fill-available;
+}
+
+.customize-header,
+.left-redirects {
+  padding-left: 40px;
+}
+
+.customize-header > p {
+  font-size: 25px;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 700;
+}
+
+.redirectss {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+.left-redirects,
+.right-redirects {
+  display: flex;
+  align-items: center;
+}
+
+.left-redirects > p {
+  cursor: pointer;
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #aaa;
+}
+
+.right-redirects {
+  position: relative;
+  right: 30px;
+}
+
+.breakk {
+  margin-top: 20px;
+  border: none;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.333);
+}
+
+.branding-txt1,
+.basic-txt1 {
+  color: #3eaffe !important;
+}
+
+.branding-txt1::before {
+  content: "";
+  position: absolute;
+  bottom: 0px;
+  left: 36px;
+  height: 4px;
+  width: 72px;
+  background-color: #3eaffe;
+  border-radius: 50px;
+  transform: scaleX(1);
+  transition: all 0.2s linear;
+}
+
+.basic-txt1::before {
+  content: "";
+  position: absolute;
+  bottom: 0px;
+  left: 137px;
+  height: 4px;
+  width: 72px;
+  background-color: #3eaffe;
+  border-radius: 50px;
+  transform: scaleX(1);
+  transition: all 0.2s linear;
+}
+
+.customize-data-section {
+  position: absolute;
+}
+
+.profile-update-section {
+  position: relative;
+  padding-left: 40px;
+  top: 25px;
+}
+
+.pic-div {
+  width: fit-content;
+  background-color: #1f1f1f;
+  width: 290px;
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.channel-image {
+  width: 140px;
+  border-radius: 100%;
+  object-fit: cover;
+}
+
+.profile-head-txt {
+  font-size: 15px;
+}
+
+.profile-desc-txt, .pic-extra-content {
+  font-size: 13px;
+  margin-top: 5px;
+  color: #aaa;
+}
+
+.picture-section{
+    display: flex;
+    margin-top: 15px;
+}
+
+.pic-extra-content{
+    display: flex;
+    flex-direction: column;
+    width: 350px;
+    margin-left: 25px;
+    line-height: 21px;
+}
+
+.change-image{
+    width: fit-content;
+}

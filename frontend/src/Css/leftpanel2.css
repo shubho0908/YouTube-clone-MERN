@@ -41,7 +41,7 @@
 }
 
 .panel:hover {
-  background-color: #1F1F1F;
+  background-color: #1f1f1f;
 }
 
 .panel > p {
@@ -52,15 +52,18 @@
 .third-panel {
   margin-top: 35px;
   line-height: 55px;
+  font-size: 15px;
 }
 
 .dashboard {
   background-color: #1e1e1e;
   border-left: 5px solid #fe3e2b;
-
 }
 
 .dashboard > .studio-icon {
+  color: #fe3e2b !important;
+}
+.dashboard > .studio-icon2 {
   color: #fe3e2b !important;
 }
 
@@ -71,4 +74,8 @@
 
 .studio-icon {
   padding-left: 30px;
+}
+
+.studio-icon2 {
+  padding-left: 25px;
 }
