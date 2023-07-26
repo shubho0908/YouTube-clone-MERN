@@ -17,7 +17,8 @@ Channel.get("/getchannel/:email", async (req, res) => {
       const channel = user.hasChannel;
       const profile = user.profilePic;
       const ChannelName = user.channelName;
-      res.json({ channel, profile, ChannelName });
+      const channelDescription = user.channelData[0].channelDescription
+      res.json({ channel, profile, ChannelName, channelDescription });
     }
   } catch (error) {
     res.json({

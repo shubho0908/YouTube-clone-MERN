@@ -171,7 +171,7 @@
   top: 30px;
 }
 
-.basic-name-head{
+.basic-name-head, .basic-desc-head{
   font-size: 15px;
 }
 
@@ -184,4 +184,27 @@
   height: 40px;
   border-radius: 3px;
   color: white;
+  padding: 5px;
+  padding-left:10px;
+  padding-right: 10px;
+  font-size: 15px;
+}
+
+.basic-description-section{
+  position: relative;
+  top: 35px;
+}
+
+.basic-channel-desc{
+  width: -webkit-fill-available;
+  height: 300px;
+  resize: none;
+  background-color: rgba(255, 255, 255, 0);
+  margin-top: 15px;
+  outline: none;
+  border: 1px solid #aaaaaa89;
+  border-radius: 3px;
+  color: white;
+  padding: 15px;
+  font-size: 15px;
 }

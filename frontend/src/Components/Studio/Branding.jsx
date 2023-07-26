@@ -6,6 +6,8 @@ function Branding() {
   const [email, setEmail] = useState("");
   const [selectedProfile, setSelectedProfile] = useState(defaultimg);
   const [selectedBanner, setSelectedBanner] = useState();
+  const ChannelProfile = localStorage.getItem("ChannelProfile");
+  const ChannelCover = localStorage.getItem("ChannelCover");
 
   useEffect(() => {
     const token = localStorage.getItem("userToken");
@@ -35,6 +37,7 @@ function Branding() {
       const reader = new FileReader();
       reader.onloadend = () => {
         setSelectedProfile(reader.result);
+        localStorage.setItem("ChannelProfile", reader.result);
       };
       reader.readAsDataURL(file);
     }
@@ -52,6 +55,7 @@ function Branding() {
           const aspectRatio = width / height;
           if (Math.abs(aspectRatio - 16 / 9) < 0.01) {
             setSelectedBanner(reader.result);
+            localStorage.setItem("ChannelCover", reader.result);
           } else {
             alert("Invalid image aspect ratio. Please select a 16:9 image.");
           }
@@ -74,7 +78,7 @@ function Branding() {
           <div className="picture-section">
             <div className="pic-div">
               <img
-                src={selectedProfile}
+                src={!ChannelProfile ? selectedProfile : ChannelProfile}
                 alt="profile"
                 className="channel-image"
               />
@@ -103,12 +107,8 @@ function Branding() {
           </p>
           <div className="banner-section">
             <div className="pic-div">
-              {selectedBanner ? (
-                <img
-                  src={selectedBanner}
-                  alt="banner"
-                  className="banner-image"
-                />
+              {ChannelCover ? (
+                <img src={ChannelCover} alt="banner" className="banner-image" />
               ) : (
                 ""
               )}
