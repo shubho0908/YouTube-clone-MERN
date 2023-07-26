@@ -132,7 +132,7 @@
   font-size: 15px;
 }
 
-.profile-desc-txt, .basic-name-desc {
+.profile-desc-txt, .basic-name-desc, .basic-channelurl-desc {
   font-size: 13px;
   margin-top: 8px;
   color: #aaa;
@@ -171,7 +171,7 @@
   top: 30px;
 }
 
-.basic-name-head, .basic-desc-head{
+.basic-name-head, .basic-desc-head, .basic-channelurl-head{
   font-size: 15px;
 }
 
@@ -190,6 +190,26 @@
   font-size: 15px;
 }
 
+.channel-name-inp2{
+  width: -webkit-fill-available;
+  background-color: #1f1f1f;
+  margin-top: 15px;
+  outline: none;
+  border: 1px solid #aaaaaa89;
+  height: 40px;
+  border-radius: 3px;
+  color: white;
+  padding: 5px;
+  padding-left:10px;
+  padding-right: 10px;
+  font-size: 15px;
+}
+
+.channel-name-inp:focus, .basic-channel-desc:focus{
+  outline: 1px solid #3EA6FF;
+
+}
+
 .basic-description-section{
   position: relative;
   top: 35px;
@@ -197,7 +217,7 @@
 
 .basic-channel-desc{
   width: -webkit-fill-available;
-  height: 300px;
+  height: max-content;
   resize: none;
   background-color: rgba(255, 255, 255, 0);
   margin-top: 15px;
@@ -207,4 +227,27 @@
   color: white;
   padding: 15px;
   font-size: 15px;
+}
+
+.basic-channelurl-section{
+  position: relative;
+  top: 70px;
+}
+
+.coppy-id{
+  cursor: pointer;
+  position: absolute;
+  top: 65px;
+  right: 14px;
+  padding: 5px;
+  border-radius: 10%;
+  transition: all .12s ease;
+}
+
+.coppy-id:hover{
+background-color: rgba(255, 255, 255, 0.119);
+}
+
+.coppy-id:active{
+transform: scale(.88);
 }
