@@ -38,7 +38,8 @@ Channel.get("/getchannelid/:email", async (req, res) => {
       const channelID = user.channelData[0]._id;
       const channelDescription = user.channelData[0].channelDescription
       const subscribers = user.channelData[0].subscribers;
-      res.json({ channelID, subscribers, channelDescription });
+      const links = user.channelData[0].socialLinks;
+      res.json({ channelID, subscribers, channelDescription, links });
     }
   } catch (error) {
     res.json({

@@ -37,7 +37,6 @@ function Customization() {
             </div>
             <div className="right-redirects">
               <p>VIEW CHANNEL</p>
-              <p>CANCEL</p>
               <button className="save-customize">PUBLISH</button>
             </div>
           </div>

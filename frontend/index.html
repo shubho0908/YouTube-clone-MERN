@@ -8,5 +8,16 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    <script>
+      const currentURL = window.location.href;
+    
+      const isStudioPage = currentURL.includes("/studio");
+    
+      if (isStudioPage) {
+        document.body.style.backgroundColor = "#282828";
+      } else {
+        document.body.style.backgroundColor = "#0f0f0f";
+      }
+    </script>
   </body>
 </html>

@@ -1,14 +1,33 @@
 import { useState, useEffect, useRef } from "react";
 import jwtDecode from "jwt-decode";
 import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import TwitterIcon from "@mui/icons-material/Twitter";
+import LanguageIcon from "@mui/icons-material/Language";
+import AddIcon from "@mui/icons-material/Add";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 
 function Basic() {
   const [Email, setEmail] = useState("");
   const [channelName, setChannelName] = useState("");
   const [channelDescription, setChannelDescription] = useState("");
   const [channelID, setChannelID] = useState("");
+  const [Links, setLinks] = useState([]);
   const channelUrl = "http://localhost:5173/channel";
   const channelIDInputRef = useRef(null);
+  const [addLinkClicked, setAddlinkClicked] = useState(false);
+  const [fblink, setfblink] = useState();
+  const [instalink, setinstalink] = useState();
+  const [twitterlink, setTwitterlink] = useState();
+  const [weblink, setweblink] = useState();
+
+  //Social Clicks
+
+  const [fbClicked, setFbclicked] = useState(false);
+  const [instaClicked, setinstaclicked] = useState(false);
+  const [twitterClicked, settwitterclicked] = useState(false);
+  const [webClicked, setwebclicked] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("userToken");
@@ -17,8 +36,6 @@ function Basic() {
     }
   }, []);
 
-
-  // Select the text in the channelID input when it is clicked
   const handleChannelIDClick = () => {
     if (channelIDInputRef.current) {
       channelIDInputRef.current.select();
@@ -44,9 +61,16 @@ function Basic() {
           `http://localhost:3000/getchannelid/${Email}`
         );
         const data = await response.json();
-        const { channelDescription, channelID } = data;
+        const { channelDescription, channelID, links } = data;
         setChannelDescription(channelDescription);
         setChannelID(channelID);
+        setLinks(links);
+        links.map((item) => {
+          setfblink(item.facebook);
+          setinstalink(item.instagram);
+          setTwitterlink(item.twitter);
+          setweblink(item.website);
+        });
       } catch (error) {
         console.log(error.message);
       }
@@ -60,13 +84,15 @@ function Basic() {
     navigator.clipboard
       .writeText(`${channelUrl}/${channelID}`)
       .then(() => {
-        handleChannelIDClick()
+        handleChannelIDClick();
         alert("Link Copied!");
       })
       .catch((error) => {
         console.log("Error copying link to clipboard:", error);
       });
   };
+
+  console.log(Links);
 
   return (
     <>
@@ -90,6 +116,7 @@ function Basic() {
               type="text"
               className="channel-name-inp"
               value={channelName}
+              required
               placeholder="Enter channel name"
               onChange={(e) => {
                 setChannelName(e.target.value);
@@ -113,6 +140,7 @@ function Basic() {
             <textarea
               name="channel-desc"
               className="basic-channel-desc"
+              required
               value={channelDescription}
               style={
                 channelDescription === ""
@@ -160,6 +188,219 @@ function Basic() {
               />
             </>
           )}
+        </div>
+        <div className="basic-links-section">
+          <p className="basic-link-head">Links</p>
+          <p className="basic-link-desc">
+            Add links to sites you want to share with your viewers{" "}
+          </p>
+          <div className="links-areaa">
+            {Links &&
+              Links.map((element, index) => {
+                return (
+                  <div className="mylink-data" key={index}>
+                    <div
+                      className="fblink-data"
+                      style={
+                        element.facebook || fbClicked === true
+                          ? { display: "flex" }
+                          : { display: "none" }
+                      }
+                    >
+                      <FacebookIcon
+                        fontSize="large"
+                        style={{ color: "white" }}
+                      />
+                      <input
+                        type="text"
+                        value={fblink}
+                        className="channel-link-inp"
+                        onChange={(e) => setfblink(e.target.value)}
+                      />
+                      <DeleteOutlineOutlinedIcon
+                        fontSize="medium"
+                        className="delete-link"
+                        style={{ color: "#aaa" }}
+                        onClick={() => setFbclicked(false)}
+                      />
+                    </div>
+                    <div
+                      className="insta-data"
+                      style={
+                        element.instagram || instaClicked === true
+                          ? { display: "flex" }
+                          : { display: "none" }
+                      }
+                    >
+                      <InstagramIcon
+                        fontSize="large"
+                        style={{ color: "white" }}
+                      />
+                      <input
+                        type="text"
+                        value={instalink}
+                        className="channel-link-inp"
+                        onChange={(e) => setinstalink(e.target.value)}
+                      />
+                      <DeleteOutlineOutlinedIcon
+                        fontSize="medium"
+                        className="delete-link"
+                        style={{ color: "#aaa" }}
+                        onClick={() => setinstaclicked(false)}
+                      />
+                    </div>
+                    <div
+                      className="twitter-data"
+                      style={
+                        element.twitter || twitterClicked === true
+                          ? { display: "flex" }
+                          : { display: "none" }
+                      }
+                    >
+                      <TwitterIcon
+                        fontSize="large"
+                        style={{ color: "white" }}
+                      />
+                      <input
+                        type="text"
+                        value={twitterlink}
+                        className="channel-link-inp"
+                        onChange={(e) => setTwitterlink(e.target.value)}
+                      />
+                      <DeleteOutlineOutlinedIcon
+                        fontSize="medium"
+                        className="delete-link"
+                        style={{ color: "#aaa" }}
+                        onClick={() => settwitterclicked(false)}
+                      />
+                    </div>
+                    <div
+                      className="web-data"
+                      style={
+                        element.website || webClicked === true
+                          ? { display: "flex" }
+                          : { display: "none" }
+                      }
+                    >
+                      <LanguageIcon
+                        fontSize="large"
+                        style={{ color: "white" }}
+                      />
+                      <input
+                        type="text"
+                        value={weblink}
+                        className="channel-link-inp"
+                        onChange={(e) => setweblink(e.target.value)}
+                      />
+                      <DeleteOutlineOutlinedIcon
+                        fontSize="medium"
+                        className="delete-link"
+                        style={{ color: "#aaa" }}
+                        onClick={() => setwebclicked(false)}
+                      />
+                    </div>
+                  </div>
+                );
+              })}
+            <div
+              className="addnew-link"
+              style={
+                ((Links && Links.length > 0 && Links[0].facebook) ||
+                  fbClicked === true) &&
+                ((Links && Links.length > 0 && Links[0].instagram) ||
+                  instaClicked === true) &&
+                ((Links && Links.length > 0 && Links[0].twitter) ||
+                  twitterClicked === true) &&
+                ((Links && Links.length > 0 && Links[0].website) ||
+                  webClicked === true)
+                  ? { display: "none" }
+                  : { display: "flex" }
+              }
+              onClick={() => {
+                if (addLinkClicked === false) {
+                  setAddlinkClicked(true);
+                } else {
+                  setAddlinkClicked(false);
+                }
+              }}
+            >
+              <AddIcon fontSize="medium" style={{ color: "#3EA6FF" }} />
+              <p>ADD LINK</p>
+            </div>
+            <div
+              className="social-icons-links2"
+              style={
+                addLinkClicked === true
+                  ? { display: "flex" }
+                  : { display: "none" }
+              }
+            >
+              <FacebookIcon
+                fontSize="large"
+                className="social_links"
+                style={
+                  Links &&
+                  Links.length > 0 &&
+                  !Links[0].facebook &&
+                  fbClicked === false
+                    ? { color: "white", marginLeft: "6px", marginRight: "6px" }
+                    : { display: "none" }
+                }
+                onClick={() => {
+                  setFbclicked(true);
+                  setAddlinkClicked(false);
+                }}
+              />
+              <InstagramIcon
+                fontSize="large"
+                className="social_links"
+                style={
+                  Links &&
+                  Links.length > 0 &&
+                  !Links[0].instagram &&
+                  instaClicked === false
+                    ? { color: "white", marginLeft: "6px", marginRight: "6px" }
+                    : { display: "none" }
+                }
+                onClick={() => {
+                  setinstaclicked(true);
+                  setAddlinkClicked(false);
+                }}
+              />
+              <TwitterIcon
+                fontSize="large"
+                className="social_links"
+                style={
+                  Links &&
+                  Links.length > 0 &&
+                  !Links[0].twitter &&
+                  twitterClicked === false
+                    ? { color: "white", marginLeft: "6px", marginRight: "6px" }
+                    : { display: "none" }
+                }
+                onClick={() => {
+                  settwitterclicked(true);
+                  setAddlinkClicked(false);
+                }}
+              />
+              <LanguageIcon
+                fontSize="large"
+                className="social_links"
+                style={
+                  Links &&
+                  Links.length > 0 &&
+                  !Links[0].website &&
+                  webClicked === false
+                    ? { color: "white", marginLeft: "6px", marginRight: "6px" }
+                    : { display: "none" }
+                }
+                onClick={() => {
+                  setwebclicked(true);
+                  setAddlinkClicked(false);
+                }}
+              />
+            </div>
+          </div>
         </div>
       </div>
     </>

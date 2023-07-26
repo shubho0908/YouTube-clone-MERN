@@ -3,7 +3,7 @@
 
 .channel-customize {
   background-color: #282828;
-  height: 100vh;
+  height: max-content;
 }
 
 .channel-customize-section {
@@ -132,13 +132,16 @@
   font-size: 15px;
 }
 
-.profile-desc-txt, .basic-name-desc, .basic-channelurl-desc {
+.profile-desc-txt,
+.basic-name-desc,
+.basic-channelurl-desc,
+.basic-link-desc {
   font-size: 13px;
   margin-top: 8px;
   color: #aaa;
 }
 .pic-extra-content,
-.banner-desc{
+.banner-desc {
   font-size: 13px;
   color: #aaa;
 }
@@ -165,17 +168,20 @@
   margin-top: 12px;
 }
 
-.basic-info-section{
+.basic-info-section {
   position: relative;
   padding-left: 40px;
   top: 30px;
 }
 
-.basic-name-head, .basic-desc-head, .basic-channelurl-head{
+.basic-name-head,
+.basic-desc-head,
+.basic-channelurl-head,
+.basic-link-head {
   font-size: 15px;
 }
 
-.channel-name-inp{
+.channel-name-inp {
   width: -webkit-fill-available;
   background-color: rgba(255, 255, 255, 0);
   margin-top: 15px;
@@ -185,12 +191,27 @@
   border-radius: 3px;
   color: white;
   padding: 5px;
-  padding-left:10px;
+  padding-left: 10px;
   padding-right: 10px;
   font-size: 15px;
 }
 
-.channel-name-inp2{
+.channel-link-inp {
+  width: 430px;
+  background-color: rgba(255, 255, 255, 0);
+  outline: none;
+  border: 1px solid #aaaaaa89;
+  height: 30px;
+  border-radius: 3px;
+  color: white;
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+  font-size: 15px;
+  margin-left: 15px;
+}
+
+.channel-name-inp2 {
   width: -webkit-fill-available;
   background-color: #1f1f1f;
   margin-top: 15px;
@@ -200,22 +221,23 @@
   border-radius: 3px;
   color: white;
   padding: 5px;
-  padding-left:10px;
+  padding-left: 10px;
   padding-right: 10px;
   font-size: 15px;
 }
 
-.channel-name-inp:focus, .basic-channel-desc:focus{
-  outline: 1px solid #3EA6FF;
-
+.channel-name-inp:focus,
+.basic-channel-desc:focus,
+.channel-link-inp:focus {
+  outline: 1px solid #3ea6ff;
 }
 
-.basic-description-section{
+.basic-description-section {
   position: relative;
   top: 35px;
 }
 
-.basic-channel-desc{
+.basic-channel-desc {
   width: -webkit-fill-available;
   height: max-content;
   resize: none;
@@ -229,25 +251,93 @@
   font-size: 15px;
 }
 
-.basic-channelurl-section{
+.basic-channelurl-section {
   position: relative;
   top: 70px;
 }
 
-.coppy-id{
+.coppy-id {
   cursor: pointer;
   position: absolute;
   top: 65px;
   right: 14px;
   padding: 5px;
   border-radius: 10%;
-  transition: all .12s ease;
+  transition: all 0.12s ease;
 }
 
-.coppy-id:hover{
-background-color: rgba(255, 255, 255, 0.119);
+.coppy-id:hover {
+  background-color: rgba(255, 255, 255, 0.119);
 }
 
-.coppy-id:active{
-transform: scale(.88);
+.coppy-id:active {
+  transform: scale(0.88);
+}
+
+.basic-links-section {
+  position: relative;
+  top: 110px;
+}
+
+.links-areaa {
+  margin-top: 25px;
+  padding-bottom: 50px;
+}
+
+.fblink-data {
+  display: flex;
+  align-items: center;
+}
+
+.insta-data,
+.twitter-data,
+.web-data {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.delete-link {
+  cursor: pointer;
+  opacity: 0;
+  margin-left: 10px;
+}
+
+.fblink-data:hover .delete-link {
+  opacity: 1;
+}
+
+.insta-data:hover .delete-link {
+  opacity: 1;
+}
+
+.twitter-data:hover .delete-link {
+  opacity: 1;
+}
+
+.web-data:hover .delete-link {
+  opacity: 1;
+}
+
+.addnew-link {
+  cursor: pointer;
+  color: #3ea6ff;
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.addnew-link > p {
+  margin-left: 6px;
+}
+
+.social-icons-links2 {
+  background-color: #50505081;
+  padding: 8px;
+  padding-left: 12px;
+  padding-right: 12px;
+  border-radius: 6px;
+  width: fit-content;
+  position: relative;
+  top: 18px;
 }

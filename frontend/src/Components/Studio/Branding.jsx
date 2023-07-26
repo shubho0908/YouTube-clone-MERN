@@ -23,6 +23,7 @@ function Branding() {
           );
           const { profile } = await response.json();
           setSelectedProfile(profile);
+          localStorage.setItem("ChannelProfile", profile);
         }
       } catch (error) {
         // console.log(error.message);
