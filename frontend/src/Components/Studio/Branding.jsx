@@ -1,18 +1,37 @@
 import jwtDecode from "jwt-decode";
 import { useState, useEffect } from "react";
 import defaultimg from "../../img/avatar.png";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { storage } from "../../Firebase";
 
 function Branding() {
   const [email, setEmail] = useState("");
-  const [selectedProfile, setSelectedProfile] = useState(defaultimg);
+  const [selectedProfile, setSelectedProfile] = useState(null);
+  const [previewProfile, setpreviewProfile] = useState(defaultimg);
   const [selectedBanner, setSelectedBanner] = useState();
-  const ChannelProfile = localStorage.getItem("ChannelProfile");
-  const ChannelCover = localStorage.getItem("ChannelCover");
+  const [previewBanner, setpreviewBanner] = useState();
+  const [changes, setChanges] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("userToken");
     setEmail(jwtDecode(token).email);
   }, []);
+
+  useEffect(() => {
+    const handleMenuButtonClick = () => {
+      alert("You'll lose your unsaved data.");
+    };
+
+    const basicInfo = document.querySelector(".basic-txt");
+
+    if (changes === true) {
+      basicInfo.addEventListener("click", handleMenuButtonClick);
+
+      return () => {
+        basicInfo.removeEventListener("click", handleMenuButtonClick);
+      };
+    }
+  }, [changes]);
 
   useEffect(() => {
     const getData = async () => {
@@ -22,8 +41,7 @@ function Branding() {
             `http://localhost:3000/getchannel/${email}`
           );
           const { profile } = await response.json();
-          setSelectedProfile(profile);
-          localStorage.setItem("ChannelProfile", profile);
+          setpreviewProfile(profile);
         }
       } catch (error) {
         // console.log(error.message);
@@ -34,18 +52,19 @@ function Branding() {
 
   const handleProfileChange = (e) => {
     const file = e.target.files[0];
+    setSelectedProfile(file);
+    setChanges(true);
+
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setSelectedProfile(reader.result);
-        localStorage.setItem("ChannelProfile", reader.result);
-      };
-      reader.readAsDataURL(file);
+      setpreviewProfile(URL.createObjectURL(file));
     }
   };
 
   const handleBannerChange = (e) => {
     const file = e.target.files[0];
+    setSelectedBanner(file);
+    setChanges(true);
+
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -55,17 +74,132 @@ function Branding() {
           const height = img.height;
           const aspectRatio = width / height;
           if (Math.abs(aspectRatio - 16 / 9) < 0.01) {
-            setSelectedBanner(reader.result);
-            localStorage.setItem("ChannelCover", reader.result);
+            setChanges(true);
           } else {
             alert("Invalid image aspect ratio. Please select a 16:9 image.");
           }
         };
-        img.src = reader.result;
       };
       reader.readAsDataURL(file);
     }
+    setpreviewBanner(URL.createObjectURL(file));
   };
+
+  const UploadProfile = async () => {
+    try {
+      if (!selectedProfile) {
+        return null;
+      }
+
+      const fileReference = ref(storage, `profile/${selectedProfile.name}`);
+      const uploadData = uploadBytesResumable(fileReference, selectedProfile);
+
+      return new Promise((resolve, reject) => {
+        uploadData.on(
+          "state_changed",
+          null,
+          (error) => {
+            console.log(error);
+            reject(error);
+          },
+          async () => {
+            try {
+              const downloadURL = await getDownloadURL(uploadData.snapshot.ref);
+              resolve(downloadURL);
+            } catch (error) {
+              console.log(error);
+              reject(error);
+            }
+          }
+        );
+      });
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
+
+  const UploadBanner = async () => {
+    try {
+      if (!selectedBanner) {
+        return null;
+      }
+
+      const fileReference = ref(storage, `cover/${selectedBanner.name}`);
+      const uploadData = uploadBytesResumable(fileReference, selectedBanner);
+
+      return new Promise((resolve, reject) => {
+        uploadData.on(
+          "state_changed",
+          null,
+          (error) => {
+            console.log(error);
+            reject(error);
+          },
+          async () => {
+            try {
+              const downloadURL1 = await getDownloadURL(
+                uploadData.snapshot.ref
+              );
+              resolve(downloadURL1);
+            } catch (error) {
+              console.log(error);
+              reject(error);
+            }
+          }
+        );
+      });
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
+
+  const saveChannelData = async (e) => {
+    e.preventDefault();
+
+    try {
+      const downloadURL = await UploadProfile();
+      const downloadURL1 = await UploadBanner();
+      if (!downloadURL && !downloadURL1) {
+        return; // Handle the case when no image is selected
+      }
+
+      const data = {
+        profileURL: downloadURL,
+        coverURL: downloadURL1,
+      };
+
+      // Proceed with saving the channel data
+      // const response = await fetch("http://localhost:3000/savecustomization", {
+      //   method: "POST",
+      //   body: JSON.stringify(data),
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      // });
+      // await response.json();
+      console.log(data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  useEffect(() => {
+    const publishBtn = document.querySelector(".save-customize");
+
+    if (changes === false) {
+      publishBtn.classList.add("disable-btn");
+    } else {
+      publishBtn.classList.remove("disable-btn");
+
+      publishBtn.addEventListener("click", saveChannelData);
+
+      return () => {
+        publishBtn.removeEventListener("click", saveChannelData);
+      };
+    }
+  });
 
   return (
     <>
@@ -79,7 +213,7 @@ function Branding() {
           <div className="picture-section">
             <div className="pic-div">
               <img
-                src={!ChannelProfile ? selectedProfile : ChannelProfile}
+                src={previewProfile}
                 alt="profile"
                 className="channel-image"
               />
@@ -108,8 +242,12 @@ function Branding() {
           </p>
           <div className="banner-section">
             <div className="pic-div">
-              {ChannelCover ? (
-                <img src={ChannelCover} alt="banner" className="banner-image" />
+              {previewBanner ? (
+                <img
+                  src={previewBanner}
+                  alt="banner"
+                  className="banner-image"
+                />
               ) : (
                 ""
               )}

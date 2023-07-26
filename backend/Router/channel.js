@@ -17,7 +17,7 @@ Channel.get("/getchannel/:email", async (req, res) => {
       const channel = user.hasChannel;
       const profile = user.profilePic;
       const ChannelName = user.channelName;
-      res.json({ channel, profile, ChannelName});
+      res.json({ channel, profile, ChannelName });
     }
   } catch (error) {
     res.json({
@@ -36,7 +36,7 @@ Channel.get("/getchannelid/:email", async (req, res) => {
       });
     } else {
       const channelID = user.channelData[0]._id;
-      const channelDescription = user.channelData[0].channelDescription
+      const channelDescription = user.channelData[0].channelDescription;
       const subscribers = user.channelData[0].subscribers;
       const links = user.channelData[0].socialLinks;
       res.json({ channelID, subscribers, channelDescription, links });
@@ -109,7 +109,7 @@ Channel.get("/checkchannel/:email", async (req, res) => {
   try {
     const email = req.params.email;
     const user = await userData.findOne({ email });
-    const channelname  = user.channelName;
+    const channelname = user.channelName;
     res.json(channelname);
   } catch (error) {
     res.json(error.message);
@@ -393,17 +393,52 @@ Channel.post("/deletefeaturedchannel/:email/:channelid", async (req, res) => {
     }
 
     const featuredChannelData = user.featuredChannels;
-    
-    const updatedFeaturedChannels = featuredChannelData.filter(channel => channel.channelID !== channelid);
-    
-    user.featuredChannels = updatedFeaturedChannels;
-    
-    await user.save();
 
+    const updatedFeaturedChannels = featuredChannelData.filter(
+      (channel) => channel.channelID !== channelid
+    );
+
+    user.featuredChannels = updatedFeaturedChannels;
+
+    await user.save();
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
+
+Channel.post("/deletelink/:name/:email", async (req, res) => {
+  const { name, email } = req.params;
+  const {link} = req.body;
+
+  try {
+    const user = await userData.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Find the channelData index that contains the socialLinks to delete
+    const channelDataIndex = user.channelData.findIndex((channel) =>
+      channel.socialLinks.some((socialLink) => socialLink[name] === link)
+    );
+
+    if (channelDataIndex === -1) {
+      return res.status(404).json({ error: `Link with name "${name}" not found in the user's channelData` });
+    }
+
+    // Use $pull operator to remove the object containing the specific key-value pair from the socialLinks array
+    await userData.updateOne(
+      { email },
+      { $pull: { [`channelData.${channelDataIndex}.socialLinks`]: { [name]: link } } }
+    );
+
+    res.status(200).json({ message: 'Link deleted successfully' });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 
 
 module.exports = Channel;

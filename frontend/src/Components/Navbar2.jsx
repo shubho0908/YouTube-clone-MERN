@@ -55,6 +55,7 @@ function Navbar2() {
             className="youtubeLogo"
             onClick={() => {
               navigate("/");
+              window.location.reload()
             }}
           />
         </div>

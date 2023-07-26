@@ -51,6 +51,23 @@
   right: 30px;
 }
 
+.right-redirects>p{
+  color: #3ea6ff;
+  font-size: 15px;
+  margin-right: 25px;
+}
+
+.save-customize{
+  background-color: #3ea6ff;
+  color: #282828;
+  border: none;
+  outline: none;
+  padding: 10px;
+  padding-left: 14px;
+  padding-right: 14px;
+  font-size: 15px;
+}
+
 .breakk {
   margin-top: 20px;
   border: none;
@@ -325,6 +342,7 @@
   display: flex;
   align-items: center;
   margin-top: 15px;
+  font-size: 15px;
 }
 
 .addnew-link > p {
@@ -340,4 +358,10 @@
   width: fit-content;
   position: relative;
   top: 18px;
+}
+
+.disable-btn{
+  background-color: #aaa;
+  opacity: 0.7;
+  cursor: not-allowed;
 }
