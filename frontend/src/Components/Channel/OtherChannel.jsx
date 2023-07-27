@@ -32,6 +32,7 @@ function OtherChannel() {
   const [isSubscribed, setIsSubscribed] = useState();
   const [Subscribers, setSubscribers] = useState();
   const [margintop, setMarginTop] = useState("155px");
+  const [coverIMG, setCoverIMG] = useState("");
 
   useEffect(() => {
     if (token) {
@@ -76,6 +77,20 @@ function OtherChannel() {
   }, [Email]);
 
   useEffect(() => {
+    const getChannelCover = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/getcover/${Email}`);
+        const coverimg = await response.json();
+        setCoverIMG(coverimg);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
+    getChannelCover();
+  }, [Email]);
+
+  useEffect(() => {
     const getSubscribers = async () => {
       try {
         const response = await fetch(
@@ -88,7 +103,9 @@ function OtherChannel() {
       }
     };
 
-    getSubscribers();
+    const interval = setInterval(getSubscribers, 200);
+
+    return () => clearInterval(interval);
   }, [Email]);
 
   useEffect(() => {
@@ -107,15 +124,23 @@ function OtherChannel() {
   }, [Email]);
 
   useEffect(() => {
-    if (Section === "Home") {
+    if (Section === "Home" && coverIMG !== "No data") {
+      setMarginTop("430px");
+    } else if (Section === "Home" && coverIMG === "No data") {
       setMarginTop("155px");
-    } else if (Section === "Videos") {
+    } else if (Section === "Videos" && coverIMG !== "No data") {
+      setMarginTop("400px");
+    } else if (Section === "Videos" && coverIMG === "No data") {
       setMarginTop("135px");
-    } else {
+    } else if (
+      (Section !== "Videos" && coverIMG === "No data") ||
+      (Section !== "Home" && coverIMG === "No data")
+    ) {
       setMarginTop("120px");
+    } else {
+      setMarginTop("380px");
     }
-  }, [Section])
-  
+  }, [Section, coverIMG]);
 
   useEffect(() => {
     const checkSubscription = async () => {
@@ -172,12 +197,17 @@ function OtherChannel() {
     }
   };
 
- 
-
   return (
     <>
       <Navbar />
       <LeftPanel />
+      {coverIMG !== "No data" ? (
+        <div className="channel-cover">
+          <img src={coverIMG} alt="Banner" className="channel-cover-img" />
+        </div>
+      ) : (
+        ""
+      )}
       {ChannelProfile ? (
         <div className="channel-main-content" style={{ marginTop: margintop }}>
           <div className="channel-top-content">
@@ -230,12 +260,18 @@ function OtherChannel() {
               </div>
             </div>
             {newEmail === Email ? (
-              <div className="channel-right-content">
+              <div
+                className="channel-right-content"
+                style={{ marginLeft: "160px" }}
+              >
                 <button className="customize-channel">Customize channel</button>
                 <button className="manage-videos">Manage videos</button>
               </div>
             ) : (
-              <div className="channel-right-content">
+              <div
+                className="channel-right-content"
+                style={{ marginLeft: "340px" }}
+              >
                 <button
                   className="subscribethis-channel"
                   style={

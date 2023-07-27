@@ -1,5 +1,5 @@
 import jwtDecode from "jwt-decode";
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import defaultimg from "../../img/avatar.png";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "../../Firebase";
@@ -7,10 +7,12 @@ import { storage } from "../../Firebase";
 function Branding() {
   const [email, setEmail] = useState("");
   const [selectedProfile, setSelectedProfile] = useState(null);
-  const [previewProfile, setpreviewProfile] = useState(defaultimg);
-  const [selectedBanner, setSelectedBanner] = useState();
-  const [previewBanner, setpreviewBanner] = useState();
+  const [previewProfile, setPreviewProfile] = useState(defaultimg);
+  const [selectedBanner, setSelectedBanner] = useState(null);
+  const [previewBanner, setPreviewBanner] = useState(null);
   const [changes, setChanges] = useState(false);
+  const [ProfileChanges, setProfileChanges] = useState(false);
+  const [BannerChanges, setBannerChanges] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("userToken");
@@ -41,8 +43,7 @@ function Branding() {
             `http://localhost:3000/getchannel/${email}`
           );
           const { profile } = await response.json();
-          console.log(profile);
-          setpreviewProfile(profile);
+          setPreviewProfile(profile);
         }
       } catch (error) {
         // console.log(error.message);
@@ -51,13 +52,27 @@ function Branding() {
     getData();
   }, [email]);
 
+  useEffect(() => {
+    const getChannelCover = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/getcover/${email}`);
+        const coverimg = await response.json();
+        setPreviewBanner(coverimg);
+      } catch (error) {
+        // console.log(error.message);
+      }
+    };
+
+    getChannelCover();
+  }, [email]);
+
   const handleProfileChange = (e) => {
     const file = e.target.files[0];
     setSelectedProfile(file);
     setChanges(true);
-
+    setProfileChanges(true);
     if (file) {
-      setpreviewProfile(URL.createObjectURL(file));
+      setPreviewProfile(URL.createObjectURL(file));
     }
   };
 
@@ -65,6 +80,7 @@ function Branding() {
     const file = e.target.files[0];
     setSelectedBanner(file);
     setChanges(true);
+    setBannerChanges(true);
 
     if (file) {
       const reader = new FileReader();
@@ -80,10 +96,11 @@ function Branding() {
             alert("Invalid image aspect ratio. Please select a 16:9 image.");
           }
         };
+        img.src = reader.result;
       };
       reader.readAsDataURL(file);
     }
-    setpreviewBanner(URL.createObjectURL(file));
+    setPreviewBanner(URL.createObjectURL(file));
   };
 
   const UploadProfile = async () => {
@@ -158,28 +175,35 @@ function Branding() {
 
   const saveChannelData = async (e) => {
     e.preventDefault();
-
+  
     try {
-      const downloadURL = await UploadProfile();
-      const downloadURL1 = await UploadBanner();
-      if (!downloadURL && !downloadURL1) {
-        return; // Handle the case when no image is selected
+      let profileURL = previewProfile;
+      let coverURL = previewBanner;
+  
+      if (ProfileChanges === true) {
+        profileURL = await UploadProfile();
       }
-
+  
+      if (BannerChanges === true) {
+        coverURL = await UploadBanner();
+      }
+  
       const data = {
-        profileURL: downloadURL,
-        coverURL: downloadURL1,
+        profileURL: profileURL,
+        coverURL: coverURL,
       };
-
-      // Proceed with saving the channel data
-      // const response = await fetch("http://localhost:3000/savecustomization", {
-      //   method: "POST",
-      //   body: JSON.stringify(data),
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      // });
-      // await response.json();
+  
+      const response = await fetch(
+        `http://localhost:3000/savecustomization/${email}`,
+        {
+          method: "POST",
+          body: JSON.stringify(data),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      await response.json();
       console.log(data);
     } catch (error) {
       // console.log(error.message);
@@ -212,7 +236,7 @@ function Branding() {
             YouTube, like next to your videos and comments.
           </p>
           <p className="profile-desc-txt">
-           (Please refresh the page if the images don’t load properly.)
+            (Please refresh the page if the images don’t load properly.)
           </p>
           <div className="picture-section">
             <div className="pic-div">
@@ -245,7 +269,7 @@ function Branding() {
             This image will appear across the top of your channel
           </p>
           <p className="profile-desc-txt">
-           (Please refresh the page if the images don’t load properly.)
+            (Please refresh the page if the images don’t load properly.)
           </p>
           <div className="banner-section">
             <div className="pic-div">

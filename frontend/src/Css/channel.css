@@ -5,14 +5,13 @@
   border-radius: 100%;
 }
 
-.channel-main-content {
+.channel-main-content{
   display: flex;
   flex-direction: column;
   width: max-content;
   position: absolute;
   transform: translate(-50%, -50%);
   left: 50%;
-  /* margin-top: 155px; */
 }
 
 .channel-name-verified {
@@ -66,10 +65,6 @@
 
 .channel-left {
   padding-left: 25px;
-}
-
-.channel-right-content {
-  margin-left: 362px;
 }
 
 .customize-channel,
@@ -730,4 +725,14 @@
 
 .created-all-playlistss:hover .playy-all-btn2 {
   opacity: 1;
+}
+
+.channel-cover{
+  position: absolute;
+}
+
+.channel-cover-img{
+  object-fit: cover;
+  width: 100vw;
+  height: 35vh;
 }

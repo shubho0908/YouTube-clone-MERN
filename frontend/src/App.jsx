@@ -5,7 +5,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import VideoSection from "./Components/VideoSection";
 import LikeVideos from "./Components/LikeVideos";
 import WatchLater from "./Components/WatchLater";
-import ChannelTop from "./Components/Channel/ChannelTop";
 import OtherChannel from "./Components/Channel/OtherChannel";
 import Subscriptions from "./Components/Subscriptions";
 import Trending from "./Components/Trending";
@@ -32,10 +31,7 @@ function App() {
             path="/watchlater"
             element={token ? <WatchLater /> : <Error />}
           />
-          <Route
-            path="/mychannel/:id"
-            element={token ? <ChannelTop /> : <Error />}
-          />
+          
           <Route
             path="/library"
             element={token ? <Library /> : <Error />}

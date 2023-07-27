@@ -108,7 +108,7 @@ function AccountPop() {
         <div className="about-channel-section">
           <div
             className="yourchannel c-sec"
-            onClick={() => navigate(`/mychannel/${ChannelID}`)}
+            onClick={() => navigate(`/channel/${ChannelID}`)}
           >
             <AccountBoxOutlinedIcon
               fontSize="medium"

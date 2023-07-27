@@ -26,6 +26,30 @@ Channel.get("/getchannel/:email", async (req, res) => {
   }
 });
 
+Channel.get("/getcover/:email", async (req, res) => {
+  try {
+    const email = req.params.email;
+    const user = await userData.findOne({ email });
+    if (!user) {
+      return res.json({
+        message: "USER DOESN'T EXIST",
+      });
+    }
+
+    const coverimg = user.channelData[0].channelCoverImg;
+    if (!coverimg) {
+      res.json("No data")
+    }
+    else{
+      res.json(coverimg);
+    }
+  } catch (error) {
+    res.json({
+      message: error.message,
+    });
+  }
+});
+
 Channel.get("/getchannelid/:email", async (req, res) => {
   try {
     const email = req.params.email;
@@ -406,39 +430,23 @@ Channel.post("/deletefeaturedchannel/:email/:channelid", async (req, res) => {
   }
 });
 
-Channel.post("/deletelink/:name/:email", async (req, res) => {
-  const { name, email } = req.params;
-  const {link} = req.body;
-
+Channel.post("/savecustomization/:email", async (req, res) => {
   try {
+    const email = req.params.email;
+    const { profileURL, coverURL } = req.body;
     const user = await userData.findOne({ email });
-
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
 
-    // Find the channelData index that contains the socialLinks to delete
-    const channelDataIndex = user.channelData.findIndex((channel) =>
-      channel.socialLinks.some((socialLink) => socialLink[name] === link)
-    );
+    user.profilePic = profileURL;
+    user.channelData[0].channelProfile = profileURL;
+    user.channelData[0].channelCoverImg = coverURL;
 
-    if (channelDataIndex === -1) {
-      return res.status(404).json({ error: `Link with name "${name}" not found in the user's channelData` });
-    }
-
-    // Use $pull operator to remove the object containing the specific key-value pair from the socialLinks array
-    await userData.updateOne(
-      { email },
-      { $pull: { [`channelData.${channelDataIndex}.socialLinks`]: { [name]: link } } }
-    );
-
-    res.status(200).json({ message: 'Link deleted successfully' });
+    await user.save();
   } catch (error) {
-    console.error(error.message);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
-
-
 
 module.exports = Channel;
