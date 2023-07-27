@@ -1,5 +1,5 @@
 import jwtDecode from "jwt-decode";
-import { useState, useEffect } from "react";
+import { useState, useEffect} from "react";
 import defaultimg from "../../img/avatar.png";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "../../Firebase";
@@ -41,6 +41,7 @@ function Branding() {
             `http://localhost:3000/getchannel/${email}`
           );
           const { profile } = await response.json();
+          console.log(profile);
           setpreviewProfile(profile);
         }
       } catch (error) {
@@ -181,7 +182,7 @@ function Branding() {
       // await response.json();
       console.log(data);
     } catch (error) {
-      console.log(error.message);
+      // console.log(error.message);
     }
   };
 
@@ -209,6 +210,9 @@ function Branding() {
           <p className="profile-desc-txt">
             Your profile picture will appear where your channel is presented on
             YouTube, like next to your videos and comments.
+          </p>
+          <p className="profile-desc-txt">
+           (Please refresh the page if the images don’t load properly.)
           </p>
           <div className="picture-section">
             <div className="pic-div">
@@ -239,6 +243,9 @@ function Branding() {
           <p className="cover-head">Banner image</p>
           <p className="banner-desc">
             This image will appear across the top of your channel
+          </p>
+          <p className="profile-desc-txt">
+           (Please refresh the page if the images don’t load properly.)
           </p>
           <div className="banner-section">
             <div className="pic-div">

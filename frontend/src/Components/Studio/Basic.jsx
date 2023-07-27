@@ -4,13 +4,12 @@ import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined";
 
 function Basic() {
   const [Email, setEmail] = useState("");
-  const [channelName, setChannelName] = useState("");
-  const [channelDescription, setChannelDescription] = useState("");
+  const [channelName, setChannelName] = useState();
+  const [channelDescription, setChannelDescription] = useState();
   const [channelID, setChannelID] = useState("");
   const channelUrl = "http://localhost:5173/channel";
   const channelIDInputRef = useRef(null);
   const [changes, setChanges] = useState(false);
-
 
   useEffect(() => {
     const token = localStorage.getItem("userToken");
@@ -18,26 +17,6 @@ function Basic() {
       setEmail(jwtDecode(token).email);
     }
   }, []);
-
-  useEffect(() => {
-    const handleMenuButtonClick = () => {
-      alert("Jai shree raam");
-    };
-
-    const publishBtn = document.querySelector(".save-customize");
-
-    if (changes === false) {
-      publishBtn.classList.add("disable-btn");
-    } else {
-      publishBtn.classList.remove("disable-btn");
-
-      publishBtn.addEventListener("click", handleMenuButtonClick);
-
-      return () => {
-        publishBtn.removeEventListener("click", handleMenuButtonClick);
-      };
-    }
-  }, [changes]);
 
   const handleChannelIDClick = () => {
     if (channelIDInputRef.current) {
@@ -54,7 +33,7 @@ function Basic() {
         const { ChannelName } = await response.json();
         setChannelName(ChannelName);
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
       }
     };
 
@@ -68,13 +47,39 @@ function Basic() {
         setChannelDescription(channelDescription);
         setChannelID(channelID);
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
       }
     };
 
     getChannelData();
     getChannelData2();
   }, [Email]);
+
+  useEffect(() => {
+    const handleMenuButtonClick = () => {
+      if (channelDescription === "" || channelName === "") {
+        alert("Input fields can't be empty");
+      }
+      else{
+      console.log(channelName, channelDescription);
+
+      }
+    };
+
+    const publishBtn = document.querySelector(".save-customize");
+
+    if (changes === false) {
+      publishBtn.classList.add("disable-btn");
+    } else {
+      publishBtn.classList.remove("disable-btn");
+
+      publishBtn.addEventListener("click", handleMenuButtonClick);
+
+      return () => {
+        publishBtn.removeEventListener("click", handleMenuButtonClick);
+      };
+    }
+  });
 
   const handleCopyLink = () => {
     navigator.clipboard
@@ -88,7 +93,6 @@ function Basic() {
       });
   };
 
-  
   return (
     <>
       <div className="basic-info-section">
@@ -98,7 +102,7 @@ function Basic() {
             Choose a channel name that represents you and your content. Changes
             made to your name and picture are visible only on YouTube.
           </p>
-          {channelName === "" || channelName === "undefined" ? (
+          {channelName === undefined ? (
             <input
               type="text"
               className="channel-name-inp"
@@ -122,7 +126,7 @@ function Basic() {
         </div>
         <div className="basic-description-section">
           <p className="basic-desc-head">Description</p>
-          {channelDescription === "" || channelDescription === "undefined" ? (
+          {channelDescription === undefined ? (
             <textarea
               name="channel-desc"
               className="basic-channel-desc"
@@ -138,14 +142,15 @@ function Basic() {
               className="basic-channel-desc"
               required
               value={channelDescription}
-              style={
-                channelDescription === ""
-                  ? { height: "80px" }
-                  : { height: "max-content" }
-              }
+              style={{
+                height: channelDescription === "" ? "80px" : "max-content",
+                cursor: channelName === undefined ? "not-allowed" : "auto",
+              }}
               onChange={(e) => {
-                setChannelDescription(e.target.value);
-                setChanges(true);
+                if (channelName !== undefined) {
+                  setChannelDescription(e.target.value);
+                  setChanges(true);
+                }
               }}
               cols="30"
               rows="10"
@@ -186,7 +191,6 @@ function Basic() {
             </>
           )}
         </div>
-        
       </div>
     </>
   );
