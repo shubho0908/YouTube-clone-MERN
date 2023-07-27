@@ -23,11 +23,11 @@
         "colId": "history",
         "containerId": "",
         "name": "http://localhost:3000/heartcomment/64b5509ba1cff5431e70e29a/64b66dcffa3325d3e5188498/shubhobera98@gmail.com",
-        "url": "http://localhost:3000/getcover/shubhobera98@gmail.com",
+        "url": "http://localhost:3000/gettrendingdata/64b5510da1cff5431e70f705",
         "method": "GET",
         "sortNum": 0,
         "created": "2023-07-24T10:45:18.766Z",
-        "modified": "2023-07-27T10:53:59.338Z",
+        "modified": "2023-07-27T14:48:12.101Z",
         "headers": [],
         "params": [],
         "body": {

@@ -379,7 +379,19 @@ Videos.get("/checktrending/:videoID", async (req, res) => {
       });
       return await trending.save();
     }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
+Videos.get("/gettrendingdata/:videoID", async (req, res) => {
+  try {
+    const { videoID } = req.params;
+    const trending = await TrendingData.findOne({ videoid: videoID });
+    if (!trending) {
+      return res.status(404).json(false);
+    }
+    res.json(true);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -719,11 +731,10 @@ Videos.post("/deleteplaylist/:playlistID", async (req, res) => {
   }
 });
 
-Videos.post("/saveplaylistprivacy/:playlistID", async(req, res)=>{
+Videos.post("/saveplaylistprivacy/:playlistID", async (req, res) => {
   try {
-
-    const {playlistID} = req.params
-    const {privacy} = req.body
+    const { playlistID } = req.params;
+    const { privacy } = req.body;
     const user = await userData.findOne({ "Playlists._id": playlistID });
 
     if (!user) {
@@ -741,11 +752,9 @@ Videos.post("/saveplaylistprivacy/:playlistID", async(req, res)=>{
     user.Playlists[playlistIndex].playlist_privacy = privacy;
 
     await user.save();
-
   } catch (error) {
     res.status(500).json({ error: error.message });
-    
   }
-})
+});
 
 module.exports = Videos;

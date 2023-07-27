@@ -103,9 +103,7 @@ function OtherChannel() {
       }
     };
 
-    const interval = setInterval(getSubscribers, 200);
-
-    return () => clearInterval(interval);
+    getSubscribers();
   }, [Email]);
 
   useEffect(() => {
@@ -137,7 +135,10 @@ function OtherChannel() {
       (Section !== "Home" && coverIMG === "No data")
     ) {
       setMarginTop("120px");
-    } else {
+    } else if (
+      (Section !== "Videos" && coverIMG !== "No data") ||
+      (Section !== "Home" && coverIMG !== "No data")
+    ) {
       setMarginTop("380px");
     }
   }, [Section, coverIMG]);

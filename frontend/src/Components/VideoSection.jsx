@@ -50,6 +50,7 @@ function VideoSection() {
   const videoRef = useRef(null);
   const [TagSelected, setTagSelected] = useState("All");
   const [userVideos, setUserVideos] = useState([]);
+  const [checkTrending, setCheckTrending] = useState(false);
   const token = localStorage.getItem("userToken");
 
   const navigate = useNavigate();
@@ -149,6 +150,25 @@ function VideoSection() {
 
     return () => clearInterval(interval);
   }, [email]);
+
+  useEffect(() => {
+    const getTrendingData = async () => {
+      try {
+        if (id !== undefined) {
+          const response = await fetch(
+            `http://localhost:3000/gettrendingdata/${id}`
+          );
+          const data = await response.json();
+          setCheckTrending(data);
+        }
+      } catch (error) {
+        //console.log(error.message);
+      }
+    };
+    const interval = setInterval(getTrendingData, 100);
+
+    return () => clearInterval(interval);
+  }, [id]);
 
   useEffect(() => {
     const getVideoData = async () => {
@@ -824,6 +844,15 @@ function VideoSection() {
               <source src={videoURL} type="video/mp4" />
             </video>
           </div>
+          <p
+            className="trending-tag"
+            onClick={() => {
+              navigate("/trending");
+              window.location.reload();
+            }}
+          >
+            {checkTrending === true ? "#TRENDING" : ""}
+          </p>
           <p className="vid-title">{Title}</p>
           <div className="some-channel-data">
             <div className="channel-left-data">

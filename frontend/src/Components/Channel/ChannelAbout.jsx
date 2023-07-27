@@ -102,7 +102,17 @@ function ChannelAbout(prop) {
           </div>
           <hr className="seperate-two seperate" />
 
-          <div className="channel-links">
+          <div
+            className="channel-links"
+            style={
+              (links && links.length > 0 && links[0].facebook) ||
+              (links && links.length > 0 && links[0].instagram) ||
+              (links && links.length > 0 && links[0].twitter) ||
+              (links && links.length > 0 && links[0].website)
+                ? { display: "block" }
+                : { display: "none" }
+            }
+          >
             <p>Links</p>
             <div className="channel-links-all">
               {links &&
@@ -146,14 +156,17 @@ function ChannelAbout(prop) {
                       )}
                       {element.twitter ? (
                         <div className="link-twitter">
-                          <TwitterIcon fontSize="medium" style={{color:"#00acee"}}/>
+                          <TwitterIcon
+                            fontSize="medium"
+                            style={{ color: "#00acee" }}
+                          />
                           <a
-                          href={`${element.twitter}`}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          Twitter
-                        </a>
+                            href={`${element.twitter}`}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            Twitter
+                          </a>
                         </div>
                       ) : (
                         ""

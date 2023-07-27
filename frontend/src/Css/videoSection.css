@@ -666,3 +666,16 @@
 .heart-comment:active {
   transform: scale(0.93);
 }
+
+.trending-tag {
+  cursor: pointer;
+  color: #3eaffe;
+  position: relative;
+  top: 14px;
+  font-size: 18px;
+  transition: all .13s ease;
+}
+
+.trending-tag:hover{
+  text-decoration: underline;
+}
