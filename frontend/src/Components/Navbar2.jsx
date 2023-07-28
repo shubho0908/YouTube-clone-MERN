@@ -1,7 +1,6 @@
 //MUI Icons
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
-import VideoCallOutlinedIcon from "@mui/icons-material/VideoCallOutlined";
 
 import "../Css/navbar.css";
 import StudioLogo from "../img/studio.png";
@@ -60,34 +59,16 @@ function Navbar2() {
           />
         </div>
         <div className="middle-bar">
-          <div className="search">
-            <input type="text" placeholder="Type to search" id="searchType" />
+          <div className="search2">
             <SearchRoundedIcon
-              className="search-icon"
-              fontSize="large"
+              className="search-icon2"
+              fontSize="medium"
               style={{ color: "rgb(160, 160, 160)" }}
             />
+            <input type="text" placeholder="Search across your channel" id="searchType2" />
           </div>
         </div>
-        <div
-          className="right-bar"
-          style={
-            token
-              ? { justifyContent: "space-evenly", paddingRight: "0px" }
-              : { justifyContent: "space-between", paddingRight: "25px" }
-          }
-        >
-          {profilePic && (
-            <div className="create-btn">
-              <VideoCallOutlinedIcon
-                className=""
-                fontSize="large"
-                style={{ color: "#FF4E45" }}
-              />
-              <p>CREATE</p>
-            </div>
-          )}
-
+        <div className="right-bar2">
           <img
             src={profilePic && profilePic}
             alt=""

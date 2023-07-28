@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Geologica:wght@600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap");
 
 * {
   margin: 0;
@@ -40,7 +41,7 @@
 
 .left-bar,
 .middle-bar,
-.search,
+.search, .search2,
 .right-bar {
   display: flex;
   align-items: center;
@@ -61,6 +62,16 @@
   border: 0.5px solid rgba(255, 255, 255, 0.351);
 }
 
+.search2 {
+  background-color: #282828;
+  border-radius: 5px;
+  padding: 2px;
+  min-width: 580px;
+  max-width: 800px;
+  border: 0.5px solid rgba(255, 255, 255, 0.351);
+  font-family: "Open Sans", sans-serif;
+}
+
 .search-icon {
   cursor: pointer;
   padding-right: 10px;
@@ -71,6 +82,16 @@
   padding: 6px;
   padding-left: 15px;
   padding-right: 15px;
+}
+.search-icon2 {
+  cursor: pointer;
+  padding-right: 10px;
+  background-color: #3d3f4300;
+  border-radius: inherit;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  padding: 2px;
+  padding-left: 15px;
 }
 
 #searchType {
@@ -87,6 +108,21 @@
   padding-right: 20px;
 }
 
+#searchType2 {
+  background-color: #282828;
+  color: white;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  min-width: 520px;
+  max-width: 750px;
+  font-size: 14.5px;
+  padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  font-family: "Open Sans", sans-serif;
+}
+
 #searchType::-webkit-input-placeholder {
   color: gray;
 }
@@ -95,6 +131,10 @@
   width: 230px;
   padding-right: 25px;
   justify-content: space-between;
+}
+
+.right-bar2 {
+margin-right: 35px;
 }
 
 .signin {

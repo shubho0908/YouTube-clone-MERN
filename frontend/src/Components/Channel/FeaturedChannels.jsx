@@ -265,7 +265,7 @@ function FeaturedChannels(prop) {
               : { display: "none" }
           }
         >
-          <p>Your subscriptions</p>
+          <p style={{fontSize:"18.5px"}}>Your subscriptions</p>
           <div className="my-subscribed-channels">
             {Subscriptions &&
               Subscriptions.length > 0 &&

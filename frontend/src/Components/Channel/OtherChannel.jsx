@@ -103,7 +103,9 @@ function OtherChannel() {
       }
     };
 
-    getSubscribers();
+    const interval = setInterval(getSubscribers, 200);
+
+    return () => clearInterval(interval);
   }, [Email]);
 
   useEffect(() => {
@@ -265,7 +267,14 @@ function OtherChannel() {
                 className="channel-right-content"
                 style={{ marginLeft: "160px" }}
               >
-                <button className="customize-channel">Customize channel</button>
+                <button
+                  className="customize-channel"
+                  onClick={() => {
+                    window.location.href = "/studio/customize";
+                  }}
+                >
+                  Customize channel
+                </button>
                 <button className="manage-videos">Manage videos</button>
               </div>
             ) : (

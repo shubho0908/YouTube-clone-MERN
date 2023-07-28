@@ -3,31 +3,40 @@ import LeftPanel2 from "../LeftPanel2";
 import "../../Css/Studio/customize.css";
 import Branding from "./Branding";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import jwtDecode from "jwt-decode";
 import Basic from "./Basic";
 
 function Customization() {
   const [currentTab, setCurrentTab] = useState("branding");
-  const navigate = useNavigate();
+  const [email, setEmail] = useState();
+  const [channelID, setChannelID] = useState();
+  const token = localStorage.getItem("userToken");
 
   useEffect(() => {
-    const createBtn = document.querySelector(".create-btn");
-
-    const handleClick = () => {
-      navigate("/studio");
-      window.location.reload()
-    };
-
-    if (createBtn) {
-      createBtn.addEventListener("click", handleClick);
+    if (token) {
+      setEmail(jwtDecode(token).email);
     }
+  }, [token]);
 
-    return () => {
-      if (createBtn) {
-        createBtn.removeEventListener("click", handleClick);
+  useEffect(() => {
+    const getChannelID = async () => {
+      try {
+        if (email !== undefined) {
+          const response = await fetch(
+            `http://localhost:3000/getchannelid/${email}`
+          );
+          const { channelID } = await response.json();
+          setChannelID(channelID);
+        }
+      } catch (error) {
+        // console.log("Error fetching user data:", error.message);
       }
     };
-  });
+
+    const interval = setInterval(getChannelID, 100);
+
+    return () => clearInterval(interval);
+  }, [email]);
 
   return (
     <>
@@ -57,7 +66,16 @@ function Customization() {
               </p>
             </div>
             <div className="right-redirects">
-              <p>VIEW CHANNEL</p>
+              <p
+                onClick={() => {
+                  if (channelID !== undefined) {
+                    window.location.href = `/channel/${channelID}`;
+                  }
+                }}
+                style={{ cursor: "pointer" }}
+              >
+                VIEW CHANNEL
+              </p>
               <button className="save-customize">PUBLISH</button>
             </div>
           </div>

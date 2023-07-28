@@ -17,6 +17,7 @@ import LinkIcon from "@mui/icons-material/Link";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
 import ArrowDropDownRoundedIcon from "@mui/icons-material/ArrowDropDownRounded";
+import VideoCallOutlinedIcon from "@mui/icons-material/VideoCallOutlined";
 
 //SOCIALS
 
@@ -62,21 +63,20 @@ function Studio() {
   }, []);
 
   useEffect(() => {
-    const createBtn = document.querySelector(".create-btn");
-
     const handleClick = () => {
       setIsClicked(true);
     };
 
+    const createBtn = document.querySelector(".create-btn");
     if (createBtn) {
       createBtn.addEventListener("click", handleClick);
-    }
 
-    return () => {
-      if (createBtn) {
-        createBtn.removeEventListener("click", handleClick);
-      }
-    };
+      return () => {
+        if (createBtn) {
+          createBtn.removeEventListener("click", handleClick);
+        }
+      };
+    }
   }, []);
 
   useEffect(() => {
@@ -452,6 +452,14 @@ function Studio() {
       <Navbar2 />
       <LeftPanel2 />
       <div className="studio">
+        <div className="create-btn">
+          <VideoCallOutlinedIcon
+            className=""
+            fontSize="large"
+            style={{ color: "#FF4E45" }}
+          />
+          <p>CREATE</p>
+        </div>
         <div
           className="create-channel"
           style={
