@@ -29,9 +29,6 @@
   color: #a9a9a9;
 }
 
-.dashboard > p {
-  color: #a9a9a9;
-}
 
 .panel {
   cursor: pointer;
@@ -55,19 +52,19 @@
   font-size: 15px;
 }
 
-.dashboard {
+.studio-active {
   background-color: #1e1e1e;
   border-left: 5px solid #fe3e2b;
 }
 
-.dashboard > .studio-icon {
+.studio-active > .studio-icon {
   color: #fe3e2b !important;
 }
-.dashboard > .studio-icon2 {
+.studio-active > .studio-icon2 {
   color: #fe3e2b !important;
 }
 
-.dashboard > p {
+.studio-active > p {
   background-color: #1e1e1e;
   color: #fe3e2b;
 }

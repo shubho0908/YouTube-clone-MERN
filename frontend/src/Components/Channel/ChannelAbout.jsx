@@ -81,13 +81,27 @@ function ChannelAbout(prop) {
       });
   };
 
+  const formatDescriptionWithLinks = (description) => {
+    const linkPattern = /(http|https):\/\/www\.[^\s]+/g;
+    const formattedDescription = description.replace(
+      linkPattern,
+      (match) => `<a href="${match}" target="_blank">${match}</a>`
+    );
+    return formattedDescription.replace(/\n/g, "<br>");
+  };
+
   return (
     <>
       <div className="channel-about-section">
         <div className="left-about-section">
           <div className="channel-description-section">
             <p>Description</p>
-            <p className="channel-desc">{description && description}</p>
+            <p
+              className="channel-desc"
+              dangerouslySetInnerHTML={{
+                __html: description && formatDescriptionWithLinks(description),
+              }}
+            />
           </div>
           <hr className="seperate-two seperate" />
 

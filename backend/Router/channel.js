@@ -3,6 +3,7 @@ require("../Database/database");
 const express = require("express");
 const userData = require("../Models/user");
 const videodata = require("../Models/videos");
+const TrendingData = require("../Models/trending");
 const Channel = express.Router();
 
 Channel.get("/getchannel/:email", async (req, res) => {
@@ -38,9 +39,8 @@ Channel.get("/getcover/:email", async (req, res) => {
 
     const coverimg = user.channelData[0].channelCoverImg;
     if (!coverimg) {
-      res.json("No data")
-    }
-    else{
+      res.json("No data");
+    } else {
       res.json(coverimg);
     }
   } catch (error) {
@@ -435,17 +435,66 @@ Channel.post("/savecustomization/:email", async (req, res) => {
     const email = req.params.email;
     const { profileURL, coverURL } = req.body;
     const user = await userData.findOne({ email });
+    const video = await videodata.findOne({ email });
+
     if (!user) {
       return res.status(404).json({ error: "User not found" });
+    }
+
+    if (!video) {
+      return res.status(404).json({ error: "Video data not found" });
     }
 
     user.profilePic = profileURL;
     user.channelData[0].channelProfile = profileURL;
     user.channelData[0].channelCoverImg = coverURL;
 
-    await user.save();
+    video.VideoData.forEach((item) => {
+      item.ChannelProfile = profileURL;
+    });
 
-    res.json(user)
+    await user.save();
+    await video.save();
+
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+Channel.post("/updatechanneldata/:email", async (req, res) => {
+  try {
+    const email = req.params.email;
+    const { channelName, channelDescription } = req.body;
+
+    const user = await userData.findOne({ email });
+    const video = await videodata.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    if (!video) {
+      return res.status(404).json({ error: "Video data not found" });
+    }
+
+    user.channelName = channelName;
+    user.channelData[0].channelName = channelName;
+    user.channelData[0].channelDescription = channelDescription;
+
+    user.Playlists.forEach(element => {
+      element.playlist_owner = channelName
+    });
+
+    video.VideoData.forEach((item) => {
+      item.uploader = channelName;
+    });
+
+    await user.save();
+    await video.save();
+    await trending.save();
+
+    res.json(findMail);
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
   }

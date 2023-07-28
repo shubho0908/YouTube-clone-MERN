@@ -5,7 +5,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import VideoLibraryOutlinedIcon from "@mui/icons-material/VideoLibraryOutlined";
 import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
 import AutoFixHighOutlinedIcon from "@mui/icons-material/AutoFixHighOutlined";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 function LeftPanel2() {
   const [email, setEmail] = useState("");
@@ -13,8 +13,32 @@ function LeftPanel2() {
   const [profileIMG, setProfileIMG] = useState();
   const [channel, setChannel] = useState("");
   const [menuClicked, setMenuClicked] = useState(false);
+  const StudioSection = localStorage.getItem("Studio-Section");
+  const location = useLocation();
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const currentUrl = location.pathname;
+    let selected = "";
+
+    if (currentUrl === "/studio") {
+      selected = "Dashboard";
+    } else if (currentUrl === "/studio/customize") {
+      selected = "Customization";
+    }
+    // } else if (currentUrl === "/watchlater") {
+    //   selected = "watch-later";
+    // } else if (currentUrl === "/subscriptions") {
+    //   selected = "subscription";
+    // } else if (currentUrl === "/likedVideos") {
+    //   selected = "liked-video";
+    // } else {
+    //   selected = "other";
+    // }
+
+    localStorage.setItem("Studio-Section", selected);
+  }, [location]);
 
   useEffect(() => {
     const handleMenuButtonClick = () => {
@@ -72,15 +96,31 @@ function LeftPanel2() {
           </div>
         </div>
         <div className="second-panel">
-          <div className="dashboard panel">
+          <div
+            className={
+              StudioSection === "Dashboard"
+                ? "studio-active panel"
+                : "dashboard panel"
+            }
+            onClick={() => {
+              localStorage.setItem("Studio-Section", "Dashboard");
+              navigate("/studio");
+              window.location.reload();
+            }}
+          >
             <DashboardIcon
-              className="studio-icon2"
+              className={StudioSection === "Dashboard" ? "studio-icon2" : "studio-icon"}
               fontSize="medium"
-              style={{ color: "#A9A9A9", paddingLeft:"25px !important" }}
+              style={{ color: "#A9A9A9", paddingLeft: "25px !important" }}
             />
             <p>Dashboard</p>
           </div>
-          <div className="content panel">
+          <div
+            className="content panel"
+            onClick={() => {
+              localStorage.setItem("Studio-Section", "Content");
+            }}
+          >
             <VideoLibraryOutlinedIcon
               className="studio-icon"
               fontSize="medium"
@@ -88,7 +128,12 @@ function LeftPanel2() {
             />
             <p>Content</p>
           </div>
-          <div className="comments panel">
+          <div
+            className="comments panel"
+            onClick={() => {
+              localStorage.setItem("Studio-Section", "Comments");
+            }}
+          >
             <ChatOutlinedIcon
               className="studio-icon"
               fontSize="medium"
@@ -96,14 +141,16 @@ function LeftPanel2() {
             />
             <p>Comments</p>
           </div>
-          <div className="customization panel"
-          onClick={()=> {
-            navigate("/studio/customize")
-            window.location.reload()
-          }}
+          <div
+            className={StudioSection === "Customization" ? "studio-active panel" : "customization panel"}
+            onClick={() => {
+              localStorage.setItem("Studio-Section", "Customization");
+              navigate("/studio/customize");
+              window.location.reload();
+            }}
           >
             <AutoFixHighOutlinedIcon
-              className="studio-icon"
+              className={StudioSection === "Customization" ? "studio-icon2" : "studio-icon"}
               fontSize="medium"
               style={{ color: "#A9A9A9" }}
             />

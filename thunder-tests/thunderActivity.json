@@ -23,16 +23,16 @@
         "colId": "history",
         "containerId": "",
         "name": "http://localhost:3000/heartcomment/64b5509ba1cff5431e70e29a/64b66dcffa3325d3e5188498/shubhobera98@gmail.com",
-        "url": "http://localhost:3000/gettrendingdata/64b5510da1cff5431e70f705",
-        "method": "GET",
+        "url": "http://localhost:3000/updatechanneldata/shubhobera98@gmail.com",
+        "method": "POST",
         "sortNum": 0,
         "created": "2023-07-24T10:45:18.766Z",
-        "modified": "2023-07-27T14:48:12.101Z",
+        "modified": "2023-07-28T11:16:15.465Z",
         "headers": [],
         "params": [],
         "body": {
             "type": "json",
-            "raw": "{\n  \"link\":\"www.instagram.com/shubho.js/\"\n}",
+            "raw": "{\n  \"channelName\":\"shubho\",\n  \"channelDescription\":\"helloooo\"\n}",
             "form": []
         },
         "tests": []
