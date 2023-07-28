@@ -51,6 +51,7 @@ function VideoSection() {
   const [TagSelected, setTagSelected] = useState("All");
   const [userVideos, setUserVideos] = useState([]);
   const [checkTrending, setCheckTrending] = useState(false);
+  const [loading, setLoading] = useState(false);
   const token = localStorage.getItem("userToken");
 
   const navigate = useNavigate();
@@ -734,6 +735,7 @@ function VideoSection() {
 
   const AddPlaylist = async () => {
     try {
+      setLoading(true);
       if (email !== undefined) {
         const currentDate = new Date().toISOString();
         const data = {
@@ -761,6 +763,8 @@ function VideoSection() {
             },
           }
         );
+        setLoading(false);
+
         await response.json();
       }
     } catch (error) {
@@ -826,6 +830,15 @@ function VideoSection() {
   if (menu !== null) {
     menu.style.display = "none";
   }
+
+  const formatDescriptionWithLinks = (description) => {
+    const linkPattern = /(http|https):\/\/www\.[^\s]+/g;
+    const formattedDescription = description.replace(
+      linkPattern,
+      (match) => `<a href="${match}" target="_blank">${match}</a>`
+    );
+    return formattedDescription.replace(/\n/g, "<br>");
+  };
 
   return (
     <>
@@ -1075,7 +1088,7 @@ function VideoSection() {
             </div>
           </div>
           <div className="description-section2">
-            <div className="views-date">
+            <div className="views-date" style={{ fontSize: "15.5px" }}>
               <p>
                 {views >= 1e9
                   ? `${(views / 1e9).toFixed(1)}B`
@@ -1112,7 +1125,13 @@ function VideoSection() {
               </p>
             </div>
             <div className="desc-data">
-              <p style={{ marginTop: "10px" }}>{Description}</p>
+              <p
+                style={{ marginTop: "20px" }}
+                dangerouslySetInnerHTML={{
+                  __html:
+                    Description && formatDescriptionWithLinks(Description),
+                }}
+              />
             </div>
           </div>
           <div className="comments-section">
@@ -1835,18 +1854,20 @@ function VideoSection() {
           </div>
           <div
             className="playlist-create-btn"
+              style={loading === true ? {pointerEvents:"none"} :{pointerEvents:"auto"} }
+
             onClick={() => {
               if (playlistName !== "" || privacy !== "") {
                 AddPlaylist();
                 setTimeout(() => {
                   window.location.reload();
-                }, 560);
+                }, 1100);
               } else {
                 alert("Input fileds can't be empty");
               }
             }}
           >
-            <p>Create</p>
+            {loading === true ? <p>Loading...</p> : <p>Create</p>}
           </div>
         </div>
       </div>
