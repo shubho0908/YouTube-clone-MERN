@@ -55,7 +55,7 @@ function Navbar2() {
             className="youtubeLogo"
             onClick={() => {
               navigate("/");
-              window.location.reload()
+              window.location.reload();
             }}
           />
         </div>
@@ -77,14 +77,16 @@ function Navbar2() {
               : { justifyContent: "space-between", paddingRight: "25px" }
           }
         >
-          <div className="create-btn">
-            <VideoCallOutlinedIcon
-              className=""
-              fontSize="large"
-              style={{ color: "#FF4E45" }}
-            />
-            <p>CREATE</p>
-          </div>
+          {profilePic && (
+            <div className="create-btn">
+              <VideoCallOutlinedIcon
+                className=""
+                fontSize="large"
+                style={{ color: "#FF4E45" }}
+              />
+              <p>CREATE</p>
+            </div>
+          )}
 
           <img
             src={profilePic && profilePic}

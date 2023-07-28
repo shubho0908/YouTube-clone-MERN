@@ -444,6 +444,8 @@ Channel.post("/savecustomization/:email", async (req, res) => {
     user.channelData[0].channelCoverImg = coverURL;
 
     await user.save();
+
+    res.json(user)
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
   }

@@ -2,11 +2,32 @@ import Navbar2 from "../Navbar2";
 import LeftPanel2 from "../LeftPanel2";
 import "../../Css/Studio/customize.css";
 import Branding from "./Branding";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Basic from "./Basic";
 
 function Customization() {
   const [currentTab, setCurrentTab] = useState("branding");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const createBtn = document.querySelector(".create-btn");
+
+    const handleClick = () => {
+      navigate("/studio");
+      window.location.reload()
+    };
+
+    if (createBtn) {
+      createBtn.addEventListener("click", handleClick);
+    }
+
+    return () => {
+      if (createBtn) {
+        createBtn.removeEventListener("click", handleClick);
+      }
+    };
+  });
 
   return (
     <>
@@ -42,7 +63,7 @@ function Customization() {
           </div>
           <hr className="breakk" />
           <div className="customize-data-section">
-            {currentTab === "branding" ? <Branding /> : <Basic/>}
+            {currentTab === "branding" ? <Branding /> : <Basic />}
           </div>
         </div>
       </div>

@@ -2,6 +2,7 @@ import jwtDecode from "jwt-decode";
 import { useState, useEffect } from "react";
 import defaultimg from "../../img/avatar.png";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import ReactLoading from "react-loading";
 import { storage } from "../../Firebase";
 
 function Branding() {
@@ -13,6 +14,7 @@ function Branding() {
   const [changes, setChanges] = useState(false);
   const [ProfileChanges, setProfileChanges] = useState(false);
   const [BannerChanges, setBannerChanges] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("userToken");
@@ -66,6 +68,14 @@ function Branding() {
     getChannelCover();
   }, [email]);
 
+  useEffect(() => {
+    if (loading === true) {
+      document.body.classList.add("bg-css2");
+    } else if (!loading) {
+      document.body.classList.remove("bg-css2");
+    }
+  }, [loading]);
+
   const handleProfileChange = (e) => {
     const file = e.target.files[0];
     setSelectedProfile(file);
@@ -92,6 +102,7 @@ function Branding() {
           const aspectRatio = width / height;
           if (Math.abs(aspectRatio - 16 / 9) < 0.01) {
             setChanges(true);
+            setPreviewBanner(URL.createObjectURL(file));
           } else {
             alert("Invalid image aspect ratio. Please select a 16:9 image.");
           }
@@ -100,7 +111,6 @@ function Branding() {
       };
       reader.readAsDataURL(file);
     }
-    setPreviewBanner(URL.createObjectURL(file));
   };
 
   const UploadProfile = async () => {
@@ -175,24 +185,25 @@ function Branding() {
 
   const saveChannelData = async (e) => {
     e.preventDefault();
-  
+    setLoading(true);
+
     try {
       let profileURL = previewProfile;
       let coverURL = previewBanner;
-  
+
       if (ProfileChanges === true) {
         profileURL = await UploadProfile();
       }
-  
+
       if (BannerChanges === true) {
         coverURL = await UploadBanner();
       }
-  
+
       const data = {
         profileURL: profileURL,
         coverURL: coverURL,
       };
-  
+
       const response = await fetch(
         `http://localhost:3000/savecustomization/${email}`,
         {
@@ -203,10 +214,16 @@ function Branding() {
           },
         }
       );
-      await response.json();
-      console.log(data);
+      const user = await response.json();
+      if (user) {
+        setLoading(false);
+        setChanges(false)
+      } else {
+        setLoading(true);
+      }
     } catch (error) {
       // console.log(error.message);
+      setLoading(false);
     }
   };
 
@@ -228,78 +245,85 @@ function Branding() {
 
   return (
     <>
-      <div className="channel-branding-section">
-        <div className="profile-update-section">
-          <p className="profile-head-txt">Picture</p>
-          <p className="profile-desc-txt">
-            Your profile picture will appear where your channel is presented on
-            YouTube, like next to your videos and comments.
-          </p>
-          <p className="profile-desc-txt">
-            (Please refresh the page if the images don’t load properly.)
-          </p>
-          <div className="picture-section">
-            <div className="pic-div">
-              <img
-                src={previewProfile}
-                alt="profile"
-                className="channel-image"
-              />
-            </div>
-            <div className="pic-extra-content">
-              It’s recommended to use a picture that’s at least 98 x 98 pixels
-              and 4MB or less. Use a PNG or GIF (no animations) file. Make sure
-              your picture follows the YouTube Community Guidelines.
-              <label className="change-image" htmlFor="profile-image-input">
-                CHANGE
-              </label>
-              <input
-                type="file"
-                id="profile-image-input"
-                accept="image/*"
-                onChange={handleProfileChange}
-                style={{ display: "none" }}
-              />
-            </div>
-          </div>
+      {loading === true ? (
+        <div className="spin3">
+          <ReactLoading type={"spin"} color={"white"} height={40} width={40} />
+          <p>Saving data...</p>
         </div>
-        <div className="cover-update-section">
-          <p className="cover-head">Banner image</p>
-          <p className="banner-desc">
-            This image will appear across the top of your channel
-          </p>
-          <p className="profile-desc-txt">
-            (Please refresh the page if the images don’t load properly.)
-          </p>
-          <div className="banner-section">
-            <div className="pic-div">
-              {previewBanner ? (
+      ) : (
+        <div className="channel-branding-section">
+          <div className="profile-update-section">
+            <p className="profile-head-txt">Picture</p>
+            <p className="profile-desc-txt">
+              Your profile picture will appear where your channel is presented
+              on YouTube, like next to your videos and comments.
+            </p>
+            <p className="profile-desc-txt">
+              (Please refresh the page if the images don’t load properly.)
+            </p>
+            <div className="picture-section">
+              <div className="pic-div">
                 <img
-                  src={previewBanner}
-                  alt="banner"
-                  className="banner-image"
+                  src={previewProfile}
+                  alt="profile"
+                  className="channel-image"
                 />
-              ) : (
-                ""
-              )}
+              </div>
+              <div className="pic-extra-content">
+                It’s recommended to use a picture that’s at least 98 x 98 pixels
+                and 4MB or less. Use a PNG or GIF (no animations) file. Make
+                sure your picture follows the YouTube Community Guidelines.
+                <label className="change-image" htmlFor="profile-image-input">
+                  CHANGE
+                </label>
+                <input
+                  type="file"
+                  id="profile-image-input"
+                  accept="image/*"
+                  onChange={handleProfileChange}
+                  style={{ display: "none" }}
+                />
+              </div>
             </div>
-            <div className="pic-extra-content">
-              For the best results on all devices, use an image that’s at least
-              2048 x 1152 pixels and 6MB or less.
-              <label className="change-image" htmlFor="banner-image-input">
-                CHANGE
-              </label>
-              <input
-                type="file"
-                id="banner-image-input"
-                accept="image/*"
-                onChange={handleBannerChange}
-                style={{ display: "none" }}
-              />
+          </div>
+          <div className="cover-update-section">
+            <p className="cover-head">Banner image</p>
+            <p className="banner-desc">
+              This image will appear across the top of your channel
+            </p>
+            <p className="profile-desc-txt">
+              (Please refresh the page if the images don’t load properly.)
+            </p>
+            <div className="banner-section">
+              <div className="pic-div">
+                {previewBanner ? (
+                  <img
+                    src={previewBanner}
+                    alt="banner"
+                    className="banner-image"
+                  />
+                ) : (
+                  ""
+                )}
+              </div>
+              <div className="pic-extra-content">
+                For the best results on all devices, use an image that’s at
+                least 2048 x 1152 pixels and 6MB or less.
+                <label className="change-image" htmlFor="banner-image-input">
+                  CHANGE
+                </label>
+                <input
+                  type="file"
+                  id="banner-image-input"
+                  accept="image/*"
+                  onChange={handleBannerChange}
+                  style={{ display: "none" }}
+                />
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 }

@@ -176,6 +176,25 @@
   }
 }
 
+.bg-css2::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5; /* Set a lower z-index than the auth-popup */
+  animation: Fade2 0.25s ease-out forwards;
+}
+
+@keyframes Fade2 {
+  from {
+  }
+  to {
+    background: rgba(0, 0, 0, 0.68);
+  }
+}
+
 .above-data {
   text-align: center;
 }

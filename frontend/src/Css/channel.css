@@ -731,6 +731,8 @@
 
 .channel-cover{
   position: absolute;
+  animation: FADEINN .45s ease;
+
 }
 
 .channel-cover-img{
