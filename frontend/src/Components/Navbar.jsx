@@ -113,8 +113,7 @@ function Navbar() {
             style={{ color: "rgb(160, 160, 160)" }}
             onClick={() => {
               if (token) {
-                navigate("/studio");
-                window.location.reload();
+                window.location.href = "/studio";
               } else {
                 setisbtnClicked(true);
                 document.body.classList.add("bg-css");

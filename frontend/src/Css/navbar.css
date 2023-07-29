@@ -341,6 +341,9 @@ form > input::placeholder {
   padding-left: 10px;
   padding-right: 10px;
   transition: all 0.2s ease;
+  position: absolute;
+  top: 100px;
+right: 35px;
 }
 
 .create-btn:hover {

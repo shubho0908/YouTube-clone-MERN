@@ -122,8 +122,8 @@ function AccountPop() {
           <div
             className="yourstudio c-sec"
             onClick={() => {
-              navigate("/studio");
-              window.location.reload();
+              window.location.href = "/studio"
+              
             }}
           >
             <OndemandVideoOutlinedIcon

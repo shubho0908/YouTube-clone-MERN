@@ -26,6 +26,8 @@ function LeftPanel2() {
       selected = "Dashboard";
     } else if (currentUrl === "/studio/customize") {
       selected = "Customization";
+    } else if (currentUrl === "/studio/video") {
+      selected = "Content";
     }
     // } else if (currentUrl === "/watchlater") {
     //   selected = "watch-later";
@@ -116,9 +118,11 @@ function LeftPanel2() {
             <p>Dashboard</p>
           </div>
           <div
-            className="content panel"
+            className={StudioSection === "Content" ? "studio-active panel" : "content panel"}
             onClick={() => {
               localStorage.setItem("Studio-Section", "Content");
+              navigate("/studio/video");
+              window.location.reload();
             }}
           >
             <VideoLibraryOutlinedIcon
