@@ -126,7 +126,7 @@ function LeftPanel2() {
             }}
           >
             <VideoLibraryOutlinedIcon
-              className="studio-icon"
+              className={StudioSection === "Content" ? "studio-icon2" : "studio-icon"}
               fontSize="medium"
               style={{ color: "#A9A9A9" }}
             />

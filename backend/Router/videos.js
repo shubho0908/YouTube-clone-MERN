@@ -135,22 +135,19 @@ Videos.get("/getvideos", async (req, res) => {
   }
 });
 
-Videos.get("/getuservideos/:email", async(req, res)=>{
+Videos.get("/getuservideos/:email", async (req, res) => {
   try {
-
-    const email = req.params.email 
+    const email = req.params.email;
     const video = await videodata.findOne({ email });
-    if (!user) {
+    if (!video) {
       return res.status(404).json({ error: "User not found" });
     }
 
-
-
+    res.json(video.VideoData);
   } catch (error) {
     res.status(500).json({ message: "An error occurred" });
-    
   }
-})
+});
 
 Videos.get("/getuserimage/:email", async (req, res) => {
   try {

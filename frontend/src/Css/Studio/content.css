@@ -7,79 +7,186 @@
   left: 310px;
 }
 
-.channel-content-top>p:nth-child(1){
-    color: white;
-    font-family: "Open Sans", sans-serif;
-    font-weight: 700;
-    font-size: 25px;
-    width: -webkit-fill-available;
+.channel-content-top > p:nth-child(1) {
+  color: white;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 700;
+  font-size: 25px;
+  width: -webkit-fill-available;
 }
 
-.channel-mid-row{
-    position: absolute;
-    top: 230px;
-    left: 310px;
-    display: flex;
-    align-items: center;
-    font-size: 14px;
-    width: -webkit-fill-available;
-    color: #aaa;
-    justify-content: space-between;
-  }
+.channel-mid-row {
+  position: absolute;
+  top: 230px;
+  left: 310px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  width: -webkit-fill-available;
+  color: #aaa;
+  justify-content: space-between;
+}
 
-  .right-row-side{
-    display: flex;
-    align-items: center;
-    justify-content: inherit;
-    margin-right: 35px;
-    color: #aaa;
-    width: inherit;
-    padding-left: 46%;
-  }
+.right-row-side {
+  display: flex;
+  align-items: center;
+  justify-content: inherit;
+  margin-right: 35px;
+  color: #aaa;
+  width: inherit;
+  padding-left: 46%;
+}
 
-  .sort-data{
-    display: flex;
-    align-items: center;
-  }
+.sort-data {
+  display: flex;
+  align-items: center;
+}
 
-.channel-videosss{
-    cursor: pointer;
-    font-family: "Open Sans", sans-serif;
-    font-size: 14px;
-    color: #3eaffe;
-    font-weight: 600;
-    margin-top: 30px;
+.channel-videosss {
+  cursor: pointer;
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  color: #3eaffe;
+  font-weight: 600;
+  margin-top: 30px;
 }
 
 .channel-videosss::before {
-    content: "";
-    position: absolute;
-    bottom: -17px;
-    left: -5px;
-    height: 4px;
-    width: 57px;
-    background-color: #3eaffe;
-    border-radius: 50px;
-    transform: scaleX(1);
-    transition: all 0.2s linear;
+  content: "";
+  position: absolute;
+  bottom: -17px;
+  left: -5px;
+  height: 4px;
+  width: 57px;
+  background-color: #3eaffe;
+  border-radius: 50px;
+  transform: scaleX(1);
+  transition: all 0.2s linear;
 }
 
-.breakk2{
-    position: absolute;
-    top: 189px;
-    left: 271px;
-    width: -webkit-fill-available;
-    margin-top: 20px;
-    border: none;
-    border-bottom: 1px solid rgba(128, 128, 128, 0.333);
+.breakk2 {
+  top: 189px;
+  left: 271px;
 }
 
-.breakk3{
-    position: absolute;
-    top: 245px;
-    left: 271px;
-    width: -webkit-fill-available;
-    margin-top: 20px;
-    border: none;
-    border-bottom: 1px solid rgba(128, 128, 128, 0.333);
+.breakkk {
+  position: absolute;
+  width: -webkit-fill-available;
+  margin-top: 20px;
+  border: none;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.333);
+}
+
+.breakkk2 {
+  position: relative;
+  width: -webkit-fill-available;
+  border: none;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.333);
+}
+
+.breakk3 {
+  top: 245px;
+  left: 271px;
+}
+
+.breakk4 {
+  bottom: 12px;
+}
+
+.channels-uploaded-videos-section {
+  position: absolute;
+  top: 210px;
+  left: 270px;
+  width: -webkit-fill-available;
+}
+
+.studio-video-thumbnail {
+  width: 140px;
+}
+
+.video-left-duration {
+  color: white;
+  font-size: 12px;
+  background-color: #000000d6;
+  width: fit-content;
+  padding: 3px;
+  position: relative;
+  top: 27px;
+  right: 37px;
+  border-radius: 3px;
+}
+
+.videos-row-section {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.333);
+}
+
+.video-row-left {
+  padding-left: 25px;
+  margin-top: 15px;
+  border: none;
+  height: 96px;
+}
+
+.video-row-right {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-right: 35px;
+  width: -webkit-fill-available;
+  padding-left: 40%;
+  font-size: 14px;
+  color: white;
+}
+
+/* Add these CSS rules to your content.css file */
+
+/* Set the table to fill the full width */
+.videos-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* Style the table header */
+.videos-table th {
+  background-color: #f2f2f200;
+  border: none;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.333);
+  padding: 18px;
+  text-align: center;
+  font-family: "Roboto", sans-serif;
+  font-weight: 100;
+}
+
+/* Style the table rows */
+.videos-table td {
+  border: none;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.333);
+  padding: 12px;
+  text-align: center;
+  color: white;
+  font-family: "Roboto", sans-serif;
+  font-size: 13px;
+}
+
+/* Align the data on the left and right sides */
+.video-cell {
+  display: flex;
+  align-items: center;
+}
+
+.studio-video-thumbnail {
+  width: 150px;
+  margin-left: 30px;
+}
+
+.video-left-duration {
+  margin: 0;
+}
+
+.privacy-table{
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
