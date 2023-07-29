@@ -33,7 +33,7 @@
   justify-content: space-between;
   background-color: #282828;
   position: fixed;
-  z-index: 2;
+  z-index: 3;
   width: -webkit-fill-available;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
     rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;

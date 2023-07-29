@@ -5,10 +5,17 @@ import SouthIcon from "@mui/icons-material/South";
 import { useEffect, useState } from "react";
 import jwtDecode from "jwt-decode";
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
+import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
+import InsertCommentOutlinedIcon from "@mui/icons-material/InsertCommentOutlined";
+import YouTubeIcon from "@mui/icons-material/YouTube";
+import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
+import NorthOutlinedIcon from "@mui/icons-material/NorthOutlined";
 
 function Content() {
   const [userVideos, setUserVideos] = useState([]);
+  const [sortByDateAsc, setSortByDateAsc] = useState(true);
   const [Email, setEmail] = useState();
+  const [changeSort, setChangeSort] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("userToken");
@@ -36,6 +43,19 @@ function Content() {
     return () => clearInterval(interval);
   }, [Email]);
 
+  const handleSortByDate = () => {
+    setSortByDateAsc((prevState) => !prevState);
+    setChangeSort(!changeSort);
+  };
+
+  const sortedUserVideos = userVideos.sort((a, b) => {
+    if (sortByDateAsc) {
+      return new Date(a.uploaded_date) - new Date(b.uploaded_date);
+    } else {
+      return new Date(b.uploaded_date) - new Date(a.uploaded_date);
+    }
+  });
+
   return (
     <>
       <Navbar2 />
@@ -47,25 +67,46 @@ function Content() {
         </div>
         <hr className="breakk2 breakkk" />
         <div className="channels-uploaded-videos-section">
-          {userVideos && userVideos.length > 0 && (
+          {sortedUserVideos && sortedUserVideos.length > 0 && (
             <table className="videos-table">
               <thead>
                 <tr style={{ color: "#aaa", fontSize: "14px" }}>
-                  <th style={{ textAlign: "left", paddingLeft: "40px" }}>
+                  <th
+                    style={{
+                      textAlign: "left",
+                      paddingLeft: "40px",
+                      width: "45%",
+                    }}
+                  >
                     Video
                   </th>
                   <th>Visibility</th>
-                  <th>Date</th>
+                  <th onClick={handleSortByDate} className="date-table-head">
+                    <div className="table-row">
+                      <p>Date</p>
+                      {changeSort === false ? (
+                        <SouthIcon
+                          fontSize="200px"
+                          style={{ color: "white", marginLeft: "5px" }}
+                        />
+                      ) : (
+                        <NorthOutlinedIcon
+                          fontSize="200px"
+                          style={{ color: "white", marginLeft: "5px" }}
+                        />
+                      )}
+                    </div>
+                  </th>
                   <th>Views</th>
                   <th>Comments</th>
                   <th>Likes</th>
                 </tr>
               </thead>
               <tbody>
-                {userVideos.map((element, index) => {
+                {sortedUserVideos.map((element, index) => {
                   const uploaded = new Date(element.uploaded_date);
                   return (
-                    <tr key={index}>
+                    <tr key={index} className="table-roww">
                       <td className="video-cell">
                         <img
                           src={element.thumbnailURL}
@@ -79,6 +120,44 @@ function Content() {
                               ? "0" + Math.round(element.videoLength % 60)
                               : Math.round(element.videoLength % 60))}
                         </p>
+                        <div className="studio-video-details">
+                          <p className="studio-video-title">
+                            {element.Title.length <= 40
+                              ? element.Title
+                              : `${element.Title.slice(0, 40)}...`}
+                          </p>
+                          {element.Description ? (
+                            <p className="studio-video-desc">
+                              {element.Description.length <= 85
+                                ? element.Description
+                                : `${element.Description.slice(0, 85)}...`}
+                            </p>
+                          ) : (
+                            <p>Add description</p>
+                          )}
+                          <div className="video-editable-section">
+                            <ModeEditOutlineOutlinedIcon
+                              className="video-edit-icons"
+                              fontSize="medium"
+                              style={{ color: "#aaa" }}
+                            />
+                            <InsertCommentOutlinedIcon
+                              className="video-edit-icons"
+                              fontSize="medium"
+                              style={{ color: "#aaa" }}
+                            />
+                            <YouTubeIcon
+                              className="video-edit-icons"
+                              fontSize="medium"
+                              style={{ color: "#aaa" }}
+                            />
+                            <MoreVertOutlinedIcon
+                              className="video-edit-icons"
+                              fontSize="medium"
+                              style={{ color: "#aaa" }}
+                            />
+                          </div>
+                        </div>
                       </td>
                       <td>
                         <div className="privacy-table">
