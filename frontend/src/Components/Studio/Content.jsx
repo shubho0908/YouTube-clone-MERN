@@ -15,6 +15,7 @@ import KeyboardTabOutlinedIcon from "@mui/icons-material/KeyboardTabOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
+import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 
 function Content() {
   const [userVideos, setUserVideos] = useState([]);
@@ -22,6 +23,9 @@ function Content() {
   const [Email, setEmail] = useState();
   const [changeSort, setChangeSort] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
+  const [DeleteVideoID, setDeleteVideoID] = useState();
+  const [isDeleteClicked, setIsDeleteClicked] = useState(false);
+  const [DeleteVideoData, setDeleteVideoData] = useState();
   const videoUrl = "http://localhost:5173/video";
 
   useEffect(() => {
@@ -49,6 +53,27 @@ function Content() {
 
     return () => clearInterval(interval);
   }, [Email]);
+
+  useEffect(() => {
+    const GetDeleteVideoData = async () => {
+      try {
+        if (DeleteVideoID !== undefined) {
+          const response = await fetch(
+            `http://localhost:3000/getdeletevideodata/${DeleteVideoID}`
+          );
+
+          const data = await response.json();
+          setDeleteVideoData(data);
+        }
+      } catch (error) {
+        // console.log(error.message);
+      }
+    };
+
+    const interval = setInterval(GetDeleteVideoData, 100);
+
+    return () => clearInterval(interval);
+  }, [DeleteVideoID]);
 
   const handleSortByDate = () => {
     setSortByDateAsc((prevState) => !prevState);
@@ -103,6 +128,10 @@ function Content() {
     link.download = "video.mp4";
     link.click();
   };
+
+  const DeleteVideoUploadDate = new Date(
+    DeleteVideoData && DeleteVideoData.uploaded_date
+  );
 
   return (
     <>
@@ -273,7 +302,16 @@ function Content() {
                                 />
                                 <p>Download</p>
                               </div>
-                              <div className="delete-video-data-row option-row">
+                              <div
+                                className="delete-video-data-row option-row"
+                                onClick={() => {
+                                  setDeleteVideoID(element._id);
+                                  if (element._id !== undefined) {
+                                    setIsDeleteClicked(true);
+                                    document.body.classList.add("bg-css");
+                                  }
+                                }}
+                              >
                                 <DeleteOutlineOutlinedIcon
                                   className="video-edit-icons"
                                   fontSize="medium"
@@ -322,8 +360,63 @@ function Content() {
           )}
         </div>
       </div>
-      <div className="last-delete-warning">
-        
+      <div
+        className="last-delete-warning"
+        style={
+          isDeleteClicked === true && DeleteVideoData
+            ? { display: "block" }
+            : { display: "none" }
+        }
+      >
+        <div className="delete-question">
+          <p>Permanently delete this video?</p>
+        </div>
+        <div className="deleted-video-data">
+          <div className="thisdelete-data">
+            <img
+              src={DeleteVideoData && DeleteVideoData.thumbnailURL}
+              alt="thumbnail"
+              className="deletevideo-thumbnail"
+            />
+            <p className="thisdelete-duration">
+              {Math.floor(DeleteVideoData && DeleteVideoData.videoLength / 60) +
+                ":" +
+                (Math.round(
+                  DeleteVideoData && DeleteVideoData.videoLength % 60
+                ) < 10
+                  ? "0" +
+                    Math.round(
+                      DeleteVideoData && DeleteVideoData.videoLength % 60
+                    )
+                  : Math.round(
+                      DeleteVideoData && DeleteVideoData.videoLength % 60
+                    ))}
+            </p>
+            <div className="thisdelete-video-details">
+              <p className="delete-title">
+                {DeleteVideoData && DeleteVideoData.Title}
+              </p>
+              <p className="delete-uploaded">
+                {"Uploaded " +
+                  DeleteVideoUploadDate.toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+              </p>
+              <p className="delete-views">
+                {DeleteVideoData && DeleteVideoData.views + " views"}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="delete-consent">
+          <CheckBoxOutlineBlankIcon
+            fontSize="medium"
+            style={{ color: "#aaa" }}
+          />
+        </div>
+        <div className="delete-video-buttons"></div>
       </div>
     </>
   );

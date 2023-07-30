@@ -277,3 +277,58 @@
 .option-row:active {
   background-color: #111111;
 }
+
+.last-delete-warning{
+  color: white;
+  background-color: #282828;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  z-index: 10;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  padding-left: 30px;
+  padding-right: 30px;
+  border-radius: 5px;
+  animation: fadeUp 0.25s ease forwards;
+
+}
+
+.deletevideo-thumbnail{
+  width: 160px;
+}
+
+.thisdelete-duration {
+  color: white;
+  font-size: 12px;
+  background-color: #000000d6;
+  width: fit-content;
+  padding: 3px;
+  position: relative;
+  border-radius: 3px;
+  top: 32px;
+  right: 35px;
+}
+
+.thisdelete-video-details{
+  width: 55%;
+  position: relative;
+    right: 12px;
+}
+
+.thisdelete-data{
+  display: flex;
+  align-items: center;
+  background-color: #181818;
+  padding: 20px;
+  margin-top:20px;
+}
+
+.delete-title{
+  font-size: 13.8px;
+}
+.delete-uploaded, .delete-views{
+  font-size: 13px;
+  color: #aaa;
+  margin-top: 5px;
+}

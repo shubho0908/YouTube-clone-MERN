@@ -396,6 +396,8 @@ Videos.get("/checktrending/:videoID", async (req, res) => {
       });
       return await trending.save();
     }
+
+    res.json("DONE")
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

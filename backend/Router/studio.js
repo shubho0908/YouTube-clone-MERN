@@ -40,9 +40,26 @@ Studio.post("/deletevideo/:videoId", async (req, res) => {
 
     res.status(200).json({ message: "Video deleted successfully" });
   } catch (error) {
-    console.error(error);
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
+Studio.get("/getdeletevideodata/:videoId", async (req, res) => {
+    try {
+      const { videoId } = req.params;
+      const video = await videodata.findOne({ "VideoData._id": videoId });
+  
+      if (!video) {
+        return res.status(404).json({ error: "Video not found" });
+      }
+  
+      const myVideo = video.VideoData.find((item) => item._id.toString() === videoId.toString());
+  
+      res.json(myVideo);
+    } catch (error) {
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+  
 
 module.exports = Studio;
