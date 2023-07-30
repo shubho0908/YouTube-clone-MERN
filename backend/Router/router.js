@@ -9,6 +9,7 @@ const Channel = require("./channel");
 const Videos = require("./videos");
 const Likes = require("./likes");
 const Comments = require("./comments");
+const Studio = require("./studio");
 
 // Middlewares
 router.use(cors());
@@ -19,6 +20,7 @@ router.use(Channel);
 router.use(Videos);
 router.use(Likes);
 router.use(Comments);
+router.use(Studio);
 
 router.get("/", (req, res) => {
   res.send("Welcome to Youtube App Backend!");

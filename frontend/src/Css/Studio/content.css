@@ -242,6 +242,38 @@
   margin-top: 15.5px;
 }
 
-.video-edit-icons:hover{
+.video-edit-icons:hover {
   color: white !important;
+}
+
+.extra-options-menu {
+  position: absolute;
+  top: 50px;
+  left: 150px;
+  width: max-content;
+  display: flex;
+  flex-direction: column;
+  background-color: #1f1f1f;
+  z-index: 3;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+}
+
+.option-row {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.option-row > p {
+  margin-left: 10px;
+  font-size: 15px;
+}
+
+.option-row:active {
+  background-color: #111111;
 }

@@ -6,16 +6,23 @@ import { useEffect, useState } from "react";
 import jwtDecode from "jwt-decode";
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
-import InsertCommentOutlinedIcon from "@mui/icons-material/InsertCommentOutlined";
+import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 import NorthOutlinedIcon from "@mui/icons-material/NorthOutlined";
+import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
+import KeyboardTabOutlinedIcon from "@mui/icons-material/KeyboardTabOutlined";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import Tooltip from "@mui/material/Tooltip";
+import Zoom from "@mui/material/Zoom";
 
 function Content() {
   const [userVideos, setUserVideos] = useState([]);
   const [sortByDateAsc, setSortByDateAsc] = useState(true);
   const [Email, setEmail] = useState();
   const [changeSort, setChangeSort] = useState(false);
+  const [showOptions, setShowOptions] = useState(false);
+  const videoUrl = "http://localhost:5173/video";
 
   useEffect(() => {
     const token = localStorage.getItem("userToken");
@@ -55,6 +62,47 @@ function Content() {
       return new Date(b.uploaded_date) - new Date(a.uploaded_date);
     }
   });
+
+  //POST REQUESTS
+
+  const DeleteVideo = async (id) => {
+    try {
+      if (id !== undefined) {
+        const response = await fetch(
+          `http://localhost:3000//deletevideo/${id}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        await response.json();
+      }
+    } catch (error) {
+      // console.log(error.message);
+    }
+  };
+
+  const handleCopyLink = (id) => {
+    navigator.clipboard
+      .writeText(`${videoUrl}/${id}`)
+      .then(() => {
+        alert("Link Copied!");
+      })
+      .catch((error) => {
+        console.log("Error copying link to clipboard:", error);
+      });
+  };
+
+  const downloadVideo = (url) => {
+    const link = document.createElement("a");
+    link.href = url;
+    link.target = "_blank";
+    link.download = "video.mp4";
+    link.click();
+  };
 
   return (
     <>
@@ -136,26 +184,104 @@ function Content() {
                             <p>Add description</p>
                           )}
                           <div className="video-editable-section">
-                            <ModeEditOutlineOutlinedIcon
-                              className="video-edit-icons"
-                              fontSize="medium"
-                              style={{ color: "#aaa" }}
-                            />
-                            <InsertCommentOutlinedIcon
-                              className="video-edit-icons"
-                              fontSize="medium"
-                              style={{ color: "#aaa" }}
-                            />
-                            <YouTubeIcon
-                              className="video-edit-icons"
-                              fontSize="medium"
-                              style={{ color: "#aaa" }}
-                            />
-                            <MoreVertOutlinedIcon
-                              className="video-edit-icons"
-                              fontSize="medium"
-                              style={{ color: "#aaa" }}
-                            />
+                            <Tooltip
+                              TransitionComponent={Zoom}
+                              title="Details"
+                              placement="bottom"
+                            >
+                              <ModeEditOutlineOutlinedIcon
+                                className="video-edit-icons"
+                                fontSize="medium"
+                                style={{ color: "#aaa" }}
+                              />
+                            </Tooltip>
+                            <Tooltip
+                              TransitionComponent={Zoom}
+                              title="Comments"
+                              placement="bottom"
+                            >
+                              <ChatOutlinedIcon
+                                className="video-edit-icons"
+                                fontSize="medium"
+                                style={{ color: "#aaa" }}
+                              />
+                            </Tooltip>
+                            <Tooltip
+                              TransitionComponent={Zoom}
+                              title="View on YouTube"
+                              placement="bottom"
+                            >
+                              <YouTubeIcon
+                                className="video-edit-icons"
+                                fontSize="medium"
+                                style={{ color: "#aaa" }}
+                                onClick={() => {
+                                  window.location.href = `/video/${element._id}`;
+                                }}
+                              />
+                            </Tooltip>
+                            <Tooltip
+                              TransitionComponent={Zoom}
+                              title="Options"
+                              placement="bottom"
+                            >
+                              <MoreVertOutlinedIcon
+                                className="video-edit-icons"
+                                fontSize="medium"
+                                style={{ color: "#aaa" }}
+                                onClick={() => setShowOptions(!showOptions)}
+                              />
+                            </Tooltip>
+                            <div
+                              className="extra-options-menu"
+                              style={
+                                showOptions === true
+                                  ? { display: "flex" }
+                                  : { display: "none" }
+                              }
+                            >
+                              <div className="edit-video-data-row option-row">
+                                <ModeEditOutlineOutlinedIcon
+                                  className="video-edit-icons"
+                                  fontSize="medium"
+                                  style={{ color: "#aaa" }}
+                                />
+                                <p>Edit title and description</p>
+                              </div>
+                              <div
+                                className="share-video-data-row option-row"
+                                onClick={() => handleCopyLink(element._id)}
+                              >
+                                <ShareOutlinedIcon
+                                  className="video-edit-icons"
+                                  fontSize="medium"
+                                  style={{ color: "#aaa" }}
+                                />
+                                <p>Get shareable link</p>
+                              </div>
+                              <div
+                                className="download-video-data-row option-row"
+                                onClick={() => downloadVideo(element.videoURL)}
+                              >
+                                <KeyboardTabOutlinedIcon
+                                  className="video-edit-icons"
+                                  fontSize="medium"
+                                  style={{
+                                    color: "#aaa",
+                                    transform: "rotate(90deg)",
+                                  }}
+                                />
+                                <p>Download</p>
+                              </div>
+                              <div className="delete-video-data-row option-row">
+                                <DeleteOutlineOutlinedIcon
+                                  className="video-edit-icons"
+                                  fontSize="medium"
+                                  style={{ color: "#aaa" }}
+                                />
+                                <p>Delete forever</p>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </td>
@@ -195,6 +321,9 @@ function Content() {
             </table>
           )}
         </div>
+      </div>
+      <div className="last-delete-warning">
+        
       </div>
     </>
   );
