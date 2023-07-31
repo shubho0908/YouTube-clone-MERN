@@ -222,6 +222,10 @@
   display: flex;
 }
 
+.table-roww:hover .drop-down {
+  opacity: 1 !important;
+}
+
 .table-row {
   display: flex;
   align-items: center;
@@ -278,10 +282,11 @@
   background-color: #111111;
 }
 
-.last-delete-warning{
+.last-delete-warning {
   color: white;
   background-color: #282828;
   position: fixed;
+  width: 520px;
   left: 50%;
   top: 50%;
   z-index: 10;
@@ -291,10 +296,9 @@
   padding-right: 30px;
   border-radius: 5px;
   animation: fadeUp 0.25s ease forwards;
-
 }
 
-.deletevideo-thumbnail{
+.deletevideo-thumbnail {
   width: 160px;
 }
 
@@ -306,29 +310,64 @@
   padding: 3px;
   position: relative;
   border-radius: 3px;
-  top: 32px;
+  top: 66px;
   right: 35px;
 }
 
-.thisdelete-video-details{
+.thisdelete-video-details {
   width: 55%;
   position: relative;
-    right: 12px;
+  right: 12px;
 }
 
-.thisdelete-data{
+.thisdelete-data {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   background-color: #181818;
   padding: 20px;
-  margin-top:20px;
+  margin-top: 20px;
 }
 
-.delete-title{
+.delete-title {
   font-size: 13.8px;
 }
-.delete-uploaded, .delete-views{
+.delete-uploaded,
+.delete-views {
   font-size: 13px;
   color: #aaa;
   margin-top: 5px;
+}
+
+.delete-consent {
+  display: flex;
+  align-items: flex-start;
+  font-size: 15px;
+  margin-top: 20px;
+}
+
+.delete-consent > p {
+  margin-left: 10px;
+  line-height: 22px;
+}
+
+.delete-video-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 35px;
+}
+
+.delete-css {
+  cursor: pointer;
+
+  background-color: rgba(255, 255, 255, 0);
+  border: none;
+  outline: none;
+  color: #3eaffe;
+  font-size: 15px;
+}
+
+.cancel-delete {
+  position: relative;
+  right: 30px;
 }

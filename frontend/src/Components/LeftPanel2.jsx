@@ -106,8 +106,7 @@ function LeftPanel2() {
             }
             onClick={() => {
               localStorage.setItem("Studio-Section", "Dashboard");
-              navigate("/studio");
-              window.location.reload();
+              window.location.href = "/studio"
             }}
           >
             <DashboardIcon
@@ -121,8 +120,7 @@ function LeftPanel2() {
             className={StudioSection === "Content" ? "studio-active panel" : "content panel"}
             onClick={() => {
               localStorage.setItem("Studio-Section", "Content");
-              navigate("/studio/video");
-              window.location.reload();
+              window.location.href = "/studio/video"
             }}
           >
             <VideoLibraryOutlinedIcon
@@ -149,8 +147,7 @@ function LeftPanel2() {
             className={StudioSection === "Customization" ? "studio-active panel" : "customization panel"}
             onClick={() => {
               localStorage.setItem("Studio-Section", "Customization");
-              navigate("/studio/customize");
-              window.location.reload();
+              window.location.href = "/studio/customize"
             }}
           >
             <AutoFixHighOutlinedIcon

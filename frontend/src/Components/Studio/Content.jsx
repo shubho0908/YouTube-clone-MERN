@@ -16,6 +16,8 @@ import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
+import CheckBoxIcon from "@mui/icons-material/CheckBox";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 function Content() {
   const [userVideos, setUserVideos] = useState([]);
@@ -26,6 +28,7 @@ function Content() {
   const [DeleteVideoID, setDeleteVideoID] = useState();
   const [isDeleteClicked, setIsDeleteClicked] = useState(false);
   const [DeleteVideoData, setDeleteVideoData] = useState();
+  const [boxclicked, setBoxClicked] = useState(false);
   const videoUrl = "http://localhost:5173/video";
 
   useEffect(() => {
@@ -94,7 +97,7 @@ function Content() {
     try {
       if (id !== undefined) {
         const response = await fetch(
-          `http://localhost:3000//deletevideo/${id}`,
+          `http://localhost:3000/deletevideo/${id}`,
           {
             method: "POST",
             headers: {
@@ -279,7 +282,10 @@ function Content() {
                               </div>
                               <div
                                 className="share-video-data-row option-row"
-                                onClick={() => handleCopyLink(element._id)}
+                                onClick={() => {
+                                  handleCopyLink(element._id);
+                                  setShowOptions(false);
+                                }}
                               >
                                 <ShareOutlinedIcon
                                   className="video-edit-icons"
@@ -290,7 +296,10 @@ function Content() {
                               </div>
                               <div
                                 className="download-video-data-row option-row"
-                                onClick={() => downloadVideo(element.videoURL)}
+                                onClick={() => {
+                                  downloadVideo(element.videoURL);
+                                  setShowOptions(false);
+                                }}
                               >
                                 <KeyboardTabOutlinedIcon
                                   className="video-edit-icons"
@@ -307,8 +316,9 @@ function Content() {
                                 onClick={() => {
                                   setDeleteVideoID(element._id);
                                   if (element._id !== undefined) {
+                                    setShowOptions(false);
                                     setIsDeleteClicked(true);
-                                    document.body.classList.add("bg-css");
+                                    document.body.classList.add("bg-css2");
                                   }
                                 }}
                               >
@@ -332,6 +342,11 @@ function Content() {
                           <p style={{ marginLeft: "8px" }}>
                             {element.visibility}
                           </p>
+                          <ArrowDropDownIcon
+                            fontSize="medium"
+                            className="drop-down"
+                            style={{ color: "#aaa", marginLeft: "5px", opacity: 0 }}
+                          />
                         </div>
                       </td>
                       <td>
@@ -412,11 +427,75 @@ function Content() {
         </div>
         <div className="delete-consent">
           <CheckBoxOutlineBlankIcon
+            onClick={() => {
+              setBoxClicked(!boxclicked);
+            }}
             fontSize="medium"
-            style={{ color: "#aaa" }}
+            style={
+              boxclicked === false
+                ? { color: "#aaa", cursor: "pointer" }
+                : { display: "none" }
+            }
           />
+          <CheckBoxIcon
+            onClick={() => {
+              setBoxClicked(!boxclicked);
+            }}
+            fontSize="medium"
+            style={
+              boxclicked === true
+                ? { color: "white", cursor: "pointer" }
+                : { display: "none" }
+            }
+          />
+          <p>
+            I understand that deleting a video from YouTube is permanent and
+            cannot be undone.
+          </p>
         </div>
-        <div className="delete-video-buttons"></div>
+        <div className="delete-video-buttons">
+          <button
+            className="download-delete-video delete-css"
+            onClick={() => {
+              if (DeleteVideoData) {
+                downloadVideo(DeleteVideoData.videoURL);
+              }
+            }}
+          >
+            DOWNLOAD VIDEO
+          </button>
+          <div className="extra-two-delete-btns">
+            <button
+              className="cancel-delete delete-css"
+              onClick={() => {
+                setIsDeleteClicked(false);
+                document.body.classList.remove("bg-css2");
+                window.location.reload();
+              }}
+            >
+              CANCEL
+            </button>
+            <button
+              className="delete-video-btn delete-css"
+              disabled={!boxclicked}
+              onClick={() => {
+                if (boxclicked === true && DeleteVideoData) {
+                  DeleteVideo(DeleteVideoData._id);
+                  setTimeout(() => {
+                    window.location.reload();
+                  }, 300);
+                }
+              }}
+              style={{
+                opacity: boxclicked === false ? 0.7 : 1,
+                color: boxclicked === false ? "#aaa" : "#3eaffe",
+                cursor: boxclicked === false ? "not-allowed" : "pointer",
+              }}
+            >
+              DELETE VIDEO
+            </button>
+          </div>
+        </div>
       </div>
     </>
   );
