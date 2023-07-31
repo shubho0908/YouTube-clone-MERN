@@ -125,11 +125,17 @@ function LeftPanel2() {
           </div>
           <div className="thisvideo-mg-data">
             <p className="ur-vid">Your video</p>
-            <p className="current-video-title">
-              {videodata && videodata.Title.length <= 38
-                ? videodata && videodata.Title
-                : `${videodata && videodata.Title.slice(0, 38)}...`}
-            </p>
+            <Tooltip
+              TransitionComponent={Zoom}
+              title={videodata && videodata.Title}
+              placement="bottom"
+            >
+              <p className="current-video-title">
+                {videodata && videodata.Title.length <= 38
+                  ? videodata && videodata.Title
+                  : `${videodata && videodata.Title.slice(0, 38)}...`}
+              </p>
+            </Tooltip>
           </div>
         </div>
         <div className="second-panel">
