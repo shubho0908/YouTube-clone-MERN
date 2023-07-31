@@ -53,8 +53,7 @@ function Navbar2() {
             alt="logo"
             className="youtubeLogo"
             onClick={() => {
-              navigate("/");
-              window.location.reload();
+              window.location.href = "/studio"
             }}
           />
         </div>

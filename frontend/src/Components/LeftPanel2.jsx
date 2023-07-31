@@ -5,7 +5,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import VideoLibraryOutlinedIcon from "@mui/icons-material/VideoLibraryOutlined";
 import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
 import AutoFixHighOutlinedIcon from "@mui/icons-material/AutoFixHighOutlined";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 function LeftPanel2() {
   const [email, setEmail] = useState("");
@@ -16,7 +16,6 @@ function LeftPanel2() {
   const StudioSection = localStorage.getItem("Studio-Section");
   const location = useLocation();
 
-  const navigate = useNavigate();
 
   useEffect(() => {
     const currentUrl = location.pathname;

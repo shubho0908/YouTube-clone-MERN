@@ -225,6 +225,9 @@ function Content() {
                                 className="video-edit-icons"
                                 fontSize="medium"
                                 style={{ color: "#aaa" }}
+                                onClick={()=> {
+                                  window.location.href = `/studio/video/edit/${element._id}`
+                                }}
                               />
                             </Tooltip>
                             <Tooltip
@@ -272,7 +275,12 @@ function Content() {
                                   : { display: "none" }
                               }
                             >
-                              <div className="edit-video-data-row option-row">
+                              <div
+                                className="edit-video-data-row option-row"
+                                onClick={() => {
+                                  window.location.href = `/studio/video/edit/${element._id}`;
+                                }}
+                              >
                                 <ModeEditOutlineOutlinedIcon
                                   className="video-edit-icons"
                                   fontSize="medium"
@@ -345,7 +353,11 @@ function Content() {
                           <ArrowDropDownIcon
                             fontSize="medium"
                             className="drop-down"
-                            style={{ color: "#aaa", marginLeft: "5px", opacity: 0 }}
+                            style={{
+                              color: "#aaa",
+                              marginLeft: "5px",
+                              opacity: 0,
+                            }}
                           />
                         </div>
                       </td>

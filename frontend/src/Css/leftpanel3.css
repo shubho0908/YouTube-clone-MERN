@@ -1,0 +1,101 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap");
+
+.about-video {
+  position: relative;
+  right: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-video > p {
+  font-family: "Open Sans", sans-serif;
+  margin-left: 30px;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.main-section3 {
+  display: flex;
+  flex-direction: column;
+  background-color: #282828;
+  position: fixed;
+  top: 68px;
+  color: white;
+  height: 100%;
+  width: 270px;
+  padding-top: 25px;
+  border-right: 1px solid rgba(128, 128, 128, 0.333);
+  text-align: center;
+  z-index: 2;
+}
+
+.mid-panel {
+  margin-top: 20px;
+}
+
+.current-video-thumbnail {
+  transition: all 0.2s ease;
+  width: 220px;
+}
+
+.current-video-duraation {
+  font-size: 12px;
+  color: white;
+  background-color: #000000b9;
+  width: fit-content;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 4px;
+  padding-right: 4px;
+  position: relative;
+  border-radius: 3px;
+  transition: all 0.2s ease;
+  bottom: 32px;
+  left: 205px;
+}
+
+.ur-vid {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 700;
+  text-align: left;
+  font-size: 15px;
+}
+
+.current-video-title {
+  text-align: left;
+  font-size: 12px;
+  color: #aaa;
+  margin-top: 6px;
+}
+
+.thisvideo-mg-data {
+  position: relative;
+  left: 25px;
+}
+
+.watch-video {
+  position: absolute;
+  left: 120px;
+  top: 120px;
+  opacity: 0;
+  transition: all 0.2s ease;
+}
+
+.redirect-video {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.redirect-video:hover .current-video-thumbnail{
+  opacity: 0.2;
+}
+
+.redirect-video:hover .current-video-duraation {
+  opacity: 0.3;
+}
+
+.redirect-video:hover .watch-video {
+  opacity: 1;
+}
