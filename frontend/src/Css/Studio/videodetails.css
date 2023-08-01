@@ -50,7 +50,8 @@
   resize: none;
 }
 
-.currentvideo-desc-inp:hover, .currentvideo-title-inp:hover {
+.currentvideo-desc-inp:hover,
+.currentvideo-title-inp:hover {
   border: 1px solid #aaa;
 }
 
@@ -85,16 +86,137 @@
   color: #3eaffe;
 }
 
-.current-editvideo-data{
+.current-editvideo-data {
   display: flex;
   width: 100%;
 }
 
-.video-details-left{
+.video-details-left {
   width: -webkit-fill-available;
 }
 
-.video-details-right{
+.video-details-right {
   margin-left: 30px;
   margin-top: 25px;
+}
+
+.preview-data-details {
+  position: relative;
+  bottom: 5px;
+  background-color: #1f1f1f;
+  padding: 20px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  color: white;
+  font-size: 15px;
+}
+
+.preview-part1 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.current-videolink {
+  cursor: pointer;
+}
+
+.video-linkleft > p:nth-child(1),
+.preview-part2 > p:nth-child(1),
+.preview-part3 > p:nth-child(1) {
+  font-size: 13px;
+  color: #aaaaaab0;
+}
+
+.video-linkleft > p:nth-child(2) {
+  margin-top: 5px;
+  color: #3eaffe;
+}
+
+.preview-part2 > p:nth-child(2) {
+  margin-top: 5px;
+}
+
+.current-editvideodata {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.preview-part2 {
+  margin-top: 20px;
+}
+
+.preview-part3 {
+  margin-top: 20px;
+}
+
+.copythis-btn:hover {
+  cursor: pointer;
+  color: white !important;
+}
+
+.currentvideo-thumbnailedit {
+  margin-top: 25px;
+  color: white;
+}
+
+.currentvideo-thumbnailedit > p:nth-child(2) {
+  font-size: 13px;
+  margin-top: 10px;
+  color: #aaa;
+}
+
+.uploadnew-thumbnaill > p {
+  font-size: 13px;
+  color: #aaa;
+  margin-top: 8px;
+}
+
+.uploadnew-thumbnaill {
+  cursor: pointer;
+  width: fit-content;
+  border: 0.5px dashed #aaaaaa4b;
+  padding: 24px;
+  padding-left: 38px;
+  padding-right: 38px;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 2px;
+  transition: all 0.2s ease;
+}
+
+.currnt-tbimg {
+  cursor: pointer;
+  margin-top: 24px;
+  margin-left: 10px;
+  width: 170px;
+}
+
+.currnt-tbimg:hover {
+  opacity: 1 !important;
+}
+
+.uploadnew-thumbnaill:hover {
+  border: 0.5px dashed #aaaaaab2;
+}
+.mythumbnails-sectionn {
+  display: flex;
+  align-items: center;
+}
+
+.img-optionss {
+  position: absolute;
+  left: 141px;
+  bottom: 58px;
+  padding: 5px;
+}
+
+.extra-optn {
+  color: white;
+  background-color: rgba(0, 0, 0, 0.503);
+  border-radius: 100%;
+  padding: 5px;
 }
