@@ -7,6 +7,8 @@ import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import HdIcon from "@mui/icons-material/Hd";
 import AddPhotoAlternateOutlinedIcon from "@mui/icons-material/AddPhotoAlternateOutlined";
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
+import KeyboardTabOutlinedIcon from "@mui/icons-material/KeyboardTabOutlined";
+import UndoOutlinedIcon from "@mui/icons-material/UndoOutlined";
 
 function VideoDetails() {
   const { id } = useParams();
@@ -17,6 +19,8 @@ function VideoDetails() {
   const [thumbnailImage, setThumbnailImage] = useState(null);
   const [thumbnailSelected, setThumbnailSelected] = useState(false);
   const [finalThumbnail, setFinalThumbnail] = useState(null);
+  const [OptionClicked, setOptionClicked] = useState(false);
+  const [changes, setChanges] = useState(false);
 
   useEffect(() => {
     const GetVideoData = async () => {
@@ -54,10 +58,20 @@ function VideoDetails() {
     setThumbnailImage(file);
     setThumbnailSelected(true);
     setFinalThumbnail(file);
+    setChanges(true);
     const reader = new FileReader();
     reader.onloadend = () => {};
     if (file) {
       reader.readAsDataURL(file);
+    }
+  };
+
+  const handleThumbnailDownload = () => {
+    if (thumbnailImage) {
+      const anchor = document.createElement("a");
+      anchor.href = URL.createObjectURL(thumbnailImage);
+      anchor.download = "thumbnail.png"; // Set the filename for download
+      anchor.click();
     }
   };
 
@@ -69,8 +83,21 @@ function VideoDetails() {
         <div className="current-editvideodata">
           <p className="current-tophead">Video details</p>
           <div className="thissection-btns">
-            <button>UNDO CHANGES</button>
-            <button>SAVE</button>
+            <button
+              className={changes === false ? "disabled-btn" : "video-editbtnss"}
+              disabled={changes === false ? true : false}
+            >
+              UNDO CHANGES
+            </button>
+            <button
+              className={
+                changes === false ? "disabled-btn2" : "video-editbtnss"
+              }
+              onClick={() => console.log("HELLO")}
+              disabled={changes === false ? true : false}
+            >
+              SAVE
+            </button>
           </div>
         </div>
         <div className="current-editvideo-data">
@@ -84,6 +111,7 @@ function VideoDetails() {
                   value={previewTitle}
                   onChange={(e) => {
                     setPreviewTitle(e.target.value);
+                    setChanges(true);
                   }}
                   placeholder="Add a title that describes your video"
                   maxLength={100}
@@ -95,7 +123,10 @@ function VideoDetails() {
                   type="text"
                   name="video-desc"
                   className="currentvideo-desc-inp"
-                  onChange={(e) => setPreviewDescription(e.target.value)}
+                  onChange={(e) => {
+                    setPreviewDescription(e.target.value);
+                    setChanges(true);
+                  }}
                   placeholder="Tell viewers about your video"
                   value={previewDescription}
                   maxLength={5000}
@@ -115,14 +146,15 @@ function VideoDetails() {
                       <img
                         src={URL.createObjectURL(thumbnailImage)}
                         alt="thumbnail"
-                        className="currnt-tbimg"
+                        className="currnt-tbimg2"
                         style={
                           thumbnailSelected === true && videodata
                             ? {
                                 border: "2.2px solid white",
-                                borderRadius: "3px", opacity:"1" 
+                                borderRadius: "3px",
+                                opacity: "1",
                               }
-                            : { border: "none", opacity:".4" }
+                            : { border: "none", opacity: ".4" }
                         }
                         onClick={() => {
                           setThumbnailSelected(true);
@@ -155,7 +187,7 @@ function VideoDetails() {
                       alt="thumbnail"
                       className="currnt-tbimg"
                       style={
-                        thumbnailSelected === false && videodata
+                        videodata && thumbnailSelected === false
                           ? {
                               border: "2.2px solid white",
                               borderRadius: "3px",
@@ -175,12 +207,64 @@ function VideoDetails() {
                           ? { display: "block" }
                           : { display: "none" }
                       }
+                      onClick={() => setOptionClicked(!OptionClicked)}
                     >
                       <MoreVertOutlinedIcon
                         fontSize="small"
                         className="extra-optn"
                         style={{ color: "white" }}
                       />
+                    </div>
+                    <div
+                      className="extra-img-options"
+                      style={
+                        OptionClicked === true
+                          ? { display: "flex" }
+                          : { display: "none" }
+                      }
+                    >
+                      <label
+                        htmlFor="thumbnail-upload"
+                        className="change-thumbnail-img"
+                        onClick={() => setOptionClicked(false)}
+                      >
+                        <AddPhotoAlternateOutlinedIcon
+                          fontSize="medium"
+                          style={{ color: "#aaa" }}
+                        />
+                        <p>Change</p>
+                      </label>
+                      <div
+                        className="download-thumbnail"
+                        onClick={() => {
+                          handleThumbnailDownload();
+                          setOptionClicked(false);
+                        }}
+                      >
+                        <KeyboardTabOutlinedIcon
+                          className="video-edit-icons"
+                          fontSize="medium"
+                          style={{
+                            color: "#aaa",
+                            transform: "rotate(90deg)",
+                          }}
+                        />
+                        <p>Download</p>
+                      </div>
+                      <div
+                        className="undo-thumbnail"
+                        onClick={() => {
+                          setThumbnailImage(null);
+                          setOptionClicked(false);
+                          setThumbnailSelected(false);
+                        }}
+                      >
+                        <UndoOutlinedIcon
+                          fontSize="medium"
+                          style={{ color: "#aaa" }}
+                        />
+                        <p>Undo</p>
+                      </div>
                     </div>
                   </div>
                 </div>

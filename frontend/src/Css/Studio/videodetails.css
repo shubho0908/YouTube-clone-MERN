@@ -42,7 +42,7 @@
   padding: 8px;
   width: -webkit-fill-available;
   border-radius: 3px;
-  height: 180px;
+  height: 190px;
   font-size: 15px;
   color: white;
   padding-top: 35px;
@@ -60,7 +60,7 @@
   font-size: 13px;
   position: absolute;
   left: 16px;
-  top: 66px;
+  top: 74px;
 }
 
 .desc-sample-txt {
@@ -68,7 +68,7 @@
   font-size: 13px;
   position: absolute;
   left: 16px;
-  top: 195px;
+  top: 202px;
 }
 
 .currentvideo-title-inp:focus {
@@ -188,14 +188,16 @@
   transition: all 0.2s ease;
 }
 
-.currnt-tbimg {
+.currnt-tbimg,
+.currnt-tbimg2 {
   cursor: pointer;
   margin-top: 24px;
   margin-left: 10px;
   width: 170px;
 }
 
-.currnt-tbimg:hover {
+.currnt-tbimg:hover,
+.currnt-tbimg2:hover {
   opacity: 1 !important;
 }
 
@@ -208,6 +210,7 @@
 }
 
 .img-optionss {
+  cursor: pointer;
   position: absolute;
   left: 141px;
   bottom: 58px;
@@ -219,4 +222,75 @@
   background-color: rgba(0, 0, 0, 0.503);
   border-radius: 100%;
   padding: 5px;
+}
+
+.extra-img-options {
+  position: absolute;
+  background-color: #1f1f1f;
+  display: flex;
+  flex-direction: column;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 4px;
+  bottom: -68px;
+  left: 124px;
+}
+
+.change-thumbnail-img,
+.download-thumbnail,
+.undo-thumbnail {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.change-thumbnail-img:active,
+.download-thumbnail:active,
+.undo-thumbnail:active {
+  background-color: #151515;
+}
+
+.change-thumbnail-img > p,
+.download-thumbnail > p,
+.undo-thumbnail > p {
+  margin-left: 22px;
+  font-size: 15px;
+}
+
+.thissection-btns > button:nth-child(1) {
+  background-color: #ffffff00;
+  color: #3eaffe;
+  border: none;
+  outline: none;
+  font-size: 15px;
+  position: relative;
+  right: 20px;
+}
+
+.thissection-btns > button:nth-child(2) {
+  background-color: #3eaffe;
+  color: #282828;
+  border: none;
+  outline: none;
+  font-size: 15px;
+  padding: 11px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 2px;
+}
+
+.disabled-btn {
+  cursor: not-allowed;
+  color: #aaa !important;
+  opacity: 0.6;
+}
+
+.disabled-btn2 {
+  cursor: not-allowed;
+  background-color: #aaa !important;
+  opacity: 0.6;
 }
