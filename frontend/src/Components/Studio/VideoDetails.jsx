@@ -9,18 +9,24 @@ import AddPhotoAlternateOutlinedIcon from "@mui/icons-material/AddPhotoAlternate
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 import KeyboardTabOutlinedIcon from "@mui/icons-material/KeyboardTabOutlined";
 import UndoOutlinedIcon from "@mui/icons-material/UndoOutlined";
+import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
+import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined";
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 
 function VideoDetails() {
   const { id } = useParams();
   const [videodata, setVideoData] = useState();
   const [previewTitle, setPreviewTitle] = useState("");
   const [previewDescription, setPreviewDescription] = useState("");
+  const [previewTags, setPreviewTags] = useState("");
   const videolink = "http://localhost:5173/video";
   const [thumbnailImage, setThumbnailImage] = useState(null);
   const [thumbnailSelected, setThumbnailSelected] = useState(false);
   const [finalThumbnail, setFinalThumbnail] = useState(null);
   const [OptionClicked, setOptionClicked] = useState(false);
   const [changes, setChanges] = useState(false);
+  const [privacyClicked, setprivacyClicked] = useState(false);
+  const [updatePrivacy, setprivacy] = useState(null);
 
   useEffect(() => {
     const GetVideoData = async () => {
@@ -33,6 +39,7 @@ function VideoDetails() {
           setVideoData(data);
           setPreviewTitle(data.Title);
           setPreviewDescription(data.Description);
+          setPreviewTags(data.Tags);
         }
       } catch (error) {
         // console.log(error.message);
@@ -109,6 +116,7 @@ function VideoDetails() {
                   name="video-title"
                   className="currentvideo-title-inp"
                   value={previewTitle}
+                  required
                   onChange={(e) => {
                     setPreviewTitle(e.target.value);
                     setChanges(true);
@@ -122,6 +130,7 @@ function VideoDetails() {
                 <textarea
                   type="text"
                   name="video-desc"
+                  required
                   className="currentvideo-desc-inp"
                   onChange={(e) => {
                     setPreviewDescription(e.target.value);
@@ -268,6 +277,27 @@ function VideoDetails() {
                     </div>
                   </div>
                 </div>
+                <div className="currnt-video-tags-section">
+                  <p>Tags</p>
+                  <p>
+                    Tags can be useful if content in your video is commonly
+                    misspelled. Otherwise, tags play a minimal role in helping
+                    viewers find your video.
+                  </p>
+                  <input
+                    type="text"
+                    name="video-title"
+                    className="currentvid-tagsinp"
+                    value={previewTags}
+                    required
+                    onChange={(e) => {
+                      setPreviewTags(e.target.value);
+                      setChanges(true);
+                    }}
+                    placeholder="Add tags to rank your video up"
+                    maxLength={200}
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -323,6 +353,66 @@ function VideoDetails() {
                     style={{ color: "#3ea6ff", marginTop: "6px" }}
                   />
                 </div>
+              </div>
+            </div>
+            <div
+              className="video-visibility-section"
+              onClick={() => {
+                setprivacyClicked(!privacyClicked);
+              }}
+            >
+              <p>Visibility</p>
+              <div className="visibility-current-data">
+                <div className="privacy-current">
+                  <RemoveRedEyeOutlinedIcon
+                    fontSize="small"
+                    style={{ color: "#2ba640" }}
+                  />
+                  {updatePrivacy === null ? (
+                    <p>{videodata && videodata.visibility}</p>
+                  ) : (
+                    <p>{updatePrivacy}</p>
+                  )}
+                </div>
+                <ArrowDropDownOutlinedIcon
+                  fontSize="medium"
+                  style={{ color: "#aaa" }}
+                />
+              </div>
+            </div>
+            <div
+              className="select-any-visibility"
+              style={
+                privacyClicked === true
+                  ? { display: "block" }
+                  : { display: "none" }
+              }
+            >
+              <div
+                className="thispublic-visibility"
+                onClick={() => {
+                  setprivacy("Public");
+                  setprivacyClicked(false);
+                }}
+              >
+                <RemoveRedEyeOutlinedIcon
+                  fontSize="small"
+                  style={{ color: "#2ba640" }}
+                />
+                <p>Public</p>
+              </div>
+              <div
+                className="thisprivate-visibility"
+                onClick={() => {
+                  setprivacy("Private");
+                  setprivacyClicked(false);
+                }}
+              >
+                <VisibilityOffOutlinedIcon
+                  fontSize="small"
+                  style={{ color: "rgb(170 170 170 / 53%)" }}
+                />
+                <p>Private</p>
               </div>
             </div>
           </div>

@@ -50,6 +50,20 @@
   resize: none;
 }
 
+.currentvid-tagsinp {
+  background-color: rgba(255, 255, 255, 0);
+  border: 1px solid #aaaaaa6b;
+  outline: none;
+  padding: 8px;
+  margin-top: 15px;
+  width: -webkit-fill-available;
+  border-radius: 3px;
+  height: 40px;
+  font-size: 15px;
+  color: white;
+  padding-left: 15px;
+}
+
 .currentvideo-desc-inp:hover,
 .currentvideo-title-inp:hover {
   border: 1px solid #aaa;
@@ -157,7 +171,7 @@
 }
 
 .currentvideo-thumbnailedit {
-  margin-top: 25px;
+  margin-top: 30px;
   color: white;
 }
 
@@ -212,8 +226,8 @@
 .img-optionss {
   cursor: pointer;
   position: absolute;
-  left: 141px;
-  bottom: 58px;
+  left: 144px;
+  bottom: 205px;
   padding: 5px;
 }
 
@@ -232,8 +246,8 @@
   padding-top: 5px;
   padding-bottom: 5px;
   border-radius: 4px;
-  bottom: -68px;
-  left: 124px;
+  bottom: 85px;
+  left: 140px;
 }
 
 .change-thumbnail-img,
@@ -293,4 +307,98 @@
   cursor: not-allowed;
   background-color: #aaa !important;
   opacity: 0.6;
+}
+
+.currnt-video-tags-section {
+  margin-top: 30px;
+}
+
+.currnt-video-tags-section > p:nth-child(2) {
+  font-size: 13px;
+  margin-top: 10px;
+  color: #aaa;
+}
+
+.video-visibility-section {
+  cursor: pointer;
+  padding: 12px;
+  border: 1px solid #aaaaaa6b;
+  color: white;
+  border-radius: 4px;
+  margin-top: 20px;
+}
+
+.video-visibility-section:hover {
+  border: 1px solid white;
+}
+
+.video-visibility-section > p {
+  font-size: 13px;
+  color: #aaa;
+}
+
+.visibility-current-data {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.privacy-current {
+  display: flex;
+  align-items: center;
+}
+
+.privacy-current > p {
+  font-size: 15px;
+  margin-left: 10px;
+}
+
+.thispublic-visibility,
+.thisprivate-visibility {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  color: white;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 20px;
+  padding-right: 20px;
+  transition: all .15s ease;
+}
+
+.thispublic-visibility:hover,
+.thisprivate-visibility:hover {
+  background-color: #131313;
+}
+
+.thispublic-visibility:active,
+.thisprivate-visibility:active {
+  background-color: #131313;
+}
+
+.thispublic-visibility > p,
+.thisprivate-visibility > p {
+  margin-left: 20px;
+  font-size: 15px;
+}
+
+.select-any-visibility {
+  position: relative;
+  background-color: #1f1f1f;
+  margin-top: 8px;
+  width: 60%;
+  animation: blowdown .25s ease;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+
+@keyframes blowdown {
+  0%{
+    bottom: 15px;
+    opacity: 0;
+  }
+  100%{
+    bottom: 0;
+    opacity: 1;
+  }
 }
