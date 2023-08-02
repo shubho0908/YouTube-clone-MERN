@@ -17,7 +17,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 
 function Content() {
   const [userVideos, setUserVideos] = useState([]);
@@ -351,22 +351,21 @@ function Content() {
                       </td>
                       <td>
                         <div className="privacy-table">
-                          <RemoveRedEyeOutlinedIcon
-                            fontSize="small"
-                            style={{ color: "#2ba640" }}
-                          />
+                          {element.visibility === "Public" ? (
+                            <RemoveRedEyeOutlinedIcon
+                              fontSize="small"
+                              style={{ color: "#2ba640" }}
+                            />
+                          ) : (
+                            <VisibilityOffOutlinedIcon
+                              fontSize="small"
+                              style={{ color: "rgb(170 170 170 / 53%)" }}
+                            />
+                          )}
                           <p style={{ marginLeft: "8px" }}>
                             {element.visibility}
                           </p>
-                          <ArrowDropDownIcon
-                            fontSize="medium"
-                            className="drop-down"
-                            style={{
-                              color: "#aaa",
-                              marginLeft: "5px",
-                              opacity: 0,
-                            }}
-                          />
+                          
                         </div>
                       </td>
                       <td>

@@ -4,6 +4,8 @@
 .channel-customize {
   background-color: #282828;
   height: max-content;
+  animation: FADEINN 1s ease;
+
 }
 
 .channel-customize-section {

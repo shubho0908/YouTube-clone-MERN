@@ -29,6 +29,8 @@
   border-right: 1px solid rgba(128, 128, 128, 0.333);
   text-align: center;
   z-index: 2;
+  animation: FADEINN 1s ease;
+
 }
 
 .current-video-thumbnail {

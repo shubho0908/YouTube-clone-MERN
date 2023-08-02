@@ -12,6 +12,8 @@
   text-align: center;
   line-height: 30px;
   z-index: 2;
+  animation: FADEINN 1s ease;
+
 }
 
 .profile_img {
