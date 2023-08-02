@@ -12,6 +12,8 @@ import UndoOutlinedIcon from "@mui/icons-material/UndoOutlined";
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { storage } from "../../Firebase";
 
 function VideoDetails() {
   const { id } = useParams();
@@ -62,12 +64,22 @@ function VideoDetails() {
 
   const handleThumbnailUpload = (e) => {
     const file = e.target.files[0];
-    setThumbnailImage(file);
-    setThumbnailSelected(true);
-    setFinalThumbnail(file);
-    setChanges(true);
     const reader = new FileReader();
-    reader.onloadend = () => {};
+    reader.onloadend = () => {
+      const img = new Image();
+      img.onload = () => {
+        const aspectRatio = img.width / img.height;
+        if (Math.abs(aspectRatio - 16 / 9) < 0.01) {
+          setThumbnailImage(file);
+          setThumbnailSelected(true);
+          setFinalThumbnail(file);
+          setChanges(true);
+        } else {
+          alert("Please upload an image with a 16:9 aspect ratio.");
+        }
+      };
+      img.src = reader.result;
+    };
     if (file) {
       reader.readAsDataURL(file);
     }
@@ -77,8 +89,91 @@ function VideoDetails() {
     if (thumbnailImage) {
       const anchor = document.createElement("a");
       anchor.href = URL.createObjectURL(thumbnailImage);
-      anchor.download = "thumbnail.png"; // Set the filename for download
+      anchor.download = "thumbnail.png"; //
       anchor.click();
+    }
+  };
+
+  const confirmReload = () => {
+    if (changes) {
+      const userConfirmation = window.confirm(
+        "Changes you made may not be saved. Do you want to continue?"
+      );
+      if (userConfirmation) {
+        window.location.reload();
+      } else {
+        // User clicked on "Cancel", do nothing
+      }
+    }
+  };
+
+  const UploadThumbnail = async () => {
+    try {
+      if (
+        !finalThumbnail ||
+        (videodata && finalThumbnail === videodata.thumbnailURL)
+      ) {
+        return videodata.thumbnailURL;
+      }
+
+      const fileReference = ref(storage, `thumbnail/${finalThumbnail.name}`);
+      const uploadData = uploadBytesResumable(fileReference, finalThumbnail);
+
+      return new Promise((resolve, reject) => {
+        uploadData.on(
+          "state_changed",
+          null,
+          (error) => {
+            console.log(error);
+            reject(error);
+          },
+          async () => {
+            try {
+              const downloadURL = await getDownloadURL(uploadData.snapshot.ref);
+              resolve(downloadURL);
+            } catch (error) {
+              console.log(error);
+              reject(error);
+            }
+          }
+        );
+      });
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  };
+
+  const SaveData = async () => {
+    try {
+      let img = await UploadThumbnail();
+      let newPrivacy = updatePrivacy === null ? videodata.visibility : updatePrivacy;
+
+      const data = {
+        thumbnail: img,
+        title: previewTitle,
+        desc: previewDescription,
+        tags: previewTags,
+        privacy: newPrivacy,
+      };
+
+      const response = await fetch(
+        `http://localhost:3000/savevideoeditdetails/${id}`,
+        {
+          method: "POST",
+          body: JSON.stringify(data),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const Data = await response.json();
+      console.log(Data);
+      if (Data) {
+        window.location.reload()
+      }
+    } catch (error) {
+      // console.log(error);
     }
   };
 
@@ -93,6 +188,7 @@ function VideoDetails() {
             <button
               className={changes === false ? "disabled-btn" : "video-editbtnss"}
               disabled={changes === false ? true : false}
+              onClick={confirmReload}
             >
               UNDO CHANGES
             </button>
@@ -100,7 +196,7 @@ function VideoDetails() {
               className={
                 changes === false ? "disabled-btn2" : "video-editbtnss"
               }
-              onClick={() => console.log("HELLO")}
+              onClick={SaveData}
               disabled={changes === false ? true : false}
             >
               SAVE
@@ -159,10 +255,10 @@ function VideoDetails() {
                         style={
                           thumbnailSelected === true && videodata
                             ? {
-                                border: "2.2px solid white",
-                                borderRadius: "3px",
-                                opacity: "1",
-                              }
+                              border: "2.2px solid white",
+                              borderRadius: "3px",
+                              opacity: "1",
+                            }
                             : { border: "none", opacity: ".4" }
                         }
                         onClick={() => {
@@ -198,10 +294,10 @@ function VideoDetails() {
                       style={
                         videodata && thumbnailSelected === false
                           ? {
-                              border: "2.2px solid white",
-                              borderRadius: "3px",
-                              opacity: "1",
-                            }
+                            border: "2.2px solid white",
+                            borderRadius: "3px",
+                            opacity: "1",
+                          }
                           : { border: "none", opacity: ".4" }
                       }
                       onClick={() => {
@@ -324,10 +420,9 @@ function VideoDetails() {
                       }}
                     >
                       {videolink +
-                        `/${
-                          videodata && videodata._id.length <= 5
-                            ? videodata && videodata._id
-                            : `${videodata && videodata._id.slice(0, 5)}...`
+                        `/${videodata && videodata._id.length <= 5
+                          ? videodata && videodata._id
+                          : `${videodata && videodata._id.slice(0, 5)}...`
                         }`}
                     </p>
                   </div>
@@ -364,10 +459,21 @@ function VideoDetails() {
               <p>Visibility</p>
               <div className="visibility-current-data">
                 <div className="privacy-current">
-                  <RemoveRedEyeOutlinedIcon
-                    fontSize="small"
-                    style={{ color: "#2ba640" }}
-                  />
+                  {updatePrivacy === "Public" ||
+                    (updatePrivacy === null &&
+                      videodata &&
+                      videodata.visibility === "Public") ? (
+                    <RemoveRedEyeOutlinedIcon
+                      fontSize="small"
+                      style={{ color: "#2ba640" }}
+                    />
+                  ) : (
+                    <VisibilityOffOutlinedIcon
+                      fontSize="small"
+                      style={{ color: "rgb(170 170 170 / 53%)" }}
+                    />
+                  )}
+
                   {updatePrivacy === null ? (
                     <p>{videodata && videodata.visibility}</p>
                   ) : (
@@ -393,6 +499,7 @@ function VideoDetails() {
                 onClick={() => {
                   setprivacy("Public");
                   setprivacyClicked(false);
+                  setChanges(true);
                 }}
               >
                 <RemoveRedEyeOutlinedIcon
@@ -406,6 +513,7 @@ function VideoDetails() {
                 onClick={() => {
                   setprivacy("Private");
                   setprivacyClicked(false);
+                  setChanges(true);
                 }}
               >
                 <VisibilityOffOutlinedIcon

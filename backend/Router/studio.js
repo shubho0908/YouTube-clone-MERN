@@ -44,7 +44,6 @@ Studio.post("/deletevideo/:videoId", async (req, res) => {
   }
 });
 
-
 Studio.get("/getvideodata/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -55,7 +54,9 @@ Studio.get("/getvideodata/:id", async (req, res) => {
       return res.status(404).json({ error: "Video not found" });
     }
 
-    const myVideo = video.VideoData.find((item) => item._id.toString() === id.toString());
+    const myVideo = video.VideoData.find(
+      (item) => item._id.toString() === id.toString()
+    );
 
     res.json(myVideo);
   } catch (error) {
@@ -65,21 +66,90 @@ Studio.get("/getvideodata/:id", async (req, res) => {
 });
 
 Studio.get("/getdeletevideodata/:videoId", async (req, res) => {
-    try {
-      const { videoId } = req.params;
-      const video = await videodata.findOne({ "VideoData._id": videoId });
-  
-      if (!video) {
-        return res.status(404).json({ error: "Video not found" });
-      }
-  
-      const myVideo = video.VideoData.find((item) => item._id.toString() === videoId.toString());
-  
-      res.json(myVideo);
-    } catch (error) {
-      res.status(500).json({ error: "Internal server error" });
+  try {
+    const { videoId } = req.params;
+    const video = await videodata.findOne({ "VideoData._id": videoId });
+
+    if (!video) {
+      return res.status(404).json({ error: "Video not found" });
     }
-  });
-  
+
+    const myVideo = video.VideoData.find(
+      (item) => item._id.toString() === videoId.toString()
+    );
+
+    res.json(myVideo);
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+Studio.post("/savevideoeditdetails/:videoId", async (req, res) => {
+  try {
+    const { videoId } = req.params;
+    const { thumbnail, title, desc, tags, privacy } = req.body;
+    
+    // Update VideoData in the videodata collection
+    await videodata.updateOne(
+      { "VideoData._id": videoId },
+      {
+        $set: {
+          "VideoData.$.thumbnailURL": thumbnail,
+          "VideoData.$.Title": title,
+          "VideoData.$.Description": desc,
+          "VideoData.$.Tags": tags,
+          "VideoData.$.visibility": privacy,
+        },
+      }
+    );
+    
+    // Update likedVideos in the userData collection
+    await userData.updateMany(
+      { "likedVideos.likedVideoID": videoId },
+      {
+        $set: {
+          "likedVideos.$.thumbnailURL": thumbnail,
+          "likedVideos.$.Title": title,
+        },
+      }
+    );
+    
+    // Update watchLater in the userData collection
+    await userData.updateMany(
+      { "watchLater.savedVideoID": videoId },
+      {
+        $set: {
+          "watchLater.$.thumbnailURL": thumbnail,
+          "watchLater.$.Title": title,
+        },
+      }
+    );
+    
+    // Update Playlists in the userData collection
+    await userData.updateMany(
+      { "Playlists.playlist_videos.videoID": videoId },
+      {
+        $set: {
+          "Playlists.$[playlist].playlist_videos.$[video]": {
+            thumbnail: thumbnail,
+            title: title,
+            description: desc,
+          },
+        },
+      },
+      {
+        arrayFilters: [
+          { "playlist.playlist_videos.videoID": videoId },
+          { "video.videoID": videoId },
+        ],
+      }
+    );
+
+    res.status(200).json({ message: "Video updated successfully" });
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 
 module.exports = Studio;

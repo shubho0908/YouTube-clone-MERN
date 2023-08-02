@@ -70,8 +70,7 @@ function ChannelPlaylists(prop) {
         <div className="created-playlist-section">
           <p>Created playlists</p>
           <div className="thischannel-playlists">
-            {PlaylistData &&
-              PlaylistData.length > 0 &&
+            {PlaylistData && PlaylistData !== "No playlists available..." &&
               PlaylistData.map((element, index) => {
                 const backgroundColor =
                   playlistColors[index] || playlistColors[0];
