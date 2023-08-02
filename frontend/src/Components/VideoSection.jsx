@@ -172,6 +172,24 @@ function VideoSection() {
   }, [id]);
 
   useEffect(() => {
+    const PushTrending = async () => {
+      try {
+        if (id !== undefined) {
+          const response = await fetch(
+            `http://localhost:3000/checktrending/${id}`
+          );
+          await response.json();
+        }
+      } catch (error) {
+        //console.log(error.message);
+      }
+    };
+    const interval = setInterval(PushTrending, 100);
+
+    return () => clearInterval(interval);
+  }, [id]);
+
+  useEffect(() => {
     const getVideoData = async () => {
       try {
         if (id !== undefined) {
@@ -677,16 +695,18 @@ function VideoSection() {
 
   const saveVideo = async () => {
     try {
-      const response = await fetch(
-        `http://localhost:3000/watchlater/${id}/${email}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      await response.json();
+      if (id !== undefined && email !== undefined) {
+        const response = await fetch(
+          `http://localhost:3000/watchlater/${id}/${email}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        await response.json();
+      }
     } catch (error) {
       //console.log(error.message);
     }
@@ -1854,8 +1874,11 @@ function VideoSection() {
           </div>
           <div
             className="playlist-create-btn"
-              style={loading === true ? {pointerEvents:"none"} :{pointerEvents:"auto"} }
-
+            style={
+              loading === true
+                ? { pointerEvents: "none" }
+                : { pointerEvents: "auto" }
+            }
             onClick={() => {
               if (playlistName !== "" || privacy !== "") {
                 AddPlaylist();

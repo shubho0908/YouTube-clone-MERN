@@ -83,7 +83,8 @@
   transition: transform 0.15s ease;
 }
 
-.customize-channel:active, .manage-videos:active {
+.customize-channel:active,
+.manage-videos:active {
   transform: scale(0.9);
 }
 
@@ -389,7 +390,7 @@
   margin-top: 30px;
 }
 
-.channel-desc>a{
+.channel-desc > a {
   color: #3ea6ff;
 }
 
@@ -749,4 +750,62 @@
   object-fit: cover;
   width: 100vw;
   height: 35vh;
+}
+
+.thischannel-no-content {
+  position: absolute;
+  color: white;
+  top: 310px;
+  left: 300px;
+  font-size: 15px;
+}
+
+.thischannel-no-content2 {
+  position: absolute;
+  color: white;
+  top: 280px;
+  font-size: 15px;
+  width: -webkit-fill-available;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  height: 500px;
+  justify-content: center;
+}
+
+.thischannel-no-content2 > p:nth-child(2) {
+  font-size: 22px;
+  margin-top: 35px;
+}
+
+.thischannel-no-content2 > p:nth-child(3) {
+  color: #aaa;
+  font-size: 13px;
+  margin-top: 10px;
+  width: 45%;
+  text-align: center;
+}
+
+.novideo {
+  width: 200px;
+}
+
+.upload-videoo {
+  cursor: pointer;
+  color: #0f0f0f;
+  font-size: 15px;
+  background-color: #3eaffe;
+  border: none;
+  outline: none;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 22px;
+  margin-top: 30px;
+  transition: all 0.16s ease;
+}
+
+.upload-videoo:active {
+  transform: scale(0.9);
 }

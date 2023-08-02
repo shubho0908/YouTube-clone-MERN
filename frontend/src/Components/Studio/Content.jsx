@@ -18,6 +18,7 @@ import Zoom from "@mui/material/Zoom";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
+import noImage from "../../img/no-video2.png"
 
 function Content() {
   const [userVideos, setUserVideos] = useState([]);
@@ -83,7 +84,7 @@ function Content() {
     setChangeSort(!changeSort);
   };
 
-  const sortedUserVideos = userVideos.sort((a, b) => {
+  const sortedUserVideos = userVideos && userVideos.length > 0 && userVideos.sort((a, b) => {
     if (sortByDateAsc) {
       return new Date(a.uploaded_date) - new Date(b.uploaded_date);
     } else {
@@ -365,7 +366,7 @@ function Content() {
                           <p style={{ marginLeft: "8px" }}>
                             {element.visibility}
                           </p>
-                          
+
                         </div>
                       </td>
                       <td>
@@ -393,6 +394,12 @@ function Content() {
             </table>
           )}
         </div>
+        <div className="novideo-available"
+          style={userVideos && userVideos.message === "USER DOESN'T EXIST" ? { display: "flex" } : { display: "none" }}
+        >
+          <img src={noImage} alt="no-video" className="no-content-img" />
+          <p>No content available</p>
+        </div>
       </div>
       <div
         className="last-delete-warning"
@@ -419,12 +426,12 @@ function Content() {
                   DeleteVideoData && DeleteVideoData.videoLength % 60
                 ) < 10
                   ? "0" +
-                    Math.round(
-                      DeleteVideoData && DeleteVideoData.videoLength % 60
-                    )
+                  Math.round(
+                    DeleteVideoData && DeleteVideoData.videoLength % 60
+                  )
                   : Math.round(
-                      DeleteVideoData && DeleteVideoData.videoLength % 60
-                    ))}
+                    DeleteVideoData && DeleteVideoData.videoLength % 60
+                  ))}
             </p>
             <div className="thisdelete-video-details">
               <p className="delete-title">

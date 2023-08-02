@@ -8,6 +8,7 @@
     "jsonwebtoken": "^9.0.0",
     "mongoose": "^7.2.4",
     "nodemon": "^3.0.1",
+    "react-top-loading-bar": "^2.3.1",
     "validator": "^13.9.0"
   }
 }

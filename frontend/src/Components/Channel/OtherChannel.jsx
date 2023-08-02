@@ -31,7 +31,7 @@ function OtherChannel() {
   const token = localStorage.getItem("userToken");
   const [isSubscribed, setIsSubscribed] = useState();
   const [Subscribers, setSubscribers] = useState();
-  const [margintop, setMarginTop] = useState("155px");
+  const [Top, setTop] = useState("155px");
   const [coverIMG, setCoverIMG] = useState("");
 
   useEffect(() => {
@@ -125,23 +125,23 @@ function OtherChannel() {
 
   useEffect(() => {
     if (Section === "Home" && coverIMG !== "No data") {
-      setMarginTop("430px");
+      setTop("46%");
     } else if (Section === "Home" && coverIMG === "No data") {
-      setMarginTop("155px");
+      setTop("155px");
     } else if (Section === "Videos" && coverIMG !== "No data") {
-      setMarginTop("400px");
+      setTop("43%");
     } else if (Section === "Videos" && coverIMG === "No data") {
-      setMarginTop("135px");
+      setTop("135px");
     } else if (
       (Section !== "Videos" && coverIMG === "No data") ||
       (Section !== "Home" && coverIMG === "No data")
     ) {
-      setMarginTop("120px");
+      setTop("120px");
     } else if (
       (Section !== "Videos" && coverIMG !== "No data") ||
       (Section !== "Home" && coverIMG !== "No data")
     ) {
-      setMarginTop("380px");
+      setTop("43%");
     }
   }, [Section, coverIMG]);
 
@@ -212,7 +212,7 @@ function OtherChannel() {
         ""
       )}
       {ChannelProfile ? (
-        <div className="channel-main-content" style={{ marginTop: margintop }}>
+        <div className="channel-main-content" style={{ top: Top }}>
           <div className="channel-top-content">
             <div className="channel-left-content">
               <img
@@ -347,6 +347,11 @@ function OtherChannel() {
               {Section === "Videos" ? (
                 <p
                   className="channel-videos1"
+                  style={
+                    myVideos && myVideos.message === "USER DOESN'T EXIST"
+                      ? { display: "none" }
+                      : { display: "block" }
+                  }
                   onClick={() => {
                     localStorage.setItem("Section", "Videos");
                     window.location.reload();
@@ -357,6 +362,11 @@ function OtherChannel() {
               ) : (
                 <p
                   className="channel-videos"
+                  style={
+                    myVideos && myVideos.message === "USER DOESN'T EXIST"
+                      ? { display: "none" }
+                      : { display: "block" }
+                  }
                   onClick={() => {
                     localStorage.setItem("Section", "Videos");
                     window.location.reload();
@@ -433,7 +443,13 @@ function OtherChannel() {
           <br />
           <hr className="seperate seperate-new" />
           {Section === "Home" ? <ChannelHome newmail={Email} /> : ""}
-          {Section === "Videos" ? <ChannelVideos newmail={Email} /> : ""}
+          {Section === "Videos" &&
+          myVideos &&
+          myVideos.message !== "USER DOESN'T EXIST" ? (
+            <ChannelVideos newmail={Email} />
+          ) : (
+            ""
+          )}
           {Section === "Playlists" ? <ChannelPlaylists newmail={Email} /> : ""}
           {Section === "Subscriptions" ? (
             <FeaturedChannels newmail={Email} />

@@ -5,15 +5,14 @@ import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import "../Css/navbar.css";
 import StudioLogo from "../img/studio.png";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import jwtDecode from "jwt-decode";
+import AccountPop2 from "./AccountPop2";
 
 function Navbar2() {
   const token = localStorage.getItem("userToken");
   const [email, setEmail] = useState();
   const [profilePic, setProfilePic] = useState();
-
-  const navigate = useNavigate();
+  const [showPop, setShowPop] = useState(false);
 
   useEffect(() => {
     if (token) {
@@ -53,7 +52,7 @@ function Navbar2() {
             alt="logo"
             className="youtubeLogo"
             onClick={() => {
-              window.location.href = "/studio"
+              window.location.href = "/studio";
             }}
           />
         </div>
@@ -64,7 +63,11 @@ function Navbar2() {
               fontSize="medium"
               style={{ color: "rgb(160, 160, 160)" }}
             />
-            <input type="text" placeholder="Search across your channel" id="searchType2" />
+            <input
+              type="text"
+              placeholder="Search across your channel"
+              id="searchType2"
+            />
           </div>
         </div>
         <div className="right-bar2">
@@ -73,8 +76,15 @@ function Navbar2() {
             alt=""
             className="profile-pic"
             style={token ? { display: "block" } : { display: "none" }}
+            onClick={() => setShowPop(!showPop)}
           />
         </div>
+      </div>
+      <div
+        className="ac-pop"
+        style={showPop === true ? { display: "block" } : { display: "none" }}
+      >
+        <AccountPop2 />
       </div>
     </>
   );

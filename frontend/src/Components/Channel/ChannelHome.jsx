@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import jwtDecode from "jwt-decode";
 import ReactLoading from "react-loading";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import noImage from "../../img/no-video.jpg";
 
 function ChannelHome(prop) {
   const [myVideos, setMyVideos] = useState([]);
@@ -76,7 +77,14 @@ function ChannelHome(prop) {
 
   return (
     <>
-      <div className="myvideos-section">
+      <div
+        className="myvideos-section"
+        style={
+          myVideos && myVideos.message === "USER DOESN'T EXIST"
+            ? { display: "none" }
+            : { display: "block" }
+        }
+      >
         {myVideos.length > 0 ? (
           <div
             className="user-video"
@@ -171,8 +179,22 @@ function ChannelHome(prop) {
         )}
       </div>
       <br />
-      <hr className="seperate seperate-new1" />
-      <div className="myuploaded-videos">
+      <hr
+        className="seperate seperate-new1"
+        style={
+          myVideos && myVideos.message === "USER DOESN'T EXIST"
+            ? { display: "none" }
+            : { display: "block" }
+        }
+      />
+      <div
+        className="myuploaded-videos"
+        style={
+          myVideos && myVideos.message === "USER DOESN'T EXIST"
+            ? { display: "none" }
+            : { display: "block" }
+        }
+      >
         <div className="section-headtxt">
           <p className="section-title">Videos</p>
           <div
@@ -286,8 +308,22 @@ function ChannelHome(prop) {
             })}
         </div>
       </div>
-      <hr className="seperate seperate-new2" />
-      <div className="mypopular-videos">
+      <hr
+        className="seperate seperate-new2"
+        style={
+          myVideos && myVideos.message === "USER DOESN'T EXIST"
+            ? { display: "none" }
+            : { display: "block" }
+        }
+      />
+      <div
+        className="mypopular-videos"
+        style={
+          myVideos && myVideos.message === "USER DOESN'T EXIST"
+            ? { display: "none" }
+            : { display: "block" }
+        }
+      >
         <div className="section-headtxt">
           <p className="section-title">Popular videos</p>
           <div
@@ -400,6 +436,43 @@ function ChannelHome(prop) {
               );
             })}
         </div>
+      </div>
+      <div
+        className="thischannel-no-content"
+        style={
+          myVideos &&
+          myVideos.message === "USER DOESN'T EXIST" &&
+          Email !== prop.newmail
+            ? { display: "block" }
+            : { display: "none" }
+        }
+      >
+        <p>This channel doesn&apos;t have any content.</p>
+      </div>
+      <div
+        className="thischannel-no-content2"
+        style={
+          myVideos &&
+          myVideos.message === "USER DOESN'T EXIST" &&
+          Email === prop.newmail
+            ? { display: "flex" }
+            : { display: "none" }
+        }
+      >
+        <img src={noImage} alt="upload" className="novideo" />
+        <p>Upload a video to get started</p>
+        <p>
+          Start sharing your story and connecting with viewers. Videos you
+          upload will show up here.
+        </p>
+        <button
+          className="upload-videoo"
+          onClick={() => {
+            window.location.href = "/studio";
+          }}
+        >
+          Upload video
+        </button>
       </div>
     </>
   );

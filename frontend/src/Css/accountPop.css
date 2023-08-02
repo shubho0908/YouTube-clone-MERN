@@ -13,6 +13,21 @@
   backdrop-filter: blur(8px);
   animation: slowdown 0.2s ease;
 }
+.account-pop2 {
+  /* background-color: #282828; */
+  background-color: #292929;
+  position: fixed;
+  color: white;
+  z-index: 20;
+  right: 20px;
+  top: 68px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-radius: 10px;
+  width: 280px;
+  animation: slowdown 0.2s ease;
+  box-shadow: rgba(0, 0, 0, 0.079) 0px 10px 20px, rgba(0, 0, 0, 0.05) 0px 6px 6px;
+}
 
 @keyframes slowdown {
   0% {
