@@ -85,11 +85,13 @@ function Basic() {
       if (
         Email !== undefined &&
         channelName !== undefined &&
-        channelDescription !== undefined
+        channelDescription !== undefined &&
+        channelID !== undefined
       ) {
         const data = {
           channelName,
           channelDescription,
+          channelID,
         };
 
         const response = await fetch(
@@ -103,9 +105,8 @@ function Basic() {
           }
         );
 
-        const user = await response.json();
-        console.log(user);
-        if (user) {
+        const Data = await response.json();
+        if (Data === "DONE") {
           setLoading(false);
           setChanges(false);
         } else {

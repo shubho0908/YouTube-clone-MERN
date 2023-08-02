@@ -465,10 +465,11 @@ Channel.post("/savecustomization/:email", async (req, res) => {
 Channel.post("/updatechanneldata/:email", async (req, res) => {
   try {
     const email = req.params.email;
-    const { channelName, channelDescription } = req.body;
+    const { channelName, channelDescription, channelID } = req.body;
 
     const user = await userData.findOne({ email });
     const video = await videodata.findOne({ email });
+    const trending = await TrendingData.findOne({ email });
 
     if (!user) {
       return res.status(404).json({ error: "User not found" });
@@ -482,9 +483,27 @@ Channel.post("/updatechanneldata/:email", async (req, res) => {
     user.channelData[0].channelName = channelName;
     user.channelData[0].channelDescription = channelDescription;
 
-    user.Playlists.forEach(element => {
-      element.playlist_owner = channelName
+    user.Playlists.forEach((element) => {
+      element.playlist_owner = channelName;
     });
+
+    await userData.updateMany(
+      { "subscribedChannels.channelID": channelID },
+      {
+        $set: {
+          "subscribedChannels.$.channelname": channelName,
+        },
+      }
+    );
+
+    await userData.updateMany(
+      { "featuredChannels.channelID": channelID },
+      {
+        $set: {
+          "featuredChannels.$.channelname": channelName,
+        },
+      }
+    );
 
     video.VideoData.forEach((item) => {
       item.uploader = channelName;
@@ -492,9 +511,14 @@ Channel.post("/updatechanneldata/:email", async (req, res) => {
 
     await user.save();
     await video.save();
-    await trending.save();
 
-    res.json(findMail);
+    if (!trending) {
+      return res.json("DONE");
+    } else {
+      trending.uploader = channelName;
+      await trending.save();
+      res.json("DONE");
+    }
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
   }

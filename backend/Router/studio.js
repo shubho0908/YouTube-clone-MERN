@@ -88,8 +88,18 @@ Studio.post("/savevideoeditdetails/:videoId", async (req, res) => {
   try {
     const { videoId } = req.params;
     const { thumbnail, title, desc, tags, privacy } = req.body;
-    
-    // Update VideoData in the videodata collection
+
+    await TrendingData.updateOne(
+      { videoid: videoId },
+      {
+        $set: {
+          thumbnailURL: thumbnail,
+          Title: title,
+          Description: desc,
+        },
+      }
+    );
+
     await videodata.updateOne(
       { "VideoData._id": videoId },
       {
@@ -102,8 +112,7 @@ Studio.post("/savevideoeditdetails/:videoId", async (req, res) => {
         },
       }
     );
-    
-    // Update likedVideos in the userData collection
+
     await userData.updateMany(
       { "likedVideos.likedVideoID": videoId },
       {
@@ -113,8 +122,7 @@ Studio.post("/savevideoeditdetails/:videoId", async (req, res) => {
         },
       }
     );
-    
-    // Update watchLater in the userData collection
+
     await userData.updateMany(
       { "watchLater.savedVideoID": videoId },
       {
@@ -124,8 +132,7 @@ Studio.post("/savevideoeditdetails/:videoId", async (req, res) => {
         },
       }
     );
-    
-    // Update Playlists in the userData collection
+
     await userData.updateMany(
       { "Playlists.playlist_videos.videoID": videoId },
       {
@@ -150,6 +157,5 @@ Studio.post("/savevideoeditdetails/:videoId", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
-
 
 module.exports = Studio;
