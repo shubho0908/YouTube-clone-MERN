@@ -81,7 +81,11 @@ function LeftPanel2() {
         className="main-section3"
         style={menuClicked === true ? { display: "none" } : { display: "flex" }}
       >
-        <div className="first-panel">
+        <div className="first-panel first-panel1"
+          onClick={() => {
+            window.location.href = "/studio/video"
+          }}
+        >
           <div className="about-video">
             <WestIcon fontSize="medium" style={{ color: "#aaa" }} />
             <p>Channel content</p>

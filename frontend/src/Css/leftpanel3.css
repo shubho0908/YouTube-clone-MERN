@@ -31,10 +31,6 @@
   z-index: 2;
 }
 
-.mid-panel {
-  margin-top: 20px;
-}
-
 .current-video-thumbnail {
   transition: all 0.2s ease;
   width: 220px;
@@ -98,4 +94,18 @@
 
 .redirect-video:hover .watch-video {
   opacity: 1;
+}
+
+.first-panel1{
+  padding-top: 13px;
+  padding-bottom: 13px;
+  position: relative;
+  bottom: 15px;
+  transition: all .15s ease;
+}
+
+.first-panel1:hover{
+  cursor: pointer;
+  background-color: #1f1f1f;
+  
 }

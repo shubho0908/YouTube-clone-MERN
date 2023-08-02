@@ -276,6 +276,7 @@
 }
 
 .thissection-btns > button:nth-child(1) {
+  cursor: pointer;
   background-color: #ffffff00;
   color: #3eaffe;
   border: none;
@@ -286,6 +287,7 @@
 }
 
 .thissection-btns > button:nth-child(2) {
+  cursor: pointer;
   background-color: #3eaffe;
   color: #282828;
   border: none;
@@ -295,6 +297,11 @@
   padding-left: 15px;
   padding-right: 15px;
   border-radius: 2px;
+  transition: all 0.15s ease;
+}
+
+.thissection-btns > button:nth-child(2):active {
+  transform: scale(0.92);
 }
 
 .disabled-btn {
@@ -364,7 +371,7 @@
   padding-bottom: 15px;
   padding-left: 20px;
   padding-right: 20px;
-  transition: all .15s ease;
+  transition: all 0.15s ease;
 }
 
 .thispublic-visibility:hover,
@@ -388,16 +395,17 @@
   background-color: #1f1f1f;
   margin-top: 8px;
   width: 60%;
-  animation: blowdown .25s ease;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  animation: blowdown 0.25s ease;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
 
 @keyframes blowdown {
-  0%{
+  0% {
     bottom: 15px;
     opacity: 0;
   }
-  100%{
+  100% {
     bottom: 0;
     opacity: 1;
   }

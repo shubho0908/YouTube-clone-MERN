@@ -172,6 +172,7 @@
 
 /* Align the data on the left and right sides */
 .video-cell {
+  cursor: pointer;
   display: flex;
   align-items: center;
 }
@@ -244,6 +245,8 @@
   width: 180px;
   justify-content: space-between;
   margin-top: 15.5px;
+  position: relative;
+  z-index: 4;
 }
 
 .video-edit-icons:hover {
@@ -370,4 +373,9 @@
 .cancel-delete {
   position: relative;
   right: 30px;
+}
+
+.studio-video-title:hover{
+  cursor: pointer;
+  text-decoration: underline;
 }

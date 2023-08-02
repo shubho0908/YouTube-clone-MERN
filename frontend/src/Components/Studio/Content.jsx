@@ -192,6 +192,9 @@ function Content() {
                           src={element.thumbnailURL}
                           alt="thumbnail"
                           className="studio-video-thumbnail"
+                          onClick={() => {
+                            window.location.href = `/studio/video/edit/${element._id}`;
+                          }}
                         />
                         <p className="video-left-duration">
                           {Math.floor(element.videoLength / 60) +
@@ -201,7 +204,12 @@ function Content() {
                               : Math.round(element.videoLength % 60))}
                         </p>
                         <div className="studio-video-details">
-                          <p className="studio-video-title">
+                          <p
+                            className="studio-video-title"
+                            onClick={() => {
+                              window.location.href = `/studio/video/edit/${element._id}`;
+                            }}
+                          >
                             {element.Title.length <= 40
                               ? element.Title
                               : `${element.Title.slice(0, 40)}...`}
@@ -225,8 +233,8 @@ function Content() {
                                 className="video-edit-icons"
                                 fontSize="medium"
                                 style={{ color: "#aaa" }}
-                                onClick={()=> {
-                                  window.location.href = `/studio/video/edit/${element._id}`
+                                onClick={() => {
+                                  window.location.href = `/studio/video/edit/${element._id}`;
                                 }}
                               />
                             </Tooltip>

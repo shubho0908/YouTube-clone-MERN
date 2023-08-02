@@ -29,6 +29,8 @@ function VideoDetails() {
   const [changes, setChanges] = useState(false);
   const [privacyClicked, setprivacyClicked] = useState(false);
   const [updatePrivacy, setprivacy] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [opacity, setOpacity] = useState(1);
 
   useEffect(() => {
     const GetVideoData = async () => {
@@ -50,6 +52,14 @@ function VideoDetails() {
 
     GetVideoData();
   }, [id]);
+
+  useEffect(() => {
+    if (loading === true) {
+      setOpacity(0.4);
+    } else {
+      setOpacity(1);
+    }
+  }, [loading]);
 
   const handleCopyLink = () => {
     navigator.clipboard
@@ -146,8 +156,10 @@ function VideoDetails() {
 
   const SaveData = async () => {
     try {
+      setLoading(true);
       let img = await UploadThumbnail();
-      let newPrivacy = updatePrivacy === null ? videodata.visibility : updatePrivacy;
+      let newPrivacy =
+        updatePrivacy === null ? videodata.visibility : updatePrivacy;
 
       const data = {
         thumbnail: img,
@@ -168,12 +180,13 @@ function VideoDetails() {
         }
       );
       const Data = await response.json();
-      console.log(Data);
       if (Data) {
-        window.location.reload()
+        setLoading(false);
+        window.location.reload();
       }
     } catch (error) {
       // console.log(error);
+      setLoading(true);
     }
   };
 
@@ -181,7 +194,10 @@ function VideoDetails() {
     <>
       <Navbar2 />
       <LeftPanel3 />
-      <div className="main-video-details-section">
+      <div
+        className="main-video-details-section"
+        style={{ opacity: opacity, pointerEvents: loading ? "none" : "auto" }}
+      >
         <div className="current-editvideodata">
           <p className="current-tophead">Video details</p>
           <div className="thissection-btns">
@@ -255,10 +271,10 @@ function VideoDetails() {
                         style={
                           thumbnailSelected === true && videodata
                             ? {
-                              border: "2.2px solid white",
-                              borderRadius: "3px",
-                              opacity: "1",
-                            }
+                                border: "2.2px solid white",
+                                borderRadius: "3px",
+                                opacity: "1",
+                              }
                             : { border: "none", opacity: ".4" }
                         }
                         onClick={() => {
@@ -294,10 +310,10 @@ function VideoDetails() {
                       style={
                         videodata && thumbnailSelected === false
                           ? {
-                            border: "2.2px solid white",
-                            borderRadius: "3px",
-                            opacity: "1",
-                          }
+                              border: "2.2px solid white",
+                              borderRadius: "3px",
+                              opacity: "1",
+                            }
                           : { border: "none", opacity: ".4" }
                       }
                       onClick={() => {
@@ -420,9 +436,10 @@ function VideoDetails() {
                       }}
                     >
                       {videolink +
-                        `/${videodata && videodata._id.length <= 5
-                          ? videodata && videodata._id
-                          : `${videodata && videodata._id.slice(0, 5)}...`
+                        `/${
+                          videodata && videodata._id.length <= 5
+                            ? videodata && videodata._id
+                            : `${videodata && videodata._id.slice(0, 5)}...`
                         }`}
                     </p>
                   </div>
@@ -460,9 +477,9 @@ function VideoDetails() {
               <div className="visibility-current-data">
                 <div className="privacy-current">
                   {updatePrivacy === "Public" ||
-                    (updatePrivacy === null &&
-                      videodata &&
-                      videodata.visibility === "Public") ? (
+                  (updatePrivacy === null &&
+                    videodata &&
+                    videodata.visibility === "Public") ? (
                     <RemoveRedEyeOutlinedIcon
                       fontSize="small"
                       style={{ color: "#2ba640" }}
