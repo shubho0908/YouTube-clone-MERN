@@ -360,15 +360,26 @@ form > input::placeholder {
 .nav-search-results {
   position: absolute;
   width: auto;
-  width: 600px;
+  width: 648px;
   color: white;
   top: 77px;
   background-color: #282828;
-  padding: 25px;
   padding-top: 18px;
-  padding-bottom: 8px;
+  padding-bottom: 18px;
   border-radius: 4px;
   animation: blowdownwards 0.2s ease;
+}
+
+.nav-search-results2 {
+  position: absolute;
+  width: auto;
+  width: 648px;
+  color: white;
+  top: 77px;
+  background-color: #282828;
+  padding-top: 18px;
+  padding-bottom: 18px;
+  border-radius: 4px;
 }
 
 @keyframes blowdownwards {
@@ -388,10 +399,20 @@ form > input::placeholder {
 }
 
 .allsearch-video-data {
+  cursor: pointer;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  margin-bottom: 16px;
+  padding-left: 25px;
+  padding-right: 25px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1.6px solid #5b5d6265;
+  transition: all 0.15s ease;
+}
+
+.allsearch-video-data:hover {
+  background-color: #1f1f1f;
 }
 
 .searchdata-one {
@@ -406,28 +427,34 @@ form > input::placeholder {
   padding-right: 4px;
   border-radius: 2px;
   width: fit-content;
-  position: absolute;
-  left: 104px;
-  top: 104px;
+  position: relative;
+  height: fit-content;
+  top: 56px;
+  right: 36px;
 }
 
 .searchvid-data {
   font-size: 13px;
   position: relative;
   top: 5px;
-  left: 15px;
+  right: 10px;
 }
 
 .searchvid-data > p:nth-child(2) {
   color: #aaa;
   margin-top: 8px;
-  width: 70%;
+  width: 68%;
 }
 .searchvid-date > p {
   font-size: 13px;
   width: max-content;
   position: relative;
   top: 5px;
+}
+
+.searchvid-date > p:nth-child(2) {
+  color: #aaa;
+  margin-top: 6px;
 }
 
 .extra-seperate {
@@ -437,7 +464,7 @@ form > input::placeholder {
 }
 
 .my-five-videos {
-  margin-top: 35px;
+  margin-top: 16px;
 }
 
 .studio-dark::before {
@@ -451,20 +478,52 @@ form > input::placeholder {
   animation: Fade2 0.25s ease-out forwards;
 }
 
-
-.just-abovetxt{
+.just-abovetxt {
   display: flex;
   align-items: center;
   font-size: 14px;
+  padding-left: 25px;
+  padding-right: 25px;
 }
 
-.show-all{
+.show-all {
   cursor: pointer;
   margin-left: 12px;
   color: #3eaffe;
 }
 
-.clear-search{
+.clear-search {
   cursor: pointer;
-  transition: opacity .25s ease;
+  transition: opacity 0.25s ease;
+}
+
+.clear-search:hover {
+  color: white !important;
+}
+
+.searchvid-edit-section {
+  display: none;
+  align-items: center;
+  position: relative;
+  width: 150px;
+  top: 22px;
+  justify-content: space-between;
+}
+
+.allsearch-video-data:hover .searchvid-data > p:nth-child(2) {
+  display: none;
+}
+
+.allsearch-video-data:hover .searchvid-edit-section {
+  display: flex;
+}
+
+.edit-this:hover,
+.comment-this:hover,
+.watch-this:hover {
+  color: white !important;
+}
+
+.searchvid-data>p:nth-child(1):hover{
+  text-decoration: underline;
 }
