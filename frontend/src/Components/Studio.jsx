@@ -80,6 +80,42 @@ function Studio() {
   }, []);
 
   useEffect(() => {
+    const handleClick = () => {
+      document.querySelector(".studio").classList.add("studio-dark");
+    };
+
+    const searchInp = document.getElementById("searchType2");
+
+    if (searchInp) {
+      searchInp.addEventListener("click", handleClick);
+    }
+
+    return () => {
+      if (searchInp) {
+        searchInp.removeEventListener("click", handleClick);
+      }
+    };
+  });
+
+  useEffect(() => {
+    const handleClick = () => {
+      document.querySelector(".studio").classList.remove("studio-dark");
+    };
+
+    const crossBtn = document.querySelector(".clear-search");
+
+    if (crossBtn) {
+      crossBtn.addEventListener("click", handleClick);
+    }
+
+    return () => {
+      if (crossBtn) {
+        crossBtn.removeEventListener("click", handleClick);
+      }
+    };
+  });
+
+  useEffect(() => {
     if (isChannel === false) {
       document.body.classList.add("bg-css");
     } else {

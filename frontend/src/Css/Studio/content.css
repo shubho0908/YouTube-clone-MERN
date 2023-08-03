@@ -417,12 +417,23 @@
   justify-content: center;
 }
 
-.novideo-available>p{
+.novideo-available > p {
   font-size: 15px;
   color: #aaa;
 }
 
-.no-content-img{
+.no-content-img {
   width: 200px;
   margin-top: 70px;
+}
+
+.channel-dark::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5; /* Set a lower z-index than the auth-popup */
+  animation: Fade2 0.25s ease-out forwards;
 }

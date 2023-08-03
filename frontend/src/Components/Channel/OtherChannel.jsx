@@ -275,7 +275,11 @@ function OtherChannel() {
                 >
                   Customize channel
                 </button>
-                <button className="manage-videos">Manage videos</button>
+                <button className="manage-videos"
+                onClick={()=>{
+                  window.location.href = "/studio/video"
+                }}
+                >Manage videos</button>
               </div>
             ) : (
               <div

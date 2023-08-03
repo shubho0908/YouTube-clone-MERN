@@ -18,7 +18,7 @@ import Zoom from "@mui/material/Zoom";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
-import noImage from "../../img/no-video2.png"
+import noImage from "../../img/no-video2.png";
 
 function Content() {
   const [userVideos, setUserVideos] = useState([]);
@@ -36,6 +36,46 @@ function Content() {
     const token = localStorage.getItem("userToken");
     setEmail(jwtDecode(token).email);
   }, []);
+
+  useEffect(() => {
+    const handleClick = () => {
+      document
+        .querySelector(".channel-content-section")
+        .classList.add("channel-dark");
+    };
+
+    const searchInp = document.getElementById("searchType2");
+
+    if (searchInp) {
+      searchInp.addEventListener("click", handleClick);
+    }
+
+    return () => {
+      if (searchInp) {
+        searchInp.removeEventListener("click", handleClick);
+      }
+    };
+  });
+
+  useEffect(() => {
+    const handleClick = () => {
+      document
+        .querySelector(".channel-content-section")
+        .classList.remove("channel-dark");
+    };
+
+    const clearBtn = document.querySelector(".clear-search");
+
+    if (clearBtn) {
+      clearBtn.addEventListener("click", handleClick);
+    }
+
+    return () => {
+      if (clearBtn) {
+        clearBtn.removeEventListener("click", handleClick);
+      }
+    };
+  });
 
   useEffect(() => {
     const GetUserVideos = async () => {
@@ -84,13 +124,16 @@ function Content() {
     setChangeSort(!changeSort);
   };
 
-  const sortedUserVideos = userVideos && userVideos.length > 0 && userVideos.sort((a, b) => {
-    if (sortByDateAsc) {
-      return new Date(a.uploaded_date) - new Date(b.uploaded_date);
-    } else {
-      return new Date(b.uploaded_date) - new Date(a.uploaded_date);
-    }
-  });
+  const sortedUserVideos =
+    userVideos &&
+    userVideos.length > 0 &&
+    userVideos.sort((a, b) => {
+      if (sortByDateAsc) {
+        return new Date(a.uploaded_date) - new Date(b.uploaded_date);
+      } else {
+        return new Date(b.uploaded_date) - new Date(a.uploaded_date);
+      }
+    });
 
   //POST REQUESTS
 
@@ -366,7 +409,6 @@ function Content() {
                           <p style={{ marginLeft: "8px" }}>
                             {element.visibility}
                           </p>
-
                         </div>
                       </td>
                       <td>
@@ -394,8 +436,13 @@ function Content() {
             </table>
           )}
         </div>
-        <div className="novideo-available"
-          style={userVideos && userVideos.message === "USER DOESN'T EXIST" ? { display: "flex" } : { display: "none" }}
+        <div
+          className="novideo-available"
+          style={
+            userVideos && userVideos.message === "USER DOESN'T EXIST"
+              ? { display: "flex" }
+              : { display: "none" }
+          }
         >
           <img src={noImage} alt="no-video" className="no-content-img" />
           <p>No content available</p>
@@ -426,12 +473,12 @@ function Content() {
                   DeleteVideoData && DeleteVideoData.videoLength % 60
                 ) < 10
                   ? "0" +
-                  Math.round(
-                    DeleteVideoData && DeleteVideoData.videoLength % 60
-                  )
+                    Math.round(
+                      DeleteVideoData && DeleteVideoData.videoLength % 60
+                    )
                   : Math.round(
-                    DeleteVideoData && DeleteVideoData.videoLength % 60
-                  ))}
+                      DeleteVideoData && DeleteVideoData.videoLength % 60
+                    ))}
             </p>
             <div className="thisdelete-video-details">
               <p className="delete-title">

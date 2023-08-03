@@ -41,7 +41,8 @@
 
 .left-bar,
 .middle-bar,
-.search, .search2,
+.search,
+.search2,
 .right-bar {
   display: flex;
   align-items: center;
@@ -114,7 +115,7 @@
   border-radius: 5px;
   border: none;
   outline: none;
-  min-width: 520px;
+  min-width: 526px;
   max-width: 750px;
   font-size: 14.5px;
   padding: 10px;
@@ -134,7 +135,7 @@
 }
 
 .right-bar2 {
-margin-right: 35px;
+  margin-right: 35px;
 }
 
 .signin {
@@ -343,7 +344,7 @@ form > input::placeholder {
   transition: all 0.2s ease;
   position: absolute;
   top: 100px;
-right: 35px;
+  right: 35px;
 }
 
 .create-btn:hover {
@@ -354,4 +355,116 @@ right: 35px;
   color: white;
   padding-left: 10px;
   font-size: 15px;
+}
+
+.nav-search-results {
+  position: absolute;
+  width: auto;
+  width: 600px;
+  color: white;
+  top: 77px;
+  background-color: #282828;
+  padding: 25px;
+  padding-top: 18px;
+  padding-bottom: 8px;
+  border-radius: 4px;
+  animation: blowdownwards 0.2s ease;
+}
+
+@keyframes blowdownwards {
+  0% {
+    top: 62px;
+    opacity: 0;
+  }
+
+  100% {
+    top: 77px;
+    opacity: 1;
+  }
+}
+
+.searching-thumbnail {
+  width: 140px;
+}
+
+.allsearch-video-data {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.searchdata-one {
+  display: flex;
+}
+
+.searchvid-duration {
+  font-size: 12px;
+  background-color: rgba(0, 0, 0, 0.789);
+  padding: 2px;
+  padding-left: 4px;
+  padding-right: 4px;
+  border-radius: 2px;
+  width: fit-content;
+  position: absolute;
+  left: 104px;
+  top: 104px;
+}
+
+.searchvid-data {
+  font-size: 13px;
+  position: relative;
+  top: 5px;
+  left: 15px;
+}
+
+.searchvid-data > p:nth-child(2) {
+  color: #aaa;
+  margin-top: 8px;
+  width: 70%;
+}
+.searchvid-date > p {
+  font-size: 13px;
+  width: max-content;
+  position: relative;
+  top: 5px;
+}
+
+.extra-seperate {
+  position: absolute;
+  width: -webkit-fill-available;
+  left: 0;
+}
+
+.my-five-videos {
+  margin-top: 35px;
+}
+
+.studio-dark::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5; /* Set a lower z-index than the auth-popup */
+  animation: Fade2 0.25s ease-out forwards;
+}
+
+
+.just-abovetxt{
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+.show-all{
+  cursor: pointer;
+  margin-left: 12px;
+  color: #3eaffe;
+}
+
+.clear-search{
+  cursor: pointer;
+  transition: opacity .25s ease;
 }
