@@ -68,6 +68,8 @@ function LeftPanel() {
       selected = "subscription";
     } else if (currentUrl === "/likedVideos") {
       selected = "liked-video";
+    } else if (currentUrl === "/library") {
+      selected = "library";
     } else {
       selected = "other";
     }

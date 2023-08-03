@@ -783,12 +783,16 @@ function VideoSection() {
             },
           }
         );
-        setLoading(false);
 
-        await response.json();
+        const Data = await response.json();
+        if (Data) {
+          setLoading(false);
+          window.location.reload();
+        }
       }
     } catch (error) {
       //console.log(error.message);
+      setLoading(true);
     }
   };
 
@@ -1882,9 +1886,6 @@ function VideoSection() {
             onClick={() => {
               if (playlistName !== "" || privacy !== "") {
                 AddPlaylist();
-                setTimeout(() => {
-                  window.location.reload();
-                }, 1100);
               } else {
                 alert("Input fileds can't be empty");
               }

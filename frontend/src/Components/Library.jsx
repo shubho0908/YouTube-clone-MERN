@@ -154,10 +154,14 @@ function Library() {
     videolike === "NO DATA"
   ) {
     return (
-      <div className="no-playlists">
-        <img src={nothing} alt="no results" className="nothing-found" />
-        <p className="no-results">No data found!</p>
-      </div>
+      <>
+        <Navbar />
+        <LeftPanel />
+        <div className="no-playlists">
+          <img src={nothing} alt="no results" className="nothing-found" />
+          <p className="no-results">No data found!</p>
+        </div>
+      </>
     );
   }
 

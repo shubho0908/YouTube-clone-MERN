@@ -10,6 +10,8 @@ import jwtDecode from "jwt-decode";
 import AccountPop2 from "./AccountPop2";
 import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
 import YouTubeIcon from "@mui/icons-material/YouTube";
+import Tooltip from "@mui/material/Tooltip";
+import Zoom from "@mui/material/Zoom";
 
 function Navbar2() {
   const token = localStorage.getItem("userToken");
@@ -128,7 +130,11 @@ function Navbar2() {
                       paddingRight: "12px",
                       opacity: "1",
                     }
-                  : { opacity: "0", pointerEvents: "none" }
+                  : {
+                      opacity: "0",
+                      paddingRight: "12px",
+                      pointerEvents: "none",
+                    }
               }
             />
           </div>
@@ -196,27 +202,45 @@ function Navbar2() {
                               : `${element.Description.slice(0, 75)}...`}
                           </p>
                           <div className="searchvid-edit-section">
-                            <ModeEditOutlineOutlinedIcon
-                              className="edit-this"
-                              fontSize="medium"
-                              style={{ color: "#aaa" }}
-                              onClick={() => {
-                                window.location.href = `/studio/video/edit/${element._id}`;
-                              }}
-                            />
-                            <ChatOutlinedIcon
-                              className="comment-this"
-                              fontSize="medium"
-                              style={{ color: "#aaa" }}
-                            />
-                            <YouTubeIcon
-                              className="watch-this"
-                              fontSize="medium"
-                              style={{ color: "#aaa" }}
-                              onClick={() => {
-                                window.location.href = `/video/${element._id}`;
-                              }}
-                            />
+                            <Tooltip
+                              TransitionComponent={Zoom}
+                              title="Details"
+                              placement="bottom"
+                            >
+                              <ModeEditOutlineOutlinedIcon
+                                className="edit-this"
+                                fontSize="medium"
+                                style={{ color: "#aaa" }}
+                                onClick={() => {
+                                  window.location.href = `/studio/video/edit/${element._id}`;
+                                }}
+                              />
+                            </Tooltip>
+                            <Tooltip
+                              TransitionComponent={Zoom}
+                              title="Comments"
+                              placement="bottom"
+                            >
+                              <ChatOutlinedIcon
+                                className="comment-this"
+                                fontSize="medium"
+                                style={{ color: "#aaa" }}
+                              />
+                            </Tooltip>
+                            <Tooltip
+                              TransitionComponent={Zoom}
+                              title="View on YouTube"
+                              placement="bottom"
+                            >
+                              <YouTubeIcon
+                                className="watch-this"
+                                fontSize="medium"
+                                style={{ color: "#aaa" }}
+                                onClick={() => {
+                                  window.location.href = `/video/${element._id}`;
+                                }}
+                              />
+                            </Tooltip>
                           </div>
                         </div>
                       </div>
@@ -302,27 +326,45 @@ function Navbar2() {
                               : `${element.Description.slice(0, 75)}...`}
                           </p>
                           <div className="searchvid-edit-section">
-                            <ModeEditOutlineOutlinedIcon
-                              className="edit-this"
-                              fontSize="medium"
-                              style={{ color: "#aaa" }}
-                              onClick={() => {
-                                window.location.href = `/studio/video/edit/${element._id}`;
-                              }}
-                            />
-                            <ChatOutlinedIcon
-                              className="comment-this"
-                              fontSize="medium"
-                              style={{ color: "#aaa" }}
-                            />
-                            <YouTubeIcon
-                              className="watch-this"
-                              fontSize="medium"
-                              style={{ color: "#aaa" }}
-                              onClick={() => {
-                                window.location.href = `/video/${element._id}`;
-                              }}
-                            />
+                            <Tooltip
+                              TransitionComponent={Zoom}
+                              title="Details"
+                              placement="bottom"
+                            >
+                              <ModeEditOutlineOutlinedIcon
+                                className="edit-this"
+                                fontSize="medium"
+                                style={{ color: "#aaa" }}
+                                onClick={() => {
+                                  window.location.href = `/studio/video/edit/${element._id}`;
+                                }}
+                              />
+                            </Tooltip>
+                            <Tooltip
+                              TransitionComponent={Zoom}
+                              title="Comments"
+                              placement="bottom"
+                            >
+                              <ChatOutlinedIcon
+                                className="comment-this"
+                                fontSize="medium"
+                                style={{ color: "#aaa" }}
+                              />
+                            </Tooltip>
+                            <Tooltip
+                              TransitionComponent={Zoom}
+                              title="View on YouTube"
+                              placement="bottom"
+                            >
+                              <YouTubeIcon
+                                className="watch-this"
+                                fontSize="medium"
+                                style={{ color: "#aaa" }}
+                                onClick={() => {
+                                  window.location.href = `/video/${element._id}`;
+                                }}
+                              />
+                            </Tooltip>
                           </div>
                         </div>
                       </div>

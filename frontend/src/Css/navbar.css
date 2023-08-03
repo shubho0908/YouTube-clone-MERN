@@ -360,7 +360,7 @@ form > input::placeholder {
 .nav-search-results {
   position: absolute;
   width: auto;
-  width: 648px;
+  width: 650px;
   color: white;
   top: 77px;
   background-color: #282828;
