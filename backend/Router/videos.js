@@ -231,10 +231,9 @@ Videos.get("/getlikevideos/:email", async (req, res) => {
   }
 });
 
-Videos.post("/watchlater/:id/:email", async (req, res) => {
+Videos.post("/watchlater/:id/:email/:email2", async (req, res) => {
   try {
-    const { id } = req.params;
-    const email = req.params.email;
+    const { id, email, email2 } = req.params;
 
     const video = await videodata.findOne({ "VideoData._id": id });
     const user = await userData.findOne({ email });
@@ -263,6 +262,7 @@ Videos.post("/watchlater/:id/:email", async (req, res) => {
 
     if (!existingSavedVideo) {
       user.watchLater.push({
+        email: email2,
         videoURL: WatchLater.videoURL,
         thumbnailURL: WatchLater.thumbnailURL,
         uploader: WatchLater.uploader,
@@ -351,9 +351,9 @@ Videos.get("/totalviews/:email", async (req, res) => {
   }
 });
 
-Videos.get("/checktrending/:videoID", async (req, res) => {
+Videos.get("/checktrending/:videoID/:email", async (req, res) => {
   try {
-    const { videoID } = req.params;
+    const { videoID, email } = req.params;
     const video = await videodata.findOne({ "VideoData._id": videoID });
     if (!video) {
       return res.status(404).json({ error: "Video doesn't exist" });
@@ -383,6 +383,7 @@ Videos.get("/checktrending/:videoID", async (req, res) => {
 
     if (timeDiffHours < 24 && Views > 5 && !trendingVideo) {
       const trending = new TrendingData({
+        email: email,
         thumbnailURL: mainVideo.thumbnailURL,
         uploader: mainVideo.uploader,
         videoURL: mainVideo.videoURL,
@@ -397,7 +398,7 @@ Videos.get("/checktrending/:videoID", async (req, res) => {
       return await trending.save();
     }
 
-    res.json("DONE")
+    res.json("DONE");
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

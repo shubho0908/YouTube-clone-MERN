@@ -174,9 +174,9 @@ function VideoSection() {
   useEffect(() => {
     const PushTrending = async () => {
       try {
-        if (id !== undefined) {
+        if (id !== undefined && usermail !== undefined) {
           const response = await fetch(
-            `http://localhost:3000/checktrending/${id}`
+            `http://localhost:3000/checktrending/${id}/${usermail}`
           );
           await response.json();
         }
@@ -187,7 +187,7 @@ function VideoSection() {
     const interval = setInterval(PushTrending, 100);
 
     return () => clearInterval(interval);
-  }, [id]);
+  }, [id, usermail]);
 
   useEffect(() => {
     const getVideoData = async () => {
@@ -599,7 +599,7 @@ function VideoSection() {
   const likeVideo = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3000/like/${id}/${email}`,
+        `http://localhost:3000/like/${id}/${email}/${usermail}`,
         {
           method: "POST",
           headers: {
@@ -697,7 +697,7 @@ function VideoSection() {
     try {
       if (id !== undefined && email !== undefined) {
         const response = await fetch(
-          `http://localhost:3000/watchlater/${id}/${email}`,
+          `http://localhost:3000/watchlater/${id}/${email}/${usermail}`,
           {
             method: "POST",
             headers: {

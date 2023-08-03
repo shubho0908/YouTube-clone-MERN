@@ -14,6 +14,7 @@ function Branding() {
   const [changes, setChanges] = useState(false);
   const [ProfileChanges, setProfileChanges] = useState(false);
   const [BannerChanges, setBannerChanges] = useState(false);
+  const [channelID, setChannelID] = useState();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -52,6 +53,23 @@ function Branding() {
       }
     };
     getData();
+  }, [email]);
+
+  useEffect(() => {
+    const getChannelID = async () => {
+      try {
+        if (email !== undefined) {
+          const response = await fetch(
+            `http://localhost:3000/getchannelid/${email}`
+          );
+          const { channelID } = await response.json();
+          setChannelID(channelID);
+        }
+      } catch (error) {
+        // console.log(error.message);
+      }
+    };
+    getChannelID();
   }, [email]);
 
   useEffect(() => {
@@ -202,6 +220,7 @@ function Branding() {
       const data = {
         profileURL: profileURL,
         coverURL: coverURL,
+        channelid: channelID
       };
 
       const response = await fetch(
@@ -217,7 +236,7 @@ function Branding() {
       const user = await response.json();
       if (user) {
         setLoading(false);
-        setChanges(false)
+        setChanges(false);
       } else {
         setLoading(true);
       }

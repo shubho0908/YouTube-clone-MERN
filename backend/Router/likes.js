@@ -5,10 +5,9 @@ const userData = require("../Models/user");
 const videodata = require("../Models/videos");
 const Likes = express.Router();
 
-Likes.post("/like/:id/:email", async (req, res) => {
+Likes.post("/like/:id/:email/:email2", async (req, res) => {
   try {
-    const { id } = req.params;
-    const email = req.params.email;
+    const { id, email, email2 } = req.params;
 
     const video = await videodata.findOne({ "VideoData._id": id });
     const user = await userData.findOne({ email });
@@ -37,6 +36,7 @@ Likes.post("/like/:id/:email", async (req, res) => {
 
     if (!existingLikedVideo) {
       user.likedVideos.push({
+        email: email2,
         videoURL: likedData.videoURL,
         thumbnailURL: likedData.thumbnailURL,
         uploader: likedData.uploader,

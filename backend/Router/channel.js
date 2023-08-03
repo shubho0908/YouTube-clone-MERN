@@ -433,7 +433,7 @@ Channel.post("/deletefeaturedchannel/:email/:channelid", async (req, res) => {
 Channel.post("/savecustomization/:email", async (req, res) => {
   try {
     const email = req.params.email;
-    const { profileURL, coverURL } = req.body;
+    const { profileURL, coverURL, channelid } = req.body;
     const user = await userData.findOne({ email });
     const video = await videodata.findOne({ email });
 
@@ -449,9 +449,42 @@ Channel.post("/savecustomization/:email", async (req, res) => {
     user.channelData[0].channelProfile = profileURL;
     user.channelData[0].channelCoverImg = coverURL;
 
+    await userData.updateMany(
+      { "subscribedChannels.channelID": channelid },
+      {
+        $set: {
+          "subscribedChannels.$.channelProfile": profileURL,
+        },
+      }
+    );
+
+    await userData.updateMany(
+      { "featuredChannels.channelID": channelid },
+      {
+        $set: {
+          "featuredChannels.$.channelProfile": profileURL,
+        },
+      }
+    );
+
     video.VideoData.forEach((item) => {
       item.ChannelProfile = profileURL;
     });
+
+    await videodata.updateMany(
+      { "VideoData.comments.user_email": email },
+      {
+        $set: {
+          "VideoData.$[video].comments.$[comment].user_profile": profileURL,
+        },
+      },
+      {
+        arrayFilters: [
+          { "video.comments.user_email": email },
+          { "comment.user_email": email },
+        ],
+      }
+    );
 
     await user.save();
     await video.save();
@@ -479,6 +512,7 @@ Channel.post("/updatechanneldata/:email", async (req, res) => {
       return res.status(404).json({ error: "Video data not found" });
     }
 
+    // Update user data
     user.channelName = channelName;
     user.channelData[0].channelName = channelName;
     user.channelData[0].channelDescription = channelDescription;
@@ -486,6 +520,18 @@ Channel.post("/updatechanneldata/:email", async (req, res) => {
     user.Playlists.forEach((element) => {
       element.playlist_owner = channelName;
     });
+
+    await userData.updateMany(
+      { "Playlists.owner_email": email },
+      {
+        $set: {
+          "Playlists.$[playlist].playlist_owner": channelName,
+        },
+      },
+      {
+        arrayFilters: [{ "playlist.owner_email": email }],
+      }
+    );
 
     await userData.updateMany(
       { "subscribedChannels.channelID": channelID },
@@ -505,20 +551,53 @@ Channel.post("/updatechanneldata/:email", async (req, res) => {
       }
     );
 
+    await userData.updateMany(
+      { "likedVideos.email": email },
+      {
+        $set: {
+          "likedVideos.$.uploader": channelName,
+        },
+      }
+    );
+
+    await userData.updateMany(
+      { "watchLater.email": email },
+      {
+        $set: {
+          "watchLater.$.uploader": channelName,
+        },
+      }
+    );
+
     video.VideoData.forEach((item) => {
       item.uploader = channelName;
     });
 
+    await videodata.updateMany(
+      { "VideoData.comments.user_email": email },
+      {
+        $set: {
+          "VideoData.$[video].comments.$[comment].username": channelName,
+        },
+      },
+      {
+        arrayFilters: [
+          { "video.comments.user_email": email },
+          { "comment.user_email": email },
+        ],
+      }
+    );
+
+    // Save changes
     await user.save();
     await video.save();
 
-    if (!trending) {
-      return res.json("DONE");
-    } else {
-      trending.uploader = channelName;
+    if (trending) {
+      trending.uploader = channelName; // Update the uploader field in trending data
       await trending.save();
-      res.json("DONE");
     }
+
+    res.json("DONE");
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
   }

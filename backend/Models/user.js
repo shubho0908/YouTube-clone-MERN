@@ -103,6 +103,15 @@ const UserData = new mongoose.Schema({
   ],
   likedVideos: [
     {
+      email: {
+        type: String,
+        required: true,
+        validate(value) {
+          if (!validator.isEmail(value)) {
+            throw new Error("Invalid email address");
+          }
+        },
+      },
       videoURL: {
         type: String,
       },
@@ -142,6 +151,15 @@ const UserData = new mongoose.Schema({
   ],
   watchLater: [
     {
+      email: {
+        type: String,
+        required: true,
+        validate(value) {
+          if (!validator.isEmail(value)) {
+            throw new Error("Invalid email address");
+          }
+        },
+      },
       videoURL: {
         type: String,
       },
