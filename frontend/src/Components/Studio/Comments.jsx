@@ -9,11 +9,17 @@ import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlin
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import Tooltip from "@mui/material/Tooltip";
+import Zoom from "@mui/material/Zoom";
+import noImage from "../../img/no-comment.png";
 
 function Comments() {
   const [Email, setEmail] = useState();
   const [AllComments, setAllComments] = useState([]);
   const [Profile, setProfile] = useState();
+  const [sorting, setSorting] = useState(false);
+  const [sortData, setSortData] = useState();
+  const [filterComment, setFilterComment] = useState("");
 
   useEffect(() => {
     const token = localStorage.getItem("userToken");
@@ -48,7 +54,7 @@ function Comments() {
           );
           const { comments } = await response.json();
 
-          // Fetch video data for each comment
+          // Fetch video data for each comment...
           const commentsWithVideoData = await Promise.all(
             comments.map(async (comment) => {
               const videoResponse = await fetch(
@@ -58,21 +64,37 @@ function Comments() {
 
               return {
                 ...comment,
-                videoData: videoData, // Add video data to the comment object
+                videoData: videoData,
               };
             })
           );
 
-          setAllComments(commentsWithVideoData);
+          let sortedComments = [...commentsWithVideoData];
+          if (sortData === "Old") {
+            sortedComments = sortedComments.sort(
+              (a, b) => new Date(a.time) - new Date(b.time)
+            );
+          } else if (sortData === "New") {
+            sortedComments = sortedComments.sort(
+              (a, b) => new Date(b.time) - new Date(a.time)
+            );
+          }
+
+          setAllComments(sortedComments);
         }
       } catch (error) {
         // Handle error
       }
     };
 
-    const interval = setInterval(getComments, 100);
-    return () => clearInterval(interval);
-  }, [Email]);
+    if (sorting === false && sortData === undefined) {
+      const interval = setInterval(getComments, 100);
+
+      return () => clearInterval(interval);
+    } else {
+      getComments();
+    }
+  }, [Email, sortData, sorting]);
 
   const LikeComment = async (id, commentId) => {
     try {
@@ -128,6 +150,26 @@ function Comments() {
     }
   };
 
+  const filterComments =
+    AllComments &&
+    AllComments.filter(
+      (item) =>
+        item.comment
+          .toLowerCase()
+          .includes(
+            filterComment !== undefined &&
+              filterComment !== "" &&
+              filterComment.toLowerCase()
+          ) ||
+        item.username
+          .toLowerCase()
+          .includes(
+            filterComment !== undefined &&
+              filterComment !== "" &&
+              filterComment.toLowerCase()
+          )
+    );
+
   return (
     <>
       <Navbar2 />
@@ -141,118 +183,389 @@ function Comments() {
         </div>
         <hr className="breakkk" />
         <div className="filter-comments">
-          <FilterListOutlinedIcon fontSize="medium" style={{ color: "#aaa" }} />
-          <input type="text" name="comment-search" placeholder="Filter" />
+          <FilterListOutlinedIcon
+            fontSize="medium"
+            style={{ color: "#aaa", cursor: "pointer" }}
+            onClick={() => setSorting(!sorting)}
+          />
+          <input
+            type="text"
+            name="comment-search"
+            value={filterComment}
+            placeholder="Filter"
+            onChange={(e) => setFilterComment(e.target.value)}
+          />
+          <div
+            className="comment-sorting"
+            style={
+              sorting === true ? { display: "block" } : { display: "none" }
+            }
+          >
+            <p
+              onClick={() => {
+                setSortData("Old");
+                setSorting(false);
+              }}
+            >
+              Oldest first
+            </p>
+            <p
+              onClick={() => {
+                setSortData("New");
+                setSorting(false);
+              }}
+            >
+              Newest first
+            </p>
+          </div>
         </div>
         <div className="channel-comments-list">
           <div className="overall-comments">
             {AllComments &&
               AllComments.length > 0 &&
+              filterComment === "" &&
               AllComments.map((element, index) => {
                 return (
                   <div className="user-comment-data" key={index}>
-                    <img
-                      src={element.user_profile}
-                      alt="profile"
-                      className="user-channelprofileee"
-                    />
-                    <div className="comment-rightt-data">
-                      <div className="name-time">
-                        <p>{element.username}</p>
-                        <FiberManualRecordIcon
-                          className="dot-seperate"
-                          style={{
-                            color: "#aaa",
-                            marginLeft: "6px",
-                            marginRight: "6px",
-                          }}
-                        />
-                        <p>
-                          {(() => {
-                            const timeDifference =
-                              new Date() - new Date(element.time);
-                            const minutes = Math.floor(timeDifference / 60000);
-                            const hours = Math.floor(timeDifference / 3600000);
-                            const days = Math.floor(timeDifference / 86400000);
-                            const weeks = Math.floor(
-                              timeDifference / 604800000
-                            );
-                            const years = Math.floor(
-                              timeDifference / 31536000000
-                            );
-
-                            if (minutes < 1) {
-                              return "just now";
-                            } else if (minutes < 60) {
-                              return `${minutes} mins ago`;
-                            } else if (hours < 24) {
-                              return `${hours} hours ago`;
-                            } else if (days < 7) {
-                              return `${days} days ago`;
-                            } else if (weeks < 52) {
-                              return `${weeks} weeks ago`;
-                            } else {
-                              return `${years} years ago`;
-                            }
-                          })()}
-                        </p>
-                      </div>
-                      <p style={{ marginTop: "8px" }}>{element.comment}</p>
-                      <div className="comment-all-btns">
-                        <div className="cmmt-like">
-                          <ThumbUpIcon
-                            fontSize="small"
-                            className="thiscomment-like-btn"
-                            style={{ color: "#white" }}
-                            onClick={() => {
-                              LikeComment(element.videoid, element._id);
+                    <div className="leftside-viddata">
+                      <img
+                        src={element.user_profile}
+                        alt="profile"
+                        className="user-channelprofileee"
+                      />
+                      <div className="comment-rightt-data">
+                        <div className="name-time">
+                          <p>{element.username}</p>
+                          <FiberManualRecordIcon
+                            className="dot-seperate"
+                            style={{
+                              color: "#aaa",
+                              marginLeft: "6px",
+                              marginRight: "6px",
                             }}
                           />
+                          <p>
+                            {(() => {
+                              const timeDifference =
+                                new Date() - new Date(element.time);
+                              const minutes = Math.floor(
+                                timeDifference / 60000
+                              );
+                              const hours = Math.floor(
+                                timeDifference / 3600000
+                              );
+                              const days = Math.floor(
+                                timeDifference / 86400000
+                              );
+                              const weeks = Math.floor(
+                                timeDifference / 604800000
+                              );
+                              const years = Math.floor(
+                                timeDifference / 31536000000
+                              );
 
-                          <p style={{ marginLeft: "10px" }}>{element.likes}</p>
+                              if (minutes < 1) {
+                                return "just now";
+                              } else if (minutes < 60) {
+                                return `${minutes} mins ago`;
+                              } else if (hours < 24) {
+                                return `${hours} hours ago`;
+                              } else if (days < 7) {
+                                return `${days} days ago`;
+                              } else if (weeks < 52) {
+                                return `${weeks} weeks ago`;
+                              } else {
+                                return `${years} years ago`;
+                              }
+                            })()}
+                          </p>
                         </div>
-                        {element.heartComment === true ? (
-                          <div
-                            className="hearted-thiscomment"
-                            onClick={() =>
-                              HeartComment(element.videoid, element._id)
-                            }
-                          >
-                            <img
-                              src={Profile && Profile}
-                              alt="profile"
-                              className="channelp"
-                            />
-                            <FavoriteIcon
-                              className="heartlike-this"
-                              fontSize="100px"
-                              style={{ color: "red" }}
-                            />
+                        <p style={{ marginTop: "8px" }}>{element.comment}</p>
+                        <div className="comment-all-btns">
+                          <div className="cmmt-like">
+                            <Tooltip
+                              TransitionComponent={Zoom}
+                              title="Like/Unlike"
+                              placement="bottom"
+                            >
+                              <ThumbUpIcon
+                                fontSize="small"
+                                className="thiscomment-like-btn"
+                                style={{ color: "#white" }}
+                                onClick={() => {
+                                  setSorting(false);
+                                  setSortData(undefined);
+                                  LikeComment(element.videoid, element._id);
+                                }}
+                              />
+                            </Tooltip>
+                            <p style={{ marginLeft: "10px" }}>
+                              {element.likes}
+                            </p>
                           </div>
-                        ) : (
-                          <FavoriteBorderOutlinedIcon
-                            fontSize="small"
-                            className="heartcmmt-btn"
-                            style={{ color: "#aaa" }}
-                            onClick={() =>
-                              HeartComment(element.videoid, element._id)
-                            }
-                          />
-                        )}
+                          {element.heartComment === true ? (
+                            <Tooltip
+                              TransitionComponent={Zoom}
+                              title="Remove heart"
+                              placement="bottom"
+                            >
+                              <div
+                                className="hearted-thiscomment"
+                                onClick={() => {
+                                  setSorting(false);
+                                  setSortData(undefined);
+                                  HeartComment(element.videoid, element._id);
+                                }}
+                              >
+                                <img
+                                  src={Profile && Profile}
+                                  alt="profile"
+                                  className="channelp"
+                                />
 
-                        <DeleteOutlineOutlinedIcon
-                          fontSize="small"
-                          style={{ color: "#aaa" }}
-                          className="deletethis-cmmt"
-                          onClick={() =>
-                            DeleteComment(element.videoid, element._id)
-                          }
-                        />
+                                <FavoriteIcon
+                                  className="heartlike-this"
+                                  fontSize="100px"
+                                  style={{ color: "red" }}
+                                />
+                              </div>
+                            </Tooltip>
+                          ) : (
+                            <Tooltip
+                              TransitionComponent={Zoom}
+                              title="Heart"
+                              placement="bottom"
+                            >
+                              <FavoriteBorderOutlinedIcon
+                                fontSize="small"
+                                className="heartcmmt-btn"
+                                style={{ color: "#aaa" }}
+                                onClick={() => {
+                                  setSorting(false);
+                                  setSortData(undefined);
+                                  HeartComment(element.videoid, element._id);
+                                }}
+                              />
+                            </Tooltip>
+                          )}
+
+                          <Tooltip
+                            TransitionComponent={Zoom}
+                            title="Delete"
+                            placement="bottom"
+                          >
+                            <DeleteOutlineOutlinedIcon
+                              fontSize="small"
+                              style={{ color: "#aaa" }}
+                              className="deletethis-cmmt"
+                              onClick={() => {
+                                setSorting(false);
+                                setSortData(undefined);
+                                DeleteComment(element.videoid, element._id);
+                              }}
+                            />
+                          </Tooltip>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="right-sidevideo" key={index}>
+                      <img
+                        src={
+                          element.videoData && element.videoData.thumbnailURL
+                        }
+                        alt="thumbnail"
+                        className="commentvideo-thumbnail"
+                      />
+                      <div className="thiscomment-rightone">
+                        <p>
+                          {element.videoData &&
+                          element.videoData.Title.length <= 40
+                            ? element.videoData.Title
+                            : `${element.videoData.Title.slice(0, 40)}...`}
+                        </p>
                       </div>
                     </div>
                   </div>
                 );
               })}
+
+            {filterComments &&
+              filterComment !== "" &&
+              filterComments.length > 0 &&
+              filterComments.map((element, index) => {
+                return (
+                  <div className="user-comment-data" key={index}>
+                    <div className="leftside-viddata">
+                      <img
+                        src={element.user_profile}
+                        alt="profile"
+                        className="user-channelprofileee"
+                      />
+                      <div className="comment-rightt-data">
+                        <div className="name-time">
+                          <p>{element.username}</p>
+                          <FiberManualRecordIcon
+                            className="dot-seperate"
+                            style={{
+                              color: "#aaa",
+                              marginLeft: "6px",
+                              marginRight: "6px",
+                            }}
+                          />
+                          <p>
+                            {(() => {
+                              const timeDifference =
+                                new Date() - new Date(element.time);
+                              const minutes = Math.floor(
+                                timeDifference / 60000
+                              );
+                              const hours = Math.floor(
+                                timeDifference / 3600000
+                              );
+                              const days = Math.floor(
+                                timeDifference / 86400000
+                              );
+                              const weeks = Math.floor(
+                                timeDifference / 604800000
+                              );
+                              const years = Math.floor(
+                                timeDifference / 31536000000
+                              );
+
+                              if (minutes < 1) {
+                                return "just now";
+                              } else if (minutes < 60) {
+                                return `${minutes} mins ago`;
+                              } else if (hours < 24) {
+                                return `${hours} hours ago`;
+                              } else if (days < 7) {
+                                return `${days} days ago`;
+                              } else if (weeks < 52) {
+                                return `${weeks} weeks ago`;
+                              } else {
+                                return `${years} years ago`;
+                              }
+                            })()}
+                          </p>
+                        </div>
+                        <p style={{ marginTop: "8px" }}>{element.comment}</p>
+                        <div className="comment-all-btns">
+                          <div className="cmmt-like">
+                            <Tooltip
+                              TransitionComponent={Zoom}
+                              title="Like/Unlike"
+                              placement="bottom"
+                            >
+                              <ThumbUpIcon
+                                fontSize="small"
+                                className="thiscomment-like-btn"
+                                style={{ color: "#white" }}
+                                onClick={() => {
+                                  setSorting(false);
+                                  setSortData(undefined);
+                                  LikeComment(element.videoid, element._id);
+                                }}
+                              />
+                            </Tooltip>
+                            <p style={{ marginLeft: "10px" }}>
+                              {element.likes}
+                            </p>
+                          </div>
+                          {element.heartComment === true ? (
+                            <Tooltip
+                              TransitionComponent={Zoom}
+                              title="Remove heart"
+                              placement="bottom"
+                            >
+                              <div
+                                className="hearted-thiscomment"
+                                onClick={() => {
+                                  setSorting(false);
+                                  setSortData(undefined);
+                                  HeartComment(element.videoid, element._id);
+                                }}
+                              >
+                                <img
+                                  src={Profile && Profile}
+                                  alt="profile"
+                                  className="channelp"
+                                />
+
+                                <FavoriteIcon
+                                  className="heartlike-this"
+                                  fontSize="100px"
+                                  style={{ color: "red" }}
+                                />
+                              </div>
+                            </Tooltip>
+                          ) : (
+                            <Tooltip
+                              TransitionComponent={Zoom}
+                              title="Heart"
+                              placement="bottom"
+                            >
+                              <FavoriteBorderOutlinedIcon
+                                fontSize="small"
+                                className="heartcmmt-btn"
+                                style={{ color: "#aaa" }}
+                                onClick={() => {
+                                  setSorting(false);
+                                  setSortData(undefined);
+                                  HeartComment(element.videoid, element._id);
+                                }}
+                              />
+                            </Tooltip>
+                          )}
+
+                          <Tooltip
+                            TransitionComponent={Zoom}
+                            title="Delete"
+                            placement="bottom"
+                          >
+                            <DeleteOutlineOutlinedIcon
+                              fontSize="small"
+                              style={{ color: "#aaa" }}
+                              className="deletethis-cmmt"
+                              onClick={() => {
+                                setSorting(false);
+                                setSortData(undefined);
+                                DeleteComment(element.videoid, element._id);
+                              }}
+                            />
+                          </Tooltip>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="right-sidevideo" key={index}>
+                      <img
+                        src={
+                          element.videoData && element.videoData.thumbnailURL
+                        }
+                        alt="thumbnail"
+                        className="commentvideo-thumbnail"
+                      />
+                      <div className="thiscomment-rightone">
+                        <p>
+                          {element.videoData &&
+                          element.videoData.Title.length <= 40
+                            ? element.videoData.Title
+                            : `${element.videoData.Title.slice(0, 40)}...`}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            {filterComments &&
+              filterComment !== "" &&
+              filterComments.length === 0 && (
+                <div className="user-comment-data2">
+                  <div className="no-comment-found">
+                    <img src={noImage} alt="no-comment" className="nocmmt" />
+                    <p>No comments found. Try searching for something else.</p>
+                  </div>
+                </div>
+              )}
           </div>
         </div>
       </div>
