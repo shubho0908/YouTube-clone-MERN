@@ -613,18 +613,20 @@ function VideoSection() {
     }
   };
 
-  const LikeComment = async (commentIndex) => {
+  const LikeComment = async (commentId) => {
     try {
-      const response = await fetch(
-        `http://localhost:3000/likecomment/${id}/${commentIndex}/${email}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      await response.json();
+      if (commentId !== undefined && id !== undefined && email !== undefined) {
+        const response = await fetch(
+          `http://localhost:3000/likecomment/${id}/${commentId}/${email}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        await response.json();
+      }
     } catch (error) {
       //console.log(error.message);
     }
@@ -649,10 +651,10 @@ function VideoSection() {
     }
   };
 
-  const DeleteComment = async (commentIndex) => {
+  const DeleteComment = async (commentId) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/deletecomment/${id}/${commentIndex}/${email}`,
+        `http://localhost:3000/deletecomment/${id}/${commentId}/${email}`,
         {
           method: "POST",
           headers: {
@@ -1276,7 +1278,7 @@ function VideoSection() {
                             style={{ color: "white", cursor: "pointer" }}
                             onClick={() => {
                               if (token) {
-                                LikeComment(index);
+                                LikeComment(element._id);
                               } else {
                                 setisbtnClicked(true);
                                 document.body.classList.add("bg-css");
@@ -1345,7 +1347,7 @@ function VideoSection() {
                             <button
                               className="delete-comment-btn"
                               style={{ marginLeft: "17px" }}
-                              onClick={() => DeleteComment(index)}
+                              onClick={() => DeleteComment(element._id)}
                             >
                               Delete
                             </button>

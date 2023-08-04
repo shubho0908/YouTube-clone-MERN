@@ -167,8 +167,33 @@ Studio.get("/getallcomments/:email", async (req, res) => {
     }
 
     const comments = video.VideoData.flatMap((data) => data.comments);
+    const videoid = video.VideoData.flatMap((data) =>
+      data.comments.map((item) => item.videoid)
+    );
 
-    res.json(comments);
+    res.json({ comments, videoid });
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+Studio.get("/checklikecomment/:commentId/:email", async (req, res) => {
+  try {
+    const { commentId, email } = req.params;
+    const user = await userData.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const checkLikeComment = user.likedComments.find(
+      (item) => item.comment_ID.toString() === commentId.toString()
+    );
+
+    if (checkLikeComment) {
+      res.json(checkLikeComment);
+    } else {
+      res.json("Not Found");
+    }
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
   }

@@ -77,3 +77,88 @@
   font-size: 15px;
   color: white;
 }
+
+.user-channelprofileee {
+  width: 45px;
+  height: 45px;
+  object-fit: cover;
+  border-radius: 100%;
+}
+
+.channel-comments-list {
+  position: absolute;
+  top: 260px;
+  width: -webkit-fill-available;
+  left: 270px;
+}
+
+.user-comment-data {
+  display: flex;
+  align-items: start;
+  width: -webkit-fill-available;
+  color: white;
+  padding-left: 25px;
+  padding-top: 18px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.333);
+}
+
+.comment-rightt-data {
+  margin-left: 15px;
+  font-size: 13.5px;
+}
+
+.name-time {
+  display: flex;
+  align-items: center;
+  color: #aaa;
+}
+
+.dot-seperate {
+  font-size: 5px !important;
+}
+
+.comment-all-btns {
+  display: flex;
+  align-items: center;
+  width: 150px;
+  margin-top: 15px;
+  justify-content: space-between;
+}
+
+.cmmt-like {
+  display: flex;
+  align-items: center;
+}
+
+.thiscomment-like-btn {
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.thiscomment-like-btn:active {
+  transform: scale(0.85);
+}
+
+.channelp {
+  height: 25px;
+  width: 25px;
+  object-fit: cover;
+  border-radius: 100%;
+}
+
+.heartlike-this {
+  position: relative;
+  right: 7px;
+  top: 2px;
+}
+
+.hearted-thiscomment,
+.heartcmmt-btn {
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.hearted-thiscomment:active,
+.heartcmmt-btn:active {
+  transform: scale(0.9);
+}
