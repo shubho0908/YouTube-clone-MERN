@@ -163,7 +163,7 @@ function Basic() {
                 type="text"
                 className="channel-name-inp"
                 value="Loading..."
-                style={{ pointerEvents: "none" }}
+                style={{ pointerEvents: "none", cursor:"wait" }}
                 placeholder="Enter channel name"
               />
             ) : (
@@ -186,7 +186,7 @@ function Basic() {
               <textarea
                 name="channel-desc"
                 className="basic-channel-desc"
-                style={{ pointerEvents: "none" }}
+                style={{ pointerEvents: "none", cursor:"wait" }}
                 value="Loading..."
                 cols="30"
                 rows="10"

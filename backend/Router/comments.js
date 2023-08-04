@@ -40,6 +40,7 @@ Comments.post("/comments/:id", async (req, res) => {
 
     const newComment = {
       username: user.channelName,
+      videoid: id,
       user_profile: user.profilePic,
       comment: comment,
       time: new Date().toISOString(),

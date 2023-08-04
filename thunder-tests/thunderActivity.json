@@ -23,18 +23,13 @@
         "colId": "history",
         "containerId": "",
         "name": "http://localhost:3000/heartcomment/64b5509ba1cff5431e70e29a/64b66dcffa3325d3e5188498/shubhobera98@gmail.com",
-        "url": "http://localhost:3000/updatechanneldata/shubhobera98@gmail.com",
-        "method": "POST",
+        "url": "http://localhost:3000/getallcomments/ranjeet@gmail.com",
+        "method": "GET",
         "sortNum": 0,
         "created": "2023-07-24T10:45:18.766Z",
-        "modified": "2023-08-03T06:17:04.914Z",
+        "modified": "2023-08-04T06:41:17.804Z",
         "headers": [],
         "params": [],
-        "body": {
-            "type": "json",
-            "raw": "{\n  \"channelName\":\"Shubho Bhai\"\n}",
-            "form": []
-        },
         "tests": []
     }
 ]

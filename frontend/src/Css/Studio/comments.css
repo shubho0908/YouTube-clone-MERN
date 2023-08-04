@@ -1,0 +1,79 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap");
+
+.channel-comments-top {
+  position: absolute;
+  top: 105px;
+  left: 310px;
+}
+
+.channel-comments-top > p:nth-child(1) {
+  color: white;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  width: -webkit-fill-available;
+}
+
+.channel-comments-mid {
+  position: absolute;
+  top: 165px;
+  left: 312px;
+  color: white;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 300;
+}
+
+.channel-comments-mid > p {
+  cursor: pointer;
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  color: #3eaffe;
+  font-weight: 600;
+}
+
+.channel-comments-mid > p::before {
+  content: "";
+  position: absolute;
+  bottom: -18px;
+  left: -5px;
+  height: 4px;
+  width: 85px;
+  background-color: #3eaffe;
+  border-radius: 50px;
+  transform: scaleX(1);
+  transition: all 0.2s linear;
+}
+
+.breakkk {
+  position: absolute;
+  top: 181px;
+  left: 262px;
+  width: -webkit-fill-available;
+  border: none;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.333);
+}
+
+.filter-comments {
+  position: absolute;
+  top: 205px;
+  left: 270px;
+  padding-top: 15px;
+  padding-left: 36px;
+  padding-bottom: 15px;
+  display: flex;
+  align-items: center;
+  width: -webkit-fill-available;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.333);
+}
+
+.filter-comments > input {
+  background-color: #ffffff00;
+  border: none;
+  outline: none;
+  margin-left: 10px;
+  width: -webkit-fill-available;
+  margin-left: 12px;
+  font-size: 15px;
+  color: white;
+}

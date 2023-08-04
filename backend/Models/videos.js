@@ -11,6 +11,9 @@ const Comment = new mongoose.Schema({
   comment: {
     type: String,
   },
+  videoid:{
+    type: String,
+  },
   time: {
     type: String,
   },

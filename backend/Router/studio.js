@@ -158,4 +158,20 @@ Studio.post("/savevideoeditdetails/:videoId", async (req, res) => {
   }
 });
 
+Studio.get("/getallcomments/:email", async (req, res) => {
+  try {
+    const email = req.params.email;
+    const video = await videodata.findOne({ email });
+    if (!video) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const comments = video.VideoData.flatMap((data) => data.comments);
+
+    res.json(comments);
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 module.exports = Studio;

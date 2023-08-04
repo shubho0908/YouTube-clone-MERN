@@ -27,6 +27,8 @@ function LeftPanel2() {
       selected = "Customization";
     } else if (currentUrl === "/studio/video") {
       selected = "Content";
+    } else if (currentUrl === "/studio/comments") {
+      selected = "Comments";
     }
     // } else if (currentUrl === "/watchlater") {
     //   selected = "watch-later";
@@ -130,13 +132,14 @@ function LeftPanel2() {
             <p>Content</p>
           </div>
           <div
-            className="comments panel"
+            className={StudioSection === "Comments" ? "studio-active panel" : "comments panel"}
             onClick={() => {
               localStorage.setItem("Studio-Section", "Comments");
+              window.location.href = "/studio/comments"
             }}
           >
             <ChatOutlinedIcon
-              className="studio-icon"
+              className={StudioSection === "Comments" ? "studio-icon2" : "studio-icon"}
               fontSize="medium"
               style={{ color: "#A9A9A9" }}
             />
