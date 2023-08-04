@@ -1179,6 +1179,7 @@ function VideoSection() {
                 type="text"
                 name="myComment"
                 placeholder="Add a comment..."
+                value={comment}
                 onClick={() => {
                   setDisplay((prevDisplay) =>
                     prevDisplay === "none" ? "block" : "block"
@@ -1204,7 +1205,9 @@ function VideoSection() {
                 className="upload-comment"
                 onClick={() => {
                   if (token && isChannel === true && comment !== "") {
+                    setComment("")
                     uploadComment();
+                    
                   } else if (token && isChannel !== true) {
                     alert("Create a channel first");
                   } else if (token && isChannel === true && comment === "") {

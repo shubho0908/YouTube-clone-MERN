@@ -153,12 +153,12 @@
 }
 
 .hearted-thiscomment,
-.heartcmmt-btn {
+.heartcmmt-btn, .deletethis-cmmt {
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
 .hearted-thiscomment:active,
-.heartcmmt-btn:active {
+.heartcmmt-btn:active, .deletethis-cmmt:active {
   transform: scale(0.9);
 }
