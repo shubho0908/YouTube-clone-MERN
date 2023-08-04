@@ -12,6 +12,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
 import noImage from "../../img/no-comment.png";
+import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
 
 function Comments() {
   const [Email, setEmail] = useState();
@@ -25,6 +26,46 @@ function Comments() {
     const token = localStorage.getItem("userToken");
     setEmail(jwtDecode(token).email);
   }, []);
+
+  useEffect(() => {
+    const handleClick = () => {
+      document
+        .querySelector(".video-all-comments-section")
+        .classList.add("channel-dark");
+    };
+
+    const searchInp = document.getElementById("searchType2");
+
+    if (searchInp) {
+      searchInp.addEventListener("click", handleClick);
+    }
+
+    return () => {
+      if (searchInp) {
+        searchInp.removeEventListener("click", handleClick);
+      }
+    };
+  });
+
+  useEffect(() => {
+    const handleClick = () => {
+      document
+        .querySelector(".video-all-comments-section")
+        .classList.remove("channel-dark");
+    };
+
+    const clearBtn = document.querySelector(".clear-search");
+
+    if (clearBtn) {
+      clearBtn.addEventListener("click", handleClick);
+    }
+
+    return () => {
+      if (clearBtn) {
+        clearBtn.removeEventListener("click", handleClick);
+      }
+    };
+  });
 
   useEffect(() => {
     const getChannel = async () => {
@@ -188,6 +229,38 @@ function Comments() {
             style={{ color: "#aaa", cursor: "pointer" }}
             onClick={() => setSorting(!sorting)}
           />
+          <div
+            className="choosed-sorting-new"
+            style={
+              sortData === "New" ? { display: "flex" } : { display: "none" }
+            }
+          >
+            <p>Newest first</p>
+            <HighlightOffOutlinedIcon
+              onClick={() => {
+                setSortData(undefined);
+              }}
+              className="cancel-sort"
+              fontSize="small"
+              style={{ color: "#aaa", marginLeft: "5px" }}
+            />
+          </div>
+          <div
+            className="choosed-sorting-old"
+            style={
+              sortData === "Old" ? { display: "flex" } : { display: "none" }
+            }
+          >
+            <p>Oldest first</p>
+            <HighlightOffOutlinedIcon
+              onClick={() => {
+                setSortData(undefined);
+              }}
+              className="cancel-sort"
+              fontSize="small"
+              style={{ color: "#aaa", marginLeft: "5px" }}
+            />
+          </div>
           <input
             type="text"
             name="comment-search"

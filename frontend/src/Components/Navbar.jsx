@@ -58,6 +58,12 @@ function Navbar() {
     console.log(searchedData);
   };
 
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter" && searchedData) {
+      window.location.href = `/results/${searchedData}`;
+    }
+  };
+
   return (
     <>
       <div className="navbar">
@@ -85,6 +91,7 @@ function Navbar() {
               placeholder="Type to search"
               id="searchType"
               onChange={handleSearch}
+              onKeyDown={handleKeyPress}
             />
             <SearchRoundedIcon
               className="search-icon"
@@ -92,8 +99,7 @@ function Navbar() {
               style={{ color: "rgb(160, 160, 160)" }}
               onClick={() => {
                 if (searchedData) {
-                  navigate(`/results/${searchedData}`);
-                  window.location.reload();
+                  window.location.href = `/results/${searchedData}`;
                 }
               }}
             />
