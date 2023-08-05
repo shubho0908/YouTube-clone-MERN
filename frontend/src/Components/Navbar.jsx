@@ -12,10 +12,12 @@ import { useEffect, useState } from "react";
 import Signup from "./Signup";
 import Signin from "./Signin";
 import avatar from "../img/avatar.png";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 
 function Navbar() {
+  const { data } = useParams();
+  const [data2, setData] = useState(data);
   const [isbtnClicked, setisbtnClicked] = useState(false);
   const [isSwitch, setisSwitched] = useState(false);
   const token = localStorage.getItem("userToken");
@@ -55,6 +57,7 @@ function Navbar() {
 
   const handleSearch = (e) => {
     setSearchedData(e.target.value);
+    setData(e.target.value);
     console.log(searchedData);
   };
 
@@ -90,6 +93,7 @@ function Navbar() {
               type="text"
               placeholder="Type to search"
               id="searchType"
+              value={data2 ? data2 : searchedData}
               onChange={handleSearch}
               onKeyDown={handleKeyPress}
             />

@@ -134,23 +134,23 @@ function Library() {
   }, [email]);
 
   const watchLaterArray =
-    watchlater && watchlater.length > 0
+    watchlater && watchlater.length > 0 && watchlater.savedData !== "NO DATA"
       ? watchlater.slice(0, 4) // Get the first four elements if available
       : [];
 
   const PlaylistArray =
-    PlaylistData && PlaylistData.length > 0
+    PlaylistData && PlaylistData.length > 0 && PlaylistData !== "No playlists available..."
       ? PlaylistData.slice(0, 4) // Get the first four elements if available
       : [];
 
   const LikedVideosArray =
-    videolike && videolike.length > 0
+    videolike && videolike.length > 0 && videolike !== "NO DATA"
       ? videolike.slice(0, 4) // Get the first four elements if available
       : [];
 
   if (
-    PlaylistData === "No playlists available..." ||
-    watchlater.savedData === "NO DATA" ||
+    PlaylistData === "No playlists available..." &&
+    watchlater.savedData === "NO DATA" &&
     videolike === "NO DATA"
   ) {
     return (
@@ -340,7 +340,7 @@ function Library() {
             )}
           </div>
           <div className="thischannel-playlists2">
-            {PlaylistArray &&
+            {PlaylistArray && PlaylistArray !== "No playlists available..." &&
               PlaylistArray.map((element, index) => {
                 const backgroundColor =
                   playlistColors[index] || playlistColors[0];
