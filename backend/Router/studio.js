@@ -199,4 +199,23 @@ Studio.get("/checklikecomment/:commentId/:email", async (req, res) => {
   }
 });
 
+Studio.get("/getvideocommentsbyid/:videoId", async (req, res) => {
+  try {
+    const { videoId } = req.params;
+    const video = await videodata.findOne({ "VideoData._id": videoId });
+
+    if (!video) {
+      return res.status(404).json({ error: "Video not found" });
+    }
+
+    const findComments = video.VideoData.filter(
+      (item) => item._id.toString() === videoId.toString()
+    );
+    const videoComments = findComments.flatMap((item) => item.comments);
+    res.json(videoComments);
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 module.exports = Studio;

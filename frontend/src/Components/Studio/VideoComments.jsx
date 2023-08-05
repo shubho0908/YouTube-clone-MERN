@@ -1,4 +1,4 @@
-import LeftPanel2 from "../LeftPanel2";
+import LeftPanel3 from "../LeftPanel3";
 import Navbar2 from "../Navbar2";
 import "../../Css/Studio/comments.css";
 import FilterListOutlinedIcon from "@mui/icons-material/FilterListOutlined";
@@ -12,11 +12,16 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
 import noImage from "../../img/no-comment.png";
+import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
+import { useParams } from "react-router-dom";
 
-function Comments() {
+function VideoComments() {
+  const { id } = useParams();
   const [Email, setEmail] = useState();
-  const [AllComments, setAllComments] = useState([]);
+  const [videoComments, setVideoComments] = useState([]);
   const [Profile, setProfile] = useState();
+  const [sorting, setSorting] = useState(false);
+  const [sortData, setSortData] = useState();
   const [filterComment, setFilterComment] = useState("");
 
   useEffect(() => {
@@ -84,39 +89,23 @@ function Comments() {
   }, [Email]);
 
   useEffect(() => {
-    const getComments = async () => {
+    const getComment = async () => {
       try {
-        if (Email !== undefined) {
+        if (id !== undefined) {
           const response = await fetch(
-            `http://localhost:3000/getallcomments/${Email}`
+            `http://localhost:3000/getvideocommentsbyid/${id}`
           );
-          const { comments } = await response.json();
-
-          // Fetch video data for each comment
-          const commentsWithVideoData = await Promise.all(
-            comments.map(async (comment) => {
-              const videoResponse = await fetch(
-                `http://localhost:3000/getdeletevideodata/${comment.videoid}`
-              );
-              const videoData = await videoResponse.json();
-
-              return {
-                ...comment,
-                videoData: videoData, // Add video data to the comment object
-              };
-            })
-          );
-
-          setAllComments(commentsWithVideoData);
+          const comments = await response.json();
+          setVideoComments(comments);
         }
       } catch (error) {
-        // Handle error
+        // console.log(error.message);
       }
     };
+    const interval = setInterval(getComment, 100);
 
-    const interval = setInterval(getComments, 500);
     return () => clearInterval(interval);
-  }, [Email]);
+  }, [id]);
 
   const LikeComment = async (id, commentId) => {
     try {
@@ -173,8 +162,8 @@ function Comments() {
   };
 
   const filterComments =
-    AllComments &&
-    AllComments.filter(
+    videoComments &&
+    videoComments.filter(
       (item) =>
         item.comment
           .toLowerCase()
@@ -195,10 +184,10 @@ function Comments() {
   return (
     <>
       <Navbar2 />
-      <LeftPanel2 />
+      <LeftPanel3 />
       <div className="video-all-comments-section">
         <div className="channel-comments-top">
-          <p>Channel comments</p>
+          <p>Video comments</p>
         </div>
         <div className="channel-comments-mid">
           <p>Comments</p>
@@ -208,8 +197,40 @@ function Comments() {
           <FilterListOutlinedIcon
             fontSize="medium"
             style={{ color: "#aaa", cursor: "pointer" }}
+            onClick={() => setSorting(!sorting)}
           />
-
+          <div
+            className="choosed-sorting-new"
+            style={
+              sortData === "New" ? { display: "flex" } : { display: "none" }
+            }
+          >
+            <p>Newest first</p>
+            <HighlightOffOutlinedIcon
+              onClick={() => {
+                setSortData(undefined);
+              }}
+              className="cancel-sort"
+              fontSize="small"
+              style={{ color: "#aaa", marginLeft: "5px" }}
+            />
+          </div>
+          <div
+            className="choosed-sorting-old"
+            style={
+              sortData === "Old" ? { display: "flex" } : { display: "none" }
+            }
+          >
+            <p>Oldest first</p>
+            <HighlightOffOutlinedIcon
+              onClick={() => {
+                setSortData(undefined);
+              }}
+              className="cancel-sort"
+              fontSize="small"
+              style={{ color: "#aaa", marginLeft: "5px" }}
+            />
+          </div>
           <input
             type="text"
             name="comment-search"
@@ -217,13 +238,36 @@ function Comments() {
             placeholder="Filter"
             onChange={(e) => setFilterComment(e.target.value)}
           />
+          <div
+            className="comment-sorting"
+            style={
+              sorting === true ? { display: "block" } : { display: "none" }
+            }
+          >
+            <p
+              onClick={() => {
+                setSortData("Old");
+                setSorting(false);
+              }}
+            >
+              Oldest first
+            </p>
+            <p
+              onClick={() => {
+                setSortData("New");
+                setSorting(false);
+              }}
+            >
+              Newest first
+            </p>
+          </div>
         </div>
         <div className="channel-comments-list">
           <div className="overall-comments">
-            {AllComments &&
-              AllComments.length > 0 &&
+            {videoComments &&
+              videoComments.length > 0 &&
               filterComment === "" &&
-              AllComments.map((element, index) => {
+              videoComments.map((element, index) => {
                 return (
                   <div className="user-comment-data" key={index}>
                     <div className="leftside-viddata">
@@ -292,6 +336,8 @@ function Comments() {
                                 className="thiscomment-like-btn"
                                 style={{ color: "#white" }}
                                 onClick={() => {
+                                  setSorting(false);
+                                  setSortData(undefined);
                                   LikeComment(element.videoid, element._id);
                                 }}
                               />
@@ -309,6 +355,8 @@ function Comments() {
                               <div
                                 className="hearted-thiscomment"
                                 onClick={() => {
+                                  setSorting(false);
+                                  setSortData(undefined);
                                   HeartComment(element.videoid, element._id);
                                 }}
                               >
@@ -336,6 +384,8 @@ function Comments() {
                                 className="heartcmmt-btn"
                                 style={{ color: "#aaa" }}
                                 onClick={() => {
+                                  setSorting(false);
+                                  setSortData(undefined);
                                   HeartComment(element.videoid, element._id);
                                 }}
                               />
@@ -352,36 +402,13 @@ function Comments() {
                               style={{ color: "#aaa" }}
                               className="deletethis-cmmt"
                               onClick={() => {
+                                setSorting(false);
+                                setSortData(undefined);
                                 DeleteComment(element.videoid, element._id);
                               }}
                             />
                           </Tooltip>
                         </div>
-                      </div>
-                    </div>
-                    <div
-                      className="right-sidevideo"
-                      key={index}
-                      onClick={() => {
-                        if (element.videoData._id !== undefined) {
-                          window.location.href = `/studio/video/comments/${element.videoData._id}`;
-                        }
-                      }}
-                    >
-                      <img
-                        src={
-                          element.videoData && element.videoData.thumbnailURL
-                        }
-                        alt="thumbnail"
-                        className="commentvideo-thumbnail"
-                      />
-                      <div className="thiscomment-rightone">
-                        <p>
-                          {element.videoData &&
-                          element.videoData.Title.length <= 40
-                            ? element.videoData.Title
-                            : `${element.videoData.Title.slice(0, 40)}...`}
-                        </p>
                       </div>
                     </div>
                   </div>
@@ -460,6 +487,8 @@ function Comments() {
                                 className="thiscomment-like-btn"
                                 style={{ color: "#white" }}
                                 onClick={() => {
+                                  setSorting(false);
+                                  setSortData(undefined);
                                   LikeComment(element.videoid, element._id);
                                 }}
                               />
@@ -477,6 +506,8 @@ function Comments() {
                               <div
                                 className="hearted-thiscomment"
                                 onClick={() => {
+                                  setSorting(false);
+                                  setSortData(undefined);
                                   HeartComment(element.videoid, element._id);
                                 }}
                               >
@@ -504,6 +535,8 @@ function Comments() {
                                 className="heartcmmt-btn"
                                 style={{ color: "#aaa" }}
                                 onClick={() => {
+                                  setSorting(false);
+                                  setSortData(undefined);
                                   HeartComment(element.videoid, element._id);
                                 }}
                               />
@@ -520,36 +553,13 @@ function Comments() {
                               style={{ color: "#aaa" }}
                               className="deletethis-cmmt"
                               onClick={() => {
+                                setSorting(false);
+                                setSortData(undefined);
                                 DeleteComment(element.videoid, element._id);
                               }}
                             />
                           </Tooltip>
                         </div>
-                      </div>
-                    </div>
-                    <div
-                      className="right-sidevideo"
-                      key={index}
-                      onClick={() => {
-                        if (element.videoData._id !== undefined) {
-                          window.location.href = `/studio/video/comments/${element.videoData._id}`;
-                        }
-                      }}
-                    >
-                      <img
-                        src={
-                          element.videoData && element.videoData.thumbnailURL
-                        }
-                        alt="thumbnail"
-                        className="commentvideo-thumbnail"
-                      />
-                      <div className="thiscomment-rightone">
-                        <p>
-                          {element.videoData &&
-                          element.videoData.Title.length <= 40
-                            ? element.videoData.Title
-                            : `${element.videoData.Title.slice(0, 40)}...`}
-                        </p>
                       </div>
                     </div>
                   </div>
@@ -572,4 +582,4 @@ function Comments() {
   );
 }
 
-export default Comments;
+export default VideoComments;

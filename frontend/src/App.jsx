@@ -15,6 +15,7 @@ import Customization from "./Components/Studio/Customization";
 import Content from "./Components/Studio/Content"
 import VideoDetails from "./Components/Studio/VideoDetails";
 import Comments from "./Components/Studio/Comments";
+import VideoComments from "./Components/Studio/VideoComments";
 
 function App() {
   const token = localStorage.getItem("userToken");
@@ -29,6 +30,7 @@ function App() {
           <Route path="/studio/video" element={token ? <Content /> : <Error />} />
           <Route path="/studio/comments" element={token ? <Comments /> : <Error />} />
           <Route path="/studio/video/edit/:id" element={token ? <VideoDetails /> : <Error />} />
+          <Route path="/studio/video/comments/:id" element={token ? <VideoComments /> : <Error />} />
           <Route
             path="/likedVideos"
             element={token ? <LikeVideos /> : <Error />}

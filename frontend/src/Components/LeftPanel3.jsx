@@ -6,7 +6,7 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
-import ChatOutlinedIcon from '@mui/icons-material/ChatOutlined';
+import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
 
 function LeftPanel2() {
   const { id } = useParams();
@@ -26,6 +26,8 @@ function LeftPanel2() {
       selected = "Customization";
     } else if (currentUrl === "/studio/video") {
       selected = "Content";
+    } else if (currentUrl === `/studio/video/comments/${id}`) {
+      selected = "Video-Comments";
     }
     // } else if (currentUrl === "/watchlater") {
     //   selected = "watch-later";
@@ -81,14 +83,24 @@ function LeftPanel2() {
         className="main-section3"
         style={menuClicked === true ? { display: "none" } : { display: "flex" }}
       >
-        <div className="first-panel first-panel1"
+        <div
+          className="first-panel first-panel1"
           onClick={() => {
-            window.location.href = "/studio/video"
+            if (window.location.href.includes(`/studio/video/edit/${id}`)) {
+              window.location.href = "/studio/video";
+            }
+            else{
+              window.location.href = "/studio/comments";
+            }
           }}
         >
           <div className="about-video">
             <WestIcon fontSize="medium" style={{ color: "#aaa" }} />
-            <p>Channel content</p>
+            {window.location.href.includes(`/studio/video/edit/${id}`) ? (
+              <p>Channel content</p>
+            ) : (
+              <p>Channel comments</p>
+            )}
           </div>
         </div>
         <div
@@ -165,18 +177,18 @@ function LeftPanel2() {
           </div>
           <div
             className={
-              VideoEditSection === "Comments"
+              VideoEditSection === "Video-Comments"
                 ? "studio-active panel"
                 : "comments panel"
             }
             onClick={() => {
-              localStorage.setItem("Video-Edit Section", "Comments");
+              localStorage.setItem("Video-Edit Section", "Video-Comments");
               window.location.href = `/studio/video/comments/${id}`;
             }}
           >
             <ChatOutlinedIcon
               className={
-                VideoEditSection === "Comments" ? "studio-icon2" : "studio-icon"
+                VideoEditSection === "Video-Comments" ? "studio-icon2" : "studio-icon"
               }
               fontSize="medium"
               style={{ color: "#A9A9A9", paddingLeft: "25px !important" }}
