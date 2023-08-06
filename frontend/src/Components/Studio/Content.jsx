@@ -291,6 +291,9 @@ function Content() {
                                 className="video-edit-icons"
                                 fontSize="medium"
                                 style={{ color: "#aaa" }}
+                                onClick={()=>{
+                                  window.location.href = `/studio/video/comments/${element._id}`;
+                                }}
                               />
                             </Tooltip>
                             <Tooltip

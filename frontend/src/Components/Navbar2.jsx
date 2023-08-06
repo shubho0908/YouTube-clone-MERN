@@ -225,6 +225,9 @@ function Navbar2() {
                                 className="comment-this"
                                 fontSize="medium"
                                 style={{ color: "#aaa" }}
+                                onClick={()=>{
+                                  window.location.href = `/studio/video/comments/${element._id}`;
+                                }}
                               />
                             </Tooltip>
                             <Tooltip
