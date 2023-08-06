@@ -1205,9 +1205,8 @@ function VideoSection() {
                 className="upload-comment"
                 onClick={() => {
                   if (token && isChannel === true && comment !== "") {
-                    setComment("")
+                    setComment("");
                     uploadComment();
-                    
                   } else if (token && isChannel !== true) {
                     alert("Create a channel first");
                   } else if (token && isChannel === true && comment === "") {

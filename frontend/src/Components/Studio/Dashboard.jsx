@@ -100,7 +100,7 @@ function Dashboard() {
                       className="expandd"
                       style={
                         dropDown === false && myVideos && myVideos.length > 1
-                          ? { color: "#aaa", cursor:"pointer" }
+                          ? { color: "#aaa", cursor: "pointer" }
                           : { display: "none" }
                       }
                       onClick={() => setDropDown(true)}
@@ -110,19 +110,20 @@ function Dashboard() {
                       className="expandd"
                       style={
                         dropDown === true && myVideos && myVideos.length > 1
-                          ? { color: "#aaa", cursor:"pointer" }
+                          ? { color: "#aaa", cursor: "pointer" }
                           : { display: "none" }
                       }
                       onClick={() => setDropDown(false)}
                     />
                   </div>
                 </div>
-                <div className="extra-performance-data"
-                style={
-                  myVideos && myVideos.length > 1 && dropDown === true
-                    ? { display: "block" }
-                    : { display: "none" }
-                }
+                <div
+                  className="extra-performance-data"
+                  style={
+                    myVideos && myVideos.length > 1 && dropDown === true
+                      ? { display: "block" }
+                      : { display: "none" }
+                  }
                 >
                   <p>
                     First{" "}
@@ -155,13 +156,8 @@ function Dashboard() {
                       }
                     })()}
                   </p>
-                  <div className="more-performed-details"
-                  
-                  >
-                    <div
-                      className="views-ranking"
-                      
-                    >
+                  <div className="more-performed-details">
+                    <div className="views-ranking">
                       <p>Ranking by views</p>
                       <div className="total-outof">
                         <p>
@@ -169,10 +165,12 @@ function Dashboard() {
                         </p>
                         <ChevronRightIcon
                           fontSize="medium"
+                          className="right-arrw"
                           style={{ color: "#aaa" }}
                         />
                       </div>
                     </div>
+
                     <div className="thisviews-performed">
                       <p>Views</p>
                       <p>
@@ -190,7 +188,39 @@ function Dashboard() {
                 </p>
               </div>
             </div>
+
             <div className="published-videos-dash"></div>
+          </div>
+          <div className="all-sortedvideos-dash">
+            <p>Top recent videos</p>
+            <p>Views</p>
+
+            {sortedVideos &&
+              sortedVideos.map((element, index) => {
+                return (
+                  <div className="list-of-sortedvideos" key={index}>
+                    <div className="leftsort-list">
+                      <p>{index + 1}</p>
+                      <div className="sorted-viddataaa">
+                      <img
+                        src={element.thumbnailURL}
+                        alt=""
+                        className="sortedthumbnail"
+                      />
+                      <p style={{marginLeft:"12px"}}>
+                        {" "}
+                        {element.Title.length <= 25
+                          ? element.Title
+                          : `${element.Title.slice(0, 25)}...`}
+                      </p>
+                      </div>
+                    </div>
+                    <div className="right-sortlist">
+                      <p>{element.views}</p>
+                    </div>
+                  </div>
+                );
+              })}
           </div>
           <div className="dashboard-analytics"></div>
         </div>

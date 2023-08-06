@@ -345,6 +345,7 @@ form > input::placeholder {
   position: absolute;
   top: 100px;
   right: 35px;
+  z-index:4 ;
 }
 
 .create-btn:hover {
