@@ -21,6 +21,7 @@ function AccountPop() {
   const [theme, setTheme] = useState("Dark");
   const [ChannelID, setChannelID] = useState();
   const [isBtnClicked, setIsBtnClicked] = useState(false);
+  const [isChannel, setIsChannel] = useState(false);
 
   const navigate = useNavigate();
 
@@ -74,6 +75,26 @@ function AccountPop() {
     getChannelID();
   }, [email]);
 
+  useEffect(() => {
+    const getChannel = async () => {
+      try {
+        if (email) {
+          const response = await fetch(
+            `http://localhost:3000/getchannel/${email}`
+          );
+          const { channel } = await response.json();
+          setIsChannel(channel);
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
+    const interval = setInterval(getChannel, 200);
+
+    return () => clearInterval(interval);
+  }, [email]);
+
   return (
     <>
       <div
@@ -109,8 +130,11 @@ function AccountPop() {
           <div
             className="yourchannel c-sec"
             onClick={() => {
-              navigate(`/channel/${ChannelID}`);
-              window.location.reload();
+              if (isChannel === true) {
+                window.location.href = `/channel/${ChannelID}`;
+              } else {
+                window.location.href = `/studio`;
+              }
             }}
           >
             <AccountBoxOutlinedIcon
@@ -122,8 +146,7 @@ function AccountPop() {
           <div
             className="yourstudio c-sec"
             onClick={() => {
-              window.location.href = "/studio"
-              
+              window.location.href = "/studio";
             }}
           >
             <OndemandVideoOutlinedIcon
@@ -167,7 +190,7 @@ function AccountPop() {
             className="exitout c-sec"
             onClick={() => {
               localStorage.removeItem("userToken");
-              window.location.href = "/"
+              window.location.href = "/";
             }}
           >
             <LogoutOutlinedIcon fontSize="medium" style={{ color: "white" }} />

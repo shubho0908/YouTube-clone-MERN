@@ -36,6 +36,8 @@ function Navbar() {
     }
   }, [token]);
 
+  
+
   useEffect(() => {
     const getData = async () => {
       try {

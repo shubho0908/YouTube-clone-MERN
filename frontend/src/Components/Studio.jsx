@@ -489,7 +489,10 @@ function Studio() {
       <Navbar2 />
       <LeftPanel2 />
       <div className="studio">
-        <div className="create-btn">
+        <div
+          className="create-btn"
+          style={isChannel === true ? { display: "flex" } : { display: "none" }}
+        >
           <VideoCallOutlinedIcon
             className=""
             fontSize="large"
@@ -1041,7 +1044,7 @@ function Studio() {
           </div>
         </div>
       </div>
-      <Dashboard/>
+      {isChannel === true ? <Dashboard /> : ""}
     </>
   );
 }

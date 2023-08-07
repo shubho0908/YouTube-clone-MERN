@@ -65,7 +65,7 @@ function Navbar2() {
   }, [email]);
 
   const filteredVideos =
-    userVideos &&
+    userVideos && userVideos.length > 0 &&
     userVideos.filter(
       (video) =>
         video.Title.toLowerCase().includes(
