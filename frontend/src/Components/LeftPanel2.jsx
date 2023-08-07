@@ -6,6 +6,7 @@ import VideoLibraryOutlinedIcon from "@mui/icons-material/VideoLibraryOutlined";
 import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
 import AutoFixHighOutlinedIcon from "@mui/icons-material/AutoFixHighOutlined";
 import { useLocation } from "react-router-dom";
+import avatar from "../img/avatar.png";
 
 function LeftPanel2() {
   const [email, setEmail] = useState("");
@@ -15,7 +16,6 @@ function LeftPanel2() {
   const [menuClicked, setMenuClicked] = useState(false);
   const StudioSection = localStorage.getItem("Studio-Section");
   const location = useLocation();
-
 
   useEffect(() => {
     const currentUrl = location.pathname;
@@ -92,7 +92,11 @@ function LeftPanel2() {
         style={menuClicked === true ? { display: "none" } : { display: "flex" }}
       >
         <div className="first-panel">
-          <img src={profileIMG} alt="" className="profile_img" />
+          <img
+            src={profileIMG ? profileIMG : avatar}
+            alt=""
+            className="profile_img"
+          />
           <div className="about-channel">
             <p className="your-channel">Your Channel</p>
             <p className="c-name">{channel}</p>
@@ -107,53 +111,75 @@ function LeftPanel2() {
             }
             onClick={() => {
               localStorage.setItem("Studio-Section", "Dashboard");
-              window.location.href = "/studio"
+              window.location.href = "/studio";
             }}
           >
             <DashboardIcon
-              className={StudioSection === "Dashboard" ? "studio-icon2" : "studio-icon"}
+              className={
+                StudioSection === "Dashboard" ? "studio-icon2" : "studio-icon"
+              }
               fontSize="medium"
               style={{ color: "#A9A9A9", paddingLeft: "25px !important" }}
             />
             <p>Dashboard</p>
           </div>
           <div
-            className={StudioSection === "Content" ? "studio-active panel" : "content panel"}
+            className={
+              StudioSection === "Content"
+                ? "studio-active panel"
+                : "content panel"
+            }
             onClick={() => {
               localStorage.setItem("Studio-Section", "Content");
-              window.location.href = "/studio/video"
+              window.location.href = "/studio/video";
             }}
           >
             <VideoLibraryOutlinedIcon
-              className={StudioSection === "Content" ? "studio-icon2" : "studio-icon"}
+              className={
+                StudioSection === "Content" ? "studio-icon2" : "studio-icon"
+              }
               fontSize="medium"
               style={{ color: "#A9A9A9" }}
             />
             <p>Content</p>
           </div>
           <div
-            className={StudioSection === "Comments" ? "studio-active panel" : "comments panel"}
+            className={
+              StudioSection === "Comments"
+                ? "studio-active panel"
+                : "comments panel"
+            }
             onClick={() => {
               localStorage.setItem("Studio-Section", "Comments");
-              window.location.href = "/studio/comments"
+              window.location.href = "/studio/comments";
             }}
           >
             <ChatOutlinedIcon
-              className={StudioSection === "Comments" ? "studio-icon2" : "studio-icon"}
+              className={
+                StudioSection === "Comments" ? "studio-icon2" : "studio-icon"
+              }
               fontSize="medium"
               style={{ color: "#A9A9A9" }}
             />
             <p>Comments</p>
           </div>
           <div
-            className={StudioSection === "Customization" ? "studio-active panel" : "customization panel"}
+            className={
+              StudioSection === "Customization"
+                ? "studio-active panel"
+                : "customization panel"
+            }
             onClick={() => {
               localStorage.setItem("Studio-Section", "Customization");
-              window.location.href = "/studio/customize"
+              window.location.href = "/studio/customize";
             }}
           >
             <AutoFixHighOutlinedIcon
-              className={StudioSection === "Customization" ? "studio-icon2" : "studio-icon"}
+              className={
+                StudioSection === "Customization"
+                  ? "studio-icon2"
+                  : "studio-icon"
+              }
               fontSize="medium"
               style={{ color: "#A9A9A9" }}
             />

@@ -40,6 +40,10 @@
   align-items: center;
 }
 
+.video-performance > p:nth-child(1) {
+  font-size: 17px;
+}
+
 .video-performance-icons {
   justify-content: space-between;
   padding-top: 15px;
@@ -107,6 +111,10 @@
   transition: all 0.5s ease !important;
 }
 
+.expandd:hover {
+  color: white !important;
+}
+
 .expandd:active {
   background-color: rgba(255, 255, 255, 0.276);
 }
@@ -116,6 +124,7 @@
   background-color: #222222;
   padding: 20px;
   position: absolute;
+  z-index: 0;
   left: 420px;
   top: 43%;
   color: white;
@@ -124,6 +133,9 @@
   transition: opacity 0.15s ease;
 }
 
+.all-sortedvideos-dash > p:nth-child(1) {
+  font-size: 15px;
+}
 .all-sortedvideos-dash > p:nth-child(2) {
   color: #aaa;
   font-size: 13.5px;
@@ -165,6 +177,7 @@
 
 .all-sortedvideos-dash.visible {
   opacity: 1;
+  z-index: 3;
 }
 
 .published-videos-dash {
@@ -179,6 +192,7 @@
 }
 
 .publish-toop {
+  font-size: 17px;
   padding: 25px 0 0 25px;
 }
 
@@ -191,23 +205,23 @@
   display: flex;
   align-items: start;
   padding: 15px 25px 15px 25px;
-  transition: all .15s ease;
+  transition: all 0.15s ease;
 }
 
 .dashboard-publishvideos:hover {
   background-color: #1f1f1f;
 }
 
-.dashboard-publishvideos:hover .bottompublish{
+.dashboard-publishvideos:hover .bottompublish {
   display: none;
 }
 
-.dashboard-publishvideos:hover .bottompublish2{
+.dashboard-publishvideos:hover .bottompublish2 {
   display: flex;
 }
 
 .all-publishvid-data {
-  margin-top: 25px;
+  margin-top: 20px;
 }
 
 .publish-rightdata {
@@ -218,7 +232,8 @@
   font-size: 13px;
 }
 
-.bottompublish, .bottompublish2 {
+.bottompublish,
+.bottompublish2 {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -226,7 +241,7 @@
   margin-top: 8px;
 }
 
-.bottompublish2{
+.bottompublish2 {
   display: none;
 }
 
@@ -246,5 +261,91 @@
 .go-videos {
   margin-left: 25px;
   margin-bottom: 15px;
-  margin-top: 25px;
+  margin-top: 8px;
+}
+.dash-data-all {
+  display: flex;
+}
+
+.dashboard-analytics {
+  position: relative;
+  top: 25px;
+  left: 20px;
+  width: fit-content;
+  background-color: #282828;
+  width: fit-content;
+  color: white;
+  border: 1px solid rgba(128, 128, 128, 0.333);
+  border-radius: 5px;
+  padding: 25px;
+  width: 350px;
+}
+
+.subscriber-analytics,
+.channel-summary {
+  border-bottom: 1px solid rgba(128, 128, 128, 0.333);
+}
+
+.channel-summary {
+  padding-bottom: 20px;
+  margin-top: 20px;
+}
+
+.channel-top-videos-analytics {
+  margin-top: 20px;
+}
+
+.dashboard-analytics > p {
+  font-size: 17px;
+}
+
+.subscriber-analytics {
+  margin-top: 18px;
+  padding-bottom: 20px;
+}
+
+.subscriber-analytics > p:nth-child(2) {
+  font-size: 34px;
+  margin-top: 5px;
+}
+
+.subscriber-analytics > p:nth-child(1) {
+  font-size: 13.5px;
+}
+
+.channel-totalviews-analytics,
+.channel-totalvideos-analytics {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+  font-size: 13.5px;
+}
+
+.channel-top-videos-analytics > p:nth-child(2) {
+  font-size: 13.5px;
+  color: #aaa;
+  margin-top: 4px;
+}
+
+.channel-top-videosdata {
+  margin-top: 12px;
+  line-height: 30px;
+}
+
+.thisanalytics-data {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13.8px;
+  transition: all 0.15s ease;
+}
+
+.thisanalytics-data:hover {
+  color: #1188dd;
+}
+
+.make-white:hover {
+  color: white !important;
 }
