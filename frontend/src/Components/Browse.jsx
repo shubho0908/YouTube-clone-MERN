@@ -1,5 +1,3 @@
-import Navbar from "./Navbar";
-import LeftPanel from "./LeftPanel";
 import "../Css/browse.css";
 import { useEffect, useState } from "react";
 import ReactLoading from "react-loading";
@@ -7,10 +5,14 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
 import { useNavigate } from "react-router-dom";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import LeftPanel from "./LeftPanel";
+import Navbar from "./Navbar";
 
 function Browse() {
   const [videos, setVideos] = useState("");
-  const [thumbnails, setThumbnails] = useState();
+  const [thumbnails, setThumbnails] = useState([]);
   const [Titles, setTitles] = useState();
   const [uploader, setUploader] = useState();
   const [ProfilePic, setProfilePic] = useState();
@@ -26,6 +28,7 @@ function Browse() {
   const [TagsSelected, setTagsSelected] = useState("All");
   const [publishDate, setPublishDate] = useState();
   const [FilteredVideos, setFilteredVideos] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const token = localStorage.getItem("userToken");
 
@@ -41,10 +44,14 @@ function Browse() {
     };
 
     const menuButton = document.querySelector(".menu");
-    menuButton.addEventListener("click", handleMenuButtonClick);
+    if (menuButton) {
+      menuButton.addEventListener("click", handleMenuButtonClick);
+    }
 
     return () => {
-      menuButton.removeEventListener("click", handleMenuButtonClick);
+      if (menuButton) {
+        menuButton.removeEventListener("click", handleMenuButtonClick);
+      }
     };
   }, []);
 
@@ -117,6 +124,12 @@ function Browse() {
     }
   }, [TagsSelected, VideoData]);
 
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 3200);
+  }, []);
+
   //UPDATE VIEWS
 
   const updateViews = async (id) => {
@@ -136,8 +149,65 @@ function Browse() {
   return (
     <>
       <Navbar />
+      <LeftPanel />
+      <SkeletonTheme baseColor="#353535" highlightColor="#444">
+        <div
+          className="browse"
+          style={loading === true ? { display: "flex" } : { display: "none" }}
+        >
+          <div className="browse-data">
+            <div className="popular-categories">
+              {Array.from({ length: Tags.length }).map((_, index) => (
+                <Skeleton
+                  key={index}
+                  count={1}
+                  width={80}
+                  height={30}
+                  style={{ marginLeft: "15px", borderRadius: "8px" }}
+                />
+              ))}
+            </div>
+            <div className="video-section">
+              <div className="uploaded-videos">
+                {Array.from({ length: 16 }).map((_, index) => (
+                  <>
+                    <div className="video-data">
+                      <Skeleton
+                        key={index}
+                        count={1}
+                        width={330}
+                        height={186}
+                        style={{ borderRadius: "12px" }}
+                      />
+                      <div className="channel-basic-data">
+                        <Skeleton
+                          key={index}
+                          count={1}
+                          width={40}
+                          height={40}
+                          style={{ borderRadius: "100%", marginTop: "40px" }}
+                        />
+                        <Skeleton
+                          key={index}
+                          count={2}
+                          width={250}
+                          height={15}
+                          style={{
+                            position: "relative",
+                            top: "40px",
+                            left: "15px",
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </SkeletonTheme>
       <div className="browse">
-        <LeftPanel />
         <div
           className="browse-data"
           style={
@@ -166,6 +236,7 @@ function Browse() {
               );
             })}
           </div>
+
           {thumbnails ? (
             <div
               className="video-section"
@@ -189,6 +260,7 @@ function Browse() {
                 }
               >
                 {thumbnails &&
+                  thumbnails.length > 0 &&
                   thumbnails.map((element, index) => {
                     return (
                       <div
@@ -240,17 +312,17 @@ function Browse() {
                                 : `${Titles[index].slice(0, 60)}..`}
                             </p>
                             <div className="video-uploader">
-                            <Tooltip
+                              <Tooltip
                                 TransitionComponent={Zoom}
                                 title={uploader[index]}
                                 placement="top"
                               >
-                              <p
-                                className="uploader"
-                                style={{ marginTop: "10px" }}
-                              >
-                                {uploader[index]}
-                              </p>
+                                <p
+                                  className="uploader"
+                                  style={{ marginTop: "10px" }}
+                                >
+                                  {uploader[index]}
+                                </p>
                               </Tooltip>
                               <Tooltip
                                 TransitionComponent={Zoom}

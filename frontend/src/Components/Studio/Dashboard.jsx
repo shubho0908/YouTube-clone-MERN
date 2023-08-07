@@ -86,7 +86,7 @@ function Dashboard() {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 2600);
+    }, 3000);
   }, []);
 
   const sortedVideos =
@@ -103,9 +103,22 @@ function Dashboard() {
       <SkeletonTheme baseColor="#353535" highlightColor="#444">
         <div className="dashboard-data">
           <Skeleton count={1} width={250} height={25} />
-          <div className="performed-vid-data">
-          <Skeleton count={1} width={350} height={425} />
-
+          <div className="dash-data-all">
+            <div className="performed-vid-data">
+              <Skeleton count={1} width={400} height={550} />
+              <Skeleton
+                count={1}
+                width={400}
+                height={450}
+                style={{ marginTop: "20px" }}
+              />
+            </div>
+            <Skeleton
+              count={1}
+              width={400}
+              height={450}
+              style={{ marginTop: "25px", marginLeft: "20px" }}
+            />
           </div>
         </div>
       </SkeletonTheme>
