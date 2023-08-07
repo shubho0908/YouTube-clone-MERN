@@ -7,11 +7,14 @@ import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import KeyboardArrowDownOutlinedIcon from "@mui/icons-material/KeyboardArrowDownOutlined";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
+import YouTubeIcon from "@mui/icons-material/YouTube";
 
 function Dashboard() {
   const [myVideos, setMyVideos] = useState([]);
   const [Email, setEmail] = useState();
-  const [dropDown, setDropDown] = useState(false);
+  const [dropDown, setDropDown] = useState(true);
+  const [showSortedVideos, setShowSortedVideos] = useState(false); // State for hover effect
 
   useEffect(() => {
     const token = localStorage.getItem("userToken");
@@ -159,7 +162,11 @@ function Dashboard() {
                   <div className="more-performed-details">
                     <div className="views-ranking">
                       <p>Ranking by views</p>
-                      <div className="total-outof">
+                      <div
+                        className="total-outof"
+                        onMouseEnter={() => setShowSortedVideos(true)}
+                        onMouseLeave={() => setShowSortedVideos(false)}
+                      >
                         <p>
                           {indexInSorted + 1} of {myVideos.length}
                         </p>
@@ -168,6 +175,41 @@ function Dashboard() {
                           className="right-arrw"
                           style={{ color: "#aaa" }}
                         />
+                      </div>
+                      <div
+                        className={`all-sortedvideos-dash ${
+                          showSortedVideos ? "visible" : ""
+                        }`}
+                      >
+                        <p>Top recent videos</p>
+                        <p>Views</p>
+
+                        {sortedVideos &&
+                          sortedVideos.map((element, index) => {
+                            return (
+                              <div className="list-of-sortedvideos" key={index}>
+                                <div className="leftsort-list">
+                                  <p>{index + 1}</p>
+                                  <div className="sorted-viddataaa">
+                                    <img
+                                      src={element.thumbnailURL}
+                                      alt=""
+                                      className="sortedthumbnail"
+                                    />
+                                    <p style={{ marginLeft: "12px" }}>
+                                      {" "}
+                                      {element.Title.length <= 25
+                                        ? element.Title
+                                        : `${element.Title.slice(0, 25)}...`}
+                                    </p>
+                                  </div>
+                                </div>
+                                <div className="right-sortlist">
+                                  <p>{element.views}</p>
+                                </div>
+                              </div>
+                            );
+                          })}
                       </div>
                     </div>
 
@@ -188,40 +230,77 @@ function Dashboard() {
                 </p>
               </div>
             </div>
-
-            <div className="published-videos-dash"></div>
           </div>
-          <div className="all-sortedvideos-dash">
-            <p>Top recent videos</p>
-            <p>Views</p>
-
-            {sortedVideos &&
-              sortedVideos.map((element, index) => {
-                return (
-                  <div className="list-of-sortedvideos" key={index}>
-                    <div className="leftsort-list">
-                      <p>{index + 1}</p>
-                      <div className="sorted-viddataaa">
+          <div className="published-videos-dash">
+            <p className="publish-toop">Published videos</p>
+            <div className="all-publishvid-data">
+              {myVideos &&
+                myVideos.length > 0 &&
+                myVideos.map((element, index) => {
+                  return (
+                    <div className="dashboard-publishvideos" key={index}>
                       <img
                         src={element.thumbnailURL}
-                        alt=""
-                        className="sortedthumbnail"
+                        alt="thumbnail"
+                        className="publish-imgs"
                       />
-                      <p style={{marginLeft:"12px"}}>
-                        {" "}
-                        {element.Title.length <= 25
-                          ? element.Title
-                          : `${element.Title.slice(0, 25)}...`}
-                      </p>
+                      <div className="publish-rightdata">
+                        <div className="toppublish">
+                          {element.Title.length <= 42
+                            ? element.Title
+                            : `${element.Title.slice(0, 42)}...`}
+                        </div>
+                        <div className="bottompublish">
+                          <div className="publishviews">
+                            <BarChartOutlinedIcon
+                              fontSize="small"
+                              style={{ color: "#aaa" }}
+                            />
+                            <p>{element.views}</p>
+                          </div>
+                          <div className="publishcomments">
+                            <ChatOutlinedIcon
+                              fontSize="small"
+                              style={{ color: "#aaa" }}
+                            />
+                            <p>{element.comments.length}</p>
+                          </div>
+                          <div className="publishlikes">
+                            <ThumbUpOutlinedIcon
+                              fontSize="small"
+                              style={{ color: "#aaa" }}
+                            />
+                            <p>{element.likes}</p>
+                          </div>
+                        </div>
+                        <div className="bottompublish2">
+                          <div className="publishviews">
+                            <ModeEditOutlineOutlinedIcon
+                              fontSize="small"
+                              style={{ color: "#aaa" }}
+                            />
+                          </div>
+                          <div className="publishcomments">
+                            <ChatOutlinedIcon
+                              fontSize="small"
+                              style={{ color: "#aaa" }}
+                            />
+                          </div>
+                          <div className="publishlikes">
+                            <YouTubeIcon
+                              fontSize="small"
+                              style={{ color: "#aaa" }}
+                            />
+                          </div>
+                        </div>
                       </div>
                     </div>
-                    <div className="right-sortlist">
-                      <p>{element.views}</p>
-                    </div>
-                  </div>
-                );
-              })}
+                  );
+                })}
+            </div>
+            <p className="see-comments-dash go-videos">GO TO VIDEOS</p>
           </div>
+
           <div className="dashboard-analytics"></div>
         </div>
       </div>

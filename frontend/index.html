@@ -10,10 +10,13 @@
     <script type="module" src="/src/main.jsx"></script>
     <script>
       const currentURL = window.location.href;
-    
-      const isStudioPage = currentURL.includes("/studio");
-    
-      if (isStudioPage) {
+      const local = "http://localhost:5173";
+
+      if (currentURL === `${local}/studio`) {
+        document.body.style.backgroundColor = "#1f1f1f";
+      } else if (currentURL === `${local}/studio/video`) {
+        document.body.style.backgroundColor = "#282828";
+      } else if (currentURL.includes(`/studio/comments`)) {
         document.body.style.backgroundColor = "#282828";
       } else {
         document.body.style.backgroundColor = "#0f0f0f";
