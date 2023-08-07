@@ -14,6 +14,8 @@ import { useEffect, useState } from "react";
 import Signup from "./Signup";
 import Signin from "./Signin";
 import { useNavigate, useLocation } from "react-router-dom";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 function LeftPanel() {
   const [menuClicked, setMenuClicked] = useState(() => {
@@ -28,6 +30,7 @@ function LeftPanel() {
   const [isbtnClicked, setisbtnClicked] = useState(false);
   const token = localStorage.getItem("userToken");
   const [isSwitch, setisSwitched] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (token) {
@@ -115,6 +118,12 @@ function LeftPanel() {
     return () => clearInterval(interval);
   }, [Email]);
 
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 2500);
+  }, []);
+
   return (
     <>
       <div
@@ -190,31 +199,66 @@ function LeftPanel() {
               Subscriptions.length > 0 &&
               Subscriptions.map((element, index) => {
                 return (
-                  <div
-                    className="mysubscriptions"
-                    key={index}
-                    onClick={() => {
-                      navigate(`/channel/${element.channelID}`);
-                      window.location.reload();
-                    }}
-                  >
-                    <img
-                      src={element.channelProfile}
-                      alt="channel profile"
-                      className="channel-profilee"
-                    />
-                    <Tooltip
-                      TransitionComponent={Zoom}
-                      title={`${element.channelname}`}
-                      placement="right"
+                  <>
+                    <SkeletonTheme baseColor="#353535" highlightColor="#444">
+                      <div
+                        className="mysubscriptions"
+                        key={index}
+                        style={
+                          loading === true
+                            ? { visibility: "visible" }
+                            : { display: "none" }
+                        }
+                      >
+                        <Skeleton
+                          count={1}
+                          width={40}
+                          height={40}
+                          style={{ borderRadius: "100%" }}
+                        />
+                        <Skeleton
+                          count={1}
+                          width={122}
+                          height={20}
+                          style={{
+                            position: "relative",
+                            left: "10px",
+                            top: "5px",
+                          }}
+                        />
+                      </div>
+                    </SkeletonTheme>
+                    <div
+                      className="mysubscriptions"
+                      key={index}
+                      onClick={() => {
+                        navigate(`/channel/${element.channelID}`);
+                        window.location.reload();
+                      }}
+                      style={
+                        loading === false
+                          ? { display: "flex" }
+                          : { display: "none" }
+                      }
                     >
-                      <p className="sub-channelnamee">
-                        {element.channelname.length <= 7
-                          ? element.channelname
-                          : `${element.channelname.slice(0, 7)}..`}
-                      </p>
-                    </Tooltip>
-                  </div>
+                      <img
+                        src={element.channelProfile}
+                        alt="channel profile"
+                        className="channel-profilee"
+                      />
+                      <Tooltip
+                        TransitionComponent={Zoom}
+                        title={`${element.channelname}`}
+                        placement="right"
+                      >
+                        <p className="sub-channelnamee">
+                          {element.channelname.length <= 7
+                            ? element.channelname
+                            : `${element.channelname.slice(0, 7)}..`}
+                        </p>
+                      </Tooltip>
+                    </div>
+                  </>
                 );
               })}
           </div>

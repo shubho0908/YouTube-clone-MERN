@@ -41,7 +41,7 @@ function Share() {
             rel="noopener noreferrer"
             onClick={() =>
               window.open(
-                `https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`
+                `https://www.facebook.com/dialog/share?app_id=87741124305&href=${window.location.href}`
               )
             }
           />
@@ -89,7 +89,7 @@ function Share() {
             rel="noopener noreferrer"
             onClick={() =>
               window.open(
-                `https://www.linkedin.com/shareArticle?url=${window.location.href}`
+                `https://www.linkedin.com/sharing/share-offsite/?url=${window.location.href}`
               )
             }
           />

@@ -5,7 +5,8 @@ import VideoCallOutlinedIcon from "@mui/icons-material/VideoCallOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import ClearRoundedIcon from "@mui/icons-material/ClearRounded";
 import AccountPop from "./AccountPop";
-
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import "../Css/navbar.css";
 import Logo from "../img/logo1.png";
 import { useEffect, useState } from "react";
@@ -25,7 +26,7 @@ function Navbar() {
   const [profilePic, setProfilePic] = useState();
   const [showPop, setShowPop] = useState(false);
   const [searchedData, setSearchedData] = useState();
-
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -54,6 +55,12 @@ function Navbar() {
 
     return () => clearInterval(interval);
   }, [email]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 2500);
+  }, []);
 
   const handleSearch = (e) => {
     setSearchedData(e.target.value);
@@ -150,12 +157,33 @@ function Navbar() {
             />
             <p>Signin</p>
           </button>
+          <SkeletonTheme baseColor="#353535" highlightColor="#444">
+            <div
+              className="navimg"
+              style={
+                loading === true && token
+                  ? { visibility: "visible" }
+                  : { visibility: "hidden", display: "none" }
+              }
+            >
+              <Skeleton
+                count={1}
+                width={42}
+                height={42}
+                style={{ borderRadius: "100%" }}
+              />
+            </div>
+          </SkeletonTheme>
           <img
             src={profilePic ? profilePic : avatar}
             alt="user profile pic"
             loading="lazy"
             className="profile-pic"
-            style={token ? { display: "block" } : { display: "none" }}
+            style={
+              token && loading === false
+                ? { display: "block" }
+                : { display: "none" }
+            }
             onClick={() => {
               if (showPop === false) {
                 setShowPop(true);

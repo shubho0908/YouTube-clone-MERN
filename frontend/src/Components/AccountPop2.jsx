@@ -12,7 +12,7 @@ import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 import DoneOutlinedIcon from "@mui/icons-material/DoneOutlined";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
-import YouTubeIcon from '@mui/icons-material/YouTube';
+import YouTubeIcon from "@mui/icons-material/YouTube";
 
 function AccountPop() {
   const [name, setName] = useState("");
@@ -109,8 +109,7 @@ function AccountPop() {
           <div
             className="yourchannel c-sec"
             onClick={() => {
-              navigate(`/channel/${ChannelID}`);
-              window.location.reload();
+              window.location.href = `/channel/${ChannelID}`;
             }}
           >
             <AccountBoxOutlinedIcon
@@ -125,10 +124,7 @@ function AccountPop() {
               window.location.href = "/";
             }}
           >
-            <YouTubeIcon
-              fontSize="medium"
-              style={{ color: "#909090" }}
-            />
+            <YouTubeIcon fontSize="medium" style={{ color: "#909090" }} />
             <p>YouTube</p>
           </div>
           <div

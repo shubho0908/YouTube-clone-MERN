@@ -575,6 +575,14 @@ function VideoComments() {
                   </div>
                 </div>
               )}
+            {videoComments && videoComments.length === 0 && (
+              <div className="user-comment-data2">
+                <div className="no-comment-found">
+                  <img src={noImage} alt="no-comment" className="nocmmt" />
+                  <p>No comments found.</p>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

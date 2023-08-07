@@ -126,7 +126,7 @@ function Browse() {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 2800);
+    }, 3100);
   }, []);
 
   //UPDATE VIEWS
@@ -154,7 +154,13 @@ function Browse() {
           className="browse"
           style={loading === true ? { display: "flex" } : { display: "none" }}
         >
-          <div className="browse-data">
+          <div className="browse-data"
+          style={
+            menuClicked === false
+              ? { left: "80px", width: "100%" }
+              : { left: "250px" }
+          }
+          >
             <div className="popular-categories">
               {Tags.map((element, index) => {
                 return (
@@ -177,7 +183,12 @@ function Browse() {
                 );
               })}
             </div>
-            <div className="video-section">
+            <div className="video-section"
+            style={{
+              marginLeft: menuClicked ? "40px" : "40px",
+              marginRight: menuClicked ? "0px" : "120px",
+            }}
+            >
               <div className="uploaded-videos">
                 {Array.from({ length: 16 }).map((_, index) => (
                   <>

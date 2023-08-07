@@ -167,8 +167,7 @@ function AccountPop() {
             className="exitout c-sec"
             onClick={() => {
               localStorage.removeItem("userToken");
-              navigate("/");
-              window.location.reload();
+              window.location.href = "/"
             }}
           >
             <LogoutOutlinedIcon fontSize="medium" style={{ color: "white" }} />
