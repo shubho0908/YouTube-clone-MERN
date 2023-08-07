@@ -28,7 +28,8 @@ import jwtDecode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import Signin from "./Signin";
 import Signup from "./Signup";
-
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import PublicOutlinedIcon from "@mui/icons-material/PublicOutlined";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
@@ -52,6 +53,7 @@ function VideoSection() {
   const [userVideos, setUserVideos] = useState([]);
   const [checkTrending, setCheckTrending] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [recommendLoading, setRecommendLoading] = useState(true);
   const token = localStorage.getItem("userToken");
 
   const navigate = useNavigate();
@@ -519,6 +521,12 @@ function VideoSection() {
 
     return () => clearInterval(interval);
   }, [email, id]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setRecommendLoading(false);
+    }, 3000);
+  }, []);
 
   //POST REQUESTS
 
@@ -1365,7 +1373,77 @@ function VideoSection() {
             </div>
           </div>
         </div>
-        <div className="recommended-section">
+        {recommendLoading === true && (
+          <SkeletonTheme baseColor="#353535" highlightColor="#444">
+            <div className="recommended-section">
+              <div className="recommend-tags">
+                <div
+                  className={
+                    TagSelected === "All"
+                      ? `top-tags tag-one tag-color`
+                      : `top-tags tag-one`
+                  }
+                >
+                  <p onClick={() => setTagSelected("All")}>All</p>
+                </div>
+                <div
+                  className={
+                    TagSelected === uploader
+                      ? `top-tags tag-two tag-color`
+                      : `top-tags tag-two`
+                  }
+                  style={{ marginLeft: "10px" }}
+                >
+                  <p onClick={() => setTagSelected(`${uploader}`)}>
+                    From {uploader}
+                  </p>
+                </div>
+              </div>
+              <div className="video-section2">
+                {Array.from({ length: 10 }).map(() => (
+                  <>
+                    <div className="video-data12" style={{marginTop:"15px"}}>
+                      <div className="video-left-side">
+                        <Skeleton
+                          count={1}
+                          width={190}
+                          height={107}
+                          style={{ borderRadius: "12px" }}
+                        />
+                      </div>
+                      <div
+                        className="video-right-side"
+                        style={{ marginTop: "5px" }}
+                      >
+                        <Skeleton count={1} width={250} height={32} />
+                        <Skeleton
+                          count={1}
+                          width={250}
+                          height={15}
+                          style={{ position: "relative", top: "10px" }}
+                        />
+                        <Skeleton
+                          count={1}
+                          width={150}
+                          height={15}
+                          style={{ position: "relative", top: "15px" }}
+                        />
+                      </div>
+                    </div>
+                  </>
+                ))}
+              </div>
+            </div>
+          </SkeletonTheme>
+        )}
+        <div
+          className="recommended-section"
+          style={
+            recommendLoading === true
+              ? { visibility: "hidden" }
+              : { visibility: "visible" }
+          }
+        >
           <div className="recommend-tags">
             <div
               className={
