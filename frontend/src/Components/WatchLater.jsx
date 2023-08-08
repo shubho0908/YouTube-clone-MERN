@@ -2,11 +2,12 @@ import Navbar from "./Navbar";
 import LeftPanel from "./LeftPanel";
 import { useEffect, useState } from "react";
 import jwtDecode from "jwt-decode";
-import ReactLoading from "react-loading";
 import { useNavigate } from "react-router-dom";
 import nothing from "../img/nothing.png";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import "../Css/likevideos.css";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 function WatchLater() {
   const [email, setEmail] = useState();
@@ -17,6 +18,7 @@ function WatchLater() {
   });
   const [watchlater, setWatchLater] = useState([]);
   const [VideoViews, setVideoViews] = useState();
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
   const token = localStorage.getItem("userToken");
@@ -25,6 +27,12 @@ function WatchLater() {
     const token = localStorage.getItem("userToken");
     setEmail(jwtDecode(token).email);
     setName(jwtDecode(token).name);
+  }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 3600);
   }, []);
 
   useEffect(() => {
@@ -135,20 +143,41 @@ function WatchLater() {
                         updateViews(watchlater[0].savedVideoID);
                         setTimeout(() => {
                           navigate(`/video/${watchlater[0].savedVideoID}`);
-                      window.location.reload();
+                          window.location.reload();
                         }, 400);
-                      }
-                      else{
+                      } else {
                         navigate(`/video/${watchlater[0].savedVideoID}`);
-                      window.location.reload();
+                        window.location.reload();
                       }
                     }}
                   >
+                    <SkeletonTheme baseColor="#353535" highlightColor="#444">
+                      <div
+                        className="thisimggg"
+                        style={
+                          loading === true
+                            ? { display: "block" }
+                            : { display: "none" }
+                        }
+                      >
+                        <Skeleton
+                          count={1}
+                          width={310}
+                          height={174}
+                          style={{ borderRadius: "12px" }}
+                        />
+                      </div>
+                    </SkeletonTheme>
                     <img
                       src={watchlater[0].thumbnailURL}
                       alt="first-like-thumbnail"
                       className="first-thumbnail"
                       loading="lazy"
+                      style={
+                        loading === true
+                          ? { visibility: "hidden", display: "none" }
+                          : { visibility: "visible", display: "block" }
+                      }
                     />
                     <p className="sample-play">&#9654; PLAY ALL</p>
                   </div>
@@ -167,15 +196,14 @@ function WatchLater() {
                   onClick={() => {
                     if (token) {
                       updateViews(watchlater[0].savedVideoID);
-                     setTimeout(() => {
+                      setTimeout(() => {
+                        navigate(`/video/${watchlater[0].savedVideoID}`);
+                        window.location.reload();
+                      }, 400);
+                    } else {
                       navigate(`/video/${watchlater[0].savedVideoID}`);
                       window.location.reload();
-                     }, 400);
                     }
-                   else{
-                    navigate(`/video/${watchlater[0].savedVideoID}`);
-                    window.location.reload();
-                   }
                   }}
                 >
                   <PlayArrowIcon fontSize="medium" style={{ color: "black" }} />
@@ -183,7 +211,55 @@ function WatchLater() {
                 </div>
               </div>
             </div>
-            <div className="like-right-section">
+            <SkeletonTheme baseColor="#353535" highlightColor="#444">
+              <div
+                className="like-right-section"
+                style={
+                  loading === true ? { display: "block" } : { display: "none" }
+                }
+              >
+                {watchlater.length > 0
+                  ? watchlater.map((element, index) => {
+                      return (
+                        <div className="liked-all-videos" key={index}>
+                          <div className="liked-videos-all-data">
+                            <Skeleton
+                              count={1}
+                              width={180}
+                              height={101}
+                              style={{ borderRadius: "12px" }}
+                            />
+                            <div
+                              className="its-content"
+                              style={{
+                                position: "relative",
+                                left: "10px",
+                                top: "6px",
+                              }}
+                            >
+                              <Skeleton count={1} width={450} height={20} />
+                              <Skeleton
+                                count={1}
+                                width={250}
+                                height={16}
+                                style={{ position: "relative", top: "10px" }}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })
+                  : ""}
+              </div>
+            </SkeletonTheme>
+            <div
+              className="like-right-section"
+              style={
+                loading === true
+                  ? { visibility: "hidden" }
+                  : { visibility: "visible" }
+              }
+            >
               {watchlater.length > 0
                 ? watchlater.map((element, index) => {
                     return (
@@ -194,15 +270,14 @@ function WatchLater() {
                           onClick={() => {
                             if (token) {
                               updateViews(element.savedVideoID);
-                             setTimeout(() => {
+                              setTimeout(() => {
+                                navigate(`/video/${element.savedVideoID}`);
+                                window.location.reload();
+                              }, 400);
+                            } else {
                               navigate(`/video/${element.savedVideoID}`);
                               window.location.reload();
-                             }, 400);
                             }
-                           else{
-                            navigate(`/video/${element.savedVideoID}`);
-                            window.location.reload();
-                           }
                           }}
                         >
                           <img
@@ -223,16 +298,8 @@ function WatchLater() {
           </div>
         ) : (
           <div className="main-trending-section">
-            <div className="spin2" style={{ height: "auto" }}>
-              <ReactLoading
-                type={"spin"}
-                color={"white"}
-                height={50}
-                width={50}
-              />
-              <p style={{ marginTop: "15px" }}>
-                Fetching the data, Hang tight...{" "}
-              </p>
+            <div className="spin23" style={{ top: "200px" }}>
+              <span className="loader"></span>
             </div>
           </div>
         )}

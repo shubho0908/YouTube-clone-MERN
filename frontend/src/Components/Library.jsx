@@ -598,7 +598,14 @@ function Library() {
               })}
           </div>
         </div>
-        <hr className="seperate" />
+        <hr
+          className="seperate"
+          style={
+            LikedVideosArray && LikedVideosArray !== "NO DATA"
+              ? { display: "block" }
+              : { display: "none" }
+          }
+        />
 
         <div className="likedvideos-library">
           <div className="top-watchlater-library">

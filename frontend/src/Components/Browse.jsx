@@ -154,12 +154,13 @@ function Browse() {
           className="browse"
           style={loading === true ? { display: "flex" } : { display: "none" }}
         >
-          <div className="browse-data"
-          style={
-            menuClicked === false
-              ? { left: "80px", width: "100%" }
-              : { left: "250px" }
-          }
+          <div
+            className="browse-data"
+            style={
+              menuClicked === false
+                ? { left: "80px", width: "100%" }
+                : { left: "250px" }
+            }
           >
             <div className="popular-categories">
               {Tags.map((element, index) => {
@@ -183,11 +184,12 @@ function Browse() {
                 );
               })}
             </div>
-            <div className="video-section"
-            style={{
-              marginLeft: menuClicked ? "40px" : "40px",
-              marginRight: menuClicked ? "0px" : "120px",
-            }}
+            <div
+              className="video-section"
+              style={{
+                marginLeft: menuClicked ? "40px" : "40px",
+                marginRight: menuClicked ? "0px" : "120px",
+              }}
             >
               <div className="uploaded-videos">
                 {Array.from({ length: 16 }).map((_, index) => (
@@ -232,8 +234,8 @@ function Browse() {
         className="browse"
         style={
           loading === true
-            ? { visibility: "hidden" }
-            : { visibility: "visible" }
+            ? { visibility: "hidden", display: "none" }
+            : { visibility: "visible", display: "flex" }
         }
       >
         <div

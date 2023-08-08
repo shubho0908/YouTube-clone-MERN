@@ -259,7 +259,14 @@ function Subscriptions() {
                   })}
               </div>
             </div>
-            <div className="subscribed-videos">
+            <div
+              className="subscribed-videos"
+              style={
+                loading === true
+                  ? { visibility: "hidden", display: "none" }
+                  : { visibility: "visible", display: "block" }
+              }
+            >
               <p className="main-txxt">Videos</p>
 
               <div className="subs-videos-all">
@@ -284,8 +291,8 @@ function Subscriptions() {
                           }}
                           style={
                             loading === true
-                              ? { visibility: "hidden" }
-                              : { visibility: "visible" }
+                              ? { visibility: "hidden", display: "none" }
+                              : { visibility: "visible", display: "block" }
                           }
                         >
                           <img
