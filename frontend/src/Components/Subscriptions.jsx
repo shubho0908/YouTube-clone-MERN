@@ -32,7 +32,7 @@ function Subscriptions() {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 4000);
+    }, 4200);
   }, []);
 
   useEffect(() => {

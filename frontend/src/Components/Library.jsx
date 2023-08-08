@@ -8,13 +8,14 @@ import nothing from "../img/nothing.png";
 import PlaylistPlayOutlinedIcon from "@mui/icons-material/PlaylistPlayOutlined";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
-import ReactLoading from "react-loading";
 import { useState, useEffect } from "react";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import PlaylistPlayIcon from "@mui/icons-material/PlaylistPlay";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import deleteIMG from "../img/delete.jpg";
 import "../Css/library.css";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 function generateRandomColors(count) {
   const transparency = 0.65; // Adjust transparency as needed (0 to 1)
@@ -40,10 +41,19 @@ function Library() {
   const [email, setEmail] = useState();
   const token = localStorage.getItem("userToken");
   const [loading, setLoading] = useState(true);
+  const [LibraryLoading, setLibraryLoading] = useState(true);
+  const [menuClicked, setMenuClicked] = useState(() => {
+    const menu = localStorage.getItem("menuClicked");
+    return menu ? JSON.parse(menu) : false;
+  });
 
   useEffect(() => {
     setEmail(jwtDecode(token).email);
   }, [token]);
+
+  useEffect(() => {
+    localStorage.setItem("menuClicked", JSON.stringify(menuClicked));
+  }, [menuClicked]);
 
   useEffect(() => {
     const colors = generateRandomColors(Math.max(1, PlaylistData.length));
@@ -53,10 +63,16 @@ function Library() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 1800);
+    }, 800);
 
     return () => clearTimeout(timer);
   }, [loading]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLibraryLoading(false);
+    }, 4200);
+  }, []);
 
   useEffect(() => {
     const getPlaylistData = async () => {
@@ -133,19 +149,34 @@ function Library() {
     return () => clearInterval(interval);
   }, [email]);
 
+  useEffect(() => {
+    const handleMenuButtonClick = () => {
+      setMenuClicked((prevMenuClicked) => !prevMenuClicked);
+    };
+
+    const menuButton = document.querySelector(".menu");
+    menuButton.addEventListener("click", handleMenuButtonClick);
+
+    return () => {
+      menuButton.removeEventListener("click", handleMenuButtonClick);
+    };
+  }, []);
+
   const watchLaterArray =
     watchlater && watchlater.length > 0 && watchlater.savedData !== "NO DATA"
-      ? watchlater.slice(0, 4) // Get the first four elements if available
+      ? watchlater.slice(0, 6) // Get the first four elements if available
       : [];
 
   const PlaylistArray =
-    PlaylistData && PlaylistData.length > 0 && PlaylistData !== "No playlists available..."
-      ? PlaylistData.slice(0, 4) // Get the first four elements if available
+    PlaylistData &&
+    PlaylistData.length > 0 &&
+    PlaylistData !== "No playlists available..."
+      ? PlaylistData.slice(0, 6) // Get the first four elements if available
       : [];
 
   const LikedVideosArray =
     videolike && videolike.length > 0 && videolike !== "NO DATA"
-      ? videolike.slice(0, 4) // Get the first four elements if available
+      ? videolike.slice(0, 6) // Get the first four elements if available
       : [];
 
   if (
@@ -171,16 +202,8 @@ function Library() {
         <Navbar />
         <LeftPanel />
         <div className="main-trending-section">
-          <div className="spin2" style={{ height: "auto" }}>
-            <ReactLoading
-              type={"spin"}
-              color={"white"}
-              height={50}
-              width={50}
-            />
-            <p style={{ marginTop: "15px" }}>
-              Fetching the data, Hang tight...{" "}
-            </p>
+          <div className="spin23" style={{ top: "200px" }}>
+            <span className="loader"></span>
           </div>
         </div>
       </>
@@ -191,16 +214,161 @@ function Library() {
     <>
       <Navbar />
       <LeftPanel />
-      <div className="library-section">
+      <SkeletonTheme baseColor="#353535" highlightColor="#444">
+        <div
+          className="library-section"
+          style={{
+            left: menuClicked === false ? "150px" : "320px",
+            display: LibraryLoading === true ? "flex" : "none",
+          }}
+        >
+          <div className="watchlater-library">
+            <Skeleton count={1} width={160} height={22} />
+            <div className="watchlater-library-videos">
+              {watchLaterArray &&
+                watchLaterArray.map((index) => {
+                  return (
+                    <div className="thiswatchlater-videoss" key={index}>
+                      <Skeleton count={1} width={230} height={129} />
+                      <div className="thislibrary-video-details">
+                        <Skeleton
+                          count={1}
+                          width={225}
+                          height={25}
+                          style={{ position: "relative", top: "25px" }}
+                        />
+                        <Skeleton
+                          count={1}
+                          width={175}
+                          height={20}
+                          style={{ position: "relative", top: "28px" }}
+                        />
+                      </div>
+                    </div>
+                  );
+                })}
+            </div>
+            <hr
+              className="seperate"
+              style={
+                PlaylistData && PlaylistData !== "No playlists available..."
+                  ? { display: "block", position: "relative", top: "60px" }
+                  : { display: "none" }
+              }
+            />
+            <div
+              className="playlists-library"
+              style={
+                PlaylistData && PlaylistData !== "No playlists available..."
+                  ? { display: "block", position: "relative", top: "66px" }
+                  : { display: "none" }
+              }
+            >
+              <div className="topplaylist-section">
+                <Skeleton count={1} width={160} height={22} />
+              </div>
+              <div className="thischannel-playlists2">
+                {PlaylistArray &&
+                  PlaylistArray !== "No playlists available..." &&
+                  PlaylistArray.map((element, index) => {
+                    return (
+                      <div className="created-all-playlistss2" key={index}>
+                        <Skeleton count={1} width={230} height={129} />
+
+                        <div className="playlistt-details">
+                          <div className="extra-playlists-data">
+                            <Skeleton
+                              count={1}
+                              width={160}
+                              height={22}
+                              style={{ position: "relative", top: "25px" }}
+                            />
+                            <Skeleton
+                              count={1}
+                              width={140}
+                              height={18}
+                              style={{ position: "relative", top: "26px" }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+              </div>
+            </div>
+            <hr
+              className="seperate"
+              style={{ position: "relative", top: "157px" }}
+            />
+
+            <div
+              className="likedvideos-library"
+              style={
+                LikedVideosArray && LikedVideosArray !== "NO DATA"
+                  ? { display: "block", position: "relative", top: "160px" }
+                  : { display: "none" }
+              }
+            >
+              <div className="top-watchlater-library">
+                <div className="top-like-lefttt">
+                  <Skeleton count={1} width={160} height={22} />
+                </div>
+              </div>
+              <div className="watchlater-library-videos">
+                {LikedVideosArray &&
+                  LikedVideosArray.map((element, index) => {
+                    return (
+                      <div className="created-all-playlistss2" key={index}>
+                        <Skeleton count={1} width={230} height={129} />
+
+                        <div className="playlistt-details">
+                          <div className="extra-playlists-data">
+                            <Skeleton
+                              count={1}
+                              width={160}
+                              height={22}
+                              style={{ position: "relative", top: "25px" }}
+                            />
+                            <Skeleton
+                              count={1}
+                              width={140}
+                              height={18}
+                              style={{ position: "relative", top: "26px" }}
+                            />
+                            <Skeleton
+                              count={1}
+                              width={110}
+                              height={15}
+                              style={{ position: "relative", top: "32px" }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+              </div>
+            </div>
+          </div>
+        </div>
+      </SkeletonTheme>
+      <div
+        className="library-section"
+        style={{
+          left: menuClicked === false ? "150px" : "320px",
+          visibility: LibraryLoading === true ? "hidden" : "visible",
+        }}
+      >
         <div className="watchlater-library">
           <div className="top-watchlater-library">
-            <WatchLaterOutlinedIcon
-              fontSize="medium"
-              style={{ color: "white" }}
-            />
-            <p>Watch later</p>
-            <p>{watchlater && watchlater.length}</p>
-            {watchLaterArray && watchLaterArray.length >= 4 ? (
+            <div className="top-watch-left">
+              <WatchLaterOutlinedIcon
+                fontSize="medium"
+                style={{ color: "white" }}
+              />
+              <p>Watch later</p>
+              <p>{watchlater && watchlater.length}</p>
+            </div>
+            {watchLaterArray && watchLaterArray.length >= 6 ? (
               <p
                 className="see-all"
                 onClick={() => {
@@ -316,15 +484,29 @@ function Library() {
               })}
           </div>
         </div>
-        <hr className="seperate" />
-        <div className="playlists-library">
+        <hr
+          className="seperate"
+          style={
+            PlaylistData && PlaylistData !== "No playlists available..."
+              ? { display: "block" }
+              : { display: "none" }
+          }
+        />
+        <div
+          className="playlists-library"
+          style={
+            PlaylistData && PlaylistData !== "No playlists available..."
+              ? { display: "block" }
+              : { display: "none" }
+          }
+        >
           <div className="topplaylist-section">
             <PlaylistPlayOutlinedIcon
               fontSize="medium"
               style={{ color: "white" }}
             />
             <p>Playlists</p>
-            {PlaylistArray && PlaylistArray.length >= 4 ? (
+            {PlaylistArray && PlaylistArray.length >= 6 ? (
               <p
                 className="see-all"
                 onClick={() => {
@@ -340,7 +522,8 @@ function Library() {
             )}
           </div>
           <div className="thischannel-playlists2">
-            {PlaylistArray && PlaylistArray !== "No playlists available..." &&
+            {PlaylistArray &&
+              PlaylistArray !== "No playlists available..." &&
               PlaylistArray.map((element, index) => {
                 const backgroundColor =
                   playlistColors[index] || playlistColors[0];
@@ -419,10 +602,15 @@ function Library() {
 
         <div className="likedvideos-library">
           <div className="top-watchlater-library">
-            <ThumbUpOutlinedIcon fontSize="medium" style={{ color: "white" }} />
-            <p>Liked videos</p>
-            <p>{videolike && videolike.length}</p>
-            {LikedVideosArray && LikedVideosArray.length >= 4 ? (
+            <div className="top-like-lefttt">
+              <ThumbUpOutlinedIcon
+                fontSize="medium"
+                style={{ color: "white" }}
+              />
+              <p>Liked videos</p>
+              <p>{videolike && videolike.length}</p>
+            </div>
+            {LikedVideosArray && LikedVideosArray.length >= 6 ? (
               <p
                 className="see-all"
                 onClick={() => {

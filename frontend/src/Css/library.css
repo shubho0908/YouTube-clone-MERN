@@ -1,16 +1,17 @@
 .library-section {
   display: flex;
   flex-direction: column;
-  width: 70%;
   position: absolute;
-  left: 350px;
+  width: -webkit-fill-available;
   top: 100px;
   color: white;
+  padding-right: 55px;
 }
 
 .top-watchlater-library {
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
 .top-watchlater-library > p {
@@ -22,7 +23,7 @@
   color: #aaa;
 }
 
-.topplaylist-section>p{
+.topplaylist-section > p {
   margin-left: 15px;
 }
 
@@ -33,7 +34,19 @@
 
 .watchlater-library-videos {
   display: flex;
-  margin-top: 20px;
+  margin-top: 40px;
+  overflow: scroll;
+}
+
+.watchlater-library-videos2 {
+  margin-top: 40px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  /* grid-template-columns: repeat(5, 1fr); */
+  /* grid-template-rows: repeat(4, 1fr); */
+  justify-content: center;
+  grid-column-gap: 10px;
+  grid-row-gap: 18px;
 }
 
 .thislibrary-duration {
@@ -59,8 +72,6 @@
 
 .see-all {
   cursor: pointer;
-  position: absolute;
-  right: 10px;
   color: #3ea6ff;
   padding: 8px;
   padding-left: 12px;
@@ -144,7 +155,7 @@
 }
 
 .view-playlist {
-  margin-top: 8px;
+  margin-top: 14px;
   font-size: 13px;
   color: #aaa;
   transition: all 0.15s ease;
@@ -174,7 +185,6 @@
   padding-left: 4.5px;
   padding-right: 4.5px;
   margin-top: 8px;
-  margin-left: 10px;
   border-radius: 4px;
 }
 
@@ -186,10 +196,18 @@
 
 .extra-playlists-data {
   display: flex;
-  align-items: center;
+  align-items: start;
+  flex-direction: column;
 }
 
 .playlists-library,
 .likedvideos-library {
   margin-top: 8px;
+}
+
+.top-like-lefttt, .top-watch-left{
+  display: flex;
+  align-items: center;
+  width: 150px;
+  justify-content: space-between;
 }
