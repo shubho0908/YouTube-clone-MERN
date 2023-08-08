@@ -5,7 +5,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import "../Css/search.css";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import Tooltip from "@mui/material/Tooltip";
-import ReactLoading from "react-loading";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import jwtDecode from "jwt-decode";
 import Signup from "./Signup";
 import Signin from "./Signin";
@@ -24,6 +25,13 @@ function SearchResults() {
   const [isSwitch, setisSwitched] = useState(false);
   const [userVideos, setUserVideos] = useState([]);
   const [isSubscribed, setIsSubscribed] = useState();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 3500);
+  }, []);
 
   const token = localStorage.getItem("userToken");
 
@@ -176,13 +184,140 @@ function SearchResults() {
       <>
         <Navbar />
         <LeftPanel />
+        <SkeletonTheme baseColor="#353535" highlightColor="#444">
+          <div
+            className="searched-content"
+            style={{
+              top:
+                searchedChannelData && searchedChannelData.length > 0
+                  ? "200px"
+                  : "130px",
+              display: loading === true ? "block" : "none",
+            }}
+          >
+            <div className="searched-channels-section">
+              <hr
+                className="seperate sep2"
+                style={
+                  searchedChannelData && searchedChannelData.length > 0
+                    ? { display: "block" }
+                    : { display: "none" }
+                }
+              />
+              {searchedChannelData &&
+                searchedChannelData.length > 0 &&
+                searchedChannelData.map((element, index) => {
+                  return (
+                    <div className="search-channel" key={index}>
+                      <Skeleton
+                        count={1}
+                        width={130}
+                        height={130}
+                        style={{ borderRadius: "100%" }}
+                      />
+                      <div className="channel-extra-content">
+                        <div className="channel-liner">
+                          <Skeleton count={1} width={300} height={18} />
+                        </div>
+
+                        <div className="channel-liner">
+                          <Skeleton
+                            count={1}
+                            width={150}
+                            height={18}
+                            style={{ position: "relative", top: "4px" }}
+                          />
+                        </div>
+                        <div className="new-desc">
+                          <Skeleton
+                            count={1}
+                            width={550}
+                            height={18}
+                            style={{ position: "relative", top: "8px" }}
+                          />
+                        </div>
+                      </div>
+                      <div className="subscribe-btnss">
+                        <Skeleton
+                          count={1}
+                          width={120}
+                          height={35}
+                          style={{ borderRadius: "20px" }}
+                        />
+                      </div>
+                    </div>
+                  );
+                })}
+            </div>
+            <hr className="seperate sep2" />
+            <div className="thischannel-videos-section">
+              {searchedChannelData &&
+                searchedChannelData.length > 0 &&
+                userVideos &&
+                userVideos.map((index) => {
+                  return (
+                    <>
+                      <div className="thischannel-all-data" key={index}>
+                        <Skeleton
+                          count={1}
+                          width={350}
+                          height={197}
+                          style={{ borderRadius: "12px" }}
+                        />
+
+                        <div
+                          className="thischannel-video-data"
+                          style={{
+                            position: "relative",
+                            left: "20px",
+                            top: "4px",
+                          }}
+                        >
+                          <Skeleton count={1} width={420} height={18} />
+
+                          <div className="thisvideo-onliner">
+                            <Skeleton count={1} width={180} height={18} />
+                          </div>
+                          <div className="thisvideo-channel">
+                            <Skeleton
+                              count={1}
+                              width={30}
+                              height={30}
+                              style={{ borderRadius: "100%" }}
+                            />
+
+                            <Skeleton
+                              count={1}
+                              width={180}
+                              height={18}
+                              style={{ position: "relative", left: "8px" }}
+                            />
+                          </div>
+                          <Skeleton
+                            count={3}
+                            width={220}
+                            height={10}
+                            style={{ position: "relative", top: "10px" }}
+                          />
+                        </div>
+                      </div>
+                    </>
+                  );
+                })}
+            </div>
+          </div>
+        </SkeletonTheme>
+
         <div
           className="searched-content"
-          style={
-            searchedChannelData && searchedChannelData.length > 0
-              ? { top: "200px" }
-              : { top: "130px" }
-          }
+          style={{
+            top:
+              searchedChannelData && searchedChannelData.length > 0
+                ? "200px"
+                : "130px",
+            display: loading === true ? "none" : "block",
+            visibility: loading === true ? "hidden" : "visible",
+          }}
         >
           <div className="searched-channels-section">
             <hr
@@ -299,7 +434,13 @@ function SearchResults() {
             <hr className="seperate sep2" />
           </div>
           <div className="thischannel-videos-section">
-            <p style={{ position: "relative", bottom: "20px" }}>
+            <p
+              style={
+                loading === true
+                  ? { visibility: "hidden", display: "none" }
+                  : { display: "block", position: "relative", bottom: "20px" }
+              }
+            >
               Latest from{" "}
               {searchedChannelData && searchedChannelData[0].channelName}
             </p>
@@ -877,9 +1018,8 @@ function SearchResults() {
       <Navbar />
       <LeftPanel />
       <div className="main-trending-section">
-        <div className="spin2" style={{ height: "auto" }}>
-          <ReactLoading type={"spin"} color={"white"} height={50} width={50} />
-          <p style={{ marginTop: "15px" }}>Fetching the data, Hang tight... </p>
+        <div className="spin23" style={{ top: "200px" }}>
+          <span className="loader"></span>
         </div>
       </div>
     </>

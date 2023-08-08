@@ -2,11 +2,12 @@ import Navbar from "./Navbar";
 import LeftPanel from "./LeftPanel";
 import { useEffect, useState } from "react";
 import jwtDecode from "jwt-decode";
-import ReactLoading from "react-loading";
 import { useNavigate } from "react-router-dom";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import nothing from "../img/nothing.png";
 import "../Css/likevideos.css";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 function LikeVideos() {
   const [email, setEmail] = useState();
@@ -16,6 +17,7 @@ function LikeVideos() {
     return menu ? JSON.parse(menu) : false;
   });
   const [videolike, setLikedVideos] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
   const token = localStorage.getItem("userToken");
@@ -24,6 +26,12 @@ function LikeVideos() {
     const token = localStorage.getItem("userToken");
     setEmail(jwtDecode(token).email);
     setName(jwtDecode(token).name);
+  }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 3600);
   }, []);
 
   useEffect(() => {
@@ -115,22 +123,43 @@ function LikeVideos() {
                     onClick={() => {
                       if (token) {
                         updateViews(videolike[0].likedVideoID);
-                      setTimeout(() => {
+                        setTimeout(() => {
+                          navigate(`/video/${videolike[0].likedVideoID}`);
+                          window.location.reload();
+                        }, 400);
+                      } else {
                         navigate(`/video/${videolike[0].likedVideoID}`);
                         window.location.reload();
-                      }, 400);
-                      }
-                      else{
-                        navigate(`/video/${videolike[0].likedVideoID}`);
-                      window.location.reload();
                       }
                     }}
                   >
+                    <SkeletonTheme baseColor="#353535" highlightColor="#444">
+                      <div
+                        className="thisimggg"
+                        style={
+                          loading === true
+                            ? { display: "block" }
+                            : { display: "none" }
+                        }
+                      >
+                        <Skeleton
+                          count={1}
+                          width={310}
+                          height={174}
+                          style={{ borderRadius: "12px" }}
+                        />
+                      </div>
+                    </SkeletonTheme>
                     <img
                       src={videolike[0].thumbnailURL}
                       alt="first-like-thumbnail"
                       className="first-thumbnail"
                       loading="lazy"
+                      style={
+                        loading === true
+                          ? { visibility: "hidden", display: "none" }
+                          : { visibility: "visible", display: "block" }
+                      }
                     />
                     <p className="sample-play">&#9654; PLAY ALL</p>
                   </div>
@@ -164,7 +193,55 @@ function LikeVideos() {
                 </div>
               </div>
             </div>
-            <div className="like-right-section">
+            <SkeletonTheme baseColor="#353535" highlightColor="#444">
+              <div
+                className="like-right-section"
+                style={
+                  loading === true ? { display: "block" } : { display: "none" }
+                }
+              >
+                {videolike.length > 0
+                  ? videolike.map((element, index) => {
+                      return (
+                        <div className="liked-all-videos" key={index}>
+                          <div className="liked-videos-all-data">
+                            <Skeleton
+                              count={1}
+                              width={180}
+                              height={101}
+                              style={{ borderRadius: "12px" }}
+                            />
+                            <div
+                              className="its-content"
+                              style={{
+                                position: "relative",
+                                left: "10px",
+                                top: "6px",
+                              }}
+                            >
+                              <Skeleton count={1} width={450} height={20} />
+                              <Skeleton
+                                count={1}
+                                width={250}
+                                height={16}
+                                style={{ position: "relative", top: "10px" }}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })
+                  : ""}
+              </div>
+            </SkeletonTheme>
+            <div
+              className="like-right-section"
+              style={
+                loading === true
+                  ? { visibility: "hidden" }
+                  : { visibility: "visible" }
+              }
+            >
               {videolike.length > 0
                 ? videolike.map((element, index) => {
                     return (
@@ -203,16 +280,8 @@ function LikeVideos() {
           </div>
         ) : (
           <div className="main-trending-section">
-            <div className="spin2" style={{ height: "auto" }}>
-              <ReactLoading
-                type={"spin"}
-                color={"white"}
-                height={50}
-                width={50}
-              />
-              <p style={{ marginTop: "15px" }}>
-                Fetching the data, Hang tight...{" "}
-              </p>
+            <div className="spin23" style={{ top: "200px" }}>
+              <span className="loader"></span>
             </div>
           </div>
         )}

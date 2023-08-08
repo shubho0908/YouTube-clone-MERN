@@ -2,7 +2,8 @@ import Navbar from "./Navbar";
 import LeftPanel from "./LeftPanel";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import ReactLoading from "react-loading";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import { useNavigate } from "react-router-dom";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import nothing from "../img/nothing.png";
@@ -23,6 +24,8 @@ function Playlists() {
     const menu = localStorage.getItem("menuClicked");
     return menu ? JSON.parse(menu) : false;
   });
+  const [loading, setLoading] = useState(true);
+
   const [Email, setEmail] = useState();
   const [playlistsVideos, setPlaylistsVideos] = useState([]);
   const [playlistDetails, setplaylistDetails] = useState();
@@ -38,6 +41,12 @@ function Playlists() {
       setEmail(jwtDecode(token).email);
     }
   }, [token]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 3600);
+  }, []);
 
   useEffect(() => {
     localStorage.setItem("menuClicked", JSON.stringify(menuClicked));
@@ -242,11 +251,33 @@ function Playlists() {
                       }
                     }}
                   >
+                    <SkeletonTheme baseColor="#353535" highlightColor="#444">
+                      <div
+                        className="thisimggg"
+                        style={
+                          loading === true
+                            ? { display: "block" }
+                            : { display: "none" }
+                        }
+                      >
+                        <Skeleton
+                          count={1}
+                          width={310}
+                          height={174}
+                          style={{ borderRadius: "12px" }}
+                        />
+                      </div>
+                    </SkeletonTheme>
                     <img
                       src={playlistsVideos[0].thumbnail}
                       alt="first-like-thumbnail"
                       className="first-thumbnail"
                       loading="lazy"
+                      style={
+                        loading === true
+                          ? { visibility: "hidden", display: "none" }
+                          : { visibility: "visible", display: "block" }
+                      }
                     />
                     <p className="sample-play">&#9654; PLAY ALL</p>
                   </div>
@@ -477,56 +508,96 @@ function Playlists() {
                 </div>
               </div>
             </div>
-            <div className="like-right-section">
+            <SkeletonTheme baseColor="#353535" highlightColor="#444">
+              <div
+                className="like-right-section"
+                style={
+                  loading === true ? { display: "block" } : { display: "none" }
+                }
+              >
+                {playlistsVideos.length > 0
+                  ? playlistsVideos.map((index) => {
+                      return (
+                        <div className="liked-all-videos" key={index}>
+                          <div className="liked-videos-all-data">
+                            <Skeleton
+                              count={1}
+                              width={180}
+                              height={101}
+                              style={{ borderRadius: "12px" }}
+                            />
+                            <div
+                              className="its-content"
+                              style={{
+                                position: "relative",
+                                left: "10px",
+                                top: "6px",
+                              }}
+                            >
+                              <Skeleton count={1} width={450} height={20} />
+                              <Skeleton
+                                count={1}
+                                width={250}
+                                height={16}
+                                style={{ position: "relative", top: "10px" }}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })
+                  : ""}
+              </div>
+            </SkeletonTheme>
+            <div
+              className="like-right-section"
+              style={
+                loading === true
+                  ? { visibility: "hidden" }
+                  : { visibility: "visible" }
+              }
+            >
               {playlistsVideos.length > 0
                 ? playlistsVideos.map((element, index) => {
-                  return (
-                    <div className="liked-all-videos" key={index}>
-                      <p style={{ color: "#aaa" }}>{index + 1}</p>
-                      <div
-                        className="liked-videos-all-data"
-                        onClick={() => {
-                          if (token) {
-                            updateViews(element.videoID);
-                            setTimeout(() => {
+                    return (
+                      <div className="liked-all-videos" key={index}>
+                        <p style={{ color: "#aaa" }}>{index + 1}</p>
+                        <div
+                          className="liked-videos-all-data"
+                          onClick={() => {
+                            if (token) {
+                              updateViews(element.videoID);
+                              setTimeout(() => {
+                                navigate(`/video/${element.videoID}`);
+                                window.location.reload();
+                              }, 400);
+                            } else {
                               navigate(`/video/${element.videoID}`);
                               window.location.reload();
-                            }, 400);
-                          } else {
-                            navigate(`/video/${element.videoID}`);
-                            window.location.reload();
-                          }
-                        }}
-                      >
-                        <img
-                          src={element.thumbnail}
-                          alt="first-like-thumbnail"
-                          loading="lazy"
-                        />
-                        <div className="its-content">
-                          <p>{element.title}</p>
+                            }
+                          }}
+                        >
+                          <img
+                            src={element.thumbnail}
+                            alt="first-like-thumbnail"
+                            loading="lazy"
+                          />
+                          <div className="its-content">
+                            <p>{element.title}</p>
 
-                          <p>{element.video_uploader}</p>
+                            <p>{element.video_uploader}</p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  );
-                })
+                    );
+                  })
                 : ""}
             </div>
           </div>
         ) : (
           <div className="main-trending-section">
-            <div className="spin2" style={{ height: "auto" }}>
-              <ReactLoading
-                type={"spin"}
-                color={"white"}
-                height={50}
-                width={50}
-              />
-              <p style={{ marginTop: "15px" }}>
-                Fetching the data, Hang tight...{" "}
-              </p>
+            <div className="spin23" style={{ top: "200px" }}>
+              <span className="loader"></span>
             </div>
           </div>
         )}

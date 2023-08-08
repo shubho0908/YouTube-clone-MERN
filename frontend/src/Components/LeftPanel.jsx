@@ -139,8 +139,7 @@ function LeftPanel() {
             }
             onClick={() => {
               localStorage.setItem("selected", "home");
-              navigate("/");
-              window.location.reload();
+              window.location.href = "/";
             }}
           >
             <HomeIcon fontSize="medium" style={{ color: "white" }} />
@@ -173,8 +172,7 @@ function LeftPanel() {
             onClick={() => {
               if (token) {
                 localStorage.setItem("selected", "subscription");
-                navigate("/subscriptions");
-                window.location.reload();
+                window.location.href = "/subscriptions"
               } else {
                 setisbtnClicked(true);
                 document.body.classList.add("bg-css");

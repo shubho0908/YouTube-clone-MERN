@@ -126,7 +126,7 @@ function Browse() {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 3100);
+    }, 3600);
   }, []);
 
   //UPDATE VIEWS

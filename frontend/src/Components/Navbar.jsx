@@ -91,8 +91,7 @@ function Navbar() {
             loading="lazy"
             className="youtubeLogo"
             onClick={() => {
-              navigate("/");
-              window.location.reload();
+              window.location.href = "/"
             }}
           />
         </div>
