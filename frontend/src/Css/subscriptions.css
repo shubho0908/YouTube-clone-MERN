@@ -29,10 +29,10 @@
   background-color: #333333;
 }
 
-.subscription-content {
+.all-subs-dataaa {
   position: relative;
   left: 300px;
-  width: min-content;
+  width: 85%;
   top: 100px;
   color: white;
 }
@@ -60,8 +60,8 @@
 .subs-videos-all {
   margin-top: 20px;
   display: grid;
-  /* grid-template-columns: repeat(auto-fit, minmax(315px, 1fr)); */
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  /* grid-template-columns: repeat(5, 1fr); */
   /* grid-template-rows: repeat(4, 1fr); */
   justify-content: center;
   grid-column-gap: 10px;

@@ -4,7 +4,6 @@ import Plyr from "plyr";
 import Navbar from "./Navbar";
 import Share from "./Share";
 import "../Css/videoSection.css";
-import ReactLoading from "react-loading";
 import "plyr/dist/plyr.css";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import Tooltip from "@mui/material/Tooltip";
@@ -553,21 +552,33 @@ function VideoSection() {
     return (
       <>
         <div className="main-video-section2">
-          <div className="spin2">
-            <ReactLoading
-              type={"spin"}
-              color={"white"}
-              height={50}
-              width={50}
-            />
-            <p style={{ marginTop: "15px" }}>
-              Fetching the data, Hang tight...{" "}
-            </p>{" "}
+          <div className="spin23">
+            <span className="loader"></span>
           </div>
         </div>
       </>
     );
   }
+
+  // if (!videoData) {
+  //   return (
+  //     <>
+  //       <div className="main-video-section2">
+  //         <div className="spin2">
+  //           <ReactLoading
+  //             type={"spin"}
+  //             color={"white"}
+  //             height={50}
+  //             width={50}
+  //           />
+  //           <p style={{ marginTop: "15px" }}>
+  //             Fetching the data, Hang tight...{" "}
+  //           </p>{" "}
+  //         </div>
+  //       </div>
+  //     </>
+  //   );
+  // }
 
   const { VideoData } = videoData;
   const matchedVideo = VideoData.find((item) => item._id === id);
@@ -576,21 +587,33 @@ function VideoSection() {
     return (
       <>
         <div className="main-video-section2">
-          <div className="spin2">
-            <ReactLoading
-              type={"spin"}
-              color={"white"}
-              height={50}
-              width={50}
-            />
-            <p style={{ marginTop: "15px" }}>
-              Fetching the data, Hang tight...{" "}
-            </p>
+          <div className="spin23">
+            <span className="loader"></span>
           </div>
         </div>
       </>
     );
   }
+
+  // if (!matchedVideo) {
+  //   return (
+  //     <>
+  //       <div className="main-video-section2">
+  //         <div className="spin2">
+  //           <ReactLoading
+  //             type={"spin"}
+  //             color={"white"}
+  //             height={50}
+  //             width={50}
+  //           />
+  //           <p style={{ marginTop: "15px" }}>
+  //             Fetching the data, Hang tight...{" "}
+  //           </p>
+  //         </div>
+  //       </div>
+  //     </>
+  //   );
+  // }
 
   const {
     videoURL,
@@ -1402,7 +1425,7 @@ function VideoSection() {
               <div className="video-section2">
                 {Array.from({ length: 10 }).map(() => (
                   <>
-                    <div className="video-data12" style={{marginTop:"15px"}}>
+                    <div className="video-data12" style={{ marginTop: "15px" }}>
                       <div className="video-left-side">
                         <Skeleton
                           count={1}

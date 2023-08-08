@@ -9,7 +9,8 @@ import jwtDecode from "jwt-decode";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
 import nothing from "../img/nothing.png";
-import ReactLoading from "react-loading";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 function Trending() {
   const [Email, setEmail] = useState();
@@ -20,12 +21,19 @@ function Trending() {
     return menu ? JSON.parse(menu) : false;
   });
   const token = localStorage.getItem("userToken");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (token) {
       setEmail(jwtDecode(token).email);
     }
   }, [token]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 3200);
+  }, []);
 
   useEffect(() => {
     localStorage.setItem("menuClicked", JSON.stringify(menuClicked));
@@ -116,118 +124,165 @@ function Trending() {
             {trendingVideos.length > 0 &&
               trendingVideos.map((element, index) => {
                 return (
-                  <div
-                    className="trending-video-data"
-                    key={index}
-                    onClick={() => {
-                      if (token) {
-                        updateViews(element.videoid);
-                       setTimeout(() => {
-                        navigate(`/video/${element.videoid}`);
-                        window.location.reload();
-                       }, 400);
+                  <>
+                    <SkeletonTheme baseColor="#353535" highlightColor="#444">
+                      <div
+                        className="trending-video-data"
+                        style={
+                          loading === true
+                            ? { display: "flex" }
+                            : { display: "none" }
+                        }
+                      >
+                        <Skeleton
+                          count={1}
+                          width={250}
+                          height={141}
+                          style={{ borderRadius: "12px" }}
+                        />
+                        <div className="trending-video-texts">
+                        <Skeleton
+                          count={1}
+                          width={150}
+                          height={20}
+                          style={{ position: "relative", left: "30px", top:"10px" }}
+                        />
+                        <Skeleton
+                          count={1}
+                          width={400}
+                          height={25}
+                          style={{ position: "relative", left: "30px", top:"15px" }}
+                        />
+                          <Skeleton
+                          count={1}
+                          width={220}
+                          height={15}
+                          style={{ position: "relative", left: "30px", top:"20px" }}
+                        />
+                        <Skeleton
+                          count={1}
+                          width={500}
+                          height={20}
+                          style={{ position: "relative", left: "30px", top:"28px" }}
+                        />
+                        </div>
+                      </div>
+                    </SkeletonTheme>
+                    <div
+                      className="trending-video-data"
+                      key={index}
+                      onClick={() => {
+                        if (token) {
+                          updateViews(element.videoid);
+                          setTimeout(() => {
+                            navigate(`/video/${element.videoid}`);
+                            window.location.reload();
+                          }, 400);
+                        } else {
+                          navigate(`/video/${element.videoid}`);
+                          window.location.reload();
+                        }
+                      }}
+                      style={
+                        loading === false
+                          ? { visibility: "visible" }
+                          : { visibility: "hidden" }
                       }
-                     else{
-                      navigate(`/video/${element.videoid}`);
-                      window.location.reload();
-                     }
-                    }}
-                  >
-                    <img
-                      src={element.thumbnailURL}
-                      alt="trending-thumbnail"
-                      className="trending-thumbnail"
-                    />
-                    <p className="trending-duration">
-                      {Math.floor(element.videoLength / 60) +
-                        ":" +
-                        (Math.round(element.videoLength % 60) < 10
-                          ? "0" + Math.round(element.videoLength % 60)
-                          : Math.round(element.videoLength % 60))}
-                    </p>
-                    <div className="trending-video-texts">
-                      <p className="trending-batch">TRENDING #{index + 1}</p>
-                      <p className="trending-title">{element.Title}</p>
-                      <div className="trending-oneliner">
-                        <p className="t-channelname">{element.uploader}</p>
-                        <Tooltip
-                          TransitionComponent={Zoom}
-                          title="Verified"
-                          placement="top"
-                        >
-                          <CheckCircleIcon
-                            fontSize="100px"
-                            style={{
-                              color: "rgb(138, 138, 138)",
-                              marginLeft: "6px",
-                            }}
-                          />
-                        </Tooltip>
-                        <p className="t-views">
-                          {" "}
-                          {element.views >= 1e9
-                            ? `${(element.views / 1e9).toFixed(1)}B`
-                            : element.views >= 1e6
-                            ? `${(element.views / 1e6).toFixed(1)}M`
-                            : element.views >= 1e3
-                            ? `${(element.views / 1e3).toFixed(1)}K`
-                            : element.views}{" "}
-                          views
-                        </p>
-                        <p className="t-uploaded-date">
-                          &#x2022;{" "}
-                          {(() => {
-                            const timeDifference =
-                              new Date() - new Date(element.uploaded_date);
-                            const minutes = Math.floor(timeDifference / 60000);
-                            const hours = Math.floor(timeDifference / 3600000);
-                            const days = Math.floor(timeDifference / 86400000);
-                            const weeks = Math.floor(
-                              timeDifference / 604800000
-                            );
-                            const years = Math.floor(
-                              timeDifference / 31536000000
-                            );
+                    >
+                      <img
+                        src={element.thumbnailURL}
+                        alt="trending-thumbnail"
+                        className="trending-thumbnail"
+                      />
+                      <p className="trending-duration">
+                        {Math.floor(element.videoLength / 60) +
+                          ":" +
+                          (Math.round(element.videoLength % 60) < 10
+                            ? "0" + Math.round(element.videoLength % 60)
+                            : Math.round(element.videoLength % 60))}
+                      </p>
+                      <div className="trending-video-texts">
+                        <p className="trending-batch">TRENDING #{index + 1}</p>
+                        <p className="trending-title">{element.Title}</p>
+                        <div className="trending-oneliner">
+                          <p className="t-channelname">{element.uploader}</p>
+                          <Tooltip
+                            TransitionComponent={Zoom}
+                            title="Verified"
+                            placement="top"
+                          >
+                            <CheckCircleIcon
+                              fontSize="100px"
+                              style={{
+                                color: "rgb(138, 138, 138)",
+                                marginLeft: "6px",
+                              }}
+                            />
+                          </Tooltip>
+                          <p className="t-views">
+                            {" "}
+                            {element.views >= 1e9
+                              ? `${(element.views / 1e9).toFixed(1)}B`
+                              : element.views >= 1e6
+                              ? `${(element.views / 1e6).toFixed(1)}M`
+                              : element.views >= 1e3
+                              ? `${(element.views / 1e3).toFixed(1)}K`
+                              : element.views}{" "}
+                            views
+                          </p>
+                          <p className="t-uploaded-date">
+                            &#x2022;{" "}
+                            {(() => {
+                              const timeDifference =
+                                new Date() - new Date(element.uploaded_date);
+                              const minutes = Math.floor(
+                                timeDifference / 60000
+                              );
+                              const hours = Math.floor(
+                                timeDifference / 3600000
+                              );
+                              const days = Math.floor(
+                                timeDifference / 86400000
+                              );
+                              const weeks = Math.floor(
+                                timeDifference / 604800000
+                              );
+                              const years = Math.floor(
+                                timeDifference / 31536000000
+                              );
 
-                            if (minutes < 1) {
-                              return "just now";
-                            } else if (minutes < 60) {
-                              return `${minutes} mins ago`;
-                            } else if (hours < 24) {
-                              return `${hours} hours ago`;
-                            } else if (days < 7) {
-                              return `${days} days ago`;
-                            } else if (weeks < 52) {
-                              return `${weeks} weeks ago`;
-                            } else {
-                              return `${years} years ago`;
-                            }
-                          })()}
+                              if (minutes < 1) {
+                                return "just now";
+                              } else if (minutes < 60) {
+                                return `${minutes} mins ago`;
+                              } else if (hours < 24) {
+                                return `${hours} hours ago`;
+                              } else if (days < 7) {
+                                return `${days} days ago`;
+                              } else if (weeks < 52) {
+                                return `${weeks} weeks ago`;
+                              } else {
+                                return `${years} years ago`;
+                              }
+                            })()}
+                          </p>
+                        </div>
+                        <p className="trending-desc">
+                          {element.Description.length <= 140
+                            ? element.Description
+                            : `${element.Description.slice(0, 140)}...`}
                         </p>
                       </div>
-                      <p className="trending-desc">
-                        {element.Description.length <= 140
-                          ? element.Description
-                          : `${element.Description.slice(0, 140)}...`}
-                      </p>
                     </div>
-                  </div>
+                  </>
                 );
               })}
           </div>
         </div>
       ) : (
         <div className="main-trending-section">
-          <div className="spin2" style={{ height: "auto" }}>
-            <ReactLoading
-              type={"spin"}
-              color={"white"}
-              height={50}
-              width={50}
-            />
-            <p style={{ marginTop: "15px" }}>
-              Fetching the data, Hang tight...{" "}
-            </p>
+          <div className="spin23" style={{top:"200px"}}>
+            <span className="loader"></span>
           </div>
         </div>
       )}

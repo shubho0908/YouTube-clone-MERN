@@ -7,7 +7,8 @@ import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
 import nothing from "../img/nothing.png";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import ReactLoading from "react-loading";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import { useNavigate } from "react-router-dom";
 
 function Subscriptions() {
@@ -18,6 +19,7 @@ function Subscriptions() {
     const menu = localStorage.getItem("menuClicked");
     return menu ? JSON.parse(menu) : false;
   });
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
   const token = localStorage.getItem("userToken");
@@ -25,6 +27,12 @@ function Subscriptions() {
   useEffect(() => {
     const token = localStorage.getItem("userToken");
     setEmail(jwtDecode(token).email);
+  }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 4000);
   }, []);
 
   useEffect(() => {
@@ -123,176 +131,281 @@ function Subscriptions() {
       <Navbar />
       <LeftPanel />
       {subsVideos.length > 0 ? (
-        <div
-          className="subscription-content"
-          style={menuClicked === false ? { left: "150px" } : { left: "300px" }}
-        >
-          <div className="subscribed-channels">
-            <p className="main-txxt">Channels</p>
-            <div className="channels-full-list">
-              {subscriptions.length > 0 &&
-                subscriptions.map((element, index) => {
-                  return (
-                    <div
-                      className="sub-channels"
-                      key={index}
-                      onClick={() => {
-                        navigate(`/channel/${element.channelID}`);
-                        window.location.reload();
-                      }}
-                    >
-                      <img
-                        src={element.channelProfile}
-                        alt="channelDP"
-                        className="sub-channelDP"
-                      />
-                      <p className="sub-channelname">{element.channelname}</p>
-                    </div>
-                  );
-                })}
-            </div>
-          </div>
-          <div className="subscribed-videos">
-            <p className="main-txxt">Videos</p>
-            <div className="subs-videos-all">
-              {subsVideos.length > 0 &&
-                subsVideos.map((element, index) => {
-                  return (
-                    <div
-                      className="subs-video-data"
-                      key={index}
-                      onClick={() => {
-                        if (token) {
-                          updateViews(element._id);
-                         setTimeout(() => {
-                          navigate(`/video/${element._id}`);
-                          window.location.reload();
-                         }, 400);
-                        }
-                       else{
-                        navigate(`/video/${element._id}`);
-                        window.location.reload();
-                       }
-                      }}
-                    >
-                      <img
-                        src={element.thumbnailURL}
-                        alt="thumbnail"
-                        className="sub-thumbnail"
-                      />
-                      <p className="duration durationn2">
-                        {Math.floor(element.videoLength / 60) +
-                          ":" +
-                          (Math.round(element.videoLength % 60) < 10
-                            ? "0" + Math.round(element.videoLength % 60)
-                            : Math.round(element.videoLength % 60))}
-                      </p>
-
-                      <div className="channel-basic-data">
-                        <div className="channel-pic">
-                          <img
-                            className="channel-profile"
-                            src={element.ChannelProfile}
-                            alt="channel-profile"
+        <div className="subscription-content">
+          <div
+            className="all-subs-dataaa"
+            style={
+              menuClicked === false
+                ? { left: "150px", width: "85%" }
+                : { left: "300px", width: "76%" }
+            }
+          >
+            <div className="subscribed-channels">
+              <p className="main-txxt">Channels</p>
+              <SkeletonTheme baseColor="#353535" highlightColor="#444">
+                <div
+                  className="channels-full-list"
+                  style={
+                    loading === true ? { display: "flex" } : { display: "none" }
+                  }
+                >
+                  {subscriptions.length > 0 &&
+                    subscriptions.map((element, index) => {
+                      return (
+                        <div className="sub-channels" key={index}>
+                          <Skeleton
+                            count={1}
+                            width={100}
+                            height={100}
+                            style={{ borderRadius: "100%" }}
+                          />
+                          <Skeleton
+                            count={1}
+                            width={120}
+                            height={22}
+                            style={{ position: "relative", top: "20px" }}
+                          />
+                          <Skeleton
+                            count={1}
+                            width={70}
+                            height={16}
+                            style={{ position: "relative", top: "25px" }}
                           />
                         </div>
-                        <div className="channel-text-data">
-                          <p className="title" style={{ marginTop: "10px" }}>
-                            {element.Title}
-                          </p>
-                          <div className="video-uploader">
-                            <p
-                              className="uploader"
-                              style={{ marginTop: "10px" }}
-                            >
-                              {element.uploader}
-                            </p>
-                            <Tooltip
-                              TransitionComponent={Zoom}
-                              title="Verified"
-                              placement="right"
-                            >
-                              <CheckCircleIcon
-                                fontSize="100px"
-                                style={{
-                                  color: "rgb(138, 138, 138)",
-                                  marginTop: "8px",
-                                  marginLeft: "4px",
-                                }}
-                              />
-                            </Tooltip>
-                          </div>
-                          <div className="view-time">
-                            <p className="views">
-                              {element.views >= 1e9
-                                ? `${(element.views / 1e9).toFixed(1)}B`
-                                : element.views >= 1e6
-                                ? `${(element.views / 1e6).toFixed(1)}M`
-                                : element.views >= 1e3
-                                ? `${(element.views / 1e3).toFixed(1)}K`
-                                : element.views}{" "}
-                              views
-                            </p>
-                            <p
-                              className="upload-time"
-                              style={{ marginLeft: "4px" }}
-                            >
-                              &#x2022;{" "}
-                              {(() => {
-                                const timeDifference =
-                                  new Date() - new Date(element.uploaded_date);
-                                const minutes = Math.floor(
-                                  timeDifference / 60000
-                                );
-                                const hours = Math.floor(
-                                  timeDifference / 3600000
-                                );
-                                const days = Math.floor(
-                                  timeDifference / 86400000
-                                );
-                                const weeks = Math.floor(
-                                  timeDifference / 604800000
-                                );
-                                const years = Math.floor(
-                                  timeDifference / 31536000000
-                                );
+                      );
+                    })}
+                </div>
+                <div
+                  className="subscribed-videos"
+                  style={
+                    loading === true
+                      ? { display: "block", position: "relative", top: "20px" }
+                      : { display: "none" }
+                  }
+                >
+                  <p className="main-txxt">Videos</p>
 
-                                if (minutes < 1) {
-                                  return "just now";
-                                } else if (minutes < 60) {
-                                  return `${minutes} mins ago`;
-                                } else if (hours < 24) {
-                                  return `${hours} hours ago`;
-                                } else if (days < 7) {
-                                  return `${days} days ago`;
-                                } else if (weeks < 52) {
-                                  return `${weeks} weeks ago`;
-                                } else {
-                                  return `${years} years ago`;
-                                }
-                              })()}
-                            </p>
+                  <div className="subs-videos-all">
+                    {Array.from({ length: 10 }).map(() => (
+                      <>
+                        <div
+                          className="subs-video-data"
+                          style={
+                            loading === true
+                              ? { display: "block" }
+                              : { display: "none" }
+                          }
+                        >
+                          <Skeleton
+                            count={1}
+                            width={300}
+                            height={169}
+                            style={{ borderRadius: "12px" }}
+                          />
+                          <div className="channel-basic-data">
+                            <Skeleton
+                              count={1}
+                              width={40}
+                              height={40}
+                              style={{
+                                borderRadius: "100%",
+                                marginTop: "40px",
+                              }}
+                            />
+                            <Skeleton
+                              count={2}
+                              width={220}
+                              height={15}
+                              style={{
+                                position: "relative",
+                                top: "40px",
+                                left: "15px",
+                              }}
+                            />
                           </div>
                         </div>
+                      </>
+                    ))}
+                  </div>
+                </div>
+              </SkeletonTheme>
+              <div
+                className="channels-full-list"
+                style={
+                  loading === true
+                    ? { visibility: "hidden" }
+                    : { visibility: "visible" }
+                }
+              >
+                {subscriptions.length > 0 &&
+                  subscriptions.map((element, index) => {
+                    return (
+                      <div
+                        className="sub-channels"
+                        key={index}
+                        onClick={() => {
+                          navigate(`/channel/${element.channelID}`);
+                          window.location.reload();
+                        }}
+                      >
+                        <img
+                          src={element.channelProfile}
+                          alt="channelDP"
+                          className="sub-channelDP"
+                        />
+                        <p className="sub-channelname">{element.channelname}</p>
                       </div>
-                    </div>
-                  );
-                })}
+                    );
+                  })}
+              </div>
+            </div>
+            <div className="subscribed-videos">
+              <p className="main-txxt">Videos</p>
+
+              <div className="subs-videos-all">
+                {subsVideos.length > 0 &&
+                  subsVideos.map((element, index) => {
+                    return (
+                      <>
+                        <div
+                          className="subs-video-data"
+                          key={index}
+                          onClick={() => {
+                            if (token) {
+                              updateViews(element._id);
+                              setTimeout(() => {
+                                navigate(`/video/${element._id}`);
+                                window.location.reload();
+                              }, 400);
+                            } else {
+                              navigate(`/video/${element._id}`);
+                              window.location.reload();
+                            }
+                          }}
+                          style={
+                            loading === true
+                              ? { visibility: "hidden" }
+                              : { visibility: "visible" }
+                          }
+                        >
+                          <img
+                            src={element.thumbnailURL}
+                            alt="thumbnail"
+                            className="sub-thumbnail"
+                          />
+                          <p className="duration durationn2">
+                            {Math.floor(element.videoLength / 60) +
+                              ":" +
+                              (Math.round(element.videoLength % 60) < 10
+                                ? "0" + Math.round(element.videoLength % 60)
+                                : Math.round(element.videoLength % 60))}
+                          </p>
+
+                          <div className="channel-basic-data">
+                            <div className="channel-pic">
+                              <img
+                                className="channel-profile"
+                                src={element.ChannelProfile}
+                                alt="channel-profile"
+                              />
+                            </div>
+                            <div className="channel-text-data">
+                              <p
+                                className="title"
+                                style={{ marginTop: "10px", width: "88%" }}
+                              >
+                                {element.Title.length <= 50
+                                  ? element.Title
+                                  : `${element.Title.slice(0, 50)}..`}
+                              </p>
+                              <div className="video-uploader">
+                                <p
+                                  className="uploader"
+                                  style={{ marginTop: "10px" }}
+                                >
+                                  {element.uploader}
+                                </p>
+                                <Tooltip
+                                  TransitionComponent={Zoom}
+                                  title="Verified"
+                                  placement="right"
+                                >
+                                  <CheckCircleIcon
+                                    fontSize="100px"
+                                    style={{
+                                      color: "rgb(138, 138, 138)",
+                                      marginTop: "8px",
+                                      marginLeft: "4px",
+                                    }}
+                                  />
+                                </Tooltip>
+                              </div>
+                              <div className="view-time">
+                                <p className="views">
+                                  {element.views >= 1e9
+                                    ? `${(element.views / 1e9).toFixed(1)}B`
+                                    : element.views >= 1e6
+                                    ? `${(element.views / 1e6).toFixed(1)}M`
+                                    : element.views >= 1e3
+                                    ? `${(element.views / 1e3).toFixed(1)}K`
+                                    : element.views}{" "}
+                                  views
+                                </p>
+                                <p
+                                  className="upload-time"
+                                  style={{ marginLeft: "4px" }}
+                                >
+                                  &#x2022;{" "}
+                                  {(() => {
+                                    const timeDifference =
+                                      new Date() -
+                                      new Date(element.uploaded_date);
+                                    const minutes = Math.floor(
+                                      timeDifference / 60000
+                                    );
+                                    const hours = Math.floor(
+                                      timeDifference / 3600000
+                                    );
+                                    const days = Math.floor(
+                                      timeDifference / 86400000
+                                    );
+                                    const weeks = Math.floor(
+                                      timeDifference / 604800000
+                                    );
+                                    const years = Math.floor(
+                                      timeDifference / 31536000000
+                                    );
+
+                                    if (minutes < 1) {
+                                      return "just now";
+                                    } else if (minutes < 60) {
+                                      return `${minutes} mins ago`;
+                                    } else if (hours < 24) {
+                                      return `${hours} hours ago`;
+                                    } else if (days < 7) {
+                                      return `${days} days ago`;
+                                    } else if (weeks < 52) {
+                                      return `${weeks} weeks ago`;
+                                    } else {
+                                      return `${years} years ago`;
+                                    }
+                                  })()}
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </>
+                    );
+                  })}
+              </div>
             </div>
           </div>
         </div>
       ) : (
         <div className="main-trending-section">
-          <div className="spin2" style={{ height: "auto" }}>
-            <ReactLoading
-              type={"spin"}
-              color={"white"}
-              height={50}
-              width={50}
-            />
-            <p style={{ marginTop: "15px" }}>
-              Fetching the data, Hang tight...{" "}
-            </p>
+          <div className="spin23" style={{ top: "200px" }}>
+            <span className="loader"></span>
           </div>
         </div>
       )}
