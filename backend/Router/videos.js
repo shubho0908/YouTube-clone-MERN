@@ -777,4 +777,15 @@ Videos.post("/saveplaylistprivacy/:playlistID", async (req, res) => {
   }
 });
 
+Videos.post("/addotherplaylist/:playlistID", async (req, res) => {
+  try {
+    const { playlistID } = req.params;
+    const {playlist_name} = req.body
+
+    res.json(playlist_name)
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 module.exports = Videos;

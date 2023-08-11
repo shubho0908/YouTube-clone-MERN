@@ -149,6 +149,13 @@ const UserData = new mongoose.Schema({
       },
     },
   ],
+  savedPlaylists: [
+    {
+      playlistID: {
+        type: String,
+      },
+    },
+  ],
   watchLater: [
     {
       email: {

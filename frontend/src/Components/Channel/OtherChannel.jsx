@@ -317,7 +317,6 @@ function OtherChannel() {
                 src={ChannelProfile}
                 alt="channelDP"
                 className="channel_profile"
-                loading="lazy"
               />
               <div className="channel-left">
                 <div className="channel-name-verified">

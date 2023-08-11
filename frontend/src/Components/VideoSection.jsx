@@ -1200,6 +1200,7 @@ function VideoSection() {
             <div className="desc-data">
               <p
                 style={{ marginTop: "20px" }}
+                className="videos-desc"
                 dangerouslySetInnerHTML={{
                   __html:
                     Description && formatDescriptionWithLinks(Description),

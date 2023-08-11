@@ -66,6 +66,9 @@
   color: white;
 }
 
+.videos-desc > a {
+  color: #3eaffe;
+}
 
 .vid-title {
   margin-top: 25px;
@@ -687,10 +690,10 @@
   position: relative;
   top: 14px;
   font-size: 18px;
-  transition: all .13s ease;
+  transition: all 0.13s ease;
 }
 
-.trending-tag:hover{
+.trending-tag:hover {
   text-decoration: underline;
 }
 
@@ -721,9 +724,15 @@
 }
 
 @keyframes rotate {
-  0% { transform: rotate(0deg) scale(0.8) }
-  50% { transform: rotate(360deg) scale(1.2) }
-  100% { transform: rotate(720deg) scale(0.8) }
+  0% {
+    transform: rotate(0deg) scale(0.8);
+  }
+  50% {
+    transform: rotate(360deg) scale(1.2);
+  }
+  100% {
+    transform: rotate(720deg) scale(0.8);
+  }
 }
 
 @keyframes ball1 {

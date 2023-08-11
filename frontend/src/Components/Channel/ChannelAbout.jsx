@@ -13,6 +13,7 @@ function ChannelAbout(prop) {
   const [links, setLinks] = useState();
   const [joinedDate, setjoinedDate] = useState();
   const [TotalViews, setTotalViews] = useState();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getUserMail = async () => {
@@ -29,6 +30,12 @@ function ChannelAbout(prop) {
 
     getUserMail();
   }, [prop.channelid]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+  }, []);
 
   useEffect(() => {
     const GetAboutData = async () => {
@@ -89,6 +96,19 @@ function ChannelAbout(prop) {
     );
     return formattedDescription.replace(/\n/g, "<br>");
   };
+
+  if (loading === true) {
+    return (
+      <div
+        className="channel-about-section"
+        style={{ width: "-webkit-fill-available" }}
+      >
+        <div className="spin23" style={{ top: "50px" }}>
+          <span className="loader2"></span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>

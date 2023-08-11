@@ -10,6 +10,7 @@ import nothing from "../img/nothing.png";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import PlaylistAddOutlinedIcon from "@mui/icons-material/PlaylistAddOutlined";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import jwtDecode from "jwt-decode";
 import PublicOutlinedIcon from "@mui/icons-material/PublicOutlined";
@@ -452,6 +453,17 @@ function Playlists() {
                   </div>
 
                   <div className="playlist-btns">
+                    <Tooltip
+                      TransitionComponent={Zoom}
+                      title="Add to Library"
+                      placement="bottom"
+                    >
+                      <PlaylistAddOutlinedIcon
+                        className="savethis-playlist"
+                        fontSize="medium"
+                        style={{ color: "white" }}
+                      />
+                    </Tooltip>
                     <Tooltip
                       TransitionComponent={Zoom}
                       title="Share"

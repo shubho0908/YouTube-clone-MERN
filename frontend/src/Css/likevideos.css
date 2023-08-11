@@ -171,8 +171,8 @@ body {
   margin-top: 20px;
 }
 
-.share-playlist,
-.delete-playlist {
+.delete-playlist,
+.share-playlist {
   cursor: pointer;
   transform: rotateY(180deg);
   background-color: rgba(255, 255, 255, 0.142);
@@ -180,12 +180,21 @@ body {
   border-radius: 100%;
 }
 
-.delete-playlist {
+.savethis-playlist {
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.142);
+  padding: 8px;
+  border-radius: 100%;
+}
+
+.delete-playlist,
+.share-playlist {
   margin-left: 15px;
 }
 
 .share-playlist:hover,
-.delete-playlist:hover {
+.delete-playlist:hover,
+.savethis-playlist:hover {
   background-color: rgba(255, 255, 255, 0.238);
 }
 

@@ -6,6 +6,7 @@ import PlaylistPlayIcon from "@mui/icons-material/PlaylistPlay";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import deleteIMG from "../../img/delete.jpg";
 
 function generateRandomColors(count) {
   const transparency = 0.7; // Adjust transparency as needed (0 to 1)
@@ -160,7 +161,11 @@ function ChannelPlaylists(prop) {
                     }
                   >
                     <img
-                      src={element.playlist_videos[0].thumbnail}
+                      src={
+                        element.playlist_videos[0] !== undefined
+                          ? element.playlist_videos[0].thumbnail
+                          : deleteIMG
+                      }
                       alt=""
                       className="playlist-thumbnail"
                       onClick={() => {

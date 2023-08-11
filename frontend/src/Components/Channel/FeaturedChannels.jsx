@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../Css/channel.css";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 function FeaturedChannels(prop) {
   const [addChannelClicked, setAddChannelClicked] = useState(false);
@@ -14,6 +16,7 @@ function FeaturedChannels(prop) {
   const [SelectedChannel, setSelectedChannel] = useState();
   const [SaveChannel, setSaveChannel] = useState();
   const token = localStorage.getItem("userToken");
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
 
@@ -22,6 +25,12 @@ function FeaturedChannels(prop) {
       setEmail(jwtDecode(token).email);
     }
   }, [token]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 3200);
+  }, []);
 
   useEffect(() => {
     const getSubscriptions = async () => {
@@ -182,13 +191,56 @@ function FeaturedChannels(prop) {
           </p>
         </div>
 
+        <SkeletonTheme baseColor="#353535" highlightColor="#444">
+          <div
+            className="featured-channels-added"
+            style={{
+              display: loading === true ? "flex" : "none",
+              top: prop.newmail === Email ? "360px" : "340px",
+              left: prop.newmail === Email ? "0px" : "-12px",
+            }}
+          >
+            {featuredChannelsData &&
+              featuredChannelsData.length > 0 &&
+              featuredChannelsData.map((index) => {
+                return (
+                  <div
+                    className={
+                      Email === prop.newmail
+                        ? `featured-channelss featured-channelss-new`
+                        : `featured-channelss`
+                    }
+                    key={index}
+                  >
+                    <Skeleton
+                      count={1}
+                      width={100}
+                      height={100}
+                      style={{ borderRadius: "100%" }}
+                    />
+                    <Skeleton
+                      count={1}
+                      width={150}
+                      height={17}
+                      style={{
+                        borderRadius: "4px",
+                        position: "relative",
+                        top: "10px",
+                      }}
+                    />
+                  </div>
+                );
+              })}
+          </div>
+        </SkeletonTheme>
         <div
           className="featured-channels-added"
-          style={
-            prop.newmail === Email
-              ? { top: "360px" }
-              : { top: "340px", left: "-12px" }
-          }
+          style={{
+            visibility: loading === true ? "hidden" : "visible",
+            display: loading === true ? "none" : "flex",
+            top: prop.newmail === Email ? "360px" : "340px",
+            left: prop.newmail === Email ? "0px" : "-12px",
+          }}
         >
           {featuredChannelsData &&
             featuredChannelsData.length > 0 &&
@@ -265,7 +317,7 @@ function FeaturedChannels(prop) {
               : { display: "none" }
           }
         >
-          <p style={{fontSize:"18.5px"}}>Your subscriptions</p>
+          <p style={{ fontSize: "18.5px" }}>Your subscriptions</p>
           <div className="my-subscribed-channels">
             {Subscriptions &&
               Subscriptions.length > 0 &&
