@@ -315,7 +315,6 @@ function Browse() {
                       <img
                         style={{ width: "330px", borderRadius: "10px" }}
                         src={element}
-                        loading="lazy"
                         alt="thumbnails"
                       />
                       <p className="duration">
@@ -465,7 +464,6 @@ function Browse() {
                       <img
                         style={{ width: "330px", borderRadius: "10px" }}
                         src={element.thumbnailURL}
-                        loading="lazy"
                         alt="thumbnails"
                       />
                       <p className="duration">
