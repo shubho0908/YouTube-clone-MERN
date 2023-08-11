@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 import PlaylistPlayIcon from "@mui/icons-material/PlaylistPlay";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 function generateRandomColors(count) {
   const transparency = 0.7; // Adjust transparency as needed (0 to 1)
@@ -25,12 +27,20 @@ function ChannelPlaylists(prop) {
   const [playlistColors, setPlaylistColors] = useState([]);
   const navigate = useNavigate();
   const token = localStorage.getItem("userToken");
+  const [loading, setLoading] = useState(true);
+  const sampleArr = [1, 2, 3, 4];
 
   useEffect(() => {
     if (token) {
       setEmail(jwtDecode(token).email);
     }
   }, [token]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 3200);
+  }, []);
 
   useEffect(() => {
     // Generate colors based on the length of PlaylistData array
@@ -66,11 +76,74 @@ function ChannelPlaylists(prop) {
 
   return (
     <>
-      <div className="channel-playlist-section">
+      <SkeletonTheme baseColor="#353535" highlightColor="#444">
+        <div
+          className="channel-playlist-section"
+          style={loading === true ? { display: "block" } : { display: "none" }}
+        >
+          <div className="created-playlist-section">
+            <Skeleton
+              count={1}
+              width={150}
+              height={16}
+              style={{ borderRadius: "4px" }}
+            />
+            <div className="thischannel-playlists">
+              {sampleArr &&
+                sampleArr.map(() => {
+                  return (
+                    <>
+                      <div className="created-all-playlistss">
+                        <Skeleton
+                          count={1}
+                          width={230}
+                          height={129}
+                          style={{ borderRadius: "9px" }}
+                        />
+
+                        <div className="playlistt-details">
+                          <Skeleton
+                            count={1}
+                            width={150}
+                            height={18}
+                            style={{
+                              borderRadius: "4px",
+                              position: "relative",
+                              top: "23px",
+                            }}
+                          />
+                          <Skeleton
+                            count={1}
+                            width={120}
+                            height={16}
+                            style={{
+                              borderRadius: "4px",
+                              position: "relative",
+                              top: "27px",
+                            }}
+                          />
+                        </div>
+                      </div>
+                    </>
+                  );
+                })}
+            </div>
+          </div>
+        </div>
+      </SkeletonTheme>
+      <div
+        className="channel-playlist-section"
+        style={
+          loading === false
+            ? { visibility: "visible", display: "block" }
+            : { visibility: "hidden", display: "none" }
+        }
+      >
         <div className="created-playlist-section">
           <p>Created playlists</p>
           <div className="thischannel-playlists">
-            {PlaylistData && PlaylistData !== "No playlists available..." &&
+            {PlaylistData &&
+              PlaylistData !== "No playlists available..." &&
               PlaylistData.map((element, index) => {
                 const backgroundColor =
                   playlistColors[index] || playlistColors[0];

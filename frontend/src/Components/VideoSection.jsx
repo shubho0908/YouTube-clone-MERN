@@ -54,6 +54,7 @@ function VideoSection() {
   const [loading, setLoading] = useState(false);
   const [recommendLoading, setRecommendLoading] = useState(true);
   const token = localStorage.getItem("userToken");
+  const [likeLoading, setLikeLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -148,7 +149,7 @@ function VideoSection() {
         //console.log(error.message);
       }
     };
-    const interval = setInterval(getChannel, 100);
+    const interval = setInterval(getChannel, 400);
 
     return () => clearInterval(interval);
   }, [email]);
@@ -167,7 +168,7 @@ function VideoSection() {
         //console.log(error.message);
       }
     };
-    const interval = setInterval(getTrendingData, 100);
+    const interval = setInterval(getTrendingData, 400);
 
     return () => clearInterval(interval);
   }, [id]);
@@ -185,7 +186,7 @@ function VideoSection() {
         //console.log(error.message);
       }
     };
-    const interval = setInterval(PushTrending, 100);
+    const interval = setInterval(PushTrending, 400);
 
     return () => clearInterval(interval);
   }, [id, usermail]);
@@ -265,7 +266,7 @@ function VideoSection() {
       }
     };
 
-    const interval = setInterval(getLikes, 200);
+    const interval = setInterval(getLikes, 300);
 
     return () => clearInterval(interval);
   }, [id]);
@@ -392,7 +393,7 @@ function VideoSection() {
       }
     };
 
-    const interval = setInterval(getChannelID, 100);
+    const interval = setInterval(getChannelID, 400);
 
     return () => clearInterval(interval);
   }, [usermail]);
@@ -414,7 +415,7 @@ function VideoSection() {
       }
     };
 
-    const interval = setInterval(GetChannelData, 100);
+    const interval = setInterval(GetChannelData, 400);
 
     return () => clearInterval(interval);
   }, [usermail]);
@@ -438,7 +439,7 @@ function VideoSection() {
       }
     };
 
-    const interval = setInterval(checkSubscription, 100);
+    const interval = setInterval(checkSubscription, 400);
 
     return () => clearInterval(interval);
   }, [channelID, email]);
@@ -476,7 +477,7 @@ function VideoSection() {
       }
     };
 
-    const interval = setInterval(getPlaylists, 100);
+    const interval = setInterval(getPlaylists, 400);
 
     return () => clearInterval(interval);
   }, [email]);
@@ -496,7 +497,7 @@ function VideoSection() {
       }
     };
 
-    const interval = setInterval(getVideoAvailableInPlaylist, 100);
+    const interval = setInterval(getVideoAvailableInPlaylist, 400);
 
     return () => clearInterval(interval);
   }, [email, id]);
@@ -516,7 +517,7 @@ function VideoSection() {
       }
     };
 
-    const interval = setInterval(getHeartComments, 100);
+    const interval = setInterval(getHeartComments, 400);
 
     return () => clearInterval(interval);
   }, [email, id]);
@@ -629,6 +630,8 @@ function VideoSection() {
 
   const likeVideo = async () => {
     try {
+      setLikeLoading(true);
+
       const response = await fetch(
         `http://localhost:3000/like/${id}/${email}/${usermail}`,
         {
@@ -638,7 +641,13 @@ function VideoSection() {
           },
         }
       );
-      await response.json();
+      const data = await response.json();
+      console.log(data);
+      if (data === "SUCCESS") {
+        setLikeLoading(false);
+      } else if (data !== "SUCCESS") {
+        setLikeLoading(true);
+      }
     } catch (error) {
       //console.log(error.message);
     }
@@ -993,7 +1002,14 @@ function VideoSection() {
               )}
             </div>
             <div className="channel-right-data">
-              <div className="like-dislike">
+              <div
+                className="like-dislike"
+                style={
+                  likeLoading === true
+                    ? { opacity: 0.46, cursor: "wait", pointerEvents: "none" }
+                    : { opacity: 1, cursor: "pointer", pointerEvents: "auto" }
+                }
+              >
                 <Tooltip
                   TransitionComponent={Zoom}
                   title="I like this"

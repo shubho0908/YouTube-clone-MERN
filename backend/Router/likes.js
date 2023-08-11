@@ -57,6 +57,8 @@ Likes.post("/like/:id/:email/:email2", async (req, res) => {
 
     await user.save();
     await video.save();
+
+    res.json("SUCCESS")
   } catch (error) {
     res.json(error.message);
   }

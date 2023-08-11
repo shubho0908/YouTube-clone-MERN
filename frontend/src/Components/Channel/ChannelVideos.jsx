@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import jwtDecode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 function ChannelVideos(prop) {
   const [myVideos, setMyVideos] = useState([]);
   const [Email, setEmail] = useState();
   const [videosort, setVideoSort] = useState();
   const token = localStorage.getItem("userToken");
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
 
@@ -15,6 +18,12 @@ function ChannelVideos(prop) {
       setEmail(jwtDecode(token).email);
     }
   }, [token]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 3200);
+  }, []);
 
   useEffect(() => {
     const getUserVideos = async () => {
@@ -113,7 +122,53 @@ function ChannelVideos(prop) {
             Oldest
           </button>
         </div>
-        <div className="uploadedvideos-sectionall">
+        <SkeletonTheme baseColor="#353535" highlightColor="#444">
+          <div
+            className="uploadedvideos-sectionall"
+            style={loading === true ? { display: "grid" } : { display: "none" }}
+          >
+            {myVideos.length > 0 &&
+              myVideos.map((index) => {
+                return (
+                  <div className="uploaded-video-contents" key={index}>
+                    <Skeleton
+                      count={1}
+                      width={300}
+                      height={169}
+                      style={{ borderRadius: "10px" }}
+                    />
+                    <div
+                      className="videos-metadataa"
+                      style={{ position: "relative", top: "15px" }}
+                    >
+                      <Skeleton
+                        count={2}
+                        width={280}
+                        height={18}
+                        style={{ borderRadius: "4px" }}
+                      />
+                      <div className="views-and-time">
+                        <Skeleton
+                          count={1}
+                          width={170}
+                          height={15}
+                          style={{ borderRadius: "4px" }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+          </div>
+        </SkeletonTheme>
+        <div
+          className="uploadedvideos-sectionall"
+          style={
+            loading === true
+              ? { visibility: "hidden", display: "none" }
+              : { visibility: "visible", display: "grid" }
+          }
+        >
           {myVideos.length > 0 &&
             myVideos.map((element, index) => {
               return (
@@ -125,7 +180,7 @@ function ChannelVideos(prop) {
                       updateViews(element._id);
                       setTimeout(() => {
                         navigate(`/video/${element._id}`);
-                      window.location.reload();
+                        window.location.reload();
                       }, 400);
                     } else {
                       navigate(`/video/${element._id}`);

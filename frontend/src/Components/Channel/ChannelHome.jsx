@@ -7,18 +7,27 @@ import jwtDecode from "jwt-decode";
 import ReactLoading from "react-loading";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import noImage from "../../img/no-video.jpg";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 function ChannelHome(prop) {
   const [myVideos, setMyVideos] = useState([]);
   const [Email, setEmail] = useState();
   const navigate = useNavigate();
   const token = localStorage.getItem("userToken");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (token) {
       setEmail(jwtDecode(token).email);
     }
   }, [token]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 3200);
+  }, []);
 
   useEffect(() => {
     const getUserVideos = async () => {
@@ -77,13 +86,101 @@ function ChannelHome(prop) {
 
   return (
     <>
+      <SkeletonTheme baseColor="#353535" highlightColor="#444">
+        <div
+          className="myvideos-section"
+          style={{
+            display:
+              (myVideos && myVideos.message === "USER DOESN'T EXIST") ||
+              loading === false
+                ? "none"
+                : "block",
+          }}
+        >
+          {myVideos.length > 0 ? (
+            <div className="user-video">
+              <Skeleton
+                count={1}
+                width={250}
+                height={141}
+                style={{ borderRadius: "10px" }}
+              />
+
+              <div
+                className="video-metadata"
+                style={{ position: "relative", top: "4px" }}
+              >
+                <Skeleton
+                  count={1}
+                  width={500}
+                  height={20}
+                  style={{
+                    borderRadius: "4px",
+                    position: "relative",
+                    left: "36px",
+                  }}
+                />
+                <div className="video-oneliner-data">
+                  <Skeleton
+                    count={1}
+                    width={350}
+                    height={20}
+                    style={{
+                      borderRadius: "4px",
+                      position: "relative",
+                      left: "36px",
+                    }}
+                  />
+                </div>
+                <Skeleton
+                  count={1}
+                  width={450}
+                  height={12}
+                  style={{
+                    borderRadius: "4px",
+                    position: "relative",
+                    left: "36px",
+                    top: "15px",
+                  }}
+                />
+                <Skeleton
+                  count={1}
+                  width={400}
+                  height={12}
+                  style={{
+                    borderRadius: "4px",
+                    position: "relative",
+                    left: "36px",
+                    top: "15px",
+                  }}
+                />
+                <Skeleton
+                  count={1}
+                  width={360}
+                  height={12}
+                  style={{
+                    borderRadius: "4px",
+                    position: "relative",
+                    left: "36px",
+                    top: "15px",
+                  }}
+                />
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
+      </SkeletonTheme>
       <div
         className="myvideos-section"
-        style={
-          myVideos && myVideos.message === "USER DOESN'T EXIST"
-            ? { display: "none" }
-            : { display: "block" }
-        }
+        style={{
+          visibility: loading === true ? "hidden" : "visible",
+          display:
+            myVideos && myVideos.message === "USER DOESN'T EXIST"
+              ? "none"
+              : "block",
+        }}
       >
         {myVideos.length > 0 ? (
           <div
@@ -187,13 +284,87 @@ function ChannelHome(prop) {
             : { display: "block" }
         }
       />
+      <SkeletonTheme baseColor="#353535" highlightColor="#444">
+        <div
+          className="myuploaded-videos"
+          style={{
+            display:
+              (myVideos && myVideos.message === "USER DOESN'T EXIST") ||
+              loading === false
+                ? "none"
+                : "block",
+            marginTop: "8px",
+          }}
+        >
+          <div className="section-headtxt">
+            <Skeleton
+              count={1}
+              width={140}
+              height={18}
+              style={{ borderRadius: "4px" }}
+            />
+          </div>
+          <div className="my-all-videos-list">
+            {AllVideos &&
+              AllVideos.length > 0 &&
+              AllVideos.sort(sortByViews2).map((element, index) => {
+                return (
+                  <div className="uploadedvideo-alldata" key={index}>
+                    <Skeleton
+                      count={1}
+                      width={220}
+                      height={124}
+                      style={{ borderRadius: "10px" }}
+                    />
+                    <div className="video-metadata2">
+                      <Skeleton
+                        count={1}
+                        width={200}
+                        height={20}
+                        style={{
+                          borderRadius: "4px",
+                          position: "relative",
+                          top: "30px",
+                        }}
+                      />
+                      <Skeleton
+                        count={1}
+                        width={170}
+                        height={20}
+                        style={{
+                          borderRadius: "4px",
+                          position: "relative",
+                          top: "33px",
+                        }}
+                      />
+                      <div className="views-and-time">
+                        <Skeleton
+                          count={1}
+                          width={140}
+                          height={18}
+                          style={{
+                            borderRadius: "4px",
+                            position: "relative",
+                            top: "40px",
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+          </div>
+        </div>
+      </SkeletonTheme>
       <div
         className="myuploaded-videos"
-        style={
-          myVideos && myVideos.message === "USER DOESN'T EXIST"
-            ? { display: "none" }
-            : { display: "block" }
-        }
+        style={{
+          visibility: loading === true ? "hidden" : "visible",
+          display:
+            myVideos && myVideos.message === "USER DOESN'T EXIST"
+              ? "none"
+              : "block",
+        }}
       >
         <div className="section-headtxt">
           <p className="section-title">Videos</p>
@@ -214,7 +385,7 @@ function ChannelHome(prop) {
           </div>
           {AllVideos && AllVideos.length >= 4 ? (
             <p
-              className="see-all"
+              className="see-all2"
               onClick={() => {
                 localStorage.setItem("Section", "Videos");
                 window.location.reload();
@@ -316,13 +487,72 @@ function ChannelHome(prop) {
             : { display: "block" }
         }
       />
+      <SkeletonTheme baseColor="#353535" highlightColor="#444">
+        <div
+          className="mypopular-videos"
+          style={{
+            display:
+              (myVideos && myVideos.message === "USER DOESN'T EXIST") ||
+              loading === false
+                ? "none"
+                : "block",
+            marginTop: "8px",
+          }}
+        >
+          <div className="section-headtxt">
+            <Skeleton
+              count={1}
+              width={180}
+              height={18}
+              style={{ borderRadius: "4px" }}
+            />
+          </div>
+          <div className="my-all-videos-list2">
+            {AllVideos &&
+              AllVideos.length > 0 &&
+              AllVideos.sort(sortByViews).map((element, index) => {
+                return (
+                  <div className="uploadedvideo-alldata" key={index}>
+                    <Skeleton
+                      count={1}
+                      width={220}
+                      height={124}
+                      style={{ borderRadius: "10px" }}
+                    />
+                    <div
+                      className="video-metadata2"
+                      style={{ position: "relative", top: "20px" }}
+                    >
+                      <Skeleton
+                        count={2}
+                        width={160}
+                        height={20}
+                        style={{ borderRadius: "4px" }}
+                      />
+                      <div className="views-and-time">
+                        <Skeleton
+                          count={1}
+                          width={120}
+                          height={14}
+                          style={{ borderRadius: "4px", top: "10px" }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+          </div>
+        </div>
+      </SkeletonTheme>
       <div
         className="mypopular-videos"
-        style={
-          myVideos && myVideos.message === "USER DOESN'T EXIST"
-            ? { display: "none" }
-            : { display: "block" }
-        }
+        style={{
+          visibility: loading === true ? "hidden" : "visible",
+          display:
+            myVideos && myVideos.message === "USER DOESN'T EXIST"
+              ? "none"
+              : "block",
+        }}
       >
         <div className="section-headtxt">
           <p className="section-title">Popular videos</p>
@@ -343,7 +573,7 @@ function ChannelHome(prop) {
           </div>
           {AllVideos && AllVideos.length >= 4 ? (
             <p
-              className="see-all"
+              className="see-all2"
               onClick={() => {
                 localStorage.setItem("Section", "Videos");
                 window.location.reload();

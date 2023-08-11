@@ -5,7 +5,8 @@ import LeftPanel from "../LeftPanel";
 import "../../Css/channel.css";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import ChannelHome from "./ChannelHome";
-import ReactLoading from "react-loading";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 import ChannelVideos from "./ChannelVideos";
 import ClearRoundedIcon from "@mui/icons-material/ClearRounded";
 import jwtDecode from "jwt-decode";
@@ -33,12 +34,19 @@ function OtherChannel() {
   const [Subscribers, setSubscribers] = useState();
   const [Top, setTop] = useState("155px");
   const [coverIMG, setCoverIMG] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (token) {
       setnewEmail(jwtDecode(token).email);
     }
   }, [token]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 3200);
+  }, []);
 
   useEffect(() => {
     const getUserMail = async () => {
@@ -206,14 +214,104 @@ function OtherChannel() {
       <LeftPanel />
       {coverIMG !== "No data" ? (
         <div className="channel-cover">
-          <img src={coverIMG} alt="Banner" className="channel-cover-img" />
+          <img
+            src={coverIMG}
+            alt="Banner"
+            loading="lazy"
+            className="channel-cover-img"
+          />
         </div>
       ) : (
         ""
       )}
       {ChannelProfile ? (
         <div className="channel-main-content" style={{ top: Top }}>
-          <div className="channel-top-content">
+          <SkeletonTheme baseColor="#353535" highlightColor="#444">
+            <div
+              className="channel-top-content"
+              style={
+                loading === true ? { display: "flex" } : { display: "none" }
+              }
+            >
+              <div className="channel-left-content">
+                <Skeleton
+                  count={1}
+                  width={130}
+                  height={130}
+                  style={{ borderRadius: "100%" }}
+                />
+                <div className="channel-left">
+                  <div className="channel-name-verified">
+                    <Skeleton
+                      count={1}
+                      width={200}
+                      height={20}
+                      style={{ borderRadius: "4px" }}
+                    />
+                  </div>
+                  <div className="channel-extra">
+                    <Skeleton
+                      count={1}
+                      width={250}
+                      height={15}
+                      style={{ borderRadius: "4px" }}
+                    />
+                  </div>
+                  <div className="more-about">
+                    <Skeleton
+                      count={1}
+                      width={200}
+                      height={14}
+                      style={{ borderRadius: "4px" }}
+                    />
+                  </div>
+                </div>
+              </div>
+              {newEmail === Email ? (
+                <div
+                  className="channel-right-content"
+                  style={{ marginLeft: "160px", display: "flex" }}
+                >
+                  <Skeleton
+                    count={1}
+                    width={160}
+                    height={38}
+                    style={{ borderRadius: "20px" }}
+                  />
+                  <Skeleton
+                    count={1}
+                    width={160}
+                    height={38}
+                    style={{
+                      borderRadius: "20px",
+                      position: "relative",
+                      left: "25px",
+                    }}
+                  />
+                </div>
+              ) : (
+                <div
+                  className="channel-right-content"
+                  style={{ marginLeft: "340px" }}
+                >
+                  <Skeleton
+                    count={1}
+                    width={125}
+                    height={38}
+                    style={{ borderRadius: "20px" }}
+                  />
+                </div>
+              )}
+            </div>
+          </SkeletonTheme>
+          <div
+            className="channel-top-content"
+            style={
+              loading === true
+                ? { visibility: "hidden", display: "none" }
+                : { visibility: "visible", display: "flex" }
+            }
+          >
             <div className="channel-left-content">
               <img
                 src={ChannelProfile}
@@ -275,11 +373,14 @@ function OtherChannel() {
                 >
                   Customize channel
                 </button>
-                <button className="manage-videos"
-                onClick={()=>{
-                  window.location.href = "/studio/video"
-                }}
-                >Manage videos</button>
+                <button
+                  className="manage-videos"
+                  onClick={() => {
+                    window.location.href = "/studio/video";
+                  }}
+                >
+                  Manage videos
+                </button>
               </div>
             ) : (
               <div
@@ -446,7 +547,11 @@ function OtherChannel() {
           </div>
           <br />
           <hr className="seperate seperate-new" />
-          {Section === "Home" ? <ChannelHome newmail={Email} /> : ""}
+          {Section === "Home" || Section === "" ? (
+            <ChannelHome newmail={Email} />
+          ) : (
+            ""
+          )}
           {Section === "Videos" &&
           myVideos &&
           myVideos.message !== "USER DOESN'T EXIST" ? (
@@ -469,16 +574,8 @@ function OtherChannel() {
         </div>
       ) : (
         <div className="main-trending-section">
-          <div className="spin2" style={{ height: "auto" }}>
-            <ReactLoading
-              type={"spin"}
-              color={"white"}
-              height={50}
-              width={50}
-            />
-            <p style={{ marginTop: "15px" }}>
-              Fetching the data, Hang tight...{" "}
-            </p>
+          <div className="spin23" style={{ top: "200px" }}>
+            <span className="loader"></span>
           </div>
         </div>
       )}
