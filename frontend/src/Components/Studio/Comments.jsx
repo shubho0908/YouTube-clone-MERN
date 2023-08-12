@@ -734,7 +734,7 @@ function Comments() {
             )}
 
             {loading === true && AllComments && AllComments.length === 0 && (
-              <div className="user-comment-data2" style={{top:"30px"}}>
+              <div className="user-comment-data2" style={{top:"60px"}}>
                 <div className="no-comment-found">
                   <div className="spin23">
                     <span className="loader2"></span>

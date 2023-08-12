@@ -7,14 +7,16 @@ import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 function LeftPanel2() {
   const { id } = useParams();
-  const token = localStorage.getItem("userToken");
   const [videodata, setVideoData] = useState();
   const [menuClicked, setMenuClicked] = useState(false);
   const VideoEditSection = localStorage.getItem("Video-Edit Section");
   const location = useLocation();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const currentUrl = location.pathname;
@@ -41,6 +43,12 @@ function LeftPanel2() {
 
     localStorage.setItem("Video-Edit Section", selected);
   }, [location, id]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 2800);
+  }, []);
 
   useEffect(() => {
     const handleMenuButtonClick = () => {
@@ -88,8 +96,7 @@ function LeftPanel2() {
           onClick={() => {
             if (window.location.href.includes(`/studio/video/edit/${id}`)) {
               window.location.href = "/studio/video";
-            }
-            else{
+            } else {
               window.location.href = "/studio/comments";
             }
           }}
@@ -103,9 +110,31 @@ function LeftPanel2() {
             )}
           </div>
         </div>
+        {/* START HERE  */}
+        <SkeletonTheme baseColor="#353535" highlightColor="#444">
+          <div
+            className="mid-panel"
+            style={
+              loading === true ? { display: "block" } : { display: "none" }
+            }
+          >
+            <div className="redirect-video">
+              <Skeleton count={1} width={220} height={124} />
+            </div>
+            <div className="thisvideo-mg-data2" style={{ marginTop: "25px" }}>
+              <Skeleton count={1} width={220} height={17} />
+              <Skeleton count={1} width={150} height={13} />
+            </div>
+          </div>
+        </SkeletonTheme>
+        {/* END HERE  */}
         <div
           className="mid-panel"
-          style={videodata ? { display: "block" } : { display: "none" }}
+          style={
+            videodata && loading === false
+              ? { visibility: "visible", display: "block" }
+              : { visibility: "hidden", display: "none" }
+          }
         >
           <div
             className="redirect-video"
@@ -188,7 +217,9 @@ function LeftPanel2() {
           >
             <ChatOutlinedIcon
               className={
-                VideoEditSection === "Video-Comments" ? "studio-icon2" : "studio-icon"
+                VideoEditSection === "Video-Comments"
+                  ? "studio-icon2"
+                  : "studio-icon"
               }
               fontSize="medium"
               style={{ color: "#A9A9A9", paddingLeft: "25px !important" }}

@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import jwtDecode from "jwt-decode";
 import Basic from "./Basic";
 
+
 function Customization() {
   const [currentTab, setCurrentTab] = useState("branding");
   const [email, setEmail] = useState();
@@ -17,6 +18,8 @@ function Customization() {
       setEmail(jwtDecode(token).email);
     }
   }, [token]);
+
+
 
   useEffect(() => {
     const handleClick = () => {

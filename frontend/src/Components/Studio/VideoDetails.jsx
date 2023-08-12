@@ -31,6 +31,7 @@ function VideoDetails() {
   const [updatePrivacy, setprivacy] = useState(null);
   const [loading, setLoading] = useState(false);
   const [opacity, setOpacity] = useState(1);
+  const [fakeLoading, setFakeLoading] = useState(true);
 
   useEffect(() => {
     const GetVideoData = async () => {
@@ -52,6 +53,12 @@ function VideoDetails() {
 
     GetVideoData();
   }, [id]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setFakeLoading(false);
+    }, 3000);
+  }, []);
 
   useEffect(() => {
     if (loading === true) {
@@ -303,24 +310,37 @@ function VideoDetails() {
                     onChange={handleThumbnailUpload}
                   />
                   <div className="currentthumbnail-data">
-                    <img
-                      src={videodata && videodata.thumbnailURL}
-                      alt="thumbnail"
-                      className="currnt-tbimg"
-                      style={
-                        videodata && thumbnailSelected === false
-                          ? {
-                              border: "2.2px solid white",
-                              borderRadius: "3px",
-                              opacity: "1",
-                            }
-                          : { border: "none", opacity: ".4" }
-                      }
-                      onClick={() => {
-                        setThumbnailSelected(false);
-                        setFinalThumbnail(videodata.thumbnailURL);
-                      }}
-                    />
+                    {fakeLoading === true ? (
+                      <div
+                        className="spin32"
+                        style={{
+                          position: "relative",
+                          left: "50px",
+                          top: "10px",
+                        }}
+                      >
+                        <span className="loader2"></span>
+                      </div>
+                    ) : (
+                      <img
+                        src={videodata && videodata.thumbnailURL}
+                        alt="thumbnail"
+                        className="currnt-tbimg"
+                        style={
+                          videodata && thumbnailSelected === false
+                            ? {
+                                border: "2.2px solid white",
+                                borderRadius: "3px",
+                                opacity: "1",
+                              }
+                            : { border: "none", opacity: ".4" }
+                        }
+                        onClick={() => {
+                          setThumbnailSelected(false);
+                          setFinalThumbnail(videodata.thumbnailURL);
+                        }}
+                      />
+                    )}
                     <div
                       className="img-optionss"
                       style={

@@ -4,6 +4,8 @@ import defaultimg from "../../img/avatar.png";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import ReactLoading from "react-loading";
 import { storage } from "../../Firebase";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 function Branding() {
   const [email, setEmail] = useState("");
@@ -16,10 +18,17 @@ function Branding() {
   const [BannerChanges, setBannerChanges] = useState(false);
   const [channelID, setChannelID] = useState();
   const [loading, setLoading] = useState(false);
+  const [fakeLoading, setFakeLoading] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem("userToken");
     setEmail(jwtDecode(token).email);
+  }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setFakeLoading(false);
+    }, 2800);
   }, []);
 
   useEffect(() => {
@@ -220,7 +229,7 @@ function Branding() {
       const data = {
         profileURL: profileURL,
         coverURL: coverURL,
-        channelid: channelID
+        channelid: channelID,
       };
 
       const response = await fetch(
@@ -281,7 +290,33 @@ function Branding() {
               (Please refresh the page if the images don’t load properly.)
             </p>
             <div className="picture-section">
-              <div className="pic-div">
+              <SkeletonTheme baseColor="#353535" highlightColor="#444">
+                <div
+                  className="pic-div"
+                  style={
+                    fakeLoading === true
+                      ? { display: "flex" }
+                      : { display: "none" }
+                  }
+                >
+                  <Skeleton
+                    count={1}
+                    width={140}
+                    height={140}
+                    style={{
+                      borderRadius: "100%",
+                    }}
+                  />
+                </div>
+              </SkeletonTheme>
+              <div
+                className="pic-div"
+                style={
+                  fakeLoading === false
+                    ? { visibility: "visible", display: "flex" }
+                    : { visibility: "hidden", display: "none" }
+                }
+              >
                 <img
                   src={previewProfile}
                   alt="profile"
@@ -314,7 +349,26 @@ function Branding() {
               (Please refresh the page if the images don’t load properly.)
             </p>
             <div className="banner-section">
-              <div className="pic-div">
+              <SkeletonTheme baseColor="#353535" highlightColor="#444">
+                <div
+                  className="pic-div"
+                  style={
+                    fakeLoading === true
+                      ? { display: "flex" }
+                      : { display: "none" }
+                  }
+                >
+                  <Skeleton count={1} width={290} height={160} />
+                </div>
+              </SkeletonTheme>
+              <div
+                className="pic-div"
+                style={
+                  fakeLoading === false
+                    ? { visibility: "visible", display: "flex" }
+                    : { visibility: "hidden", display: "none" }
+                }
+              >
                 {previewBanner ? (
                   <img
                     src={previewBanner}

@@ -29,8 +29,6 @@
   border-right: 1px solid rgba(128, 128, 128, 0.333);
   text-align: center;
   z-index: 2;
-  animation: FADEINN 1s ease;
-
 }
 
 .current-video-thumbnail {
@@ -73,6 +71,13 @@
   left: 25px;
 }
 
+.thisvideo-mg-data2 {
+  margin-top: 25px;
+  text-align: left;
+  position: relative;
+  left: 25px;
+}
+
 .watch-video {
   position: absolute;
   left: 120px;
@@ -86,7 +91,7 @@
   transition: all 0.2s ease;
 }
 
-.redirect-video:hover .current-video-thumbnail{
+.redirect-video:hover .current-video-thumbnail {
   opacity: 0.2;
 }
 
@@ -98,16 +103,15 @@
   opacity: 1;
 }
 
-.first-panel1{
+.first-panel1 {
   padding-top: 13px;
   padding-bottom: 13px;
   position: relative;
   bottom: 15px;
-  transition: all .15s ease;
+  transition: all 0.15s ease;
 }
 
-.first-panel1:hover{
+.first-panel1:hover {
   cursor: pointer;
   background-color: #1f1f1f;
-  
 }

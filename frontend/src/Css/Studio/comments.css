@@ -7,6 +7,11 @@
   left: 310px;
 }
 
+.video-all-comments-section{
+  animation: FADEINN 1s ease;
+
+}
+
 .channel-comments-top > p:nth-child(1) {
   color: white;
   font-family: "Open Sans", sans-serif;
@@ -87,7 +92,7 @@
 
 .channel-comments-list {
   position: absolute;
-  top: 268px;
+  top: 260px;
   width: -webkit-fill-available;
   left: 270px;
 }

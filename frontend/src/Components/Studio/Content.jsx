@@ -239,7 +239,15 @@ function Content() {
                 {sortedUserVideos.map((element, index) => {
                   const uploaded = new Date(element.uploaded_date);
                   return (
-                    <tr key={index} className="table-roww">
+                    <tr
+                      key={index}
+                      className="table-roww"
+                      style={
+                        loading === true
+                          ? { pointerEvents: "none" }
+                          : { pointerEvents: "auto" }
+                      }
+                    >
                       <td className="video-cell">
                         <SkeletonTheme
                           baseColor="#353535"
