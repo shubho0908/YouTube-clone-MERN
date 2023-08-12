@@ -260,15 +260,17 @@ Channel.post("/subscribe/:channelID/:email/:email2", async (req, res) => {
         channelID: youtubeChannelID.toString(),
       });
       user2.channelData[0].subscribers += 1;
+      res.json("Subscribed")
     } else {
       user.subscribedChannels.splice(existingChannelIndex, 1);
       user2.channelData[0].subscribers -= 1;
+      res.json("Unsubscribed")
+
     }
 
     await user.save();
     await user2.save();
 
-    res.json("SUBSCRIBED CHANNEL");
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

@@ -48,17 +48,18 @@ Likes.post("/like/:id/:email/:email2", async (req, res) => {
         likedVideoID: likedData._id,
       });
       video.VideoData[videoIndex].likes += 1;
+      res.json("Liked");
     } else {
       user.likedVideos = user.likedVideos.filter(
         (likedVideo) => likedVideo.likedVideoID !== likedData._id.toString()
       );
       video.VideoData[videoIndex].likes -= 1;
+      res.json("Disliked");
+
     }
 
     await user.save();
     await video.save();
-
-    res.json("SUCCESS")
   } catch (error) {
     res.json(error.message);
   }
@@ -92,10 +93,10 @@ Likes.get("/getlike/:id", async (req, res) => {
 Likes.get("/getuserlikes/:id/:email", async (req, res) => {
   try {
     const { id } = req.params;
-    const email = req.params.email
+    const email = req.params.email;
 
     const video = await videodata.findOne({ "VideoData._id": id });
-    const user = await userData.findOne({email});
+    const user = await userData.findOne({ email });
 
     if (!video) {
       return res.status(404).json({ error: "Video not found" });
@@ -170,6 +171,5 @@ Likes.post("/dislikevideo/:id/:email", async (req, res) => {
     res.json(error.message);
   }
 });
-
 
 module.exports = Likes;

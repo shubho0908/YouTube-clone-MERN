@@ -68,7 +68,8 @@ function ChannelPlaylists(prop) {
 
   if (
     PlaylistData === "No playlists available..." ||
-    (PlaylistData.length === 1 && prop.newmail !== email &&
+    (PlaylistData.length === 1 &&
+      prop.newmail !== email &&
       PlaylistData[0].playlist_privacy === "Private")
   ) {
     return (
@@ -154,66 +155,90 @@ function ChannelPlaylists(prop) {
                   playlistColors[index] || playlistColors[0];
 
                 return (
-                  <div
-                    className="created-all-playlistss"
-                    key={index}
-                    style={
-                      prop.newmail !== email &&
-                      element.playlist_privacy === "Private"
-                        ? { display: "none" }
-                        : { display: "block" }
-                    }
-                  >
-                    <img
-                      src={
-                        element.playlist_videos[0] !== undefined
-                          ? element.playlist_videos[0].thumbnail
-                          : deleteIMG
+                  <>
+                    <div
+                      className="created-all-playlistss"
+                      key={index}
+                      style={
+                        prop.newmail !== email &&
+                        element.playlist_privacy === "Private"
+                          ? { display: "none" }
+                          : { display: "block" }
                       }
-                      alt=""
-                      className="playlist-thumbnail"
-                      onClick={() => {
-                        navigate(
-                          `/video/${element.playlist_videos[0].videoID}`
-                        );
-                      }}
-                    />
-                    <div
-                      className="playy-all-btn"
-                      onClick={() => {
-                        navigate(
-                          `/video/${element.playlist_videos[0].videoID}`
-                        );
-                      }}
                     >
-                      <PlayArrowIcon
-                        fontSize="medium"
-                        style={{ color: "white" }}
+                      <img
+                        src={
+                          element.playlist_videos[0] !== undefined
+                            ? element.playlist_videos[0].thumbnail
+                            : deleteIMG
+                        }
+                        alt=""
+                        className="playlist-thumbnail"
+                        onClick={() => {
+                          navigate(
+                            `/video/${element.playlist_videos[0].videoID}`
+                          );
+                        }}
                       />
-                      <p>PLAY ALL</p>
+                      <div
+                        className="playy-all-btn"
+                        onClick={() => {
+                          navigate(
+                            `/video/${element.playlist_videos[0].videoID}`
+                          );
+                        }}
+                      >
+                        <PlayArrowIcon
+                          fontSize="medium"
+                          style={{ color: "white" }}
+                        />
+                        <p>PLAY ALL</p>
+                      </div>
+                      <div
+                        className="playlist-element"
+                        style={{ backgroundColor }}
+                        onClick={() => {
+                          navigate(
+                            `/video/${element.playlist_videos[0].videoID}`
+                          );
+                        }}
+                      >
+                        <PlaylistPlayIcon
+                          fontSize="medium"
+                          style={{ color: "white" }}
+                        />
+                        <p>{element.playlist_videos.length} videos</p>
+                      </div>
+                      <div className="playlistt-details">
+                        <p>{element.playlist_name}</p>
+                        <p onClick={() => navigate(`/playlist/${element._id}`)}>
+                          View full playlist
+                        </p>
+                      </div>
                     </div>
+
+                    {/* If Private  */}
+
                     <div
-                      className="playlist-element"
-                      style={{ backgroundColor }}
-                      onClick={() => {
-                        navigate(
-                          `/video/${element.playlist_videos[0].videoID}`
-                        );
-                      }}
+                      className="created-all-playlistss"
+                      key={index}
+                      style={
+                        prop.newmail !== email &&
+                        element.playlist_privacy === "Private"
+                          ? { display: "block" }
+                          : { display: "none" }
+                      }
                     >
-                      <PlaylistPlayIcon
-                        fontSize="medium"
-                        style={{ color: "white" }}
-                      />
-                      <p>{element.playlist_videos.length} videos</p>
+                      <div className="no-playlists">
+                        <img
+                          src={nothing}
+                          alt="no results"
+                          className="nothing-found"
+                        />
+                        <p className="no-results">No playlists found!</p>
+                      </div>
                     </div>
-                    <div className="playlistt-details">
-                      <p>{element.playlist_name}</p>
-                      <p onClick={() => navigate(`/playlist/${element._id}`)}>
-                        View full playlist
-                      </p>
-                    </div>
-                  </div>
+                  </>
                 );
               })}
           </div>

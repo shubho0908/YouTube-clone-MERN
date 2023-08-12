@@ -400,7 +400,7 @@
   top: 320px;
   display: flex;
   justify-content: space-between;
-    width: -webkit-fill-available;
+  width: -webkit-fill-available;
 }
 
 .seperate-two {
@@ -818,7 +818,7 @@
   height: 48px;
   border-radius: 50%;
   display: inline-block;
-  border-top: 3px solid #FFF;
+  border-top: 3px solid #fff;
   border-right: 3px solid transparent;
   box-sizing: border-box;
   animation: rotation 1s linear infinite;
@@ -831,4 +831,16 @@
   100% {
     transform: rotate(360deg);
   }
-} 
+}
+
+.playlistt-details > p:nth-child(2) {
+  transition: all 0.15s ease;
+}
+
+.playlistt-details > p:nth-child(2):hover {
+  color: white;
+}
+
+.left-about-section {
+  width: -webkit-fill-available;
+}

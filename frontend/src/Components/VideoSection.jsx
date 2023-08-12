@@ -24,7 +24,6 @@ import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import jwtDecode from "jwt-decode";
-import { useNavigate } from "react-router-dom";
 import Signin from "./Signin";
 import Signup from "./Signup";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
@@ -57,8 +56,6 @@ function VideoSection() {
   const [recommendLoading, setRecommendLoading] = useState(true);
   const token = localStorage.getItem("userToken");
   const [likeLoading, setLikeLoading] = useState(false);
-
-  const navigate = useNavigate();
 
   //EXTRAS
 
@@ -109,6 +106,30 @@ function VideoSection() {
 
   const watchLaterNotify = () =>
     toast.success("Video saved to watch later!", {
+      position: "bottom-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+
+  const LikedNotify = () =>
+    toast.success("Video liked!", {
+      position: "bottom-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+
+  const SubscribeNotify = () =>
+    toast.success("Channel subscribed!", {
       position: "bottom-center",
       autoClose: 2000,
       hideProgressBar: false,
@@ -673,9 +694,12 @@ function VideoSection() {
       );
       const data = await response.json();
       console.log(data);
-      if (data === "SUCCESS") {
+      if (data === "Liked") {
+        LikedNotify();
         setLikeLoading(false);
-      } else if (data !== "SUCCESS") {
+      } else if (data === "Liked" || data === "Disliked") {
+        setLikeLoading(false);
+      } else if (data !== "Liked" || data !== "Disliked") {
         setLikeLoading(true);
       }
     } catch (error) {
@@ -804,7 +828,10 @@ function VideoSection() {
           },
         }
       );
-      await response.json();
+      const data = await response.json();
+      if (data === "Subscribed") {
+        SubscribeNotify();
+      }
     } catch (error) {
       //console.log(error.message);
     }
@@ -961,8 +988,7 @@ function VideoSection() {
           <p
             className="trending-tag"
             onClick={() => {
-              navigate("/trending");
-              window.location.reload();
+              window.location.href = "/trending";
             }}
           >
             {checkTrending === true ? "#TRENDING" : ""}
@@ -982,7 +1008,7 @@ function VideoSection() {
                     style={{ fontSize: "17px", cursor: "pointer" }}
                     onClick={() => {
                       if (channelID !== undefined) {
-                        navigate(`/channel/${channelID}`);
+                        window.location.href = `/channel/${channelID}`;
                       }
                     }}
                   >
@@ -1563,12 +1589,10 @@ function VideoSection() {
                       if (token) {
                         updateViews(VideoID[index]);
                         setTimeout(() => {
-                          navigate(`/video/${VideoID[index]}`);
-                          window.location.reload();
+                          window.location.href = `/video/${VideoID[index]}`;
                         }, 400);
                       } else {
-                        navigate(`/video/${VideoID[index]}`);
-                        window.location.reload();
+                        window.location.href = `/video/${VideoID[index]}`;
                       }
                     }}
                   >
@@ -1679,12 +1703,10 @@ function VideoSection() {
                       if (token) {
                         updateViews(element._id);
                         setTimeout(() => {
-                          navigate(`/video/${element._id}`);
-                          window.location.reload();
+                          window.location.href = `/video/${element._id}`;
                         }, 400);
                       } else {
-                        navigate(`/video/${element._id}`);
-                        window.location.reload();
+                        window.location.href = `/video/${element._id}`;
                       }
                     }}
                   >

@@ -19,6 +19,8 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
 import "../Css/likevideos.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Playlists() {
   const { id } = useParams();
@@ -38,6 +40,34 @@ function Playlists() {
   const [isSaved, setIsSaved] = useState(false);
   const navigate = useNavigate();
   const token = localStorage.getItem("userToken");
+
+  //TOAST FUNCTIONS
+
+  const savePlaylistNotify = () =>
+    toast.success("Playlist added to library!", {
+      position: "bottom-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+
+  const RemovePlaylistNotify = () =>
+    toast.success("Playlist removed from library!", {
+      position: "bottom-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+
+  //USE EFFECTS
 
   useEffect(() => {
     if (token) {
@@ -220,7 +250,12 @@ function Playlists() {
           },
         }
       );
-      await response.json();
+      const data = await response.json();
+      if (data === "Saved") {
+        savePlaylistNotify();
+      } else if (data === "Removed") {
+        RemovePlaylistNotify();
+      }
     } catch (error) {
       console.log(error.message);
     }
@@ -388,6 +423,7 @@ function Playlists() {
                         className="save-edit"
                         onClick={() => {
                           saveEditData();
+
                           setTimeout(() => {
                             window.location.reload();
                           }, 300);
@@ -572,10 +608,10 @@ function Playlists() {
                     if (token) {
                       updateViews(playlistsVideos[0].videoID);
                       setTimeout(() => {
-                       window.location.href = `/video/${playlistsVideos[0].videoID}`
+                        window.location.href = `/video/${playlistsVideos[0].videoID}`;
                       }, 400);
                     } else {
-                      window.location.href = `/video/${playlistsVideos[0].videoID}`
+                      window.location.href = `/video/${playlistsVideos[0].videoID}`;
                     }
                   }}
                 >
