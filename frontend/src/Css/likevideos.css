@@ -168,6 +168,8 @@ body {
 }
 
 .playlist-btns {
+  display: flex;
+  align-items: center;
   margin-top: 20px;
 }
 
@@ -187,9 +189,12 @@ body {
   border-radius: 100%;
 }
 
-.delete-playlist,
-.share-playlist {
+.delete-playlist {
   margin-left: 15px;
+}
+
+.savethis-playlist {
+  margin-right: 15px;
 }
 
 .share-playlist:hover,

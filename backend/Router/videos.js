@@ -777,12 +777,83 @@ Videos.post("/saveplaylistprivacy/:playlistID", async (req, res) => {
   }
 });
 
-Videos.post("/addotherplaylist/:playlistID", async (req, res) => {
+Videos.post("/addotherplaylist/:playlistID/:email", async (req, res) => {
   try {
-    const { playlistID } = req.params;
-    const {playlist_name} = req.body
+    const { playlistID, email } = req.params;
+    const user = await userData.findOne({ email });
 
-    res.json(playlist_name)
+    if (!user) {
+      return res.status(404).json({ error: "User doesn't exist" });
+    }
+
+    const checkPlaylistAvailability = user.savedPlaylists.find(
+      (item) => item.playlistID.toString() === playlistID.toString()
+    );
+
+    if (!checkPlaylistAvailability) {
+      user.savedPlaylists.push({ playlistID: playlistID });
+      await user.save();
+      res.json("Saved");
+    } else {
+      user.savedPlaylists = user.savedPlaylists.filter(
+        (item) => item.playlistID !== playlistID.toString()
+      );
+      await user.save();
+
+      res.json("Removed");
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+Videos.get("/getsavedplaylist/:playlistID/:email", async (req, res) => {
+  try {
+    const { playlistID, email } = req.params;
+    const user = await userData.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ error: "User doesn't exist" });
+    }
+
+    const checkPlaylistAvailability = user.savedPlaylists.find(
+      (item) => item.playlistID.toString() === playlistID.toString()
+    );
+    if (!checkPlaylistAvailability) {
+      res.json("Not Found");
+    } else {
+      res.json("Found");
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+Videos.get("/getsavedplaylist/:email", async (req, res) => {
+  try {
+    const email = req.params.email;
+    const user = await userData.findOne({ email });
+    const AllUsers = await userData.find();
+
+    if (!user) {
+      return res.status(404).json({ error: "User doesn't exist" });
+    }
+
+    const savedPlaylistIDs = user.savedPlaylists.map(
+      (playlist) => playlist.playlistID
+    );
+
+    const matchingPlaylists = [];
+
+    // Iterate through all users and their playlists
+    AllUsers.forEach((currentUser) => {
+      const playlistsForUser = currentUser.Playlists.filter((playlist) =>
+        savedPlaylistIDs.includes(playlist._id.toString())
+      );
+      matchingPlaylists.push(...playlistsForUser);
+    });
+
+    res.json(matchingPlaylists);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

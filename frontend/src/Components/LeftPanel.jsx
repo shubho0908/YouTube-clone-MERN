@@ -31,6 +31,7 @@ function LeftPanel() {
   const token = localStorage.getItem("userToken");
   const [isSwitch, setisSwitched] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [savedPlaylist, setSavedPlaylist] = useState([]);
 
   useEffect(() => {
     if (token) {
@@ -119,6 +120,26 @@ function LeftPanel() {
   }, [Email]);
 
   useEffect(() => {
+    const GetSavedPlaylist = async () => {
+      try {
+        if (Email !== undefined) {
+          const response = await fetch(
+            `http://localhost:3000/getsavedplaylist/${Email}`
+          );
+          const matchingPlaylists = await response.json();
+          setSavedPlaylist(matchingPlaylists);
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
+    const interval = setInterval(GetSavedPlaylist, 250);
+
+    return () => clearInterval(interval);
+  }, [Email]);
+
+  useEffect(() => {
     setTimeout(() => {
       setLoading(false);
     }, 2500);
@@ -172,7 +193,7 @@ function LeftPanel() {
             onClick={() => {
               if (token) {
                 localStorage.setItem("selected", "subscription");
-                window.location.href = "/subscriptions"
+                window.location.href = "/subscriptions";
               } else {
                 setisbtnClicked(true);
                 document.body.classList.add("bg-css");
@@ -336,6 +357,36 @@ function LeftPanel() {
               PlaylistData !== "No playlists available..." &&
               PlaylistData.length > 0 &&
               PlaylistData.map((element, index) => {
+                return (
+                  <div
+                    className="my-playlist-data"
+                    key={index}
+                    onClick={() => {
+                      navigate(`/playlist/${element._id}`);
+                      window.location.reload();
+                    }}
+                  >
+                    <PlaylistPlayOutlinedIcon
+                      fontSize="medium"
+                      style={{ color: "white" }}
+                    />
+                    <Tooltip
+                      TransitionComponent={Zoom}
+                      title={`${element.playlist_name}`}
+                      placement="right"
+                    >
+                      <p>
+                        {element.playlist_name.length <= 8
+                          ? element.playlist_name
+                          : `${element.playlist_name.slice(0, 8)}..`}
+                      </p>
+                    </Tooltip>
+                  </div>
+                );
+              })}
+            {savedPlaylist &&
+              savedPlaylist.length > 0 &&
+              savedPlaylist.map((element, index) => {
                 return (
                   <div
                     className="my-playlist-data"

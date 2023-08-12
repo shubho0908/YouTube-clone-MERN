@@ -11,6 +11,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import ReplyOutlinedIcon from "@mui/icons-material/ReplyOutlined";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import PlaylistAddOutlinedIcon from "@mui/icons-material/PlaylistAddOutlined";
+import PlaylistAddCheckOutlinedIcon from "@mui/icons-material/PlaylistAddCheckOutlined";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import jwtDecode from "jwt-decode";
 import PublicOutlinedIcon from "@mui/icons-material/PublicOutlined";
@@ -34,6 +35,7 @@ function Playlists() {
   const [privacyClicked, setprivacyClicked] = useState(false);
   const [channelID, setChannelID] = useState();
   const [PlaylistName, setPlaylistName] = useState("");
+  const [isSaved, setIsSaved] = useState(false);
   const navigate = useNavigate();
   const token = localStorage.getItem("userToken");
 
@@ -120,6 +122,29 @@ function Playlists() {
     return () => clearInterval(interval);
   });
 
+  useEffect(() => {
+    const GetSavedPlaylistData = async () => {
+      try {
+        if (id !== undefined && Email !== undefined) {
+          const response = await fetch(
+            `http://localhost:3000/getsavedplaylist/${id}/${Email}`
+          );
+          const data = await response.json();
+          if (data === "Found") {
+            setIsSaved(true);
+          } else {
+            setIsSaved(false);
+          }
+        }
+      } catch (error) {
+        // console.log("Error fetching user data:", error.message);
+      }
+    };
+    const interval = setInterval(GetSavedPlaylistData, 250);
+
+    return () => clearInterval(interval);
+  }, [id, Email]);
+
   //POST REQUEST
 
   const saveEditData = async () => {
@@ -173,6 +198,23 @@ function Playlists() {
         {
           method: "POST",
           body: JSON.stringify({ privacy }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      await response.json();
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  const SaveOtherPlaylist = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/addotherplaylist/${id}/${Email}`,
+        {
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
@@ -453,17 +495,41 @@ function Playlists() {
                   </div>
 
                   <div className="playlist-btns">
-                    <Tooltip
-                      TransitionComponent={Zoom}
-                      title="Add to Library"
-                      placement="bottom"
-                    >
-                      <PlaylistAddOutlinedIcon
-                        className="savethis-playlist"
-                        fontSize="medium"
-                        style={{ color: "white" }}
-                      />
-                    </Tooltip>
+                    {isSaved === false ? (
+                      <Tooltip
+                        TransitionComponent={Zoom}
+                        title="Add to Library"
+                        placement="bottom"
+                      >
+                        <PlaylistAddOutlinedIcon
+                          className="savethis-playlist"
+                          fontSize="medium"
+                          style={
+                            playlistDetails.owner_email === Email
+                              ? { display: "none" }
+                              : { display: "block", color: "white" }
+                          }
+                          onClick={SaveOtherPlaylist}
+                        />
+                      </Tooltip>
+                    ) : (
+                      <Tooltip
+                        TransitionComponent={Zoom}
+                        title="Add to Library"
+                        placement="bottom"
+                      >
+                        <PlaylistAddCheckOutlinedIcon
+                          className="savethis-playlist"
+                          fontSize="medium"
+                          style={
+                            playlistDetails.owner_email === Email
+                              ? { display: "none" }
+                              : { display: "block", color: "white" }
+                          }
+                          onClick={SaveOtherPlaylist}
+                        />
+                      </Tooltip>
+                    )}
                     <Tooltip
                       TransitionComponent={Zoom}
                       title="Share"
