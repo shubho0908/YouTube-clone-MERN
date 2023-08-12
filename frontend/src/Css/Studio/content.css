@@ -437,3 +437,13 @@
   z-index: 5; /* Set a lower z-index than the auth-popup */
   animation: Fade2 0.25s ease-out forwards;
 }
+
+.no-skeleton{
+  display: flex;
+  align-items: center;
+}
+
+.no-skeleton2{
+  display: flex;
+  flex-direction: column;
+}

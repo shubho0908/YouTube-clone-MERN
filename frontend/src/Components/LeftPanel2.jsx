@@ -7,6 +7,8 @@ import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
 import AutoFixHighOutlinedIcon from "@mui/icons-material/AutoFixHighOutlined";
 import { useLocation } from "react-router-dom";
 import avatar from "../img/avatar.png";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 function LeftPanel2() {
   const [email, setEmail] = useState("");
@@ -16,6 +18,7 @@ function LeftPanel2() {
   const [menuClicked, setMenuClicked] = useState(false);
   const StudioSection = localStorage.getItem("Studio-Section");
   const location = useLocation();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const currentUrl = location.pathname;
@@ -42,6 +45,12 @@ function LeftPanel2() {
 
     localStorage.setItem("Studio-Section", selected);
   }, [location]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 2800);
+  }, []);
 
   useEffect(() => {
     const handleMenuButtonClick = () => {
@@ -91,7 +100,38 @@ function LeftPanel2() {
         className="main-section2"
         style={menuClicked === true ? { display: "none" } : { display: "flex" }}
       >
-        <div className="first-panel">
+        <SkeletonTheme baseColor="#353535" highlightColor="#444">
+          <div
+            className="first-panel"
+            style={
+              loading === true ? { display: "block" } : { display: "none" }
+            }
+          >
+            <Skeleton
+              count={1}
+              width={110}
+              height={110}
+              style={{ borderRadius: "100%" }}
+            />
+            <div className="about-channel">
+              <p className="your-channel">Your Channel</p>
+              <Skeleton
+                count={1}
+                width={150}
+                height={20}
+                style={{ borderRadius: "4px" }}
+              />
+            </div>
+          </div>
+        </SkeletonTheme>
+        <div
+          className="first-panel"
+          style={
+            loading === false
+              ? { visibility: "visible", display: "block" }
+              : { visibility: "hidden", display: "none" }
+          }
+        >
           <img
             src={profileIMG ? profileIMG : avatar}
             alt=""

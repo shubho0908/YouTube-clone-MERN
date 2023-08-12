@@ -142,7 +142,8 @@ function Dashboard() {
                         myVideos.length > 0 &&
                         myVideos[0].thumbnailURL
                       }
-                      alt=""
+                      alt="thumbnail"
+                      style={{width:"360px"}}
                     />
                     <div className="video-performance-icons">
                       <div className="left-performed-icons">

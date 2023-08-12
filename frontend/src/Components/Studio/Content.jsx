@@ -19,6 +19,8 @@ import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import noImage from "../../img/no-video2.png";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 function Content() {
   const [userVideos, setUserVideos] = useState([]);
@@ -31,10 +33,17 @@ function Content() {
   const [DeleteVideoData, setDeleteVideoData] = useState();
   const [boxclicked, setBoxClicked] = useState(false);
   const videoUrl = "http://localhost:5173/video";
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem("userToken");
     setEmail(jwtDecode(token).email);
+  }, []);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 2800);
   }, []);
 
   useEffect(() => {
@@ -232,41 +241,125 @@ function Content() {
                   return (
                     <tr key={index} className="table-roww">
                       <td className="video-cell">
-                        <img
-                          src={element.thumbnailURL}
-                          alt="thumbnail"
-                          className="studio-video-thumbnail"
-                          onClick={() => {
-                            window.location.href = `/studio/video/edit/${element._id}`;
-                          }}
-                        />
-                        <p className="video-left-duration">
-                          {Math.floor(element.videoLength / 60) +
-                            ":" +
-                            (Math.round(element.videoLength % 60) < 10
-                              ? "0" + Math.round(element.videoLength % 60)
-                              : Math.round(element.videoLength % 60))}
-                        </p>
-                        <div className="studio-video-details">
-                          <p
-                            className="studio-video-title"
+                        <SkeletonTheme
+                          baseColor="#353535"
+                          highlightColor="#444"
+                        >
+                          <div
+                            className="no-skeleton"
+                            style={
+                              loading === true
+                                ? { display: "flex" }
+                                : { display: "none" }
+                            }
+                          >
+                            <Skeleton
+                              count={1}
+                              width={150}
+                              height={84}
+                              style={{ marginLeft: "30px" }}
+                            />
+                          </div>
+                        </SkeletonTheme>
+                        <div
+                          className="no-skeleton"
+                          style={
+                            loading === true
+                              ? { visibility: "hidden", display: "none" }
+                              : { visibility: "visible", display: "flex" }
+                          }
+                        >
+                          <img
+                            src={element.thumbnailURL}
+                            alt="thumbnail"
+                            className="studio-video-thumbnail"
                             onClick={() => {
                               window.location.href = `/studio/video/edit/${element._id}`;
                             }}
-                          >
-                            {element.Title.length <= 40
-                              ? element.Title
-                              : `${element.Title.slice(0, 40)}...`}
+                          />
+                          <p className="video-left-duration">
+                            {Math.floor(element.videoLength / 60) +
+                              ":" +
+                              (Math.round(element.videoLength % 60) < 10
+                                ? "0" + Math.round(element.videoLength % 60)
+                                : Math.round(element.videoLength % 60))}
                           </p>
-                          {element.Description ? (
-                            <p className="studio-video-desc">
-                              {element.Description.length <= 85
-                                ? element.Description
-                                : `${element.Description.slice(0, 85)}...`}
+                        </div>
+                        <div className="studio-video-details">
+                          <SkeletonTheme
+                            baseColor="#353535"
+                            highlightColor="#444"
+                          >
+                            <div
+                              className="no-skeleton2"
+                              style={
+                                loading === true
+                                  ? { display: "flex" }
+                                  : { display: "none" }
+                              }
+                            >
+                              <Skeleton
+                                count={1}
+                                width={250}
+                                height={14}
+                                style={{
+                                  borderRadius: "3px",
+                                  position: "relative",
+                                  left: "25px",
+                                }}
+                              />
+                              <Skeleton
+                                count={1}
+                                width={180}
+                                height={10}
+                                style={{
+                                  borderRadius: "3px",
+                                  position: "relative",
+                                  top: "15px",
+                                  left: "25px",
+                                }}
+                              />
+                              <Skeleton
+                                count={1}
+                                width={140}
+                                height={10}
+                                style={{
+                                  borderRadius: "3px",
+                                  position: "relative",
+                                  top: "18px",
+                                  left: "25px",
+                                }}
+                              />
+                            </div>
+                          </SkeletonTheme>
+                          <div
+                            className="no-skeleton2"
+                            style={
+                              loading === true
+                                ? { visibility: "hidden", display: "none" }
+                                : { visibility: "visible", display: "flex" }
+                            }
+                          >
+                            <p
+                              className="studio-video-title"
+                              onClick={() => {
+                                window.location.href = `/studio/video/edit/${element._id}`;
+                              }}
+                            >
+                              {element.Title.length <= 40
+                                ? element.Title
+                                : `${element.Title.slice(0, 40)}...`}
                             </p>
-                          ) : (
-                            <p>Add description</p>
-                          )}
+                            {element.Description ? (
+                              <p className="studio-video-desc">
+                                {element.Description.length <= 85
+                                  ? element.Description
+                                  : `${element.Description.slice(0, 85)}...`}
+                              </p>
+                            ) : (
+                              <p>Add description</p>
+                            )}
+                          </div>
                           <div className="video-editable-section">
                             <Tooltip
                               TransitionComponent={Zoom}
@@ -291,7 +384,7 @@ function Content() {
                                 className="video-edit-icons"
                                 fontSize="medium"
                                 style={{ color: "#aaa" }}
-                                onClick={()=>{
+                                onClick={() => {
                                   window.location.href = `/studio/video/comments/${element._id}`;
                                 }}
                               />

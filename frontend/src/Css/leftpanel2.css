@@ -12,8 +12,6 @@
   text-align: center;
   line-height: 30px;
   z-index: 2;
-  animation: FADEINN 1s ease;
-
 }
 
 .profile_img {
@@ -31,7 +29,6 @@
   font-size: 14px;
   color: #a9a9a9;
 }
-
 
 .panel {
   cursor: pointer;
