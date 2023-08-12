@@ -31,6 +31,8 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import PublicOutlinedIcon from "@mui/icons-material/PublicOutlined";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function VideoSection() {
   const { id } = useParams();
@@ -90,6 +92,34 @@ function VideoSection() {
 
   //Signup user Profile Pic
   const [userProfile, setUserProfile] = useState();
+
+  //TOAST FUNCTIONS
+
+  const playlistNotify = () =>
+    toast.success("Video added to the playlist!", {
+      position: "bottom-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+
+  const watchLaterNotify = () =>
+    toast.success("Video saved to watch later!", {
+      position: "bottom-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+
+  // USE EFFECTS
 
   useEffect(() => {
     if (token) {
@@ -747,7 +777,10 @@ function VideoSection() {
             },
           }
         );
-        await response.json();
+        const data = await response.json();
+        if (data === "Saved") {
+          watchLaterNotify();
+        }
       }
     } catch (error) {
       //console.log(error.message);
@@ -829,6 +862,7 @@ function VideoSection() {
         const Data = await response.json();
         if (Data) {
           setLoading(false);
+          playlistNotify();
           window.location.reload();
         }
       }
@@ -865,6 +899,7 @@ function VideoSection() {
         );
 
         await response.json();
+        playlistNotify();
       }
     } catch (error) {
       //console.log(error.message);

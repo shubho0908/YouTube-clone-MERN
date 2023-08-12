@@ -273,6 +273,7 @@ Videos.post("/watchlater/:id/:email/:email2", async (req, res) => {
         uploaded_date: WatchLater.uploaded_date,
         savedVideoID: WatchLater._id,
       });
+      res.json("Saved");
     } else {
       user.watchLater = user.watchLater.filter(
         (savedVideo) => savedVideo.savedVideoID !== WatchLater._id.toString()

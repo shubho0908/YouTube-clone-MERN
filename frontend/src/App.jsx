@@ -12,25 +12,54 @@ import SearchResults from "./Components/SearchResults";
 import Playlists from "./Components/Playlists";
 import Library from "./Components/Library";
 import Customization from "./Components/Studio/Customization";
-import Content from "./Components/Studio/Content"
+import Content from "./Components/Studio/Content";
 import VideoDetails from "./Components/Studio/VideoDetails";
 import Comments from "./Components/Studio/Comments";
 import VideoComments from "./Components/Studio/VideoComments";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const token = localStorage.getItem("userToken");
 
   return (
     <>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+      />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Browse />} />
           <Route path="/studio" element={token ? <Studio /> : <Error />} />
-          <Route path="/studio/customize" element={token ? <Customization /> : <Error />} />
-          <Route path="/studio/video" element={token ? <Content /> : <Error />} />
-          <Route path="/studio/comments" element={token ? <Comments /> : <Error />} />
-          <Route path="/studio/video/edit/:id" element={token ? <VideoDetails /> : <Error />} />
-          <Route path="/studio/video/comments/:id" element={token ? <VideoComments /> : <Error />} />
+          <Route
+            path="/studio/customize"
+            element={token ? <Customization /> : <Error />}
+          />
+          <Route
+            path="/studio/video"
+            element={token ? <Content /> : <Error />}
+          />
+          <Route
+            path="/studio/comments"
+            element={token ? <Comments /> : <Error />}
+          />
+          <Route
+            path="/studio/video/edit/:id"
+            element={token ? <VideoDetails /> : <Error />}
+          />
+          <Route
+            path="/studio/video/comments/:id"
+            element={token ? <VideoComments /> : <Error />}
+          />
           <Route
             path="/likedVideos"
             element={token ? <LikeVideos /> : <Error />}
@@ -39,27 +68,12 @@ function App() {
             path="/watchlater"
             element={token ? <WatchLater /> : <Error />}
           />
-          
-          <Route
-            path="/library"
-            element={token ? <Library /> : <Error />}
-          />
-          <Route
-            path="/channel/:id"
-            element={<OtherChannel />}
-          />
-          <Route
-            path="/trending"
-            element={<Trending />}
-          />
-          <Route
-            path="/results/:data"
-            element={<SearchResults />}
-          />
-          <Route
-            path="/playlist/:id"
-            element={<Playlists />}
-          />
+
+          <Route path="/library" element={token ? <Library /> : <Error />} />
+          <Route path="/channel/:id" element={<OtherChannel />} />
+          <Route path="/trending" element={<Trending />} />
+          <Route path="/results/:data" element={<SearchResults />} />
+          <Route path="/playlist/:id" element={<Playlists />} />
           <Route
             path="/subscriptions"
             element={token ? <Subscriptions /> : <Error />}

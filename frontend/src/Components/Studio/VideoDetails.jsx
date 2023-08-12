@@ -201,6 +201,7 @@ function VideoDetails() {
     <>
       <Navbar2 />
       <LeftPanel3 />
+      
       <div
         className="main-video-details-section"
         style={{ opacity: opacity, pointerEvents: loading ? "none" : "auto" }}
