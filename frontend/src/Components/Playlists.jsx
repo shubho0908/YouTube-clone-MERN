@@ -572,12 +572,10 @@ function Playlists() {
                     if (token) {
                       updateViews(playlistsVideos[0].videoID);
                       setTimeout(() => {
-                        navigate(`/video/${playlistsVideos[0].videoID}`);
-                        window.location.reload();
+                       window.location.href = `/video/${playlistsVideos[0].videoID}`
                       }, 400);
                     } else {
-                      navigate(`/video/${playlistsVideos[0].videoID}`);
-                      window.location.reload();
+                      window.location.href = `/video/${playlistsVideos[0].videoID}`
                     }
                   }}
                 >
@@ -646,12 +644,10 @@ function Playlists() {
                             if (token) {
                               updateViews(element.videoID);
                               setTimeout(() => {
-                                navigate(`/video/${element.videoID}`);
-                                window.location.reload();
+                                window.location.href = `/video/${element.videoID}`;
                               }, 400);
                             } else {
-                              navigate(`/video/${element.videoID}`);
-                              window.location.reload();
+                              window.location.href = `/video/${element.videoID}`;
                             }
                           }}
                         >

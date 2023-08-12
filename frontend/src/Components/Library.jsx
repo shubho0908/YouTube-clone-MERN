@@ -46,6 +46,7 @@ function Library() {
     const menu = localStorage.getItem("menuClicked");
     return menu ? JSON.parse(menu) : false;
   });
+  const [savedPlaylist, setSavedPlaylist] = useState([]);
 
   useEffect(() => {
     setEmail(jwtDecode(token).email);
@@ -145,6 +146,26 @@ function Library() {
     };
 
     const interval = setInterval(getChannelID, 100);
+
+    return () => clearInterval(interval);
+  }, [email]);
+
+  useEffect(() => {
+    const GetSavedPlaylist = async () => {
+      try {
+        if (email !== undefined) {
+          const response = await fetch(
+            `http://localhost:3000/getsavedplaylist/${email}`
+          );
+          const matchingPlaylists = await response.json();
+          setSavedPlaylist(matchingPlaylists);
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
+    const interval = setInterval(GetSavedPlaylist, 250);
 
     return () => clearInterval(interval);
   }, [email]);
@@ -506,7 +527,8 @@ function Library() {
               style={{ color: "white" }}
             />
             <p>Playlists</p>
-            {PlaylistArray && PlaylistArray.length >= 6 ? (
+            {(PlaylistArray && PlaylistArray.length >= 6) ||
+            (savedPlaylist && savedPlaylist.length >= 6) ? (
               <p
                 className="see-all"
                 onClick={() => {
@@ -556,6 +578,75 @@ function Library() {
                         navigate(
                           `/video/${element.playlist_videos[0].videoID}`
                         );
+                      }}
+                    >
+                      <PlaylistPlayIcon
+                        fontSize="medium"
+                        style={{ color: "white" }}
+                      />
+                      <p>{element.playlist_videos.length} videos</p>
+                    </div>
+                    <div className="playlistt-details">
+                      <p>{element.playlist_name}</p>
+                      <div className="extra-playlists-data">
+                        <p className="playlist-ownner">
+                          {element.playlist_owner}
+                        </p>
+
+                        <div
+                          className="private-privacyy"
+                          style={
+                            element.playlist_privacy === "Private"
+                              ? { display: "flex" }
+                              : { display: "none" }
+                          }
+                        >
+                          <LockOutlinedIcon
+                            fontSize="small"
+                            style={{ color: "#aaa" }}
+                          />
+                          <p>Private</p>
+                        </div>
+                      </div>
+                      <p
+                        onClick={() => navigate(`/playlist/${element._id}`)}
+                        className="view-playlist"
+                      >
+                        View full playlist
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            {savedPlaylist &&
+              savedPlaylist.length > 0 &&
+              savedPlaylist.map((element, index) => {
+                const backgroundColor =
+                  playlistColors[index] || playlistColors[0];
+
+                const thumbnailURL =
+                  element.playlist_videos &&
+                  element.playlist_videos.length > 0 &&
+                  element.playlist_videos[0].thumbnail
+                    ? element.playlist_videos[0].thumbnail
+                    : deleteIMG;
+
+                return (
+                  <div className="created-all-playlistss2" key={index}>
+                    <img
+                      src={thumbnailURL}
+                      alt=""
+                      className="playlist-thumbnail"
+                      onClick={() => {
+                        window.location.href = `/video/${element.playlist_videos[0].videoID}`;
+                      }}
+                    />
+
+                    <div
+                      className="playlist-element"
+                      style={{ backgroundColor }}
+                      onClick={() => {
+                        window.location.href = `/video/${element.playlist_videos[0].videoID}`;
                       }}
                     >
                       <PlaylistPlayIcon

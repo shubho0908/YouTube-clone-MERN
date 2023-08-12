@@ -66,7 +66,11 @@ function ChannelPlaylists(prop) {
     getPlaylistData();
   }, [prop.newmail]);
 
-  if (PlaylistData === "No playlists available...") {
+  if (
+    PlaylistData === "No playlists available..." ||
+    (PlaylistData.length === 1 && prop.newmail !== email &&
+      PlaylistData[0].playlist_privacy === "Private")
+  ) {
     return (
       <div className="no-playlists">
         <img src={nothing} alt="no results" className="nothing-found" />

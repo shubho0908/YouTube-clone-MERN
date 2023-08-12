@@ -362,8 +362,7 @@ function LeftPanel() {
                     className="my-playlist-data"
                     key={index}
                     onClick={() => {
-                      navigate(`/playlist/${element._id}`);
-                      window.location.reload();
+                      window.location.href = `/playlist/${element._id}`;
                     }}
                   >
                     <PlaylistPlayOutlinedIcon
@@ -392,8 +391,7 @@ function LeftPanel() {
                     className="my-playlist-data"
                     key={index}
                     onClick={() => {
-                      navigate(`/playlist/${element._id}`);
-                      window.location.reload();
+                      window.location.href = `/playlist/${element._id}`;
                     }}
                   >
                     <PlaylistPlayOutlinedIcon

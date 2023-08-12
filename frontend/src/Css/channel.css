@@ -399,6 +399,8 @@
   position: absolute;
   top: 320px;
   display: flex;
+  justify-content: space-between;
+    width: -webkit-fill-available;
 }
 
 .seperate-two {
@@ -452,7 +454,7 @@
 }
 
 .right-about-section {
-  margin-left: 60px;
+  margin-left: 65px;
   max-width: 230px;
   min-width: 180px;
 }
