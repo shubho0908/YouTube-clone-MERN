@@ -75,7 +75,9 @@ function ChannelPlaylists(prop) {
     return (
       <div className="no-playlists">
         <img src={nothing} alt="no results" className="nothing-found" />
-        <p className="no-results">No playlists found!</p>
+        <p className="no-results" style={{ fontSize: "15px" }}>
+          No playlists found!
+        </p>
       </div>
     );
   }
@@ -85,7 +87,11 @@ function ChannelPlaylists(prop) {
       <SkeletonTheme baseColor="#353535" highlightColor="#444">
         <div
           className="channel-playlist-section"
-          style={loading === true ? { display: "block" } : { display: "none" }}
+          style={
+            loading === true
+              ? { display: "block", width: "-webkit-fill-available" }
+              : { display: "none" }
+          }
         >
           <div className="created-playlist-section">
             <Skeleton
@@ -141,7 +147,10 @@ function ChannelPlaylists(prop) {
         className="channel-playlist-section"
         style={
           loading === false
-            ? { visibility: "visible", display: "block" }
+            ? {
+                visibility: "visible",
+                display: "block",
+              }
             : { visibility: "hidden", display: "none" }
         }
       >
@@ -216,9 +225,31 @@ function ChannelPlaylists(prop) {
                         </p>
                       </div>
                     </div>
-
-                    {/* If Private  */}
-
+                  </>
+                );
+              })}
+          </div>
+        </div>
+      </div>
+      <div
+        className="channel-playlist-section"
+        style={
+          loading === false
+            ? {
+                visibility: "visible",
+                display: "block",
+                width: "-webkit-fill-available",
+              }
+            : { visibility: "hidden", display: "none" }
+        }
+      >
+        <div className="created-playlist-section">
+          <div className="thischannel-playlists">
+            {PlaylistData &&
+              PlaylistData !== "No playlists available..." &&
+              PlaylistData.map((element, index) => {
+                return (
+                  <>
                     <div
                       className="created-all-playlistss"
                       key={index}
@@ -229,14 +260,28 @@ function ChannelPlaylists(prop) {
                           : { display: "none" }
                       }
                     >
-                      <div className="no-playlists">
-                        <img
-                          src={nothing}
-                          alt="no results"
-                          className="nothing-found"
-                        />
-                        <p className="no-results">No playlists found!</p>
-                      </div>
+                      <img
+                        src={nothing}
+                        alt="no results"
+                        className="nothing-found"
+                        style={
+                          prop.newmail !== email &&
+                          element.playlist_privacy === "Private"
+                            ? { display: "flex" }
+                            : { display: "none" }
+                        }
+                      />
+                      <p
+                        className="no-results"
+                        style={
+                          prop.newmail !== email &&
+                          element.playlist_privacy === "Private"
+                            ? { display: "flex", fontSize: "15px" }
+                            : { display: "none" }
+                        }
+                      >
+                        No playlists found!
+                      </p>
                     </div>
                   </>
                 );

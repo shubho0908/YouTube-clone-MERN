@@ -56,6 +56,7 @@ function VideoSection() {
   const [recommendLoading, setRecommendLoading] = useState(true);
   const token = localStorage.getItem("userToken");
   const [likeLoading, setLikeLoading] = useState(false);
+  const [seeDesc, setSeeDesc] = useState(false);
 
   //EXTRAS
 
@@ -1260,13 +1261,54 @@ function VideoSection() {
             </div>
             <div className="desc-data">
               <p
-                style={{ marginTop: "20px" }}
+                style={
+                  seeDesc === false ? { marginTop: "20px" } : { display: "none" }
+                }
+                className="videos-desc"
+                dangerouslySetInnerHTML={{
+                  __html:
+                    Description &&
+                    formatDescriptionWithLinks(
+                      Description.length > 170
+                        ? Description.substring(0, 170) + "..."
+                        : Description
+                    ),
+                }}
+              />
+              <p
+                 style={
+                  seeDesc === true ? { marginTop: "20px" } : { display: "none" }
+                }
                 className="videos-desc"
                 dangerouslySetInnerHTML={{
                   __html:
                     Description && formatDescriptionWithLinks(Description),
                 }}
               />
+              {Description && Description.length > 170 ? (
+                <p className="desc-seemore"
+                  onClick={() => setSeeDesc(!seeDesc)}
+                  style={
+                    seeDesc === false
+                      ? { display: "block", cursor:"pointer" }
+                      : { display: "none" }
+                  }
+                >
+                  See more...
+                </p>
+              ) : null}
+              {Description && Description.length > 170 ? (
+                <p className="desc-seemore"
+                  onClick={() => setSeeDesc(!seeDesc)}
+                  style={
+                    seeDesc === true
+                      ? { display: "block", cursor:"pointer" }
+                      : { display: "none" }
+                  }
+                >
+                  See less...
+                </p>
+              ) : null}
             </div>
           </div>
           <div className="comments-section">

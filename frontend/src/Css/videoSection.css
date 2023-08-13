@@ -764,3 +764,9 @@
     margin-top: 0;
   }
 }
+
+.desc-seemore{
+  font-size: 14.8px;
+  position: relative;
+  margin-top: 10px;
+}
