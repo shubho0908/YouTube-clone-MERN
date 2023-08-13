@@ -632,7 +632,16 @@ function Library() {
                     : deleteIMG;
 
                 return (
-                  <div className="created-all-playlistss2" key={index}>
+                  <div
+                    className="created-all-playlistss2"
+                    key={index}
+                    style={
+                      element.owner_email !== email &&
+                      element.playlist_privacy === "Private"
+                        ? { display: "none" }
+                        : { display: "block" }
+                    }
+                  >
                     <img
                       src={thumbnailURL}
                       alt=""

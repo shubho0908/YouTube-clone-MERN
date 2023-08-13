@@ -18,6 +18,8 @@ import Signin from "../Signin";
 import ChannelAbout from "./ChannelAbout";
 import ChannelPlaylists from "./ChannelPlaylists";
 import FeaturedChannels from "./FeaturedChannels";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function OtherChannel() {
   const { id } = useParams();
@@ -35,6 +37,22 @@ function OtherChannel() {
   const [Top, setTop] = useState("155px");
   const [coverIMG, setCoverIMG] = useState("");
   const [loading, setLoading] = useState(true);
+
+  //TOAST FUNCTIONS
+
+  const SubscribeNotify = () =>
+    toast.success("Channel subscribed!", {
+      position: "bottom-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+
+  //USE EFFECTS
 
   useEffect(() => {
     if (token) {
@@ -201,8 +219,10 @@ function OtherChannel() {
           },
         }
       );
-      console.log(channelData);
-      await response.json();
+      const data = await response.json();
+      if (data === "Subscribed") {
+        SubscribeNotify();
+      }
     } catch (error) {
       console.log(error.message);
     }

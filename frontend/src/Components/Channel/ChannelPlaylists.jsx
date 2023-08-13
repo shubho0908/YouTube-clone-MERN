@@ -67,10 +67,7 @@ function ChannelPlaylists(prop) {
   }, [prop.newmail]);
 
   if (
-    PlaylistData === "No playlists available..." ||
-    (PlaylistData.length === 1 &&
-      prop.newmail !== email &&
-      PlaylistData[0].playlist_privacy === "Private")
+    PlaylistData === "No playlists available..."
   ) {
     return (
       <div className="no-playlists">
@@ -148,9 +145,9 @@ function ChannelPlaylists(prop) {
         style={
           loading === false
             ? {
-                visibility: "visible",
-                display: "block",
-              }
+              visibility: "visible",
+              display: "block",
+            }
             : { visibility: "hidden", display: "none" }
         }
       >
@@ -170,7 +167,7 @@ function ChannelPlaylists(prop) {
                       key={index}
                       style={
                         prop.newmail !== email &&
-                        element.playlist_privacy === "Private"
+                          element.playlist_privacy === "Private"
                           ? { display: "none" }
                           : { display: "block" }
                       }
@@ -236,10 +233,10 @@ function ChannelPlaylists(prop) {
         style={
           loading === false
             ? {
-                visibility: "visible",
-                display: "block",
-                width: "-webkit-fill-available",
-              }
+              visibility: "visible",
+              display: "block",
+              width: "-webkit-fill-available",
+            }
             : { visibility: "hidden", display: "none" }
         }
       >
@@ -255,7 +252,7 @@ function ChannelPlaylists(prop) {
                       key={index}
                       style={
                         prop.newmail !== email &&
-                        element.playlist_privacy === "Private"
+                          element.playlist_privacy === "Private"
                           ? { display: "block" }
                           : { display: "none" }
                       }
@@ -266,7 +263,7 @@ function ChannelPlaylists(prop) {
                         className="nothing-found"
                         style={
                           prop.newmail !== email &&
-                          element.playlist_privacy === "Private"
+                            element.playlist_privacy === "Private"
                             ? { display: "flex" }
                             : { display: "none" }
                         }
@@ -275,7 +272,7 @@ function ChannelPlaylists(prop) {
                         className="no-results"
                         style={
                           prop.newmail !== email &&
-                          element.playlist_privacy === "Private"
+                            element.playlist_privacy === "Private"
                             ? { display: "flex", fontSize: "15px" }
                             : { display: "none" }
                         }

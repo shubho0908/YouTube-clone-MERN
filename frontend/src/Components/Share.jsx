@@ -6,14 +6,28 @@ import twitter from "../img/social/twitter.jpg";
 import mail from "../img/social/mail.jpg";
 import "../Css/share.css";
 import { useState } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 function Share() {
   const [copyText, setCopyText] = useState("Copy");
+
+  const CopiedNotify = () =>
+    toast.success("Link Copied!", {
+      position: "bottom-center",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
 
   const handleCopyLink = () => {
     navigator.clipboard
       .writeText(window.location.href)
       .then(() => {
-        alert("Link Copied!");
         setCopyText("Copied!");
       })
       .catch((error) => {
@@ -97,7 +111,13 @@ function Share() {
         <div className="share-link">
           <div className="link-area">
             <p>{window.location.href}</p>
-            <button className="copy-link-btn" onClick={handleCopyLink}>
+            <button
+              className="copy-link-btn"
+              onClick={() => {
+                handleCopyLink();
+                CopiedNotify();
+              }}
+            >
               {copyText}
             </button>
           </div>
