@@ -19,6 +19,8 @@ import Zoom from "@mui/material/Zoom";
 import ArrowDropDownRoundedIcon from "@mui/icons-material/ArrowDropDownRounded";
 import VideoCallOutlinedIcon from "@mui/icons-material/VideoCallOutlined";
 import Dashboard from "./Studio/Dashboard";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 //SOCIALS
 
@@ -57,6 +59,34 @@ function Studio() {
   const [websitelink, setwebsitelink] = useState();
   const [visibility, setVisibility] = useState("Public");
   const [isVisibilityClicked, setisVisibilityClicked] = useState(false);
+
+  //TOAST FUNCTIONS
+
+  const UploadedNotify = () =>
+    toast.success("Video is published!", {
+      position: "bottom-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+
+  const CancelNotify = () =>
+    toast.warning("Video upload was cancelled!", {
+      position: "bottom-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+
+  //USE EFFECTS
 
   useEffect(() => {
     const token = localStorage.getItem("userToken");
@@ -475,9 +505,10 @@ function Studio() {
         });
 
         // Handle the response
-        const result = await response.json();
-        console.log(result);
+        await response.json();
         setLoading(false);
+        setIsClicked(false);
+        UploadedNotify();
       } catch (error) {
         console.log(error.message);
       }
@@ -737,10 +768,10 @@ function Studio() {
               onClick={() => {
                 if (Progress !== 100) {
                   cancelVideoUpload();
+                  CancelNotify();
                 }
                 if (isClicked === true) {
                   setIsClicked(false);
-                  window.location.reload();
                 }
               }}
             />
