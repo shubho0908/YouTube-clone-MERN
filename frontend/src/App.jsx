@@ -17,6 +17,9 @@ import VideoDetails from "./Components/Studio/VideoDetails";
 import Comments from "./Components/Studio/Comments";
 import VideoComments from "./Components/Studio/VideoComments";
 import { ToastContainer } from "react-toastify";
+import { Helmet } from "react-helmet";
+import ytLogo from "./img/icon.png";
+
 import "react-toastify/dist/ReactToastify.css";
 
 function App() {
@@ -37,6 +40,9 @@ function App() {
         theme="dark"
       />
       <BrowserRouter>
+        <Helmet>
+          <link rel="icon" type="image/x-icon" href={ytLogo} />
+        </Helmet>
         <Routes>
           <Route path="/" element={<Browse />} />
           <Route path="/studio" element={token ? <Studio /> : <Error />} />

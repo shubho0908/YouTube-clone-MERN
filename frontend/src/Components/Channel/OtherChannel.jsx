@@ -102,6 +102,8 @@ function OtherChannel() {
     getChannelData();
   }, [Email]);
 
+  document.title = channelName && channelName !== undefined ? `${channelName} - YouTube` : "YouTube";
+
   useEffect(() => {
     const getChannelCover = async () => {
       try {

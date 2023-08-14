@@ -39,6 +39,9 @@ function Content() {
     return menu ? JSON.parse(menu) : false;
   });
 
+  document.title = "Channel content - YouTube Studio"
+
+
   useEffect(() => {
     const token = localStorage.getItem("userToken");
     setEmail(jwtDecode(token).email);

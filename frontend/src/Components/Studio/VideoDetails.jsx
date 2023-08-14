@@ -37,6 +37,9 @@ function VideoDetails() {
     return menu ? JSON.parse(menu) : false;
   });
 
+  document.title = "Video details - YouTube Studio";
+
+
   useEffect(() => {
     const handleMenuButtonClick = () => {
       setmenu((prevMenuClicked) => !prevMenuClicked);

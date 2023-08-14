@@ -105,6 +105,11 @@ function Playlists() {
     getPlaylists();
   }, [id]);
 
+  document.title =
+    PlaylistName && PlaylistName !== undefined
+      ? `${PlaylistName} - YouTube`
+      : "YouTube";
+
   useEffect(() => {
     const handleMenuButtonClick = () => {
       setMenuClicked((prevMenuClicked) => !prevMenuClicked);
@@ -286,7 +291,9 @@ function Playlists() {
         <LeftPanel />
         <div className="searched-content">
           <img src={nothing} alt="no results" className="nothing-found" />
-          <p className="no-results">This playlist is private!</p>
+          <p className="no-results" style={{ fontSize: "16.8px" }}>
+            This playlist is set to private by the user!
+          </p>
         </div>
       </>
     );

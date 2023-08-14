@@ -47,6 +47,7 @@ function Library() {
     return menu ? JSON.parse(menu) : false;
   });
   const [savedPlaylist, setSavedPlaylist] = useState([]);
+  document.title = "Library - YouTube";
 
   useEffect(() => {
     setEmail(jwtDecode(token).email);

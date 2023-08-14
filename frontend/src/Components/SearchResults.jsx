@@ -33,6 +33,8 @@ function SearchResults() {
     }, 3500);
   }, []);
 
+  document.title = data && data !== undefined ? `${data} - YouTube` : "YouTube";
+
   const token = localStorage.getItem("userToken");
 
   const navigate = useNavigate();

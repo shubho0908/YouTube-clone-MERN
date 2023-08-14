@@ -204,7 +204,7 @@ function LeftPanel() {
               fontSize="medium"
               style={{ color: "white" }}
             />
-            <p>Subscription</p>
+            <p>Subscriptions</p>
           </div>
           <div
             className="subscribed-channels"

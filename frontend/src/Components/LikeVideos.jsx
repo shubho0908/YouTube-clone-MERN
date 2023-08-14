@@ -21,6 +21,8 @@ function LikeVideos() {
 
   const navigate = useNavigate();
   const token = localStorage.getItem("userToken");
+  document.title = "Liked videos - YouTube";
+
 
   useEffect(() => {
     const token = localStorage.getItem("userToken");

@@ -688,6 +688,9 @@ function VideoSection() {
     uploaded_date,
   } = matchedVideo;
 
+  document.title =
+    Title && Title !== undefined ? `${Title} - YouTube` : "YouTube";
+
   const likeVideo = async () => {
     try {
       setLikeLoading(true);
@@ -1410,14 +1413,18 @@ function VideoSection() {
               ""
             )}
 
-            <div
-              className="video-comments"
-              style={{ transition: "all 0.15s ease", opacity: commentOpacity }}
-            >
+            <div className="video-comments">
               {comments.map((element, index) => {
                 return (
                   <>
-                    <div className="comment-data" key={index}>
+                    <div
+                      className="comment-data"
+                      key={index}
+                      style={{
+                        transition: "all 0.15s ease",
+                        opacity: commentOpacity,
+                      }}
+                    >
                       <div className="comment-left-data">
                         <img
                           src={element.user_profile}

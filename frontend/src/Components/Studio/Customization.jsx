@@ -16,6 +16,8 @@ function Customization() {
     return menu ? JSON.parse(menu) : false;
   });
 
+  document.title = "Channel customization - YouTube Studio";
+
   useEffect(() => {
     const handleMenuButtonClick = () => {
       setmenu((prevMenuClicked) => !prevMenuClicked);
@@ -108,7 +110,10 @@ function Customization() {
       <div className="channel-customize">
         <div
           className="channel-customize-section"
-          style={{ left: menu ? "90px" : " 270px", transition: menu ? "all .12s ease" : "none" }}
+          style={{
+            left: menu ? "90px" : " 270px",
+            transition: menu ? "all .12s ease" : "none",
+          }}
         >
           <div className="customize-header">
             <p>Channel customization</p>

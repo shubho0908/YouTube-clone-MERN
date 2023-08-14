@@ -25,6 +25,8 @@ function Dashboard() {
     return menu ? JSON.parse(menu) : false;
   });
 
+  document.title = "Channel dashboard - YouTube Studio"
+
   useEffect(() => {
     const token = localStorage.getItem("userToken");
     setEmail(jwtDecode(token).email);

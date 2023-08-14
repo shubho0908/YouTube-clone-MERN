@@ -23,6 +23,7 @@ function Subscriptions() {
 
   const navigate = useNavigate();
   const token = localStorage.getItem("userToken");
+  document.title = "Subscriptions - YouTube";
 
   useEffect(() => {
     const token = localStorage.getItem("userToken");

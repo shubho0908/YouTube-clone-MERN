@@ -22,6 +22,8 @@ function WatchLater() {
 
   const navigate = useNavigate();
   const token = localStorage.getItem("userToken");
+  document.title = "Watch later - YouTube";
+
 
   useEffect(() => {
     const token = localStorage.getItem("userToken");

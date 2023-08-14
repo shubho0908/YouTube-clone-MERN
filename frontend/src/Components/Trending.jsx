@@ -23,6 +23,8 @@ function Trending() {
   const token = localStorage.getItem("userToken");
   const [loading, setLoading] = useState(true);
 
+  document.title = "Trending - YouTube";
+
   useEffect(() => {
     if (token) {
       setEmail(jwtDecode(token).email);
@@ -141,30 +143,46 @@ function Trending() {
                           style={{ borderRadius: "12px" }}
                         />
                         <div className="trending-video-texts">
-                        <Skeleton
-                          count={1}
-                          width={150}
-                          height={20}
-                          style={{ position: "relative", left: "30px", top:"10px" }}
-                        />
-                        <Skeleton
-                          count={1}
-                          width={400}
-                          height={25}
-                          style={{ position: "relative", left: "30px", top:"15px" }}
-                        />
                           <Skeleton
-                          count={1}
-                          width={220}
-                          height={15}
-                          style={{ position: "relative", left: "30px", top:"20px" }}
-                        />
-                        <Skeleton
-                          count={1}
-                          width={500}
-                          height={20}
-                          style={{ position: "relative", left: "30px", top:"28px" }}
-                        />
+                            count={1}
+                            width={150}
+                            height={20}
+                            style={{
+                              position: "relative",
+                              left: "30px",
+                              top: "10px",
+                            }}
+                          />
+                          <Skeleton
+                            count={1}
+                            width={400}
+                            height={25}
+                            style={{
+                              position: "relative",
+                              left: "30px",
+                              top: "15px",
+                            }}
+                          />
+                          <Skeleton
+                            count={1}
+                            width={220}
+                            height={15}
+                            style={{
+                              position: "relative",
+                              left: "30px",
+                              top: "20px",
+                            }}
+                          />
+                          <Skeleton
+                            count={1}
+                            width={500}
+                            height={20}
+                            style={{
+                              position: "relative",
+                              left: "30px",
+                              top: "28px",
+                            }}
+                          />
                         </div>
                       </div>
                     </SkeletonTheme>
@@ -281,7 +299,7 @@ function Trending() {
         </div>
       ) : (
         <div className="main-trending-section">
-          <div className="spin23" style={{top:"200px"}}>
+          <div className="spin23" style={{ top: "200px" }}>
             <span className="loader"></span>
           </div>
         </div>

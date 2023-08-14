@@ -31,6 +31,8 @@ function VideoComments() {
     return menu ? JSON.parse(menu) : false;
   });
 
+  document.title = "Video comments - YouTube Studio";
+
   useEffect(() => {
     const handleMenuButtonClick = () => {
       setmenu((prevMenuClicked) => !prevMenuClicked);
