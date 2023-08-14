@@ -20,11 +20,36 @@ function Dashboard() {
   const [channelSubs, setChannelSubs] = useState(0);
   const [totalViews, setTotalViews] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [menu, setmenu] = useState(() => {
+    const menu = localStorage.getItem("studioMenuClicked");
+    return menu ? JSON.parse(menu) : false;
+  });
 
   useEffect(() => {
     const token = localStorage.getItem("userToken");
     setEmail(jwtDecode(token).email);
   }, []);
+
+  useEffect(() => {
+    const handleMenuButtonClick = () => {
+      setmenu((prevMenuClicked) => !prevMenuClicked);
+    };
+
+    const menuButton = document.querySelector(".menu2");
+    if (menuButton) {
+      menuButton.addEventListener("click", handleMenuButtonClick);
+    }
+
+    return () => {
+      if (menuButton) {
+        menuButton.removeEventListener("click", handleMenuButtonClick);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("studioMenuClicked", JSON.stringify(menu));
+  }, [menu]);
 
   useEffect(() => {
     const getVideos = async () => {
@@ -101,7 +126,7 @@ function Dashboard() {
   if (loading === true) {
     return (
       <SkeletonTheme baseColor="#353535" highlightColor="#444">
-        <div className="dashboard-data">
+        <div className="dashboard-data" style={{ left: menu ? "125px" : "310px" }}>
           <Skeleton count={1} width={250} height={25} />
           <div className="dash-data-all">
             <div className="performed-vid-data">
@@ -128,7 +153,10 @@ function Dashboard() {
   return (
     <>
       <div className="studio-dashboard-section">
-        <div className="dashboard-data">
+        <div
+          className="dashboard-data"
+          style={{ left: menu ? "125px" : "310px" }}
+        >
           <p className="dashboard-top">Channel dashboard</p>
           <div className="dash-data-all">
             <div className="left-dashboard-data">
@@ -143,7 +171,7 @@ function Dashboard() {
                         myVideos[0].thumbnailURL
                       }
                       alt="thumbnail"
-                      style={{width:"355px"}}
+                      style={{ width: "355px" }}
                     />
                     <div className="video-performance-icons">
                       <div className="left-performed-icons">

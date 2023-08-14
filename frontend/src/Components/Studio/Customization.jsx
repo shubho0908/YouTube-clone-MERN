@@ -6,20 +6,42 @@ import { useState, useEffect } from "react";
 import jwtDecode from "jwt-decode";
 import Basic from "./Basic";
 
-
 function Customization() {
   const [currentTab, setCurrentTab] = useState("branding");
   const [email, setEmail] = useState();
   const [channelID, setChannelID] = useState();
   const token = localStorage.getItem("userToken");
+  const [menu, setmenu] = useState(() => {
+    const menu = localStorage.getItem("studioMenuClicked");
+    return menu ? JSON.parse(menu) : false;
+  });
+
+  useEffect(() => {
+    const handleMenuButtonClick = () => {
+      setmenu((prevMenuClicked) => !prevMenuClicked);
+    };
+
+    const menuButton = document.querySelector(".menu2");
+    if (menuButton) {
+      menuButton.addEventListener("click", handleMenuButtonClick);
+    }
+
+    return () => {
+      if (menuButton) {
+        menuButton.removeEventListener("click", handleMenuButtonClick);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("studioMenuClicked", JSON.stringify(menu));
+  }, [menu]);
 
   useEffect(() => {
     if (token) {
       setEmail(jwtDecode(token).email);
     }
   }, [token]);
-
-
 
   useEffect(() => {
     const handleClick = () => {
@@ -41,7 +63,9 @@ function Customization() {
 
   useEffect(() => {
     const handleClick = () => {
-      document.querySelector(".channel-customize").classList.remove("studio-dark");
+      document
+        .querySelector(".channel-customize")
+        .classList.remove("studio-dark");
     };
 
     const crossBtn = document.querySelector(".clear-search");
@@ -82,7 +106,10 @@ function Customization() {
       <Navbar2 />
       <LeftPanel2 />
       <div className="channel-customize">
-        <div className="channel-customize-section">
+        <div
+          className="channel-customize-section"
+          style={{ left: menu ? "90px" : " 270px" }}
+        >
           <div className="customize-header">
             <p>Channel customization</p>
           </div>

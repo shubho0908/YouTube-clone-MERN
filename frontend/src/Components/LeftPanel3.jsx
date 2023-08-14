@@ -17,6 +17,30 @@ function LeftPanel2() {
   const VideoEditSection = localStorage.getItem("Video-Edit Section");
   const location = useLocation();
   const [loading, setLoading] = useState(true);
+  const [studioMenuClicked, setstudioMenuClicked] = useState(() => {
+    const menu = localStorage.getItem("studioMenuClicked2");
+    return menu ? JSON.parse(menu) : false;
+  });
+
+  useEffect(() => {
+    const handleMenuButtonClick = () => {
+      setstudioMenuClicked((prevMenuClicked) => !prevMenuClicked);
+    };
+
+    const menuButton = document.querySelector(".menu2");
+    menuButton.addEventListener("click", handleMenuButtonClick);
+
+    return () => {
+      menuButton.removeEventListener("click", handleMenuButtonClick);
+    };
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem(
+      "studioMenuClicked2",
+      JSON.stringify(studioMenuClicked)
+    );
+  }, [studioMenuClicked]);
 
   useEffect(() => {
     const currentUrl = location.pathname;
@@ -51,23 +75,6 @@ function LeftPanel2() {
   }, []);
 
   useEffect(() => {
-    const handleMenuButtonClick = () => {
-      setMenuClicked((prevMenuClicked) => !prevMenuClicked);
-    };
-
-    const menuButton = document.querySelector(".menu2");
-    if (menuButton) {
-      menuButton.addEventListener("click", handleMenuButtonClick);
-    }
-
-    return () => {
-      if (menuButton) {
-        menuButton.removeEventListener("click", handleMenuButtonClick);
-      }
-    };
-  }, []);
-
-  useEffect(() => {
     const GetVideoData = async () => {
       try {
         if (id !== undefined) {
@@ -89,7 +96,9 @@ function LeftPanel2() {
     <>
       <div
         className="main-section3"
-        style={menuClicked === true ? { display: "none" } : { display: "flex" }}
+        style={
+          studioMenuClicked === true ? { display: "none" } : { display: "flex" }
+        }
       >
         <div
           className="first-panel first-panel1"
@@ -225,6 +234,125 @@ function LeftPanel2() {
               style={{ color: "#A9A9A9", paddingLeft: "25px !important" }}
             />
             <p>Comments</p>
+          </div>
+        </div>
+      </div>
+
+      {/* SHORT HAND  */}
+
+      <div
+        className="main-section3"
+        style={
+          studioMenuClicked === false
+            ? { display: "none" }
+            : { display: "flex", width: "90px" }
+        }
+      >
+        <div
+          className="first-panel first-panel1"
+          onClick={() => {
+            if (window.location.href.includes(`/studio/video/edit/${id}`)) {
+              window.location.href = "/studio/video";
+            } else {
+              window.location.href = "/studio/comments";
+            }
+          }}
+        >
+          <div
+            className="about-video"
+            style={{ right: studioMenuClicked ? "0px" : "15px" }}
+          >
+            <WestIcon fontSize="medium" style={{ color: "#aaa" }} />
+          </div>
+        </div>
+        {/* START HERE  */}
+        <SkeletonTheme baseColor="#353535" highlightColor="#444">
+          <div
+            className="mid-panel"
+            style={
+              loading === true ? { display: "block" } : { display: "none" }
+            }
+          >
+            <div className="redirect-video">
+              <Skeleton count={1} width={75} height={42} />
+            </div>
+          </div>
+        </SkeletonTheme>
+        {/* END HERE  */}
+        <div
+          className="mid-panel"
+          style={
+            videodata && loading === false
+              ? { visibility: "visible", display: "block" }
+              : { visibility: "hidden", display: "none" }
+          }
+        >
+          <div
+            className="redirect-video"
+            onClick={() => {
+              if (videodata) {
+                window.location.href = `/video/${videodata._id}`;
+              }
+            }}
+          >
+            <img
+              src={videodata && videodata.thumbnailURL}
+              alt="thumbnail"
+              className="current-video-thumbnail"
+              style={{ width: studioMenuClicked ? "70px" : "220px" }}
+            />
+          </div>
+        </div>
+        <div className="second-panel">
+          <div
+            className={
+              VideoEditSection === "Details"
+                ? "studio-active panel"
+                : "details panel"
+            }
+            onClick={() => {
+              localStorage.setItem("Video-Edit Section", "Details");
+              window.location.href = `/studio/video/edit/${id}`;
+            }}
+          >
+            <ModeEditOutlineOutlinedIcon
+              className={
+                VideoEditSection === "Details" ? "studio-icon2" : "studio-icon"
+              }
+              fontSize="medium"
+              style={{
+                color: "#A9A9A9",
+                paddingLeft: "25px !important",
+                paddingTop: "16px",
+                paddingBottom: "16px",
+              }}
+            />
+          </div>
+          <div
+            className={
+              VideoEditSection === "Video-Comments"
+                ? "studio-active panel"
+                : "comments panel"
+            }
+            onClick={() => {
+              localStorage.setItem("Video-Edit Section", "Video-Comments");
+              window.location.href = `/studio/video/comments/${id}`;
+            }}
+          >
+            <ChatOutlinedIcon
+              className={
+                VideoEditSection === "Video-Comments"
+                  ? "studio-icon2"
+                  : "studio-icon"
+              }
+              fontSize="medium"
+              style={{
+                color: "#A9A9A9",
+                paddingLeft: "25px !important",
+                paddingTop: "16px",
+                paddingBottom: "16px",
+              }}
+            />
           </div>
         </div>
       </div>

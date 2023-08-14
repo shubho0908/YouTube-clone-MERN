@@ -34,6 +34,10 @@ function Content() {
   const [boxclicked, setBoxClicked] = useState(false);
   const videoUrl = "http://localhost:5173/video";
   const [loading, setLoading] = useState(true);
+  const [menu, setmenu] = useState(() => {
+    const menu = localStorage.getItem("studioMenuClicked");
+    return menu ? JSON.parse(menu) : false;
+  });
 
   useEffect(() => {
     const token = localStorage.getItem("userToken");
@@ -41,9 +45,30 @@ function Content() {
   }, []);
 
   useEffect(() => {
+    const handleMenuButtonClick = () => {
+      setmenu((prevMenuClicked) => !prevMenuClicked);
+    };
+
+    const menuButton = document.querySelector(".menu2");
+    if (menuButton) {
+      menuButton.addEventListener("click", handleMenuButtonClick);
+    }
+
+    return () => {
+      if (menuButton) {
+        menuButton.removeEventListener("click", handleMenuButtonClick);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("studioMenuClicked", JSON.stringify(menu));
+  }, [menu]);
+
+  useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 2800);
+    }, 3200);
   }, []);
 
   useEffect(() => {
@@ -194,12 +219,21 @@ function Content() {
       <Navbar2 />
       <LeftPanel2 />
       <div className="channel-content-section">
-        <div className="channel-content-top">
+        <div
+          className="channel-content-top"
+          style={{ left: menu ? "125px" : "310px" }}
+        >
           <p>Channel content</p>
           <p className="channel-videosss">Videos</p>
         </div>
-        <hr className="breakk2 breakkk" />
-        <div className="channels-uploaded-videos-section">
+        <hr
+          className="breakk2 breakkk"
+          style={{ left: menu ? "88px" : "262px" }}
+        />
+        <div
+          className="channels-uploaded-videos-section"
+          style={{ left: menu ? "90px" : "270px" }}
+        >
           {sortedUserVideos && sortedUserVideos.length > 0 && (
             <table className="videos-table">
               <thead>

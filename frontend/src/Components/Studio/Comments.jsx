@@ -21,6 +21,31 @@ function Comments() {
   const [Profile, setProfile] = useState();
   const [filterComment, setFilterComment] = useState("");
   const [loading, setLoading] = useState(true);
+  const [menu, setmenu] = useState(() => {
+    const menu = localStorage.getItem("studioMenuClicked");
+    return menu ? JSON.parse(menu) : false;
+  });
+
+  useEffect(() => {
+    const handleMenuButtonClick = () => {
+      setmenu((prevMenuClicked) => !prevMenuClicked);
+    };
+
+    const menuButton = document.querySelector(".menu2");
+    if (menuButton) {
+      menuButton.addEventListener("click", handleMenuButtonClick);
+    }
+
+    return () => {
+      if (menuButton) {
+        menuButton.removeEventListener("click", handleMenuButtonClick);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("studioMenuClicked", JSON.stringify(menu));
+  }, [menu]);
 
   useEffect(() => {
     const token = localStorage.getItem("userToken");
@@ -206,14 +231,17 @@ function Comments() {
       <Navbar2 />
       <LeftPanel2 />
       <div className="video-all-comments-section">
-        <div className="channel-comments-top">
+        <div
+          className="channel-comments-top"
+          style={{ left: menu ? "125px" : "310px" }}
+        >
           <p>Channel comments</p>
         </div>
-        <div className="channel-comments-mid">
+        <div className="channel-comments-mid" style={{ left: menu ? "128px" : "312px" }}>
           <p>Comments</p>
         </div>
-        <hr className="breakkk" />
-        <div className="filter-comments">
+        <hr className="breakkk" style={{ left: menu ? "90px" : "262px" }}/>
+        <div className="filter-comments" style={{ left: menu ? "90px" : "270px" }}>
           <FilterListOutlinedIcon
             fontSize="medium"
             style={{ color: "#aaa", cursor: "pointer" }}
@@ -734,7 +762,7 @@ function Comments() {
             )}
 
             {loading === true && AllComments && AllComments.length === 0 && (
-              <div className="user-comment-data2" style={{top:"60px"}}>
+              <div className="user-comment-data2" style={{ top: "60px" }}>
                 <div className="no-comment-found">
                   <div className="spin23">
                     <span className="loader2"></span>
