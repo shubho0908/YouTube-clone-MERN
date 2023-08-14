@@ -9,12 +9,16 @@ import { useLocation } from "react-router-dom";
 import avatar from "../img/avatar.png";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { CiShare1 } from "react-icons/ci";
+import Tooltip from "@mui/material/Tooltip";
+import Zoom from "@mui/material/Zoom";
 
 function LeftPanel2() {
   const [email, setEmail] = useState("");
   const token = localStorage.getItem("userToken");
   const [profileIMG, setProfileIMG] = useState();
   const [channel, setChannel] = useState("");
+  const [channelId, setChannelId] = useState();
   const [studioMenuClicked, setstudioMenuClicked] = useState(() => {
     const menu = localStorage.getItem("studioMenuClicked");
     return menu ? JSON.parse(menu) : false;
@@ -82,18 +86,42 @@ function LeftPanel2() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:3000/getchannel/${email}`
-        );
-        const { profile, ChannelName } = await response.json();
-        setProfileIMG(profile);
-        setChannel(ChannelName);
+        if (email !== undefined) {
+          const response = await fetch(
+            `http://localhost:3000/getchannel/${email}`
+          );
+          const { profile, ChannelName } = await response.json();
+          setProfileIMG(profile);
+          setChannel(ChannelName);
+        }
       } catch (error) {
         console.log(error.message);
       }
     };
 
     const interval = setInterval(getData, 100);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [email]);
+
+  useEffect(() => {
+    const getChannelId = async () => {
+      try {
+        if (email !== undefined) {
+          const response = await fetch(
+            `http://localhost:3000/getchannelid/${email}`
+          );
+          const { channelID } = await response.json();
+          setChannelId(channelID);
+        }
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+
+    const interval = setInterval(getChannelId, 100);
 
     return () => {
       clearInterval(interval);
@@ -142,11 +170,23 @@ function LeftPanel2() {
               : { visibility: "hidden", display: "none" }
           }
         >
-          <img
-            src={profileIMG ? profileIMG : avatar}
-            alt=""
-            className="profile_img"
-          />
+          <Tooltip
+            TransitionComponent={Zoom}
+            title="View channel on YouTube"
+            placement="top"
+          >
+            <img
+              src={profileIMG ? profileIMG : avatar}
+              alt=""
+              className="profile_img"
+              onClick={() => {
+                if (channelId !== undefined) {
+                  window.location.href = `/channel/${channelId}`;
+                }
+              }}
+            />
+          </Tooltip>
+          <CiShare1 className="view-channel2" fontSize="25px" />
           <div className="about-channel">
             <p className="your-channel">Your Channel</p>
             <p className="c-name">{channel}</p>
@@ -271,12 +311,24 @@ function LeftPanel2() {
               : { visibility: "hidden", display: "none" }
           }
         >
-          <img
-            src={profileIMG ? profileIMG : avatar}
-            alt=""
-            className="profile_img"
-            style={{ width: "50px", height: "50px" }}
-          />
+          <Tooltip
+            TransitionComponent={Zoom}
+            title="View channel on YouTube"
+            placement="top"
+          >
+            <img
+              src={profileIMG ? profileIMG : avatar}
+              alt=""
+              className="profile_img"
+              style={{ width: "50px", height: "50px" }}
+              onClick={() => {
+                if (channelId !== undefined) {
+                  window.location.href = `/channel/${channelId}`;
+                }
+              }}
+            />
+          </Tooltip>
+          <CiShare1 className="view-channel3" fontSize="20px" />
         </div>
         <div className="second-panel">
           <div
