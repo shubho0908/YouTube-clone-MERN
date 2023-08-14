@@ -202,7 +202,11 @@ function ChannelVideos(prop) {
                         : Math.round(element.videoLength % 60))}
                   </p>
                   <div className="videos-metadataa">
-                    <p>{element.Title}</p>
+                    <p>
+                      {element.Title.length <= 50
+                        ? element.Title
+                        : `${element.Title.slice(0, 50)}...`}
+                    </p>
                     <div className="views-and-time">
                       <p className="myviews">
                         {element.views >= 1e9

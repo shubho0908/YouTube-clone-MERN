@@ -66,9 +66,13 @@ function ChannelPlaylists(prop) {
     getPlaylistData();
   }, [prop.newmail]);
 
-  if (
-    PlaylistData === "No playlists available..."
-  ) {
+  const publicPlaylists = PlaylistData.filter(
+    (item) => item.playlist_privacy === "Public"
+  );
+
+  const noPublicPlaylists = publicPlaylists.length === 0;
+
+  if (PlaylistData === "No playlists available..." || noPublicPlaylists) {
     return (
       <div className="no-playlists">
         <img src={nothing} alt="no results" className="nothing-found" />
@@ -145,18 +149,17 @@ function ChannelPlaylists(prop) {
         style={
           loading === false
             ? {
-              visibility: "visible",
-              display: "block",
-            }
+                visibility: "visible",
+                display: "block",
+              }
             : { visibility: "hidden", display: "none" }
         }
       >
         <div className="created-playlist-section">
           <p>Created playlists</p>
           <div className="thischannel-playlists">
-            {PlaylistData &&
-              PlaylistData !== "No playlists available..." &&
-              PlaylistData.map((element, index) => {
+            {publicPlaylists &&
+              publicPlaylists.map((element, index) => {
                 const backgroundColor =
                   playlistColors[index] || playlistColors[0];
 
@@ -167,7 +170,7 @@ function ChannelPlaylists(prop) {
                       key={index}
                       style={
                         prop.newmail !== email &&
-                          element.playlist_privacy === "Private"
+                        element.playlist_privacy === "Private"
                           ? { display: "none" }
                           : { display: "block" }
                       }
@@ -228,64 +231,7 @@ function ChannelPlaylists(prop) {
           </div>
         </div>
       </div>
-      <div
-        className="channel-playlist-section"
-        style={
-          loading === false
-            ? {
-              visibility: "visible",
-              display: "block",
-              width: "-webkit-fill-available",
-            }
-            : { visibility: "hidden", display: "none" }
-        }
-      >
-        <div className="created-playlist-section">
-          <div className="thischannel-playlists">
-            {PlaylistData &&
-              PlaylistData !== "No playlists available..." &&
-              PlaylistData.map((element, index) => {
-                return (
-                  <>
-                    <div
-                      className="created-all-playlistss"
-                      key={index}
-                      style={
-                        prop.newmail !== email &&
-                          element.playlist_privacy === "Private"
-                          ? { display: "block" }
-                          : { display: "none" }
-                      }
-                    >
-                      <img
-                        src={nothing}
-                        alt="no results"
-                        className="nothing-found"
-                        style={
-                          prop.newmail !== email &&
-                            element.playlist_privacy === "Private"
-                            ? { display: "flex" }
-                            : { display: "none" }
-                        }
-                      />
-                      <p
-                        className="no-results"
-                        style={
-                          prop.newmail !== email &&
-                            element.playlist_privacy === "Private"
-                            ? { display: "flex", fontSize: "15px" }
-                            : { display: "none" }
-                        }
-                      >
-                        No playlists found!
-                      </p>
-                    </div>
-                  </>
-                );
-              })}
-          </div>
-        </div>
-      </div>
+      
     </>
   );
 }
