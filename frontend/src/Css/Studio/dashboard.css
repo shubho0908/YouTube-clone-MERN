@@ -6,6 +6,8 @@
   top: 100px;
   left: 310px;
   width: -webkit-fill-available;
+  animation: FADEINN .45s ease;
+
 }
 
 .dashboard-top {

@@ -155,7 +155,7 @@ function Dashboard() {
       <div className="studio-dashboard-section">
         <div
           className="dashboard-data"
-          style={{ left: menu ? "125px" : "310px" }}
+          style={{ left: menu ? "125px" : "310px", transition: menu ? "all .1s ease" : "none" }}
         >
           <p className="dashboard-top">Channel dashboard</p>
           <div className="dash-data-all">

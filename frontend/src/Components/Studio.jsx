@@ -766,7 +766,7 @@ function Studio() {
               fontSize="large"
               style={{ color: "gray" }}
               onClick={() => {
-                if (Progress !== 100) {
+                if (Progress !== 100 && selectedVideo !== null) {
                   cancelVideoUpload();
                   CancelNotify();
                 }

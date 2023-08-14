@@ -255,7 +255,7 @@ function Comments() {
             onChange={(e) => setFilterComment(e.target.value)}
           />
         </div>
-        <div className="channel-comments-list">
+        <div className="channel-comments-list" style={{ left: menu ? "90px" : "270px" }}>
           <div className="overall-comments">
             {AllComments &&
               AllComments.length > 0 &&

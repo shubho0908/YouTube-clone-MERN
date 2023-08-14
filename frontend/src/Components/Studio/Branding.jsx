@@ -6,6 +6,8 @@ import ReactLoading from "react-loading";
 import { storage } from "../../Firebase";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Branding() {
   const [email, setEmail] = useState("");
@@ -19,6 +21,22 @@ function Branding() {
   const [channelID, setChannelID] = useState();
   const [loading, setLoading] = useState(false);
   const [fakeLoading, setFakeLoading] = useState(true);
+
+  //TOAST FUNCTIONS
+
+  const saveNotify = () =>
+    toast.success("Changes saved successfully!", {
+      position: "bottom-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+
+  //USE EFFECTS
 
   useEffect(() => {
     const token = localStorage.getItem("userToken");
@@ -94,14 +112,6 @@ function Branding() {
 
     getChannelCover();
   }, [email]);
-
-  useEffect(() => {
-    if (loading === true) {
-      document.body.classList.add("bg-css2");
-    } else if (!loading) {
-      document.body.classList.remove("bg-css2");
-    }
-  }, [loading]);
 
   const handleProfileChange = (e) => {
     const file = e.target.files[0];
@@ -246,6 +256,7 @@ function Branding() {
       if (user) {
         setLoading(false);
         setChanges(false);
+        saveNotify();
       } else {
         setLoading(true);
       }
@@ -273,130 +284,130 @@ function Branding() {
 
   return (
     <>
-      {loading === true ? (
-        <div className="spin3">
-          <ReactLoading type={"spin"} color={"white"} height={40} width={40} />
-          <p>Saving data...</p>
-        </div>
-      ) : (
-        <div className="channel-branding-section">
-          <div className="profile-update-section">
-            <p className="profile-head-txt">Picture</p>
-            <p className="profile-desc-txt">
-              Your profile picture will appear where your channel is presented
-              on YouTube, like next to your videos and comments.
-            </p>
-            <p className="profile-desc-txt">
-              (Please refresh the page if the images don’t load properly.)
-            </p>
-            <div className="picture-section">
-              <SkeletonTheme baseColor="#353535" highlightColor="#444">
-                <div
-                  className="pic-div"
-                  style={
-                    fakeLoading === true
-                      ? { display: "flex" }
-                      : { display: "none" }
-                  }
-                >
-                  <Skeleton
-                    count={1}
-                    width={140}
-                    height={140}
-                    style={{
-                      borderRadius: "100%",
-                    }}
-                  />
-                </div>
-              </SkeletonTheme>
+      <div
+        className="channel-branding-section"
+        style={{
+          opacity: loading ? "0.35" : "1",
+          transition: "opacity .15s ease",
+          cursor: loading ? "wait" : "auto",
+        }}
+      >
+        <div className="profile-update-section">
+          <p className="profile-head-txt">Picture</p>
+          <p className="profile-desc-txt">
+            Your profile picture will appear where your channel is presented on
+            YouTube, like next to your videos and comments.
+          </p>
+          <p className="profile-desc-txt">
+            (Please refresh the page if the images don’t load properly.)
+          </p>
+          <div className="picture-section">
+            <SkeletonTheme baseColor="#353535" highlightColor="#444">
               <div
                 className="pic-div"
                 style={
-                  fakeLoading === false
-                    ? { visibility: "visible", display: "flex" }
-                    : { visibility: "hidden", display: "none" }
+                  fakeLoading === true
+                    ? { display: "flex" }
+                    : { display: "none" }
                 }
               >
+                <Skeleton
+                  count={1}
+                  width={140}
+                  height={140}
+                  style={{
+                    borderRadius: "100%",
+                  }}
+                />
+              </div>
+            </SkeletonTheme>
+            <div
+              className="pic-div"
+              style={
+                fakeLoading === false
+                  ? { visibility: "visible", display: "flex" }
+                  : { visibility: "hidden", display: "none" }
+              }
+            >
+              <img
+                src={previewProfile}
+                alt="profile"
+                className="channel-image"
+              />
+            </div>
+            <div className="pic-extra-content">
+              It’s recommended to use a picture that’s at least 98 x 98 pixels
+              and 4MB or less. Use a PNG or GIF (no animations) file. Make sure
+              your picture follows the YouTube Community Guidelines.
+              <label className="change-image" htmlFor="profile-image-input">
+                CHANGE
+              </label>
+              <input
+                type="file"
+                id="profile-image-input"
+                accept="image/*"
+                onChange={handleProfileChange}
+                style={{ display: "none" }}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="cover-update-section">
+          <p className="cover-head">Banner image</p>
+          <p className="banner-desc">
+            This image will appear across the top of your channel
+          </p>
+          <p className="profile-desc-txt">
+            (Please refresh the page if the images don’t load properly.)
+          </p>
+          <div className="banner-section">
+            <SkeletonTheme baseColor="#353535" highlightColor="#444">
+              <div
+                className="pic-div"
+                style={
+                  fakeLoading === true
+                    ? { display: "flex" }
+                    : { display: "none" }
+                }
+              >
+                <Skeleton count={1} width={290} height={160} />
+              </div>
+            </SkeletonTheme>
+            <div
+              className="pic-div"
+              style={
+                fakeLoading === false
+                  ? { visibility: "visible", display: "flex" }
+                  : { visibility: "hidden", display: "none" }
+              }
+            >
+              {previewBanner ? (
                 <img
-                  src={previewProfile}
-                  alt="profile"
-                  className="channel-image"
+                  src={previewBanner}
+                  alt="banner"
+                  className="banner-image"
                 />
-              </div>
-              <div className="pic-extra-content">
-                It’s recommended to use a picture that’s at least 98 x 98 pixels
-                and 4MB or less. Use a PNG or GIF (no animations) file. Make
-                sure your picture follows the YouTube Community Guidelines.
-                <label className="change-image" htmlFor="profile-image-input">
-                  CHANGE
-                </label>
-                <input
-                  type="file"
-                  id="profile-image-input"
-                  accept="image/*"
-                  onChange={handleProfileChange}
-                  style={{ display: "none" }}
-                />
-              </div>
+              ) : (
+                ""
+              )}
             </div>
-          </div>
-          <div className="cover-update-section">
-            <p className="cover-head">Banner image</p>
-            <p className="banner-desc">
-              This image will appear across the top of your channel
-            </p>
-            <p className="profile-desc-txt">
-              (Please refresh the page if the images don’t load properly.)
-            </p>
-            <div className="banner-section">
-              <SkeletonTheme baseColor="#353535" highlightColor="#444">
-                <div
-                  className="pic-div"
-                  style={
-                    fakeLoading === true
-                      ? { display: "flex" }
-                      : { display: "none" }
-                  }
-                >
-                  <Skeleton count={1} width={290} height={160} />
-                </div>
-              </SkeletonTheme>
-              <div
-                className="pic-div"
-                style={
-                  fakeLoading === false
-                    ? { visibility: "visible", display: "flex" }
-                    : { visibility: "hidden", display: "none" }
-                }
-              >
-                {previewBanner ? (
-                  <img
-                    src={previewBanner}
-                    alt="banner"
-                    className="banner-image"
-                  />
-                ) : (
-                  ""
-                )}
-              </div>
-              <div className="pic-extra-content">
-                For the best results on all devices, use an image that’s at
-                least 2048 x 1152 pixels and 6MB or less.
-                <label className="change-image" htmlFor="banner-image-input">
-                  CHANGE
-                </label>
-                <input
-                  type="file"
-                  id="banner-image-input"
-                  accept="image/*"
-                  onChange={handleBannerChange}
-                  style={{ display: "none" }}
-                />
-              </div>
+            <div className="pic-extra-content">
+              For the best results on all devices, use an image that’s at least
+              2048 x 1152 pixels and 6MB or less.
+              <label className="change-image" htmlFor="banner-image-input">
+                CHANGE
+              </label>
+              <input
+                type="file"
+                id="banner-image-input"
+                accept="image/*"
+                onChange={handleBannerChange}
+                style={{ display: "none" }}
+              />
             </div>
           </div>
         </div>
-      )}
+      </div>
     </>
   );
 }

@@ -13,7 +13,6 @@ import "react-loading-skeleton/dist/skeleton.css";
 function LeftPanel2() {
   const { id } = useParams();
   const [videodata, setVideoData] = useState();
-  const [menuClicked, setMenuClicked] = useState(false);
   const VideoEditSection = localStorage.getItem("Video-Edit Section");
   const location = useLocation();
   const [loading, setLoading] = useState(true);

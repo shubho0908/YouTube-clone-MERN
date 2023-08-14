@@ -108,7 +108,7 @@ function Customization() {
       <div className="channel-customize">
         <div
           className="channel-customize-section"
-          style={{ left: menu ? "90px" : " 270px" }}
+          style={{ left: menu ? "90px" : " 270px", transition: menu ? "all .12s ease" : "none" }}
         >
           <div className="customize-header">
             <p>Channel customization</p>

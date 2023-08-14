@@ -32,6 +32,31 @@ function VideoDetails() {
   const [loading, setLoading] = useState(false);
   const [opacity, setOpacity] = useState(1);
   const [fakeLoading, setFakeLoading] = useState(true);
+  const [menu, setmenu] = useState(() => {
+    const menu = localStorage.getItem("studioMenuClicked2");
+    return menu ? JSON.parse(menu) : false;
+  });
+
+  useEffect(() => {
+    const handleMenuButtonClick = () => {
+      setmenu((prevMenuClicked) => !prevMenuClicked);
+    };
+
+    const menuButton = document.querySelector(".menu2");
+    if (menuButton) {
+      menuButton.addEventListener("click", handleMenuButtonClick);
+    }
+
+    return () => {
+      if (menuButton) {
+        menuButton.removeEventListener("click", handleMenuButtonClick);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("studioMenuClicked2", JSON.stringify(menu));
+  }, [menu]);
 
   useEffect(() => {
     const GetVideoData = async () => {
@@ -201,10 +226,15 @@ function VideoDetails() {
     <>
       <Navbar2 />
       <LeftPanel3 />
-      
+
       <div
         className="main-video-details-section"
-        style={{ opacity: opacity, pointerEvents: loading ? "none" : "auto" }}
+        style={{
+          opacity: opacity,
+          pointerEvents: loading ? "none" : "auto",
+          left: menu ? "115px" : "300px",
+          transition: menu ? "all .12s ease" : "none",
+        }}
       >
         <div className="current-editvideodata">
           <p className="current-tophead">Video details</p>
