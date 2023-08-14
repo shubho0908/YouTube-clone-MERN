@@ -57,6 +57,8 @@ function VideoSection() {
   const token = localStorage.getItem("userToken");
   const [likeLoading, setLikeLoading] = useState(false);
   const [seeDesc, setSeeDesc] = useState(false);
+  const [commentLoading, setCommentLoading] = useState(false);
+  const [commentOpacity, setCommentOpacity] = useState(1);
 
   //EXTRAS
 
@@ -140,7 +142,6 @@ function VideoSection() {
       progress: undefined,
       theme: "dark",
     });
-
 
   // USE EFFECTS
 
@@ -585,6 +586,7 @@ function VideoSection() {
 
   const uploadComment = async () => {
     try {
+      setCommentLoading(true);
       const data = {
         comment,
         email,
@@ -596,7 +598,12 @@ function VideoSection() {
           "Content-Type": "application/json",
         },
       });
-      await response.json();
+      const Data = await response.json();
+      if (Data === "Uploaded") {
+        setCommentLoading(false);
+      } else {
+        setCommentLoading(true);
+      }
     } catch (error) {
       //console.log(error.message);
     }
@@ -749,6 +756,8 @@ function VideoSection() {
 
   const DeleteComment = async (commentId) => {
     try {
+      setCommentOpacity(0.34);
+
       const response = await fetch(
         `http://localhost:3000/deletecomment/${id}/${commentId}/${email}`,
         {
@@ -758,7 +767,10 @@ function VideoSection() {
           },
         }
       );
-      await response.json();
+      const data = await response.json();
+      if (data === "Comment Deleted") {
+        setCommentOpacity(1);
+      }
       // window.location.reload();
     } catch (error) {
       //console.log(error.message);
@@ -1263,7 +1275,9 @@ function VideoSection() {
             <div className="desc-data">
               <p
                 style={
-                  seeDesc === false ? { marginTop: "20px" } : { display: "none" }
+                  seeDesc === false
+                    ? { marginTop: "20px" }
+                    : { display: "none" }
                 }
                 className="videos-desc"
                 dangerouslySetInnerHTML={{
@@ -1277,7 +1291,7 @@ function VideoSection() {
                 }}
               />
               <p
-                 style={
+                style={
                   seeDesc === true ? { marginTop: "20px" } : { display: "none" }
                 }
                 className="videos-desc"
@@ -1287,11 +1301,12 @@ function VideoSection() {
                 }}
               />
               {Description && Description.length > 170 ? (
-                <p className="desc-seemore"
+                <p
+                  className="desc-seemore"
                   onClick={() => setSeeDesc(!seeDesc)}
                   style={
                     seeDesc === false
-                      ? { display: "block", cursor:"pointer" }
+                      ? { display: "block", cursor: "pointer" }
                       : { display: "none" }
                   }
                 >
@@ -1299,11 +1314,12 @@ function VideoSection() {
                 </p>
               ) : null}
               {Description && Description.length > 170 ? (
-                <p className="desc-seemore"
+                <p
+                  className="desc-seemore"
                   onClick={() => setSeeDesc(!seeDesc)}
                   style={
                     seeDesc === true
-                      ? { display: "block", cursor:"pointer" }
+                      ? { display: "block", cursor: "pointer" }
                       : { display: "none" }
                   }
                 >
@@ -1319,61 +1335,85 @@ function VideoSection() {
                 {comments && comments.length > 1 ? "Comments" : "Comment"}
               </p>
             </div>
-            <div className="my-comment-area">
-              <img
-                src={userProfile ? userProfile : avatar}
-                alt="channelDP"
-                className="channelDP"
-                loading="lazy"
-              />
-              <input
-                className="comment-input"
-                type="text"
-                name="myComment"
-                placeholder="Add a comment..."
-                value={comment}
-                onClick={() => {
-                  setDisplay((prevDisplay) =>
-                    prevDisplay === "none" ? "block" : "block"
-                  );
-                }}
-                onChange={(e) => {
-                  setComment(e.target.value);
-                }}
-              />
-            </div>
-            <div className="comment-btns" style={{ display: Display }}>
-              <button
-                className="cancel-comment"
-                onClick={() => {
-                  setDisplay((prevDisplay) =>
-                    prevDisplay === "none" ? "block" : "none"
-                  );
-                }}
-              >
-                Cancel
-              </button>
-              <button
-                className="upload-comment"
-                onClick={() => {
-                  if (token && isChannel === true && comment !== "") {
-                    setComment("");
-                    uploadComment();
-                  } else if (token && isChannel !== true) {
-                    alert("Create a channel first");
-                  } else if (token && isChannel === true && comment === "") {
-                    alert("Comment can't be empty");
-                  } else {
-                    setisbtnClicked(true);
-                    document.body.classList.add("bg-css");
-                  }
+            {commentLoading === false ? (
+              <div className="my-comment-area">
+                <img
+                  src={userProfile ? userProfile : avatar}
+                  alt="channelDP"
+                  className="channelDP"
+                  loading="lazy"
+                />
+                <input
+                  className="comment-input"
+                  type="text"
+                  name="myComment"
+                  placeholder="Add a comment..."
+                  value={comment}
+                  onClick={() => {
+                    setDisplay((prevDisplay) =>
+                      prevDisplay === "none" ? "block" : "block"
+                    );
+                  }}
+                  onChange={(e) => {
+                    setComment(e.target.value);
+                  }}
+                />
+              </div>
+            ) : (
+              <div
+                className="my-comment-area"
+                style={{
+                  width: "-webkit-fill-available",
+                  justifyContent: "center",
                 }}
               >
-                Comment
-              </button>
-            </div>
+                <div
+                  className="spin22"
+                  style={{ position: "relative", top: "20px" }}
+                >
+                  <div className="loader2"></div>
+                </div>
+              </div>
+            )}
+            {commentLoading === false ? (
+              <div className="comment-btns" style={{ display: Display }}>
+                <button
+                  className="cancel-comment"
+                  onClick={() => {
+                    setDisplay((prevDisplay) =>
+                      prevDisplay === "none" ? "block" : "none"
+                    );
+                  }}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="upload-comment"
+                  onClick={() => {
+                    if (token && isChannel === true && comment !== "") {
+                      setComment("");
+                      uploadComment();
+                    } else if (token && isChannel !== true) {
+                      alert("Create a channel first");
+                    } else if (token && isChannel === true && comment === "") {
+                      alert("Comment can't be empty");
+                    } else {
+                      setisbtnClicked(true);
+                      document.body.classList.add("bg-css");
+                    }
+                  }}
+                >
+                  Comment
+                </button>
+              </div>
+            ) : (
+              ""
+            )}
 
-            <div className="video-comments">
+            <div
+              className="video-comments"
+              style={{ transition: "all 0.15s ease", opacity: commentOpacity }}
+            >
               {comments.map((element, index) => {
                 return (
                   <>

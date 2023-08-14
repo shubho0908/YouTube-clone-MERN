@@ -52,70 +52,66 @@ Comments.post("/comments/:id", async (req, res) => {
 
     await vid.save();
 
-    res.json(vid);
+    res.json("Uploaded");
   } catch (error) {
     res.json(error.message);
   }
 });
 
-Comments.post(
-  "/likecomment/:videoId/:commentId/:email",
-  async (req, res) => {
-    try {
-      const { videoId, commentId, email } = req.params;
+Comments.post("/likecomment/:videoId/:commentId/:email", async (req, res) => {
+  try {
+    const { videoId, commentId, email } = req.params;
 
-      const video = await videodata.findOne({ "VideoData._id": videoId });
-      const user = await userData.findOne({ email });
+    const video = await videodata.findOne({ "VideoData._id": videoId });
+    const user = await userData.findOne({ email });
 
-      if (!video) {
-        return res.status(404).json({ error: "Video not found" });
-      }
-      if (!user) {
-        return res.status(404).json({ error: "User not found" });
-      }
-
-      const videoIndex = video.VideoData.findIndex(
-        (data) => data._id.toString() === videoId
-      );
-
-      if (videoIndex === -1) {
-        return res.status(404).json({ error: "Video not found" });
-      }
-
-      const comments = video.VideoData[videoIndex].comments;
-
-      const commentIndex = comments.findIndex(
-        (comment) => comment._id.toString() === commentId
-      );
-
-      if (commentIndex === -1) {
-        return res.status(404).json({ error: "Comment not found" });
-      }
-
-      const comment = comments[commentIndex];
-
-      const likedCommentIndex = user.likedComments.findIndex(
-        (likedComment) => likedComment.comment_ID === commentId
-      );
-
-      if (likedCommentIndex === -1) {
-        user.likedComments.push({ comment_ID: commentId });
-        comment.likes += 1;
-      } else {
-        user.likedComments.splice(likedCommentIndex, 1);
-        comment.likes -= 1;
-      }
-
-      await user.save();
-      await video.save();
-
-      res.status(200).json({ message: "Comment liked/unliked successfully" });
-    } catch (error) {
-      res.status(500).json({ error: error.message });
+    if (!video) {
+      return res.status(404).json({ error: "Video not found" });
     }
-  }
-);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
 
+    const videoIndex = video.VideoData.findIndex(
+      (data) => data._id.toString() === videoId
+    );
+
+    if (videoIndex === -1) {
+      return res.status(404).json({ error: "Video not found" });
+    }
+
+    const comments = video.VideoData[videoIndex].comments;
+
+    const commentIndex = comments.findIndex(
+      (comment) => comment._id.toString() === commentId
+    );
+
+    if (commentIndex === -1) {
+      return res.status(404).json({ error: "Comment not found" });
+    }
+
+    const comment = comments[commentIndex];
+
+    const likedCommentIndex = user.likedComments.findIndex(
+      (likedComment) => likedComment.comment_ID === commentId
+    );
+
+    if (likedCommentIndex === -1) {
+      user.likedComments.push({ comment_ID: commentId });
+      comment.likes += 1;
+    } else {
+      user.likedComments.splice(likedCommentIndex, 1);
+      comment.likes -= 1;
+    }
+
+    await user.save();
+    await video.save();
+
+    res.status(200).json({ message: "Comment liked/unliked successfully" });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
 Comments.post("/heartcomment/:videoId/:commentID", async (req, res) => {
   try {
@@ -154,7 +150,7 @@ Comments.post("/heartcomment/:videoId/:commentID", async (req, res) => {
   }
 });
 
-Comments.get("/getheartcomment/:videoId", async(req, res)=>{
+Comments.get("/getheartcomment/:videoId", async (req, res) => {
   try {
     const { videoId } = req.params;
 
@@ -173,13 +169,13 @@ Comments.get("/getheartcomment/:videoId", async(req, res)=>{
     }
 
     const comments = video.VideoData[videoIndex].comments;
-    const heart = comments.flatMap((item)=> item.heartComment)
-   
+    const heart = comments.flatMap((item) => item.heartComment);
+
     res.json(heart);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-})
+});
 
 Comments.get("/likecomment/:videoId", async (req, res) => {
   try {
@@ -226,52 +222,48 @@ Comments.get("/getcomments/:id", async (req, res) => {
   }
 });
 
-Comments.post(
-  "/deletecomment/:videoId/:commentId/:email",
-  async (req, res) => {
-    try {
-      const { videoId, commentId, email } = req.params;
+Comments.post("/deletecomment/:videoId/:commentId/:email", async (req, res) => {
+  try {
+    const { videoId, commentId, email } = req.params;
 
-      const video = await videodata.findOne({ "VideoData._id": videoId });
-      const user = await userData.findOne({ email });
+    const video = await videodata.findOne({ "VideoData._id": videoId });
+    const user = await userData.findOne({ email });
 
-      if (!video) {
-        return res.status(404).json({ error: "Video not found" });
-      }
-      if (!user) {
-        return res.status(404).json({ error: "User not found" });
-      }
-
-      const videoIndex = video.VideoData.findIndex(
-        (data) => data._id.toString() === videoId
-      );
-
-      if (videoIndex === -1) {
-        return res.status(404).json({ error: "Video not found" });
-      }
-
-      const comments = video.VideoData[videoIndex].comments;
-
-      const existingCommentIndex = comments.findIndex(
-        (comment) => comment._id.toString() === commentId
-      );
-
-      if (existingCommentIndex !== -1) {
-        // Remove the comment from the comments array
-        comments.splice(existingCommentIndex, 1);
-
-        // Save the updated video document
-        await video.save();
-
-        res.json({ message: "Comment deleted successfully" });
-      } else {
-        return res.status(404).json({ error: "Comment not found" });
-      }
-    } catch (error) {
-      res.json(error.message);
+    if (!video) {
+      return res.status(404).json({ error: "Video not found" });
     }
-  }
-);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
 
+    const videoIndex = video.VideoData.findIndex(
+      (data) => data._id.toString() === videoId
+    );
+
+    if (videoIndex === -1) {
+      return res.status(404).json({ error: "Video not found" });
+    }
+
+    const comments = video.VideoData[videoIndex].comments;
+
+    const existingCommentIndex = comments.findIndex(
+      (comment) => comment._id.toString() === commentId
+    );
+
+    if (existingCommentIndex !== -1) {
+      // Remove the comment from the comments array
+      comments.splice(existingCommentIndex, 1);
+
+      // Save the updated video document
+      await video.save();
+
+      res.json("Comment Deleted");
+    } else {
+      return res.status(404).json({ error: "Comment not found" });
+    }
+  } catch (error) {
+    res.json(error.message);
+  }
+});
 
 module.exports = Comments;

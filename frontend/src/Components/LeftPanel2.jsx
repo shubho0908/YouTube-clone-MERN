@@ -15,10 +15,33 @@ function LeftPanel2() {
   const token = localStorage.getItem("userToken");
   const [profileIMG, setProfileIMG] = useState();
   const [channel, setChannel] = useState("");
-  const [menuClicked, setMenuClicked] = useState(false);
+  const [studioMenuClicked, setstudioMenuClicked] = useState(() => {
+    const menu = localStorage.getItem("studioMenuClicked");
+    return menu ? JSON.parse(menu) : false;
+  });
   const StudioSection = localStorage.getItem("Studio-Section");
   const location = useLocation();
   const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const handleMenuButtonClick = () => {
+      setstudioMenuClicked((prevMenuClicked) => !prevMenuClicked);
+    };
+
+    const menuButton = document.querySelector(".menu2");
+    menuButton.addEventListener("click", handleMenuButtonClick);
+
+    return () => {
+      menuButton.removeEventListener("click", handleMenuButtonClick);
+    };
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem(
+      "studioMenuClicked",
+      JSON.stringify(studioMenuClicked)
+    );
+  }, [studioMenuClicked]);
 
   useEffect(() => {
     const currentUrl = location.pathname;
@@ -53,23 +76,6 @@ function LeftPanel2() {
   }, []);
 
   useEffect(() => {
-    const handleMenuButtonClick = () => {
-      setMenuClicked((prevMenuClicked) => !prevMenuClicked);
-    };
-
-    const menuButton = document.querySelector(".menu2");
-    if (menuButton) {
-      menuButton.addEventListener("click", handleMenuButtonClick);
-    }
-
-    return () => {
-      if (menuButton) {
-        menuButton.removeEventListener("click", handleMenuButtonClick);
-      }
-    };
-  }, []);
-
-  useEffect(() => {
     setEmail(jwtDecode(token).email);
   }, [token]);
 
@@ -98,7 +104,11 @@ function LeftPanel2() {
     <>
       <div
         className="main-section2"
-        style={menuClicked === true ? { display: "none" } : { display: "flex" }}
+        style={
+          studioMenuClicked === true
+            ? { display: "none" }
+            : { display: "flex", width: "270px" }
+        }
       >
         <SkeletonTheme baseColor="#353535" highlightColor="#444">
           <div
@@ -224,6 +234,145 @@ function LeftPanel2() {
               style={{ color: "#A9A9A9" }}
             />
             <p>Customization</p>
+          </div>
+        </div>
+      </div>
+
+      {/* SHORT HAND  */}
+
+      <div
+        className="main-section2"
+        style={
+          studioMenuClicked === false
+            ? { display: "none" }
+            : { display: "flex", width: "90px" }
+        }
+      >
+        <SkeletonTheme baseColor="#353535" highlightColor="#444">
+          <div
+            className="first-panel"
+            style={
+              loading === true ? { display: "block" } : { display: "none" }
+            }
+          >
+            <Skeleton
+              count={1}
+              width={50}
+              height={50}
+              style={{ borderRadius: "100%" }}
+            />
+          </div>
+        </SkeletonTheme>
+        <div
+          className="first-panel"
+          style={
+            loading === false
+              ? { visibility: "visible", display: "block" }
+              : { visibility: "hidden", display: "none" }
+          }
+        >
+          <img
+            src={profileIMG ? profileIMG : avatar}
+            alt=""
+            className="profile_img"
+            style={{ width: "50px", height: "50px" }}
+          />
+        </div>
+        <div className="second-panel">
+          <div
+            className={
+              StudioSection === "Dashboard"
+                ? "studio-active panel"
+                : "dashboard panel"
+            }
+            onClick={() => {
+              localStorage.setItem("Studio-Section", "Dashboard");
+              window.location.href = "/studio";
+            }}
+          >
+            <DashboardIcon
+              className={
+                StudioSection === "Dashboard" ? "studio-icon2" : "studio-icon"
+              }
+              fontSize="medium"
+              style={{
+                color: "#A9A9A9",
+                paddingLeft: "25px !important",
+                paddingTop: "16px",
+                paddingBottom: "16px",
+              }}
+            />
+          </div>
+          <div
+            className={
+              StudioSection === "Content"
+                ? "studio-active panel"
+                : "content panel"
+            }
+            onClick={() => {
+              localStorage.setItem("Studio-Section", "Content");
+              window.location.href = "/studio/video";
+            }}
+          >
+            <VideoLibraryOutlinedIcon
+              className={
+                StudioSection === "Content" ? "studio-icon2" : "studio-icon"
+              }
+              fontSize="medium"
+              style={{
+                color: "#A9A9A9",
+                paddingTop: "16px",
+                paddingBottom: "16px",
+              }}
+            />
+          </div>
+          <div
+            className={
+              StudioSection === "Comments"
+                ? "studio-active panel"
+                : "comments panel"
+            }
+            onClick={() => {
+              localStorage.setItem("Studio-Section", "Comments");
+              window.location.href = "/studio/comments";
+            }}
+          >
+            <ChatOutlinedIcon
+              className={
+                StudioSection === "Comments" ? "studio-icon2" : "studio-icon"
+              }
+              fontSize="medium"
+              style={{
+                color: "#A9A9A9",
+                paddingTop: "16px",
+                paddingBottom: "16px",
+              }}
+            />
+          </div>
+          <div
+            className={
+              StudioSection === "Customization"
+                ? "studio-active panel"
+                : "customization panel"
+            }
+            onClick={() => {
+              localStorage.setItem("Studio-Section", "Customization");
+              window.location.href = "/studio/customize";
+            }}
+          >
+            <AutoFixHighOutlinedIcon
+              className={
+                StudioSection === "Customization"
+                  ? "studio-icon2"
+                  : "studio-icon"
+              }
+              fontSize="medium"
+              style={{
+                color: "#A9A9A9",
+                paddingTop: "16px",
+                paddingBottom: "16px",
+              }}
+            />
           </div>
         </div>
       </div>
