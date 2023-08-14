@@ -12,6 +12,8 @@ import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 function Navbar2() {
   const token = localStorage.getItem("userToken");
@@ -21,12 +23,19 @@ function Navbar2() {
   const [showPop, setShowPop] = useState(false);
   const [searchInput, setSearchInput] = useState();
   const [showResults, setShowResults] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (token) {
       setEmail(jwtDecode(token).email);
     }
   }, [token]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 2800);
+  }, []);
 
   useEffect(() => {
     const getData = async () => {
@@ -65,7 +74,8 @@ function Navbar2() {
   }, [email]);
 
   const filteredVideos =
-    userVideos && userVideos.length > 0 &&
+    userVideos &&
+    userVideos.length > 0 &&
     userVideos.filter(
       (video) =>
         video.Title.toLowerCase().includes(
@@ -225,7 +235,7 @@ function Navbar2() {
                                 className="comment-this"
                                 fontSize="medium"
                                 style={{ color: "#aaa" }}
-                                onClick={()=>{
+                                onClick={() => {
                                   window.location.href = `/studio/video/comments/${element._id}`;
                                 }}
                               />
@@ -407,7 +417,27 @@ function Navbar2() {
             <div className="my-five-videos"></div>
           </div>
         </div>
-        <div className="right-bar2">
+        <SkeletonTheme baseColor="#353535" highlightColor="#444">
+          <div
+            className="right-bar2"
+            style={loading ? { display: "block" } : { display: "none" }}
+          >
+            <Skeleton
+              count={1}
+              width={42}
+              height={42}
+              style={{ borderRadius: "100%" }}
+            />
+          </div>
+        </SkeletonTheme>
+        <div
+          className="right-bar2"
+          style={
+            !loading
+              ? { visibility: "visible", display: "block" }
+              : { visibility: "hidden", display: "none" }
+          }
+        >
           <img
             src={profilePic && profilePic}
             alt=""

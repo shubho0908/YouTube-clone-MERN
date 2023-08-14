@@ -259,8 +259,8 @@
 
 .extra-options-menu {
   position: absolute;
-  top: 24px;
-  left: 150px;
+  top: -10px;
+  left: 186px;
   width: max-content;
   display: flex;
   flex-direction: column;
@@ -438,12 +438,12 @@
   animation: Fade2 0.25s ease-out forwards;
 }
 
-.no-skeleton{
+.no-skeleton {
   display: flex;
   align-items: center;
 }
 
-.no-skeleton2{
+.no-skeleton2 {
   display: flex;
   flex-direction: column;
 }

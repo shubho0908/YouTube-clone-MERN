@@ -64,7 +64,7 @@ Videos.post("/publish", async (req, res) => {
       await user.save();
       await videos.save();
 
-      return res.status(200).json({ message: "Video published" });
+      return res.status(200).json("Published");
     } else {
       return res.status(404).json({ message: "User not found" });
     }

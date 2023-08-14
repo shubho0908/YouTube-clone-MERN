@@ -342,18 +342,24 @@ function LeftPanel2() {
               window.location.href = "/studio";
             }}
           >
-            <DashboardIcon
-              className={
-                StudioSection === "Dashboard" ? "studio-icon2" : "studio-icon"
-              }
-              fontSize="medium"
-              style={{
-                color: "#A9A9A9",
-                paddingLeft: "25px !important",
-                paddingTop: "16px",
-                paddingBottom: "16px",
-              }}
-            />
+            <Tooltip
+              TransitionComponent={Zoom}
+              title="Dashboard"
+              placement="bottom"
+            >
+              <DashboardIcon
+                className={
+                  StudioSection === "Dashboard" ? "studio-icon2" : "studio-icon"
+                }
+                fontSize="medium"
+                style={{
+                  color: "#A9A9A9",
+                  paddingLeft: "25px !important",
+                  paddingTop: "16px",
+                  paddingBottom: "16px",
+                }}
+              />
+            </Tooltip>
           </div>
           <div
             className={
@@ -366,17 +372,23 @@ function LeftPanel2() {
               window.location.href = "/studio/video";
             }}
           >
-            <VideoLibraryOutlinedIcon
-              className={
-                StudioSection === "Content" ? "studio-icon2" : "studio-icon"
-              }
-              fontSize="medium"
-              style={{
-                color: "#A9A9A9",
-                paddingTop: "16px",
-                paddingBottom: "16px",
-              }}
-            />
+            <Tooltip
+              TransitionComponent={Zoom}
+              title="Content"
+              placement="bottom"
+            >
+              <VideoLibraryOutlinedIcon
+                className={
+                  StudioSection === "Content" ? "studio-icon2" : "studio-icon"
+                }
+                fontSize="medium"
+                style={{
+                  color: "#A9A9A9",
+                  paddingTop: "16px",
+                  paddingBottom: "16px",
+                }}
+              />
+            </Tooltip>
           </div>
           <div
             className={
@@ -389,17 +401,23 @@ function LeftPanel2() {
               window.location.href = "/studio/comments";
             }}
           >
-            <ChatOutlinedIcon
-              className={
-                StudioSection === "Comments" ? "studio-icon2" : "studio-icon"
-              }
-              fontSize="medium"
-              style={{
-                color: "#A9A9A9",
-                paddingTop: "16px",
-                paddingBottom: "16px",
-              }}
-            />
+            <Tooltip
+              TransitionComponent={Zoom}
+              title="Comments"
+              placement="bottom"
+            >
+              <ChatOutlinedIcon
+                className={
+                  StudioSection === "Comments" ? "studio-icon2" : "studio-icon"
+                }
+                fontSize="medium"
+                style={{
+                  color: "#A9A9A9",
+                  paddingTop: "16px",
+                  paddingBottom: "16px",
+                }}
+              />
+            </Tooltip>
           </div>
           <div
             className={
@@ -412,19 +430,25 @@ function LeftPanel2() {
               window.location.href = "/studio/customize";
             }}
           >
-            <AutoFixHighOutlinedIcon
-              className={
-                StudioSection === "Customization"
-                  ? "studio-icon2"
-                  : "studio-icon"
-              }
-              fontSize="medium"
-              style={{
-                color: "#A9A9A9",
-                paddingTop: "16px",
-                paddingBottom: "16px",
-              }}
-            />
+            <Tooltip
+              TransitionComponent={Zoom}
+              title="Customization"
+              placement="bottom"
+            >
+              <AutoFixHighOutlinedIcon
+                className={
+                  StudioSection === "Customization"
+                    ? "studio-icon2"
+                    : "studio-icon"
+                }
+                fontSize="medium"
+                style={{
+                  color: "#A9A9A9",
+                  paddingTop: "16px",
+                  paddingBottom: "16px",
+                }}
+              />
+            </Tooltip>
           </div>
         </div>
       </div>

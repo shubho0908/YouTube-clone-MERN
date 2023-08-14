@@ -225,7 +225,7 @@ function Library() {
         <LeftPanel />
         <div className="main-trending-section">
           <div className="spin23" style={{ top: "200px" }}>
-            <span className="loader"></span>
+            <span className="loader2"></span>
           </div>
         </div>
       </>

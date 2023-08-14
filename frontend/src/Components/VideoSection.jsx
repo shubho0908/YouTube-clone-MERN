@@ -614,7 +614,7 @@ function VideoSection() {
       <>
         <div className="main-video-section2">
           <div className="spin23">
-            <span className="loader"></span>
+            <span className="loader2"></span>
           </div>
         </div>
       </>
@@ -649,7 +649,7 @@ function VideoSection() {
       <>
         <div className="main-video-section2">
           <div className="spin23">
-            <span className="loader"></span>
+            <span className="loader2"></span>
           </div>
         </div>
       </>

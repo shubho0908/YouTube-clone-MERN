@@ -182,7 +182,21 @@
   border-radius: 3px;
   font-size: 16px;
   border: none;
-  width: fit-content;
+  width: 120px;
+  height: 40px;
+}
+
+.save-video-data-disable {
+  cursor: wait;
+  color: #282828;
+  background-color: #3ea6ff;
+  opacity: .5;
+  padding: 8px 20px;
+  border-radius: 3px;
+  font-size: 16px;
+  border: none;
+  width: 120px;
+  height: 40px;
 }
 
 .upload-content {

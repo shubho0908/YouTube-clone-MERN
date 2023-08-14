@@ -25,7 +25,7 @@ function Dashboard() {
     return menu ? JSON.parse(menu) : false;
   });
 
-  document.title = "Channel dashboard - YouTube Studio"
+  document.title = "Channel dashboard - YouTube Studio";
 
   useEffect(() => {
     const token = localStorage.getItem("userToken");
@@ -128,7 +128,10 @@ function Dashboard() {
   if (loading === true) {
     return (
       <SkeletonTheme baseColor="#353535" highlightColor="#444">
-        <div className="dashboard-data" style={{ left: menu ? "125px" : "310px" }}>
+        <div
+          className="dashboard-data"
+          style={{ left: menu ? "125px" : "310px" }}
+        >
           <Skeleton count={1} width={250} height={25} />
           <div className="dash-data-all">
             <div className="performed-vid-data">
@@ -157,14 +160,17 @@ function Dashboard() {
       <div className="studio-dashboard-section">
         <div
           className="dashboard-data"
-          style={{ left: menu ? "125px" : "310px", transition: menu ? "all .1s ease" : "none" }}
+          style={{
+            left: menu ? "125px" : "310px",
+            transition: menu ? "all .1s ease" : "none",
+          }}
         >
           <p className="dashboard-top">Channel dashboard</p>
           <div className="dash-data-all">
             <div className="left-dashboard-data">
               <div className="dashboard-performance">
                 <div className="video-performance">
-                  <p>Latest video performance</p>
+                  <p>Bestest video performance</p>
                   <div className="performed-vid-data">
                     <img
                       src={

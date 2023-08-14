@@ -237,6 +237,7 @@ function VideoDetails() {
           pointerEvents: loading ? "none" : "auto",
           left: menu ? "115px" : "300px",
           transition: menu ? "all .12s ease" : "none",
+          cursor: loading ? "wait" : "auto"
         }}
       >
         <div className="current-editvideodata">

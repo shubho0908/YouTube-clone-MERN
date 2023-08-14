@@ -432,7 +432,9 @@ function ChannelHome(prop) {
                         : Math.round(element.videoLength % 60))}
                   </p>
                   <div className="video-metadata2">
-                    <p className="video-title2">{element.Title}</p>
+                    <p className="video-title2">{element.Title.length <= 50
+                  ? element.Title
+                  : `${element.Title.slice(0, 50)}...`}</p>
                     <div className="views-and-time">
                       <p className="myviews">
                         {element.views >= 1e9
@@ -620,7 +622,9 @@ function ChannelHome(prop) {
                         : Math.round(element.videoLength % 60))}
                   </p>
                   <div className="video-metadata2">
-                    <p className="video-title2">{element.Title}</p>
+                    <p className="video-title2">{element.Title.length <= 50
+                  ? element.Title
+                  : `${element.Title.slice(0, 50)}...`}</p>
                     <div className="views-and-time">
                       <p className="myviews">
                         {element.views >= 1e9

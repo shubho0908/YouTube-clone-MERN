@@ -65,7 +65,7 @@ function Studio() {
   const UploadedNotify = () =>
     toast.success("Video is published!", {
       position: "bottom-center",
-      autoClose: 2000,
+      autoClose: 950,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -77,7 +77,7 @@ function Studio() {
   const CancelNotify = () =>
     toast.warning("Video upload was cancelled!", {
       position: "bottom-center",
-      autoClose: 2000,
+      autoClose: 950,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -505,10 +505,21 @@ function Studio() {
         });
 
         // Handle the response
-        await response.json();
-        setLoading(false);
-        setIsClicked(false);
-        UploadedNotify();
+        const Data = await response.json();
+        if (Data === "Published") {
+          setLoading(false);
+          setIsClicked(false);
+          UploadedNotify();
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
+        } else {
+          setLoading(true);
+          setIsClicked(true);
+          setTimeout(() => {
+            alert("An unknown error occurred, Please try again!");
+          }, 1500);
+        }
       } catch (error) {
         console.log(error.message);
       }
@@ -769,6 +780,9 @@ function Studio() {
                 if (Progress !== 100 && selectedVideo !== null) {
                   cancelVideoUpload();
                   CancelNotify();
+                  setTimeout(() => {
+                    window.location.reload();
+                  }, 1000);
                 }
                 if (isClicked === true) {
                   setIsClicked(false);
@@ -1064,13 +1078,31 @@ function Studio() {
                   Video uploaded
                 </p>
               </div>
-              <button
-                className="save-video-data"
-                onClick={PublishData}
-                disabled={loading === true ? true : false}
-              >
-                {loading === true ? "LOADING..." : "PUBLISH"}
-              </button>
+              {loading ? (
+                <button
+                  className={
+                    loading || Progress !== 100
+                      ? "save-video-data-disable"
+                      : "save-video-data"
+                  }
+                  onClick={PublishData}
+                  disabled={loading === true || Progress !== 100 ? true : false}
+                >
+                  <span className="loader3"></span>
+                </button>
+              ) : (
+                <button
+                  className={
+                    loading || Progress !== 100
+                      ? "save-video-data-disable"
+                      : "save-video-data"
+                  }
+                  onClick={PublishData}
+                  disabled={loading === true || Progress !== 100 ? true : false}
+                >
+                  PUBLISH
+                </button>
+              )}
             </div>
           </div>
         </div>
