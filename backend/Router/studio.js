@@ -218,4 +218,34 @@ Studio.get("/getvideocommentsbyid/:videoId", async (req, res) => {
   }
 });
 
+Studio.post("/savelinksdata/:email", async (req, res) => {
+  try {
+    const email = req.params.email;
+    const { fblink, instalink, twitterlink, websitelink, channelID } = req.body;
+
+    const updatedUserData = await userData.findOneAndUpdate(
+      { email, "channelData._id": channelID },
+      {
+        $set: {
+          "channelData.$.socialLinks": {
+            facebook: fblink,
+            instagram: instalink,
+            twitter: twitterlink,
+            website: websitelink,
+          },
+        },
+      },
+      { new: true }
+    );
+
+    if (!updatedUserData) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    return res.status(200).json({ message: "Social links updated" });
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 module.exports = Studio;

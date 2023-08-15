@@ -53,6 +53,30 @@ function Basic() {
     }
   }, []);
 
+  useEffect(() => {
+    const handleMenuButtonClick = () => {
+      if (channelDescription === "" || channelName === "") {
+        alert("Input fields can't be empty");
+      } else {
+        saveData();
+      }
+    };
+
+    const publishBtn = document.querySelector(".save-customize");
+
+    if (changes === false) {
+      publishBtn.classList.add("disable-btn");
+    } else {
+      publishBtn.classList.remove("disable-btn");
+
+      publishBtn.addEventListener("click", handleMenuButtonClick);
+
+      return () => {
+        publishBtn.removeEventListener("click", handleMenuButtonClick);
+      };
+    }
+  });
+
   const handleChannelIDClick = () => {
     if (channelIDInputRef.current) {
       channelIDInputRef.current.select();
@@ -109,6 +133,33 @@ function Basic() {
 
   //POST REQUEST
 
+  const SaveLinksData = async () => {
+    try {
+      if (Email !== undefined) {
+        const data = {
+          fblink: fblink,
+          instalink: instalink,
+          twitterlink: twitterlink,
+          websitelink: weblink,
+          channelID: channelID,
+        };
+        const response = await fetch(
+          `http://localhost:3000/savelinksdata/${Email}`,
+          {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        await response.json();
+      }
+    } catch (error) {
+      // console.log(error.message);
+    }
+  };
+
   const saveData = async () => {
     try {
       setLoading(true);
@@ -134,6 +185,7 @@ function Basic() {
             },
           }
         );
+        SaveLinksData();
 
         const Data = await response.json();
         if (Data === "DONE") {
@@ -149,30 +201,6 @@ function Basic() {
       // console.log(error.message);
     }
   };
-
-  useEffect(() => {
-    const handleMenuButtonClick = () => {
-      if (channelDescription === "" || channelName === "") {
-        alert("Input fields can't be empty");
-      } else {
-        saveData();
-      }
-    };
-
-    const publishBtn = document.querySelector(".save-customize");
-
-    if (changes === false) {
-      publishBtn.classList.add("disable-btn");
-    } else {
-      publishBtn.classList.remove("disable-btn");
-
-      publishBtn.addEventListener("click", handleMenuButtonClick);
-
-      return () => {
-        publishBtn.removeEventListener("click", handleMenuButtonClick);
-      };
-    }
-  });
 
   return (
     <>
@@ -301,7 +329,10 @@ function Basic() {
                         type="text"
                         className="edit-instalink"
                         value={instalink}
-                        onChange={(e) => setInstaLink(e.target.value)}
+                        onChange={(e) => {
+                          setInstaLink(e.target.value);
+                          setChanges(true);
+                        }}
                       />
                       <DeleteOutlineOutlinedIcon
                         className="delete-social"
@@ -326,7 +357,10 @@ function Basic() {
                         type="text"
                         className="edit-instalink"
                         value={instalink}
-                        onChange={(e) => setInstaLink(e.target.value)}
+                        onChange={(e) => {
+                          setInstaLink(e.target.value);
+                          setChanges(true);
+                        }}
                       />
                       <DeleteOutlineOutlinedIcon
                         className="delete-social"
@@ -345,7 +379,10 @@ function Basic() {
                         type="text"
                         className="edit-fblink"
                         value={fblink}
-                        onChange={(e) => setfbLink(e.target.value)}
+                        onChange={(e) => {
+                          setfbLink(e.target.value);
+                          setChanges(true);
+                        }}
                       />
                       <DeleteOutlineOutlinedIcon
                         className="delete-social"
@@ -370,7 +407,10 @@ function Basic() {
                         type="text"
                         className="edit-fblink"
                         value={fblink}
-                        onChange={(e) => setfbLink(e.target.value)}
+                        onChange={(e) => {
+                          setfbLink(e.target.value);
+                          setChanges(true);
+                        }}
                       />
                       <DeleteOutlineOutlinedIcon
                         className="delete-social"
@@ -389,7 +429,10 @@ function Basic() {
                         type="text"
                         className="edit-twitterlink"
                         value={twitterlink}
-                        onChange={(e) => settwitterLink(e.target.value)}
+                        onChange={(e) => {
+                          settwitterLink(e.target.value);
+                          setChanges(true);
+                        }}
                       />
                       <DeleteOutlineOutlinedIcon
                         className="delete-social"
@@ -414,7 +457,10 @@ function Basic() {
                         type="text"
                         className="edit-twitterlink"
                         value={twitterlink}
-                        onChange={(e) => settwitterLink(e.target.value)}
+                        onChange={(e) => {
+                          settwitterLink(e.target.value);
+                          setChanges(true);
+                        }}
                       />
                       <DeleteOutlineOutlinedIcon
                         className="delete-social"
@@ -433,7 +479,10 @@ function Basic() {
                         type="text"
                         className="edit-weblink"
                         value={weblink}
-                        onChange={(e) => setwebLink(e.target.value)}
+                        onChange={(e) => {
+                          setwebLink(e.target.value);
+                          setChanges(true);
+                        }}
                       />
                       <DeleteOutlineOutlinedIcon
                         className="delete-social"
@@ -458,7 +507,10 @@ function Basic() {
                         type="text"
                         className="edit-weblink"
                         value={weblink}
-                        onChange={(e) => setwebLink(e.target.value)}
+                        onChange={(e) => {
+                          setwebLink(e.target.value);
+                          setChanges(true);
+                        }}
                       />
                       <DeleteOutlineOutlinedIcon
                         className="delete-social"
