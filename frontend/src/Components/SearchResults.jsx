@@ -1,7 +1,7 @@
 import Navbar from "./Navbar";
 import LeftPanel from "./LeftPanel";
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import "../Css/search.css";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import Tooltip from "@mui/material/Tooltip";
@@ -36,8 +36,6 @@ function SearchResults() {
   document.title = data && data !== undefined ? `${data} - YouTube` : "YouTube";
 
   const token = localStorage.getItem("userToken");
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (token) {
@@ -255,8 +253,9 @@ function SearchResults() {
             <div className="thischannel-videos-section">
               {searchedChannelData &&
                 searchedChannelData.length > 0 &&
-                userVideos && userVideos.length > 0 &&
-                 userVideos.map((index) => {
+                userVideos &&
+                userVideos.length > 0 &&
+                userVideos.map((index) => {
                   return (
                     <>
                       <div className="thischannel-all-data" key={index}>
@@ -340,11 +339,15 @@ function SearchResults() {
                       src={element.channelProfile}
                       alt="channelDP"
                       className="channel-img"
-                      onClick={() => navigate(`/channel/${element._id}`)}
+                      onClick={() =>
+                        (window.location.href = `/channel/${element._id}`)
+                      }
                     />
                     <div
                       className="channel-extra-content"
-                      onClick={() => navigate(`/channel/${element._id}`)}
+                      onClick={() =>
+                        (window.location.href = `/channel/${element._id}`)
+                      }
                     >
                       <div className="channel-liner">
                         <p className="new-title">{element.channelName}</p>
@@ -438,7 +441,7 @@ function SearchResults() {
           <div className="thischannel-videos-section">
             <p
               style={
-                loading === true
+                userVideos.message === "USER DOESN'T EXIST" || loading === true
                   ? { visibility: "hidden", display: "none" }
                   : { display: "block", position: "relative", bottom: "20px" }
               }
@@ -448,7 +451,8 @@ function SearchResults() {
             </p>
             {searchedChannelData &&
               searchedChannelData.length > 0 &&
-              userVideos && userVideos.length > 0 &&
+              userVideos &&
+              userVideos.length > 0 &&
               userVideos.map((element, index) => {
                 return (
                   <>
@@ -459,12 +463,10 @@ function SearchResults() {
                         if (token) {
                           updateViews(element._id);
                           setTimeout(() => {
-                            navigate(`/video/${element._id}`);
-                            window.location.reload();
+                            window.location.href = `/video/${element._id}`;
                           }, 400);
                         } else {
-                          navigate(`/video/${element._id}`);
-                          window.location.reload();
+                          window.location.href = `/video/${element._id}`;
                         }
                       }}
                     >
@@ -733,12 +735,10 @@ function SearchResults() {
                       if (token) {
                         updateViews(element._id);
                         setTimeout(() => {
-                          navigate(`/video/${element._id}`);
-                          window.location.reload();
+                          window.location.href = `/video/${element._id}`;
                         }, 400);
                       } else {
-                        navigate(`/video/${element._id}`);
-                        window.location.reload();
+                        window.location.href = `/video/${element._id}`;
                       }
                     }}
                   >
@@ -1000,11 +1000,15 @@ function SearchResults() {
                       src={element.channelProfile}
                       alt="channelDP"
                       className="channel-img"
-                      onClick={() => navigate(`/channel/${element._id}`)}
+                      onClick={() =>
+                        (window.location.href = `/channel/${element._id}`)
+                      }
                     />
                     <div
                       className="channel-extra-content"
-                      onClick={() => navigate(`/channel/${element._id}`)}
+                      onClick={() =>
+                        (window.location.href = `/channel/${element._id}`)
+                      }
                     >
                       <div className="channel-liner">
                         <p className="new-title">{element.channelName}</p>
@@ -1098,12 +1102,10 @@ function SearchResults() {
                       if (token) {
                         updateViews(element._id);
                         setTimeout(() => {
-                          navigate(`/video/${element._id}`);
-                          window.location.reload();
+                          window.location.href = `/video/${element._id}`;
                         }, 400);
                       } else {
-                        navigate(`/video/${element._id}`);
-                        window.location.reload();
+                        window.location.href = `/video/${element._id}`;
                       }
                     }}
                   >

@@ -11,6 +11,7 @@ import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutl
 import YouTubeIcon from "@mui/icons-material/YouTube";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import noVideo from "../../img/no-video2.png";
 
 function Dashboard() {
   const [myVideos, setMyVideos] = useState([]);
@@ -118,6 +119,7 @@ function Dashboard() {
 
   const sortedVideos =
     myVideos &&
+    myVideos !== "USER DOESN'T EXIST" &&
     myVideos.length > 0 &&
     myVideos.sort((a, b) => b.views - a.views);
 
@@ -155,6 +157,68 @@ function Dashboard() {
     );
   }
 
+  if (myVideos.message === "USER DOESN'T EXIST") {
+    return (
+      <>
+        <div className="studio-dashboard-section">
+          <div
+            className="dashboard-data"
+            style={{
+              left: menu ? "125px" : "310px",
+              transition: menu ? "all .1s ease" : "none",
+            }}
+          >
+            <p className="dashboard-top">Channel dashboard</p>
+            <div className="dash-data-all">
+              <div className="left-dashboard-data">
+                <div className="uploadnew-video-dash">
+                  <div className="dashed-dash">
+                    <div className="dash-dataimp">
+                      <img
+                        src={noVideo}
+                        alt="upload"
+                        className="noupload-img"
+                      />
+                      <p>Want to see metrics on your recent video?</p>
+                      <p>Upload and publish a video to get started.</p>
+                      <button
+                        
+                        className="uploadnewone-video"
+                      >
+                        UPLOAD VIDEOS
+                      </button>
+                      
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="right-dashboard-data">
+                <div className="dashboard-analytics">
+                  <p>Channel analytics</p>
+                  <div className="subscriber-analytics">
+                    <p>Current subscribers</p>
+                    <p>0</p>
+                  </div>
+                  <div className="channel-summary" style={{ border: "none" }}>
+                    <p>Summary</p>
+                    <div className="channel-totalviews-analytics">
+                      <p>Views</p>
+                      <p>0</p>
+                    </div>
+                    <div className="channel-totalvideos-analytics">
+                      <p>Videos</p>
+                      <p>0</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  }
+
   return (
     <>
       <div className="studio-dashboard-section">
@@ -175,7 +239,7 @@ function Dashboard() {
                     <img
                       src={
                         myVideos &&
-                        myVideos.length > 0 &&
+                        myVideos.message !== "USER DOESN'T EXIST" &&
                         myVideos[0].thumbnailURL
                       }
                       alt="thumbnail"
@@ -190,7 +254,7 @@ function Dashboard() {
                           />
                           <p>
                             {myVideos &&
-                              myVideos.length > 0 &&
+                              myVideos.message !== "USER DOESN'T EXIST" &&
                               myVideos[0].views}
                           </p>
                         </div>
@@ -201,7 +265,7 @@ function Dashboard() {
                           />
                           <p>
                             {myVideos &&
-                              myVideos.length > 0 &&
+                              myVideos.message !== "USER DOESN'T EXIST" &&
                               myVideos[0].comments.length}
                           </p>
                         </div>
@@ -212,7 +276,7 @@ function Dashboard() {
                           />
                           <p>
                             {myVideos &&
-                              myVideos.length > 0 &&
+                              myVideos.message !== "USER DOESN'T EXIST" &&
                               myVideos[0].likes}
                           </p>
                         </div>
@@ -224,6 +288,7 @@ function Dashboard() {
                           style={
                             dropDown === false &&
                             myVideos &&
+                            myVideos.message !== "USER DOESN'T EXIST" &&
                             myVideos.length > 1
                               ? { color: "#aaa", cursor: "pointer" }
                               : { display: "none" }
@@ -234,7 +299,10 @@ function Dashboard() {
                           fontSize="medium"
                           className="expandd"
                           style={
-                            dropDown === true && myVideos && myVideos.length > 1
+                            dropDown === true &&
+                            myVideos &&
+                            myVideos.message !== "USER DOESN'T EXIST" &&
+                            myVideos.length > 1
                               ? { color: "#aaa", cursor: "pointer" }
                               : { display: "none" }
                           }
@@ -245,7 +313,10 @@ function Dashboard() {
                     <div
                       className="extra-performance-data"
                       style={
-                        myVideos && myVideos.length > 1 && dropDown === true
+                        myVideos &&
+                        myVideos.message !== "USER DOESN'T EXIST" &&
+                        myVideos.length > 1 &&
+                        dropDown === true
                           ? { display: "block" }
                           : { display: "none" }
                       }

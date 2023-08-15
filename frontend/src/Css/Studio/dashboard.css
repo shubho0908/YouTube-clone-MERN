@@ -6,8 +6,7 @@
   top: 100px;
   left: 310px;
   width: -webkit-fill-available;
-  animation: FADEINN .45s ease;
-
+  animation: FADEINN 0.45s ease;
 }
 
 .dashboard-top {
@@ -298,7 +297,7 @@
 }
 
 .dashboard-analytics > p {
-  font-size: 17px;
+  font-size: 19px;
 }
 
 .subscriber-analytics {
@@ -350,4 +349,45 @@
 
 .make-white:hover {
   color: white !important;
+}
+
+.uploadnew-video-dash {
+  background-color: #282828;
+  border: 1px solid rgba(128, 128, 128, 0.333);
+  padding: 14px;
+  position: relative;
+  top: 25px;
+  border-radius: 5px;
+}
+
+.dashed-dash {
+  border: 1px dashed rgba(128, 128, 128, 0.333);
+  padding-left: 55px;
+  padding-right: 55px;
+  padding-top: 100px;
+  padding-bottom: 100px;
+  border-radius: 3px;
+  text-align: center;
+}
+
+.dash-dataimp > p {
+  font-size: 14.5px;
+  color: #aaa;
+}
+
+.noupload-img {
+  width: 150px;
+}
+
+.dash-dataimp>button{
+  border: none;
+  outline: none;
+  background-color: #3eaffe;
+  color: #282828;
+  padding: 10px;
+  padding-left: 16px;
+  padding-right: 16px;
+  font-size: 15px;
+  border-radius: 2px;
+  margin-top: 25px;
 }

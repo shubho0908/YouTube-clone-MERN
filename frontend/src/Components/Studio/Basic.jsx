@@ -158,6 +158,8 @@ function Basic() {
   };
 
   useEffect(() => {
+    const publishBtn = document.querySelector(".save-customize");
+
     const handleMenuButtonClick = () => {
       if (channelDescription === "" || channelName === "") {
         alert("Input fields can't be empty");
@@ -168,6 +170,7 @@ function Basic() {
         if (Linkchanges) {
           SaveLinksData();
         }
+
         setTimeout(() => {
           setLoading(false);
           setBasicChanges(false);
@@ -176,22 +179,19 @@ function Basic() {
         }, 3800);
       }
     };
-  
-    const publishBtn = document.querySelector(".save-customize");
-  
-    if (Basicchanges === false && Linkchanges === false) {
+
+    if ((Basicchanges === false && Linkchanges === false) || loading) {
       publishBtn.classList.add("disable-btn");
     } else {
       publishBtn.classList.remove("disable-btn");
-  
+
       publishBtn.addEventListener("click", handleMenuButtonClick);
-  
+
       return () => {
         publishBtn.removeEventListener("click", handleMenuButtonClick);
       };
     }
   });
-  
 
   return (
     <>

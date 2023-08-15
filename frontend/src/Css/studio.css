@@ -190,7 +190,7 @@
   cursor: wait;
   color: #282828;
   background-color: #3ea6ff;
-  opacity: .5;
+  opacity: 0.5;
   padding: 8px 20px;
   border-radius: 3px;
   font-size: 16px;
@@ -594,4 +594,22 @@
   padding-top: 10px;
   padding-bottom: 10px;
   padding-left: 10px;
+}
+
+.create-btn2 {
+  display: flex;
+  opacity: 0;
+  cursor: pointer;
+  align-items: center;
+  border: 1px solid black;
+  padding-left: 10px;
+  padding-right: 10px;
+  transition: all 0.2s ease;
+  position: absolute;
+  top: 489px;
+  left: 445px;
+  padding: 9px;
+  padding-left: 28px;
+  padding-right: 56px;
+  z-index: 2;
 }

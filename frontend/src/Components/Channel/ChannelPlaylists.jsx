@@ -77,9 +77,7 @@ function ChannelPlaylists(prop) {
     return (
       <div className="no-playlists">
         <img src={nothing} alt="no results" className="nothing-found" />
-        <p className="no-results" style={{ fontSize: "15px" }}>
-          No playlists found!
-        </p>
+        <p className="no-results">No playlists found!</p>
       </div>
     );
   }

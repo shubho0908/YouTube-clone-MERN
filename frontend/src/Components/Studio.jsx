@@ -95,16 +95,50 @@ function Studio() {
 
   useEffect(() => {
     const handleClick = () => {
+      console.log("Button clicked");
       setIsClicked(true);
     };
 
     const createBtn = document.querySelector(".create-btn");
+
     if (createBtn) {
       createBtn.addEventListener("click", handleClick);
 
       return () => {
-        if (createBtn) {
-          createBtn.removeEventListener("click", handleClick);
+        createBtn.removeEventListener("click", handleClick);
+      };
+    }
+  }, []);
+
+  useEffect(() => {
+    const handleClick = () => {
+      console.log("Button clicked");
+      setIsClicked(true);
+    };
+
+    const createBtn = document.querySelector(".create-btn2");
+
+    if (createBtn) {
+      createBtn.addEventListener("click", handleClick);
+
+      return () => {
+        createBtn.removeEventListener("click", handleClick);
+      };
+    }
+  }, []);
+
+  useEffect(() => {
+    const handleClick = () => {
+      setIsClicked(true);
+    };
+
+    const uploadBtn = document.querySelector(".uploadnewone-video");
+    if (uploadBtn) {
+      uploadBtn.addEventListener("click", handleClick);
+
+      return () => {
+        if (uploadBtn) {
+          uploadBtn.removeEventListener("click", handleClick);
         }
       };
     }
@@ -542,6 +576,7 @@ function Studio() {
           />
           <p>CREATE</p>
         </div>
+        <div className="create-btn2">CREATE</div>
         <div
           className="create-channel"
           style={
