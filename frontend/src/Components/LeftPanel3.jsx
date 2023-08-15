@@ -300,6 +300,17 @@ function LeftPanel2() {
               className="current-video-thumbnail"
               style={{ width: studioMenuClicked ? "70px" : "220px" }}
             />
+            <Tooltip
+              TransitionComponent={Zoom}
+              title="View on YouTube"
+              placement="bottom"
+            >
+              <YouTubeIcon
+                className="watch-video2"
+                fontSize="medium"
+                style={{ color: "white" }}
+              />
+            </Tooltip>
           </div>
         </div>
         <div className="second-panel">

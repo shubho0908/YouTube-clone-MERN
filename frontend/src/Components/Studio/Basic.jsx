@@ -1,9 +1,14 @@
 import { useState, useEffect, useRef } from "react";
 import jwtDecode from "jwt-decode";
 import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined";
-import ReactLoading from "react-loading";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import TwitterIcon from "@mui/icons-material/Twitter";
+import LanguageIcon from "@mui/icons-material/Language";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import AddIcon from "@mui/icons-material/Add";
+import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 
 function Basic() {
   const [Email, setEmail] = useState("");
@@ -14,6 +19,16 @@ function Basic() {
   const channelIDInputRef = useRef(null);
   const [changes, setChanges] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [Links, setLinks] = useState([]);
+  const [addLink, setAddLink] = useState(false);
+  const [instaSelected, setInstaSelected] = useState(false);
+  const [FBSelected, setFBSelected] = useState(false);
+  const [TwitterSelected, setTwitterSelected] = useState(false);
+  const [WebSelected, setWebSelected] = useState(false);
+  const [instalink, setInstaLink] = useState("");
+  const [fblink, setfbLink] = useState("");
+  const [twitterlink, settwitterLink] = useState("");
+  const [weblink, setwebLink] = useState("");
 
   //TOAST FUNCTIONS
 
@@ -63,9 +78,14 @@ function Basic() {
           `http://localhost:3000/getchannelid/${Email}`
         );
         const data = await response.json();
-        const { channelDescription, channelID } = data;
+        const { channelDescription, channelID, links } = data;
         setChannelDescription(channelDescription);
         setChannelID(channelID);
+        setLinks(links);
+        setInstaLink(links[0].instagram ? links[0].instagram : "");
+        setfbLink(links[0].facebook ? links[0].facebook : "");
+        settwitterLink(links[0].twitter ? links[0].twitter : "");
+        setwebLink(links[0].website ? links[0].website : "");
       } catch (error) {
         // console.log(error.message);
       }
@@ -258,6 +278,241 @@ function Basic() {
               />
             </>
           )}
+        </div>
+        <div className="basic-links-section">
+          <p className="basic-channelurl-head">Links</p>
+          <p className="basic-link-desc">
+            Share external links with your viewers. They&apos;ll be visible on
+            your channel&apos;s about page.
+          </p>
+          {Links &&
+            Links.length > 0 &&
+            Links.map((element, index) => {
+              return (
+                <div className="uerlinks-data" key={index}>
+                  {element.instagram && element.instagram !== "" && (
+                    <div className="users-instalink">
+                      <InstagramIcon
+                        fontSize="large"
+                        className="studio-social-icons"
+                        style={{ color: "white" }}
+                      />
+                      <input
+                        type="text"
+                        className="edit-instalink"
+                        value={instalink}
+                        onChange={(e) => setInstaLink(e.target.value)}
+                      />
+                      <DeleteOutlineOutlinedIcon
+                        className="delete-social"
+                        style={{ color: "#aaaaaa89" }}
+                      />
+                    </div>
+                  )}
+                  {instaSelected && (
+                    <div
+                      className="users-instalink"
+                      style={{
+                        transition: "all .2s ease",
+                        animation: "social-animation2 0.5s ease",
+                      }}
+                    >
+                      <InstagramIcon
+                        fontSize="large"
+                        className="studio-social-icons"
+                        style={{ color: "white" }}
+                      />
+                      <input
+                        type="text"
+                        className="edit-instalink"
+                        value={instalink}
+                        onChange={(e) => setInstaLink(e.target.value)}
+                      />
+                      <DeleteOutlineOutlinedIcon
+                        className="delete-social"
+                        style={{ color: "#aaaaaa89" }}
+                      />
+                    </div>
+                  )}
+                  {element.facebook && element.facebook !== "" && (
+                    <div className="users-fblink">
+                      <FacebookIcon
+                        fontSize="large"
+                        className="studio-social-icons"
+                        style={{ color: "white" }}
+                      />
+                      <input
+                        type="text"
+                        className="edit-fblink"
+                        value={fblink}
+                        onChange={(e) => setfbLink(e.target.value)}
+                      />
+                      <DeleteOutlineOutlinedIcon
+                        className="delete-social"
+                        style={{ color: "#aaaaaa89" }}
+                      />
+                    </div>
+                  )}
+                  {FBSelected && (
+                    <div
+                      className="users-fblink"
+                      style={{
+                        transition: "all .2s ease",
+                        animation: "social-animation2 0.5s ease",
+                      }}
+                    >
+                      <FacebookIcon
+                        fontSize="large"
+                        className="studio-social-icons"
+                        style={{ color: "white" }}
+                      />
+                      <input
+                        type="text"
+                        className="edit-fblink"
+                        value={fblink}
+                        onChange={(e) => setfbLink(e.target.value)}
+                      />
+                      <DeleteOutlineOutlinedIcon
+                        className="delete-social"
+                        style={{ color: "#aaaaaa89" }}
+                      />
+                    </div>
+                  )}
+                  {element.twitter && element.twitter !== "" && (
+                    <div className="users-twitterlink">
+                      <TwitterIcon
+                        fontSize="large"
+                        className="studio-social-icons"
+                        style={{ color: "white" }}
+                      />
+                      <input
+                        type="text"
+                        className="edit-twitterlink"
+                        value={twitterlink}
+                        onChange={(e) => settwitterLink(e.target.value)}
+                      />
+                      <DeleteOutlineOutlinedIcon
+                        className="delete-social"
+                        style={{ color: "#aaaaaa89" }}
+                      />
+                    </div>
+                  )}
+                  {TwitterSelected && (
+                    <div
+                      className="users-twitterlink"
+                      style={{
+                        transition: "all .2s ease",
+                        animation: "social-animation2 0.5s ease",
+                      }}
+                    >
+                      <TwitterIcon
+                        fontSize="large"
+                        className="studio-social-icons"
+                        style={{ color: "white" }}
+                      />
+                      <input
+                        type="text"
+                        className="edit-twitterlink"
+                        value={twitterlink}
+                        onChange={(e) => settwitterLink(e.target.value)}
+                      />
+                      <DeleteOutlineOutlinedIcon
+                        className="delete-social"
+                        style={{ color: "#aaaaaa89" }}
+                      />
+                    </div>
+                  )}
+                  {element.website && element.website !== "" && (
+                    <div className="users-weblink">
+                      <LanguageIcon
+                        fontSize="large"
+                        className="studio-social-icons"
+                        style={{ color: "white" }}
+                      />
+                      <input
+                        type="text"
+                        className="edit-weblink"
+                        value={weblink}
+                        onChange={(e) => setwebLink(e.target.value)}
+                      />
+                      <DeleteOutlineOutlinedIcon
+                        className="delete-social"
+                        style={{ color: "#aaaaaa89" }}
+                      />
+                    </div>
+                  )}
+                  {WebSelected && (
+                    <div
+                      className="users-weblink"
+                      style={{
+                        transition: "all .2s ease",
+                        animation: "social-animation2 0.5s ease",
+                      }}
+                    >
+                      <LanguageIcon
+                        fontSize="large"
+                        className="studio-social-icons"
+                        style={{ color: "white" }}
+                      />
+                      <input
+                        type="text"
+                        className="edit-weblink"
+                        value={weblink}
+                        onChange={(e) => setwebLink(e.target.value)}
+                      />
+                      <DeleteOutlineOutlinedIcon
+                        className="delete-social"
+                        style={{ color: "#aaaaaa89" }}
+                      />
+                    </div>
+                  )}
+                  <div
+                    className="add-newlink-social"
+                    onClick={() => setAddLink(!addLink)}
+                  >
+                    <AddIcon fontSize="medium" style={{ color: "#3eaffe" }} />
+                    <p>ADD LINK</p>
+                  </div>
+                  <div
+                    className="add-more-socials"
+                    style={addLink ? { display: "flex" } : { display: "none" }}
+                  >
+                    {!element.instagram && (
+                      <InstagramIcon
+                        fontSize="large"
+                        className="addthis-icon"
+                        style={{ color: "white" }}
+                        onClick={() => setInstaSelected(!instaSelected)}
+                      />
+                    )}
+                    {!element.facebook && (
+                      <FacebookIcon
+                        fontSize="large"
+                        className="addthis-icon"
+                        style={{ color: "white" }}
+                        onClick={() => setFBSelected(!FBSelected)}
+                      />
+                    )}
+                    {!element.twitter && (
+                      <TwitterIcon
+                        fontSize="large"
+                        className="addthis-icon"
+                        style={{ color: "white" }}
+                        onClick={() => setTwitterSelected(!TwitterSelected)}
+                      />
+                    )}
+                    {!element.website && (
+                      <LanguageIcon
+                        fontSize="large"
+                        className="addthis-icon"
+                        style={{ color: "white" }}
+                        onClick={() => setWebSelected(!WebSelected)}
+                      />
+                    )}
+                  </div>
+                </div>
+              );
+            })}
         </div>
       </div>
     </>

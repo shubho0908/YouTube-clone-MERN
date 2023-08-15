@@ -79,10 +79,22 @@
 }
 
 .watch-video {
+  pointer-events: none;
+
   position: absolute;
   left: 120px;
   top: 120px;
-  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s ease;
+}
+
+.watch-video2 {
+  pointer-events: none;
+
+  position: absolute;
+  right: 32px;
+  top: 83px;
+  visibility: hidden;
   transition: all 0.2s ease;
 }
 
@@ -91,16 +103,20 @@
   transition: all 0.2s ease;
 }
 
-.redirect-video:hover .current-video-thumbnail {
-  opacity: 0.2;
+.current-video-thumbnail:hover {
+  filter: brightness(0.45);
 }
 
-.redirect-video:hover .current-video-duraation {
+.current-video-thumbnail:hover .current-video-duraation {
   opacity: 0.3;
 }
 
-.redirect-video:hover .watch-video {
-  opacity: 1;
+.current-video-thumbnail:hover ~ .watch-video {
+  visibility: visible;
+}
+
+.current-video-thumbnail:hover ~ .watch-video2 {
+  visibility: visible;
 }
 
 .first-panel1 {

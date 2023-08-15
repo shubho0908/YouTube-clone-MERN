@@ -5,7 +5,6 @@
   background-color: #282828;
   height: max-content;
   animation: FADEINN 1s ease;
-
 }
 
 .channel-customize-section {
@@ -303,6 +302,7 @@
 .basic-links-section {
   position: relative;
   top: 110px;
+  padding-bottom: 80px;
 }
 
 .links-areaa {
@@ -389,4 +389,110 @@
 
 .spin3 > p {
   margin-top: 15px;
+}
+
+.uerlinks-data {
+  margin-top: 25px;
+}
+
+.users-instalink,
+.users-fblink,
+.users-twitterlink,
+.users-weblink {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  border: 1px solid #aaaaaa89;
+  margin-bottom: 10px;
+  border-radius: 3px;
+}
+
+.edit-instalink,
+.edit-fblink,
+.edit-twitterlink,
+.edit-weblink {
+  background-color: #ffffff00;
+  padding: 5px;
+  outline: none;
+  border: none;
+  width: -webkit-fill-available;
+  color: white;
+  font-size: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.studio-social-icons {
+  cursor: pointer;
+  background-color: #1f1f1f;
+  padding: 8px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.add-newlink-social {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.add-newlink-social > p {
+  margin-left: 5px;
+  color: #3eaffe;
+}
+
+.delete-social {
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.delete-social:hover {
+  color: white !important;
+}
+
+.add-more-socials {
+  position: relative;
+  top: 15px;
+  width: fit-content;
+  background-color: #1f1f1f;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 5px;
+  animation: social-animation 0.2s ease;
+}
+
+@keyframes social-animation {
+  0% {
+    top: 10px;
+    opacity: 0;
+  }
+
+  100% {
+    top: 15px;
+    opacity: 1;
+  }
+}
+
+@keyframes social-animation2 {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.addthis-icon {
+  cursor: pointer;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.addthis-icon:hover {
+  background-color: #323232;
 }

@@ -143,6 +143,18 @@ function VideoSection() {
       theme: "dark",
     });
 
+  const CommentDeleteNotify = () =>
+    toast.success("Comment deleted!", {
+      position: "bottom-center",
+      autoClose: 1500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+
   // USE EFFECTS
 
   useEffect(() => {
@@ -773,6 +785,7 @@ function VideoSection() {
       const data = await response.json();
       if (data === "Comment Deleted") {
         setCommentOpacity(1);
+        CommentDeleteNotify();
       }
       // window.location.reload();
     } catch (error) {
