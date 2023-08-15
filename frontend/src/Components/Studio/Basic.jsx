@@ -5,10 +5,8 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import LanguageIcon from "@mui/icons-material/Language";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import AddIcon from "@mui/icons-material/Add";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import CloseIcon from "@mui/icons-material/Close";
 
 function Basic() {
   const [Email, setEmail] = useState("");
@@ -17,7 +15,8 @@ function Basic() {
   const [channelID, setChannelID] = useState("");
   const channelUrl = "http://localhost:5173/channel";
   const channelIDInputRef = useRef(null);
-  const [changes, setChanges] = useState(false);
+  const [Basicchanges, setBasicChanges] = useState(false);
+  const [Linkchanges, setLinkChanges] = useState(false);
   const [loading, setLoading] = useState(false);
   const [Links, setLinks] = useState([]);
   const [addLink, setAddLink] = useState(false);
@@ -30,20 +29,6 @@ function Basic() {
   const [twitterlink, settwitterLink] = useState("");
   const [weblink, setwebLink] = useState("");
 
-  //TOAST FUNCTIONS
-
-  const saveNotify = () =>
-    toast.success("Changes saved successfully!", {
-      position: "bottom-center",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-    });
-
   //USE EFFECTS
 
   useEffect(() => {
@@ -52,30 +37,6 @@ function Basic() {
       setEmail(jwtDecode(token).email);
     }
   }, []);
-
-  useEffect(() => {
-    const handleMenuButtonClick = () => {
-      if (channelDescription === "" || channelName === "") {
-        alert("Input fields can't be empty");
-      } else {
-        saveData();
-      }
-    };
-
-    const publishBtn = document.querySelector(".save-customize");
-
-    if (changes === false) {
-      publishBtn.classList.add("disable-btn");
-    } else {
-      publishBtn.classList.remove("disable-btn");
-
-      publishBtn.addEventListener("click", handleMenuButtonClick);
-
-      return () => {
-        publishBtn.removeEventListener("click", handleMenuButtonClick);
-      };
-    }
-  });
 
   const handleChannelIDClick = () => {
     if (channelIDInputRef.current) {
@@ -135,6 +96,8 @@ function Basic() {
 
   const SaveLinksData = async () => {
     try {
+      setLoading(true);
+
       if (Email !== undefined) {
         const data = {
           fblink: fblink,
@@ -174,7 +137,6 @@ function Basic() {
           channelDescription,
           channelID,
         };
-
         const response = await fetch(
           `http://localhost:3000/updatechanneldata/${Email}`,
           {
@@ -185,22 +147,51 @@ function Basic() {
             },
           }
         );
-        SaveLinksData();
 
         const Data = await response.json();
-        if (Data === "DONE") {
-          setLoading(false);
-          setChanges(false);
-          saveNotify();
-        } else {
-          setLoading(true);
-        }
+        console.log(Data);
       }
     } catch (error) {
       setLoading(false);
       // console.log(error.message);
     }
   };
+
+  useEffect(() => {
+    const handleMenuButtonClick = () => {
+      if (channelDescription === "" || channelName === "") {
+        alert("Input fields can't be empty");
+      } else {
+        if (Basicchanges) {
+          saveData();
+        }
+        if (Linkchanges) {
+          SaveLinksData();
+        }
+        setTimeout(() => {
+          setLoading(false);
+          setBasicChanges(false);
+          setLinkChanges(false);
+          window.location.reload();
+        }, 3800);
+      }
+    };
+  
+    const publishBtn = document.querySelector(".save-customize");
+  
+    if (Basicchanges === false && Linkchanges === false) {
+      publishBtn.classList.add("disable-btn");
+    } else {
+      publishBtn.classList.remove("disable-btn");
+  
+      publishBtn.addEventListener("click", handleMenuButtonClick);
+  
+      return () => {
+        publishBtn.removeEventListener("click", handleMenuButtonClick);
+      };
+    }
+  });
+  
 
   return (
     <>
@@ -210,6 +201,7 @@ function Basic() {
           opacity: loading ? "0.35" : "1",
           transition: "opacity .15s ease",
           cursor: loading ? "wait" : "auto",
+          pointerEvents: loading ? "none" : "auto",
         }}
       >
         <div className="basic-name-section">
@@ -235,7 +227,7 @@ function Basic() {
               placeholder="Enter channel name"
               onChange={(e) => {
                 setChannelName(e.target.value);
-                setChanges(true);
+                setBasicChanges(true);
               }}
             />
           )}
@@ -265,7 +257,7 @@ function Basic() {
               onChange={(e) => {
                 if (channelName !== undefined) {
                   setChannelDescription(e.target.value);
-                  setChanges(true);
+                  setBasicChanges(true);
                 }
               }}
               cols="30"
@@ -311,7 +303,8 @@ function Basic() {
           <p className="basic-channelurl-head">Links</p>
           <p className="basic-link-desc">
             Share external links with your viewers. They&apos;ll be visible on
-            your channel&apos;s about page.
+            your channel&apos;s about page. Note: To delete/remove the pre-added
+            link kindly leave the input field empty.
           </p>
           {Links &&
             Links.length > 0 &&
@@ -331,12 +324,16 @@ function Basic() {
                         value={instalink}
                         onChange={(e) => {
                           setInstaLink(e.target.value);
-                          setChanges(true);
+                          setLinkChanges(true);
                         }}
                       />
-                      <DeleteOutlineOutlinedIcon
+                      <CloseIcon
                         className="delete-social"
                         style={{ color: "#aaaaaa89" }}
+                        onClick={() => {
+                          setLinkChanges(true);
+                          setInstaLink("");
+                        }}
                       />
                     </div>
                   )}
@@ -359,12 +356,17 @@ function Basic() {
                         value={instalink}
                         onChange={(e) => {
                           setInstaLink(e.target.value);
-                          setChanges(true);
+                          setLinkChanges(true);
                         }}
                       />
-                      <DeleteOutlineOutlinedIcon
+                      <CloseIcon
                         className="delete-social"
                         style={{ color: "#aaaaaa89" }}
+                        onClick={() => {
+                          setInstaSelected(false);
+                          setLinkChanges(true);
+                          setInstaLink("");
+                        }}
                       />
                     </div>
                   )}
@@ -381,12 +383,16 @@ function Basic() {
                         value={fblink}
                         onChange={(e) => {
                           setfbLink(e.target.value);
-                          setChanges(true);
+                          setLinkChanges(true);
                         }}
                       />
-                      <DeleteOutlineOutlinedIcon
+                      <CloseIcon
                         className="delete-social"
                         style={{ color: "#aaaaaa89" }}
+                        onClick={() => {
+                          setLinkChanges(true);
+                          setfbLink("");
+                        }}
                       />
                     </div>
                   )}
@@ -409,12 +415,17 @@ function Basic() {
                         value={fblink}
                         onChange={(e) => {
                           setfbLink(e.target.value);
-                          setChanges(true);
+                          setLinkChanges(true);
                         }}
                       />
-                      <DeleteOutlineOutlinedIcon
+                      <CloseIcon
                         className="delete-social"
                         style={{ color: "#aaaaaa89" }}
+                        onClick={() => {
+                          setFBSelected(false);
+                          setLinkChanges(true);
+                          setfbLink("");
+                        }}
                       />
                     </div>
                   )}
@@ -431,12 +442,16 @@ function Basic() {
                         value={twitterlink}
                         onChange={(e) => {
                           settwitterLink(e.target.value);
-                          setChanges(true);
+                          setLinkChanges(true);
                         }}
                       />
-                      <DeleteOutlineOutlinedIcon
+                      <CloseIcon
                         className="delete-social"
                         style={{ color: "#aaaaaa89" }}
+                        onClick={() => {
+                          setLinkChanges(true);
+                          settwitterLink("");
+                        }}
                       />
                     </div>
                   )}
@@ -459,12 +474,17 @@ function Basic() {
                         value={twitterlink}
                         onChange={(e) => {
                           settwitterLink(e.target.value);
-                          setChanges(true);
+                          setLinkChanges(true);
                         }}
                       />
-                      <DeleteOutlineOutlinedIcon
+                      <CloseIcon
                         className="delete-social"
                         style={{ color: "#aaaaaa89" }}
+                        onClick={() => {
+                          setTwitterSelected(false);
+                          setLinkChanges(true);
+                          settwitterLink("");
+                        }}
                       />
                     </div>
                   )}
@@ -481,12 +501,16 @@ function Basic() {
                         value={weblink}
                         onChange={(e) => {
                           setwebLink(e.target.value);
-                          setChanges(true);
+                          setLinkChanges(true);
                         }}
                       />
-                      <DeleteOutlineOutlinedIcon
+                      <CloseIcon
                         className="delete-social"
                         style={{ color: "#aaaaaa89" }}
+                        onClick={() => {
+                          setLinkChanges(true);
+                          setwebLink("");
+                        }}
                       />
                     </div>
                   )}
@@ -509,12 +533,17 @@ function Basic() {
                         value={weblink}
                         onChange={(e) => {
                           setwebLink(e.target.value);
-                          setChanges(true);
+                          setLinkChanges(true);
                         }}
                       />
-                      <DeleteOutlineOutlinedIcon
+                      <CloseIcon
                         className="delete-social"
                         style={{ color: "#aaaaaa89" }}
+                        onClick={() => {
+                          setWebSelected(false);
+                          setLinkChanges(true);
+                          setwebLink("");
+                        }}
                       />
                     </div>
                   )}
@@ -534,7 +563,10 @@ function Basic() {
                         fontSize="large"
                         className="addthis-icon"
                         style={{ color: "white" }}
-                        onClick={() => setInstaSelected(!instaSelected)}
+                        onClick={() => {
+                          setInstaSelected(!instaSelected);
+                          setAddLink(false);
+                        }}
                       />
                     )}
                     {!element.facebook && (
@@ -542,7 +574,10 @@ function Basic() {
                         fontSize="large"
                         className="addthis-icon"
                         style={{ color: "white" }}
-                        onClick={() => setFBSelected(!FBSelected)}
+                        onClick={() => {
+                          setFBSelected(!FBSelected);
+                          setAddLink(false);
+                        }}
                       />
                     )}
                     {!element.twitter && (
@@ -550,7 +585,10 @@ function Basic() {
                         fontSize="large"
                         className="addthis-icon"
                         style={{ color: "white" }}
-                        onClick={() => setTwitterSelected(!TwitterSelected)}
+                        onClick={() => {
+                          setTwitterSelected(!TwitterSelected);
+                          setAddLink(false);
+                        }}
                       />
                     )}
                     {!element.website && (
@@ -558,7 +596,10 @@ function Basic() {
                         fontSize="large"
                         className="addthis-icon"
                         style={{ color: "white" }}
-                        onClick={() => setWebSelected(!WebSelected)}
+                        onClick={() => {
+                          setWebSelected(!WebSelected);
+                          setAddLink(false);
+                        }}
                       />
                     )}
                   </div>

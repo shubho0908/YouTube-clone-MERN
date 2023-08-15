@@ -66,9 +66,10 @@ function ChannelPlaylists(prop) {
     getPlaylistData();
   }, [prop.newmail]);
 
-  const publicPlaylists = PlaylistData.filter(
-    (item) => item.playlist_privacy === "Public"
-  );
+  const publicPlaylists =
+    PlaylistData &&
+    PlaylistData !== "No playlists available..." &&
+    PlaylistData.filter((item) => item.playlist_privacy === "Public");
 
   const noPublicPlaylists = publicPlaylists.length === 0;
 
@@ -231,7 +232,6 @@ function ChannelPlaylists(prop) {
           </div>
         </div>
       </div>
-      
     </>
   );
 }

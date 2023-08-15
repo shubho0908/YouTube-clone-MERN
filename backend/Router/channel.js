@@ -260,17 +260,15 @@ Channel.post("/subscribe/:channelID/:email/:email2", async (req, res) => {
         channelID: youtubeChannelID.toString(),
       });
       user2.channelData[0].subscribers += 1;
-      res.json("Subscribed")
+      res.json("Subscribed");
     } else {
       user.subscribedChannels.splice(existingChannelIndex, 1);
       user2.channelData[0].subscribers -= 1;
-      res.json("Unsubscribed")
-
+      res.json("Unsubscribed");
     }
 
     await user.save();
     await user2.save();
-
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -510,11 +508,6 @@ Channel.post("/updatechanneldata/:email", async (req, res) => {
       return res.status(404).json({ error: "User not found" });
     }
 
-    if (!video) {
-      return res.status(404).json({ error: "Video data not found" });
-    }
-
-    // Update user data
     user.channelName = channelName;
     user.channelData[0].channelName = channelName;
     user.channelData[0].channelDescription = channelDescription;
@@ -571,6 +564,12 @@ Channel.post("/updatechanneldata/:email", async (req, res) => {
       }
     );
 
+    await user.save();
+
+    if (!video) {
+      return res.status(404).json({ error: "Video data not found" });
+    }
+
     video.VideoData.forEach((item) => {
       item.uploader = channelName;
     });
@@ -590,8 +589,6 @@ Channel.post("/updatechanneldata/:email", async (req, res) => {
       }
     );
 
-    // Save changes
-    await user.save();
     await video.save();
 
     if (trending) {

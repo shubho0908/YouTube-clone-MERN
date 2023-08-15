@@ -12,7 +12,7 @@ function ChannelAbout(prop) {
   const [description, setDescription] = useState();
   const [links, setLinks] = useState();
   const [joinedDate, setjoinedDate] = useState();
-  const [TotalViews, setTotalViews] = useState();
+  const [TotalViews, setTotalViews] = useState(0);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -243,7 +243,13 @@ function ChannelAbout(prop) {
             <p style={{ fontSize: "15px" }}>No data</p>
           )}
           <hr className="seperate-three seperate" />
-          <p>{TotalViews && TotalViews.toLocaleString()} views</p>
+          <p>
+            {typeof TotalViews === "number"
+              ? TotalViews.toLocaleString()
+              : "No"}{" "}
+            views
+          </p>
+
           <hr className="seperate-three seperate" />
           <Tooltip
             TransitionComponent={Zoom}

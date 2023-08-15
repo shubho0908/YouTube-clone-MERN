@@ -255,8 +255,8 @@ function SearchResults() {
             <div className="thischannel-videos-section">
               {searchedChannelData &&
                 searchedChannelData.length > 0 &&
-                userVideos &&
-                userVideos.map((index) => {
+                userVideos && userVideos.length > 0 &&
+                 userVideos.map((index) => {
                   return (
                     <>
                       <div className="thischannel-all-data" key={index}>
@@ -448,7 +448,7 @@ function SearchResults() {
             </p>
             {searchedChannelData &&
               searchedChannelData.length > 0 &&
-              userVideos &&
+              userVideos && userVideos.length > 0 &&
               userVideos.map((element, index) => {
                 return (
                   <>
