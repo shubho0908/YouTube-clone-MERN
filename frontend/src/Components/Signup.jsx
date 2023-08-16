@@ -1,8 +1,36 @@
 import { useState } from "react";
 import "../Css/navbar.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Signup() {
   const [data, setData] = useState({});
+
+  //TOASTS
+
+  const SignupNotify = () =>
+    toast.success("Signup successfull!", {
+      position: "top-center",
+      autoClose: 1200,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+
+  const ErrorNotify = () =>
+    toast.error("Input fields can't be empty.", {
+      position: "top-center",
+      autoClose: 1200,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
 
   const handleInputs = (e) => {
     setData({
@@ -13,6 +41,10 @@ function Signup() {
 
   const SubmitData = async (e) => {
     e.preventDefault();
+    if (!data.name || !data.email || !data.password) {
+      ErrorNotify();
+      return;
+    }
     try {
       const response = await fetch("http://localhost:3000/signup", {
         method: "POST",
@@ -23,9 +55,12 @@ function Signup() {
       });
       const { message, token } = await response.json();
       if (message === "REGISTRATION SUCCESSFUL") {
+        SignupNotify();
         localStorage.setItem("userToken", token);
-        window.location.reload();
-        document.body.classList.remove("bg-class");
+        setTimeout(() => {
+          window.location.reload();
+          document.body.classList.remove("bg-class");
+        }, 2000);
       }
     } catch (error) {
       alert(error.message);

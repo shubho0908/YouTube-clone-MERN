@@ -15,6 +15,8 @@ import Signin from "./Signin";
 import avatar from "../img/avatar.png";
 import { useParams } from "react-router-dom";
 import jwtDecode from "jwt-decode";
+import Tooltip from "@mui/material/Tooltip";
+import Zoom from "@mui/material/Zoom";
 
 function Navbar() {
   const { data } = useParams();
@@ -124,6 +126,11 @@ function Navbar() {
               : { justifyContent: "space-evenly", paddingRight: "25px" }
           }
         >
+          <Tooltip
+                TransitionComponent={Zoom}
+                title="YouTube studio"
+                placement="bottom"
+              >
           <VideoCallOutlinedIcon
             className="icon-btns"
             fontSize="large"
@@ -137,6 +144,7 @@ function Navbar() {
               }
             }}
           />
+          </Tooltip>
 
           <button
             onClick={() => {

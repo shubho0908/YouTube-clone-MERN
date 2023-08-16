@@ -161,6 +161,18 @@
   border: none;
 }
 
+.save-data-disable{
+  cursor: wait;
+  opacity: 45%;
+  margin-top: 22px;
+  color: #282828;
+  background-color: #3ea6ff;
+  padding: 8px 20px;
+  border-radius: 3px;
+  font-size: 16px;
+  border: none;
+}
+
 .last-btn {
   display: flex;
   align-items: center;
@@ -612,4 +624,38 @@
   padding-left: 28px;
   padding-right: 56px;
   z-index: 2;
+}
+
+.close-channel {
+  cursor: pointer;
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  padding: 5px;
+  border-radius: 100%;
+}
+
+.close-channel:hover {
+  color: white !important;
+  background-color: rgba(255, 255, 255, 0.163);
+}
+
+.loader4 {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: inline-block;
+  border-top: 3px solid #fff;
+  border-right: 3px solid transparent;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

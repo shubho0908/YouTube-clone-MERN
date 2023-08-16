@@ -1,8 +1,48 @@
 import { useState } from "react";
 import "../Css/navbar.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Signin() {
   const [data, setData] = useState({});
+
+  //TOASTS
+
+  const LoginNotify = () =>
+    toast.success("Login successfull!", {
+      position: "top-center",
+      autoClose: 1200,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+
+  const InvalidNotify = () =>
+    toast.error("Invalid Credentials!", {
+      position: "top-center",
+      autoClose: 1200,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+
+  const ErrorNotify = () =>
+    toast.error("Input fields can't be empty.", {
+      position: "top-center",
+      autoClose: 1200,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
 
   const handleInputs = (e) => {
     setData({
@@ -13,6 +53,10 @@ function Signin() {
 
   const SubmitData = async (e) => {
     e.preventDefault();
+    if (!data.email1 || !data.password1) {
+      ErrorNotify();
+      return;
+    }
     try {
       const response = await fetch("http://localhost:3000/login", {
         method: "POST",
@@ -23,9 +67,14 @@ function Signin() {
       });
       const { message, token } = await response.json();
       if (message === "LOGIN SUCCESSFUL") {
+        LoginNotify();
         localStorage.setItem("userToken", token);
-        window.location.reload();
-        document.body.classList.remove("bg-class");
+        setTimeout(() => {
+          window.location.reload();
+          document.body.classList.remove("bg-class");
+        }, 2000);
+      } else if (message === "INVALID CREDENTIALS") {
+        InvalidNotify();
       }
     } catch (error) {
       alert(error.message);
@@ -48,16 +97,16 @@ function Signin() {
             name="email1"
             className="email"
             placeholder="Email Address"
-            required
             onChange={handleInputs}
+            required
           />
           <input
             type="password"
             name="password1"
             className="password"
             placeholder="Passcode"
-            required
             onChange={handleInputs}
+            required
           />
           <button className="signup-btn" type="submit">
             Login to Your Account

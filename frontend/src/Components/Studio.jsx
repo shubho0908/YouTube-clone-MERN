@@ -21,6 +21,7 @@ import VideoCallOutlinedIcon from "@mui/icons-material/VideoCallOutlined";
 import Dashboard from "./Studio/Dashboard";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ClearRoundedIcon from "@mui/icons-material/ClearRounded";
 
 //SOCIALS
 
@@ -60,6 +61,7 @@ function Studio() {
   const [visibility, setVisibility] = useState("Public");
   const [isVisibilityClicked, setisVisibilityClicked] = useState(false);
   const [myVideos, setMyVideos] = useState([]);
+  const [isPublished, setIsPublished] = useState(false);
 
   //TOAST FUNCTIONS
 
@@ -79,6 +81,42 @@ function Studio() {
     toast.warning("Video upload was cancelled!", {
       position: "bottom-center",
       autoClose: 950,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+
+  const ErrorNotify = () =>
+    toast.error("Image/Input can't be empty.", {
+      position: "top-center",
+      autoClose: 1200,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+
+  const VideoErrorNotify = () =>
+    toast.error("Input fields can't be empty.", {
+      position: "top-center",
+      autoClose: 1200,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+
+  const ThumbnailNotify = () =>
+    toast.warning("Please select a thumbnail!", {
+      position: "top-center",
+      autoClose: 1200,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -389,7 +427,12 @@ function Studio() {
   //SAVE DATA TO DB
 
   const saveChannelData = async (e) => {
+    console.log(selectedImage, ChannelName, ChannelAbout);
     e.preventDefault();
+    if (selectedImage === null || ChannelName === "" || ChannelAbout === "") {
+      ErrorNotify();
+      return;
+    }
 
     try {
       setisLoading(true);
@@ -529,9 +572,9 @@ function Studio() {
 
   const PublishData = async () => {
     if (videoName === "" || videoDescription === "" || videoTags === "") {
-      alert("Input fields can't be empty");
+      VideoErrorNotify();
     } else if (selectedThumbnail === null) {
-      alert("Please select a thumbnail");
+      ThumbnailNotify();
     } else {
       try {
         setLoading(true);
@@ -562,6 +605,7 @@ function Studio() {
         // Handle the response
         const Data = await response.json();
         if (Data === "Published") {
+          setIsPublished(true);
           setLoading(false);
           setIsClicked(false);
           UploadedNotify();
@@ -613,6 +657,14 @@ function Studio() {
             isChannel === false ? { display: "flex" } : { display: "none" }
           }
         >
+          <ClearRoundedIcon
+            fontSize="large"
+            className="close-channel"
+            style={{ color: "rgb(170 170 170 / 50%)" }}
+            onClick={() => {
+              window.location.href = "/";
+            }}
+          />
           <p className="channel-head">Create Your Channel</p>
           <p className="channel-slogan">
             Share Your Story: Inspire and Connect with a YouTube Channel!
@@ -637,6 +689,7 @@ function Studio() {
                 name="channelname"
                 placeholder="Channel Name"
                 onChange={handleChannelname}
+                required
               />
               <textarea
                 className="channelAbout"
@@ -645,6 +698,7 @@ function Studio() {
                 placeholder="About channel"
                 onChange={handleChannelabout}
                 style={{ width: "93%", resize: "vertical" }}
+                required
               />
               <Tooltip
                 TransitionComponent={Zoom}
@@ -811,16 +865,33 @@ function Studio() {
                 </div>
               </div>
             </div>
-            <button
-              className="save-data"
-              type="submit"
-              style={
-                linksClicked === true ? { marginTop: 0 } : { marginTop: "22px" }
-              }
-              disabled={isLoading ? true : false}
-            >
-              {isLoading ? "LOADING..." : "SAVE"}
-            </button>
+            {isLoading === false ? (
+              <button
+                className={isLoading ? "save-data-disable" : "save-data"}
+                type="submit"
+                style={
+                  linksClicked === true
+                    ? { marginTop: 0 }
+                    : { marginTop: "22px" }
+                }
+                disabled={isLoading ? true : false}
+              >
+                SAVE
+              </button>
+            ) : (
+              <button
+                className={isLoading ? "save-data-disable" : "save-data"}
+                type="submit"
+                style={
+                  linksClicked === true
+                    ? { marginTop: 0 }
+                    : { marginTop: "22px" }
+                }
+                disabled={isLoading ? true : false}
+              >
+                <span className="loader4"></span>
+              </button>
+            )}
           </form>
         </div>
         <div
@@ -844,6 +915,11 @@ function Studio() {
               onClick={() => {
                 if (Progress !== 100 && selectedVideo !== null) {
                   cancelVideoUpload();
+                  CancelNotify();
+                  setTimeout(() => {
+                    window.location.reload();
+                  }, 1000);
+                } else if (Progress === 100 && isPublished === false) {
                   CancelNotify();
                   setTimeout(() => {
                     window.location.reload();
