@@ -17,6 +17,7 @@ import { useParams } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
+import { FiSearch } from "react-icons/fi";
 
 function Navbar() {
   const { data } = useParams();
@@ -36,8 +37,6 @@ function Navbar() {
       setEmail(jwtDecode(token).email);
     }
   }, [token]);
-
-  
 
   useEffect(() => {
     const getData = async () => {
@@ -92,7 +91,7 @@ function Navbar() {
             loading="lazy"
             className="youtubeLogo"
             onClick={() => {
-              window.location.href = "/"
+              window.location.href = "/";
             }}
           />
         </div>
@@ -126,24 +125,25 @@ function Navbar() {
               : { justifyContent: "space-evenly", paddingRight: "25px" }
           }
         >
+          <FiSearch fontSize="24px" color="#aaa" className="second-search" />
           <Tooltip
-                TransitionComponent={Zoom}
-                title="YouTube studio"
-                placement="bottom"
-              >
-          <VideoCallOutlinedIcon
-            className="icon-btns"
-            fontSize="large"
-            style={{ color: "rgb(160, 160, 160)" }}
-            onClick={() => {
-              if (token) {
-                window.location.href = "/studio";
-              } else {
-                setisbtnClicked(true);
-                document.body.classList.add("bg-css");
-              }
-            }}
-          />
+            TransitionComponent={Zoom}
+            title="YouTube studio"
+            placement="bottom"
+          >
+            <VideoCallOutlinedIcon
+              className="icon-btns"
+              fontSize="large"
+              style={{ color: "rgb(160, 160, 160)" }}
+              onClick={() => {
+                if (token) {
+                  window.location.href = "/studio";
+                } else {
+                  setisbtnClicked(true);
+                  document.body.classList.add("bg-css");
+                }
+              }}
+            />
           </Tooltip>
 
           <button

@@ -16,6 +16,7 @@ import Signin from "./Signin";
 import { useLocation } from "react-router-dom";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import CodeIcon from "@mui/icons-material/Code";
 
 function LeftPanel() {
   const [menuClicked, setMenuClicked] = useState(() => {
@@ -173,7 +174,7 @@ function LeftPanel() {
             }
             onClick={() => {
               localStorage.setItem("selected", "trending");
-            window.location.href = "/trending"
+              window.location.href = "/trending";
             }}
           >
             <WhatshotOutlinedIcon
@@ -249,7 +250,7 @@ function LeftPanel() {
                       className="mysubscriptions"
                       key={index}
                       onClick={() => {
-                        window.location.href = `/channel/${element.channelID}`
+                        window.location.href = `/channel/${element.channelID}`;
                       }}
                       style={
                         loading === false
@@ -290,7 +291,7 @@ function LeftPanel() {
             onClick={() => {
               if (token) {
                 localStorage.setItem("selected", "library");
-                window.location.href = "/library"
+                window.location.href = "/library";
               } else {
                 setisbtnClicked(true);
                 document.body.classList.add("bg-css");
@@ -313,7 +314,7 @@ function LeftPanel() {
             onClick={() => {
               if (token) {
                 localStorage.setItem("selected", "watch-later");
-                window.location.href = "/watchlater"
+                window.location.href = "/watchlater";
               } else {
                 setisbtnClicked(true);
                 document.body.classList.add("bg-css");
@@ -336,7 +337,7 @@ function LeftPanel() {
               if (token) {
                 localStorage.setItem("selected", "liked-video");
 
-               window.location.href = "/likedVideos"
+                window.location.href = "/likedVideos";
               } else {
                 setisbtnClicked(true);
                 document.body.classList.add("bg-css");
@@ -408,6 +409,22 @@ function LeftPanel() {
               })}
           </div>
           <hr className="seperate" />
+          <Tooltip
+            TransitionComponent={Zoom}
+            title="Made with 💖 by Shubhojeet"
+            placement="bottom"
+          >
+            <div className="developer">
+              <CodeIcon fontSize="medium" style={{ color: "white" }} />
+              <a
+                href="https://github.com/shubho0908"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Shubhojeet Bera 🚀
+              </a>
+            </div>
+          </Tooltip>
         </div>
       </div>
 
@@ -428,7 +445,7 @@ function LeftPanel() {
             onClick={() => {
               localStorage.setItem("selected", "home");
 
-             window.location.href = "/"
+              window.location.href = "/";
             }}
           >
             <HomeIcon fontSize="medium" style={{ color: "white" }} />
@@ -442,7 +459,7 @@ function LeftPanel() {
             onClick={() => {
               localStorage.setItem("selected", "trending");
 
-              window.location.href = "/trending"
+              window.location.href = "/trending";
             }}
           >
             <WhatshotOutlinedIcon
@@ -459,7 +476,7 @@ function LeftPanel() {
             onClick={() => {
               if (token) {
                 localStorage.setItem("selected", "subscription");
-                window.location.href = "/subscriptions"
+                window.location.href = "/subscriptions";
               } else {
                 setisbtnClicked(true);
                 document.body.classList.add("bg-css");
@@ -479,7 +496,7 @@ function LeftPanel() {
             onClick={() => {
               if (token) {
                 localStorage.setItem("selected", "library");
-                window.location.href = "/library"
+                window.location.href = "/library";
               } else {
                 setisbtnClicked(true);
                 document.body.classList.add("bg-css");
@@ -500,7 +517,7 @@ function LeftPanel() {
             onClick={() => {
               if (token) {
                 localStorage.setItem("selected", "watch-later");
-                window.location.href = "/watchlater"
+                window.location.href = "/watchlater";
               } else {
                 setisbtnClicked(true);
                 document.body.classList.add("bg-css");
@@ -522,7 +539,7 @@ function LeftPanel() {
               if (token) {
                 localStorage.setItem("selected", "liked-video");
 
-                window.location.href = "/likedVideos"
+                window.location.href = "/likedVideos";
               } else {
                 setisbtnClicked(true);
                 document.body.classList.add("bg-css");

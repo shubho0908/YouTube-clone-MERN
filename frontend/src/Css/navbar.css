@@ -345,7 +345,7 @@ form > input::placeholder {
   position: absolute;
   top: 100px;
   right: 35px;
-  z-index:2 ;
+  z-index: 2;
 }
 
 .create-btn:hover {
@@ -525,6 +525,41 @@ form > input::placeholder {
   color: white !important;
 }
 
-.searchvid-data>p:nth-child(1):hover{
+.searchvid-data > p:nth-child(1):hover {
   text-decoration: underline;
+}
+
+.second-search{
+  display: none !important;
+}
+
+/* MEDIA QUERY */
+
+@media (max-width: 1190px) {
+  .search {
+    min-width: 510px;
+  }
+
+  #searchType {
+    min-width: 410px;
+  }
+}
+
+@media (max-width: 1050px) {
+  .search {
+    min-width: 390px;
+  }
+
+  #searchType {
+    min-width: 290px;
+  }
+}
+
+@media (max-width: 940px) {
+  .middle-bar{
+    display: none;
+  }
+  .second-search{
+    display: block !important;
+  }
 }

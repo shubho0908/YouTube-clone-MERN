@@ -289,10 +289,11 @@ function Dashboard() {
                       src={
                         myVideos &&
                         myVideos.message !== "USER DOESN'T EXIST" &&
+                        myVideos.length > 0 &&
                         myVideos[0].thumbnailURL
                       }
                       alt="thumbnail"
-                      style={{ width: "355px" }}
+                      style={{ width: "358px" }}
                     />
                     <div className="video-performance-icons">
                       <div className="left-performed-icons">
@@ -304,6 +305,7 @@ function Dashboard() {
                           <p>
                             {myVideos &&
                               myVideos.message !== "USER DOESN'T EXIST" &&
+                              myVideos.length > 0 &&
                               myVideos[0].views}
                           </p>
                         </div>
@@ -315,6 +317,7 @@ function Dashboard() {
                           <p>
                             {myVideos &&
                               myVideos.message !== "USER DOESN'T EXIST" &&
+                              myVideos.length > 0 &&
                               myVideos[0].comments.length}
                           </p>
                         </div>
@@ -326,6 +329,7 @@ function Dashboard() {
                           <p>
                             {myVideos &&
                               myVideos.message !== "USER DOESN'T EXIST" &&
+                              myVideos.length > 0 &&
                               myVideos[0].likes}
                           </p>
                         </div>
@@ -502,6 +506,9 @@ function Dashboard() {
                             src={element.thumbnailURL}
                             alt="thumbnail"
                             className="publish-imgs"
+                            onClick={() =>
+                              (window.location.href = `/studio/video/edit/${element._id}`)
+                            }
                           />
                           <div className="publish-rightdata">
                             <div className="toppublish">

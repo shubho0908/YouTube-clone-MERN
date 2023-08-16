@@ -101,3 +101,17 @@
 .my-playlist-data > p {
   padding-left: 20px;
 }
+
+.developer{
+  margin-top: 25px;
+  margin-left: 10px;
+  line-height: normal !important;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+}
+.developer>a{
+  margin-left: 10px;
+  color: #3eaffe;
+  text-decoration: none;
+}
