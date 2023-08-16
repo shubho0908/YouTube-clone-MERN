@@ -450,7 +450,9 @@ function Playlists() {
                   >
                     <p
                       className="like-username"
-                      onClick={() => navigate(`/channel/${channelID}`)}
+                      onClick={() =>
+                        (window.location.href = `/channel/${channelID}`)
+                      }
                     >
                       {playlistDetails.playlist_owner}
                     </p>
@@ -601,8 +603,7 @@ function Playlists() {
                         onClick={() => {
                           DeletePlaylist();
                           setTimeout(() => {
-                            navigate("/");
-                            window.location.reload();
+                            window.location.href = "/";
                           }, 300);
                         }}
                       />

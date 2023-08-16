@@ -394,8 +394,7 @@ function Library() {
               <p
                 className="see-all"
                 onClick={() => {
-                  navigate(`/watchlater`);
-                  window.location.reload();
+                  window.location.href = `/watchlater`;
                 }}
               >
                 See all
@@ -533,9 +532,8 @@ function Library() {
               <p
                 className="see-all"
                 onClick={() => {
-                  navigate(`/channel/${channelID}`);
                   localStorage.setItem("Section", "Playlists");
-                  window.location.reload();
+                  window.location.href = `/channel/${channelID}`;
                 }}
               >
                 See all
@@ -565,10 +563,7 @@ function Library() {
                       alt=""
                       className="playlist-thumbnail"
                       onClick={() => {
-                        navigate(
-                          `/video/${element.playlist_videos[0].videoID}`
-                        );
-                        window.location.reload();
+                        window.location.href = `/video/${element.playlist_videos[0].videoID}`;
                       }}
                     />
 
@@ -576,9 +571,7 @@ function Library() {
                       className="playlist-element"
                       style={{ backgroundColor }}
                       onClick={() => {
-                        navigate(
-                          `/video/${element.playlist_videos[0].videoID}`
-                        );
+                        window.location.href = `/video/${element.playlist_videos[0].videoID}`;
                       }}
                     >
                       <PlaylistPlayIcon
@@ -610,7 +603,9 @@ function Library() {
                         </div>
                       </div>
                       <p
-                        onClick={() => navigate(`/playlist/${element._id}`)}
+                        onClick={() =>
+                          (window.location.href = `/playlist/${element._id}`)
+                        }
                         className="view-playlist"
                       >
                         View full playlist
@@ -688,7 +683,9 @@ function Library() {
                         </div>
                       </div>
                       <p
-                        onClick={() => navigate(`/playlist/${element._id}`)}
+                        onClick={() =>
+                          (window.location.href = `/playlist/${element._id}`)
+                        }
                         className="view-playlist"
                       >
                         View full playlist
@@ -722,8 +719,7 @@ function Library() {
               <p
                 className="see-all"
                 onClick={() => {
-                  navigate(`/likedVideos`);
-                  window.location.reload();
+                  window.location.href = `/likedVideos`;
                 }}
               >
                 See all
@@ -740,8 +736,7 @@ function Library() {
                     className="thiswatchlater-videoss"
                     key={index}
                     onClick={() => {
-                      navigate(`/video/${element.likedVideoID}`);
-                      window.location.reload();
+                      window.location.href = `/video/${element.likedVideoID}`;
                     }}
                   >
                     <img

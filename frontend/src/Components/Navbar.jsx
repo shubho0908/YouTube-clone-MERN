@@ -13,7 +13,7 @@ import { useEffect, useState } from "react";
 import Signup from "./Signup";
 import Signin from "./Signin";
 import avatar from "../img/avatar.png";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 
 function Navbar() {
@@ -27,7 +27,6 @@ function Navbar() {
   const [showPop, setShowPop] = useState(false);
   const [searchedData, setSearchedData] = useState();
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (token) {

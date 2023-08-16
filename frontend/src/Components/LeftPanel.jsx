@@ -13,7 +13,7 @@ import Zoom from "@mui/material/Zoom";
 import { useEffect, useState } from "react";
 import Signup from "./Signup";
 import Signin from "./Signin";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
@@ -22,7 +22,6 @@ function LeftPanel() {
     const menu = localStorage.getItem("menuClicked");
     return menu ? JSON.parse(menu) : false;
   });
-  const navigate = useNavigate();
   const [Email, setEmail] = useState();
   const location = useLocation();
   const [Subscriptions, setSubscriptions] = useState([]);
@@ -174,8 +173,7 @@ function LeftPanel() {
             }
             onClick={() => {
               localStorage.setItem("selected", "trending");
-              navigate("/trending");
-              window.location.reload();
+            window.location.href = "/trending"
             }}
           >
             <WhatshotOutlinedIcon
@@ -251,8 +249,7 @@ function LeftPanel() {
                       className="mysubscriptions"
                       key={index}
                       onClick={() => {
-                        navigate(`/channel/${element.channelID}`);
-                        window.location.reload();
+                        window.location.href = `/channel/${element.channelID}`
                       }}
                       style={
                         loading === false
@@ -293,8 +290,7 @@ function LeftPanel() {
             onClick={() => {
               if (token) {
                 localStorage.setItem("selected", "library");
-                navigate("/library");
-                window.location.reload();
+                window.location.href = "/library"
               } else {
                 setisbtnClicked(true);
                 document.body.classList.add("bg-css");
@@ -317,8 +313,7 @@ function LeftPanel() {
             onClick={() => {
               if (token) {
                 localStorage.setItem("selected", "watch-later");
-                navigate("/watchlater");
-                window.location.reload();
+                window.location.href = "/watchlater"
               } else {
                 setisbtnClicked(true);
                 document.body.classList.add("bg-css");
@@ -341,8 +336,7 @@ function LeftPanel() {
               if (token) {
                 localStorage.setItem("selected", "liked-video");
 
-                navigate("/likedVideos");
-                window.location.reload();
+               window.location.href = "/likedVideos"
               } else {
                 setisbtnClicked(true);
                 document.body.classList.add("bg-css");
@@ -434,8 +428,7 @@ function LeftPanel() {
             onClick={() => {
               localStorage.setItem("selected", "home");
 
-              navigate("/");
-              window.location.reload();
+             window.location.href = "/"
             }}
           >
             <HomeIcon fontSize="medium" style={{ color: "white" }} />
@@ -449,8 +442,7 @@ function LeftPanel() {
             onClick={() => {
               localStorage.setItem("selected", "trending");
 
-              navigate("/trending");
-              window.location.reload();
+              window.location.href = "/trending"
             }}
           >
             <WhatshotOutlinedIcon
@@ -467,8 +459,7 @@ function LeftPanel() {
             onClick={() => {
               if (token) {
                 localStorage.setItem("selected", "subscription");
-                navigate("/subscriptions");
-                window.location.reload();
+                window.location.href = "/subscriptions"
               } else {
                 setisbtnClicked(true);
                 document.body.classList.add("bg-css");
@@ -488,8 +479,7 @@ function LeftPanel() {
             onClick={() => {
               if (token) {
                 localStorage.setItem("selected", "library");
-                navigate("/library");
-                window.location.reload();
+                window.location.href = "/library"
               } else {
                 setisbtnClicked(true);
                 document.body.classList.add("bg-css");
@@ -510,8 +500,7 @@ function LeftPanel() {
             onClick={() => {
               if (token) {
                 localStorage.setItem("selected", "watch-later");
-                navigate("/watchlater");
-                window.location.reload();
+                window.location.href = "/watchlater"
               } else {
                 setisbtnClicked(true);
                 document.body.classList.add("bg-css");
@@ -533,8 +522,7 @@ function LeftPanel() {
               if (token) {
                 localStorage.setItem("selected", "liked-video");
 
-                navigate("/likedVideos");
-                window.location.reload();
+                window.location.href = "/likedVideos"
               } else {
                 setisbtnClicked(true);
                 document.body.classList.add("bg-css");

@@ -24,11 +24,9 @@ function Signin() {
       const { message, token } = await response.json();
       if (message === "LOGIN SUCCESSFUL") {
         localStorage.setItem("userToken", token);
-        alert(message);
         window.location.reload();
         document.body.classList.remove("bg-class");
       }
-      alert(message);
     } catch (error) {
       alert(error.message);
     }

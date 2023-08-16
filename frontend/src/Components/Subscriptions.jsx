@@ -244,8 +244,7 @@ function Subscriptions() {
                       className="sub-channels"
                       key={index}
                       onClick={() => {
-                        navigate(`/channel/${element.channelID}`);
-                        window.location.reload();
+                       window.location.href = `/channel/${element.channelID}`
                       }}
                     >
                       <img
