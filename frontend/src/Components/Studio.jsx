@@ -59,6 +59,7 @@ function Studio() {
   const [websitelink, setwebsitelink] = useState();
   const [visibility, setVisibility] = useState("Public");
   const [isVisibilityClicked, setisVisibilityClicked] = useState(false);
+  const [myVideos, setMyVideos] = useState([]);
 
   //TOAST FUNCTIONS
 
@@ -109,6 +110,26 @@ function Studio() {
       };
     }
   }, []);
+
+  useEffect(() => {
+    const getVideos = async () => {
+      try {
+        if (email !== undefined) {
+          const response = await fetch(
+            `http://localhost:3000/getuservideos/${email}`
+          );
+          const data = await response.json();
+          setMyVideos(data);
+        }
+      } catch (error) {
+        // console.log(error.message);
+      }
+    };
+
+    const interval = setInterval(getVideos, 100);
+
+    return () => clearInterval(interval);
+  }, [email]);
 
   useEffect(() => {
     const handleClick = () => {
@@ -576,7 +597,16 @@ function Studio() {
           />
           <p>CREATE</p>
         </div>
-        <div className="create-btn2">CREATE</div>
+        <div
+          style={
+            myVideos && myVideos.message === "USER DOESN'T EXIST"
+              ? { display: "block" }
+              : { display: "none" }
+          }
+          className="create-btn2"
+        >
+          CREATE
+        </div>
         <div
           className="create-channel"
           style={

@@ -13,6 +13,8 @@ import Signin from "./Signin";
 import ClearRoundedIcon from "@mui/icons-material/ClearRounded";
 import nothing from "../img/nothing.png";
 import Zoom from "@mui/material/Zoom";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function SearchResults() {
   const { data } = useParams();
@@ -26,6 +28,22 @@ function SearchResults() {
   const [userVideos, setUserVideos] = useState([]);
   const [isSubscribed, setIsSubscribed] = useState();
   const [loading, setLoading] = useState(true);
+
+  //TOASTS
+
+  const SubscribeNotify = () =>
+    toast.success("Channel subscribed!", {
+      position: "bottom-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+
+  //USE EFFECTS
 
   useEffect(() => {
     setTimeout(() => {
@@ -400,6 +418,7 @@ function SearchResults() {
                                   element.channelProfile,
                                   element._id
                                 );
+                                SubscribeNotify();
                               } else {
                                 setisbtnClicked(true);
                                 document.body.classList.add("bg-css");
@@ -1054,13 +1073,14 @@ function SearchResults() {
                                 ? { display: "none" }
                                 : { display: "block" }
                             }
-                            onClick={() =>
+                            onClick={() => {
                               SubscribeChannel(
                                 element.channelName,
                                 element.channelProfile,
                                 element._id
-                              )
-                            }
+                              );
+                              SubscribeNotify();
+                            }}
                           >
                             Subscribe
                           </button>

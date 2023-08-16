@@ -7,6 +7,8 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import LanguageIcon from "@mui/icons-material/Language";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Basic() {
   const [Email, setEmail] = useState("");
@@ -28,6 +30,21 @@ function Basic() {
   const [fblink, setfbLink] = useState("");
   const [twitterlink, settwitterLink] = useState("");
   const [weblink, setwebLink] = useState("");
+
+  //TOASTS
+
+  
+  const CopiedNotify = () =>
+    toast.success("Link Copied!", {
+      position: "bottom-center",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
 
   //USE EFFECTS
 
@@ -85,7 +102,7 @@ function Basic() {
       .writeText(`${channelUrl}/${channelID}`)
       .then(() => {
         handleChannelIDClick();
-        alert("Link Copied!");
+        CopiedNotify()
       })
       .catch((error) => {
         console.log("Error copying link to clipboard:", error);

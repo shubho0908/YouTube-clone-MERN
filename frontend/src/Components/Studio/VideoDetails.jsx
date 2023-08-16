@@ -14,6 +14,8 @@ import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "../../Firebase";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function VideoDetails() {
   const { id } = useParams();
@@ -39,6 +41,21 @@ function VideoDetails() {
 
   document.title = "Video details - YouTube Studio";
 
+  //TOASTS
+
+  const WarningNotify = () =>
+    toast.error("Input fields can't be empty!", {
+      position: "bottom-center",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+
+  //USE EFFECTS
 
   useEffect(() => {
     const handleMenuButtonClick = () => {
@@ -237,7 +254,7 @@ function VideoDetails() {
           pointerEvents: loading ? "none" : "auto",
           left: menu ? "115px" : "300px",
           transition: menu ? "all .12s ease" : "none",
-          cursor: loading ? "wait" : "auto"
+          cursor: loading ? "wait" : "auto",
         }}
       >
         <div className="current-editvideodata">
@@ -254,7 +271,17 @@ function VideoDetails() {
               className={
                 changes === false ? "disabled-btn2" : "video-editbtnss"
               }
-              onClick={SaveData}
+              onClick={() => {
+                if (
+                  previewTitle === "" ||
+                  previewDescription === "" ||
+                  previewTags === ""
+                ) {
+                  WarningNotify();
+                } else {
+                  SaveData();
+                }
+              }}
               disabled={changes === false ? true : false}
             >
               SAVE

@@ -2,7 +2,6 @@ import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import nothing from "../../img/nothing.png";
 import jwtDecode from "jwt-decode";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import "../../Css/channel.css";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
@@ -18,7 +17,6 @@ function FeaturedChannels(prop) {
   const token = localStorage.getItem("userToken");
   const [loading, setLoading] = useState(true);
 
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (token) {
@@ -255,8 +253,7 @@ function FeaturedChannels(prop) {
                   key={index}
                   onClick={() => {
                     if (Email !== prop.newmail) {
-                      navigate(`/channel/${element.channelID}`);
-                      window.location.reload();
+                     window.location.href = `/channel/${element.channelID}`
                     }
                   }}
                 >

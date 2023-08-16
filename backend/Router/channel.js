@@ -72,6 +72,26 @@ Channel.get("/getchannelid/:email", async (req, res) => {
   }
 });
 
+Channel.get("/getsubscribers/:email", async (req, res) => {
+  try {
+    const email = req.params.email;
+    const user = await userData.findOne({ email });
+
+    if (!user) {
+      return res.json({
+        message: "USER DOESN'T EXIST",
+      });
+    } else {
+      const subscribers = user.channelData[0].subscribers;
+      res.json(subscribers);
+    }
+  } catch (error) {
+    res.json({
+      message: error.message,
+    });
+  }
+});
+
 Channel.post("/savechannel", async (req, res) => {
   try {
     const {

@@ -1,6 +1,5 @@
 import nothing from "../../img/nothing.png";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 import PlaylistPlayIcon from "@mui/icons-material/PlaylistPlay";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
@@ -26,7 +25,6 @@ function ChannelPlaylists(prop) {
   const [PlaylistData, setPlaylistData] = useState([]);
   const [email, setEmail] = useState();
   const [playlistColors, setPlaylistColors] = useState([]);
-  const navigate = useNavigate();
   const token = localStorage.getItem("userToken");
   const [loading, setLoading] = useState(true);
   const sampleArr = [1, 2, 3, 4];
@@ -183,17 +181,13 @@ function ChannelPlaylists(prop) {
                         alt=""
                         className="playlist-thumbnail"
                         onClick={() => {
-                          navigate(
-                            `/video/${element.playlist_videos[0].videoID}`
-                          );
+                         window.location.href = `/video/${element.playlist_videos[0].videoID}`
                         }}
                       />
                       <div
                         className="playy-all-btn"
                         onClick={() => {
-                          navigate(
-                            `/video/${element.playlist_videos[0].videoID}`
-                          );
+                         window.location.href = `/video/${element.playlist_videos[0].videoID}`
                         }}
                       >
                         <PlayArrowIcon
@@ -206,9 +200,7 @@ function ChannelPlaylists(prop) {
                         className="playlist-element"
                         style={{ backgroundColor }}
                         onClick={() => {
-                          navigate(
-                            `/video/${element.playlist_videos[0].videoID}`
-                          );
+                        window.location.href =  `/video/${element.playlist_videos[0].videoID}`
                         }}
                       >
                         <PlaylistPlayIcon
@@ -219,7 +211,7 @@ function ChannelPlaylists(prop) {
                       </div>
                       <div className="playlistt-details">
                         <p>{element.playlist_name}</p>
-                        <p onClick={() => navigate(`/playlist/${element._id}`)}>
+                        <p onClick={() => window.location.href = `/playlist/${element._id}`}>
                           View full playlist
                         </p>
                       </div>

@@ -1,7 +1,6 @@
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
-import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import jwtDecode from "jwt-decode";
 import ReactLoading from "react-loading";
@@ -13,7 +12,6 @@ import "react-loading-skeleton/dist/skeleton.css";
 function ChannelHome(prop) {
   const [myVideos, setMyVideos] = useState([]);
   const [Email, setEmail] = useState();
-  const navigate = useNavigate();
   const token = localStorage.getItem("userToken");
   const [loading, setLoading] = useState(true);
 
@@ -188,11 +186,10 @@ function ChannelHome(prop) {
             onClick={() => {
               if (token) {
                 updateViews(myVideos[0]._id);
-                navigate(`/video/${myVideos[0]._id}`);
-                window.location.reload();
+                window.location.href = `/video/${myVideos[0]._id}`
               }
-              navigate(`/video/${myVideos[0]._id}`);
-              window.location.reload();
+              window.location.href = `/video/${myVideos[0]._id}`
+
             }}
           >
             <img
@@ -373,11 +370,10 @@ function ChannelHome(prop) {
             onClick={() => {
               if (token) {
                 updateViews(AllVideos.sort(sortByViews2)[0]._id);
-                navigate(`/video/${AllVideos.sort(sortByViews2)[0]._id}`);
-                window.location.reload();
+                window.location.href = `/video/${AllVideos.sort(sortByViews2)[0]._id}`
               }
-              navigate(`/video/${AllVideos.sort(sortByViews2)[0]._id}`);
-              window.location.reload();
+              window.location.href = `/video/${AllVideos.sort(sortByViews2)[0]._id}`
+
             }}
           >
             <PlayArrowIcon fontSize="medium" style={{ color: "white" }} />
@@ -409,12 +405,11 @@ function ChannelHome(prop) {
                     if (token) {
                       updateViews(element._id);
                       setTimeout(() => {
-                        navigate(`/video/${element._id}`);
-                        window.location.reload();
+                        window.location.href = `/video/${element._id}`
                       }, 400);
                     } else {
-                      navigate(`/video/${element._id}`);
-                      window.location.reload();
+                      window.location.href = `/video/${element._id}`
+
                     }
                   }}
                 >
@@ -563,11 +558,10 @@ function ChannelHome(prop) {
             onClick={() => {
               if (token) {
                 updateViews(AllVideos.sort(sortByViews)[0]._id);
-                navigate(`/video/${AllVideos.sort(sortByViews)[0]._id}`);
-                window.location.reload();
+               window.location.href = `/video/${AllVideos.sort(sortByViews)[0]._id}`
               }
-              navigate(`/video/${AllVideos.sort(sortByViews)[0]._id}`);
-              window.location.reload();
+              window.location.href = `/video/${AllVideos.sort(sortByViews)[0]._id}`
+
             }}
           >
             <PlayArrowIcon fontSize="medium" style={{ color: "white" }} />
@@ -599,12 +593,11 @@ function ChannelHome(prop) {
                     if (token) {
                       updateViews(element._id);
                       setTimeout(() => {
-                        navigate(`/video/${element._id}`);
-                        window.location.reload();
+                       window.location.href = `/video/${element._id}`
                       }, 400);
                     } else {
-                      navigate(`/video/${element._id}`);
-                      window.location.reload();
+                      window.location.href = `/video/${element._id}`
+
                     }
                   }}
                 >

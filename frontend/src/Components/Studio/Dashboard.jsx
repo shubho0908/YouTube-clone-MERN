@@ -18,7 +18,7 @@ function Dashboard() {
   const [Email, setEmail] = useState();
   const [dropDown, setDropDown] = useState(true);
   const [showSortedVideos, setShowSortedVideos] = useState(false); // State for hover effect
-  const [channelSubs, setChannelSubs] = useState(0);
+  const [channelSubs, setChannelSubs] = useState();
   const [totalViews, setTotalViews] = useState(0);
   const [loading, setLoading] = useState(true);
   const [menu, setmenu] = useState(() => {
@@ -75,20 +75,23 @@ function Dashboard() {
   }, [Email]);
 
   useEffect(() => {
-    const getSubscriber = async () => {
+    const getSubscribers = async () => {
       try {
         if (Email !== undefined) {
           const response = await fetch(
-            `http://localhost:3000/getchannelid/${Email}`
+            `http://localhost:3000/getsubscribers/${Email}`
           );
-          const { subscribers } = await response.json();
+          const subscribers = await response.json();
+
           setChannelSubs(subscribers);
         }
       } catch (error) {
-        //  console.log(error.message);
+        // Handle fetch error
+        console.error(error);
       }
     };
-    const interval = setInterval(getSubscriber, 100);
+
+    const interval = setInterval(getSubscribers, 100);
 
     return () => clearInterval(interval);
   }, [Email]);
@@ -157,7 +160,7 @@ function Dashboard() {
     );
   }
 
-  if (myVideos.message === "USER DOESN'T EXIST") {
+  if (myVideos.message === "USER DOESN'T EXIST" && channelSubs === 0) {
     return (
       <>
         <div className="studio-dashboard-section">
@@ -181,13 +184,9 @@ function Dashboard() {
                       />
                       <p>Want to see metrics on your recent video?</p>
                       <p>Upload and publish a video to get started.</p>
-                      <button
-                        
-                        className="uploadnewone-video"
-                      >
+                      <button className="uploadnewone-video">
                         UPLOAD VIDEOS
                       </button>
-                      
                     </div>
                   </div>
                 </div>
@@ -216,6 +215,56 @@ function Dashboard() {
           </div>
         </div>
       </>
+    );
+  } else if (myVideos.message === "USER DOESN'T EXIST" && channelSubs > 0) {
+    return (
+      <div className="studio-dashboard-section">
+        <div
+          className="dashboard-data"
+          style={{
+            left: menu ? "125px" : "310px",
+            transition: menu ? "all .1s ease" : "none",
+          }}
+        >
+          <p className="dashboard-top">Channel dashboard</p>
+          <div className="dash-data-all">
+            <div className="left-dashboard-data">
+              <div className="uploadnew-video-dash">
+                <div className="dashed-dash">
+                  <div className="dash-dataimp">
+                    <img src={noVideo} alt="upload" className="noupload-img" />
+                    <p>Want to see metrics on your recent video?</p>
+                    <p>Upload and publish a video to get started.</p>
+                    <button className="uploadnewone-video">
+                      UPLOAD VIDEOS
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="right-dashboard-data">
+              <div className="dashboard-analytics">
+                <p>Channel analytics</p>
+                <div className="subscriber-analytics">
+                  <p>Current subscribers</p>
+                  <p>{channelSubs && channelSubs}</p>
+                </div>
+                <div className="channel-summary" style={{ border: "none" }}>
+                  <p>Summary</p>
+                  <div className="channel-totalviews-analytics">
+                    <p>Views</p>
+                    <p>0</p>
+                  </div>
+                  <div className="channel-totalvideos-analytics">
+                    <p>Videos</p>
+                    <p>0</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     );
   }
 
