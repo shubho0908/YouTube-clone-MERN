@@ -48,6 +48,10 @@
   align-items: center;
 }
 
+.middle-bar {
+  padding-left: 15px;
+}
+
 .youtubeLogo {
   width: 110px;
   cursor: pointer;
@@ -58,8 +62,7 @@
 .search {
   background-color: #0f0f0f;
   border-radius: 25px;
-  min-width: 580px;
-  max-width: 800px;
+  width: 45vw;
   border: 0.5px solid rgba(255, 255, 255, 0.351);
 }
 
@@ -101,8 +104,7 @@
   border-radius: 25px;
   border: none;
   outline: none;
-  min-width: 520px;
-  max-width: 750px;
+  width: 45vw;
   font-size: 16px;
   padding: 10px;
   padding-left: 20px;
@@ -205,7 +207,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 5; /* Set a lower z-index than the auth-popup */
+  z-index: 6; /* Set a lower z-index than the auth-popup */
   animation: Fade 0.25s ease-out forwards;
 }
 
@@ -224,7 +226,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 5; /* Set a lower z-index than the auth-popup */
+  z-index: 6; /* Set a lower z-index than the auth-popup */
   animation: Fade2 0.25s ease-out forwards;
 }
 
@@ -613,31 +615,26 @@ form > input::placeholder {
   }
 }
 
-@media (max-width: 1190px) {
-  .search {
-    min-width: 510px;
-  }
-
-  #searchType {
-    min-width: 410px;
-  }
-}
-
-@media (max-width: 1050px) {
-  .search {
-    min-width: 390px;
-  }
-
-  #searchType {
-    min-width: 290px;
-  }
-}
-
 @media (max-width: 940px) {
   .middle-bar {
     display: none;
   }
   .second-search {
     display: block !important;
+  }
+}
+
+@media (max-width: 850px) {
+  .browse-data2 {
+    width: 90% !important;
+  }
+}
+
+@media (max-width: 650px) {
+  .menu {
+    display: none !important;
+  }
+  .youtubeLogo {
+    padding-left: 0;
   }
 }
