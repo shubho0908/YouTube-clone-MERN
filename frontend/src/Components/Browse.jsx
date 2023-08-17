@@ -158,7 +158,7 @@ function Browse() {
             className={menuClicked === true ? "browse-data" : "browse-data2"}
             style={
               menuClicked === false
-                ? { left: "80px" }
+                ? { left: "74px" }
                 : { left: "250px" }
             }
           >
@@ -241,7 +241,7 @@ function Browse() {
           className={menuClicked === true ? "browse-data" : "browse-data2"}
           style={
             menuClicked === false
-              ? { left: "80px" }
+              ? { left: "74px" }
               : { left: "250px" }
           }
         >

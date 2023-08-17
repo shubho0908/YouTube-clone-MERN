@@ -35,6 +35,7 @@ function LeftPanel() {
   const [loading, setLoading] = useState(true);
   const [savedPlaylist, setSavedPlaylist] = useState([]);
   const [togglepanel, setTogglePannel] = useState(false);
+  const [closePanel, setClosePanel] = useState(false);
 
   useEffect(() => {
     if (token) {
@@ -44,7 +45,12 @@ function LeftPanel() {
 
   useEffect(() => {
     const handleMenuButtonClick = () => {
-      setMenuClicked((prevMenuClicked) => !prevMenuClicked);
+      if (window.innerWidth >= 860) {
+        setMenuClicked((prevMenuClicked) => !prevMenuClicked);
+      } else {
+        document.body.classList.add("bg-css");
+        setTogglePannel(true);
+      }
     };
 
     const menuButton = document.querySelector(".menu");
@@ -555,7 +561,10 @@ function LeftPanel() {
       </div>
 
       {/* SHORT HAND - 2 */}
-      <div className="main-left-section main-2 main-3" style={{display:"none"}}>
+      <div
+        className="main-left-section main-2 main-3"
+        style={{ display: "none" }}
+      >
         <div className="first-section ">
           <div
             className={
@@ -738,9 +747,29 @@ function LeftPanel() {
       </div>
 
       {/* SECONDARY PANEL  */}
-      <div className="secondary-panel" style={{ display: "none" }}>
+      <div
+        className={
+          closePanel === true ? "secondary-panel moveout" : "secondary-panel"
+        }
+        style={{ display: togglepanel ? "block" : "none" }}
+      >
         <div className="panel-topdata">
-          <MenuRoundedIcon fontSize="large" style={{ color: "white" }} />
+          <MenuRoundedIcon
+            fontSize="large"
+            style={{ color: "white" }}
+            className="close-sidepanel"
+            onClick={() => {
+              setClosePanel(true);
+              setTimeout(() => {
+                document.body.classList.remove("bg-css");
+              }, 250);
+              setTimeout(() => {
+                setClosePanel(false);
+
+                setTogglePannel(false);
+              }, 800);
+            }}
+          />
           <img
             src={Logo}
             alt="logo"
@@ -752,12 +781,7 @@ function LeftPanel() {
             }}
           />
         </div>
-        <div
-          className="main-left-section-new"
-          style={
-            menuClicked === false ? { display: "none" } : { display: "block" }
-          }
-        >
+        <div className="main-left-section-new">
           <div className="first-section ">
             <div
               className={
