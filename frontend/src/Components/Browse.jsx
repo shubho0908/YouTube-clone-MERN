@@ -155,10 +155,10 @@ function Browse() {
           style={loading === true ? { display: "flex" } : { display: "none" }}
         >
           <div
-            className="browse-data"
+            className={menuClicked === true ? "browse-data" : "browse-data2"}
             style={
               menuClicked === false
-                ? { left: "80px", width: "100%" }
+                ? { left: "80px" }
                 : { left: "250px" }
             }
           >
@@ -188,7 +188,6 @@ function Browse() {
               className="video-section"
               style={{
                 marginLeft: menuClicked ? "40px" : "40px",
-                marginRight: menuClicked ? "0px" : "120px",
               }}
             >
               <div className="uploaded-videos">
@@ -239,10 +238,10 @@ function Browse() {
         }
       >
         <div
-          className="browse-data"
+          className={menuClicked === true ? "browse-data" : "browse-data2"}
           style={
             menuClicked === false
-              ? { left: "80px", width: "100%" }
+              ? { left: "80px" }
               : { left: "250px" }
           }
         >
@@ -271,7 +270,6 @@ function Browse() {
             className="video-section"
             style={{
               marginLeft: menuClicked ? "40px" : "40px",
-              marginRight: menuClicked ? "0px" : "120px",
             }}
           >
             <div
@@ -279,13 +277,13 @@ function Browse() {
               style={
                 menuClicked === true
                   ? {
-                      paddingRight: "50px",
-                      display: TagsSelected === "All" ? "grid" : "none",
-                    }
+                    paddingRight: "50px",
+                    display: TagsSelected === "All" ? "grid" : "none",
+                  }
                   : {
-                      paddingRight: "0px",
-                      display: TagsSelected === "All" ? "grid" : "none",
-                    }
+                    paddingRight: "0px",
+                    display: TagsSelected === "All" ? "grid" : "none",
+                  }
               }
             >
               {thumbnails &&
@@ -372,10 +370,10 @@ function Browse() {
                               {VideoViews[index] >= 1e9
                                 ? `${(VideoViews[index] / 1e9).toFixed(1)}B`
                                 : VideoViews[index] >= 1e6
-                                ? `${(VideoViews[index] / 1e6).toFixed(1)}M`
-                                : VideoViews[index] >= 1e3
-                                ? `${(VideoViews[index] / 1e3).toFixed(1)}K`
-                                : VideoViews[index]}{" "}
+                                  ? `${(VideoViews[index] / 1e6).toFixed(1)}M`
+                                  : VideoViews[index] >= 1e3
+                                    ? `${(VideoViews[index] / 1e3).toFixed(1)}K`
+                                    : VideoViews[index]}{" "}
                               views
                             </p>
                             <p
@@ -429,13 +427,13 @@ function Browse() {
               style={
                 menuClicked === true
                   ? {
-                      paddingRight: "50px",
-                      display: TagsSelected !== "All" ? "grid" : "none",
-                    }
+                    paddingRight: "50px",
+                    display: TagsSelected !== "All" ? "grid" : "none",
+                  }
                   : {
-                      paddingRight: "0px",
-                      display: TagsSelected !== "All" ? "grid" : "none",
-                    }
+                    paddingRight: "0px",
+                    display: TagsSelected !== "All" ? "grid" : "none",
+                  }
               }
             >
               {FilteredVideos &&
@@ -513,10 +511,10 @@ function Browse() {
                               {element.views >= 1e9
                                 ? `${(element.views / 1e9).toFixed(1)}B`
                                 : element.views >= 1e6
-                                ? `${(element.views / 1e6).toFixed(1)}M`
-                                : element.views >= 1e3
-                                ? `${(element.views / 1e3).toFixed(1)}K`
-                                : element.views}{" "}
+                                  ? `${(element.views / 1e6).toFixed(1)}M`
+                                  : element.views >= 1e3
+                                    ? `${(element.views / 1e3).toFixed(1)}K`
+                                    : element.views}{" "}
                               views
                             </p>
                             <p

@@ -42,6 +42,14 @@
   top: 100px;
 }
 
+.browse-data2 {
+  background-color: #0f0f0f;
+  width: 95%;
+  position: relative;
+  left: 250px;
+  top: 100px;
+}
+
 .browse {
   background-color: #0f0f0f;
   display: flex;

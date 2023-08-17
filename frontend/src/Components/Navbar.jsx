@@ -18,6 +18,7 @@ import jwtDecode from "jwt-decode";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
 import { FiSearch } from "react-icons/fi";
+import { RxCross1 } from "react-icons/rx";
 
 function Navbar() {
   const { data } = useParams();
@@ -30,6 +31,7 @@ function Navbar() {
   const [showPop, setShowPop] = useState(false);
   const [searchedData, setSearchedData] = useState();
   const [loading, setLoading] = useState(true);
+  const [newSearch, setNewSearch] = useState(false);
 
   useEffect(() => {
     if (token) {
@@ -67,7 +69,6 @@ function Navbar() {
   const handleSearch = (e) => {
     setSearchedData(e.target.value);
     setData(e.target.value);
-    console.log(searchedData);
   };
 
   const handleKeyPress = (e) => {
@@ -125,7 +126,12 @@ function Navbar() {
               : { justifyContent: "space-evenly", paddingRight: "25px" }
           }
         >
-          <FiSearch fontSize="24px" color="#aaa" className="second-search" />
+          <FiSearch
+            fontSize="24px"
+            color="#aaa"
+            className="second-search"
+            onClick={() => setNewSearch(true)}
+          />
           <Tooltip
             TransitionComponent={Zoom}
             title="YouTube studio"
@@ -269,6 +275,27 @@ function Navbar() {
         style={showPop === true ? { display: "block" } : { display: "none" }}
       >
         <AccountPop />
+      </div>
+      <div
+        className="new-searchbar"
+        style={{ display: newSearch && window.innerWidth <= 940 ? "flex" : "none" }}
+      >
+        <div
+          className="new-searchbar-component"
+          style={{ display: newSearch && window.innerWidth <= 940 ? "flex" : "none" }}
+        >
+          <FiSearch fontSize="28px" color="#aaa" />
+          <input
+            type="text"
+            name="search-content"
+            placeholder="Type to search"
+            className="extra-search"
+            value={data2 ? data2 : searchedData}
+            onChange={handleSearch}
+            onKeyDown={handleKeyPress}
+          />
+          <RxCross1 fontSize="26px" color="#aaa" className="cancel-newsearch" onClick={()=> setNewSearch(false)}/>
+        </div>
       </div>
     </>
   );
