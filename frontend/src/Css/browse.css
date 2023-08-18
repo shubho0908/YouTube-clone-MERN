@@ -224,7 +224,8 @@
     width: 290px !important;
   }
 
-  .uploaded-videos {
+  .uploaded-videos,
+  .uploaded-videos2 {
     grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
     width: 82vw;
   }
@@ -238,5 +239,42 @@
   }
   .title {
     font-size: 16px;
+  }
+}
+
+@media (max-width: 740px) {
+  .uploaded-videos,
+  .uploaded-videos2 {
+    width: 66vw !important;
+    position: relative;
+    left: 60px;
+  }
+  .browse-thumbnails {
+    width: 450px !important;
+  }
+  .duration {
+    left: 403px;
+    bottom: 38px;
+    font-size: 14px;
+  }
+  .channel-profile {
+    width: 45px;
+    height: 45px;
+  }
+  .channel-text-data {
+    width: 365px;
+  }
+  .title {
+    font-size: 17px;
+  }
+  .video-uploader > p,
+  .view-time > p {
+    font-size: 15.6px;
+  }
+}
+
+@media (max-width: 650px) {
+  .browse-data {
+    left: 0 !important;
   }
 }

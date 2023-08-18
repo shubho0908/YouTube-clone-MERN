@@ -464,6 +464,7 @@ function Browse() {
                         style={{ width: "330px", borderRadius: "10px" }}
                         src={element.thumbnailURL}
                         alt="thumbnails"
+                        className="browse-thumbnails"
                       />
                       <p className="duration">
                         {Math.floor(element.videoLength / 60) +

@@ -161,6 +161,19 @@
   left: 11px;
 }
 
+.close-sidepannel {
+  transition: all 0.15s ease;
+}
+
+.close-sidepannel:hover {
+  color: white !important;
+  background-color: #3d3f4365;
+}
+
+.main-3{
+  z-index: 10;
+}
+
 /* MEDIA QUERIES */
 @media (max-width: 1100px) {
   .main-left-section {
