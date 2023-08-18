@@ -765,8 +765,33 @@
   }
 }
 
-.desc-seemore{
+.desc-seemore {
   font-size: 14.8px;
   position: relative;
   margin-top: 10px;
+}
+
+.second-one {
+  display: none;
+}
+
+/* MEDIA QUERIES  */
+
+@media (max-width: 1550px) {
+  .main-video-section {
+    flex-wrap: wrap;
+  }
+  .recommended-section {
+    top: 45px;
+    left: 100px;
+  }
+  .video-right-side {
+    width: auto;
+  }
+  .first-one {
+    display: none;
+  }
+  .second-one {
+    display: block;
+  }
 }

@@ -1344,7 +1344,7 @@ function VideoSection() {
               ) : null}
             </div>
           </div>
-          <div className="comments-section">
+          <div className="comments-section first-one">
             <div className="total-comments">
               <p>
                 {comments && comments.length}{" "}
@@ -1897,6 +1897,241 @@ function VideoSection() {
                   </div>
                 );
               })}
+          </div>
+
+          {/* SECOND COMMENT OPTIONS  */}
+
+          <div className="comments-section second-one">
+            <div className="total-comments">
+              <p>
+                {comments && comments.length}{" "}
+                {comments && comments.length > 1 ? "Comments" : "Comment"}
+              </p>
+            </div>
+            {commentLoading === false ? (
+              <div className="my-comment-area">
+                <img
+                  src={userProfile ? userProfile : avatar}
+                  alt="channelDP"
+                  className="channelDP"
+                  loading="lazy"
+                />
+                <input
+                  className="comment-input"
+                  type="text"
+                  name="myComment"
+                  placeholder="Add a comment..."
+                  value={comment}
+                  onClick={() => {
+                    setDisplay((prevDisplay) =>
+                      prevDisplay === "none" ? "block" : "block"
+                    );
+                  }}
+                  onChange={(e) => {
+                    setComment(e.target.value);
+                  }}
+                />
+              </div>
+            ) : (
+              <div
+                className="my-comment-area"
+                style={{
+                  width: "-webkit-fill-available",
+                  justifyContent: "center",
+                }}
+              >
+                <div
+                  className="spin22"
+                  style={{ position: "relative", top: "20px" }}
+                >
+                  <div className="loader2"></div>
+                </div>
+              </div>
+            )}
+            {commentLoading === false ? (
+              <div className="comment-btns" style={{ display: Display }}>
+                <button
+                  className="cancel-comment"
+                  onClick={() => {
+                    setDisplay((prevDisplay) =>
+                      prevDisplay === "none" ? "block" : "none"
+                    );
+                  }}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="upload-comment"
+                  onClick={() => {
+                    if (token && isChannel === true && comment !== "") {
+                      setComment("");
+                      uploadComment();
+                    } else if (token && isChannel !== true) {
+                      alert("Create a channel first");
+                    } else if (token && isChannel === true && comment === "") {
+                      alert("Comment can't be empty");
+                    } else {
+                      setisbtnClicked(true);
+                      document.body.classList.add("bg-css");
+                    }
+                  }}
+                >
+                  Comment
+                </button>
+              </div>
+            ) : (
+              ""
+            )}
+
+            <div className="video-comments">
+              {comments.map((element, index) => {
+                return (
+                  <>
+                    <div
+                      className="comment-data"
+                      key={index}
+                      style={{
+                        transition: "all 0.15s ease",
+                        opacity: commentOpacity,
+                      }}
+                    >
+                      <div className="comment-left-data">
+                        <img
+                          src={element.user_profile}
+                          alt="commentDP"
+                          className="commentDP"
+                          loading="lazy"
+                        />
+                      </div>
+                      <div className="comment-right-data">
+                        <div className="comment-row1">
+                          <p>{element.username}</p>
+                          <p className="comment-time">
+                            {(() => {
+                              const timeDifference =
+                                new Date() - new Date(element.time);
+                              const minutes = Math.floor(
+                                timeDifference / 60000
+                              );
+                              const hours = Math.floor(
+                                timeDifference / 3600000
+                              );
+                              const days = Math.floor(
+                                timeDifference / 86400000
+                              );
+                              const weeks = Math.floor(
+                                timeDifference / 604800000
+                              );
+                              const years = Math.floor(
+                                timeDifference / 31536000000
+                              );
+
+                              if (minutes < 1) {
+                                return "just now";
+                              } else if (minutes < 60) {
+                                return `${minutes} mins ago`;
+                              } else if (hours < 24) {
+                                return `${hours} hours ago`;
+                              } else if (days < 7) {
+                                return `${days} days ago`;
+                              } else if (weeks < 52) {
+                                return `${weeks} weeks ago`;
+                              } else {
+                                return `${years} years ago`;
+                              }
+                            })()}
+                          </p>
+                        </div>
+                        <p className="main-comment">{element.comment}</p>
+                        <div className="comment-interaction">
+                          <ThumbUpIcon
+                            fontSize="small"
+                            style={{ color: "white", cursor: "pointer" }}
+                            onClick={() => {
+                              if (token) {
+                                LikeComment(element._id);
+                              } else {
+                                setisbtnClicked(true);
+                                document.body.classList.add("bg-css");
+                              }
+                            }}
+                            className="comment-like"
+                          />
+
+                          <p style={{ marginLeft: "16px" }}>
+                            {CommentLikes &&
+                              CommentLikes[index] &&
+                              CommentLikes[index].likes}
+                          </p>
+
+                          {isHeart[index] === false ? (
+                            <FavoriteBorderOutlinedIcon
+                              fontSize="small"
+                              style={
+                                email === usermail
+                                  ? {
+                                      color: "white",
+                                      marginLeft: "20px",
+                                      cursor: "pointer",
+                                    }
+                                  : { display: "none" }
+                              }
+                              className="heart-comment"
+                              onClick={() => {
+                                if (email === usermail) {
+                                  HeartComment(element._id);
+                                }
+                              }}
+                            />
+                          ) : (
+                            <Tooltip
+                              TransitionComponent={Zoom}
+                              title="Liked!"
+                              placement="bottom"
+                            >
+                              <div
+                                className="heart-liked"
+                                style={{ cursor: "pointer" }}
+                                onClick={() => {
+                                  if (email === usermail) {
+                                    HeartComment(element._id);
+                                  }
+                                }}
+                              >
+                                <img
+                                  src={ChannelProfile}
+                                  alt="commentDP"
+                                  className="heartDP"
+                                  loading="lazy"
+                                />
+                                <FavoriteIcon
+                                  fontSize="100px"
+                                  style={{ color: "rgb(220, 2, 2)" }}
+                                  className="comment-heart"
+                                />
+                              </div>
+                            </Tooltip>
+                          )}
+
+                          {element.user_email === email ||
+                          email === usermail ? (
+                            <button
+                              className="delete-comment-btn"
+                              style={{ marginLeft: "17px" }}
+                              onClick={() => DeleteComment(element._id)}
+                            >
+                              Delete
+                            </button>
+                          ) : (
+                            ""
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>

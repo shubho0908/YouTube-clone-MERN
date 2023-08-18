@@ -22,8 +22,10 @@ import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import { GoHome } from "react-icons/go";
 import { GoHomeFill } from "react-icons/go";
 import { HiOutlineFire } from "react-icons/hi";
+import { HiMiniFire } from "react-icons/hi2";
 import { IoAddCircleOutline } from "react-icons/io5";
 import { MdOutlineSubscriptions } from "react-icons/md";
+import { MdSubscriptions } from "react-icons/md";
 import { MdOutlineVideoLibrary } from "react-icons/md";
 
 function LeftPanel() {
@@ -1071,7 +1073,13 @@ function LeftPanel() {
 
       <div className="horizontal-panel">
         <div className="horizontal-main-section">
-          <div className="home-hori hori">
+          <div
+            className="home-hori hori"
+            onClick={() => {
+              localStorage.setItem("selected", "home");
+              window.location.href = "/";
+            }}
+          >
             {selected === "home" ? (
               <GoHomeFill fontSize="28px" color="white" className="hor-icons" />
             ) : (
@@ -1080,24 +1088,54 @@ function LeftPanel() {
 
             <p>Home</p>
           </div>
-          <div className="trending-hori hori">
-            <HiOutlineFire
-              fontSize="28px"
-              color="white"
-              className="hor-icons"
-            />
+          <div
+            className="trending-hori hori"
+            onClick={() => {
+              localStorage.setItem("selected", "trending");
+              window.location.href = "/trending";
+            }}
+          >
+            {selected === "trending" ? (
+              <HiMiniFire fontSize="28px" color="white" className="hor-icons" />
+            ) : (
+              <HiOutlineFire
+                fontSize="28px"
+                color="white"
+                className="hor-icons"
+              />
+            )}
             <p>Trending</p>
           </div>
           <IoAddCircleOutline fontSize="50px" color="white" />
-          <div className="subscriptions-hori hori">
-            <MdOutlineSubscriptions
-              fontSize="28px"
-              color="white"
-              className="hor-icons"
-            />
+          <div
+            className="subscriptions-hori hori"
+            onClick={() => {
+              localStorage.setItem("selected", "subscription");
+              window.location.href = "/subscriptions";
+            }}
+          >
+            {selected === "subscription" ? (
+              <MdSubscriptions
+                fontSize="28px"
+                color="white"
+                className="hor-icons"
+              />
+            ) : (
+              <MdOutlineSubscriptions
+                fontSize="28px"
+                color="white"
+                className="hor-icons"
+              />
+            )}
             <p>Subscriptions</p>
           </div>
-          <div className="library-hori hori">
+          <div
+            className="library-hori hori"
+            onClick={() => {
+              localStorage.setItem("selected", "library");
+              window.location.href = "/library";
+            }}
+          >
             <MdOutlineVideoLibrary
               fontSize="28px"
               color="white"

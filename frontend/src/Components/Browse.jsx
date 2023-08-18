@@ -62,7 +62,6 @@ function Browse() {
     "All",
     "Artificial Intelligence",
     "Comedy",
-    "Coding",
     "Gaming",
     "Vlog",
     "Beauty",
