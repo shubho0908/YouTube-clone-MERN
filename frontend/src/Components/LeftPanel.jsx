@@ -19,11 +19,12 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import CodeIcon from "@mui/icons-material/Code";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
-import { GoHome } from "react-icons/go"
-import { HiOutlineFire } from "react-icons/hi"
-import { IoAddCircleOutline } from "react-icons/io5"
-import { MdOutlineSubscriptions } from "react-icons/md"
-import { MdOutlineVideoLibrary } from "react-icons/md"
+import { GoHome } from "react-icons/go";
+import { GoHomeFill } from "react-icons/go";
+import { HiOutlineFire } from "react-icons/hi";
+import { IoAddCircleOutline } from "react-icons/io5";
+import { MdOutlineSubscriptions } from "react-icons/md";
+import { MdOutlineVideoLibrary } from "react-icons/md";
 
 function LeftPanel() {
   const [menuClicked, setMenuClicked] = useState(() => {
@@ -1071,20 +1072,37 @@ function LeftPanel() {
       <div className="horizontal-panel">
         <div className="horizontal-main-section">
           <div className="home-hori hori">
-            <GoHome fontSize="28px" color="white" className="hor-icons"/>
+            {selected === "home" ? (
+              <GoHomeFill fontSize="28px" color="white" className="hor-icons" />
+            ) : (
+              <GoHome fontSize="28px" color="white" className="hor-icons" />
+            )}
+
             <p>Home</p>
           </div>
           <div className="trending-hori hori">
-            <HiOutlineFire fontSize="28px" color="white" className="hor-icons"/>
+            <HiOutlineFire
+              fontSize="28px"
+              color="white"
+              className="hor-icons"
+            />
             <p>Trending</p>
           </div>
           <IoAddCircleOutline fontSize="50px" color="white" />
           <div className="subscriptions-hori hori">
-            <MdOutlineSubscriptions fontSize="28px" color="white" className="hor-icons"/>
+            <MdOutlineSubscriptions
+              fontSize="28px"
+              color="white"
+              className="hor-icons"
+            />
             <p>Subscriptions</p>
           </div>
           <div className="library-hori hori">
-            <MdOutlineVideoLibrary fontSize="28px" color="white" className="hor-icons"/>
+            <MdOutlineVideoLibrary
+              fontSize="28px"
+              color="white"
+              className="hor-icons"
+            />
             <p>Library</p>
           </div>
         </div>
