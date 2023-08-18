@@ -637,4 +637,12 @@ form > input::placeholder {
   .youtubeLogo {
     padding-left: 0;
   }
+  .videocreate {
+    display: none !important;
+  }
+  .right-bar {
+    width: 110px;
+    justify-content: space-between !important;
+    padding-right: 10px !important;
+  }
 }

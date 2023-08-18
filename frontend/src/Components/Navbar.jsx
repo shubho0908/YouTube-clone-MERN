@@ -138,7 +138,7 @@ function Navbar() {
             placement="bottom"
           >
             <VideoCallOutlinedIcon
-              className="icon-btns"
+              className="icon-btns videocreate"
               fontSize="large"
               style={{ color: "rgb(160, 160, 160)" }}
               onClick={() => {
