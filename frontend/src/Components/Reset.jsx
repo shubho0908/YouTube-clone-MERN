@@ -9,7 +9,19 @@ function Reset() {
     if (email === "") {
       return;
     } else {
-      alert("Submitted");
+      const response = await fetch(`http://localhost:3000/reset-link`, {
+        method: "POST",
+        body: JSON.stringify({ email }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const data = await response.json();
+      if (data.message !== "USER DOESN'T EXIST") {
+        console.log(`Reset Link: `, data);
+      } else {
+        alert(data.message);
+      }
     }
   };
 
@@ -19,8 +31,8 @@ function Reset() {
         <div className="top-reset">
           <p>Forgot Password</p>
           <p>
-            Don&apos;t remember your password? No worries, you can simply reset
-            it.
+            Don&apos;t remember your password? No worries, we can help you to reset
+            your password.
           </p>
         </div>
         <div className="reset-option">

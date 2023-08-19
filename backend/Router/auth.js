@@ -5,6 +5,8 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const userData = require("../Models/user");
 const auth = express.Router();
+const nodemailer = require("nodemailer");
+const URL = "http://localhost:3000";
 
 auth.post("/signup", async (req, res) => {
   try {
@@ -71,16 +73,58 @@ auth.post("/login", async (req, res) => {
   }
 });
 
-auth.post("/reset-password", async (req, res) => {
+auth.post("/reset-link", async (req, res) => {
   try {
     const { email } = req.body;
     const user = await userData.findOne({ email });
+
     if (!user) {
       return res.json({
         message: "USER DOESN'T EXIST",
       });
     }
-  } catch (error) {}
+
+    const token = await jwt.sign({ email }, process.env.SECRET_KEY, {
+      expiresIn: "30m",
+    });
+    const resetLink = `${URL}/${user._id}/${token}`;
+
+    // Nodemailer configuration
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.ethereal.email',
+      port: 587,
+      auth: {
+          user: 'andrew.bruen94@ethereal.email',
+          pass: 'ESmU5EtNJm2mhKnqEs'
+      }
+  });
+
+    const mailOptions = {
+      from: "admin@youtube.app",
+      to: email,
+      subject: "Password Reset Link",
+      html: `Click the following link to reset your password: <a href="${resetLink}">${resetLink}</a> <br/> Only valid for 30 minutes.`,
+    };
+
+    // Send the email
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error(error);
+        return res.json({
+          message: "Error sending email",
+        });
+      } else {
+        console.log("Email sent: " + info.response);
+        res.json({
+          message: "Password reset link sent to your email",
+        });
+      }
+    });
+  } catch (error) {
+    res.json({
+      message: error.message,
+    });
+  }
 });
 
 module.exports = auth;
