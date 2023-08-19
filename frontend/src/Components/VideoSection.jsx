@@ -1092,7 +1092,7 @@ function VideoSection() {
                 </button>
               )}
             </div>
-            <div className="channel-right-data">
+            <div className="channel-right-data c-right1">
               <div
                 className="like-dislike"
                 style={
@@ -1154,6 +1154,7 @@ function VideoSection() {
                     <ThumbDownOutlinedIcon
                       fontSize="medium"
                       style={{ color: "white" }}
+                      className="dislike-icon"
                     />
                   </div>
                 </Tooltip>
@@ -1178,6 +1179,7 @@ function VideoSection() {
                   <ReplyIcon
                     fontSize="medium"
                     style={{ color: "white", transform: "rotateY(180deg)" }}
+                    className="sharee-icon"
                   />
                   <p className="share-txt">Share</p>
                 </div>
@@ -1189,7 +1191,7 @@ function VideoSection() {
               >
                 <div className="download-btn" onClick={downloadVideo}>
                   <h3>
-                    <TfiDownload />
+                    <TfiDownload className="download-icon" />
                   </h3>
                   <p>Download</p>
                 </div>
@@ -1214,11 +1216,13 @@ function VideoSection() {
                     <BookmarkAddedIcon
                       fontSize="medium"
                       style={{ color: "white" }}
+                      className="save-video-icon"
                     />
                   ) : (
                     <BookmarkAddOutlinedIcon
                       fontSize="medium"
                       style={{ color: "white" }}
+                      className="save-video-icon"
                     />
                   )}
                   <p>Save</p>
@@ -1250,6 +1254,337 @@ function VideoSection() {
                 </div>
               </Tooltip>
             </div>
+            <div className="channel-right-data c-right2">
+              <div className="first-c-data">
+                <div
+                  className="like-dislike"
+                  style={
+                    likeLoading === true
+                      ? { opacity: 0.46, cursor: "wait", pointerEvents: "none" }
+                      : { opacity: 1, cursor: "pointer", pointerEvents: "auto" }
+                  }
+                >
+                  <Tooltip
+                    TransitionComponent={Zoom}
+                    title="I like this"
+                    placement="top"
+                  >
+                    <div
+                      className="like-data"
+                      onClick={() => {
+                        if (token) {
+                          likeVideo();
+                        } else {
+                          setisbtnClicked(true);
+                          document.body.classList.add("bg-css");
+                        }
+                      }}
+                    >
+                      {isLiked === true && token ? (
+                        <ThumbUpIcon
+                          fontSize="medium"
+                          style={{ color: "white" }}
+                          className="like-icon"
+                        />
+                      ) : (
+                        <ThumbUpAltOutlinedIcon
+                          fontSize="medium"
+                          style={{ color: "white" }}
+                          className="like-icon"
+                        />
+                      )}
+
+                      <p className="like-count">{VideoLikes}</p>
+                    </div>
+                  </Tooltip>
+                  <div className="vl"></div>
+                  <Tooltip
+                    TransitionComponent={Zoom}
+                    title="I dislike this"
+                    placement="top"
+                  >
+                    <div
+                      className="dislike-data"
+                      onClick={() => {
+                        if (token) {
+                          DislikeVideo();
+                        } else {
+                          setisbtnClicked(true);
+                          document.body.classList.add("bg-css");
+                        }
+                      }}
+                    >
+                      <ThumbDownOutlinedIcon
+                        fontSize="medium"
+                        style={{ color: "white" }}
+                        className="dislike-icon"
+                      />
+                    </div>
+                  </Tooltip>
+                </div>
+                <Tooltip
+                  TransitionComponent={Zoom}
+                  title="Share this video"
+                  placement="top"
+                >
+                  <div
+                    className="share"
+                    onClick={() => {
+                      if (shareClicked === false) {
+                        setShareClicked(true);
+                        document.body.classList.add("bg-css");
+                      } else {
+                        setShareClicked(false);
+                        document.body.classList.remove("bg-css");
+                      }
+                    }}
+                  >
+                    <ReplyIcon
+                      fontSize="medium"
+                      style={{ color: "white", transform: "rotateY(180deg)" }}
+                      className="sharee-icon"
+                    />
+                    <p className="share-txt">Share</p>
+                  </div>
+                </Tooltip>
+                <Tooltip
+                  TransitionComponent={Zoom}
+                  title="Download this video"
+                  placement="top"
+                >
+                  <div className="download-btn" onClick={downloadVideo}>
+                    <h3>
+                      <TfiDownload className="download-icon" />
+                    </h3>
+                    <p>Download</p>
+                  </div>
+                </Tooltip>
+                <Tooltip
+                  TransitionComponent={Zoom}
+                  title="Watch Later"
+                  placement="top"
+                >
+                  <div
+                    className="save-later"
+                    onClick={() => {
+                      if (token) {
+                        saveVideo();
+                      } else {
+                        setisbtnClicked(true);
+                        document.body.classList.add("bg-css");
+                      }
+                    }}
+                  >
+                    {isSaved === true ? (
+                      <BookmarkAddedIcon
+                        fontSize="medium"
+                        style={{ color: "white" }}
+                        className="save-video-icon"
+                      />
+                    ) : (
+                      <BookmarkAddOutlinedIcon
+                        fontSize="medium"
+                        style={{ color: "white" }}
+                        className="save-video-icon"
+                      />
+                    )}
+                    <p>Save</p>
+                  </div>
+                </Tooltip>
+              </div>
+              <div className="firstt-c-data">
+                <div
+                  className="like-dislike"
+                  style={
+                    likeLoading === true
+                      ? { opacity: 0.46, cursor: "wait", pointerEvents: "none" }
+                      : { opacity: 1, cursor: "pointer", pointerEvents: "auto" }
+                  }
+                >
+                  <Tooltip
+                    TransitionComponent={Zoom}
+                    title="I like this"
+                    placement="top"
+                  >
+                    <div
+                      className="like-data"
+                      onClick={() => {
+                        if (token) {
+                          likeVideo();
+                        } else {
+                          setisbtnClicked(true);
+                          document.body.classList.add("bg-css");
+                        }
+                      }}
+                    >
+                      {isLiked === true && token ? (
+                        <ThumbUpIcon
+                          fontSize="medium"
+                          style={{ color: "white" }}
+                          className="like-icon"
+                        />
+                      ) : (
+                        <ThumbUpAltOutlinedIcon
+                          fontSize="medium"
+                          style={{ color: "white" }}
+                          className="like-icon"
+                        />
+                      )}
+
+                      <p className="like-count">{VideoLikes}</p>
+                    </div>
+                  </Tooltip>
+                  <div className="vl"></div>
+                  <Tooltip
+                    TransitionComponent={Zoom}
+                    title="I dislike this"
+                    placement="top"
+                  >
+                    <div
+                      className="dislike-data"
+                      onClick={() => {
+                        if (token) {
+                          DislikeVideo();
+                        } else {
+                          setisbtnClicked(true);
+                          document.body.classList.add("bg-css");
+                        }
+                      }}
+                    >
+                      <ThumbDownOutlinedIcon
+                        fontSize="medium"
+                        style={{ color: "white" }}
+                        className="dislike-icon"
+                      />
+                    </div>
+                  </Tooltip>
+                </div>
+                <Tooltip
+                  TransitionComponent={Zoom}
+                  title="Share this video"
+                  placement="top"
+                >
+                  <div
+                    className="share"
+                    onClick={() => {
+                      if (shareClicked === false) {
+                        setShareClicked(true);
+                        document.body.classList.add("bg-css");
+                      } else {
+                        setShareClicked(false);
+                        document.body.classList.remove("bg-css");
+                      }
+                    }}
+                  >
+                    <ReplyIcon
+                      fontSize="medium"
+                      style={{ color: "white", transform: "rotateY(180deg)" }}
+                      className="sharee-icon"
+                    />
+                    <p className="share-txt">Share</p>
+                  </div>
+                </Tooltip>
+                <Tooltip
+                  TransitionComponent={Zoom}
+                  title="Download this video"
+                  placement="top"
+                >
+                  <div className="download-btn" onClick={downloadVideo}>
+                    <h3>
+                      <TfiDownload className="download-icon" />
+                    </h3>
+                    <p>Download</p>
+                  </div>
+                </Tooltip>
+                
+              </div>
+              <div className="second-c-data">
+                <Tooltip
+                  TransitionComponent={Zoom}
+                  title="Add to playlist"
+                  placement="top"
+                >
+                  <div
+                    className="add-playlist"
+                    onClick={() => {
+                      if (playlistClicked === false && token) {
+                        setPlaylistClicked(true);
+                        document.body.classList.add("bg-css");
+                      } else if (!token) {
+                        setisbtnClicked(true);
+                        document.body.classList.add("bg-css");
+                      }
+                    }}
+                  >
+                    <PlaylistAddIcon
+                      fontSize="medium"
+                      style={{ color: "white" }}
+                    />
+
+                    <p>Playlist</p>
+                  </div>
+                </Tooltip>
+              </div>
+              <div className="third-c-data">
+                <Tooltip
+                  TransitionComponent={Zoom}
+                  title="Watch Later"
+                  placement="top"
+                >
+                  <div
+                    className="save-later"
+                    onClick={() => {
+                      if (token) {
+                        saveVideo();
+                      } else {
+                        setisbtnClicked(true);
+                        document.body.classList.add("bg-css");
+                      }
+                    }}
+                  >
+                    {isSaved === true ? (
+                      <BookmarkAddedIcon
+                        fontSize="medium"
+                        style={{ color: "white" }}
+                        className="save-video-icon"
+                      />
+                    ) : (
+                      <BookmarkAddOutlinedIcon
+                        fontSize="medium"
+                        style={{ color: "white" }}
+                        className="save-video-icon"
+                      />
+                    )}
+                    <p>Save</p>
+                  </div>
+                </Tooltip>
+                <Tooltip
+                  TransitionComponent={Zoom}
+                  title="Add to playlist"
+                  placement="top"
+                >
+                  <div
+                    className="add-playlist"
+                    onClick={() => {
+                      if (playlistClicked === false && token) {
+                        setPlaylistClicked(true);
+                        document.body.classList.add("bg-css");
+                      } else if (!token) {
+                        setisbtnClicked(true);
+                        document.body.classList.add("bg-css");
+                      }
+                    }}
+                  >
+                    <PlaylistAddIcon
+                      fontSize="medium"
+                      style={{ color: "white" }}
+                    />
+
+                    <p>Playlist</p>
+                  </div>
+                </Tooltip>
+              </div>
+            </div>
           </div>
           <div className="description-section2">
             <div className="views-date" style={{ fontSize: "15.5px" }}>
@@ -1257,10 +1592,10 @@ function VideoSection() {
                 {views >= 1e9
                   ? `${(views / 1e9).toFixed(1)}B`
                   : views >= 1e6
-                  ? `${(views / 1e6).toFixed(1)}M`
-                  : views >= 1e3
-                  ? `${(views / 1e3).toFixed(1)}K`
-                  : views}{" "}
+                    ? `${(views / 1e6).toFixed(1)}M`
+                    : views >= 1e3
+                      ? `${(views / 1e3).toFixed(1)}K`
+                      : views}{" "}
                 views
               </p>
               <p style={{ marginLeft: "10px" }}>
@@ -1513,10 +1848,10 @@ function VideoSection() {
                               style={
                                 email === usermail
                                   ? {
-                                      color: "white",
-                                      marginLeft: "20px",
-                                      cursor: "pointer",
-                                    }
+                                    color: "white",
+                                    marginLeft: "20px",
+                                    cursor: "pointer",
+                                  }
                                   : { display: "none" }
                               }
                               className="heart-comment"
@@ -1557,7 +1892,7 @@ function VideoSection() {
                           )}
 
                           {element.user_email === email ||
-                          email === usermail ? (
+                            email === usermail ? (
                             <button
                               className="delete-comment-btn"
                               style={{ marginLeft: "17px" }}
@@ -1739,10 +2074,10 @@ function VideoSection() {
                           {Views[index] >= 1e9
                             ? `${(Views[index] / 1e9).toFixed(1)}B`
                             : Views[index] >= 1e6
-                            ? `${(Views[index] / 1e6).toFixed(1)}M`
-                            : Views[index] >= 1e3
-                            ? `${(Views[index] / 1e3).toFixed(1)}K`
-                            : Views[index]}{" "}
+                              ? `${(Views[index] / 1e6).toFixed(1)}M`
+                              : Views[index] >= 1e3
+                                ? `${(Views[index] / 1e3).toFixed(1)}K`
+                                : Views[index]}{" "}
                           views
                         </p>
                         <p
@@ -1853,10 +2188,10 @@ function VideoSection() {
                           {element.views >= 1e9
                             ? `${(element.views / 1e9).toFixed(1)}B`
                             : element.views >= 1e6
-                            ? `${(element.views / 1e6).toFixed(1)}M`
-                            : element.views >= 1e3
-                            ? `${(element.views / 1e3).toFixed(1)}K`
-                            : element.views}{" "}
+                              ? `${(element.views / 1e6).toFixed(1)}M`
+                              : element.views >= 1e3
+                                ? `${(element.views / 1e3).toFixed(1)}K`
+                                : element.views}{" "}
                           views
                         </p>
                         <p
@@ -2070,10 +2405,10 @@ function VideoSection() {
                               style={
                                 email === usermail
                                   ? {
-                                      color: "white",
-                                      marginLeft: "20px",
-                                      cursor: "pointer",
-                                    }
+                                    color: "white",
+                                    marginLeft: "20px",
+                                    cursor: "pointer",
+                                  }
                                   : { display: "none" }
                               }
                               className="heart-comment"
@@ -2114,7 +2449,7 @@ function VideoSection() {
                           )}
 
                           {element.user_email === email ||
-                          email === usermail ? (
+                            email === usermail ? (
                             <button
                               className="delete-comment-btn"
                               style={{ marginLeft: "17px" }}
@@ -2242,7 +2577,7 @@ function VideoSection() {
           }
         >
           {!UserPlaylist ||
-          UserPlaylist.includes("No playlists available...") ? (
+            UserPlaylist.includes("No playlists available...") ? (
             <p>No Playlists available...</p>
           ) : (
             ""
@@ -2258,7 +2593,7 @@ function VideoSection() {
                     {(playlistID &&
                       playlistID.length > 0 &&
                       playlistID.includes(element._id) === false) ||
-                    playlistID === "Video doesn't exist in any playlist" ? (
+                      playlistID === "Video doesn't exist in any playlist" ? (
                       <CheckBoxOutlineBlankIcon
                         className="tick-box"
                         fontSize="medium"
