@@ -220,6 +220,7 @@ function Navbar() {
               setisbtnClicked(true);
             } else {
               setisbtnClicked(false);
+              setisSwitched(false)
               document.body.classList.remove("bg-css");
             }
           }}
@@ -253,7 +254,7 @@ function Navbar() {
           className="signin-last"
           style={isSwitch === true ? { display: "block" } : { display: "none" }}
         >
-          <Signin />
+          <Signin close={isbtnClicked} switch={isSwitch}/>
           <div className="already">
             <p>Don&apos;t have an account?</p>
             <p

@@ -1,10 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../Css/navbar.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Reset from "./Reset";
 
-function Signin() {
+function Signin(prop) {
   const [data, setData] = useState({});
+  const [showReset, setShowReset] = useState(false);
+
+  useEffect(() => {
+    if (prop.close === true) {
+      setShowReset(false);
+    }
+  }, [prop.close]);
+
+  useEffect(() => {
+    if (prop.switch === false) {
+      setShowReset(false);
+    }
+  }, [prop.switch]);
 
   //TOASTS
 
@@ -83,14 +97,20 @@ function Signin() {
 
   return (
     <>
-      <div className="above-data">
+      <div
+        className="above-data"
+        style={{ display: showReset ? "none" : "block" }}
+      >
         <p className="signup-head">Login to Your Account</p>
         <p className="signup-desc">
           Stay Connected-Stay Entertained, Step into the World of YouTube, Join
           the YouTube Community
         </p>
       </div>
-      <div className="signup-form">
+      <div
+        className="signup-form"
+        style={{ display: showReset ? "none" : "flex" }}
+      >
         <form onSubmit={SubmitData}>
           <input
             type="email"
@@ -108,10 +128,19 @@ function Signin() {
             onChange={handleInputs}
             required
           />
+          <p className="forgot-password" onClick={() => setShowReset(true)}>
+            Forgot password?
+          </p>
           <button className="signup-btn" type="submit">
             Login to Your Account
           </button>
         </form>
+      </div>
+      <div
+        className="password-reset"
+        style={{ display: showReset ? "block" : "none" }}
+      >
+        <Reset />
       </div>
     </>
   );

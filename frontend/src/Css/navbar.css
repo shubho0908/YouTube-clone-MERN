@@ -275,6 +275,18 @@ form > input::placeholder {
   color: rgba(255, 255, 255, 0.59);
 }
 
+.forgot-password {
+  cursor: pointer;
+  font-size: 14.5px;
+  color: rgba(255, 255, 255, 0.59);
+  margin-top: 8px;
+}
+
+.forgot-password:hover{
+  color: white;
+  text-decoration: underline;
+}
+
 .cancel {
   cursor: pointer;
   position: absolute;

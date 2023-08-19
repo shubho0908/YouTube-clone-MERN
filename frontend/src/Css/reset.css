@@ -1,0 +1,17 @@
+.top-reset > p:nth-child(1) {
+  font-size: 35px;
+  font-family: "Geologica", sans-serif;
+}
+.top-reset > p:nth-child(2) {
+    margin-top: 15px;
+    font-weight: lighter;
+    color: gray;
+}
+
+.auth-popup {
+  width: -webkit-fill-available;
+}
+
+.top-reset{
+    text-align: center;
+}
