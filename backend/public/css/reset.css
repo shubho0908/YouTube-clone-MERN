@@ -1,0 +1,77 @@
+@import url("https://fonts.googleapis.com/css2?family=Geologica:wght@500&display=swap");
+
+body {
+  background-color: #0f0f0f;
+  color: white;
+  font-family: "Geologica", sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+u {
+  cursor: pointer;
+}
+
+.email-verified {
+  display: flex;
+  align-items: center;
+}
+
+.email-verified > p {
+  font-size: 18px;
+}
+
+.reset-password > p {
+  font-size: 25px;
+}
+
+.done {
+  width: 30px;
+  margin-left: 10px;
+}
+
+form > input {
+  background-color: #3d3f4359;
+  outline: none;
+  height: 45px;
+  padding: 10px;
+  color: white;
+  margin-bottom: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.27);
+  border-radius: 5px;
+  width: -webkit-fill-available;
+}
+
+form > input::placeholder {
+  color: rgba(255, 255, 255, 0.59);
+}
+
+.reset-password {
+  background-color: #282828;
+  padding: 25px;
+  border-radius: 8px;
+}
+
+button {
+  cursor: pointer;
+  background-color: #c00;
+  color: white;
+  border: none;
+  font-family: "Geologica", sans-serif;
+  font-size: 18px;
+  outline: none;
+  height: 60px;
+  margin-top: 20px;
+  width: -webkit-fill-available;
+  border-radius: 5px;
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  transform: scale(1.04);
+}
+
+button:active {
+  transform: scale(0.95);
+}

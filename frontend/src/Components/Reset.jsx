@@ -1,15 +1,46 @@
 import { useState } from "react";
 import "../Css/reset.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Reset() {
   const [email, setEmail] = useState("");
+  const [BtnLoading, setBtnLoading] = useState(false);
+
+  //TOASTS
+
+  const LinkNotify = () =>
+    toast.success("Link sent successfully!", {
+      position: "top-center",
+      autoClose: 1200,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+
+    const ErrorNotify = () =>
+    toast.error("Input fields can't be empty.", {
+      position: "top-center",
+      autoClose: 1200,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
 
   const ResetData = async (e) => {
     e.preventDefault();
     if (email === "") {
+      ErrorNotify()
       return;
     } else {
-      const response = await fetch(`http://localhost:3000/reset-link`, {
+      setBtnLoading(true);
+      const response = await fetch(`http://localhost:3000/resetlink`, {
         method: "POST",
         body: JSON.stringify({ email }),
         headers: {
@@ -18,7 +49,8 @@ function Reset() {
       });
       const data = await response.json();
       if (data.message !== "USER DOESN'T EXIST") {
-        console.log(`Reset Link: `, data);
+        setBtnLoading(false);
+        LinkNotify();
       } else {
         alert(data.message);
       }
@@ -31,8 +63,8 @@ function Reset() {
         <div className="top-reset">
           <p>Forgot Password</p>
           <p>
-            Don&apos;t remember your password? No worries, we can help you to reset
-            your password.
+            Don&apos;t remember your password? No worries, we can help you to
+            reset your password.
           </p>
         </div>
         <div className="reset-option">
@@ -45,9 +77,23 @@ function Reset() {
               placeholder="Email Address"
               required
             />
-            <button className="signup-btn" type="submit">
-              Send Reset Link
-            </button>
+            {BtnLoading ? (
+              <button
+                className="signup-btn"
+                type="submit"
+                disabled={BtnLoading ? true : false}
+              >
+                <span className="loader3"></span>
+              </button>
+            ) : (
+              <button
+                className="signup-btn"
+                type="submit"
+                disabled={BtnLoading ? true : false}
+              >
+                Send Reset Link
+              </button>
+            )}
           </form>
         </div>
       </div>

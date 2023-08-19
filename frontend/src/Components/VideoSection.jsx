@@ -654,7 +654,7 @@ function VideoSection() {
   // }
 
   const { VideoData } = videoData;
-  const matchedVideo = VideoData.find((item) => item._id === id);
+  const matchedVideo = VideoData && VideoData.find((item) => item._id === id);
 
   if (!matchedVideo) {
     return (

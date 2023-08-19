@@ -73,7 +73,7 @@ auth.post("/login", async (req, res) => {
   }
 });
 
-auth.post("/reset-link", async (req, res) => {
+auth.post("/resetlink", async (req, res) => {
   try {
     const { email } = req.body;
     const user = await userData.findOne({ email });
@@ -91,16 +91,15 @@ auth.post("/reset-link", async (req, res) => {
 
     // Nodemailer configuration
     const transporter = nodemailer.createTransport({
-      host: 'smtp.ethereal.email',
-      port: 587,
+      service: "gmail",
       auth: {
-          user: 'andrew.bruen94@ethereal.email',
-          pass: 'ESmU5EtNJm2mhKnqEs'
-      }
-  });
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD,
+      },
+    });
 
     const mailOptions = {
-      from: "admin@youtube.app",
+      from: "admin@shubho.youtube.app",
       to: email,
       subject: "Password Reset Link",
       html: `Click the following link to reset your password: <a href="${resetLink}">${resetLink}</a> <br/> Only valid for 30 minutes.`,
@@ -126,5 +125,6 @@ auth.post("/reset-link", async (req, res) => {
     });
   }
 });
+
 
 module.exports = auth;

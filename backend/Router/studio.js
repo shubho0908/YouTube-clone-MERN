@@ -1,9 +1,11 @@
 require("dotenv").config();
 require("../Database/database");
+const jwt = require("jsonwebtoken");
 const express = require("express");
 const userData = require("../Models/user");
 const videodata = require("../Models/videos");
 const TrendingData = require("../Models/trending");
+const bcrypt = require("bcrypt");
 const Studio = express.Router();
 
 Studio.post("/deletevideo/:videoId", async (req, res) => {
@@ -248,6 +250,64 @@ Studio.post("/savelinksdata/:email", async (req, res) => {
   }
 });
 
+Studio.get("/:userId/:token", async (req, res) => {
+  try {
+    const { userId, token } = req.params;
+    const user = await userData.findOne({ _id: userId });
 
+    if (!user) {
+      return res.status(404).json({
+        message: "USER DOESN'T EXIST",
+      });
+    }
+
+    if (!token) {
+      return res.status(404).json({
+        message: "INVALID TOKEN",
+      });
+    }
+
+    jwt.verify(token, process.env.SECRET_KEY, (err, payload) => {
+      if (err) {
+        return res.status(401).json({ message: "Token verification failed" });
+      }
+      res.render("reset-password", {
+        email: payload.email,
+      });
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+});
+
+Studio.post("/resetpassword", async (req, res) => {
+  try {
+    const password1 = req.body.new_password;
+    const password2 = req.body.new_password1;
+    const email = req.body.email;
+    if (password1 !== password2) {
+      res.send("Passwords doesn't match!");
+    } else {
+      const user = await userData.findOne({ email });
+
+      if (!user) {
+        return res.status(404).json({
+          message: "USER DOESN'T EXIST",
+        });
+      }
+
+      const hashedPassword = await bcrypt.hash(password1, 11);
+      user.password = hashedPassword;
+      await user.save();
+      res.render("done");
+    }
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+});
 
 module.exports = Studio;
