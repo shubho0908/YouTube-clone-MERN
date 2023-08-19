@@ -58,6 +58,18 @@ function Signin(prop) {
       theme: "dark",
     });
 
+  const NoUserNotify = () =>
+    toast.error("User doesn't exists.", {
+      position: "top-center",
+      autoClose: 1200,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+
   const handleInputs = (e) => {
     setData({
       ...data,
@@ -89,6 +101,8 @@ function Signin(prop) {
         }, 2000);
       } else if (message === "INVALID CREDENTIALS") {
         InvalidNotify();
+      } else if (message === "USER DOESN'T EXIST") {
+        NoUserNotify();
       }
     } catch (error) {
       alert(error.message);

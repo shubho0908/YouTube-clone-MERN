@@ -287,21 +287,28 @@ Studio.post("/resetpassword", async (req, res) => {
     const password1 = req.body.new_password;
     const password2 = req.body.new_password1;
     const email = req.body.email;
-    if (password1 !== password2) {
-      res.send("Passwords doesn't match!");
+
+    if (password1 === "" || password2 === "") {
+      return res.send("Input fields can't be empty!");
+    } else if (password1 !== password2) {
+      return res.send("Passwords don't match!");
     } else {
       const user = await userData.findOne({ email });
 
       if (!user) {
-        return res.status(404).json({
-          message: "USER DOESN'T EXIST",
-        });
+        return res.send("USER DOESN'T EXIST");
       }
 
-      const hashedPassword = await bcrypt.hash(password1, 11);
-      user.password = hashedPassword;
-      await user.save();
-      res.render("done");
+      const checkPassword = await bcrypt.compare(password1, user.password);
+
+      if (checkPassword) {
+        return res.send("New Password can't be the same as the Old Password.");
+      } else {
+        const hashedPassword = await bcrypt.hash(password1, 11);
+        user.password = hashedPassword;
+        await user.save();
+        return res.render("done");
+      }
     }
   } catch (error) {
     res.status(500).json({

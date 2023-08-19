@@ -121,6 +121,8 @@
   position: fixed;
   background-color: #0f0f0f;
   z-index: 11;
+  height: 100%;
+  overflow: scroll;
   animation: COME_IN 0.35s both;
 }
 
@@ -158,7 +160,6 @@
 .panel-topdata {
   padding: 20px;
   position: relative;
-  left: 11px;
 }
 
 .close-sidepannel {
@@ -229,8 +230,8 @@
   }
 }
 
-@media (max-width:450px) {
-  .hor-icons{
+@media (max-width: 450px) {
+  .hor-icons {
     font-size: 24px !important;
   }
 }

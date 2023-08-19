@@ -27,6 +27,12 @@ import { IoAddCircleOutline } from "react-icons/io5";
 import { MdOutlineSubscriptions } from "react-icons/md";
 import { MdSubscriptions } from "react-icons/md";
 import { MdOutlineVideoLibrary } from "react-icons/md";
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import WhatshotIcon from "@mui/icons-material/Whatshot";
+import SubscriptionsIcon from "@mui/icons-material/Subscriptions";
+import VideoLibraryIcon from "@mui/icons-material/VideoLibrary";
+import WatchLaterIcon from "@mui/icons-material/WatchLater";
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 
 function LeftPanel() {
   const [menuClicked, setMenuClicked] = useState(() => {
@@ -180,7 +186,12 @@ function LeftPanel() {
               window.location.href = "/";
             }}
           >
-            <HomeIcon fontSize="medium" style={{ color: "white" }} />
+            {selected === "home" ? (
+              <HomeIcon fontSize="medium" style={{ color: "white" }} />
+            ) : (
+              <HomeOutlinedIcon fontSize="medium" style={{ color: "white" }} />
+            )}
+
             <p>Home</p>
           </div>
           <div
@@ -194,10 +205,14 @@ function LeftPanel() {
               window.location.href = "/trending";
             }}
           >
-            <WhatshotOutlinedIcon
-              fontSize="medium"
-              style={{ color: "white" }}
-            />
+            {selected === "trending" ? (
+              <WhatshotIcon fontSize="medium" style={{ color: "white" }} />
+            ) : (
+              <WhatshotOutlinedIcon
+                fontSize="medium"
+                style={{ color: "white" }}
+              />
+            )}
             <p>Trending</p>
           </div>
           <div
@@ -216,10 +231,14 @@ function LeftPanel() {
               }
             }}
           >
-            <SubscriptionsOutlinedIcon
-              fontSize="medium"
-              style={{ color: "white" }}
-            />
+            {selected === "subscription" ? (
+              <SubscriptionsIcon fontSize="medium" style={{ color: "white" }} />
+            ) : (
+              <SubscriptionsOutlinedIcon
+                fontSize="medium"
+                style={{ color: "white" }}
+              />
+            )}
             <p>Subscriptions</p>
           </div>
           <div
@@ -315,10 +334,14 @@ function LeftPanel() {
               }
             }}
           >
-            <VideoLibraryOutlinedIcon
-              fontSize="medium"
-              style={{ color: "white" }}
-            />
+            {selected === "library" ? (
+              <VideoLibraryIcon fontSize="medium" style={{ color: "white" }} />
+            ) : (
+              <VideoLibraryOutlinedIcon
+                fontSize="medium"
+                style={{ color: "white" }}
+              />
+            )}
             <p>Library</p>
           </div>
 
@@ -338,10 +361,14 @@ function LeftPanel() {
               }
             }}
           >
-            <WatchLaterOutlinedIcon
-              fontSize="medium"
-              style={{ color: "white" }}
-            />
+            {selected === "watch-later" ? (
+              <WatchLaterIcon fontSize="medium" style={{ color: "white" }} />
+            ) : (
+              <WatchLaterOutlinedIcon
+                fontSize="medium"
+                style={{ color: "white" }}
+              />
+            )}
             <p>Watch later</p>
           </div>
           <div
@@ -361,7 +388,14 @@ function LeftPanel() {
               }
             }}
           >
-            <ThumbUpOutlinedIcon fontSize="medium" style={{ color: "white" }} />
+            {selected === "liked-video" ? (
+              <ThumbUpIcon fontSize="medium" style={{ color: "white" }} />
+            ) : (
+              <ThumbUpOutlinedIcon
+                fontSize="medium"
+                style={{ color: "white" }}
+              />
+            )}
             <p>Liked videos</p>
           </div>
           <div className="my-playlists-sectionn">
@@ -465,7 +499,11 @@ function LeftPanel() {
               window.location.href = "/";
             }}
           >
-            <HomeIcon fontSize="medium" style={{ color: "white" }} />
+            {selected === "home" ? (
+              <HomeIcon fontSize="medium" style={{ color: "white" }} />
+            ) : (
+              <HomeOutlinedIcon fontSize="medium" style={{ color: "white" }} />
+            )}
           </div>
           <div
             className={
@@ -479,10 +517,14 @@ function LeftPanel() {
               window.location.href = "/trending";
             }}
           >
-            <WhatshotOutlinedIcon
-              fontSize="medium"
-              style={{ color: "white" }}
-            />
+            {selected === "trending" ? (
+              <WhatshotIcon fontSize="medium" style={{ color: "white" }} />
+            ) : (
+              <WhatshotOutlinedIcon
+                fontSize="medium"
+                style={{ color: "white" }}
+              />
+            )}
           </div>
           <div
             className={
@@ -500,10 +542,14 @@ function LeftPanel() {
               }
             }}
           >
-            <SubscriptionsOutlinedIcon
-              fontSize="medium"
-              style={{ color: "white" }}
-            />
+            {selected === "subscription" ? (
+              <SubscriptionsIcon fontSize="medium" style={{ color: "white" }} />
+            ) : (
+              <SubscriptionsOutlinedIcon
+                fontSize="medium"
+                style={{ color: "white" }}
+              />
+            )}
           </div>
         </div>
         {/* <hr className="seperate" /> */}
@@ -520,10 +566,14 @@ function LeftPanel() {
               }
             }}
           >
-            <VideoLibraryOutlinedIcon
-              fontSize="medium"
-              style={{ color: "white" }}
-            />
+            {selected === "library" ? (
+              <VideoLibraryIcon fontSize="medium" style={{ color: "white" }} />
+            ) : (
+              <VideoLibraryOutlinedIcon
+                fontSize="medium"
+                style={{ color: "white" }}
+              />
+            )}
           </div>
           <div
             className={
@@ -541,10 +591,14 @@ function LeftPanel() {
               }
             }}
           >
-            <WatchLaterOutlinedIcon
-              fontSize="medium"
-              style={{ color: "white" }}
-            />
+            {selected === "watch-later" ? (
+              <WatchLaterIcon fontSize="medium" style={{ color: "white" }} />
+            ) : (
+              <WatchLaterOutlinedIcon
+                fontSize="medium"
+                style={{ color: "white" }}
+              />
+            )}
           </div>
           <div
             className={
@@ -563,7 +617,14 @@ function LeftPanel() {
               }
             }}
           >
-            <ThumbUpOutlinedIcon fontSize="medium" style={{ color: "white" }} />
+            {selected === "liked-video" ? (
+              <ThumbUpIcon fontSize="medium" style={{ color: "white" }} />
+            ) : (
+              <ThumbUpOutlinedIcon
+                fontSize="medium"
+                style={{ color: "white" }}
+              />
+            )}
           </div>
         </div>
       </div>
@@ -586,7 +647,11 @@ function LeftPanel() {
               window.location.href = "/";
             }}
           >
-            <HomeIcon fontSize="medium" style={{ color: "white" }} />
+            {selected === "home" ? (
+              <HomeIcon fontSize="medium" style={{ color: "white" }} />
+            ) : (
+              <HomeOutlinedIcon fontSize="medium" style={{ color: "white" }} />
+            )}
           </div>
           <div
             className={
@@ -600,10 +665,14 @@ function LeftPanel() {
               window.location.href = "/trending";
             }}
           >
-            <WhatshotOutlinedIcon
-              fontSize="medium"
-              style={{ color: "white" }}
-            />
+            {selected === "trending" ? (
+              <WhatshotIcon fontSize="medium" style={{ color: "white" }} />
+            ) : (
+              <WhatshotOutlinedIcon
+                fontSize="medium"
+                style={{ color: "white" }}
+              />
+            )}
           </div>
           <div
             className={
@@ -621,10 +690,14 @@ function LeftPanel() {
               }
             }}
           >
-            <SubscriptionsOutlinedIcon
-              fontSize="medium"
-              style={{ color: "white" }}
-            />
+            {selected === "subscription" ? (
+              <SubscriptionsIcon fontSize="medium" style={{ color: "white" }} />
+            ) : (
+              <SubscriptionsOutlinedIcon
+                fontSize="medium"
+                style={{ color: "white" }}
+              />
+            )}
           </div>
         </div>
         {/* <hr className="seperate" /> */}
@@ -641,10 +714,14 @@ function LeftPanel() {
               }
             }}
           >
-            <VideoLibraryOutlinedIcon
-              fontSize="medium"
-              style={{ color: "white" }}
-            />
+            {selected === "library" ? (
+              <VideoLibraryIcon fontSize="medium" style={{ color: "white" }} />
+            ) : (
+              <VideoLibraryOutlinedIcon
+                fontSize="medium"
+                style={{ color: "white" }}
+              />
+            )}
           </div>
           <div
             className={
@@ -662,10 +739,14 @@ function LeftPanel() {
               }
             }}
           >
-            <WatchLaterOutlinedIcon
-              fontSize="medium"
-              style={{ color: "white" }}
-            />
+            {selected === "watch-later" ? (
+              <WatchLaterIcon fontSize="medium" style={{ color: "white" }} />
+            ) : (
+              <WatchLaterOutlinedIcon
+                fontSize="medium"
+                style={{ color: "white" }}
+              />
+            )}
           </div>
           <div
             className={
@@ -684,7 +765,14 @@ function LeftPanel() {
               }
             }}
           >
-            <ThumbUpOutlinedIcon fontSize="medium" style={{ color: "white" }} />
+            {selected === "liked-video" ? (
+              <ThumbUpIcon fontSize="medium" style={{ color: "white" }} />
+            ) : (
+              <ThumbUpOutlinedIcon
+                fontSize="medium"
+                style={{ color: "white" }}
+              />
+            )}
           </div>
         </div>
       </div>
@@ -800,7 +888,14 @@ function LeftPanel() {
                 window.location.href = "/";
               }}
             >
-              <HomeIcon fontSize="medium" style={{ color: "white" }} />
+              {selected === "home" ? (
+                <HomeIcon fontSize="medium" style={{ color: "white" }} />
+              ) : (
+                <HomeOutlinedIcon
+                  fontSize="medium"
+                  style={{ color: "white" }}
+                />
+              )}
               <p>Home</p>
             </div>
             <div
@@ -814,10 +909,14 @@ function LeftPanel() {
                 window.location.href = "/trending";
               }}
             >
-              <WhatshotOutlinedIcon
-                fontSize="medium"
-                style={{ color: "white" }}
-              />
+              {selected === "trending" ? (
+                <WhatshotIcon fontSize="medium" style={{ color: "white" }} />
+              ) : (
+                <WhatshotOutlinedIcon
+                  fontSize="medium"
+                  style={{ color: "white" }}
+                />
+              )}
               <p>Trending</p>
             </div>
             <div
@@ -836,10 +935,17 @@ function LeftPanel() {
                 }
               }}
             >
-              <SubscriptionsOutlinedIcon
-                fontSize="medium"
-                style={{ color: "white" }}
-              />
+              {selected === "subscription" ? (
+                <SubscriptionsIcon
+                  fontSize="medium"
+                  style={{ color: "white" }}
+                />
+              ) : (
+                <SubscriptionsOutlinedIcon
+                  fontSize="medium"
+                  style={{ color: "white" }}
+                />
+              )}
               <p>Subscriptions</p>
             </div>
             <div
@@ -935,10 +1041,17 @@ function LeftPanel() {
                 }
               }}
             >
-              <VideoLibraryOutlinedIcon
-                fontSize="medium"
-                style={{ color: "white" }}
-              />
+              {selected === "library" ? (
+                <VideoLibraryIcon
+                  fontSize="medium"
+                  style={{ color: "white" }}
+                />
+              ) : (
+                <VideoLibraryOutlinedIcon
+                  fontSize="medium"
+                  style={{ color: "white" }}
+                />
+              )}
               <p>Library</p>
             </div>
 
@@ -958,10 +1071,14 @@ function LeftPanel() {
                 }
               }}
             >
-              <WatchLaterOutlinedIcon
-                fontSize="medium"
-                style={{ color: "white" }}
-              />
+              {selected === "watch-later" ? (
+                <WatchLaterIcon fontSize="medium" style={{ color: "white" }} />
+              ) : (
+                <WatchLaterOutlinedIcon
+                  fontSize="medium"
+                  style={{ color: "white" }}
+                />
+              )}
               <p>Watch later</p>
             </div>
             <div
@@ -981,10 +1098,14 @@ function LeftPanel() {
                 }
               }}
             >
-              <ThumbUpOutlinedIcon
-                fontSize="medium"
-                style={{ color: "white" }}
-              />
+              {selected === "liked-video" ? (
+                <ThumbUpIcon fontSize="medium" style={{ color: "white" }} />
+              ) : (
+                <ThumbUpOutlinedIcon
+                  fontSize="medium"
+                  style={{ color: "white" }}
+                />
+              )}
               <p>Liked videos</p>
             </div>
             <div className="my-playlists-sectionn">

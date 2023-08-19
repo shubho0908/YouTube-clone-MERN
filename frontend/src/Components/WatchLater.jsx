@@ -181,7 +181,7 @@ function WatchLater() {
                           : { visibility: "visible", display: "block" }
                       }
                     />
-                    <p className="sample-play">&#9654; PLAY ALL</p>
+                    <p className="sample-play" style={{pointerEvents : "none"}}>&#9654; PLAY ALL</p>
                   </div>
                 )}
                 <div className="last-like-section">

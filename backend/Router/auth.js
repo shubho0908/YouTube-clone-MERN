@@ -28,6 +28,48 @@ auth.post("/signup", async (req, res) => {
     });
     await saveData.save();
 
+    // Nodemailer configuration
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD,
+      },
+    });
+
+    const mailOptions = {
+      from: "admin@shubho.youtube.app",
+      to: email,
+      subject: "Welcome to Shubho's YouTube Clone!",
+      html: `
+        <div style="font-family: Arial, sans-serif; background-color: #f5f5f5; padding: 20px;">
+          <h1 style="color: #333;">Welcome to Shubho's YouTube Clone!</h1>
+          <p style="color: #555;">Hello ${name},</p>
+          <p style="color: #555;">We are excited to have you as a new member of our community! Thank you for joining.</p>
+          <p style="color: #555;">Feel free to explore our platform and start sharing your videos with the world.</p>
+          <p style="color: #555;">If you have any questions or need assistance, don't hesitate to reach out to us.</p>
+          <p style="color: #555;">Best regards,</p>
+          <p style="color: #555;">Shubhojeet Bera</p>
+        </div>
+      `,
+    };
+    
+
+    // Send the email
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error(error);
+        return res.json({
+          message: "Error sending email",
+        });
+      } else {
+        console.log("Email sent: " + info.response);
+        res.json({
+          message: "Password reset link sent to your email",
+        });
+      }
+    });
+
     res.json({
       message: "REGISTRATION SUCCESSFUL",
       token,
@@ -102,8 +144,21 @@ auth.post("/resetlink", async (req, res) => {
       from: "admin@shubho.youtube.app",
       to: email,
       subject: "Password Reset Link",
-      html: `Click the following link to reset your password: <a href="${resetLink}">${resetLink}</a> <br/> Only valid for 30 minutes.`,
+      html: `
+        <div style="font-family: Arial, sans-serif; background-color: #f5f5f5; padding: 20px;">
+          <h2 style="color: #333;">Password Reset</h2>
+          <p style="color: #555;">Hello,</p>
+          <p style="color: #555;">Click the following link to reset your password:</p>
+          <p style="margin: 20px 0;">
+            <a href="${resetLink}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">Reset Password</a>
+          </p>
+          <p style="color: #555;">This link is only valid for 30 minutes.</p>
+          <p style="color: #555;">If you didn't request a password reset, please ignore this email.</p>
+          <p style="color: #888;">Best regards,<br/>Shubhojeet Bera</p>
+        </div>
+      `,
     };
+    
 
     // Send the email
     transporter.sendMail(mailOptions, (error, info) => {
@@ -125,6 +180,5 @@ auth.post("/resetlink", async (req, res) => {
     });
   }
 });
-
 
 module.exports = auth;

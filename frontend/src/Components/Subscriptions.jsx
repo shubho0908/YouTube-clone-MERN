@@ -33,7 +33,7 @@ function Subscriptions() {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 4200);
+    }, 6200);
   }, []);
 
   useEffect(() => {
@@ -71,7 +71,13 @@ function Subscriptions() {
               `http://localhost:3000/getuservideos/${userEmail}`
             );
             const myvideos = await response2.json();
-            newSubsVideos.push(...myvideos);
+  
+            // Make sure myvideos is an array before using spread syntax
+            if (Array.isArray(myvideos)) {
+              newSubsVideos.push(...myvideos);
+            } else {
+              // console.log("myvideos is not an array:", myvideos);
+            }
           }
           setSubsVideos(newSubsVideos);
         }
@@ -79,11 +85,12 @@ function Subscriptions() {
         console.log(error.message);
       }
     };
-
+  
     const interval = setInterval(getUserMail, 200);
-
+  
     return () => clearInterval(interval);
   }, [subscriptions]);
+  
 
   useEffect(() => {
     const handleMenuButtonClick = () => {
