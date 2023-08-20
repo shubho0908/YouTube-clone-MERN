@@ -32,6 +32,7 @@ import PublicOutlinedIcon from "@mui/icons-material/PublicOutlined";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import LeftPanel from "./LeftPanel";
 
 function VideoSection() {
   const { id } = useParams();
@@ -1003,6 +1004,9 @@ function VideoSection() {
       <div className="my-navbar">
         <Navbar />
       </div>
+      <div className="my-panelbar">
+        <LeftPanel/>
+      </div>
       <div className="main-video-section">
         <div className="left-video-section2">
           <div className="videoframe">
@@ -1193,7 +1197,7 @@ function VideoSection() {
                   <h3>
                     <TfiDownload className="download-icon" />
                   </h3>
-                  <p>Download</p>
+                  <p className="download-txt">Download</p>
                 </div>
               </Tooltip>
               <Tooltip
@@ -1248,6 +1252,7 @@ function VideoSection() {
                   <PlaylistAddIcon
                     fontSize="medium"
                     style={{ color: "white" }}
+                    className="playlist-iconn"
                   />
 
                   <p>Playlist</p>
@@ -1356,7 +1361,7 @@ function VideoSection() {
                     <h3>
                       <TfiDownload className="download-icon" />
                     </h3>
-                    <p>Download</p>
+                    <p className="download-txt">Download</p>
                   </div>
                 </Tooltip>
                 <Tooltip
@@ -1493,7 +1498,7 @@ function VideoSection() {
                     <h3>
                       <TfiDownload className="download-icon" />
                     </h3>
-                    <p>Download</p>
+                    <p className="download-txt">Download</p>
                   </div>
                 </Tooltip>
                 

@@ -790,6 +790,10 @@
   display: none;
 }
 
+.my-panelbar {
+  display: none;
+}
+
 /* MEDIA QUERIES  */
 
 @media (max-width: 1550px) {
@@ -853,7 +857,7 @@
 
 @media (max-width: 990px) {
   .left-video-section2 {
-    width: 750px;
+    width: 94vw;
   }
   .vid-title {
     font-size: 19px;
@@ -885,9 +889,6 @@
 }
 
 @media (width < 800px) {
-  .left-video-section2 {
-    width: 600px;
-  }
   .channel-right-data {
     width: inherit;
   }
@@ -939,20 +940,40 @@
   .download-icon {
     font-size: 16px;
   }
+  .comments-section {
+    margin-bottom: 220px;
+  }
+}
+
+@media (width<= 650px) {
+  .my-panelbar {
+    display: block !important;
+  }
 }
 
 @media (width<635px) {
   .left-video-section2 {
-    width: 420px;
+    padding-top: 74px;
   }
   .c-right1 {
     display: none;
+  }
+  .views-date > p {
+    font-size: 13.5px;
   }
   .c-right2 {
     display: flex !important;
     flex-direction: column;
     align-items: flex-start;
   }
+
+  .videos-desc {
+    font-size: 13.3px;
+  }
+  .desc-seemore {
+    font-size: 13.5px;
+  }
+
   .second-c-data {
     margin-top: 15px;
   }
@@ -1032,12 +1053,25 @@
     bottom: 32px;
     font-size: 12.6px;
   }
+  .comments-section {
+    margin-bottom: 150px;
+  }
+  .some-channel-data {
+    margin-top: 10px;
+  }
+  .top-tags > p {
+    font-size: 12.8px;
+  }
 }
 
 @media (width< 465px) {
-  .left-video-section2 {
-    width: 320px;
+  .c-right1 {
+    display: flex !important;
   }
+  .c-right2 {
+    display: none !important;
+  }
+
   .second-c-data {
     display: none;
   }
@@ -1053,10 +1087,104 @@
     align-items: center;
     margin-top: 15px;
   }
-  .save-later{
+  .save-later {
     margin-left: 0px;
   }
-  .add-playlist{
+  .add-playlist {
     margin-left: 20px;
+  }
+  .description-section2 {
+    width: 93%;
+  }
+  .vid-title {
+    margin-top: 10px;
+  }
+  .channelDP {
+    width: 30px;
+    height: 30px;
+  }
+  .creator > p {
+    font-size: 11.6px !important;
+  }
+  .channel-left-data {
+    margin-top: 12px;
+  }
+  .channel-subs {
+    font-size: 11px;
+  }
+  .channel-data2 {
+    margin-left: 12px;
+  }
+  .subscribe {
+    font-size: 12px;
+    padding-left: 14px;
+    padding-right: 14px;
+    margin-left: 26px;
+  }
+
+  .share-txt,
+  .download-txt,
+  .save-later > p,
+  .add-playlist > p {
+    display: none !important;
+  }
+  .share,
+  .save-later,
+  .add-playlist {
+    width: 35px;
+  }
+  .download-btn {
+    width: 40px;
+  }
+  .share,
+  .download-btn,
+  .add-playlist,
+  .save-later {
+    margin-left: 10px;
+  }
+  .recommend-tags {
+    position: absolute;
+    left: 28px;
+  }
+  .video-section2 {
+    margin-top: 55px;
+  }
+}
+
+@media (width < 400px) {
+  .comments-section {
+    position: relative;
+    right: 44px;
+    width: 88vw;
+  }
+  .upload-comment,
+  .cancel-comment {
+    font-size: 12px;
+  }
+  .comment-input,
+  .comment-input::placeholder {
+    font-size: 13.5px;
+  }
+  .video-comments {
+    margin-top: 60px;
+  }
+  .commentDP {
+    width: 35px;
+    height: 35px;
+  }
+  .comment-like {
+    font-size: larger !important;
+  }
+  .heartDP {
+    width: 22px;
+    height: 22px;
+  }
+  .comment-interaction > p,
+  .delete-comment-btn,
+  .like-count {
+    font-size: 12px;
+  }
+  .playlist-iconn {
+    font-size: larger !important;
   }
 }
