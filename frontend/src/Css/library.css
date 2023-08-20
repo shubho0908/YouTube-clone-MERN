@@ -122,6 +122,7 @@
 .topplaylist-section {
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
 .playy-all-btn2 {
@@ -219,5 +220,11 @@
   display: flex;
   align-items: center;
   width: 150px;
+  justify-content: space-between;
+}
+.playlistt-left {
+  display: flex;
+  align-items: center;
+  width: 120px;
   justify-content: space-between;
 }

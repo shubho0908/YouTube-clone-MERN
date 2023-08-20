@@ -1,4 +1,3 @@
-import nothing from "../../img/nothing.png";
 import { useEffect, useState } from "react";
 import jwtDecode from "jwt-decode";
 import PlaylistPlayIcon from "@mui/icons-material/PlaylistPlay";
@@ -38,7 +37,7 @@ function ChannelPlaylists(prop) {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 3200);
+    }, 3000);
   }, []);
 
   useEffect(() => {
@@ -64,19 +63,14 @@ function ChannelPlaylists(prop) {
     getPlaylistData();
   }, [prop.newmail]);
 
-  const publicPlaylists =
-    PlaylistData &&
-    PlaylistData !== "No playlists available..." &&
-    PlaylistData.filter((item) => item.playlist_privacy === "Public");
-
-  const noPublicPlaylists = publicPlaylists.length === 0;
-
-  if (PlaylistData === "No playlists available..." || noPublicPlaylists) {
+  if (
+    (loading === false && PlaylistData === "No playlists available...") ||
+    (loading === false && PlaylistData.length === 0)
+  ) {
     return (
-      <div className="no-playlists">
-        <img src={nothing} alt="no results" className="nothing-found" />
-        <p className="no-results">No playlists found!</p>
-      </div>
+      <p className="no-results" style={{ color: "white", fontSize: "16px" }}>
+        This user has doesn&apos;t have any playlists.
+      </p>
     );
   }
 
@@ -155,8 +149,10 @@ function ChannelPlaylists(prop) {
         <div className="created-playlist-section">
           <p>Created playlists</p>
           <div className="thischannel-playlists">
-            {publicPlaylists &&
-              publicPlaylists.map((element, index) => {
+            {PlaylistData &&
+              PlaylistData !== "No playlists available..." &&
+              PlaylistData.length > 0 &&
+              PlaylistData.map((element, index) => {
                 const backgroundColor =
                   playlistColors[index] || playlistColors[0];
 
@@ -181,13 +177,13 @@ function ChannelPlaylists(prop) {
                         alt=""
                         className="playlist-thumbnail"
                         onClick={() => {
-                         window.location.href = `/video/${element.playlist_videos[0].videoID}`
+                          window.location.href = `/video/${element.playlist_videos[0].videoID}`;
                         }}
                       />
                       <div
                         className="playy-all-btn"
                         onClick={() => {
-                         window.location.href = `/video/${element.playlist_videos[0].videoID}`
+                          window.location.href = `/video/${element.playlist_videos[0].videoID}`;
                         }}
                       >
                         <PlayArrowIcon
@@ -200,7 +196,7 @@ function ChannelPlaylists(prop) {
                         className="playlist-element"
                         style={{ backgroundColor }}
                         onClick={() => {
-                        window.location.href =  `/video/${element.playlist_videos[0].videoID}`
+                          window.location.href = `/video/${element.playlist_videos[0].videoID}`;
                         }}
                       >
                         <PlaylistPlayIcon
@@ -211,7 +207,11 @@ function ChannelPlaylists(prop) {
                       </div>
                       <div className="playlistt-details">
                         <p>{element.playlist_name}</p>
-                        <p onClick={() => window.location.href = `/playlist/${element._id}`}>
+                        <p
+                          onClick={() =>
+                            (window.location.href = `/playlist/${element._id}`)
+                          }
+                        >
                           View full playlist
                         </p>
                       </div>

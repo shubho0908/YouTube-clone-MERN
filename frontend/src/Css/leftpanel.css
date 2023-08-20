@@ -8,6 +8,8 @@
   width: 225px;
   line-height: 48px;
   z-index: 1;
+  height: -webkit-fill-available;
+  overflow: scroll;
 }
 
 .changeBG {
