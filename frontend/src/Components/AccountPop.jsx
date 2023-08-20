@@ -31,7 +31,7 @@ function AccountPop() {
         setName(decodedToken.name || "");
         setEmail(decodedToken.email || "");
       } catch (error) {
-        console.log("Error decoding token:", error.message);
+        // console.log("Error decoding token:", error.message);
       }
     }
   }, []);
@@ -47,7 +47,7 @@ function AccountPop() {
           setProfile(channelIMG);
         }
       } catch (error) {
-        console.log("Error fetching user data:", error.message);
+        // console.log("Error fetching user data:", error.message);
       }
     };
 
@@ -65,7 +65,7 @@ function AccountPop() {
           setChannelID(channelID);
         }
       } catch (error) {
-        console.log("Error fetching user data:", error.message);
+        // console.log("Error fetching user data:", error.message);
       }
     };
 
@@ -83,7 +83,7 @@ function AccountPop() {
           setIsChannel(channel);
         }
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
       }
     };
 

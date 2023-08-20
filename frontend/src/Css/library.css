@@ -145,23 +145,8 @@
 
 .thischannel-playlists2 {
   display: flex;
-  margin-top: 20px;
-}
-
-.created-all-playlistss2:hover .playlist-thumbnail {
-  opacity: 0.3;
-}
-
-.created-all-playlistss2:hover .playlist-element {
-  opacity: 0.3;
-}
-
-.created-all-playlistss2:hover .playy-all-btn {
-  opacity: 1;
-}
-
-.created-all-playlistss2:hover .playy-all-btn2 {
-  opacity: 1;
+  margin-top: 40px;
+  overflow: scroll;
 }
 
 .view-playlist {

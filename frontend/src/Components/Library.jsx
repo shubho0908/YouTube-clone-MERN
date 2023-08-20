@@ -87,7 +87,7 @@ function Library() {
           setPlaylistData(playlistData);
         }
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
       }
     };
     getPlaylistData();
@@ -104,7 +104,7 @@ function Library() {
           setWatchLater(savedData);
         }
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
       }
     };
 
@@ -122,7 +122,7 @@ function Library() {
         const result = await response.json();
         setLikedVideos(result);
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
       }
     };
 
@@ -162,7 +162,7 @@ function Library() {
           setSavedPlaylist(matchingPlaylists);
         }
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
       }
     };
 
@@ -247,7 +247,10 @@ function Library() {
         <SkeletonTheme baseColor="#353535" highlightColor="#444">
           <div
             className="watchlater-library"
-            style={{ display: LibraryLoading ? "block" : "none", marginBottom:"20px" }}
+            style={{
+              display: LibraryLoading ? "block" : "none",
+              marginBottom: "20px",
+            }}
           >
             <div className="top-watchlater-library">
               <Skeleton count={1} width={160} height={22} />
@@ -454,7 +457,10 @@ function Library() {
         <SkeletonTheme baseColor="#353535" highlightColor="#444">
           <div
             className="playlists-library"
-            style={{ display: LibraryLoading ? "block" : "none", marginBottom:"50px" }}
+            style={{
+              display: LibraryLoading ? "block" : "none",
+              marginBottom: "50px",
+            }}
           >
             <div className="topplaylist-section">
               <Skeleton count={1} width={160} height={22} />
@@ -574,14 +580,16 @@ function Library() {
 
                   return (
                     <div className="created-all-playlistss2" key={index}>
-                      <img
-                        src={thumbnailURL}
-                        alt=""
-                        className="playlist-thumbnail"
-                        onClick={() => {
-                          window.location.href = `/video/${element.playlist_videos[0].videoID}`;
-                        }}
-                      />
+                      <div className="playlist-main-img">
+                        <img
+                          src={thumbnailURL}
+                          alt=""
+                          className="playlist-thumbnail"
+                          onClick={() => {
+                            window.location.href = `/video/${element.playlist_videos[0].videoID}`;
+                          }}
+                        />
+                      </div>
 
                       <div
                         className="playlist-element"
@@ -657,14 +665,16 @@ function Library() {
                           : { display: "block" }
                       }
                     >
-                      <img
-                        src={thumbnailURL}
-                        alt=""
-                        className="playlist-thumbnail"
-                        onClick={() => {
-                          window.location.href = `/video/${element.playlist_videos[0].videoID}`;
-                        }}
-                      />
+                      <div className="playlist-main-img">
+                        <img
+                          src={thumbnailURL}
+                          alt=""
+                          className="playlist-thumbnail"
+                          onClick={() => {
+                            window.location.href = `/video/${element.playlist_videos[0].videoID}`;
+                          }}
+                        />
+                      </div>
 
                       <div
                         className="playlist-element"

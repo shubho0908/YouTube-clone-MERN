@@ -281,6 +281,7 @@ function ChannelHome(prop) {
             : { display: "block" }
         }
       />
+      
       <SkeletonTheme baseColor="#353535" highlightColor="#444">
         <div
           className="myuploaded-videos"
@@ -290,7 +291,7 @@ function ChannelHome(prop) {
               loading === false
                 ? "none"
                 : "block",
-            marginTop: "8px",
+            marginTop: "8px"
           }}
         >
           <div className="section-headtxt">
@@ -479,9 +480,17 @@ function ChannelHome(prop) {
       <hr
         className="seperate seperate-new2"
         style={
-          myVideos && myVideos.message === "USER DOESN'T EXIST"
+          myVideos && myVideos.message === "USER DOESN'T EXIST" || loading
             ? { display: "none" }
             : { display: "block" }
+        }
+      />
+      <hr
+        className="seperate seperate-new2"
+        style={
+          !loading
+            ? { display: "none" }
+            : { display: "block", marginTop:"30px" }
         }
       />
       <SkeletonTheme baseColor="#353535" highlightColor="#444">
@@ -493,7 +502,7 @@ function ChannelHome(prop) {
               loading === false
                 ? "none"
                 : "block",
-            marginTop: "8px",
+            marginTop: "16px",
           }}
         >
           <div className="section-headtxt">

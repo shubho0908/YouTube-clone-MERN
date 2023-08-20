@@ -63,13 +63,21 @@ function ChannelPlaylists(prop) {
     getPlaylistData();
   }, [prop.newmail]);
 
+  const publicPlaylists =
+    PlaylistData &&
+    PlaylistData !== "No playlists available..." &&
+    PlaylistData.filter((item) => item.playlist_privacy === "Public");
+
+  const noPublicPlaylists = publicPlaylists.length === 0;
+
   if (
     (loading === false && PlaylistData === "No playlists available...") ||
-    (loading === false && PlaylistData.length === 0)
+    (loading === false && PlaylistData.length === 0) ||
+    noPublicPlaylists
   ) {
     return (
       <p className="no-results" style={{ color: "white", fontSize: "16px" }}>
-        This user has doesn&apos;t have any playlists.
+        This channel doesn&apos;t have any playlists.
       </p>
     );
   }
@@ -168,6 +176,7 @@ function ChannelPlaylists(prop) {
                           : { display: "block" }
                       }
                     >
+                      <div className="playlist-main-img">
                       <img
                         src={
                           element.playlist_videos[0] !== undefined
@@ -180,18 +189,8 @@ function ChannelPlaylists(prop) {
                           window.location.href = `/video/${element.playlist_videos[0].videoID}`;
                         }}
                       />
-                      <div
-                        className="playy-all-btn"
-                        onClick={() => {
-                          window.location.href = `/video/${element.playlist_videos[0].videoID}`;
-                        }}
-                      >
-                        <PlayArrowIcon
-                          fontSize="medium"
-                          style={{ color: "white" }}
-                        />
-                        <p>PLAY ALL</p>
                       </div>
+
                       <div
                         className="playlist-element"
                         style={{ backgroundColor }}

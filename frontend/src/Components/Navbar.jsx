@@ -51,7 +51,7 @@ function Navbar() {
           setProfilePic(channelIMG);
         }
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
       }
     };
 

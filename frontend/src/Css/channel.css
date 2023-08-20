@@ -672,12 +672,9 @@
 }
 
 .playlist-thumbnail {
-  width: 230px;
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
-  border-bottom-left-radius: 6px;
+  height: 100%;
+  width: 100%;
   transition: all 0.15s ease;
-  border-bottom-right-radius: 6px;
 }
 
 .playlist-element {
@@ -685,7 +682,7 @@
   align-items: center;
   justify-content: space-between;
   position: relative;
-  bottom: 26px;
+  bottom: 23px;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
   backdrop-filter: blur(3px);
@@ -728,25 +725,20 @@
   opacity: 0;
 }
 
-.created-all-playlistss:hover .playlist-thumbnail {
-  opacity: 0.2;
+.playlist-main-img {
+  cursor: pointer;
+  width: 230px;
+  height: 132px;
+  overflow: hidden;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
+  transition: all 0.25s ease;
 }
 
-.created-all-playlistss:hover .playlist-element {
-  opacity: 0.2;
-}
-
-.created-all-playlistss:hover .playy-all-btn {
-  opacity: 1;
-}
-
-.created-all-playlistss:hover .playy-all-btn2 {
-  opacity: 1;
-}
-
-.channel-cover {
-  position: absolute;
-  animation: FADEINN 0.45s ease;
+.playlist-main-img:hover .playlist-thumbnail {
+  transform: scale(1.15);
 }
 
 .channel-cover-img {
@@ -855,4 +847,3 @@
 .left-about-section {
   width: -webkit-fill-available;
 }
-

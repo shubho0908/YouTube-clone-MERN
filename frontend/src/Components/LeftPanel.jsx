@@ -266,14 +266,14 @@ function LeftPanel() {
                       >
                         <Skeleton
                           count={1}
-                          width={40}
-                          height={40}
+                          width={35}
+                          height={35}
                           style={{ borderRadius: "100%" }}
                         />
                         <Skeleton
                           count={1}
                           width={122}
-                          height={20}
+                          height={16}
                           style={{
                             position: "relative",
                             left: "10px",
@@ -1227,7 +1227,11 @@ function LeftPanel() {
             )}
             <p>Trending</p>
           </div>
-          <IoAddCircleOutline fontSize="50px" color="white" className="addvid-icon"/>
+          <IoAddCircleOutline
+            fontSize="50px"
+            color="white"
+            className="addvid-icon"
+          />
           <div
             className="subscriptions-hori hori"
             onClick={() => {
