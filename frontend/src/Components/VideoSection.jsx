@@ -1005,7 +1005,7 @@ function VideoSection() {
         <Navbar />
       </div>
       <div className="my-panelbar">
-        <LeftPanel/>
+        <LeftPanel />
       </div>
       <div className="main-video-section">
         <div className="left-video-section2">
@@ -1035,6 +1035,11 @@ function VideoSection() {
                 alt="channelDP"
                 className="channelDP"
                 loading="lazy"
+                onClick={() => {
+                  if (channelID !== undefined) {
+                    window.location.href = `/channel/${channelID}`;
+                  }
+                }}
               />
               <div className="channel-data2">
                 <div className="creator">
@@ -1501,7 +1506,6 @@ function VideoSection() {
                     <p className="download-txt">Download</p>
                   </div>
                 </Tooltip>
-                
               </div>
               <div className="second-c-data">
                 <Tooltip
@@ -1597,10 +1601,10 @@ function VideoSection() {
                 {views >= 1e9
                   ? `${(views / 1e9).toFixed(1)}B`
                   : views >= 1e6
-                    ? `${(views / 1e6).toFixed(1)}M`
-                    : views >= 1e3
-                      ? `${(views / 1e3).toFixed(1)}K`
-                      : views}{" "}
+                  ? `${(views / 1e6).toFixed(1)}M`
+                  : views >= 1e3
+                  ? `${(views / 1e3).toFixed(1)}K`
+                  : views}{" "}
                 views
               </p>
               <p style={{ marginLeft: "10px" }}>
@@ -1853,10 +1857,10 @@ function VideoSection() {
                               style={
                                 email === usermail
                                   ? {
-                                    color: "white",
-                                    marginLeft: "20px",
-                                    cursor: "pointer",
-                                  }
+                                      color: "white",
+                                      marginLeft: "20px",
+                                      cursor: "pointer",
+                                    }
                                   : { display: "none" }
                               }
                               className="heart-comment"
@@ -1897,7 +1901,7 @@ function VideoSection() {
                           )}
 
                           {element.user_email === email ||
-                            email === usermail ? (
+                          email === usermail ? (
                             <button
                               className="delete-comment-btn"
                               style={{ marginLeft: "17px" }}
@@ -1946,7 +1950,10 @@ function VideoSection() {
               <div className="video-section2">
                 {Array.from({ length: 10 }).map(() => (
                   <>
-                    <div className="video-data123" style={{ marginTop: "10px" }}>
+                    <div
+                      className="video-data123"
+                      style={{ marginTop: "10px" }}
+                    >
                       <div className="video-left-side">
                         <Skeleton
                           count={1}
@@ -1960,7 +1967,12 @@ function VideoSection() {
                         className="video-right-side sk-right"
                         style={{ marginTop: "5px" }}
                       >
-                        <Skeleton count={1} width={250} height={32} className="sk-recommend-title"/>
+                        <Skeleton
+                          count={1}
+                          width={250}
+                          height={32}
+                          className="sk-recommend-title"
+                        />
                         <Skeleton
                           count={1}
                           width={250}
@@ -2082,10 +2094,10 @@ function VideoSection() {
                           {Views[index] >= 1e9
                             ? `${(Views[index] / 1e9).toFixed(1)}B`
                             : Views[index] >= 1e6
-                              ? `${(Views[index] / 1e6).toFixed(1)}M`
-                              : Views[index] >= 1e3
-                                ? `${(Views[index] / 1e3).toFixed(1)}K`
-                                : Views[index]}{" "}
+                            ? `${(Views[index] / 1e6).toFixed(1)}M`
+                            : Views[index] >= 1e3
+                            ? `${(Views[index] / 1e3).toFixed(1)}K`
+                            : Views[index]}{" "}
                           views
                         </p>
                         <p
@@ -2196,10 +2208,10 @@ function VideoSection() {
                           {element.views >= 1e9
                             ? `${(element.views / 1e9).toFixed(1)}B`
                             : element.views >= 1e6
-                              ? `${(element.views / 1e6).toFixed(1)}M`
-                              : element.views >= 1e3
-                                ? `${(element.views / 1e3).toFixed(1)}K`
-                                : element.views}{" "}
+                            ? `${(element.views / 1e6).toFixed(1)}M`
+                            : element.views >= 1e3
+                            ? `${(element.views / 1e3).toFixed(1)}K`
+                            : element.views}{" "}
                           views
                         </p>
                         <p
@@ -2413,10 +2425,10 @@ function VideoSection() {
                               style={
                                 email === usermail
                                   ? {
-                                    color: "white",
-                                    marginLeft: "20px",
-                                    cursor: "pointer",
-                                  }
+                                      color: "white",
+                                      marginLeft: "20px",
+                                      cursor: "pointer",
+                                    }
                                   : { display: "none" }
                               }
                               className="heart-comment"
@@ -2457,7 +2469,7 @@ function VideoSection() {
                           )}
 
                           {element.user_email === email ||
-                            email === usermail ? (
+                          email === usermail ? (
                             <button
                               className="delete-comment-btn"
                               style={{ marginLeft: "17px" }}
@@ -2585,7 +2597,7 @@ function VideoSection() {
           }
         >
           {!UserPlaylist ||
-            UserPlaylist.includes("No playlists available...") ? (
+          UserPlaylist.includes("No playlists available...") ? (
             <p>No Playlists available...</p>
           ) : (
             ""
@@ -2601,7 +2613,7 @@ function VideoSection() {
                     {(playlistID &&
                       playlistID.length > 0 &&
                       playlistID.includes(element._id) === false) ||
-                      playlistID === "Video doesn't exist in any playlist" ? (
+                    playlistID === "Video doesn't exist in any playlist" ? (
                       <CheckBoxOutlineBlankIcon
                         className="tick-box"
                         fontSize="medium"

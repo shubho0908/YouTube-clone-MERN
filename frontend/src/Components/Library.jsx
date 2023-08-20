@@ -451,18 +451,7 @@ function Library() {
                           </Tooltip>
                         </div>
                         <div className="thisvide-oneliner-2">
-                          <p>
-                            {element.views >= 1e9
-                              ? `${(element.views / 1e9).toFixed(1)}B`
-                              : element.views >= 1e6
-                              ? `${(element.views / 1e6).toFixed(1)}M`
-                              : element.views >= 1e3
-                              ? `${(element.views / 1e3).toFixed(1)}K`
-                              : element.views}{" "}
-                            views
-                          </p>
                           <p className="thisvideo-uploaddate">
-                            &#x2022;{" "}
                             {(() => {
                               const timeDifference =
                                 new Date() - new Date(element.uploaded_date);
@@ -775,18 +764,7 @@ function Library() {
                           </Tooltip>
                         </div>
                         <div className="thisvide-oneliner-2">
-                          <p>
-                            {element.views >= 1e9
-                              ? `${(element.views / 1e9).toFixed(1)}B`
-                              : element.views >= 1e6
-                              ? `${(element.views / 1e6).toFixed(1)}M`
-                              : element.views >= 1e3
-                              ? `${(element.views / 1e3).toFixed(1)}K`
-                              : element.views}{" "}
-                            views
-                          </p>
                           <p className="thisvideo-uploaddate">
-                            &#x2022;{" "}
                             {(() => {
                               const timeDifference =
                                 new Date() - new Date(element.uploaded_date);

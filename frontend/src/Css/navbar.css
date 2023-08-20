@@ -657,8 +657,15 @@ form > input::placeholder {
     justify-content: space-between !important;
     padding-right: 10px !important;
   }
-  .profile-pic, .sk-profile {
+  .profile-pic,
+  .sk-profile {
     width: 35px !important;
     height: 35px !important;
+  }
+}
+
+@media (width < 380px) {
+  .right-bar {
+    width: 88px;
   }
 }

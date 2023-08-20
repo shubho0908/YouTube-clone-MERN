@@ -92,6 +92,7 @@
 }
 
 .channelDP {
+  cursor: pointer;
   width: 42px;
   height: 42px;
   object-fit: cover;
@@ -854,9 +855,7 @@
   .channel-right-data {
     margin-top: 25px;
   }
-  .youtubeLogo {
-    padding-left: 0;
-  }
+
   .description-section2 {
     width: 95.4%;
   }
