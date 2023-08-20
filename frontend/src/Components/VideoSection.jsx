@@ -1946,7 +1946,7 @@ function VideoSection() {
               <div className="video-section2">
                 {Array.from({ length: 10 }).map(() => (
                   <>
-                    <div className="video-data12" style={{ marginTop: "15px" }}>
+                    <div className="video-data123" style={{ marginTop: "10px" }}>
                       <div className="video-left-side">
                         <Skeleton
                           count={1}
@@ -2014,7 +2014,7 @@ function VideoSection() {
           <div
             className="video-section2"
             style={
-              TagSelected === "All" ? { display: "block" } : { display: "none" }
+              TagSelected === "All" ? { display: "flex" } : { display: "none" }
             }
           >
             {thumbnails &&
@@ -2125,9 +2125,9 @@ function VideoSection() {
               })}
           </div>
           <div
-            className="video-section2"
+            className="video-section23 userVideos"
             style={
-              TagSelected !== "All" ? { display: "block" } : { display: "none" }
+              TagSelected !== "All" ? { display: "flex" } : { display: "none" }
             }
           >
             {userVideos &&
@@ -2137,7 +2137,7 @@ function VideoSection() {
                   <div
                     className="video-data12"
                     style={
-                      element === thumbnailURL
+                      element.thumbnailURL === thumbnailURL
                         ? { display: "none" }
                         : { display: "flex" }
                     }

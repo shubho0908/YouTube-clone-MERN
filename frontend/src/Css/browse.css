@@ -362,12 +362,15 @@
     left: 40px;
   }
   .uploaded-videos2 {
-    left:40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    left: 28px;
   }
 }
 
-@media (max-width:380px) {
+@media (max-width: 380px) {
   .uploaded-videos2 {
-    left:15px;
+    left: 12px;
   }
 }
