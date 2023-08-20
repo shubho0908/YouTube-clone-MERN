@@ -199,6 +199,7 @@ function Browse() {
                         width={330}
                         height={186}
                         style={{ borderRadius: "12px" }}
+                        className="sk-browse-vid"
                       />
                       <div className="channel-basic-data">
                         <Skeleton
@@ -207,6 +208,7 @@ function Browse() {
                           width={40}
                           height={40}
                           style={{ borderRadius: "100%", marginTop: "40px" }}
+                          className="sk-browse-profile"
                         />
                         <Skeleton
                           key={index}
@@ -218,6 +220,7 @@ function Browse() {
                             top: "40px",
                             left: "15px",
                           }}
+                          className="sk-browse-title"
                         />
                       </div>
                     </div>

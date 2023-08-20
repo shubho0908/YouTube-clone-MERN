@@ -220,6 +220,16 @@
   }
 }
 
+@media (width < 920px) {
+  .sk-browse-vid {
+    width: 270px !important;
+    height: 152px !important;
+  }
+  .sk-browse-title {
+    width: 200px !important;
+  }
+}
+
 @media (max-width: 860px) {
   .browse-data,
   .browse-data2 {
@@ -245,6 +255,13 @@
   }
   .title {
     font-size: 16px;
+  }
+  .sk-browse-vid {
+    width: 290px !important;
+    height: 163px !important;
+  }
+  .sk-browse-title {
+    width: 200px !important;
   }
 }
 
@@ -285,7 +302,7 @@
     left: 0 !important;
   }
   .popular-categories {
-    top: 60px !important;
+    top: 48px !important;
   }
 }
 
@@ -301,7 +318,20 @@
   .video-data {
     padding-right: 20px;
   }
+  .sk-browse-vid {
+    width: 450px !important;
+    height: 253px !important;
+  }
+  .sk-browse-title {
+    width: 350px !important;
+    height: 20px !important;
+  }
+  .sk-browse-profile {
+    width: 48px !important;
+    height: 48px !important;
+  }
 }
+
 
 @media (max-width: 520px) {
   .uploaded-videos,
@@ -338,6 +368,7 @@
   }
 }
 
+
 @media (max-width: 475px) {
   .uploaded-videos,
   .uploaded-videos2 {
@@ -366,6 +397,18 @@
     flex-direction: column;
     align-items: center;
     left: 28px;
+  }
+  .sk-browse-vid {
+    width: 325px !important;
+    height: 183px !important;
+  }
+  .sk-browse-title {
+    width: 220px !important;
+    height: 15px !important;
+  }
+  .sk-browse-profile {
+    width: 40px !important;
+    height: 40px !important;
   }
 }
 

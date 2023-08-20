@@ -282,7 +282,7 @@ form > input::placeholder {
   margin-top: 8px;
 }
 
-.forgot-password:hover{
+.forgot-password:hover {
   color: white;
   text-decoration: underline;
 }
@@ -656,5 +656,9 @@ form > input::placeholder {
     width: 110px;
     justify-content: space-between !important;
     padding-right: 10px !important;
+  }
+  .profile-pic, .sk-profile {
+    width: 35px !important;
+    height: 35px !important;
   }
 }

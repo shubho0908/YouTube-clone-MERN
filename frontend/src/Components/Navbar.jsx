@@ -185,6 +185,7 @@ function Navbar() {
                 width={42}
                 height={42}
                 style={{ borderRadius: "100%" }}
+                className="sk-profile"
               />
             </div>
           </SkeletonTheme>

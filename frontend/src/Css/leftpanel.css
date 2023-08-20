@@ -234,4 +234,20 @@
   .hor-icons {
     font-size: 24px !important;
   }
+  .addvid-icon {
+    font-size: 44px !important;
+  }
+}
+
+@media (width < 355px) {
+  .hor-icons {
+    width: 22px !important;
+  }
+  .hori > p {
+    font-size: 12px !important;
+  }
+  .horizontal-panel {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
 }

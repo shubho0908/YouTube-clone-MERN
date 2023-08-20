@@ -115,7 +115,7 @@ function LeftPanel() {
           setSubscriptions(result);
         }
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
       }
     };
     const interval = setInterval(getSubscriptions, 100);
@@ -134,7 +134,7 @@ function LeftPanel() {
           setPlaylistData(playlistData);
         }
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
       }
     };
     const interval = setInterval(getPlaylistData, 100);
@@ -153,7 +153,7 @@ function LeftPanel() {
           setSavedPlaylist(matchingPlaylists);
         }
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
       }
     };
 
@@ -1227,7 +1227,7 @@ function LeftPanel() {
             )}
             <p>Trending</p>
           </div>
-          <IoAddCircleOutline fontSize="50px" color="white" />
+          <IoAddCircleOutline fontSize="50px" color="white" className="addvid-icon"/>
           <div
             className="subscriptions-hori hori"
             onClick={() => {

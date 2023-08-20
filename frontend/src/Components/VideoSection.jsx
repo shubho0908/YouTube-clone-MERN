@@ -592,7 +592,7 @@ function VideoSection() {
   useEffect(() => {
     setTimeout(() => {
       setRecommendLoading(false);
-    }, 3000);
+    }, 3500);
   }, []);
 
   //POST REQUESTS
@@ -1953,24 +1953,27 @@ function VideoSection() {
                           width={190}
                           height={107}
                           style={{ borderRadius: "12px" }}
+                          className="sk-recommend-vid"
                         />
                       </div>
                       <div
-                        className="video-right-side"
+                        className="video-right-side sk-right"
                         style={{ marginTop: "5px" }}
                       >
-                        <Skeleton count={1} width={250} height={32} />
+                        <Skeleton count={1} width={250} height={32} className="sk-recommend-title"/>
                         <Skeleton
                           count={1}
                           width={250}
                           height={15}
                           style={{ position: "relative", top: "10px" }}
+                          className="sk-recommend-basic1"
                         />
                         <Skeleton
                           count={1}
                           width={150}
                           height={15}
                           style={{ position: "relative", top: "15px" }}
+                          className="sk-recommend-basic2"
                         />
                       </div>
                     </div>
