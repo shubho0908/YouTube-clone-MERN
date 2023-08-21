@@ -26,6 +26,17 @@ body {
   width: 70%;
 }
 
+.durationn3 {
+  width: fit-content;
+  position: absolute;
+  background-color: #000000c9;
+  padding: 5px;
+  left: 174px;
+  margin-top: 71px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
 .liked-video-data {
   background-color: #0f0f0f;
   height: 100vh;
@@ -443,6 +454,11 @@ body {
     left: 0px !important;
     width: 91vw;
   }
+  .like-right-section2 {
+    right: 18px;
+    width: 95vw;
+    padding-bottom: 120px;
+  }
 }
 
 @media (width<= 585px) {
@@ -454,5 +470,72 @@ body {
   }
   .first-thumbnail2 {
     width: 80.5vw !important;
+  }
+  .liked-all-videos > p {
+    display: none;
+  }
+  .durationn3 {
+    left: 164px;
+  }
+}
+
+@media (width <= 500px) {
+  .its-content2 > p {
+    font-size: 15px;
+  }
+  .liked-videos-all-data2 > img {
+    width: 155px;
+  }
+  .like-video-sections2 {
+    width: 88vw;
+  }
+  .durationn3 {
+    margin-top: 62px;
+    left: 144px;
+    padding: 3px;
+    font-size: 11.5px;
+  }
+}
+
+@media (width<= 450px) {
+  .liked-videos-all-data2 {
+    flex-direction: column;
+    margin-bottom: 30px;
+  }
+  .liked-videos-all-data2 > img {
+    width: 85vw;
+  }
+  .its-content2 {
+    margin-left: 15px;
+    margin-right: 15px;
+  }
+  .durationn3 {
+    position: relative !important;
+    left: 78.5vw !important;
+    margin-top: 0px !important;
+    font-size: 13px;
+    padding: 4px;
+    bottom: 30px;
+  }
+}
+
+@media (width<= 430px) {
+  .its-content2 > p {
+    font-size: 14px;
+  }
+  .its-content2 > p:nth-child(2) {
+    font-size: 11.8px;
+  }
+}
+
+@media (width<= 400px) {
+  .like-video-sections2 {
+    padding-left: 25px;
+  }
+}
+
+@media (width<= 370px) {
+  .durationn3 {
+    font-size: 11.6px;
   }
 }

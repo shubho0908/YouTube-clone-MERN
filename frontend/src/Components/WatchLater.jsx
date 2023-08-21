@@ -291,8 +291,24 @@ function WatchLater() {
                             alt="first-like-thumbnail"
                             loading="lazy"
                           />
+                          <p className="durationn3">
+                          {Math.floor(element.videoLength / 60) +
+                            ":" +
+                            (Math.round(element.videoLength % 60) < 10
+                              ? "0" + Math.round(element.videoLength % 60)
+                              : Math.round(element.videoLength % 60))}
+                        </p>
                           <div className="its-content">
-                            <p>{element.Title}</p>
+                            {window.innerWidth <= 1000 ? (
+                              <p>
+                                {element.Title.length <= 50
+                                  ? element.Title
+                                  : `${element.Title.slice(0, 50)}..`}
+                              </p>
+                            ) : (
+                              <p>{element.Title}</p>
+                            )}
+
                             <p>{element.uploader}</p>
                           </div>
                         </div>
@@ -487,8 +503,24 @@ function WatchLater() {
                             alt="first-like-thumbnail"
                             loading="lazy"
                           />
+                          <p className="durationn3">
+                          {Math.floor(element.videoLength / 60) +
+                            ":" +
+                            (Math.round(element.videoLength % 60) < 10
+                              ? "0" + Math.round(element.videoLength % 60)
+                              : Math.round(element.videoLength % 60))}
+                        </p>
                           <div className="its-content2">
-                            <p>{element.Title}</p>
+                          {window.innerWidth <= 1000 ? (
+                              <p>
+                                {element.Title.length <= 50
+                                  ? element.Title
+                                  : `${element.Title.slice(0, 50)}..`}
+                              </p>
+                            ) : (
+                              <p>{element.Title}</p>
+                            )}
+
                             <p>{element.uploader}</p>
                           </div>
                         </div>
