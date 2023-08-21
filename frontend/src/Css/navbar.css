@@ -688,7 +688,7 @@ form > input::placeholder {
   .already {
     font-size: 14.5px;
   }
-  .forgot-password{
+  .forgot-password {
     font-size: 12.5px;
   }
 }
@@ -707,14 +707,15 @@ form > input::placeholder {
   form {
     margin-top: 15px;
   }
-  .signup-head, .top-reset>p:nth-child(1) {
+  .signup-head,
+  .top-reset > p:nth-child(1) {
     font-size: 24px !important;
   }
-  .top-reset > p:nth-child(2){
+  .top-reset > p:nth-child(2) {
     font-size: 12.5px !important;
   }
 
-  .reset-option>form{
+  .reset-option > form {
     margin-top: 26px !important;
   }
 
@@ -734,7 +735,7 @@ form > input::placeholder {
   .right-bar {
     width: 88px;
   }
-  .auth-popup{
+  .auth-popup {
     width: 85vw !important;
     padding-top: 18%;
     padding-bottom: 18%;
@@ -743,7 +744,7 @@ form > input::placeholder {
     top: 15px;
     right: 15px;
   }
-  .already{
+  .already {
     font-size: 13.8px;
   }
 }

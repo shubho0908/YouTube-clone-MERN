@@ -165,25 +165,22 @@ function Subscriptions() {
                           width={100}
                           height={100}
                           style={{ borderRadius: "100%" }}
+                          className="sk-channelDP"
                         />
                         <Skeleton
                           count={1}
                           width={120}
                           height={22}
                           style={{ position: "relative", top: "20px" }}
+                          className="sk-channelname"
                         />
-                        <Skeleton
-                          count={1}
-                          width={70}
-                          height={16}
-                          style={{ position: "relative", top: "25px" }}
-                        />
+                        
                       </div>
                     );
                   })}
               </div>
               <div
-                className="subscribed-videos"
+                className="subscribed-videos sk-subs"
                 style={
                   loading === true
                     ? { display: "block", position: "relative", top: "20px" }
@@ -208,8 +205,9 @@ function Subscriptions() {
                           width={300}
                           height={169}
                           style={{ borderRadius: "12px" }}
+                          className="sk-channelvid"
                         />
-                        <div className="channel-basic-data">
+                        <div className="channel-basic-data2">
                           <Skeleton
                             count={1}
                             width={40}
@@ -218,6 +216,7 @@ function Subscriptions() {
                               borderRadius: "100%",
                               marginTop: "40px",
                             }}
+                            className="sk-thisvid-img"
                           />
                           <Skeleton
                             count={2}
@@ -228,6 +227,7 @@ function Subscriptions() {
                               top: "40px",
                               left: "15px",
                             }}
+                            className="sk-thisvid-title"
                           />
                         </div>
                       </div>
@@ -306,7 +306,7 @@ function Subscriptions() {
                           alt="thumbnail"
                           className="sub-thumbnail"
                         />
-                        <p className="duration durationn2">
+                        <p className="durationn2">
                           {Math.floor(element.videoLength / 60) +
                             ":" +
                             (Math.round(element.videoLength % 60) < 10
@@ -314,26 +314,26 @@ function Subscriptions() {
                               : Math.round(element.videoLength % 60))}
                         </p>
 
-                        <div className="channel-basic-data">
-                          <div className="channel-pic">
+                        <div className="channel-basic-data2">
+                          <div className="channel-pic2">
                             <img
-                              className="channel-profile"
+                              className="channel-profile2"
                               src={element.ChannelProfile}
                               alt="channel-profile"
                             />
                           </div>
-                          <div className="channel-text-data">
+                          <div className="channel-text-data2">
                             <p
-                              className="title"
+                              className="title2"
                               style={{ marginTop: "10px", width: "88%" }}
                             >
                               {element.Title.length <= 50
                                 ? element.Title
                                 : `${element.Title.slice(0, 50)}..`}
                             </p>
-                            <div className="video-uploader">
+                            <div className="video-uploader2">
                               <p
-                                className="uploader"
+                                className="uploader2"
                                 style={{ marginTop: "10px" }}
                               >
                                 {element.uploader}
@@ -348,13 +348,13 @@ function Subscriptions() {
                                   style={{
                                     color: "rgb(138, 138, 138)",
                                     marginTop: "8px",
-                                    marginLeft: "4px",
+                                    marginLeft: "5px",
                                   }}
                                 />
                               </Tooltip>
                             </div>
-                            <div className="view-time">
-                              <p className="views">
+                            <div className="view-time23">
+                              <p className="views2">
                                 {element.views >= 1e9
                                   ? `${(element.views / 1e9).toFixed(1)}B`
                                   : element.views >= 1e6
@@ -365,8 +365,8 @@ function Subscriptions() {
                                 views
                               </p>
                               <p
-                                className="upload-time"
-                                style={{ marginLeft: "4px" }}
+                                className="upload-time2"
+                                style={{ marginLeft: "5px" }}
                               >
                                 &#x2022;{" "}
                                 {(() => {

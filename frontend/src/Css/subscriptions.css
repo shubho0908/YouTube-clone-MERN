@@ -11,6 +11,7 @@
 
 .channels-full-list {
   display: flex;
+  overflow: scroll;
 }
 
 .sub-channels {
@@ -66,4 +67,158 @@
   justify-content: center;
   grid-column-gap: 10px;
   grid-row-gap: 18px;
+}
+
+/* MEDIA QUERIES */
+
+@media (width <= 860px) {
+  .all-subs-dataaa {
+    left: 120px !important;
+    width: 85% !important;
+    top: 88px !important;
+  }
+}
+
+@media (width <= 750px) {
+  .subs-videos-all {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .subs-video-data > img {
+    width: 78vw;
+  }
+  .durationn2 {
+    left: 71.5vw;
+  }
+  .channel-profile2 {
+    width: 48px;
+    height: 48px;
+  }
+  .channel-text-data2 {
+    width: auto;
+  }
+  .title2 {
+    width: max-content !important;
+  }
+  .channel-basic-data2 {
+    margin-top: 10px !important;
+  }
+  .sub-channelname {
+    font-size: 15px;
+  }
+
+  /* SKELETONS  */
+
+  .sk-channelvid {
+    width: 78vw !important;
+    height: 43vw !important;
+  }
+  .sk-thisvid-img {
+    width: 48px !important;
+    height: 48px !important;
+  }
+  .sk-thisvid-title {
+    width: 400px !important;
+    height: 18px !important;
+  }
+}
+
+@media (width<= 650px) {
+  .all-subs-dataaa {
+    left: 30px !important;
+  }
+  .subs-video-data > img {
+    width: 90.5vw !important;
+  }
+  .durationn2 {
+    left: 83.2vw;
+  }
+  .sub-channelname {
+    display: none !important;
+  }
+  .sub-channelDP {
+    width: 80px;
+    height: 80px;
+  }
+  .sk-channelvid {
+    width: 90.5vw !important;
+    height: 48vw !important;
+  }
+  .sk-channelDP {
+    width: 80px !important;
+    height: 80px !important;
+  }
+  .sk-channelname {
+    display: none !important;
+  }
+  .sk-subs{
+    top: 0 !important;
+  }
+}
+
+@media (width <= 510px) {
+  .all-subs-dataaa {
+    left: 24px !important;
+    padding-bottom: 85px;
+  }
+  .durationn2 {
+    left: 82vw;
+  }
+  .title2 {
+    width: 75vw !important;
+  }
+  .sk-thisvid-title {
+    width: 72vw !important;
+  }
+}
+
+@media (width <= 400px) {
+  .channel-profile2 {
+    width: 38px;
+    height: 38px;
+  }
+  .title2 {
+    font-size: 15px;
+  }
+  .uploader2 {
+    font-size: 13px;
+    margin-top: 7px;
+  }
+  .view-time23 {
+    margin-top: 2.5px;
+  }
+  .view-time23 > p {
+    font-size: 13px;
+  }
+  .durationn2 {
+    font-size: 12px;
+    left: 80vw;
+  }
+  .sub-channelDP {
+    width: 60px;
+    height: 60px;
+  }
+  .main-txxt {
+    font-size: 17.5px;
+  }
+  .all-subs-dataaa {
+    left: 20px !important;
+  }
+  .sk-channelDP {
+    width: 60px !important;
+    height: 60px !important;
+  }
+  .sk-thisvid-img {
+    width: 38px !important;
+    height: 38px !important;
+  }
+}
+
+@media (width <= 350px) {
+  .durationn2 {
+    font-size: 11px;
+    left: 79vw;
+    bottom: 34px;
+  }
 }

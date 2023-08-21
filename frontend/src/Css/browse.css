@@ -105,6 +105,10 @@
   font-weight: 500 !important;
 }
 
+.title2 {
+  font-weight: 500 !important;
+}
+
 .uploader {
   font-size: 14px;
   color: rgb(130, 130, 130);
@@ -112,6 +116,16 @@
 }
 
 .uploader:hover {
+  color: white;
+}
+
+.uploader2 {
+  font-size: 14px;
+  color: rgb(130, 130, 130);
+  transition: all 0.12s ease;
+}
+
+.uploader2:hover {
   color: white;
 }
 
@@ -135,7 +149,20 @@
   bottom: 25px;
 }
 
+.channel-basic-data2 {
+  display: flex;
+  position: relative;
+  bottom: 25px;
+}
+
 .channel-profile {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 100%;
+  margin-top: 8px;
+}
+.channel-profile2 {
   width: 40px;
   height: 40px;
   object-fit: cover;
@@ -148,11 +175,26 @@
   width: 250px;
 }
 
+.channel-text-data2 {
+  margin-left: 15px;
+  width: 250px;
+}
+
 .duration {
   width: fit-content;
   position: relative;
   bottom: 37px;
   left: 285px;
+  background-color: #000000c9;
+  padding: 5px;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+.durationn2 {
+  width: fit-content;
+  position: relative;
+  bottom: 37px;
   background-color: #000000c9;
   padding: 5px;
   border-radius: 4px;
@@ -179,7 +221,23 @@
   color: rgb(130, 130, 130);
 }
 
+.view-time23 {
+  display: flex;
+  align-items: center;
+  margin-top: 4px;
+}
+
+.view-time23 > p {
+  font-size: 14px;
+  color: rgb(130, 130, 130);
+}
+
 .video-uploader {
+  display: flex;
+  align-items: center;
+}
+
+.video-uploader2 {
   display: flex;
   align-items: center;
 }
@@ -332,7 +390,6 @@
   }
 }
 
-
 @media (max-width: 520px) {
   .uploaded-videos,
   .uploaded-videos2 {
@@ -367,7 +424,6 @@
     font-size: 14.5px;
   }
 }
-
 
 @media (max-width: 475px) {
   .uploaded-videos,
