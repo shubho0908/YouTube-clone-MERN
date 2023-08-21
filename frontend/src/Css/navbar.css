@@ -207,7 +207,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 6; /* Set a lower z-index than the auth-popup */
+  z-index: 7; /* Set a lower z-index than the auth-popup */
   animation: Fade 0.25s ease-out forwards;
 }
 
@@ -226,7 +226,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 6; /* Set a lower z-index than the auth-popup */
+  z-index: 7; /* Set a lower z-index than the auth-popup */
   animation: Fade2 0.25s ease-out forwards;
 }
 
@@ -627,6 +627,14 @@ form > input::placeholder {
   }
 }
 
+@media (width<= 1000px) {
+  .auth-popup {
+    width: 65vw !important;
+    padding-left: 8% !important;
+    padding-right: 8% !important;
+  }
+}
+
 @media (max-width: 940px) {
   .middle-bar {
     display: none;
@@ -662,10 +670,80 @@ form > input::placeholder {
     width: 35px !important;
     height: 35px !important;
   }
+  .signin > p {
+    display: none;
+  }
+  .signin {
+    border: none;
+  }
+  .user-avatar {
+    font-size: xx-large !important;
+  }
+  .signup-head {
+    font-size: 28px;
+  }
+  .signup-desc {
+    font-size: 14.5px;
+  }
+  .already {
+    font-size: 14.5px;
+  }
+  .forgot-password{
+    font-size: 12.5px;
+  }
 }
 
-@media (width < 380px) {
+@media (width<=500px) {
+  .cancel {
+    top: 10px;
+    right: 10px;
+    font-size: 1.8rem !important;
+  }
+  .auth-popup {
+    padding-top: 12%;
+    padding-bottom: 12%;
+  }
+  .signup-form,
+  form {
+    margin-top: 15px;
+  }
+  .signup-head, .top-reset>p:nth-child(1) {
+    font-size: 24px !important;
+  }
+  .top-reset > p:nth-child(2){
+    font-size: 12.5px !important;
+  }
+
+  .reset-option>form{
+    margin-top: 26px !important;
+  }
+
+  .signup-desc {
+    font-size: 12.5px;
+  }
+  .signup-btn {
+    font-size: 15px;
+    height: 50px;
+  }
+  form > input {
+    height: 28px;
+  }
+}
+
+@media (width <= 380px) {
   .right-bar {
     width: 88px;
+  }
+  .auth-popup{
+    width: 85vw !important;
+    padding-top: 18%;
+    padding-bottom: 18%;
+  }
+  .cancel {
+    top: 15px;
+    right: 15px;
+  }
+  .already{
+    font-size: 13.8px;
   }
 }

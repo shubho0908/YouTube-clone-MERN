@@ -168,6 +168,7 @@ function Navbar() {
             <AccountCircleOutlinedIcon
               fontSize="medium"
               style={{ color: "rgb(0, 162, 255)" }}
+              className="user-avatar"
             />
             <p>Signin</p>
           </button>
