@@ -24,7 +24,6 @@ function WatchLater() {
   const token = localStorage.getItem("userToken");
   document.title = "Watch later - YouTube";
 
-
   useEffect(() => {
     const token = localStorage.getItem("userToken");
     setEmail(jwtDecode(token).email);
@@ -181,7 +180,12 @@ function WatchLater() {
                           : { visibility: "visible", display: "block" }
                       }
                     />
-                    <p className="sample-play" style={{pointerEvents : "none"}}>&#9654; PLAY ALL</p>
+                    <p
+                      className="sample-play"
+                      style={{ pointerEvents: "none" }}
+                    >
+                      &#9654; PLAY ALL
+                    </p>
                   </div>
                 )}
                 <div className="last-like-section">
@@ -288,6 +292,202 @@ function WatchLater() {
                             loading="lazy"
                           />
                           <div className="its-content">
+                            <p>{element.Title}</p>
+                            <p>{element.uploader}</p>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })
+                : ""}
+            </div>
+          </div>
+        ) : (
+          <div className="main-trending-section">
+            <div className="spin23" style={{ top: "200px" }}>
+              <span className="loader2"></span>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* SECONDARY WATCH LATER */}
+
+      <div className="liked-video-data-new">
+        {watchlater.length > 0 ? (
+          <div
+            className="like-video-sections2"
+            style={
+              menuClicked === false
+                ? { left: "80px", width: "100%" }
+                : { left: "255px" }
+            }
+          >
+            <div
+              className="like-left-section2"
+              style={{
+                backgroundImage: `url(${watchlater[0]?.thumbnailURL})`,
+              }}
+            >
+              <div className="page-cover2">
+                <div className="inside-cover">
+                  {watchlater && (
+                    <div
+                      className="firstvideo-thumbnail"
+                      onClick={() => {
+                        if (token) {
+                          updateViews(watchlater[0].savedVideoID);
+                          setTimeout(() => {
+                            navigate(`/video/${watchlater[0].savedVideoID}`);
+                            window.location.reload();
+                          }, 400);
+                        } else {
+                          navigate(`/video/${watchlater[0].savedVideoID}`);
+                          window.location.reload();
+                        }
+                      }}
+                    >
+                      <SkeletonTheme baseColor="#353535" highlightColor="#444">
+                        <div
+                          className="thisimggg"
+                          style={
+                            loading === true
+                              ? { display: "block" }
+                              : { display: "none" }
+                          }
+                        >
+                          <Skeleton
+                            count={1}
+                            width={310}
+                            height={174}
+                            style={{ borderRadius: "12px" }}
+                          />
+                        </div>
+                      </SkeletonTheme>
+                      <img
+                        src={watchlater[0].thumbnailURL}
+                        alt="first-like-thumbnail"
+                        className="first-thumbnail2"
+                        loading="lazy"
+                        style={
+                          loading === true
+                            ? { visibility: "hidden", display: "none" }
+                            : { visibility: "visible", display: "block" }
+                        }
+                      />
+                      <p
+                        className="sample-play"
+                        style={{ pointerEvents: "none" }}
+                      >
+                        &#9654; PLAY ALL
+                      </p>
+                    </div>
+                  )}
+                  <div className="last-like-section2">
+                    <p className="like-head">Watch later</p>
+                    <div className="last-like2">
+                      <p className="like-username">{name}</p>
+                      <p className="like-total-videos">
+                        {watchlater.length} videos
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="playvideo-btn"
+                  onClick={() => {
+                    if (token) {
+                      updateViews(watchlater[0].savedVideoID);
+                      setTimeout(() => {
+                        navigate(`/video/${watchlater[0].savedVideoID}`);
+                        window.location.reload();
+                      }, 400);
+                    } else {
+                      navigate(`/video/${watchlater[0].savedVideoID}`);
+                      window.location.reload();
+                    }
+                  }}
+                >
+                  <PlayArrowIcon fontSize="medium" style={{ color: "black" }} />
+                  <p className="play-all">Play all</p>
+                </div>
+              </div>
+            </div>
+            <SkeletonTheme baseColor="#353535" highlightColor="#444">
+              <div
+                className="like-right-section"
+                style={
+                  loading === true ? { display: "block" } : { display: "none" }
+                }
+              >
+                {watchlater.length > 0
+                  ? watchlater.map((element, index) => {
+                      return (
+                        <div className="liked-all-videos" key={index}>
+                          <div className="liked-videos-all-data">
+                            <Skeleton
+                              count={1}
+                              width={180}
+                              height={101}
+                              style={{ borderRadius: "12px" }}
+                            />
+                            <div
+                              className="its-content"
+                              style={{
+                                position: "relative",
+                                left: "10px",
+                                top: "6px",
+                              }}
+                            >
+                              <Skeleton count={1} width={450} height={20} />
+                              <Skeleton
+                                count={1}
+                                width={250}
+                                height={16}
+                                style={{ position: "relative", top: "10px" }}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })
+                  : ""}
+              </div>
+            </SkeletonTheme>
+            <div
+              className="like-right-section2"
+              style={
+                loading === true
+                  ? { visibility: "hidden" }
+                  : { visibility: "visible" }
+              }
+            >
+              {watchlater.length > 0
+                ? watchlater.map((element, index) => {
+                    return (
+                      <div className="liked-all-videos" key={index}>
+                        <p style={{ color: "#aaa" }}>{index + 1}</p>
+                        <div
+                          className="liked-videos-all-data2"
+                          onClick={() => {
+                            if (token) {
+                              updateViews(element.savedVideoID);
+                              setTimeout(() => {
+                                navigate(`/video/${element.savedVideoID}`);
+                                window.location.reload();
+                              }, 400);
+                            } else {
+                              navigate(`/video/${element.savedVideoID}`);
+                              window.location.reload();
+                            }
+                          }}
+                        >
+                          <img
+                            src={element.thumbnailURL}
+                            alt="first-like-thumbnail"
+                            loading="lazy"
+                          />
+                          <div className="its-content2">
                             <p>{element.Title}</p>
                             <p>{element.uploader}</p>
                           </div>

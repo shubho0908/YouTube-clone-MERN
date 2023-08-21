@@ -111,6 +111,7 @@
   line-height: normal !important;
   font-size: 15px;
   display: flex;
+  padding-bottom: 26px;
   align-items: center;
 }
 .developer > a {

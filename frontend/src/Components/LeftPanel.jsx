@@ -33,6 +33,7 @@ import SubscriptionsIcon from "@mui/icons-material/Subscriptions";
 import VideoLibraryIcon from "@mui/icons-material/VideoLibrary";
 import WatchLaterIcon from "@mui/icons-material/WatchLater";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import { MdVideoLibrary } from "react-icons/md";
 
 function LeftPanel() {
   const [menuClicked, setMenuClicked] = useState(() => {
@@ -1261,11 +1262,19 @@ function LeftPanel() {
               window.location.href = "/library";
             }}
           >
-            <MdOutlineVideoLibrary
-              fontSize="28px"
-              color="white"
-              className="hor-icons"
-            />
+            {selected === "library" ? (
+              <MdVideoLibrary
+                fontSize="28px"
+                color="white"
+                className="hor-icons"
+              />
+            ) : (
+              <MdOutlineVideoLibrary
+                fontSize="28px"
+                color="white"
+                className="hor-icons"
+              />
+            )}
             <p>Library</p>
           </div>
         </div>
