@@ -276,43 +276,7 @@ function Library() {
                           <div className="thisvide-oneliner-1">
                             <Skeleton count={1} width={180} height={14} />
                           </div>
-                          <div className="thisvide-oneliner-2">
-                            <p className="thisvideo-uploaddate">
-                              {(() => {
-                                const timeDifference =
-                                  new Date() - new Date(element.uploaded_date);
-                                const minutes = Math.floor(
-                                  timeDifference / 60000
-                                );
-                                const hours = Math.floor(
-                                  timeDifference / 3600000
-                                );
-                                const days = Math.floor(
-                                  timeDifference / 86400000
-                                );
-                                const weeks = Math.floor(
-                                  timeDifference / 604800000
-                                );
-                                const years = Math.floor(
-                                  timeDifference / 31536000000
-                                );
-
-                                if (minutes < 1) {
-                                  return "just now";
-                                } else if (minutes < 60) {
-                                  return `${minutes} mins ago`;
-                                } else if (hours < 24) {
-                                  return `${hours} hours ago`;
-                                } else if (days < 7) {
-                                  return `${days} days ago`;
-                                } else if (weeks < 52) {
-                                  return `${weeks} weeks ago`;
-                                } else {
-                                  return `${years} years ago`;
-                                }
-                              })()}
-                            </p>
-                          </div>
+                          <div className="thisvide-oneliner-2"></div>
                         </div>
                       </div>
                     </div>
@@ -608,7 +572,22 @@ function Library() {
                         <p>{element.playlist_name}</p>
                         <div className="extra-playlists-data">
                           <p className="playlist-ownner">
-                            {element.playlist_owner}
+                            <div className="thisvide-oneliner-1">
+                              {element.playlist_owner}
+                              <Tooltip
+                                TransitionComponent={Zoom}
+                                title="Verified"
+                                placement="right"
+                              >
+                                <CheckCircleIcon
+                                  fontSize="100px"
+                                  style={{
+                                    color: "rgb(138, 138, 138)",
+                                    marginLeft: "4px",
+                                  }}
+                                />
+                              </Tooltip>
+                            </div>
                           </p>
 
                           <div
@@ -622,6 +601,7 @@ function Library() {
                             <LockOutlinedIcon
                               fontSize="small"
                               style={{ color: "#aaa" }}
+                              className="privateone"
                             />
                             <p>Private</p>
                           </div>
