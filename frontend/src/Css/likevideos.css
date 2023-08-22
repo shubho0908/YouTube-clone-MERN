@@ -438,11 +438,31 @@ body {
   .sk-watch-title {
     width: 42.4vw !important;
   }
+  .playlist-tools {
+    display: flex;
+    align-items: center;
+  }
+  .playlist-edit-tools {
+    padding-top: 30px;
+    padding-bottom: 30px;
+  }
 }
 
 @media (width<= 1025px) {
   .like-video-sections2 {
     width: 64%;
+  }
+  .playlist-name-edit {
+    font-size: 22px;
+  }
+  .playlist-first-thumbnail {
+    width: 56vw;
+  }
+  .playlist-tools {
+    flex-direction: column;
+  }
+  .playlist-name-edit {
+    font-size: 24px;
   }
 }
 
@@ -454,6 +474,9 @@ body {
   .liked-videos-all-data2 {
     width: auto;
   }
+  .playlist-first-thumbnail {
+    width: 70vw;
+  }
 }
 
 @media (width<= 685px) {
@@ -462,6 +485,9 @@ body {
   }
   .sk-watch-channel {
     width: 34vw !important;
+  }
+  .playlist-edit-tools{
+    padding-left: 30px !important;
   }
 }
 

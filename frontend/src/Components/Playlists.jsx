@@ -67,7 +67,7 @@ function Playlists() {
       theme: "dark",
     });
 
-    const CopiedNotify = () =>
+  const CopiedNotify = () =>
     toast.success("Link Copied!", {
       position: "bottom-center",
       autoClose: 1000,
@@ -231,7 +231,7 @@ function Playlists() {
     navigator.clipboard
       .writeText(window.location.href)
       .then(() => {
-        CopiedNotify()
+        CopiedNotify();
       })
       .catch((error) => {
         console.log("Error copying link to clipboard:", error);
@@ -362,13 +362,14 @@ function Playlists() {
                           width={310}
                           height={174}
                           style={{ borderRadius: "12px" }}
+                          className="sk-watch-bigimg"
                         />
                       </div>
                     </SkeletonTheme>
                     <img
                       src={playlistsVideos[0].thumbnail}
                       alt="first-like-thumbnail"
-                      className="first-thumbnail"
+                      className="first-thumbnail playlist-first-thumbnail"
                       loading="lazy"
                       style={
                         loading === true
@@ -388,7 +389,7 @@ function Playlists() {
                         : { display: "none" }
                     }
                   >
-                    <p className="like-head">
+                    <p className="like-head playlist-name-edit">
                       {/* {playlistDetails.playlist_name.length <= 15
                           ? playlistDetails.playlist_name
                           : `${playlistDetails.playlist_name.slice(0, 15)}..`} */}
@@ -426,7 +427,7 @@ function Playlists() {
                     <input
                       type="text"
                       name="playlist-name"
-                      className="like-head like-head2"
+                      className="like-head like-head2 playlist-name-edit"
                       value={PlaylistName}
                       maxLength={50}
                       onChange={(e) => setPlaylistName(e.target.value)}
@@ -657,6 +658,7 @@ function Playlists() {
                               width={180}
                               height={101}
                               style={{ borderRadius: "12px" }}
+                              className="sk-watch-thumbnail"
                             />
                             <div
                               className="its-content"
@@ -666,12 +668,18 @@ function Playlists() {
                                 top: "6px",
                               }}
                             >
-                              <Skeleton count={1} width={450} height={20} />
+                              <Skeleton
+                                count={1}
+                                width={450}
+                                height={20}
+                                className="sk-watch-title"
+                              />
                               <Skeleton
                                 count={1}
                                 width={250}
                                 height={16}
                                 style={{ position: "relative", top: "10px" }}
+                                className="sk-watch-channel"
                               />
                             </div>
                           </div>
@@ -685,8 +693,439 @@ function Playlists() {
               className="like-right-section"
               style={
                 loading === true
-                  ? { visibility: "hidden" }
-                  : { visibility: "visible" }
+                  ? { visibility: "hidden", display: "none" }
+                  : { visibility: "visible", display: "block" }
+              }
+            >
+              {playlistsVideos.length > 0
+                ? playlistsVideos.map((element, index) => {
+                    return (
+                      <div className="liked-all-videos" key={index}>
+                        <p style={{ color: "#aaa" }}>{index + 1}</p>
+                        <div
+                          className="liked-videos-all-data"
+                          onClick={() => {
+                            if (token) {
+                              updateViews(element.videoID);
+                              setTimeout(() => {
+                                window.location.href = `/video/${element.videoID}`;
+                              }, 400);
+                            } else {
+                              window.location.href = `/video/${element.videoID}`;
+                            }
+                          }}
+                        >
+                          <img
+                            src={element.thumbnail}
+                            alt="first-like-thumbnail"
+                            loading="lazy"
+                          />
+                          <div className="its-content">
+                            <p>{element.title}</p>
+
+                            <p>{element.video_uploader}</p>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })
+                : ""}
+            </div>
+          </div>
+        ) : (
+          <div className="main-trending-section">
+            <div className="spin23" style={{ top: "200px" }}>
+              <span className="loader2"></span>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* SECONDARY PLAYLIST  */}
+
+      <div className="liked-video-data-new">
+        {playlistsVideos && playlistsVideos.length > 0 ? (
+          <div
+            className="like-video-sections2"
+            style={
+              menuClicked === false
+                ? { left: "80px", width: "100%" }
+                : { left: "255px" }
+            }
+          >
+            <div
+              className="like-left-section2"
+              style={{
+                backgroundImage: `url(${playlistsVideos[0]?.thumbnail})`,
+              }}
+            >
+              <div className="page-cover2">
+                <div className="playlist-tools">
+                  {playlistsVideos && (
+                    <div
+                      className="firstvideo-thumbnail"
+                      onClick={() => {
+                        if (token) {
+                          updateViews(playlistsVideos[0].videoID);
+                          setTimeout(() => {
+                            navigate(`/video/${playlistsVideos[0].videoID}`);
+                            window.location.reload();
+                          }, 400);
+                        } else {
+                          navigate(`/video/${playlistsVideos[0].videoID}`);
+                          window.location.reload();
+                        }
+                      }}
+                    >
+                      <SkeletonTheme baseColor="#353535" highlightColor="#444">
+                        <div
+                          className="thisimggg"
+                          style={
+                            loading === true
+                              ? { display: "block" }
+                              : { display: "none" }
+                          }
+                        >
+                          <Skeleton
+                            count={1}
+                            width={310}
+                            height={174}
+                            style={{ borderRadius: "12px" }}
+                            className="sk-watch-bigimg"
+                          />
+                        </div>
+                      </SkeletonTheme>
+                      <img
+                        src={playlistsVideos[0].thumbnail}
+                        alt="first-like-thumbnail"
+                        className="first-thumbnail2 playlist-first-thumbnail"
+                        loading="lazy"
+                        style={
+                          loading === true
+                            ? { visibility: "hidden", display: "none" }
+                            : { visibility: "visible", display: "block" }
+                        }
+                      />
+                      <p className="sample-play">&#9654; PLAY ALL</p>
+                    </div>
+                  )}
+                  <div className="last-like-section2 playlist-edit-tools">
+                    <div
+                      className="like-div"
+                      style={
+                        isEditmode === false
+                          ? { display: "flex" }
+                          : { display: "none" }
+                      }
+                    >
+                      <p className="like-head playlist-name-edit">
+                        {/* {playlistDetails.playlist_name.length <= 15
+                          ? playlistDetails.playlist_name
+                          : `${playlistDetails.playlist_name.slice(0, 15)}..`} */}
+                        {playlistDetails.playlist_name}
+                      </p>
+                      <Tooltip
+                        TransitionComponent={Zoom}
+                        title="Edit"
+                        placement="bottom"
+                      >
+                        <EditOutlinedIcon
+                          className="edit-name-btn"
+                          fontSize="medium"
+                          style={
+                            playlistDetails.owner_email === Email
+                              ? { color: "white" }
+                              : { display: "none" }
+                          }
+                          onClick={() => {
+                            if (token) {
+                              setIsEditmode(true);
+                            }
+                          }}
+                        />
+                      </Tooltip>
+                    </div>
+                    <div
+                      className="like-div"
+                      style={
+                        isEditmode === true
+                          ? { display: "block" }
+                          : { display: "none" }
+                      }
+                    >
+                      <input
+                        type="text"
+                        name="playlist-name"
+                        className="like-head like-head2 playlist-name-edit"
+                        value={PlaylistName}
+                        maxLength={50}
+                        onChange={(e) => setPlaylistName(e.target.value)}
+                      />
+                      <div className="two-main-btns">
+                        <button
+                          className="cancel-edit"
+                          onClick={() => setIsEditmode(false)}
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          className="save-edit"
+                          onClick={() => {
+                            saveEditData();
+
+                            setTimeout(() => {
+                              window.location.reload();
+                            }, 300);
+                          }}
+                        >
+                          Save
+                        </button>
+                      </div>
+                    </div>
+                    <div
+                      className="last-like2"
+                      style={
+                        isEditmode === true
+                          ? { marginTop: "65px" }
+                          : { marginTop: "15px" }
+                      }
+                    >
+                      <p
+                        className="like-username"
+                        onClick={() =>
+                          (window.location.href = `/channel/${channelID}`)
+                        }
+                      >
+                        {playlistDetails.playlist_owner}
+                      </p>
+
+                      <div
+                        className="update-privacy"
+                        style={
+                          playlistDetails &&
+                          playlistDetails.owner_email === Email
+                            ? { display: "block" }
+                            : { display: "none" }
+                        }
+                      >
+                        <div
+                          className="updateit-one"
+                          onClick={() => {
+                            if (privacyClicked === false) {
+                              setprivacyClicked(true);
+                            } else {
+                              setprivacyClicked(false);
+                            }
+                          }}
+                        >
+                          <p>{playlistDetails.playlist_privacy}</p>
+                          <KeyboardArrowDownIcon
+                            fontSize="medium"
+                            style={
+                              playlistDetails.owner_email === Email
+                                ? { color: "white" }
+                                : { display: "none" }
+                            }
+                          />
+                        </div>
+                        <div
+                          className="choose-privacy2"
+                          style={
+                            privacyClicked === true
+                              ? { display: "block" }
+                              : { display: "none" }
+                          }
+                        >
+                          <div
+                            className="first-privacy"
+                            onClick={() => {
+                              setprivacyClicked(false);
+                              setPrivacy("Public");
+                              setTimeout(() => {
+                                window.location.reload();
+                              }, 200);
+                            }}
+                          >
+                            <PublicOutlinedIcon
+                              fontSize="medium"
+                              style={{ color: "white" }}
+                            />
+                            <div className="right-privacy">
+                              <p>Public</p>
+                              <p>Anyone can view</p>
+                            </div>
+                          </div>
+                          <div
+                            className="second-privacy"
+                            onClick={() => {
+                              setprivacyClicked(false);
+                              setPrivacy("Private");
+                              setTimeout(() => {
+                                window.location.reload();
+                              }, 200);
+                            }}
+                          >
+                            <LockOutlinedIcon
+                              fontSize="medium"
+                              style={{ color: "white" }}
+                            />
+                            <div className="right-privacy">
+                              <p>Private</p>
+                              <p>Only you can view</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <p className="like-total-videos">
+                        {playlistsVideos.length} videos
+                      </p>
+                    </div>
+
+                    <div className="playlist-btns">
+                      {isSaved === false ? (
+                        <Tooltip
+                          TransitionComponent={Zoom}
+                          title="Add to Library"
+                          placement="bottom"
+                        >
+                          <PlaylistAddOutlinedIcon
+                            className="savethis-playlist"
+                            fontSize="medium"
+                            style={
+                              playlistDetails.owner_email === Email
+                                ? { display: "none" }
+                                : { display: "block", color: "white" }
+                            }
+                            onClick={SaveOtherPlaylist}
+                          />
+                        </Tooltip>
+                      ) : (
+                        <Tooltip
+                          TransitionComponent={Zoom}
+                          title="Add to Library"
+                          placement="bottom"
+                        >
+                          <PlaylistAddCheckOutlinedIcon
+                            className="savethis-playlist"
+                            fontSize="medium"
+                            style={
+                              playlistDetails.owner_email === Email
+                                ? { display: "none" }
+                                : { display: "block", color: "white" }
+                            }
+                            onClick={SaveOtherPlaylist}
+                          />
+                        </Tooltip>
+                      )}
+                      <Tooltip
+                        TransitionComponent={Zoom}
+                        title="Share"
+                        placement="bottom"
+                      >
+                        <ReplyOutlinedIcon
+                          className="share-playlist"
+                          fontSize="medium"
+                          style={{ color: "white" }}
+                          onClick={handleCopyLink}
+                        />
+                      </Tooltip>
+                      <Tooltip
+                        TransitionComponent={Zoom}
+                        title="Delete"
+                        placement="bottom"
+                      >
+                        <DeleteIcon
+                          className="delete-playlist"
+                          fontSize="medium"
+                          style={
+                            playlistDetails.owner_email === Email
+                              ? { color: "white" }
+                              : { display: "none" }
+                          }
+                          onClick={() => {
+                            DeletePlaylist();
+                            setTimeout(() => {
+                              window.location.href = "/";
+                            }, 300);
+                          }}
+                        />
+                      </Tooltip>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="playvideo-btn"
+                  onClick={() => {
+                    if (token) {
+                      updateViews(playlistsVideos[0].videoID);
+                      setTimeout(() => {
+                        window.location.href = `/video/${playlistsVideos[0].videoID}`;
+                      }, 400);
+                    } else {
+                      window.location.href = `/video/${playlistsVideos[0].videoID}`;
+                    }
+                  }}
+                >
+                  <PlayArrowIcon fontSize="medium" style={{ color: "black" }} />
+                  <p className="play-all">Play all</p>
+                </div>
+              </div>
+            </div>
+            <SkeletonTheme baseColor="#353535" highlightColor="#444">
+              <div
+                className="like-right-section2"
+                style={
+                  loading === true ? { display: "block" } : { display: "none" }
+                }
+              >
+                {playlistsVideos.length > 0
+                  ? playlistsVideos.map((index) => {
+                      return (
+                        <div className="liked-all-videos" key={index}>
+                          <div className="liked-videos-all-data">
+                            <Skeleton
+                              count={1}
+                              width={180}
+                              height={101}
+                              style={{ borderRadius: "12px" }}
+                              className="sk-watch-thumbnail"
+                            />
+                            <div
+                              className="its-content"
+                              style={{
+                                position: "relative",
+                                left: "10px",
+                                top: "6px",
+                              }}
+                            >
+                              <Skeleton
+                                count={1}
+                                width={450}
+                                height={20}
+                                className="sk-watch-title"
+                              />
+                              <Skeleton
+                                count={1}
+                                width={250}
+                                height={16}
+                                style={{ position: "relative", top: "10px" }}
+                                className="sk-watch-channel"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })
+                  : ""}
+              </div>
+            </SkeletonTheme>
+            <div
+              className="like-right-section2"
+              style={
+                loading === true
+                  ? { visibility: "hidden", display: "none" }
+                  : { visibility: "visible", display: "block" }
               }
             >
               {playlistsVideos.length > 0
