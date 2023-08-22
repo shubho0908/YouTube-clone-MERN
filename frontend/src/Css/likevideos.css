@@ -138,6 +138,9 @@ body {
   padding: 30px;
   padding-top: 30px;
   padding-bottom: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .first-thumbnail {
@@ -159,9 +162,7 @@ body {
 .sample-play {
   opacity: 0;
   position: absolute;
-  top: 110px;
   transition: all 0.25s ease;
-  left: 135px;
 }
 
 .first-thumbnail:hover {
@@ -446,6 +447,9 @@ body {
     padding-top: 30px;
     padding-bottom: 30px;
   }
+  .choose-privacy2 {
+    left: auto !important;
+  }
 }
 
 @media (width<= 1025px) {
@@ -464,6 +468,9 @@ body {
   .playlist-name-edit {
     font-size: 24px;
   }
+  .two-main-btns {
+    top: 38px;
+  }
 }
 
 @media (width<= 860px) {
@@ -479,6 +486,12 @@ body {
   }
 }
 
+@media (width<= 741px) {
+  .two-main-btns {
+    top: 0px;
+  }
+}
+
 @media (width<= 685px) {
   .last-like-section2 {
     padding-left: 12px;
@@ -486,7 +499,7 @@ body {
   .sk-watch-channel {
     width: 34vw !important;
   }
-  .playlist-edit-tools{
+  .playlist-edit-tools {
     padding-left: 30px !important;
   }
 }
@@ -500,6 +513,12 @@ body {
     right: 18px;
     width: 95vw;
     padding-bottom: 120px;
+  }
+  .playlist-edit-tools {
+    padding-top: 0px !important;
+  }
+  .playlist-first-thumbnail {
+    width: 82vw !important;
   }
 }
 
@@ -545,6 +564,22 @@ body {
     padding: 3px;
     font-size: 11.5px;
   }
+  .playlist-duration {
+    left: 164px !important;
+    padding: 5px !important;
+    margin-top: 71px !important;
+    border-radius: 4px !important;
+    font-size: 12px !important;
+  }
+  .playlist-contentt > p:nth-child(1) {
+    font-size: 15px;
+  }
+  .right-privacy > p:nth-child(1) {
+    font-size: 14.5px;
+  }
+  .right-privacy > p:nth-child(2) {
+    font-size: 13px;
+  }
 }
 
 @media (width<= 450px) {
@@ -555,7 +590,8 @@ body {
   .liked-videos-all-data2 > img {
     width: 85vw;
   }
-  .its-content2 {
+  .its-content2,
+  .playlist-contentt {
     margin-left: 15px;
     margin-right: 15px;
   }
@@ -581,6 +617,20 @@ body {
   }
   .sk-watch-title {
     width: 75vw !important;
+  }
+
+  .playlistvideos > img {
+    width: 85vw;
+  }
+  .cancel-edit,
+  .save-edit {
+    font-size: 12.5px;
+  }
+  .playlist-name-edit {
+    font-size: 20px;
+  }
+  .like-right-section2 {
+    top: 25px;
   }
 }
 

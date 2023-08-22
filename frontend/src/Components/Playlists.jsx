@@ -1,6 +1,6 @@
 import Navbar from "./Navbar";
 import LeftPanel from "./LeftPanel";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -40,6 +40,8 @@ function Playlists() {
   const [isSaved, setIsSaved] = useState(false);
   const navigate = useNavigate();
   const token = localStorage.getItem("userToken");
+
+  const privacyRef = useRef();
 
   //TOAST FUNCTIONS
 
@@ -91,6 +93,16 @@ function Playlists() {
     setTimeout(() => {
       setLoading(false);
     }, 3600);
+  }, []);
+
+  useEffect(() => {
+    const handler = (e) => {
+      if (!privacyRef.current.contains(e.target)) {
+        setprivacyClicked(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handler);
   }, []);
 
   useEffect(() => {
@@ -500,6 +512,7 @@ function Playlists() {
                       </div>
                       <div
                         className="choose-privacy2"
+                        ref={privacyRef}
                         style={
                           privacyClicked === true
                             ? { display: "block" }
@@ -703,7 +716,7 @@ function Playlists() {
                       <div className="liked-all-videos" key={index}>
                         <p style={{ color: "#aaa" }}>{index + 1}</p>
                         <div
-                          className="liked-videos-all-data"
+                          className="liked-videos-all-data playlistvideos"
                           onClick={() => {
                             if (token) {
                               updateViews(element.videoID);
@@ -720,8 +733,23 @@ function Playlists() {
                             alt="first-like-thumbnail"
                             loading="lazy"
                           />
-                          <div className="its-content">
-                            <p>{element.title}</p>
+                          <p className="durationn3 playlist-duration">
+                            {Math.floor(element.videolength / 60) +
+                              ":" +
+                              (Math.round(element.videolength % 60) < 10
+                                ? "0" + Math.round(element.videolength % 60)
+                                : Math.round(element.videolength % 60))}
+                          </p>
+                          <div className="its-content playlist-contentt">
+                            {window.innerWidth <= 1000 ? (
+                              <p>
+                                {element.title.length <= 50
+                                  ? element.title
+                                  : `${element.title.slice(0, 50)}..`}
+                              </p>
+                            ) : (
+                              <p>{element.title}</p>
+                            )}
 
                             <p>{element.video_uploader}</p>
                           </div>
@@ -930,6 +958,7 @@ function Playlists() {
                         </div>
                         <div
                           className="choose-privacy2"
+                          ref={privacyRef}
                           style={
                             privacyClicked === true
                               ? { display: "block" }
@@ -1134,7 +1163,7 @@ function Playlists() {
                       <div className="liked-all-videos" key={index}>
                         <p style={{ color: "#aaa" }}>{index + 1}</p>
                         <div
-                          className="liked-videos-all-data"
+                          className="liked-videos-all-data playlistvideos"
                           onClick={() => {
                             if (token) {
                               updateViews(element.videoID);
@@ -1151,8 +1180,23 @@ function Playlists() {
                             alt="first-like-thumbnail"
                             loading="lazy"
                           />
-                          <div className="its-content">
-                            <p>{element.title}</p>
+                          <p className="durationn3 playlist-duration">
+                            {Math.floor(element.videolength / 60) +
+                              ":" +
+                              (Math.round(element.videolength % 60) < 10
+                                ? "0" + Math.round(element.videolength % 60)
+                                : Math.round(element.videolength % 60))}
+                          </p>
+                          <div className="its-content playlist-contentt">
+                            {window.innerWidth <= 1000 ? (
+                              <p>
+                                {element.title.length <= 50
+                                  ? element.title
+                                  : `${element.title.slice(0, 50)}..`}
+                              </p>
+                            ) : (
+                              <p>{element.title}</p>
+                            )}
 
                             <p>{element.video_uploader}</p>
                           </div>
