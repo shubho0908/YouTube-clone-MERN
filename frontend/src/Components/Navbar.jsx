@@ -9,7 +9,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import "../Css/navbar.css";
 import Logo from "../img/logo1.png";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Signup from "./Signup";
 import Signin from "./Signin";
 import avatar from "../img/avatar.png";
@@ -33,12 +33,24 @@ function Navbar() {
   const [loading, setLoading] = useState(true);
   const [newSearch, setNewSearch] = useState(false);
 
+  const profileRef = useRef();
+
   useEffect(() => {
     if (token) {
       setisbtnClicked(false);
       setEmail(jwtDecode(token).email);
     }
   }, [token]);
+
+  useEffect(() => {
+    const handler = (e) => {
+      if (!profileRef.current.contains(e.target)) {
+        setShowPop(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handler);
+  }, []);
 
   useEffect(() => {
     const getData = async () => {
@@ -195,6 +207,8 @@ function Navbar() {
             alt="user profile pic"
             loading="lazy"
             className="profile-pic"
+            
+            
             style={
               token && loading === false
                 ? { display: "block" }
@@ -222,7 +236,7 @@ function Navbar() {
               setisbtnClicked(true);
             } else {
               setisbtnClicked(false);
-              setisSwitched(false)
+              setisSwitched(false);
               document.body.classList.remove("bg-css");
             }
           }}
@@ -256,7 +270,7 @@ function Navbar() {
           className="signin-last"
           style={isSwitch === true ? { display: "block" } : { display: "none" }}
         >
-          <Signin close={isbtnClicked} switch={isSwitch}/>
+          <Signin close={isbtnClicked} switch={isSwitch} />
           <div className="already">
             <p>Don&apos;t have an account?</p>
             <p
@@ -274,18 +288,22 @@ function Navbar() {
         </div>
       </div>
       <div
-        className="ac-pop"
+        className="ac-pop" ref={profileRef}
         style={showPop === true ? { display: "block" } : { display: "none" }}
       >
         <AccountPop />
       </div>
       <div
         className="new-searchbar"
-        style={{ display: newSearch && window.innerWidth <= 940 ? "flex" : "none" }}
+        style={{
+          display: newSearch && window.innerWidth <= 940 ? "flex" : "none",
+        }}
       >
         <div
           className="new-searchbar-component"
-          style={{ display: newSearch && window.innerWidth <= 940 ? "flex" : "none" }}
+          style={{
+            display: newSearch && window.innerWidth <= 940 ? "flex" : "none",
+          }}
         >
           <FiSearch fontSize="28px" color="#aaa" />
           <input
@@ -297,7 +315,12 @@ function Navbar() {
             onChange={handleSearch}
             onKeyDown={handleKeyPress}
           />
-          <RxCross1 fontSize="26px" color="#aaa" className="cancel-newsearch" onClick={()=> setNewSearch(false)}/>
+          <RxCross1
+            fontSize="26px"
+            color="#aaa"
+            className="cancel-newsearch"
+            onClick={() => setNewSearch(false)}
+          />
         </div>
       </div>
     </>

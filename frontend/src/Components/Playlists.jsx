@@ -512,7 +512,7 @@ function Playlists() {
                       </div>
                       <div
                         className="choose-privacy2"
-                        ref={privacyRef}
+                        ref={window.innerWidth >= 1290 ? privacyRef : null}
                         style={
                           privacyClicked === true
                             ? { display: "block" }
@@ -958,7 +958,7 @@ function Playlists() {
                         </div>
                         <div
                           className="choose-privacy2"
-                          ref={privacyRef}
+                          ref={window.innerWidth <= 1290 ? privacyRef : null}
                           style={
                             privacyClicked === true
                               ? { display: "block" }

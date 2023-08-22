@@ -1236,8 +1236,13 @@ function LeftPanel() {
           <div
             className="subscriptions-hori hori"
             onClick={() => {
-              localStorage.setItem("selected", "subscription");
-              window.location.href = "/subscriptions";
+              if (token) {
+                localStorage.setItem("selected", "subscription");
+                window.location.href = "/subscriptions";
+              } else {
+                setisbtnClicked(true);
+                document.body.classList.add("bg-css");
+              }
             }}
           >
             {selected === "subscription" ? (
@@ -1258,8 +1263,13 @@ function LeftPanel() {
           <div
             className="library-hori hori"
             onClick={() => {
-              localStorage.setItem("selected", "library");
-              window.location.href = "/library";
+              if (token) {
+                localStorage.setItem("selected", "library");
+                window.location.href = "/library";
+              } else {
+                setisbtnClicked(true);
+                document.body.classList.add("bg-css");
+              }
             }}
           >
             {selected === "library" ? (
