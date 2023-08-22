@@ -418,12 +418,25 @@ body {
 
 /* MEDIA QUERIES */
 
+@media (width <= 1365px) {
+  .sk-watch-title {
+    width: 30.5vw !important;
+  }
+}
+
 @media (width <= 1290px) {
   .liked-video-data {
     display: none !important;
   }
   .liked-video-data-new {
     display: block !important;
+  }
+  .sk-right-like {
+    left: 0 !important;
+    top: 80px;
+  }
+  .sk-watch-title {
+    width: 42.4vw !important;
   }
 }
 
@@ -446,6 +459,9 @@ body {
 @media (width<= 685px) {
   .last-like-section2 {
     padding-left: 12px;
+  }
+  .sk-watch-channel {
+    width: 34vw !important;
   }
 }
 
@@ -476,6 +492,14 @@ body {
   }
   .durationn3 {
     left: 164px;
+  }
+
+  .sk-watch-bigimg {
+    width: 80.5vw !important;
+    height: 43.5vw !important;
+  }
+  .page-cover2::before {
+    height: 100% !important;
   }
 }
 
@@ -516,6 +540,21 @@ body {
     font-size: 13px;
     padding: 4px;
     bottom: 30px;
+  }
+  .liked-videos-all-data {
+    flex-direction: column;
+    margin-bottom: 30px;
+  }
+  .sk-watch-thumbnail {
+    width: 85vw !important;
+    height: 44vw !important;
+  }
+
+  .sk-right-like {
+    left: -5px !important;
+  }
+  .sk-watch-title {
+    width: 75vw !important;
   }
 }
 

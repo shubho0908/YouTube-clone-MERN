@@ -33,7 +33,7 @@ function WatchLater() {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 3600);
+    }, 4000);
   }, []);
 
   useEffect(() => {
@@ -166,6 +166,7 @@ function WatchLater() {
                           width={310}
                           height={174}
                           style={{ borderRadius: "12px" }}
+                          className="sk-watch-bigimg"
                         />
                       </div>
                     </SkeletonTheme>
@@ -219,7 +220,7 @@ function WatchLater() {
             </div>
             <SkeletonTheme baseColor="#353535" highlightColor="#444">
               <div
-                className="like-right-section"
+                className="like-right-section sk-right-like"
                 style={
                   loading === true ? { display: "block" } : { display: "none" }
                 }
@@ -234,6 +235,7 @@ function WatchLater() {
                               width={180}
                               height={101}
                               style={{ borderRadius: "12px" }}
+                              className="sk-watch-thumbnail"
                             />
                             <div
                               className="its-content"
@@ -243,12 +245,18 @@ function WatchLater() {
                                 top: "6px",
                               }}
                             >
-                              <Skeleton count={1} width={450} height={20} />
+                              <Skeleton
+                                count={1}
+                                width={450}
+                                height={20}
+                                className="sk-watch-title"
+                              />
                               <Skeleton
                                 count={1}
                                 width={250}
                                 height={16}
                                 style={{ position: "relative", top: "10px" }}
+                                className="sk-watch-channel"
                               />
                             </div>
                           </div>
@@ -262,8 +270,8 @@ function WatchLater() {
               className="like-right-section"
               style={
                 loading === true
-                  ? { visibility: "hidden" }
-                  : { visibility: "visible" }
+                  ? { visibility: "hidden", display: "none" }
+                  : { visibility: "visible", display: "block" }
               }
             >
               {watchlater.length > 0
@@ -292,12 +300,12 @@ function WatchLater() {
                             loading="lazy"
                           />
                           <p className="durationn3">
-                          {Math.floor(element.videoLength / 60) +
-                            ":" +
-                            (Math.round(element.videoLength % 60) < 10
-                              ? "0" + Math.round(element.videoLength % 60)
-                              : Math.round(element.videoLength % 60))}
-                        </p>
+                            {Math.floor(element.videoLength / 60) +
+                              ":" +
+                              (Math.round(element.videoLength % 60) < 10
+                                ? "0" + Math.round(element.videoLength % 60)
+                                : Math.round(element.videoLength % 60))}
+                          </p>
                           <div className="its-content">
                             {window.innerWidth <= 1000 ? (
                               <p>
@@ -377,6 +385,7 @@ function WatchLater() {
                             width={310}
                             height={174}
                             style={{ borderRadius: "12px" }}
+                            className="sk-watch-bigimg"
                           />
                         </div>
                       </SkeletonTheme>
@@ -431,7 +440,7 @@ function WatchLater() {
             </div>
             <SkeletonTheme baseColor="#353535" highlightColor="#444">
               <div
-                className="like-right-section"
+                className="like-right-section  sk-right-like"
                 style={
                   loading === true ? { display: "block" } : { display: "none" }
                 }
@@ -446,6 +455,7 @@ function WatchLater() {
                               width={180}
                               height={101}
                               style={{ borderRadius: "12px" }}
+                              className="sk-watch-thumbnail"
                             />
                             <div
                               className="its-content"
@@ -455,12 +465,18 @@ function WatchLater() {
                                 top: "6px",
                               }}
                             >
-                              <Skeleton count={1} width={450} height={20} />
+                              <Skeleton
+                                count={1}
+                                width={450}
+                                height={20}
+                                className="sk-watch-title"
+                              />
                               <Skeleton
                                 count={1}
                                 width={250}
                                 height={16}
                                 style={{ position: "relative", top: "10px" }}
+                                className="sk-watch-channel"
                               />
                             </div>
                           </div>
@@ -474,8 +490,8 @@ function WatchLater() {
               className="like-right-section2"
               style={
                 loading === true
-                  ? { visibility: "hidden" }
-                  : { visibility: "visible" }
+                  ? { visibility: "hidden", display: "none" }
+                  : { visibility: "visible", display: "block" }
               }
             >
               {watchlater.length > 0
@@ -504,14 +520,14 @@ function WatchLater() {
                             loading="lazy"
                           />
                           <p className="durationn3">
-                          {Math.floor(element.videoLength / 60) +
-                            ":" +
-                            (Math.round(element.videoLength % 60) < 10
-                              ? "0" + Math.round(element.videoLength % 60)
-                              : Math.round(element.videoLength % 60))}
-                        </p>
+                            {Math.floor(element.videoLength / 60) +
+                              ":" +
+                              (Math.round(element.videoLength % 60) < 10
+                                ? "0" + Math.round(element.videoLength % 60)
+                                : Math.round(element.videoLength % 60))}
+                          </p>
                           <div className="its-content2">
-                          {window.innerWidth <= 1000 ? (
+                            {window.innerWidth <= 1000 ? (
                               <p>
                                 {element.Title.length <= 50
                                   ? element.Title

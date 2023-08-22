@@ -149,6 +149,7 @@ function LikeVideos() {
                           width={310}
                           height={174}
                           style={{ borderRadius: "12px" }}
+                          className="sk-watch-bigimg"
                         />
                       </div>
                     </SkeletonTheme>
@@ -163,7 +164,12 @@ function LikeVideos() {
                           : { visibility: "visible", display: "block" }
                       }
                     />
-                    <p className="sample-play" style={{pointerEvents : "none"}}>&#9654; PLAY ALL</p>
+                    <p
+                      className="sample-play"
+                      style={{ pointerEvents: "none" }}
+                    >
+                      &#9654; PLAY ALL
+                    </p>
                   </div>
                 )}
                 <div className="last-like-section">
@@ -197,7 +203,7 @@ function LikeVideos() {
             </div>
             <SkeletonTheme baseColor="#353535" highlightColor="#444">
               <div
-                className="like-right-section"
+                className="like-right-section sk-right-like"
                 style={
                   loading === true ? { display: "block" } : { display: "none" }
                 }
@@ -212,6 +218,7 @@ function LikeVideos() {
                               width={180}
                               height={101}
                               style={{ borderRadius: "12px" }}
+                              className="sk-watch-thumbnail"
                             />
                             <div
                               className="its-content"
@@ -221,12 +228,18 @@ function LikeVideos() {
                                 top: "6px",
                               }}
                             >
-                              <Skeleton count={1} width={450} height={20} />
+                              <Skeleton
+                                count={1}
+                                width={450}
+                                height={20}
+                                className="sk-watch-title"
+                              />
                               <Skeleton
                                 count={1}
                                 width={250}
                                 height={16}
                                 style={{ position: "relative", top: "10px" }}
+                                className="sk-watch-channel"
                               />
                             </div>
                           </div>
@@ -240,8 +253,8 @@ function LikeVideos() {
               className="like-right-section"
               style={
                 loading === true
-                  ? { visibility: "hidden" }
-                  : { visibility: "visible" }
+                  ? { visibility: "hidden", display: "none" }
+                  : { visibility: "visible", display: "block" }
               }
             >
               {videolike.length > 0
@@ -269,8 +282,244 @@ function LikeVideos() {
                             alt="first-like-thumbnail"
                             loading="lazy"
                           />
+                          <p className="durationn3">
+                            {Math.floor(element.videoLength / 60) +
+                              ":" +
+                              (Math.round(element.videoLength % 60) < 10
+                                ? "0" + Math.round(element.videoLength % 60)
+                                : Math.round(element.videoLength % 60))}
+                          </p>
                           <div className="its-content">
-                            <p>{element.Title}</p>
+                            {window.innerWidth <= 1000 ? (
+                              <p>
+                                {element.Title.length <= 50
+                                  ? element.Title
+                                  : `${element.Title.slice(0, 50)}..`}
+                              </p>
+                            ) : (
+                              <p>{element.Title}</p>
+                            )}
+
+                            <p>{element.uploader}</p>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })
+                : ""}
+            </div>
+          </div>
+        ) : (
+          <div className="main-trending-section">
+            <div className="spin23" style={{ top: "200px" }}>
+              <span className="loader2"></span>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* SECONDARY WATCH LATER */}
+
+      <div className="liked-video-data-new">
+        {videolike.length > 0 ? (
+          <div
+            className="like-video-sections2"
+            style={
+              menuClicked === false
+                ? { left: "80px", width: "100%" }
+                : { left: "255px" }
+            }
+          >
+            <div
+              className="like-left-section2"
+              style={{
+                backgroundImage: `url(${videolike[0]?.thumbnailURL})`,
+              }}
+            >
+              <div className="page-cover2">
+                <div className="inside-cover">
+                  {videolike && (
+                    <div
+                      className="firstvideo-thumbnail"
+                      onClick={() => {
+                        if (token) {
+                          updateViews(videolike[0].likedVideoID);
+                          setTimeout(() => {
+                            navigate(`/video/${videolike[0].likedVideoID}`);
+                            window.location.reload();
+                          }, 400);
+                        } else {
+                          navigate(`/video/${videolike[0].likedVideoID}`);
+                          window.location.reload();
+                        }
+                      }}
+                    >
+                      <SkeletonTheme baseColor="#353535" highlightColor="#444">
+                        <div
+                          className="thisimggg"
+                          style={
+                            loading === true
+                              ? { display: "block" }
+                              : { display: "none" }
+                          }
+                        >
+                          <Skeleton
+                            count={1}
+                            width={310}
+                            height={174}
+                            style={{ borderRadius: "12px" }}
+                            className="sk-watch-bigimg"
+                          />
+                        </div>
+                      </SkeletonTheme>
+                      <img
+                        src={videolike[0].thumbnailURL}
+                        alt="first-like-thumbnail"
+                        className="first-thumbnail2"
+                        loading="lazy"
+                        style={
+                          loading === true
+                            ? { visibility: "hidden", display: "none" }
+                            : { visibility: "visible", display: "block" }
+                        }
+                      />
+                      <p
+                        className="sample-play"
+                        style={{ pointerEvents: "none" }}
+                      >
+                        &#9654; PLAY ALL
+                      </p>
+                    </div>
+                  )}
+                  <div className="last-like-section2">
+                    <p className="like-head">Liked videos</p>
+                    <div className="last-like2">
+                      <p className="like-username">{name}</p>
+                      <p className="like-total-videos">
+                        {videolike.length} videos
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="playvideo-btn"
+                  onClick={() => {
+                    if (token) {
+                      updateViews(videolike[0].likedVideoID);
+                      setTimeout(() => {
+                        navigate(`/video/${videolike[0].likedVideoID}`);
+                        window.location.reload();
+                      }, 400);
+                    } else {
+                      navigate(`/video/${videolike[0].likedVideoID}`);
+                      window.location.reload();
+                    }
+                  }}
+                >
+                  <PlayArrowIcon fontSize="medium" style={{ color: "black" }} />
+                  <p className="play-all">Play all</p>
+                </div>
+              </div>
+            </div>
+            <SkeletonTheme baseColor="#353535" highlightColor="#444">
+              <div
+                className="like-right-section  sk-right-like"
+                style={
+                  loading === true ? { display: "block" } : { display: "none" }
+                }
+              >
+                {videolike.length > 0
+                  ? videolike.map((element, index) => {
+                      return (
+                        <div className="liked-all-videos" key={index}>
+                          <div className="liked-videos-all-data">
+                            <Skeleton
+                              count={1}
+                              width={180}
+                              height={101}
+                              style={{ borderRadius: "12px" }}
+                              className="sk-watch-thumbnail"
+                            />
+                            <div
+                              className="its-content"
+                              style={{
+                                position: "relative",
+                                left: "10px",
+                                top: "6px",
+                              }}
+                            >
+                              <Skeleton
+                                count={1}
+                                width={450}
+                                height={20}
+                                className="sk-watch-title"
+                              />
+                              <Skeleton
+                                count={1}
+                                width={250}
+                                height={16}
+                                style={{ position: "relative", top: "10px" }}
+                                className="sk-watch-channel"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })
+                  : ""}
+              </div>
+            </SkeletonTheme>
+            <div
+              className="like-right-section2"
+              style={
+                loading === true
+                  ? { visibility: "hidden", display: "none" }
+                  : { visibility: "visible", display: "block" }
+              }
+            >
+              {videolike.length > 0
+                ? videolike.map((element, index) => {
+                    return (
+                      <div className="liked-all-videos" key={index}>
+                        <p style={{ color: "#aaa" }}>{index + 1}</p>
+                        <div
+                          className="liked-videos-all-data2"
+                          onClick={() => {
+                            if (token) {
+                              updateViews(element.likedVideoID);
+                              setTimeout(() => {
+                                navigate(`/video/${element.likedVideoID}`);
+                                window.location.reload();
+                              }, 400);
+                            } else {
+                              navigate(`/video/${element.likedVideoID}`);
+                              window.location.reload();
+                            }
+                          }}
+                        >
+                          <img
+                            src={element.thumbnailURL}
+                            alt="first-like-thumbnail"
+                            loading="lazy"
+                          />
+                          <p className="durationn3">
+                            {Math.floor(element.videoLength / 60) +
+                              ":" +
+                              (Math.round(element.videoLength % 60) < 10
+                                ? "0" + Math.round(element.videoLength % 60)
+                                : Math.round(element.videoLength % 60))}
+                          </p>
+                          <div className="its-content2">
+                            {window.innerWidth <= 1000 ? (
+                              <p>
+                                {element.Title.length <= 50
+                                  ? element.Title
+                                  : `${element.Title.slice(0, 50)}..`}
+                              </p>
+                            ) : (
+                              <p>{element.Title}</p>
+                            )}
+
                             <p>{element.uploader}</p>
                           </div>
                         </div>
