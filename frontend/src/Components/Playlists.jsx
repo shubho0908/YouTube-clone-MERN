@@ -295,7 +295,7 @@ function Playlists() {
       <>
         <Navbar />
         <LeftPanel />
-        <div className="searched-content">
+        <div className="searched-content2">
           <img src={nothing} alt="no results" className="nothing-found" />
           <p className="no-results">No videos found!</p>
         </div>
@@ -313,7 +313,7 @@ function Playlists() {
       <>
         <Navbar />
         <LeftPanel />
-        <div className="searched-content">
+        <div className="searched-content2">
           <img src={nothing} alt="no results" className="nothing-found" />
           <p className="no-results" style={{ fontSize: "16.8px" }}>
             This playlist is set to private by the user!

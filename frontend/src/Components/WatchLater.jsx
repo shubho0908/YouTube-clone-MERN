@@ -107,7 +107,7 @@ function WatchLater() {
       <>
         <Navbar />
         <LeftPanel />
-        <div className="searched-content">
+        <div className="searched-content2">
           <img src={nothing} alt="no results" className="nothing-found" />
           <p className="no-results">No videos found!</p>
         </div>

@@ -479,7 +479,7 @@ body {
 }
 
 @media (width<= 970px) {
-  .searched-content {
+  .searched-content2 {
     left: 58% !important;
   }
   .no-results {
@@ -498,7 +498,7 @@ body {
   .playlist-first-thumbnail {
     width: 70vw;
   }
-  .searched-content {
+  .searched-content2 {
     left: 50% !important;
   }
   .no-results {
@@ -600,7 +600,7 @@ body {
   .right-privacy > p:nth-child(2) {
     font-size: 13px;
   }
-  .searched-content > img {
+  .searched-content2 > img {
     width: 90vw;
   }
 }

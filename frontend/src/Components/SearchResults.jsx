@@ -48,7 +48,7 @@ function SearchResults() {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 3500);
+    }, 4000);
   }, []);
 
   document.title = data && data !== undefined ? `${data} - YouTube` : "YouTube";
@@ -336,96 +336,98 @@ function SearchResults() {
                         (window.location.href = `/channel/${element._id}`)
                       }
                     />
-                    <div
-                      className="channel-extra-content"
-                      onClick={() =>
-                        (window.location.href = `/channel/${element._id}`)
-                      }
-                    >
-                      <div className="channel-liner">
-                        <p className="new-title">{element.channelName}</p>
-                        <Tooltip
-                          TransitionComponent={Zoom}
-                          title="Verified"
-                          placement="top"
-                        >
-                          <CheckCircleIcon
-                            fontSize="100px"
-                            style={{
-                              color: "rgb(138, 138, 138)",
-                              marginLeft: "4px",
-                            }}
-                          />
-                        </Tooltip>
-                      </div>
+                    <div className="channel-flex-data">
+                      <div
+                        className="channel-extra-content"
+                        onClick={() =>
+                          (window.location.href = `/channel/${element._id}`)
+                        }
+                      >
+                        <div className="channel-liner">
+                          <p className="new-title">{element.channelName}</p>
+                          <Tooltip
+                            TransitionComponent={Zoom}
+                            title="Verified"
+                            placement="top"
+                          >
+                            <CheckCircleIcon
+                              fontSize="100px"
+                              style={{
+                                color: "rgb(138, 138, 138)",
+                                marginLeft: "4px",
+                              }}
+                            />
+                          </Tooltip>
+                        </div>
 
-                      <div className="channel-liner">
-                        <p className="new-email">
-                          {userEmail && "@" + userEmail.split("@")[0]}
-                        </p>
-                        <p className="new-subs">
-                          {element.subscribers} subscribers
+                        <div className="channel-liner">
+                          <p className="new-email">
+                            {userEmail && "@" + userEmail.split("@")[0]}
+                          </p>
+                          <p className="new-subs">
+                            {element.subscribers} subscribers
+                          </p>
+                        </div>
+                        <p className="new-desc search-desc">
+                          {" "}
+                          {element.channelDescription.length <= 100
+                            ? element.channelDescription
+                            : `${element.channelDescription.slice(0, 100)}...`}
                         </p>
                       </div>
-                      <p className="new-desc">
-                        {" "}
-                        {element.channelDescription.length <= 100
-                          ? element.channelDescription
-                          : `${element.channelDescription.slice(0, 100)}...`}
-                      </p>
-                    </div>
-                    <div className="subscribe-btnss">
-                      {myemail === userEmail ? (
-                        ""
-                      ) : (
-                        <>
-                          <button
-                            className="subscribethis-channel"
-                            style={
-                              isSubscribed === true
-                                ? { display: "none" }
-                                : { display: "block" }
-                            }
-                            onClick={() => {
-                              if (token) {
-                                SubscribeChannel(
-                                  element.channelName,
-                                  element.channelProfile,
-                                  element._id
-                                );
-                                SubscribeNotify();
-                              } else {
-                                setisbtnClicked(true);
-                                document.body.classList.add("bg-css");
+                      <div className="subscribe-btnss">
+                        {myemail === userEmail ? (
+                          ""
+                        ) : (
+                          <>
+                            <button
+                              className="subscribethis-channel"
+                              style={
+                                isSubscribed === true
+                                  ? { display: "none" }
+                                  : { display: "block" }
                               }
-                            }}
-                          >
-                            Subscribe
-                          </button>
-                          <button
-                            className="subscribethis-channel2"
-                            style={
-                              isSubscribed === true
-                                ? { display: "block" }
-                                : { display: "none" }
-                            }
-                            onClick={() => {
-                              if (token) {
-                                SubscribeChannel(
-                                  element.channelName,
-                                  element.channelProfile,
-                                  element._id
-                                );
-                              } else {
-                                setisbtnClicked(true);
-                                document.body.classList.add("bg-css");
+                              onClick={() => {
+                                if (token) {
+                                  SubscribeChannel(
+                                    element.channelName,
+                                    element.channelProfile,
+                                    element._id
+                                  );
+                                  SubscribeNotify();
+                                } else {
+                                  setisbtnClicked(true);
+                                  document.body.classList.add("bg-css");
+                                }
+                              }}
+                            >
+                              Subscribe
+                            </button>
+                            <button
+                              className="subscribethis-channel2"
+                              style={
+                                isSubscribed === true
+                                  ? { display: "block" }
+                                  : { display: "none" }
                               }
-                            }}
-                          >
-                            Subscribed
-                          </button>
-                        </>
-                      )}
+                              onClick={() => {
+                                if (token) {
+                                  SubscribeChannel(
+                                    element.channelName,
+                                    element.channelProfile,
+                                    element._id
+                                  );
+                                } else {
+                                  setisbtnClicked(true);
+                                  document.body.classList.add("bg-css");
+                                }
+                              }}
+                            >
+                              Subscribed
+                            </button>
+                          </>
+                        )}
+                      </div>
                     </div>
                   </div>
                 );
@@ -467,7 +469,7 @@ function SearchResults() {
                       <img
                         src={element.thumbnailURL}
                         alt="thumbnail"
-                        className="thischannel-thumbnail"
+                        className="thischannel-thumbnail search-ka-thumbnail"
                       />
                       <p className="thisvideo-duration">
                         {Math.floor(element.videoLength / 60) +
@@ -477,16 +479,26 @@ function SearchResults() {
                             : Math.round(element.videoLength % 60))}
                       </p>
                       <div className="thischannel-video-data">
-                        <p className="thisvideo-title">{element.Title}</p>
+                        <p className="thisvideo-title">
+                          {window.innerWidth <= 1200 ? (
+                            <p>
+                              {element.Title.length <= 50
+                                ? element.Title
+                                : `${element.Title.slice(0, 50)}..`}
+                            </p>
+                          ) : (
+                            <p>{element.Title}</p>
+                          )}
+                        </p>
                         <div className="thisvideo-onliner">
                           <p className="thisvideo-views">
                             {element.views >= 1e9
                               ? `${(element.views / 1e9).toFixed(1)}B`
                               : element.views >= 1e6
-                              ? `${(element.views / 1e6).toFixed(1)}M`
-                              : element.views >= 1e3
-                              ? `${(element.views / 1e3).toFixed(1)}K`
-                              : element.views}{" "}
+                                ? `${(element.views / 1e6).toFixed(1)}M`
+                                : element.views >= 1e3
+                                  ? `${(element.views / 1e3).toFixed(1)}K`
+                                  : element.views}{" "}
                             views
                           </p>
                           <p className="thisvideo-uploaded-date">
@@ -547,11 +559,123 @@ function SearchResults() {
                             />
                           </Tooltip>
                         </div>
-                        <p className="thisvideo-desc">
-                          {element.Description.length <= 120
-                            ? element.Description
-                            : `${element.Description.slice(0, 120)}...`}
-                        </p>
+                        {window.innerWidth <= 970 ? (
+                          <p className="thisvideo-desc">
+                            {element.Description.length <= 50
+                              ? element.Description
+                              : `${element.Description.slice(0, 50)}...`}
+                          </p>
+                        ) : (
+                          <p className="thisvideo-desc">
+                            {element.Description.length <= 120
+                              ? element.Description
+                              : `${element.Description.slice(0, 120)}...`}
+                          </p>
+                        )}
+                      </div>
+                      <div className="thischannel-video-data-new">
+                        <img
+                          src={element.ChannelProfile}
+                          alt="profile"
+                          className="thischannelDP"
+                        />
+                        <div className="new-channel-data-right">
+                          <div className="thisvideos-top-right">
+                            <p className="thisvideo-title">
+                              {window.innerWidth <= 1200 ? (
+                                <p>
+                                  {element.Title.length <= 50
+                                    ? element.Title
+                                    : `${element.Title.slice(0, 50)}..`}
+                                </p>
+                              ) : (
+                                <p>{element.Title}</p>
+                              )}
+                            </p>
+                          </div>
+                          <div className="thisvideos-bottom-right">
+                            <div className="thisvideo-onliner">
+                              <p className="thischannel-name">
+                                {element.uploader}
+                              </p>
+                              <Tooltip
+                                TransitionComponent={Zoom}
+                                title="Verified"
+                                placement="top"
+                              >
+                                <CheckCircleIcon
+                                  fontSize="100px"
+                                  style={{
+                                    color: "rgb(138, 138, 138)",
+                                    marginLeft: "6px",
+                                    marginRight: "6px"
+                                  }}
+                                />
+                              </Tooltip>
+                              &#x2022;
+                              <p className="thisvideo-views">
+                                {element.views >= 1e9
+                                  ? `${(element.views / 1e9).toFixed(1)}B`
+                                  : element.views >= 1e6
+                                    ? `${(element.views / 1e6).toFixed(1)}M`
+                                    : element.views >= 1e3
+                                      ? `${(element.views / 1e3).toFixed(1)}K`
+                                      : element.views}{" "}
+                                views
+                              </p>
+                              <p className="thisvideo-uploaded-date">
+                                &#x2022;{" "}
+                                {(() => {
+                                  const timeDifference =
+                                    new Date() - new Date(element.uploaded_date);
+                                  const minutes = Math.floor(
+                                    timeDifference / 60000
+                                  );
+                                  const hours = Math.floor(
+                                    timeDifference / 3600000
+                                  );
+                                  const days = Math.floor(
+                                    timeDifference / 86400000
+                                  );
+                                  const weeks = Math.floor(
+                                    timeDifference / 604800000
+                                  );
+                                  const years = Math.floor(
+                                    timeDifference / 31536000000
+                                  );
+
+                                  if (minutes < 1) {
+                                    return "just now";
+                                  } else if (minutes < 60) {
+                                    return `${minutes} mins ago`;
+                                  } else if (hours < 24) {
+                                    return `${hours} hours ago`;
+                                  } else if (days < 7) {
+                                    return `${days} days ago`;
+                                  } else if (weeks < 52) {
+                                    return `${weeks} weeks ago`;
+                                  } else {
+                                    return `${years} years ago`;
+                                  }
+                                })()}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+
+                        {window.innerWidth <= 970 ? (
+                          <p className="thisvideo-desc">
+                            {element.Description.length <= 50
+                              ? element.Description
+                              : `${element.Description.slice(0, 50)}...`}
+                          </p>
+                        ) : (
+                          <p className="thisvideo-desc">
+                            {element.Description.length <= 120
+                              ? element.Description
+                              : `${element.Description.slice(0, 120)}...`}
+                          </p>
+                        )}
                       </div>
                     </div>
                   </>
@@ -647,7 +771,6 @@ function SearchResults() {
               display: loading === true ? "block" : "none",
             }}
           >
-            <hr className="seperate sep2" />
             <div className="searched-videos-section">
               {searchedVideoData &&
                 searchedVideoData.length > 0 &&
@@ -715,7 +838,6 @@ function SearchResults() {
             visibility: loading === true ? "hidden" : "visible",
           }}
         >
-          <hr className="seperate sep2" />
           <div className="searched-videos-section">
             {searchedVideoData &&
               searchedVideoData.length > 0 &&
@@ -739,7 +861,7 @@ function SearchResults() {
                     <img
                       src={element.thumbnailURL}
                       alt="thumbnail"
-                      className="thischannel-thumbnail"
+                      className="thischannel-thumbnail search-ka-thumbnail"
                     />
                     <p className="thisvideo-duration">
                       {Math.floor(element.videoLength / 60) +
@@ -749,16 +871,26 @@ function SearchResults() {
                           : Math.round(element.videoLength % 60))}
                     </p>
                     <div className="thischannel-video-data">
-                      <p className="thisvideo-title">{element.Title}</p>
+                      <p className="thisvideo-title">
+                        {window.innerWidth <= 1200 ? (
+                          <p>
+                            {element.Title.length <= 50
+                              ? element.Title
+                              : `${element.Title.slice(0, 50)}..`}
+                          </p>
+                        ) : (
+                          <p>{element.Title}</p>
+                        )}
+                      </p>
                       <div className="thisvideo-onliner">
                         <p className="thisvideo-views">
                           {element.views >= 1e9
                             ? `${(element.views / 1e9).toFixed(1)}B`
                             : element.views >= 1e6
-                            ? `${(element.views / 1e6).toFixed(1)}M`
-                            : element.views >= 1e3
-                            ? `${(element.views / 1e3).toFixed(1)}K`
-                            : element.views}{" "}
+                              ? `${(element.views / 1e6).toFixed(1)}M`
+                              : element.views >= 1e3
+                                ? `${(element.views / 1e3).toFixed(1)}K`
+                                : element.views}{" "}
                           views
                         </p>
                         <p className="thisvideo-uploaded-date">
@@ -813,11 +945,121 @@ function SearchResults() {
                           />
                         </Tooltip>
                       </div>
-                      <p className="thisvideo-desc">
-                        {element.Description.length <= 120
-                          ? element.Description
-                          : `${element.Description.slice(0, 120)}...`}
-                      </p>
+                      {window.innerWidth <= 970 ? (
+                        <p className="thisvideo-desc">
+                          {element.Description.length <= 50
+                            ? element.Description
+                            : `${element.Description.slice(0, 50)}...`}
+                        </p>
+                      ) : (
+                        <p className="thisvideo-desc">
+                          {element.Description.length <= 120
+                            ? element.Description
+                            : `${element.Description.slice(0, 120)}...`}
+                        </p>
+                      )}
+                    </div>
+                    <div className="thischannel-video-data-new">
+                      <img
+                        src={element.ChannelProfile}
+                        alt="profile"
+                        className="thischannelDP"
+                      />
+                      <div className="thisvideos-top-right">
+                        <p className="thisvideo-title">
+                          {window.innerWidth <= 1200 ? (
+                            <p>
+                              {element.Title.length <= 50
+                                ? element.Title
+                                : `${element.Title.slice(0, 50)}..`}
+                            </p>
+                          ) : (
+                            <p>{element.Title}</p>
+                          )}
+                        </p>
+                      </div>
+                      <div className="thisvideos-bottom-right">
+                        <div className="thisvideo-onliner">
+                          <p className="thischannel-name">
+                            {element.uploader}
+                          </p>
+                          <Tooltip
+                            TransitionComponent={Zoom}
+                            title="Verified"
+                            placement="top"
+                          >
+                            <CheckCircleIcon
+                              fontSize="100px"
+                              style={{
+                                color: "rgb(138, 138, 138)",
+                                marginLeft: "6px",
+                                marginRight: "6px"
+                              }}
+                            />
+                          </Tooltip>
+                          &#x2022;
+                          <p className="thisvideo-views">
+                            {element.views >= 1e9
+                              ? `${(element.views / 1e9).toFixed(1)}B`
+                              : element.views >= 1e6
+                                ? `${(element.views / 1e6).toFixed(1)}M`
+                                : element.views >= 1e3
+                                  ? `${(element.views / 1e3).toFixed(1)}K`
+                                  : element.views}{" "}
+                            views
+                          </p>
+                          <p className="thisvideo-uploaded-date">
+                            &#x2022;{" "}
+                            {(() => {
+                              const timeDifference =
+                                new Date() - new Date(element.uploaded_date);
+                              const minutes = Math.floor(
+                                timeDifference / 60000
+                              );
+                              const hours = Math.floor(
+                                timeDifference / 3600000
+                              );
+                              const days = Math.floor(
+                                timeDifference / 86400000
+                              );
+                              const weeks = Math.floor(
+                                timeDifference / 604800000
+                              );
+                              const years = Math.floor(
+                                timeDifference / 31536000000
+                              );
+
+                              if (minutes < 1) {
+                                return "just now";
+                              } else if (minutes < 60) {
+                                return `${minutes} mins ago`;
+                              } else if (hours < 24) {
+                                return `${hours} hours ago`;
+                              } else if (days < 7) {
+                                return `${days} days ago`;
+                              } else if (weeks < 52) {
+                                return `${weeks} weeks ago`;
+                              } else {
+                                return `${years} years ago`;
+                              }
+                            })()}
+                          </p>
+                        </div>
+                      </div>
+
+                      {window.innerWidth <= 970 ? (
+                        <p className="thisvideo-desc">
+                          {element.Description.length <= 50
+                            ? element.Description
+                            : `${element.Description.slice(0, 50)}...`}
+                        </p>
+                      ) : (
+                        <p className="thisvideo-desc">
+                          {element.Description.length <= 120
+                            ? element.Description
+                            : `${element.Description.slice(0, 120)}...`}
+                        </p>
+                      )}
                     </div>
                   </div>
                 );
@@ -852,15 +1094,6 @@ function SearchResults() {
             }}
           >
             <div className="searched-channels-section">
-              <hr
-                className="seperate sep2"
-                style={
-                  searchedChannelData && searchedChannelData.length > 0
-                    ? { display: "block" }
-                    : { display: "none" }
-                }
-              />
-
               {searchedChannelData &&
                 searchedChannelData.length > 0 &&
                 searchedChannelData.map((element, index) => {
@@ -883,14 +1116,6 @@ function SearchResults() {
                             width={150}
                             height={18}
                             style={{ position: "relative", top: "4px" }}
-                          />
-                        </div>
-                        <div className="new-desc">
-                          <Skeleton
-                            count={1}
-                            width={550}
-                            height={18}
-                            style={{ position: "relative", top: "8px" }}
                           />
                         </div>
                       </div>
@@ -976,15 +1201,6 @@ function SearchResults() {
           }}
         >
           <div className="searched-channels-section">
-            <hr
-              className="seperate sep2"
-              style={
-                searchedChannelData && searchedChannelData.length > 0
-                  ? { display: "block" }
-                  : { display: "none" }
-              }
-            />
-
             {searchedChannelData &&
               searchedChannelData.length > 0 &&
               searchedChannelData.map((element, index) => {
@@ -998,86 +1214,88 @@ function SearchResults() {
                         (window.location.href = `/channel/${element._id}`)
                       }
                     />
-                    <div
-                      className="channel-extra-content"
-                      onClick={() =>
-                        (window.location.href = `/channel/${element._id}`)
-                      }
-                    >
-                      <div className="channel-liner">
-                        <p className="new-title">{element.channelName}</p>
-                        <Tooltip
-                          TransitionComponent={Zoom}
-                          title="Verified"
-                          placement="top"
-                        >
-                          <CheckCircleIcon
-                            fontSize="100px"
-                            style={{
-                              color: "rgb(138, 138, 138)",
-                              marginLeft: "4px",
-                            }}
-                          />
-                        </Tooltip>
-                      </div>
+                    <div className="channel-flex-data">
+                      <div
+                        className="channel-extra-content"
+                        onClick={() =>
+                          (window.location.href = `/channel/${element._id}`)
+                        }
+                      >
+                        <div className="channel-liner">
+                          <p className="new-title">{element.channelName}</p>
+                          <Tooltip
+                            TransitionComponent={Zoom}
+                            title="Verified"
+                            placement="top"
+                          >
+                            <CheckCircleIcon
+                              fontSize="100px"
+                              style={{
+                                color: "rgb(138, 138, 138)",
+                                marginLeft: "4px",
+                              }}
+                            />
+                          </Tooltip>
+                        </div>
 
-                      <div className="channel-liner">
-                        <p className="new-email">
-                          {userEmail && "@" + userEmail.split("@")[0]}
-                        </p>
-                        <p className="new-subs">
-                          {element.subscribers} subscribers
+                        <div className="channel-liner">
+                          <p className="new-email">
+                            {userEmail && "@" + userEmail.split("@")[0]}
+                          </p>
+                          <p className="new-subs">
+                            {element.subscribers} subscribers
+                          </p>
+                        </div>
+                        <p className="new-desc search-desc">
+                          {" "}
+                          {element.channelDescription.length <= 100
+                            ? element.channelDescription
+                            : `${element.channelDescription.slice(0, 100)}...`}
                         </p>
                       </div>
-                      <p className="new-desc">
-                        {" "}
-                        {element.channelDescription.length <= 100
-                          ? element.channelDescription
-                          : `${element.channelDescription.slice(0, 100)}...`}
-                      </p>
-                    </div>
-                    <div className="subscribe-btnss">
-                      {myemail === userEmail ? (
-                        ""
-                      ) : (
-                        <>
-                          <button
-                            className="subscribethis-channel"
-                            style={
-                              isSubscribed === true
-                                ? { display: "none" }
-                                : { display: "block" }
-                            }
-                            onClick={() => {
-                              SubscribeChannel(
-                                element.channelName,
-                                element.channelProfile,
-                                element._id
-                              );
-                              SubscribeNotify();
-                            }}
-                          >
-                            Subscribe
-                          </button>
-                          <button
-                            className="subscribethis-channel2"
-                            style={
-                              isSubscribed === true
-                                ? { display: "block" }
-                                : { display: "none" }
-                            }
-                            onClick={() =>
-                              SubscribeChannel(
-                                element.channelName,
-                                element.channelProfile,
-                                element._id
-                              )
-                            }
-                          >
-                            Subscribed
-                          </button>
-                        </>
-                      )}
+                      <div className="subscribe-btnss">
+                        {myemail === userEmail ? (
+                          ""
+                        ) : (
+                          <>
+                            <button
+                              className="subscribethis-channel"
+                              style={
+                                isSubscribed === true
+                                  ? { display: "none" }
+                                  : { display: "block" }
+                              }
+                              onClick={() => {
+                                SubscribeChannel(
+                                  element.channelName,
+                                  element.channelProfile,
+                                  element._id
+                                );
+                                SubscribeNotify();
+                              }}
+                            >
+                              Subscribe
+                            </button>
+                            <button
+                              className="subscribethis-channel2"
+                              style={
+                                isSubscribed === true
+                                  ? { display: "block" }
+                                  : { display: "none" }
+                              }
+                              onClick={() =>
+                                SubscribeChannel(
+                                  element.channelName,
+                                  element.channelProfile,
+                                  element._id
+                                )
+                              }
+                            >
+                              Subscribed
+                            </button>
+                          </>
+                        )}
+                      </div>
                     </div>
                   </div>
                 );
@@ -1107,7 +1325,7 @@ function SearchResults() {
                     <img
                       src={element.thumbnailURL}
                       alt="thumbnail"
-                      className="thischannel-thumbnail"
+                      className="thischannel-thumbnail search-ka-thumbnail"
                     />
                     <p className="thisvideo-duration">
                       {Math.floor(element.videoLength / 60) +
@@ -1117,16 +1335,26 @@ function SearchResults() {
                           : Math.round(element.videoLength % 60))}
                     </p>
                     <div className="thischannel-video-data">
-                      <p className="thisvideo-title">{element.Title}</p>
+                      <p className="thisvideo-title">
+                        {window.innerWidth <= 1200 ? (
+                          <p>
+                            {element.Title.length <= 50
+                              ? element.Title
+                              : `${element.Title.slice(0, 50)}..`}
+                          </p>
+                        ) : (
+                          <p>{element.Title}</p>
+                        )}
+                      </p>
                       <div className="thisvideo-onliner">
                         <p className="thisvideo-views">
                           {element.views >= 1e9
                             ? `${(element.views / 1e9).toFixed(1)}B`
                             : element.views >= 1e6
-                            ? `${(element.views / 1e6).toFixed(1)}M`
-                            : element.views >= 1e3
-                            ? `${(element.views / 1e3).toFixed(1)}K`
-                            : element.views}{" "}
+                              ? `${(element.views / 1e6).toFixed(1)}M`
+                              : element.views >= 1e3
+                                ? `${(element.views / 1e3).toFixed(1)}K`
+                                : element.views}{" "}
                           views
                         </p>
                         <p className="thisvideo-uploaded-date">
@@ -1181,11 +1409,121 @@ function SearchResults() {
                           />
                         </Tooltip>
                       </div>
-                      <p className="thisvideo-desc">
-                        {element.Description.length <= 120
-                          ? element.Description
-                          : `${element.Description.slice(0, 120)}...`}
-                      </p>
+                      {window.innerWidth <= 970 ? (
+                        <p className="thisvideo-desc">
+                          {element.Description.length <= 50
+                            ? element.Description
+                            : `${element.Description.slice(0, 50)}...`}
+                        </p>
+                      ) : (
+                        <p className="thisvideo-desc">
+                          {element.Description.length <= 120
+                            ? element.Description
+                            : `${element.Description.slice(0, 120)}...`}
+                        </p>
+                      )}
+                    </div>
+                    <div className="thischannel-video-data-new">
+                      <img
+                        src={element.ChannelProfile}
+                        alt="profile"
+                        className="thischannelDP"
+                      />
+                      <div className="thisvideos-top-right">
+                        <p className="thisvideo-title">
+                          {window.innerWidth <= 1200 ? (
+                            <p>
+                              {element.Title.length <= 50
+                                ? element.Title
+                                : `${element.Title.slice(0, 50)}..`}
+                            </p>
+                          ) : (
+                            <p>{element.Title}</p>
+                          )}
+                        </p>
+                      </div>
+                      <div className="thisvideos-bottom-right">
+                        <div className="thisvideo-onliner">
+                          <p className="thischannel-name">
+                            {element.uploader}
+                          </p>
+                          <Tooltip
+                            TransitionComponent={Zoom}
+                            title="Verified"
+                            placement="top"
+                          >
+                            <CheckCircleIcon
+                              fontSize="100px"
+                              style={{
+                                color: "rgb(138, 138, 138)",
+                                marginLeft: "6px",
+                                marginRight: "6px"
+                              }}
+                            />
+                          </Tooltip>
+                          &#x2022;
+                          <p className="thisvideo-views">
+                            {element.views >= 1e9
+                              ? `${(element.views / 1e9).toFixed(1)}B`
+                              : element.views >= 1e6
+                                ? `${(element.views / 1e6).toFixed(1)}M`
+                                : element.views >= 1e3
+                                  ? `${(element.views / 1e3).toFixed(1)}K`
+                                  : element.views}{" "}
+                            views
+                          </p>
+                          <p className="thisvideo-uploaded-date">
+                            &#x2022;{" "}
+                            {(() => {
+                              const timeDifference =
+                                new Date() - new Date(element.uploaded_date);
+                              const minutes = Math.floor(
+                                timeDifference / 60000
+                              );
+                              const hours = Math.floor(
+                                timeDifference / 3600000
+                              );
+                              const days = Math.floor(
+                                timeDifference / 86400000
+                              );
+                              const weeks = Math.floor(
+                                timeDifference / 604800000
+                              );
+                              const years = Math.floor(
+                                timeDifference / 31536000000
+                              );
+
+                              if (minutes < 1) {
+                                return "just now";
+                              } else if (minutes < 60) {
+                                return `${minutes} mins ago`;
+                              } else if (hours < 24) {
+                                return `${hours} hours ago`;
+                              } else if (days < 7) {
+                                return `${days} days ago`;
+                              } else if (weeks < 52) {
+                                return `${weeks} weeks ago`;
+                              } else {
+                                return `${years} years ago`;
+                              }
+                            })()}
+                          </p>
+                        </div>
+                      </div>
+
+                      {window.innerWidth <= 970 ? (
+                        <p className="thisvideo-desc">
+                          {element.Description.length <= 50
+                            ? element.Description
+                            : `${element.Description.slice(0, 50)}...`}
+                        </p>
+                      ) : (
+                        <p className="thisvideo-desc">
+                          {element.Description.length <= 120
+                            ? element.Description
+                            : `${element.Description.slice(0, 120)}...`}
+                        </p>
+                      )}
                     </div>
                   </div>
                 );

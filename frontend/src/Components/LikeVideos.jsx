@@ -90,7 +90,7 @@ function LikeVideos() {
       <>
         <Navbar />
         <LeftPanel />
-        <div className="searched-content">
+        <div className="searched-content2">
           <img src={nothing} alt="no results" className="nothing-found" />
           <p className="no-results">No liked videos found!</p>
         </div>
