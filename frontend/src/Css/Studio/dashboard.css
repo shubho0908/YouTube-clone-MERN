@@ -266,6 +266,7 @@
 }
 .dash-data-all {
   display: flex;
+  padding-bottom: 80px;
 }
 
 .dashboard-analytics {
@@ -379,7 +380,7 @@
   width: 150px;
 }
 
-.dash-dataimp>button{
+.dash-dataimp > button {
   border: none;
   outline: none;
   background-color: #3eaffe;

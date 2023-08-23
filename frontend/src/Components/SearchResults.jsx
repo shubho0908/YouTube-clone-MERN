@@ -214,14 +214,6 @@ function SearchResults() {
             }}
           >
             <div className="searched-channels-section">
-              <hr
-                className="seperate sep2"
-                style={
-                  searchedChannelData && searchedChannelData.length > 0
-                    ? { display: "block" }
-                    : { display: "none" }
-                }
-              />
               {searchedChannelData &&
                 searchedChannelData.length > 0 &&
                 searchedChannelData.map((element, index) => {
@@ -244,14 +236,6 @@ function SearchResults() {
                             width={150}
                             height={18}
                             style={{ position: "relative", top: "4px" }}
-                          />
-                        </div>
-                        <div className="new-desc">
-                          <Skeleton
-                            count={1}
-                            width={550}
-                            height={18}
-                            style={{ position: "relative", top: "8px" }}
                           />
                         </div>
                       </div>
@@ -339,15 +323,6 @@ function SearchResults() {
           }}
         >
           <div className="searched-channels-section">
-            <hr
-              className="seperate sep2"
-              style={
-                searchedChannelData && searchedChannelData.length > 0
-                  ? { display: "block" }
-                  : { display: "none" }
-              }
-            />
-
             {searchedChannelData &&
               searchedChannelData.length > 0 &&
               searchedChannelData.map((element, index) => {

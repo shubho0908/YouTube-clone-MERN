@@ -10,12 +10,12 @@
   position: absolute;
   /* top: 95px; */
   /* left: 450px; */
-  width: -webkit-fill-available;
   color: white;
-  transform: translate(-50%, -50%);
-  left: 50%;
-  top: 200px;
-  animation: FADEINN .45s ease;
+  transform: none !important;
+  left: 17%;
+  top: 100px !important;
+  width: 77vw !important;
+  animation: FADEINN 0.45s ease;
 }
 
 .search-channel {
@@ -40,8 +40,8 @@
 }
 
 .subscribe-btnss {
-  position: relative;
-  left: 100px;
+  position: absolute;
+  right: 10px;
 }
 
 .new-subs {
@@ -61,7 +61,6 @@
   margin-top: 6px;
   font-size: 14px;
   color: #aaa;
-
 }
 
 .sep2 {
@@ -156,7 +155,7 @@
   margin-bottom: 15px;
 }
 
-.nothing-found{
+.nothing-found {
   width: 450px;
   position: absolute;
   transform: translate(-50%, -50%);
@@ -164,10 +163,12 @@
   top: 180px;
 }
 
-.no-results{
+.no-results {
   position: absolute;
   transform: translate(-50%, -50%);
   left: 50%;
   top: 320px;
   font-size: 20px;
 }
+
+/* MEDIA QUERIES */

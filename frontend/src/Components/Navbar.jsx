@@ -34,6 +34,7 @@ function Navbar() {
   const [newSearch, setNewSearch] = useState(false);
 
   const profileRef = useRef();
+  const searchRef = useRef();
 
   useEffect(() => {
     if (token) {
@@ -46,6 +47,16 @@ function Navbar() {
     const handler = (e) => {
       if (!profileRef.current.contains(e.target)) {
         setShowPop(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handler);
+  }, []);
+
+  useEffect(() => {
+    const handler = (e) => {
+      if (!searchRef.current.contains(e.target)) {
+        setNewSearch(false);
       }
     };
 
@@ -207,8 +218,6 @@ function Navbar() {
             alt="user profile pic"
             loading="lazy"
             className="profile-pic"
-            
-            
             style={
               token && loading === false
                 ? { display: "block" }
@@ -288,7 +297,8 @@ function Navbar() {
         </div>
       </div>
       <div
-        className="ac-pop" ref={profileRef}
+        className="ac-pop"
+        ref={profileRef}
         style={showPop === true ? { display: "block" } : { display: "none" }}
       >
         <AccountPop />
@@ -301,6 +311,7 @@ function Navbar() {
       >
         <div
           className="new-searchbar-component"
+          ref={searchRef}
           style={{
             display: newSearch && window.innerWidth <= 940 ? "flex" : "none",
           }}
