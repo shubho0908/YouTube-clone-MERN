@@ -100,7 +100,8 @@
   object-fit: cover;
   border-radius: 100%;
 }
-.thischannel-all-data {
+.thischannel-all-data,
+.sk-thischannel-all-data {
   cursor: pointer;
   display: flex;
   align-items: flex-start;
@@ -108,6 +109,13 @@
 }
 
 .thischannel-video-data {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  right: 20px;
+}
+
+.sk-thischannel-video-data {
   display: flex;
   flex-direction: column;
   position: relative;
@@ -219,6 +227,9 @@
     width: 64vw !important;
     left: 28%;
   }
+  .sk-search-title {
+    width: 31vw !important;
+  }
 }
 
 @media (width <= 970px) {
@@ -238,6 +249,13 @@
   .searched-content {
     left: 32%;
   }
+  .sk-search-thumbnail {
+    width: 285px !important;
+    height: 160px !important;
+  }
+  .sk-search-channel-name {
+    width: 230px !important;
+  }
 }
 
 @media (width<= 860px) {
@@ -247,6 +265,15 @@
   }
   .thischannel-videos-section {
     width: inherit !important;
+  }
+  .sk-search-title {
+    width: 40vw !important;
+  }
+}
+
+@media (width<= 735px) {
+  .sk-search-title {
+    width: 33vw !important;
   }
 }
 
@@ -263,11 +290,19 @@
     width: 95px;
     height: 95px;
   }
+  .sk-search-dp {
+    width: 95px !important;
+    height: 95px !important;
+  }
   .new-title {
     font-size: 18px;
   }
-  .subscribethis-channel2,.subscribethis-channel {
+  .subscribethis-channel2,
+  .subscribethis-channel {
     font-size: 13.8px;
+  }
+  .sk-search-channel-name {
+    width: 210px !important;
   }
 }
 
@@ -281,12 +316,19 @@
   .searched-videos-section {
     padding-bottom: 100px;
   }
+  .sk-search-title {
+    width: 40vw !important;
+  }
 }
 
 @media (width<= 570px) {
   .thischannel-all-data {
     flex-direction: column;
     margin-bottom: 28px;
+  }
+  .sk-thischannel-all-data {
+    flex-direction: column;
+    margin-bottom: 0px !important;
   }
   .thischannel-video-data {
     display: none;
@@ -327,6 +369,34 @@
   .thisvideo-channel,
   .thisvideo-desc {
     font-size: 14px;
+  }
+
+  /* SKELETONS */
+
+  .sk-search-thumbnail {
+    width: 92vw !important;
+    height: 50vw !important;
+  }
+  .sk-search-title {
+    width: 88vw !important;
+  }
+  .sk-thischannel-video-data {
+    left: auto !important;
+    right: auto !important;
+    margin-top: 12px;
+  }
+  .sk-search-videodata {
+    width: 65vw !important;
+  }
+  .sk-search-channeldp {
+    width: 42px !important;
+    height: 42px !important;
+  }
+  .sk-search-videodata3 {
+    display: none;
+  }
+  .sk-search-channel-name {
+    width: 180px !important;
   }
 }
 
@@ -386,6 +456,14 @@
     left: 82vw;
     font-size: 12px;
   }
+  .sk-search-dp {
+    width: 78px !important;
+    height: 78px !important;
+  }
+  .sk-search-button {
+    width: 100px !important;
+    height: 30px !important;
+  }
 }
 
 @media (width<= 400px) {
@@ -410,7 +488,8 @@
   .thischannel-name {
     margin-right: 5px;
   }
-  .subscribethis-channel2,.subscribethis-channel {
+  .subscribethis-channel2,
+  .subscribethis-channel {
     font-size: 12.5px;
     padding-left: 16px;
     padding-right: 16px;

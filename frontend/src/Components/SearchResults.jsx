@@ -224,28 +224,33 @@ function SearchResults() {
                         width={130}
                         height={130}
                         style={{ borderRadius: "100%" }}
+                        className="sk-search-dp"
                       />
-                      <div className="channel-extra-content">
-                        <div className="channel-liner">
-                          <Skeleton count={1} width={300} height={18} />
-                        </div>
+                      <div className="channel-flex-data">
+                        <div className="channel-extra-content">
+                          <div className="channel-liner">
+                            <Skeleton count={1} width={300} height={18} className="sk-search-channel-name" />
+                          </div>
 
-                        <div className="channel-liner">
+                          <div className="channel-liner">
+                            <Skeleton
+                              count={1}
+                              width={150}
+                              height={18}
+                              style={{ position: "relative", top: "4px" }}
+                              className="sk-search-channel-extra"
+                            />
+                          </div>
+                        </div>
+                        <div className="subscribe-btnss">
                           <Skeleton
                             count={1}
-                            width={150}
-                            height={18}
-                            style={{ position: "relative", top: "4px" }}
+                            width={120}
+                            height={35}
+                            style={{ borderRadius: "20px" }}
+                            className="sk-search-button"
                           />
                         </div>
-                      </div>
-                      <div className="subscribe-btnss">
-                        <Skeleton
-                          count={1}
-                          width={120}
-                          height={35}
-                          style={{ borderRadius: "20px" }}
-                        />
                       </div>
                     </div>
                   );
@@ -260,26 +265,27 @@ function SearchResults() {
                 userVideos.map((index) => {
                   return (
                     <>
-                      <div className="thischannel-all-data" key={index}>
+                      <div className="sk-thischannel-all-data" key={index}>
                         <Skeleton
                           count={1}
                           width={350}
                           height={197}
                           style={{ borderRadius: "12px" }}
+                          className="sk-search-thumbnail"
                         />
 
                         <div
-                          className="thischannel-video-data"
+                          className="sk-thischannel-video-data"
                           style={{
                             position: "relative",
                             left: "20px",
                             top: "4px",
                           }}
                         >
-                          <Skeleton count={1} width={420} height={18} />
+                          <Skeleton count={1} width={420} height={18} className="sk-search-title" />
 
                           <div className="thisvideo-onliner">
-                            <Skeleton count={1} width={180} height={18} />
+                            <Skeleton count={1} width={180} height={18} className="sk-search-videodata" />
                           </div>
                           <div className="thisvideo-channel">
                             <Skeleton
@@ -287,6 +293,7 @@ function SearchResults() {
                               width={30}
                               height={30}
                               style={{ borderRadius: "100%" }}
+                              className="sk-search-channeldp"
                             />
 
                             <Skeleton
@@ -294,6 +301,7 @@ function SearchResults() {
                               width={180}
                               height={18}
                               style={{ position: "relative", left: "8px" }}
+                              className="sk-search-videodata2"
                             />
                           </div>
                           <Skeleton
@@ -301,6 +309,7 @@ function SearchResults() {
                             width={220}
                             height={10}
                             style={{ position: "relative", top: "10px" }}
+                            className="sk-search-videodata3"
                           />
                         </div>
                       </div>
@@ -780,26 +789,27 @@ function SearchResults() {
                 searchedVideoData.map((index) => {
                   return (
                     <>
-                      <div className="thischannel-all-data" key={index}>
+                      <div className="sk-thischannel-all-data" key={index}>
                         <Skeleton
                           count={1}
                           width={350}
                           height={197}
                           style={{ borderRadius: "12px" }}
+                          className="sk-search-thumbnail"
                         />
 
                         <div
-                          className="thischannel-video-data"
+                          className="sk-thischannel-video-data"
                           style={{
                             position: "relative",
                             left: "20px",
                             top: "4px",
                           }}
                         >
-                          <Skeleton count={1} width={420} height={18} />
+                          <Skeleton count={1} width={420} height={18} className="sk-search-title" />
 
                           <div className="thisvideo-onliner">
-                            <Skeleton count={1} width={180} height={18} />
+                            <Skeleton count={1} width={180} height={18} className="sk-search-videodata" />
                           </div>
                           <div className="thisvideo-channel">
                             <Skeleton
@@ -807,6 +817,7 @@ function SearchResults() {
                               width={30}
                               height={30}
                               style={{ borderRadius: "100%" }}
+                              className="sk-search-channeldp"
                             />
 
                             <Skeleton
@@ -814,6 +825,7 @@ function SearchResults() {
                               width={180}
                               height={18}
                               style={{ position: "relative", left: "8px" }}
+                              className="sk-search-videodata2"
                             />
                           </div>
                           <Skeleton
@@ -821,6 +833,7 @@ function SearchResults() {
                             width={220}
                             height={10}
                             style={{ position: "relative", top: "10px" }}
+                            className="sk-search-videodata3"
                           />
                         </div>
                       </div>
@@ -1109,28 +1122,33 @@ function SearchResults() {
                         width={130}
                         height={130}
                         style={{ borderRadius: "100%" }}
+                        className="sk-search-dp"
                       />
-                      <div className="channel-extra-content">
-                        <div className="channel-liner">
-                          <Skeleton count={1} width={300} height={18} />
-                        </div>
+                      <div className="channel-flex-data">
+                        <div className="channel-extra-content">
+                          <div className="channel-liner">
+                            <Skeleton count={1} width={300} height={18} className="sk-search-channel-name" />
+                          </div>
 
-                        <div className="channel-liner">
+                          <div className="channel-liner">
+                            <Skeleton
+                              count={1}
+                              width={150}
+                              height={18}
+                              style={{ position: "relative", top: "4px" }}
+                              className="sk-search-channel-extra"
+                            />
+                          </div>
+                        </div>
+                        <div className="subscribe-btnss">
                           <Skeleton
                             count={1}
-                            width={150}
-                            height={18}
-                            style={{ position: "relative", top: "4px" }}
+                            width={120}
+                            height={35}
+                            style={{ borderRadius: "20px" }}
+                            className="sk-search-button"
                           />
                         </div>
-                      </div>
-                      <div className="subscribe-btnss">
-                        <Skeleton
-                          count={1}
-                          width={120}
-                          height={35}
-                          style={{ borderRadius: "20px" }}
-                        />
                       </div>
                     </div>
                   );
@@ -1143,26 +1161,27 @@ function SearchResults() {
                 searchedVideoData.map((element, index) => {
                   <hr className="seperate sep2" />;
                   return (
-                    <div className="thischannel-all-data" key={index}>
+                    <div className="sk-thischannel-all-data" key={index}>
                       <Skeleton
                         count={1}
                         width={350}
                         height={197}
                         style={{ borderRadius: "12px" }}
+                        className="sk-search-thumbnail"
                       />
 
                       <div
-                        className="thischannel-video-data"
+                        className="sk-thischannel-video-data"
                         style={{
                           position: "relative",
                           left: "20px",
                           top: "4px",
                         }}
                       >
-                        <Skeleton count={1} width={420} height={18} />
+                        <Skeleton count={1} width={420} height={18} className="sk-search-title" />
 
                         <div className="thisvideo-onliner">
-                          <Skeleton count={1} width={180} height={18} />
+                          <Skeleton count={1} width={180} height={18} className="sk-search-videodata" />
                         </div>
                         <div className="thisvideo-channel">
                           <Skeleton
@@ -1170,6 +1189,7 @@ function SearchResults() {
                             width={30}
                             height={30}
                             style={{ borderRadius: "100%" }}
+                            className="sk-search-channeldp"
                           />
 
                           <Skeleton
@@ -1177,6 +1197,7 @@ function SearchResults() {
                             width={180}
                             height={18}
                             style={{ position: "relative", left: "8px" }}
+                            className="sk-search-videodata2"
                           />
                         </div>
                         <Skeleton
@@ -1184,6 +1205,7 @@ function SearchResults() {
                           width={220}
                           height={10}
                           style={{ position: "relative", top: "10px" }}
+                          className="sk-search-videodata3"
                         />
                       </div>
                     </div>
