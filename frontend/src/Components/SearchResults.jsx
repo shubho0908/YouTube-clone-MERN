@@ -356,6 +356,7 @@ function SearchResults() {
                                 color: "rgb(138, 138, 138)",
                                 marginLeft: "4px",
                               }}
+                              className="channelVerify"
                             />
                           </Tooltip>
                         </div>
@@ -556,6 +557,7 @@ function SearchResults() {
                                 color: "rgb(138, 138, 138)",
                                 marginLeft: "6px",
                               }}
+                              className="channelVerify"
                             />
                           </Tooltip>
                         </div>
@@ -610,6 +612,7 @@ function SearchResults() {
                                     marginLeft: "6px",
                                     marginRight: "6px"
                                   }}
+                                  className="channelVerify"
                                 />
                               </Tooltip>
                               &#x2022;
@@ -942,6 +945,7 @@ function SearchResults() {
                               color: "rgb(138, 138, 138)",
                               marginLeft: "6px",
                             }}
+                            className="channelVerify"
                           />
                         </Tooltip>
                       </div>
@@ -995,6 +999,7 @@ function SearchResults() {
                                 marginLeft: "6px",
                                 marginRight: "6px"
                               }}
+                              className="channelVerify"
                             />
                           </Tooltip>
                           &#x2022;
@@ -1234,6 +1239,7 @@ function SearchResults() {
                                 color: "rgb(138, 138, 138)",
                                 marginLeft: "4px",
                               }}
+                              className="channelVerify"
                             />
                           </Tooltip>
                         </div>
@@ -1406,6 +1412,7 @@ function SearchResults() {
                               color: "rgb(138, 138, 138)",
                               marginLeft: "6px",
                             }}
+                            className="channelVerify"
                           />
                         </Tooltip>
                       </div>
@@ -1459,6 +1466,7 @@ function SearchResults() {
                                 marginLeft: "6px",
                                 marginRight: "6px"
                               }}
+                              className="channelVerify"
                             />
                           </Tooltip>
                           &#x2022;
