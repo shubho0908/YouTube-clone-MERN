@@ -90,7 +90,7 @@ function ChannelHome(prop) {
           style={{
             display:
               (myVideos && myVideos.message === "USER DOESN'T EXIST") ||
-                loading === false
+              loading === false
                 ? "none"
                 : "block",
           }}
@@ -105,7 +105,7 @@ function ChannelHome(prop) {
               />
 
               <div
-                className="video-metadata"
+                className="video-metadata user-ka-video"
                 style={{ position: "relative", top: "4px" }}
               >
                 <Skeleton
@@ -171,7 +171,7 @@ function ChannelHome(prop) {
         </div>
       </SkeletonTheme>
       <div
-        className="myvideos-section"
+        className="myvideos-section before-channel"
         style={{
           visibility: loading === true ? "hidden" : "visible",
           display:
@@ -186,10 +186,9 @@ function ChannelHome(prop) {
             onClick={() => {
               if (token) {
                 updateViews(myVideos[0]._id);
-                window.location.href = `/video/${myVideos[0]._id}`
+                window.location.href = `/video/${myVideos[0]._id}`;
               }
-              window.location.href = `/video/${myVideos[0]._id}`
-
+              window.location.href = `/video/${myVideos[0]._id}`;
             }}
           >
             <img
@@ -205,32 +204,42 @@ function ChannelHome(prop) {
                   ? "0" + Math.round(myVideos[0].videoLength % 60)
                   : Math.round(myVideos[0].videoLength % 60))}
             </p>
-            <div className="video-metadata">
-              <p className="myvideo-title">{myVideos[0].Title}</p>
+            <div className="video-metadata user-ka-video">
+              {window.innerWidth <= 1180 ? (
+                <p className="myvideo-title">
+                  {myVideos[0].Title.length <= 50
+                    ? myVideos[0].Title
+                    : `${myVideos[0].Title.slice(0, 50)}...`}
+                </p>
+              ) : (
+                <p className="myvideo-title">{myVideos[0].Title}</p>
+              )}
               <div className="video-oneliner-data">
-                <p className="mychannelname">{myVideos[0].uploader}</p>
-                <Tooltip
-                  TransitionComponent={Zoom}
-                  title="Verified"
-                  placement="right"
-                >
-                  <CheckCircleIcon
-                    fontSize="100px"
-                    style={{
-                      color: "rgb(138, 138, 138)",
-                      marginLeft: "6px",
-                    }}
-                  />
-                </Tooltip>
+                <div className="videoliner-indata">
+                  <p className="mychannelname">{myVideos[0].uploader}</p>
+                  <Tooltip
+                    TransitionComponent={Zoom}
+                    title="Verified"
+                    placement="right"
+                  >
+                    <CheckCircleIcon
+                      fontSize="100px"
+                      style={{
+                        color: "rgb(138, 138, 138)",
+                        marginLeft: "6px",
+                      }}
+                    />
+                  </Tooltip>
+                </div>
                 <div className="view-time2">
                   <p className="myviews">
                     {myVideos[0].views >= 1e9
                       ? `${(myVideos[0].views / 1e9).toFixed(1)}B`
                       : myVideos[0].views >= 1e6
-                        ? `${(myVideos[0].views / 1e6).toFixed(1)}M`
-                        : myVideos[0].views >= 1e3
-                          ? `${(myVideos[0].views / 1e3).toFixed(1)}K`
-                          : myVideos[0].views}{" "}
+                      ? `${(myVideos[0].views / 1e6).toFixed(1)}M`
+                      : myVideos[0].views >= 1e3
+                      ? `${(myVideos[0].views / 1e3).toFixed(1)}K`
+                      : myVideos[0].views}{" "}
                     views
                   </p>
                   <p className="video_published-date">
@@ -261,11 +270,19 @@ function ChannelHome(prop) {
                   </p>
                 </div>
               </div>
-              <p className="myvideo-description">
-                {myVideos[0].Description.length <= 250
-                  ? myVideos[0].Description
-                  : `${myVideos[0].Description.slice(0, 250)}...`}
-              </p>
+              {window.innerWidth <= 1180 ? (
+                <p className="myvideo-description">
+                  {myVideos[0].Description.length <= 120
+                    ? myVideos[0].Description
+                    : `${myVideos[0].Description.slice(0, 120)}...`}
+                </p>
+              ) : (
+                <p className="myvideo-description">
+                  {myVideos[0].Description.length <= 250
+                    ? myVideos[0].Description
+                    : `${myVideos[0].Description.slice(0, 250)}...`}
+                </p>
+              )}
             </div>
           </div>
         ) : (
@@ -273,14 +290,6 @@ function ChannelHome(prop) {
         )}
       </div>
       <br />
-      <hr
-        className="seperate seperate-new1"
-        style={
-          myVideos && myVideos.message === "USER DOESN'T EXIST"
-            ? { display: "none" }
-            : { display: "block" }
-        }
-      />
 
       <SkeletonTheme baseColor="#353535" highlightColor="#444">
         <div
@@ -288,10 +297,10 @@ function ChannelHome(prop) {
           style={{
             display:
               (myVideos && myVideos.message === "USER DOESN'T EXIST") ||
-                loading === false
+              loading === false
                 ? "none"
                 : "block",
-            marginTop: "8px"
+            marginTop: "8px",
           }}
         >
           <div className="section-headtxt">
@@ -355,7 +364,7 @@ function ChannelHome(prop) {
         </div>
       </SkeletonTheme>
       <div
-        className="myuploaded-videos"
+        className="myuploaded-videos before-channel"
         style={{
           visibility: loading === true ? "hidden" : "visible",
           display:
@@ -372,10 +381,13 @@ function ChannelHome(prop) {
               onClick={() => {
                 if (token) {
                   updateViews(AllVideos.sort(sortByViews2)[0]._id);
-                  window.location.href = `/video/${AllVideos.sort(sortByViews2)[0]._id}`
+                  window.location.href = `/video/${
+                    AllVideos.sort(sortByViews2)[0]._id
+                  }`;
                 }
-                window.location.href = `/video/${AllVideos.sort(sortByViews2)[0]._id}`
-
+                window.location.href = `/video/${
+                  AllVideos.sort(sortByViews2)[0]._id
+                }`;
               }}
             >
               <PlayArrowIcon fontSize="medium" style={{ color: "white" }} />
@@ -408,11 +420,10 @@ function ChannelHome(prop) {
                     if (token) {
                       updateViews(element._id);
                       setTimeout(() => {
-                        window.location.href = `/video/${element._id}`
+                        window.location.href = `/video/${element._id}`;
                       }, 400);
                     } else {
-                      window.location.href = `/video/${element._id}`
-
+                      window.location.href = `/video/${element._id}`;
                     }
                   }}
                 >
@@ -430,18 +441,20 @@ function ChannelHome(prop) {
                         : Math.round(element.videoLength % 60))}
                   </p>
                   <div className="video-metadata2">
-                    <p className="video-title2">{element.Title.length <= 50
-                      ? element.Title
-                      : `${element.Title.slice(0, 50)}...`}</p>
+                    <p className="video-title2">
+                      {element.Title.length <= 50
+                        ? element.Title
+                        : `${element.Title.slice(0, 50)}...`}
+                    </p>
                     <div className="views-and-time">
                       <p className="myviews">
                         {element.views >= 1e9
                           ? `${(element.views / 1e9).toFixed(1)}B`
                           : element.views >= 1e6
-                            ? `${(element.views / 1e6).toFixed(1)}M`
-                            : element.views >= 1e3
-                              ? `${(element.views / 1e3).toFixed(1)}K`
-                              : element.views}{" "}
+                          ? `${(element.views / 1e6).toFixed(1)}M`
+                          : element.views >= 1e3
+                          ? `${(element.views / 1e3).toFixed(1)}K`
+                          : element.views}{" "}
                         views
                       </p>
                       <p className="video_published-date">
@@ -479,29 +492,14 @@ function ChannelHome(prop) {
             })}
         </div>
       </div>
-      <hr
-        className="seperate seperate-new2"
-        style={
-          myVideos && myVideos.message === "USER DOESN'T EXIST" || loading
-            ? { display: "none" }
-            : { display: "block" }
-        }
-      />
-      <hr
-        className="seperate seperate-new2"
-        style={
-          !loading
-            ? { display: "none" }
-            : { display: "block", marginTop: "30px" }
-        }
-      />
+
       <SkeletonTheme baseColor="#353535" highlightColor="#444">
         <div
           className="mypopular-videos"
           style={{
             display:
               (myVideos && myVideos.message === "USER DOESN'T EXIST") ||
-                loading === false
+              loading === false
                 ? "none"
                 : "block",
             marginTop: "16px",
@@ -553,7 +551,7 @@ function ChannelHome(prop) {
         </div>
       </SkeletonTheme>
       <div
-        className="mypopular-videos"
+        className="mypopular-videos before-channel"
         style={{
           visibility: loading === true ? "hidden" : "visible",
           display:
@@ -570,10 +568,13 @@ function ChannelHome(prop) {
               onClick={() => {
                 if (token) {
                   updateViews(AllVideos.sort(sortByViews)[0]._id);
-                  window.location.href = `/video/${AllVideos.sort(sortByViews)[0]._id}`
+                  window.location.href = `/video/${
+                    AllVideos.sort(sortByViews)[0]._id
+                  }`;
                 }
-                window.location.href = `/video/${AllVideos.sort(sortByViews)[0]._id}`
-
+                window.location.href = `/video/${
+                  AllVideos.sort(sortByViews)[0]._id
+                }`;
               }}
             >
               <PlayArrowIcon fontSize="medium" style={{ color: "white" }} />
@@ -606,11 +607,10 @@ function ChannelHome(prop) {
                     if (token) {
                       updateViews(element._id);
                       setTimeout(() => {
-                        window.location.href = `/video/${element._id}`
+                        window.location.href = `/video/${element._id}`;
                       }, 400);
                     } else {
-                      window.location.href = `/video/${element._id}`
-
+                      window.location.href = `/video/${element._id}`;
                     }
                   }}
                 >
@@ -628,18 +628,20 @@ function ChannelHome(prop) {
                         : Math.round(element.videoLength % 60))}
                   </p>
                   <div className="video-metadata2">
-                    <p className="video-title2">{element.Title.length <= 50
-                      ? element.Title
-                      : `${element.Title.slice(0, 50)}...`}</p>
+                    <p className="video-title2">
+                      {element.Title.length <= 50
+                        ? element.Title
+                        : `${element.Title.slice(0, 50)}...`}
+                    </p>
                     <div className="views-and-time">
                       <p className="myviews">
                         {element.views >= 1e9
                           ? `${(element.views / 1e9).toFixed(1)}B`
                           : element.views >= 1e6
-                            ? `${(element.views / 1e6).toFixed(1)}M`
-                            : element.views >= 1e3
-                              ? `${(element.views / 1e3).toFixed(1)}K`
-                              : element.views}{" "}
+                          ? `${(element.views / 1e6).toFixed(1)}M`
+                          : element.views >= 1e3
+                          ? `${(element.views / 1e3).toFixed(1)}K`
+                          : element.views}{" "}
                         views
                       </p>
                       <p className="video_published-date">
@@ -681,8 +683,8 @@ function ChannelHome(prop) {
         className="thischannel-no-content"
         style={
           myVideos &&
-            myVideos.message === "USER DOESN'T EXIST" &&
-            Email !== prop.newmail
+          myVideos.message === "USER DOESN'T EXIST" &&
+          Email !== prop.newmail
             ? { display: "block" }
             : { display: "none" }
         }
@@ -693,8 +695,8 @@ function ChannelHome(prop) {
         className="thischannel-no-content2"
         style={
           myVideos &&
-            myVideos.message === "USER DOESN'T EXIST" &&
-            Email === prop.newmail
+          myVideos.message === "USER DOESN'T EXIST" &&
+          Email === prop.newmail
             ? { display: "flex" }
             : { display: "none" }
         }
@@ -713,6 +715,392 @@ function ChannelHome(prop) {
         >
           Upload video
         </button>
+      </div>
+
+      {/* AFTER 540 WIDTH  */}
+
+      <div className="home-pagevideos">
+        <div
+          className="myvideos-section"
+          style={{
+            visibility: loading === true ? "hidden" : "visible",
+            display:
+              myVideos && myVideos.message === "USER DOESN'T EXIST"
+                ? "none"
+                : "block",
+          }}
+        >
+          {myVideos.length > 0 ? (
+            <div
+              className="user-video"
+              onClick={() => {
+                if (token) {
+                  updateViews(myVideos[0]._id);
+                  window.location.href = `/video/${myVideos[0]._id}`;
+                }
+                window.location.href = `/video/${myVideos[0]._id}`;
+              }}
+            >
+              <img
+                src={myVideos[0].thumbnailURL}
+                alt="user-videos"
+                className="myvideos-thumbnail"
+                loading="lazy"
+              />
+              <p className="myvideo-duration">
+                {Math.floor(myVideos[0].videoLength / 60) +
+                  ":" +
+                  (Math.round(myVideos[0].videoLength % 60) < 10
+                    ? "0" + Math.round(myVideos[0].videoLength % 60)
+                    : Math.round(myVideos[0].videoLength % 60))}
+              </p>
+              <div className="video-metadata user-ka-video">
+                {window.innerWidth <= 1180 ? (
+                  <p className="myvideo-title">
+                    {myVideos[0].Title.length <= 50
+                      ? myVideos[0].Title
+                      : `${myVideos[0].Title.slice(0, 50)}...`}
+                  </p>
+                ) : (
+                  <p className="myvideo-title">{myVideos[0].Title}</p>
+                )}
+                <div className="video-oneliner-data">
+                  <div className="videoliner-indata">
+                    <p className="mychannelname">{myVideos[0].uploader}</p>
+                    <Tooltip
+                      TransitionComponent={Zoom}
+                      title="Verified"
+                      placement="right"
+                    >
+                      <CheckCircleIcon
+                        fontSize="100px"
+                        style={{
+                          color: "rgb(138, 138, 138)",
+                          marginLeft: "6px",
+                        }}
+                      />
+                    </Tooltip>
+                  </div>
+                  <div className="view-time2">
+                    <p className="myviews">
+                      {myVideos[0].views >= 1e9
+                        ? `${(myVideos[0].views / 1e9).toFixed(1)}B`
+                        : myVideos[0].views >= 1e6
+                        ? `${(myVideos[0].views / 1e6).toFixed(1)}M`
+                        : myVideos[0].views >= 1e3
+                        ? `${(myVideos[0].views / 1e3).toFixed(1)}K`
+                        : myVideos[0].views}{" "}
+                      views
+                    </p>
+                    <p className="video_published-date">
+                      &#x2022;{" "}
+                      {(() => {
+                        const timeDifference =
+                          new Date() - new Date(myVideos[0].uploaded_date);
+                        const minutes = Math.floor(timeDifference / 60000);
+                        const hours = Math.floor(timeDifference / 3600000);
+                        const days = Math.floor(timeDifference / 86400000);
+                        const weeks = Math.floor(timeDifference / 604800000);
+                        const years = Math.floor(timeDifference / 31536000000);
+
+                        if (minutes < 1) {
+                          return "just now";
+                        } else if (minutes < 60) {
+                          return `${minutes} mins ago`;
+                        } else if (hours < 24) {
+                          return `${hours} hours ago`;
+                        } else if (days < 7) {
+                          return `${days} days ago`;
+                        } else if (weeks < 52) {
+                          return `${weeks} weeks ago`;
+                        } else {
+                          return `${years} years ago`;
+                        }
+                      })()}
+                    </p>
+                  </div>
+                </div>
+                {window.innerWidth <= 1180 ? (
+                  <p className="myvideo-description">
+                    {myVideos[0].Description.length <= 120
+                      ? myVideos[0].Description
+                      : `${myVideos[0].Description.slice(0, 120)}...`}
+                  </p>
+                ) : (
+                  <p className="myvideo-description">
+                    {myVideos[0].Description.length <= 250
+                      ? myVideos[0].Description
+                      : `${myVideos[0].Description.slice(0, 250)}...`}
+                  </p>
+                )}
+              </div>
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
+        <div
+          className="myuploaded-videos"
+          style={{
+            visibility: loading === true ? "hidden" : "visible",
+            display:
+              myVideos && myVideos.message === "USER DOESN'T EXIST"
+                ? "none"
+                : "block",
+          }}
+        >
+          <div className="section-headtxt">
+            <div className="inside-headtxt">
+              <p className="section-title">Videos</p>
+              <div
+                className="playall-videos"
+                onClick={() => {
+                  if (token) {
+                    updateViews(AllVideos.sort(sortByViews2)[0]._id);
+                    window.location.href = `/video/${
+                      AllVideos.sort(sortByViews2)[0]._id
+                    }`;
+                  }
+                  window.location.href = `/video/${
+                    AllVideos.sort(sortByViews2)[0]._id
+                  }`;
+                }}
+              >
+                <PlayArrowIcon fontSize="medium" style={{ color: "white" }} />
+                <p className="playall-txt">Play all</p>
+              </div>
+            </div>
+            {AllVideos && AllVideos.length >= 5 ? (
+              <p
+                className="see-all2"
+                onClick={() => {
+                  localStorage.setItem("Section", "Videos");
+                  window.location.reload();
+                }}
+              >
+                See all
+              </p>
+            ) : (
+              ""
+            )}
+          </div>
+          <div className="my-all-videos-list">
+            {AllVideos &&
+              AllVideos.length > 0 &&
+              AllVideos.sort(sortByViews2).map((element, index) => {
+                return (
+                  <div
+                    className="uploadedvideo-alldata"
+                    key={index}
+                    onClick={() => {
+                      if (token) {
+                        updateViews(element._id);
+                        setTimeout(() => {
+                          window.location.href = `/video/${element._id}`;
+                        }, 400);
+                      } else {
+                        window.location.href = `/video/${element._id}`;
+                      }
+                    }}
+                  >
+                    <img
+                      src={element.thumbnailURL}
+                      alt="thumbnails"
+                      className="myvideos-thumbnail myvideos-thumbnail2"
+                      loading="lazy"
+                    />
+                    <p className="myvideo-duration2">
+                      {Math.floor(element.videoLength / 60) +
+                        ":" +
+                        (Math.round(element.videoLength % 60) < 10
+                          ? "0" + Math.round(element.videoLength % 60)
+                          : Math.round(element.videoLength % 60))}
+                    </p>
+                    <div className="video-metadata2">
+                      <p className="video-title2">
+                        {element.Title.length <= 50
+                          ? element.Title
+                          : `${element.Title.slice(0, 50)}...`}
+                      </p>
+                      <div className="views-and-time">
+                        <p className="myviews">
+                          {element.views >= 1e9
+                            ? `${(element.views / 1e9).toFixed(1)}B`
+                            : element.views >= 1e6
+                            ? `${(element.views / 1e6).toFixed(1)}M`
+                            : element.views >= 1e3
+                            ? `${(element.views / 1e3).toFixed(1)}K`
+                            : element.views}{" "}
+                          views
+                        </p>
+                        <p className="video_published-date">
+                          &#x2022;{" "}
+                          {(() => {
+                            const timeDifference =
+                              new Date() - new Date(element.uploaded_date);
+                            const minutes = Math.floor(timeDifference / 60000);
+                            const hours = Math.floor(timeDifference / 3600000);
+                            const days = Math.floor(timeDifference / 86400000);
+                            const weeks = Math.floor(
+                              timeDifference / 604800000
+                            );
+                            const years = Math.floor(
+                              timeDifference / 31536000000
+                            );
+
+                            if (minutes < 1) {
+                              return "just now";
+                            } else if (minutes < 60) {
+                              return `${minutes} mins ago`;
+                            } else if (hours < 24) {
+                              return `${hours} hours ago`;
+                            } else if (days < 7) {
+                              return `${days} days ago`;
+                            } else if (weeks < 52) {
+                              return `${weeks} weeks ago`;
+                            } else {
+                              return `${years} years ago`;
+                            }
+                          })()}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+          </div>
+        </div>
+        <div
+          className="mypopular-videos"
+          style={{
+            visibility: loading === true ? "hidden" : "visible",
+            display:
+              myVideos && myVideos.message === "USER DOESN'T EXIST"
+                ? "none"
+                : "block",
+          }}
+        >
+          <div className="section-headtxt">
+            <div className="inside-headtxt">
+              <p className="section-title">Popular videos</p>
+              <div
+                className="playall-videos"
+                onClick={() => {
+                  if (token) {
+                    updateViews(AllVideos.sort(sortByViews)[0]._id);
+                    window.location.href = `/video/${
+                      AllVideos.sort(sortByViews)[0]._id
+                    }`;
+                  }
+                  window.location.href = `/video/${
+                    AllVideos.sort(sortByViews)[0]._id
+                  }`;
+                }}
+              >
+                <PlayArrowIcon fontSize="medium" style={{ color: "white" }} />
+                <p className="playall-txt">Play all</p>
+              </div>
+            </div>
+            {AllVideos && AllVideos.length >= 5 ? (
+              <p
+                className="see-all2"
+                onClick={() => {
+                  localStorage.setItem("Section", "Videos");
+                  window.location.reload();
+                }}
+              >
+                See all
+              </p>
+            ) : (
+              ""
+            )}
+          </div>
+          <div className="my-all-videos-list2">
+            {AllVideos &&
+              AllVideos.length > 0 &&
+              AllVideos.sort(sortByViews).map((element, index) => {
+                return (
+                  <div
+                    className="uploadedvideo-alldata"
+                    key={index}
+                    onClick={() => {
+                      if (token) {
+                        updateViews(element._id);
+                        setTimeout(() => {
+                          window.location.href = `/video/${element._id}`;
+                        }, 400);
+                      } else {
+                        window.location.href = `/video/${element._id}`;
+                      }
+                    }}
+                  >
+                    <img
+                      src={element.thumbnailURL}
+                      alt="thumbnails"
+                      className="myvideos-thumbnail myvideos-thumbnail2"
+                      loading="lazy"
+                    />
+                    <p className="myvideo-duration2">
+                      {Math.floor(element.videoLength / 60) +
+                        ":" +
+                        (Math.round(element.videoLength % 60) < 10
+                          ? "0" + Math.round(element.videoLength % 60)
+                          : Math.round(element.videoLength % 60))}
+                    </p>
+                    <div className="video-metadata2">
+                      <p className="video-title2">
+                        {element.Title.length <= 50
+                          ? element.Title
+                          : `${element.Title.slice(0, 50)}...`}
+                      </p>
+                      <div className="views-and-time">
+                        <p className="myviews">
+                          {element.views >= 1e9
+                            ? `${(element.views / 1e9).toFixed(1)}B`
+                            : element.views >= 1e6
+                            ? `${(element.views / 1e6).toFixed(1)}M`
+                            : element.views >= 1e3
+                            ? `${(element.views / 1e3).toFixed(1)}K`
+                            : element.views}{" "}
+                          views
+                        </p>
+                        <p className="video_published-date">
+                          &#x2022;{" "}
+                          {(() => {
+                            const timeDifference =
+                              new Date() - new Date(element.uploaded_date);
+                            const minutes = Math.floor(timeDifference / 60000);
+                            const hours = Math.floor(timeDifference / 3600000);
+                            const days = Math.floor(timeDifference / 86400000);
+                            const weeks = Math.floor(
+                              timeDifference / 604800000
+                            );
+                            const years = Math.floor(
+                              timeDifference / 31536000000
+                            );
+
+                            if (minutes < 1) {
+                              return "just now";
+                            } else if (minutes < 60) {
+                              return `${minutes} mins ago`;
+                            } else if (hours < 24) {
+                              return `${hours} hours ago`;
+                            } else if (days < 7) {
+                              return `${days} days ago`;
+                            } else if (weeks < 52) {
+                              return `${weeks} weeks ago`;
+                            } else {
+                              return `${years} years ago`;
+                            }
+                          })()}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+          </div>
+        </div>
       </div>
     </>
   );

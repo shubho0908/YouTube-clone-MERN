@@ -18,6 +18,7 @@ import Signin from "../Signin";
 import ChannelAbout from "./ChannelAbout";
 import ChannelPlaylists from "./ChannelPlaylists";
 import FeaturedChannels from "./FeaturedChannels";
+import { RiUserSettingsLine } from "react-icons/ri";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -102,7 +103,10 @@ function OtherChannel() {
     getChannelData();
   }, [Email]);
 
-  document.title = channelName && channelName !== undefined ? `${channelName} - YouTube` : "YouTube";
+  document.title =
+    channelName && channelName !== undefined
+      ? `${channelName} - YouTube`
+      : "YouTube";
 
   useEffect(() => {
     const getChannelCover = async () => {
@@ -155,7 +159,7 @@ function OtherChannel() {
     if (Section === "Home" && coverIMG !== "No data") {
       setTop("31%");
     } else if (Section === "Home" && coverIMG === "No data") {
-      setTop("155px");
+      setTop("0%");
     } else if (Section === "Videos" && coverIMG !== "No data") {
       setTop("31%");
     } else if (Section === "Videos" && coverIMG === "No data") {
@@ -262,66 +266,64 @@ function OtherChannel() {
                   height={130}
                   style={{ borderRadius: "100%" }}
                 />
-                <div className="channel-left">
-                  <div className="channel-name-verified">
-                    <Skeleton
-                      count={1}
-                      width={200}
-                      height={20}
-                      style={{ borderRadius: "4px" }}
-                    />
+                <div className="channel-topleft-data">
+                  <div className="channel-left">
+                    <div className="channel-name-verified">
+                      <Skeleton
+                        count={1}
+                        width={200}
+                        height={20}
+                        style={{ borderRadius: "4px" }}
+                      />
+                    </div>
+                    <div className="channel-extra">
+                      <Skeleton
+                        count={1}
+                        width={250}
+                        height={15}
+                        style={{ borderRadius: "4px" }}
+                      />
+                    </div>
+                    <div className="more-about">
+                      <Skeleton
+                        count={1}
+                        width={200}
+                        height={14}
+                        style={{ borderRadius: "4px" }}
+                      />
+                    </div>
                   </div>
-                  <div className="channel-extra">
-                    <Skeleton
-                      count={1}
-                      width={250}
-                      height={15}
-                      style={{ borderRadius: "4px" }}
-                    />
-                  </div>
-                  <div className="more-about">
-                    <Skeleton
-                      count={1}
-                      width={200}
-                      height={14}
-                      style={{ borderRadius: "4px" }}
-                    />
-                  </div>
+                  {newEmail === Email ? (
+                    <div className="channel-right-content channel-dualbtns">
+                      <Skeleton
+                        count={1}
+                        width={160}
+                        height={38}
+                        style={{ borderRadius: "20px" }}
+                      />
+                      <Skeleton
+                        count={1}
+                        width={160}
+                        height={38}
+                        style={{
+                          borderRadius: "20px",
+                          position: "relative",
+                          left: "25px",
+                        }}
+                      />
+                    </div>
+                  ) : (
+                    <div className="channel-right-content">
+                      <Skeleton
+                        count={1}
+                        width={125}
+                        height={38}
+                        style={{ borderRadius: "20px" }}
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
-              {newEmail === Email ? (
-                <div
-                  className="channel-right-content"
-                >
-                  <Skeleton
-                    count={1}
-                    width={160}
-                    height={38}
-                    style={{ borderRadius: "20px" }}
-                  />
-                  <Skeleton
-                    count={1}
-                    width={160}
-                    height={38}
-                    style={{
-                      borderRadius: "20px",
-                      position: "relative",
-                      left: "25px",
-                    }}
-                  />
-                </div>
-              ) : (
-                <div
-                  className="channel-right-content"
-                >
-                  <Skeleton
-                    count={1}
-                    width={125}
-                    height={38}
-                    style={{ borderRadius: "20px" }}
-                  />
-                </div>
-              )}
             </div>
           </SkeletonTheme>
           <div
@@ -338,110 +340,120 @@ function OtherChannel() {
                 alt="channelDP"
                 className="channel_profile"
               />
-              <div className="channel-left">
-                <div className="channel-name-verified">
-                  <p className="channelname">{channelName && channelName}</p>
-                  <Tooltip
-                    TransitionComponent={Zoom}
-                    title="Verified"
-                    placement="right"
+              <div className="channel-topleft-data">
+                <div className="channel-left">
+                  <div className="channel-name-verified">
+                    <p className="channelname">{channelName && channelName}</p>
+                    <Tooltip
+                      TransitionComponent={Zoom}
+                      title="Verified"
+                      placement="right"
+                    >
+                      <CheckCircleIcon
+                        fontSize="small"
+                        style={{
+                          color: "rgb(138, 138, 138)",
+                          marginLeft: "6px",
+                        }}
+                      />
+                    </Tooltip>
+                  </div>
+                  <div className="channel-extra">
+                    <p className="channeluser">@{username && username}</p>
+                    <p className="my-subs">
+                      {Subscribers && Subscribers} subscribers
+                    </p>
+                    <p className="my-videoscount">
+                      {myVideos && myVideos.length} videos
+                    </p>
+                  </div>
+                  <div
+                    className="more-about"
+                    onClick={() => {
+                      localStorage.setItem("Section", "About");
+                      window.location.reload();
+                    }}
                   >
-                    <CheckCircleIcon
-                      fontSize="small"
-                      style={{
-                        color: "rgb(138, 138, 138)",
-                        marginLeft: "6px",
-                      }}
+                    <p className="more-text">More about this channel</p>
+                    <ArrowForwardIosIcon
+                      fontSize="15px"
+                      style={{ color: "#aaa", marginLeft: "7px" }}
                     />
-                  </Tooltip>
+                  </div>
                 </div>
-                <div className="channel-extra">
-                  <p className="channeluser">@{username && username}</p>
-                  <p className="my-subs">
-                    {Subscribers && Subscribers} subscribers
-                  </p>
-                  <p className="my-videoscount">
-                    {myVideos && myVideos.length} videos
-                  </p>
-                </div>
-                <div
-                  className="more-about"
-                  onClick={() => {
-                    localStorage.setItem("Section", "About");
-                    window.location.reload();
-                  }}
-                >
-                  <p className="more-text">More about this channel</p>
-                  <ArrowForwardIosIcon
-                    fontSize="15px"
-                    style={{ color: "#aaa", marginLeft: "7px" }}
-                  />
-                </div>
+                {newEmail === Email ? (
+                  <div className="channel-right-content channel-dualbtns">
+                    <button
+                      className="customize-channel"
+                      onClick={() => {
+                        window.location.href = "/studio/customize";
+                      }}
+                    >
+                      Customize channel
+                    </button>
+                    <button
+                      className="manage-videos"
+                      onClick={() => {
+                        window.location.href = "/studio/video";
+                      }}
+                    >
+                      Manage videos
+                    </button>
+                    <div
+                      className="setting-btn"
+                      onClick={() => {
+                        window.location.href = "/studio/video";
+                      }}
+                    >
+                      <RiUserSettingsLine
+                        fontSize="28px"
+                        color="white"
+                        className="channel-settings"
+                      />
+                    </div>
+                  </div>
+                ) : (
+                  <div className="channel-right-content">
+                    <button
+                      className="subscribethis-channel"
+                      style={
+                        isSubscribed === true
+                          ? { display: "none" }
+                          : { display: "block" }
+                      }
+                      onClick={() => {
+                        if (token) {
+                          SubscribeChannel();
+                        } else {
+                          setisbtnClicked(true);
+                          document.body.classList.add("bg-css");
+                        }
+                      }}
+                    >
+                      Subscribe
+                    </button>
+                    <button
+                      className="subscribethis-channel2"
+                      style={
+                        isSubscribed === true
+                          ? { display: "block" }
+                          : { display: "none" }
+                      }
+                      onClick={() => {
+                        if (token) {
+                          SubscribeChannel();
+                        } else {
+                          setisbtnClicked(true);
+                          document.body.classList.add("bg-css");
+                        }
+                      }}
+                    >
+                      Subscribed
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
-            {newEmail === Email ? (
-              <div
-                className="channel-right-content"
-              >
-                <button
-                  className="customize-channel"
-                  onClick={() => {
-                    window.location.href = "/studio/customize";
-                  }}
-                >
-                  Customize channel
-                </button>
-                <button
-                  className="manage-videos"
-                  onClick={() => {
-                    window.location.href = "/studio/video";
-                  }}
-                >
-                  Manage videos
-                </button>
-              </div>
-            ) : (
-              <div
-                className="channel-right-content"
-              >
-                <button
-                  className="subscribethis-channel"
-                  style={
-                    isSubscribed === true
-                      ? { display: "none" }
-                      : { display: "block" }
-                  }
-                  onClick={() => {
-                    if (token) {
-                      SubscribeChannel();
-                    } else {
-                      setisbtnClicked(true);
-                      document.body.classList.add("bg-css");
-                    }
-                  }}
-                >
-                  Subscribe
-                </button>
-                <button
-                  className="subscribethis-channel2"
-                  style={
-                    isSubscribed === true
-                      ? { display: "block" }
-                      : { display: "none" }
-                  }
-                  onClick={() => {
-                    if (token) {
-                      SubscribeChannel();
-                    } else {
-                      setisbtnClicked(true);
-                      document.body.classList.add("bg-css");
-                    }
-                  }}
-                >
-                  Subscribed
-                </button>
-              </div>
-            )}
           </div>
           <div className="channel-mid-content">
             <div className="different-sections">
@@ -570,8 +582,8 @@ function OtherChannel() {
             ""
           )}
           {Section === "Videos" &&
-            myVideos &&
-            myVideos.message !== "USER DOESN'T EXIST" ? (
+          myVideos &&
+          myVideos.message !== "USER DOESN'T EXIST" ? (
             <ChannelVideos newmail={Email} />
           ) : (
             ""
