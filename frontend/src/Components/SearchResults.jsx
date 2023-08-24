@@ -982,86 +982,88 @@ function SearchResults() {
                         alt="profile"
                         className="thischannelDP"
                       />
-                      <div className="thisvideos-top-right">
-                        <p className="thisvideo-title">
-                          {window.innerWidth <= 1200 ? (
-                            <p>
-                              {element.Title.length <= 50
-                                ? element.Title
-                                : `${element.Title.slice(0, 50)}..`}
+                      <div className="new-channel-data-right">
+                        <div className="thisvideos-top-right">
+                          <p className="thisvideo-title">
+                            {window.innerWidth <= 1200 ? (
+                              <p>
+                                {element.Title.length <= 50
+                                  ? element.Title
+                                  : `${element.Title.slice(0, 50)}..`}
+                              </p>
+                            ) : (
+                              <p>{element.Title}</p>
+                            )}
+                          </p>
+                        </div>
+                        <div className="thisvideos-bottom-right">
+                          <div className="thisvideo-onliner">
+                            <p className="thischannel-name">
+                              {element.uploader}
                             </p>
-                          ) : (
-                            <p>{element.Title}</p>
-                          )}
-                        </p>
-                      </div>
-                      <div className="thisvideos-bottom-right">
-                        <div className="thisvideo-onliner">
-                          <p className="thischannel-name">
-                            {element.uploader}
-                          </p>
-                          <Tooltip
-                            TransitionComponent={Zoom}
-                            title="Verified"
-                            placement="top"
-                          >
-                            <CheckCircleIcon
-                              fontSize="100px"
-                              style={{
-                                color: "rgb(138, 138, 138)",
-                                marginLeft: "6px",
-                                marginRight: "6px"
-                              }}
-                              className="channelVerify"
-                            />
-                          </Tooltip>
-                          &#x2022;
-                          <p className="thisvideo-views">
-                            {element.views >= 1e9
-                              ? `${(element.views / 1e9).toFixed(1)}B`
-                              : element.views >= 1e6
-                                ? `${(element.views / 1e6).toFixed(1)}M`
-                                : element.views >= 1e3
-                                  ? `${(element.views / 1e3).toFixed(1)}K`
-                                  : element.views}{" "}
-                            views
-                          </p>
-                          <p className="thisvideo-uploaded-date">
-                            &#x2022;{" "}
-                            {(() => {
-                              const timeDifference =
-                                new Date() - new Date(element.uploaded_date);
-                              const minutes = Math.floor(
-                                timeDifference / 60000
-                              );
-                              const hours = Math.floor(
-                                timeDifference / 3600000
-                              );
-                              const days = Math.floor(
-                                timeDifference / 86400000
-                              );
-                              const weeks = Math.floor(
-                                timeDifference / 604800000
-                              );
-                              const years = Math.floor(
-                                timeDifference / 31536000000
-                              );
+                            <Tooltip
+                              TransitionComponent={Zoom}
+                              title="Verified"
+                              placement="top"
+                            >
+                              <CheckCircleIcon
+                                fontSize="100px"
+                                style={{
+                                  color: "rgb(138, 138, 138)",
+                                  marginLeft: "6px",
+                                  marginRight: "6px"
+                                }}
+                                className="channelVerify"
+                              />
+                            </Tooltip>
+                            &#x2022;
+                            <p className="thisvideo-views">
+                              {element.views >= 1e9
+                                ? `${(element.views / 1e9).toFixed(1)}B`
+                                : element.views >= 1e6
+                                  ? `${(element.views / 1e6).toFixed(1)}M`
+                                  : element.views >= 1e3
+                                    ? `${(element.views / 1e3).toFixed(1)}K`
+                                    : element.views}{" "}
+                              views
+                            </p>
+                            <p className="thisvideo-uploaded-date">
+                              &#x2022;{" "}
+                              {(() => {
+                                const timeDifference =
+                                  new Date() - new Date(element.uploaded_date);
+                                const minutes = Math.floor(
+                                  timeDifference / 60000
+                                );
+                                const hours = Math.floor(
+                                  timeDifference / 3600000
+                                );
+                                const days = Math.floor(
+                                  timeDifference / 86400000
+                                );
+                                const weeks = Math.floor(
+                                  timeDifference / 604800000
+                                );
+                                const years = Math.floor(
+                                  timeDifference / 31536000000
+                                );
 
-                              if (minutes < 1) {
-                                return "just now";
-                              } else if (minutes < 60) {
-                                return `${minutes} mins ago`;
-                              } else if (hours < 24) {
-                                return `${hours} hours ago`;
-                              } else if (days < 7) {
-                                return `${days} days ago`;
-                              } else if (weeks < 52) {
-                                return `${weeks} weeks ago`;
-                              } else {
-                                return `${years} years ago`;
-                              }
-                            })()}
-                          </p>
+                                if (minutes < 1) {
+                                  return "just now";
+                                } else if (minutes < 60) {
+                                  return `${minutes} mins ago`;
+                                } else if (hours < 24) {
+                                  return `${hours} hours ago`;
+                                } else if (days < 7) {
+                                  return `${days} days ago`;
+                                } else if (weeks < 52) {
+                                  return `${weeks} weeks ago`;
+                                } else {
+                                  return `${years} years ago`;
+                                }
+                              })()}
+                            </p>
+                          </div>
                         </div>
                       </div>
 
@@ -1294,12 +1296,17 @@ function SearchResults() {
                                   : { display: "block" }
                               }
                               onClick={() => {
-                                SubscribeChannel(
-                                  element.channelName,
-                                  element.channelProfile,
-                                  element._id
-                                );
-                                SubscribeNotify();
+                                if (token) {
+                                  SubscribeChannel(
+                                    element.channelName,
+                                    element.channelProfile,
+                                    element._id
+                                  );
+                                  SubscribeNotify();
+                                } else {
+                                  setisbtnClicked(true);
+                                  document.body.classList.add("bg-css");
+                                }
                               }}
                             >
                               Subscribe
@@ -1311,13 +1318,18 @@ function SearchResults() {
                                   ? { display: "block" }
                                   : { display: "none" }
                               }
-                              onClick={() =>
-                                SubscribeChannel(
-                                  element.channelName,
-                                  element.channelProfile,
-                                  element._id
-                                )
-                              }
+                              onClick={() => {
+                                if (token) {
+                                  SubscribeChannel(
+                                    element.channelName,
+                                    element.channelProfile,
+                                    element._id
+                                  );
+                                } else {
+                                  setisbtnClicked(true);
+                                  document.body.classList.add("bg-css");
+                                }
+                              }}
                             >
                               Subscribed
                             </button>
@@ -1458,6 +1470,7 @@ function SearchResults() {
                         alt="profile"
                         className="thischannelDP"
                       />
+                      <div className="new-channel-data-right">
                       <div className="thisvideos-top-right">
                         <p className="thisvideo-title">
                           {window.innerWidth <= 1200 ? (
@@ -1539,6 +1552,7 @@ function SearchResults() {
                             })()}
                           </p>
                         </div>
+                      </div>
                       </div>
 
                       {window.innerWidth <= 970 ? (

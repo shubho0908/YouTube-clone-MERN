@@ -326,6 +326,10 @@
     flex-direction: column;
     margin-bottom: 28px;
   }
+  .searched-video-alldata {
+    flex-direction: column;
+    margin-bottom: 28px;
+  }
   .sk-thischannel-all-data {
     flex-direction: column;
     margin-bottom: 0px !important;
