@@ -782,6 +782,7 @@ function ChannelHome(prop) {
                     </Tooltip>
                   </div>
                   <div className="view-time2">
+                    <p className="last-dot">&#x2022;</p>
                     <p className="myviews">
                       {myVideos[0].views >= 1e9
                         ? `${(myVideos[0].views / 1e9).toFixed(1)}B`

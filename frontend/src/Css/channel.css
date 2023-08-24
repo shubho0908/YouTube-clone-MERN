@@ -177,7 +177,7 @@
 }
 
 .video_published-date {
-  margin-left: 6px;
+  margin-left: 5px;
 }
 
 .myvideos-thumbnail {
@@ -200,6 +200,10 @@
   position: absolute;
   width: inherit;
   top: 805px;
+}
+
+.last-dot {
+  display: none;
 }
 
 .section-headtxt,
@@ -1007,6 +1011,7 @@
   }
   .user-ka-video {
     right: 0px !important;
+    bottom: 10px;
   }
   .before-channel {
     display: none !important;
@@ -1086,9 +1091,67 @@
     top: 105px;
   }
   .seperate-new {
-    top: 66px;
+    top: 65px;
   }
   .home-pagevideos {
     top: 65px;
+  }
+  .different-sections > p {
+    font-size: 13.6px;
+  }
+  .video-oneliner-data {
+    flex-direction: row;
+    align-items: center;
+  }
+  .view-time2 {
+    margin-top: 0px;
+  }
+  .last-dot {
+    display: block;
+    margin-left: 7px;
+    margin-right: 7px;
+  }
+  .playall-txt {
+    margin-left: 5px;
+    font-size: 15px;
+  }
+}
+
+@media (width<= 425px) {
+  .channelname {
+    font-size: 20px;
+  }
+  .channel-extra,
+  .more-about {
+    font-size: 13px;
+  }
+  .myvideo-duration {
+    left: 81.5vw;
+  }
+  .myvideo-title {
+    font-size: 15px;
+  }
+  .video-title2 {
+    font-size: 14px;
+  }
+  .video-oneliner-data {
+    font-size: 13.4px;
+  }
+  .views-and-time {
+    font-size: 12.4px;
+  }
+  .myvideos-thumbnail2,
+  .video-metadata2 {
+    width: 200px;
+  }
+  .myvideo-duration2 {
+    left: 162px;
+    font-size: 11px;
+  }
+}
+
+@media (width<= 370px) {
+  .myvideo-duration {
+    left: 80vw;
   }
 }
