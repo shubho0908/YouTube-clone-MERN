@@ -90,7 +90,7 @@ function ChannelHome(prop) {
           style={{
             display:
               (myVideos && myVideos.message === "USER DOESN'T EXIST") ||
-              loading === false
+                loading === false
                 ? "none"
                 : "block",
           }}
@@ -227,10 +227,10 @@ function ChannelHome(prop) {
                     {myVideos[0].views >= 1e9
                       ? `${(myVideos[0].views / 1e9).toFixed(1)}B`
                       : myVideos[0].views >= 1e6
-                      ? `${(myVideos[0].views / 1e6).toFixed(1)}M`
-                      : myVideos[0].views >= 1e3
-                      ? `${(myVideos[0].views / 1e3).toFixed(1)}K`
-                      : myVideos[0].views}{" "}
+                        ? `${(myVideos[0].views / 1e6).toFixed(1)}M`
+                        : myVideos[0].views >= 1e3
+                          ? `${(myVideos[0].views / 1e3).toFixed(1)}K`
+                          : myVideos[0].views}{" "}
                     views
                   </p>
                   <p className="video_published-date">
@@ -281,14 +281,14 @@ function ChannelHome(prop) {
             : { display: "block" }
         }
       />
-      
+
       <SkeletonTheme baseColor="#353535" highlightColor="#444">
         <div
           className="myuploaded-videos"
           style={{
             display:
               (myVideos && myVideos.message === "USER DOESN'T EXIST") ||
-              loading === false
+                loading === false
                 ? "none"
                 : "block",
             marginTop: "8px"
@@ -365,22 +365,24 @@ function ChannelHome(prop) {
         }}
       >
         <div className="section-headtxt">
-          <p className="section-title">Videos</p>
-          <div
-            className="playall-videos"
-            onClick={() => {
-              if (token) {
-                updateViews(AllVideos.sort(sortByViews2)[0]._id);
+          <div className="inside-headtxt">
+            <p className="section-title">Videos</p>
+            <div
+              className="playall-videos"
+              onClick={() => {
+                if (token) {
+                  updateViews(AllVideos.sort(sortByViews2)[0]._id);
+                  window.location.href = `/video/${AllVideos.sort(sortByViews2)[0]._id}`
+                }
                 window.location.href = `/video/${AllVideos.sort(sortByViews2)[0]._id}`
-              }
-              window.location.href = `/video/${AllVideos.sort(sortByViews2)[0]._id}`
 
-            }}
-          >
-            <PlayArrowIcon fontSize="medium" style={{ color: "white" }} />
-            <p className="playall-txt">Play all</p>
+              }}
+            >
+              <PlayArrowIcon fontSize="medium" style={{ color: "white" }} />
+              <p className="playall-txt">Play all</p>
+            </div>
           </div>
-          {AllVideos && AllVideos.length >= 4 ? (
+          {AllVideos && AllVideos.length >= 5 ? (
             <p
               className="see-all2"
               onClick={() => {
@@ -429,17 +431,17 @@ function ChannelHome(prop) {
                   </p>
                   <div className="video-metadata2">
                     <p className="video-title2">{element.Title.length <= 50
-                  ? element.Title
-                  : `${element.Title.slice(0, 50)}...`}</p>
+                      ? element.Title
+                      : `${element.Title.slice(0, 50)}...`}</p>
                     <div className="views-and-time">
                       <p className="myviews">
                         {element.views >= 1e9
                           ? `${(element.views / 1e9).toFixed(1)}B`
                           : element.views >= 1e6
-                          ? `${(element.views / 1e6).toFixed(1)}M`
-                          : element.views >= 1e3
-                          ? `${(element.views / 1e3).toFixed(1)}K`
-                          : element.views}{" "}
+                            ? `${(element.views / 1e6).toFixed(1)}M`
+                            : element.views >= 1e3
+                              ? `${(element.views / 1e3).toFixed(1)}K`
+                              : element.views}{" "}
                         views
                       </p>
                       <p className="video_published-date">
@@ -490,7 +492,7 @@ function ChannelHome(prop) {
         style={
           !loading
             ? { display: "none" }
-            : { display: "block", marginTop:"30px" }
+            : { display: "block", marginTop: "30px" }
         }
       />
       <SkeletonTheme baseColor="#353535" highlightColor="#444">
@@ -499,7 +501,7 @@ function ChannelHome(prop) {
           style={{
             display:
               (myVideos && myVideos.message === "USER DOESN'T EXIST") ||
-              loading === false
+                loading === false
                 ? "none"
                 : "block",
             marginTop: "16px",
@@ -561,22 +563,24 @@ function ChannelHome(prop) {
         }}
       >
         <div className="section-headtxt">
-          <p className="section-title">Popular videos</p>
-          <div
-            className="playall-videos"
-            onClick={() => {
-              if (token) {
-                updateViews(AllVideos.sort(sortByViews)[0]._id);
-               window.location.href = `/video/${AllVideos.sort(sortByViews)[0]._id}`
-              }
-              window.location.href = `/video/${AllVideos.sort(sortByViews)[0]._id}`
+          <div className="inside-headtxt">
+            <p className="section-title">Popular videos</p>
+            <div
+              className="playall-videos"
+              onClick={() => {
+                if (token) {
+                  updateViews(AllVideos.sort(sortByViews)[0]._id);
+                  window.location.href = `/video/${AllVideos.sort(sortByViews)[0]._id}`
+                }
+                window.location.href = `/video/${AllVideos.sort(sortByViews)[0]._id}`
 
-            }}
-          >
-            <PlayArrowIcon fontSize="medium" style={{ color: "white" }} />
-            <p className="playall-txt">Play all</p>
+              }}
+            >
+              <PlayArrowIcon fontSize="medium" style={{ color: "white" }} />
+              <p className="playall-txt">Play all</p>
+            </div>
           </div>
-          {AllVideos && AllVideos.length >= 4 ? (
+          {AllVideos && AllVideos.length >= 5 ? (
             <p
               className="see-all2"
               onClick={() => {
@@ -602,7 +606,7 @@ function ChannelHome(prop) {
                     if (token) {
                       updateViews(element._id);
                       setTimeout(() => {
-                       window.location.href = `/video/${element._id}`
+                        window.location.href = `/video/${element._id}`
                       }, 400);
                     } else {
                       window.location.href = `/video/${element._id}`
@@ -625,17 +629,17 @@ function ChannelHome(prop) {
                   </p>
                   <div className="video-metadata2">
                     <p className="video-title2">{element.Title.length <= 50
-                  ? element.Title
-                  : `${element.Title.slice(0, 50)}...`}</p>
+                      ? element.Title
+                      : `${element.Title.slice(0, 50)}...`}</p>
                     <div className="views-and-time">
                       <p className="myviews">
                         {element.views >= 1e9
                           ? `${(element.views / 1e9).toFixed(1)}B`
                           : element.views >= 1e6
-                          ? `${(element.views / 1e6).toFixed(1)}M`
-                          : element.views >= 1e3
-                          ? `${(element.views / 1e3).toFixed(1)}K`
-                          : element.views}{" "}
+                            ? `${(element.views / 1e6).toFixed(1)}M`
+                            : element.views >= 1e3
+                              ? `${(element.views / 1e3).toFixed(1)}K`
+                              : element.views}{" "}
                         views
                       </p>
                       <p className="video_published-date">
@@ -677,8 +681,8 @@ function ChannelHome(prop) {
         className="thischannel-no-content"
         style={
           myVideos &&
-          myVideos.message === "USER DOESN'T EXIST" &&
-          Email !== prop.newmail
+            myVideos.message === "USER DOESN'T EXIST" &&
+            Email !== prop.newmail
             ? { display: "block" }
             : { display: "none" }
         }
@@ -689,8 +693,8 @@ function ChannelHome(prop) {
         className="thischannel-no-content2"
         style={
           myVideos &&
-          myVideos.message === "USER DOESN'T EXIST" &&
-          Email === prop.newmail
+            myVideos.message === "USER DOESN'T EXIST" &&
+            Email === prop.newmail
             ? { display: "flex" }
             : { display: "none" }
         }

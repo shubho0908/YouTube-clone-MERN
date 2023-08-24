@@ -8,11 +8,16 @@
 .channel-main-content {
   display: flex;
   flex-direction: column;
-  width: max-content;
+  width: 68vw;
   position: absolute;
-  transform: translate(-50%, -50%);
-  left: 50%;
+  left: 18%;
   animation: FADEINN 0.45s ease;
+}
+
+.channel-right-content {
+  display: flex;
+  position: absolute;
+  right: 10px;
 }
 
 .channel-name-verified {
@@ -182,6 +187,8 @@
 
 .myuploaded-videos {
   color: white;
+  overflow: scroll;
+  width: inherit;
 
   position: absolute;
   top: 500px;
@@ -190,6 +197,8 @@
 .mypopular-videos {
   color: white;
   position: absolute;
+  overflow: scroll;
+  width: inherit;
   top: 805px;
 }
 
@@ -197,6 +206,7 @@
 .playall-videos {
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
 .playall-videos {
@@ -253,6 +263,11 @@
   width: 300px;
   position: relative;
   bottom: 15px;
+}
+
+.inside-headtxt {
+  display: flex;
+  align-items: center;
 }
 
 .my-all-videos-list,
@@ -846,4 +861,15 @@
 
 .left-about-section {
   width: -webkit-fill-available;
+}
+
+/* MEDIA QUERIES */
+
+@media (width<= 1430px) {
+  .channel-main-content {
+    left: 24%;
+  }
+}
+
+@media (width<= 1350px) {
 }

@@ -153,23 +153,23 @@ function OtherChannel() {
 
   useEffect(() => {
     if (Section === "Home" && coverIMG !== "No data") {
-      setTop("46%");
+      setTop("31%");
     } else if (Section === "Home" && coverIMG === "No data") {
       setTop("155px");
     } else if (Section === "Videos" && coverIMG !== "No data") {
-      setTop("43%");
+      setTop("31%");
     } else if (Section === "Videos" && coverIMG === "No data") {
-      setTop("135px");
+      setTop("4%");
     } else if (
       (Section !== "Videos" && coverIMG === "No data") ||
       (Section !== "Home" && coverIMG === "No data")
     ) {
-      setTop("120px");
+      setTop("4%");
     } else if (
       (Section !== "Videos" && coverIMG !== "No data") ||
       (Section !== "Home" && coverIMG !== "No data")
     ) {
-      setTop("43%");
+      setTop("31%");
     }
   }, [Section, coverIMG]);
 
@@ -292,7 +292,6 @@ function OtherChannel() {
               {newEmail === Email ? (
                 <div
                   className="channel-right-content"
-                  style={{ marginLeft: "160px", display: "flex" }}
                 >
                   <Skeleton
                     count={1}
@@ -314,7 +313,6 @@ function OtherChannel() {
               ) : (
                 <div
                   className="channel-right-content"
-                  style={{ marginLeft: "340px" }}
                 >
                   <Skeleton
                     count={1}
@@ -384,7 +382,6 @@ function OtherChannel() {
             {newEmail === Email ? (
               <div
                 className="channel-right-content"
-                style={{ marginLeft: "160px" }}
               >
                 <button
                   className="customize-channel"
@@ -406,7 +403,6 @@ function OtherChannel() {
             ) : (
               <div
                 className="channel-right-content"
-                style={{ marginLeft: "340px" }}
               >
                 <button
                   className="subscribethis-channel"
@@ -574,8 +570,8 @@ function OtherChannel() {
             ""
           )}
           {Section === "Videos" &&
-          myVideos &&
-          myVideos.message !== "USER DOESN'T EXIST" ? (
+            myVideos &&
+            myVideos.message !== "USER DOESN'T EXIST" ? (
             <ChannelVideos newmail={Email} />
           ) : (
             ""
