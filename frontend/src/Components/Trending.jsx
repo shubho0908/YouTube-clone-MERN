@@ -112,10 +112,7 @@ function Trending() {
       <Navbar />
       <LeftPanel />
       {trendingVideos.length > 0 ? (
-        <div
-          className="main-trending-section"
-          style={menuClicked === false ? { left: "40%" } : { left: "50%" }}
-        >
+        <div className="main-trending-section2">
           <div className="trending-top">
             <img src={trending} alt="trending" className="trendingIMG" />
             <p>Trending</p>
@@ -223,72 +220,76 @@ function Trending() {
                         <p className="trending-batch">TRENDING #{index + 1}</p>
                         <p className="trending-title">{element.Title}</p>
                         <div className="trending-oneliner">
-                          <p className="t-channelname">{element.uploader}</p>
-                          <Tooltip
-                            TransitionComponent={Zoom}
-                            title="Verified"
-                            placement="top"
-                          >
-                            <CheckCircleIcon
-                              fontSize="100px"
-                              style={{
-                                color: "rgb(138, 138, 138)",
-                                marginLeft: "6px",
-                              }}
-                            />
-                          </Tooltip>
-                          <p className="t-views">
-                            {" "}
-                            {element.views >= 1e9
-                              ? `${(element.views / 1e9).toFixed(1)}B`
-                              : element.views >= 1e6
-                              ? `${(element.views / 1e6).toFixed(1)}M`
-                              : element.views >= 1e3
-                              ? `${(element.views / 1e3).toFixed(1)}K`
-                              : element.views}{" "}
-                            views
-                          </p>
-                          <p className="t-uploaded-date">
-                            &#x2022;{" "}
-                            {(() => {
-                              const timeDifference =
-                                new Date() - new Date(element.uploaded_date);
-                              const minutes = Math.floor(
-                                timeDifference / 60000
-                              );
-                              const hours = Math.floor(
-                                timeDifference / 3600000
-                              );
-                              const days = Math.floor(
-                                timeDifference / 86400000
-                              );
-                              const weeks = Math.floor(
-                                timeDifference / 604800000
-                              );
-                              const years = Math.floor(
-                                timeDifference / 31536000000
-                              );
+                          <div className="trend-channel-name">
+                            <p className="t-channelname">{element.uploader}</p>
+                            <Tooltip
+                              TransitionComponent={Zoom}
+                              title="Verified"
+                              placement="top"
+                            >
+                              <CheckCircleIcon
+                                fontSize="100px"
+                                style={{
+                                  color: "rgb(138, 138, 138)",
+                                  marginLeft: "6px",
+                                }}
+                              />
+                            </Tooltip>
+                          </div>
+                          <div className="trend-channel-extras">
+                            <p className="t-views">
+                              {" "}
+                              {element.views >= 1e9
+                                ? `${(element.views / 1e9).toFixed(1)}B`
+                                : element.views >= 1e6
+                                ? `${(element.views / 1e6).toFixed(1)}M`
+                                : element.views >= 1e3
+                                ? `${(element.views / 1e3).toFixed(1)}K`
+                                : element.views}{" "}
+                              views
+                            </p>
+                            <p className="t-uploaded-date">
+                              &#x2022;{" "}
+                              {(() => {
+                                const timeDifference =
+                                  new Date() - new Date(element.uploaded_date);
+                                const minutes = Math.floor(
+                                  timeDifference / 60000
+                                );
+                                const hours = Math.floor(
+                                  timeDifference / 3600000
+                                );
+                                const days = Math.floor(
+                                  timeDifference / 86400000
+                                );
+                                const weeks = Math.floor(
+                                  timeDifference / 604800000
+                                );
+                                const years = Math.floor(
+                                  timeDifference / 31536000000
+                                );
 
-                              if (minutes < 1) {
-                                return "just now";
-                              } else if (minutes < 60) {
-                                return `${minutes} mins ago`;
-                              } else if (hours < 24) {
-                                return `${hours} hours ago`;
-                              } else if (days < 7) {
-                                return `${days} days ago`;
-                              } else if (weeks < 52) {
-                                return `${weeks} weeks ago`;
-                              } else {
-                                return `${years} years ago`;
-                              }
-                            })()}
-                          </p>
+                                if (minutes < 1) {
+                                  return "just now";
+                                } else if (minutes < 60) {
+                                  return `${minutes} mins ago`;
+                                } else if (hours < 24) {
+                                  return `${hours} hours ago`;
+                                } else if (days < 7) {
+                                  return `${days} days ago`;
+                                } else if (weeks < 52) {
+                                  return `${weeks} weeks ago`;
+                                } else {
+                                  return `${years} years ago`;
+                                }
+                              })()}
+                            </p>
+                          </div>
                         </div>
                         <p className="trending-desc">
                           {element.Description.length <= 140
                             ? element.Description
-                            : `${element.Description.slice(0, 140)}...`}
+                            : `${element.Description.slice(0, 80)}...`}
                         </p>
                       </div>
                     </div>
