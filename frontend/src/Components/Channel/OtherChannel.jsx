@@ -163,12 +163,12 @@ function OtherChannel() {
     } else if (Section === "Videos" && coverIMG !== "No data") {
       setTop("31%");
     } else if (Section === "Videos" && coverIMG === "No data") {
-      setTop("4%");
+      setTop("0%");
     } else if (
       (Section !== "Videos" && coverIMG === "No data") ||
       (Section !== "Home" && coverIMG === "No data")
     ) {
-      setTop("4%");
+      setTop("0%");
     } else if (
       (Section !== "Videos" && coverIMG !== "No data") ||
       (Section !== "Home" && coverIMG !== "No data")
@@ -281,7 +281,7 @@ function OtherChannel() {
                     <div className="channel-extra">
                       <Skeleton
                         count={1}
-                        width={250}
+                        width={220}
                         height={15}
                         style={{ borderRadius: "4px" }}
                         className="sk-channel-liner"
@@ -589,8 +589,8 @@ function OtherChannel() {
             ""
           )}
           {Section === "Videos" &&
-          myVideos &&
-          myVideos.message !== "USER DOESN'T EXIST" ? (
+            myVideos &&
+            myVideos.message !== "USER DOESN'T EXIST" ? (
             <ChannelVideos newmail={Email} />
           ) : (
             ""

@@ -37,7 +37,7 @@ function ChannelPlaylists(prop) {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 3000);
+    }, 3200);
   }, []);
 
   useEffect(() => {
@@ -176,34 +176,37 @@ function ChannelPlaylists(prop) {
                           : { display: "block" }
                       }
                     >
-                      <div className="playlist-main-img">
-                      <img
-                        src={
-                          element.playlist_videos[0] !== undefined
-                            ? element.playlist_videos[0].thumbnail
-                            : deleteIMG
-                        }
-                        alt=""
-                        className="playlist-thumbnail"
-                        onClick={() => {
-                          window.location.href = `/video/${element.playlist_videos[0].videoID}`;
-                        }}
-                      />
+                      <div className="keep-playlist-one">
+                        <div className="playlist-main-img">
+                          <img
+                            src={
+                              element.playlist_videos[0] !== undefined
+                                ? element.playlist_videos[0].thumbnail
+                                : deleteIMG
+                            }
+                            alt=""
+                            className="playlist-thumbnail"
+                            onClick={() => {
+                              window.location.href = `/video/${element.playlist_videos[0].videoID}`;
+                            }}
+                          />
+                        </div>
+
+                        <div
+                          className="playlist-element"
+                          style={{ backgroundColor }}
+                          onClick={() => {
+                            window.location.href = `/video/${element.playlist_videos[0].videoID}`;
+                          }}
+                        >
+                          <PlaylistPlayIcon
+                            fontSize="medium"
+                            style={{ color: "white" }}
+                          />
+                          <p>{element.playlist_videos.length} videos</p>
+                        </div>
                       </div>
 
-                      <div
-                        className="playlist-element"
-                        style={{ backgroundColor }}
-                        onClick={() => {
-                          window.location.href = `/video/${element.playlist_videos[0].videoID}`;
-                        }}
-                      >
-                        <PlaylistPlayIcon
-                          fontSize="medium"
-                          style={{ color: "white" }}
-                        />
-                        <p>{element.playlist_videos.length} videos</p>
-                      </div>
                       <div className="playlistt-details">
                         <p>{element.playlist_name}</p>
                         <p

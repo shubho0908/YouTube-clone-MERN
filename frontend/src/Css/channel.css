@@ -105,6 +105,7 @@
 .channel-mid-content {
   position: relative;
   top: 120px;
+  z-index: 2;
 }
 
 .different-sections {
@@ -743,11 +744,11 @@
 .thischannel-playlists {
   display: grid;
   /* grid-template-columns: repeat(auto-fit, minmax(315px, 1fr)); */
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   /* grid-template-rows: repeat(4, 1fr); */
   justify-content: center;
   grid-column-gap: 10px;
-  grid-row-gap: 18px;
+  grid-row-gap: 12px;
 }
 
 .playlistt-details {
@@ -924,6 +925,10 @@
   margin-right: 5px;
 }
 
+.keep-playlist-one {
+  width: fit-content;
+}
+
 /* MEDIA QUERIES */
 
 @media (width<= 1825px) {
@@ -933,10 +938,25 @@
   }
 }
 
+@media (width<= 1735px) {
+  .thischannel-playlists {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .playlistt-details {
+    width: 230px;
+  }
+}
+
 @media (width<= 1430px) {
   .channel-main-content,
   .channel-main-content-nocover {
     left: 24%;
+  }
+}
+
+@media (width<=1345px) {
+  .thischannel-playlists {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
@@ -1015,6 +1035,19 @@
   }
 }
 
+@media (width<= 1125px) {
+  .thischannel-playlists {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .playlist-main-img {
+    width: 260px;
+    height: 146px;
+  }
+  .playlistt-details {
+    width: 260px !important;
+  }
+}
+
 @media (width<= 1030px) {
   .uploadedvideos-sectionall,
   .sk-uploadedvideos-sectionall {
@@ -1067,6 +1100,10 @@
   .sk-topvideo-desc2,
   .sk-topvideo-desc3 {
     width: 24vw !important;
+  }
+  .created-playlist-section {
+    position: relative;
+    bottom: 25px;
   }
 }
 
@@ -1132,6 +1169,9 @@
   .thischannel-no-content2 > p:nth-child(2) {
     font-size: 20px;
   }
+  .thischannel-playlists {
+    padding-bottom: 100px;
+  }
 }
 
 @media (width<= 600px) {
@@ -1165,6 +1205,31 @@
   }
   .sk-video-sec-title {
     width: 38vw !important;
+  }
+}
+
+@media (width<= 570px) {
+  .thischannel-playlists {
+    display: flex !important;
+    flex-direction: column;
+    grid-row-gap: 0px !important;
+    position: relative;
+    top: 12px;
+  }
+  .created-all-playlistss {
+    display: flex !important;
+  }
+  .playlistt-details {
+    bottom: 0px;
+    left: 15px;
+    width: 44.5vw !important;
+  }
+  .playlist-main-img {
+    width: 230px !important;
+    height: 129px !important;
+  }
+  .playlistt-details > p:nth-child(2) {
+    margin-top: 8px;
   }
 }
 
@@ -1219,6 +1284,13 @@
     top: 89px !important;
     font-size: 12px;
   }
+  .created-playlist-section {
+    bottom: 0px;
+    top: 10px;
+  }
+  .no-results {
+    top: 340px !important;
+  }
 }
 
 @media (width<= 510px) {
@@ -1245,6 +1317,10 @@
   .mypopular-videos {
     position: relative;
     top: 0px;
+  }
+
+  .no-results {
+    top: 430px !important;
   }
 
   .mypopular-videos {
@@ -1352,6 +1428,20 @@
     font-size: 15.2px;
   }
 
+  .created-playlist-section {
+    position: relative !important;
+    top: 105px !important;
+  }
+
+  .playlistt-details {
+    width: 40.2vw !important;
+  }
+
+  .playlist-main-img {
+    width: 200px !important;
+    height: 113px !important;
+  }
+
   /* SKELETONS */
 
   .sk-channel-customize {
@@ -1453,6 +1543,16 @@
   }
 }
 
+@media (width<= 390px) {
+  .playlist-main-img {
+    width: 180px !important;
+    height: 101px !important;
+  }
+  .playlistt-details {
+    width: 37vw !important;
+  }
+}
+
 @media (width<= 370px) {
   .myvideo-duration {
     left: 80vw;
@@ -1479,5 +1579,14 @@
   }
   .sk-video-sec-title {
     width: 36vw !important;
+  }
+}
+
+@media (width<= 350px) {
+  .playlistt-details {
+    width: 33vw !important;
+  }
+  .no-results {
+    font-size: 13.5px !important;
   }
 }
