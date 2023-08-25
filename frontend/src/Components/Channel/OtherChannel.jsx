@@ -159,16 +159,16 @@ function OtherChannel() {
     if (Section === "Home" && coverIMG !== "No data") {
       setTop("31%");
     } else if (Section === "Home" && coverIMG === "No data") {
-      setTop("0%");
+      setTop("2%");
     } else if (Section === "Videos" && coverIMG !== "No data") {
       setTop("31%");
     } else if (Section === "Videos" && coverIMG === "No data") {
-      setTop("0%");
+      setTop("2%");
     } else if (
       (Section !== "Videos" && coverIMG === "No data") ||
       (Section !== "Home" && coverIMG === "No data")
     ) {
-      setTop("0%");
+      setTop("2%");
     } else if (
       (Section !== "Videos" && coverIMG !== "No data") ||
       (Section !== "Home" && coverIMG !== "No data")
@@ -251,7 +251,14 @@ function OtherChannel() {
         ""
       )}
       {ChannelProfile ? (
-        <div className={Top === '0%' ? 'channel-main-content-nocover' : 'channel-main-content'} style={{ top: Top }}>
+        <div
+          className={
+            Top === "2%"
+              ? "channel-main-content-nocover"
+              : "channel-main-content"
+          }
+          style={{ top: Top }}
+        >
           <SkeletonTheme baseColor="#353535" highlightColor="#444">
             <div
               className="channel-top-content"
@@ -589,8 +596,8 @@ function OtherChannel() {
             ""
           )}
           {Section === "Videos" &&
-            myVideos &&
-            myVideos.message !== "USER DOESN'T EXIST" ? (
+          myVideos &&
+          myVideos.message !== "USER DOESN'T EXIST" ? (
             <ChannelVideos newmail={Email} />
           ) : (
             ""

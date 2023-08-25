@@ -508,6 +508,13 @@
   min-width: 180px;
 }
 
+.right-about-section2 {
+  display: none;
+  margin-left: 65px;
+  max-width: 230px;
+  min-width: 180px;
+}
+
 .share-clicked2 {
   position: fixed;
   left: 50%;
@@ -933,6 +940,23 @@
   width: fit-content;
 }
 
+.this-aboutall-data {
+  margin-top: 20px;
+  line-height: 38px;
+  margin-bottom: 20px;
+}
+
+.about-joined-date,
+.about-totalviews-channel {
+  display: flex;
+  align-items: center;
+}
+
+.about-joined-date > p,
+.about-totalviews-channel > p {
+  margin-left: 25px;
+}
+
 /* MEDIA QUERIES */
 
 @media (width<= 1825px) {
@@ -1179,6 +1203,19 @@
   .featured-channels-added {
     padding-bottom: 100px;
   }
+  .channel-about-section {
+    flex-direction: column;
+    padding-bottom: 110px;
+    top: 300px;
+  }
+  .right-about-section {
+    display: none;
+  }
+  .right-about-section2 {
+    display: block;
+    margin-left: 0px;
+    margin-top: 15px;
+  }
 }
 
 @media (width<= 600px) {
@@ -1311,6 +1348,9 @@
   }
   .no-channel {
     top: 320px !important;
+  }
+  .channel-about-section {
+    top: 325px !important;
   }
 }
 
@@ -1479,6 +1519,18 @@
     top: 490px !important;
   }
 
+  .channel-about-section {
+    top: 420px !important;
+  }
+  .channel-desc {
+    font-size: 13.8px;
+  }
+
+  .about-joined-date > p,
+  .about-totalviews-channel > p {
+    font-size: 14.5px;
+  }
+
   /* SKELETONS */
 
   .sk-channel-customize {
@@ -1521,6 +1573,14 @@
 @media (width<= 425px) {
   .channelname {
     font-size: 20px;
+  }
+  .enquiries {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .channel-email {
+    margin-left: 0px;
+    margin-top: 5px;
   }
   .channel-extra,
   .more-about {

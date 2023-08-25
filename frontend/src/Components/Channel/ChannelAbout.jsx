@@ -6,6 +6,8 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import LanguageIcon from "@mui/icons-material/Language";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import FacebookIcon from "@mui/icons-material/Facebook";
+import { AiOutlineInfoCircle } from "react-icons/ai";
+import { BiTrendingUp } from "react-icons/bi";
 
 function ChannelAbout(prop) {
   const [Email, setEmail] = useState();
@@ -251,6 +253,51 @@ function ChannelAbout(prop) {
           </p>
 
           <hr className="seperate-three seperate" />
+          <Tooltip
+            TransitionComponent={Zoom}
+            title="Share channel"
+            placement="bottom"
+          >
+            <ReplyOutlinedIcon
+              className="share-playlist"
+              fontSize="medium"
+              style={{ color: "white" }}
+              onClick={handleCopyLink}
+            />
+          </Tooltip>
+        </div>
+
+        {/* SECOND RIGHT SECTION */}
+
+        <div className="right-about-section2">
+          <p>Stats</p>
+          <div className="this-aboutall-data">
+            <div className="about-joined-date">
+              <AiOutlineInfoCircle fontSize="24px" color="white" />
+              {joinedDate ? (
+                <p style={{ fontSize: "15px" }}>
+                  {joined.toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </p>
+              ) : (
+                <p style={{ fontSize: "15px" }}>No data</p>
+              )}
+            </div>
+            <div className="about-totalviews-channel">
+              <BiTrendingUp fontSize="24px" color="white" />
+
+              <p>
+                {typeof TotalViews === "number"
+                  ? TotalViews.toLocaleString()
+                  : "No"}{" "}
+                views
+              </p>
+            </div>
+          </div>
+
           <Tooltip
             TransitionComponent={Zoom}
             title="Share channel"
