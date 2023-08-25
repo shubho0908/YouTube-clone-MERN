@@ -14,12 +14,23 @@ function ChannelHome(prop) {
   const [Email, setEmail] = useState();
   const token = localStorage.getItem("userToken");
   const [loading, setLoading] = useState(true);
+  const [showHome, setShowHome] = useState(false);
 
   useEffect(() => {
     if (token) {
       setEmail(jwtDecode(token).email);
     }
   }, [token]);
+
+  useEffect(() => {
+    function handleResize() {
+      setShowHome(window.innerWidth <= 510);
+    }
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     setTimeout(() => {
@@ -86,7 +97,7 @@ function ChannelHome(prop) {
     <>
       <SkeletonTheme baseColor="#353535" highlightColor="#444">
         <div
-          className="myvideos-section"
+          className="myvideos-section sk-myvideos"
           style={{
             display:
               (myVideos && myVideos.message === "USER DOESN'T EXIST") ||
@@ -102,10 +113,11 @@ function ChannelHome(prop) {
                 width={250}
                 height={141}
                 style={{ borderRadius: "10px" }}
+                className="sk-top-video"
               />
 
               <div
-                className="video-metadata user-ka-video"
+                className="video-metadata user-ka-video sk-video-metadata"
                 style={{ position: "relative", top: "4px" }}
               >
                 <Skeleton
@@ -117,6 +129,7 @@ function ChannelHome(prop) {
                     position: "relative",
                     left: "36px",
                   }}
+                  className="sk-topvideo-title"
                 />
                 <div className="video-oneliner-data">
                   <Skeleton
@@ -128,6 +141,7 @@ function ChannelHome(prop) {
                       position: "relative",
                       left: "36px",
                     }}
+                    className="sk-topvideo-title2"
                   />
                 </div>
                 <Skeleton
@@ -140,6 +154,7 @@ function ChannelHome(prop) {
                     left: "36px",
                     top: "15px",
                   }}
+                  className="sk-topvideo-desc"
                 />
                 <Skeleton
                   count={1}
@@ -151,6 +166,7 @@ function ChannelHome(prop) {
                     left: "36px",
                     top: "15px",
                   }}
+                  className="sk-topvideo-desc2"
                 />
                 <Skeleton
                   count={1}
@@ -162,6 +178,7 @@ function ChannelHome(prop) {
                     left: "36px",
                     top: "15px",
                   }}
+                  className="sk-topvideo-desc3"
                 />
               </div>
             </div>
@@ -293,7 +310,7 @@ function ChannelHome(prop) {
 
       <SkeletonTheme baseColor="#353535" highlightColor="#444">
         <div
-          className="myuploaded-videos"
+          className="myuploaded-videos sk-myupload"
           style={{
             display:
               (myVideos && myVideos.message === "USER DOESN'T EXIST") ||
@@ -309,6 +326,7 @@ function ChannelHome(prop) {
               width={140}
               height={18}
               style={{ borderRadius: "4px" }}
+              className="sk-upload-title"
             />
           </div>
           <div className="my-all-videos-list">
@@ -322,6 +340,7 @@ function ChannelHome(prop) {
                       width={220}
                       height={124}
                       style={{ borderRadius: "10px" }}
+                      className="sk-upload-thumbnail"
                     />
                     <div className="video-metadata2">
                       <Skeleton
@@ -333,6 +352,7 @@ function ChannelHome(prop) {
                           position: "relative",
                           top: "30px",
                         }}
+                        className="sk-upload-title"
                       />
                       <Skeleton
                         count={1}
@@ -343,6 +363,7 @@ function ChannelHome(prop) {
                           position: "relative",
                           top: "33px",
                         }}
+                        className="sk-upload-extra"
                       />
                       <div className="views-and-time">
                         <Skeleton
@@ -354,6 +375,7 @@ function ChannelHome(prop) {
                             position: "relative",
                             top: "40px",
                           }}
+                          className="sk-upload-extra2"
                         />
                       </div>
                     </div>
@@ -495,7 +517,7 @@ function ChannelHome(prop) {
 
       <SkeletonTheme baseColor="#353535" highlightColor="#444">
         <div
-          className="mypopular-videos"
+          className="mypopular-videos sk-mypopular"
           style={{
             display:
               (myVideos && myVideos.message === "USER DOESN'T EXIST") ||
@@ -524,6 +546,7 @@ function ChannelHome(prop) {
                       width={220}
                       height={124}
                       style={{ borderRadius: "10px" }}
+                      className="sk-popular-thumbnail"
                     />
                     <div
                       className="video-metadata2"
@@ -534,6 +557,7 @@ function ChannelHome(prop) {
                         width={160}
                         height={20}
                         style={{ borderRadius: "4px" }}
+                        className="sk-popular-title"
                       />
                       <div className="views-and-time">
                         <Skeleton
@@ -541,6 +565,7 @@ function ChannelHome(prop) {
                           width={120}
                           height={14}
                           style={{ borderRadius: "4px", top: "10px" }}
+                          className="sk-popular-extra"
                         />
                       </div>
                     </div>
@@ -719,7 +744,242 @@ function ChannelHome(prop) {
 
       {/* AFTER 540 WIDTH  */}
 
-      <div className="home-pagevideos">
+      <SkeletonTheme baseColor="#353535" highlightColor="#444">
+        <div className="home-pagevideos sk-homepage">
+          <div
+            className="myvideos-section sk-myvideos2"
+            style={{
+              display:
+                (myVideos && myVideos.message === "USER DOESN'T EXIST") ||
+                loading === false
+                  ? "none"
+                  : "block",
+            }}
+          >
+            {myVideos.length > 0 ? (
+              <div className="user-video">
+                <Skeleton
+                  count={1}
+                  width={250}
+                  height={141}
+                  style={{ borderRadius: "10px" }}
+                  className="sk-top-video"
+                />
+
+                <div
+                  className="video-metadata user-ka-video sk-video-metadata"
+                  style={{ position: "relative", top: "4px" }}
+                >
+                  <Skeleton
+                    count={1}
+                    width={500}
+                    height={20}
+                    style={{
+                      borderRadius: "4px",
+                      position: "relative",
+                      left: "36px",
+                    }}
+                    className="sk-topvideo-title"
+                  />
+                  <div className="video-oneliner-data">
+                    <Skeleton
+                      count={1}
+                      width={350}
+                      height={20}
+                      style={{
+                        borderRadius: "4px",
+                        position: "relative",
+                        left: "36px",
+                      }}
+                      className="sk-topvideo-title2"
+                    />
+                  </div>
+                  <Skeleton
+                    count={1}
+                    width={450}
+                    height={12}
+                    style={{
+                      borderRadius: "4px",
+                      position: "relative",
+                      left: "36px",
+                      top: "15px",
+                    }}
+                    className="sk-topvideo-desc"
+                  />
+                  <Skeleton
+                    count={1}
+                    width={400}
+                    height={12}
+                    style={{
+                      borderRadius: "4px",
+                      position: "relative",
+                      left: "36px",
+                      top: "15px",
+                    }}
+                    className="sk-topvideo-desc2"
+                  />
+                  <Skeleton
+                    count={1}
+                    width={360}
+                    height={12}
+                    style={{
+                      borderRadius: "4px",
+                      position: "relative",
+                      left: "36px",
+                      top: "15px",
+                    }}
+                    className="sk-topvideo-desc3"
+                  />
+                </div>
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
+          <div
+            className="myuploaded-videos sk-myupload2"
+            style={{
+              display:
+                (myVideos && myVideos.message === "USER DOESN'T EXIST") ||
+                loading === false
+                  ? "none"
+                  : "block",
+              marginTop: "8px",
+            }}
+          >
+            <div className="section-headtxt">
+              <Skeleton
+                count={1}
+                width={140}
+                height={18}
+                style={{ borderRadius: "4px" }}
+                className="sk-upload-title"
+              />
+            </div>
+            <div className="my-all-videos-list">
+              {AllVideos &&
+                AllVideos.length > 0 &&
+                AllVideos.sort(sortByViews2).map((element, index) => {
+                  return (
+                    <div className="uploadedvideo-alldata" key={index}>
+                      <Skeleton
+                        count={1}
+                        width={220}
+                        height={124}
+                        style={{ borderRadius: "10px" }}
+                        className="sk-upload-thumbnail"
+                      />
+                      <div className="video-metadata2">
+                        <Skeleton
+                          count={1}
+                          width={200}
+                          height={20}
+                          style={{
+                            borderRadius: "4px",
+                            position: "relative",
+                            top: "30px",
+                          }}
+                          className="sk-upload-title"
+                        />
+                        <Skeleton
+                          count={1}
+                          width={170}
+                          height={20}
+                          style={{
+                            borderRadius: "4px",
+                            position: "relative",
+                            top: "33px",
+                          }}
+                          className="sk-upload-extra"
+                        />
+                        <div className="views-and-time">
+                          <Skeleton
+                            count={1}
+                            width={140}
+                            height={18}
+                            style={{
+                              borderRadius: "4px",
+                              position: "relative",
+                              top: "40px",
+                            }}
+                            className="sk-upload-extra2"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+            </div>
+          </div>
+          <div
+            className="mypopular-videos sk-mypopular2"
+            style={{
+              display:
+                (myVideos && myVideos.message === "USER DOESN'T EXIST") ||
+                loading === false
+                  ? "none"
+                  : "block",
+              marginTop: "16px",
+            }}
+          >
+            <div className="section-headtxt">
+              <Skeleton
+                count={1}
+                width={180}
+                height={18}
+                style={{ borderRadius: "4px" }}
+              />
+            </div>
+            <div className="my-all-videos-list2">
+              {AllVideos &&
+                AllVideos.length > 0 &&
+                AllVideos.sort(sortByViews).map((element, index) => {
+                  return (
+                    <div className="uploadedvideo-alldata" key={index}>
+                      <Skeleton
+                        count={1}
+                        width={220}
+                        height={124}
+                        style={{ borderRadius: "10px" }}
+                        className="sk-popular-thumbnail"
+                      />
+                      <div
+                        className="video-metadata2"
+                        style={{ position: "relative", top: "20px" }}
+                      >
+                        <Skeleton
+                          count={2}
+                          width={160}
+                          height={20}
+                          style={{ borderRadius: "4px" }}
+                          className="sk-popular-title"
+                        />
+                        <div className="views-and-time">
+                          <Skeleton
+                            count={1}
+                            width={120}
+                            height={14}
+                            style={{ borderRadius: "4px", top: "10px" }}
+                            className="sk-popular-extra"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+            </div>
+          </div>
+        </div>
+      </SkeletonTheme>
+
+      <div
+        className="home-pagevideos"
+        style={
+          loading === false && showHome === true
+            ? { display: "block" }
+            : { display: "none" }
+        }
+      >
         <div
           className="myvideos-section"
           style={{

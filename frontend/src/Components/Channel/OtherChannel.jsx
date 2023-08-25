@@ -265,6 +265,7 @@ function OtherChannel() {
                   width={130}
                   height={130}
                   style={{ borderRadius: "100%" }}
+                  className="sk-channel-profile"
                 />
                 <div className="channel-topleft-data">
                   <div className="channel-left">
@@ -274,6 +275,7 @@ function OtherChannel() {
                         width={200}
                         height={20}
                         style={{ borderRadius: "4px" }}
+                        className="sk-channel-main-name"
                       />
                     </div>
                     <div className="channel-extra">
@@ -282,6 +284,7 @@ function OtherChannel() {
                         width={250}
                         height={15}
                         style={{ borderRadius: "4px" }}
+                        className="sk-channel-liner"
                       />
                     </div>
                     <div className="more-about">
@@ -290,6 +293,7 @@ function OtherChannel() {
                         width={200}
                         height={14}
                         style={{ borderRadius: "4px" }}
+                        className="sk-channel-more"
                       />
                     </div>
                   </div>
@@ -300,6 +304,7 @@ function OtherChannel() {
                         width={160}
                         height={38}
                         style={{ borderRadius: "20px" }}
+                        className="sk-channel-customize"
                       />
                       <Skeleton
                         count={1}
@@ -310,6 +315,7 @@ function OtherChannel() {
                           position: "relative",
                           left: "25px",
                         }}
+                        className="sk-channel-manage"
                       />
                     </div>
                   ) : (
@@ -319,6 +325,7 @@ function OtherChannel() {
                         width={125}
                         height={38}
                         style={{ borderRadius: "20px" }}
+                        className="sk-channel-subscribe"
                       />
                     </div>
                   )}

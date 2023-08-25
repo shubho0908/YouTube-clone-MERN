@@ -877,6 +877,21 @@
   display: none;
 }
 
+.channel-settings {
+  background-color: #242424;
+  padding: 12px;
+  border-radius: 100%;
+}
+.home-pagevideos,
+.sk-home-pagevideos {
+  display: none;
+}
+
+.channel-topleft-data {
+  display: flex;
+  align-items: center;
+}
+
 /* MEDIA QUERIES */
 
 @media (width<= 1430px) {
@@ -897,20 +912,26 @@
   .setting-btn {
     display: block;
   }
-}
-
-.channel-settings {
-  background-color: #242424;
-  padding: 12px;
-  border-radius: 100%;
-}
-.home-pagevideos {
-  display: none;
-}
-
-.channel-topleft-data {
-  display: flex;
-  align-items: center;
+  .sk-channel-customize {
+    display: none;
+  }
+  .sk-channel-manage {
+    height: 50px !important;
+    width: 50px !important;
+    border-radius: 100% !important;
+    left: 0px !important;
+  }
+  .sk-topvideo-title {
+    width: 42vw !important;
+  }
+  .sk-topvideo-title2 {
+    width: 34vw !important;
+  }
+  .sk-topvideo-desc,
+  .sk-topvideo-desc2,
+  .sk-topvideo-desc3 {
+    width: 28vw !important;
+  }
 }
 
 @media (width<= 980px) {
@@ -920,6 +941,21 @@
   .channel_profile {
     width: 108px;
     height: 108px;
+  }
+  .sk-channel-profile {
+    width: 108px !important;
+    height: 108px !important;
+  }
+  .sk-topvideo-title {
+    width: 34vw !important;
+  }
+  .sk-topvideo-title2 {
+    width: 30vw !important;
+  }
+  .sk-topvideo-desc,
+  .sk-topvideo-desc2,
+  .sk-topvideo-desc3 {
+    width: 24vw !important;
   }
 }
 
@@ -1000,6 +1036,15 @@
   .mypopular-videos {
     top: 815px;
   }
+  .sk-channel-manage {
+    display: none;
+  }
+  .sk-channel-customize {
+    left: 22px;
+    display: block;
+    width: 130px !important;
+    height: 32px !important;
+  }
 }
 
 @media (width<= 510px) {
@@ -1017,7 +1062,7 @@
     display: none !important;
   }
   .home-pagevideos {
-    display: block !important;
+    display: block;
     position: relative;
     top: 95px;
   }
@@ -1078,6 +1123,10 @@
     width: 80px;
     height: 80px;
   }
+  .sk-channel-profile {
+    width: 80px !important;
+    height: 80px !important;
+  }
   .channel-extra,
   .more-about {
     margin-top: 10px !important;
@@ -1114,6 +1163,45 @@
   .playall-txt {
     margin-left: 5px;
     font-size: 15px;
+  }
+
+  /* SKELETONS */
+
+  .sk-channel-customize {
+    left: 0px;
+  }
+
+  .sk-top-video {
+    width: 92vw !important;
+    height: 51vw !important;
+  }
+  .sk-myvideos,
+  .sk-myupload,
+  .sk-mypopular {
+    display: none !important;
+  }
+  .sk-home-pagevideos {
+    display: block;
+  }
+  .sk-topvideo-title,
+  .sk-topvideo-title2,
+  .sk-topvideo-desc,
+  .sk-topvideo-desc2,
+  .sk-topvideo-desc3 {
+    left: 0px !important;
+  }
+  .sk-topvideo-title {
+    width: 88vw !important;
+    margin-top: 10px;
+  }
+  .sk-topvideo-title2 {
+    width: 78vw !important;
+  }
+  .sk-topvideo-desc,
+  .sk-topvideo-desc2,
+  .sk-topvideo-desc3 {
+    width: 75vw !important;
+
   }
 }
 
