@@ -251,7 +251,7 @@ function OtherChannel() {
         ""
       )}
       {ChannelProfile ? (
-        <div className="channel-main-content" style={{ top: Top }}>
+        <div className={Top === '0%' ? 'channel-main-content-nocover' : 'channel-main-content'} style={{ top: Top }}>
           <SkeletonTheme baseColor="#353535" highlightColor="#444">
             <div
               className="channel-top-content"
