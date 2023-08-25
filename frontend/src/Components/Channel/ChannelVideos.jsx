@@ -10,6 +10,7 @@ function ChannelVideos(prop) {
   const [videosort, setVideoSort] = useState();
   const token = localStorage.getItem("userToken");
   const [loading, setLoading] = useState(true);
+  const [showDiv, setShowDiv] = useState(false)
 
   const navigate = useNavigate();
 
@@ -23,6 +24,16 @@ function ChannelVideos(prop) {
     setTimeout(() => {
       setLoading(false);
     }, 3200);
+  }, []);
+
+  useEffect(() => {
+    function handleResize() {
+      setShowDiv(window.innerWidth <= 600);
+    }
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   useEffect(() => {
@@ -124,21 +135,22 @@ function ChannelVideos(prop) {
         </div>
         <SkeletonTheme baseColor="#353535" highlightColor="#444">
           <div
-            className="uploadedvideos-sectionall"
+            className="sk-uploadedvideos-sectionall"
             style={loading === true ? { display: "grid" } : { display: "none" }}
           >
             {myVideos.length > 0 &&
               myVideos.map((index) => {
                 return (
-                  <div className="uploaded-video-contents" key={index}>
+                  <div className="uploaded-video-contents sk-uploadcontent" key={index}>
                     <Skeleton
                       count={1}
                       width={300}
                       height={169}
                       style={{ borderRadius: "10px" }}
+                      className="sk-video-sec-thumbnail"
                     />
                     <div
-                      className="videos-metadataa"
+                      className="videos-metadataa sk-videosmeta"
                       style={{ position: "relative", top: "15px" }}
                     >
                       <Skeleton
@@ -146,6 +158,7 @@ function ChannelVideos(prop) {
                         width={280}
                         height={18}
                         style={{ borderRadius: "4px" }}
+                        className="sk-video-sec-title"
                       />
                       <div className="views-and-time">
                         <Skeleton
@@ -153,6 +166,47 @@ function ChannelVideos(prop) {
                           width={170}
                           height={15}
                           style={{ borderRadius: "4px" }}
+                          className="sk-video-sec-extra"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+          </div>
+          <div
+            className="sk-uploadedvideos-sectionall2"
+            style={loading === true && showDiv ? { display: "flex" } : { display: "none" }}
+          >
+            {myVideos.length > 0 &&
+              myVideos.map((index) => {
+                return (
+                  <div className="uploaded-video-contents sk-uploadcontent" key={index}>
+                    <Skeleton
+                      count={1}
+                      width={300}
+                      height={169}
+                      style={{ borderRadius: "10px" }}
+                      className="sk-video-sec-thumbnail"
+                    />
+                    <div
+                      className="videos-metadataa sk-videosmeta"
+                      style={{ position: "relative", top: "15px" }}
+                    >
+                      <Skeleton
+                        count={2}
+                        width={280}
+                        height={18}
+                        style={{ borderRadius: "4px" }}
+                        className="sk-video-sec-title"
+                      />
+                      <div className="views-and-time">
+                        <Skeleton
+                          count={1}
+                          width={170}
+                          height={15}
+                          style={{ borderRadius: "4px" }}
+                          className="sk-video-sec-extra"
                         />
                       </div>
                     </div>
@@ -212,14 +266,14 @@ function ChannelVideos(prop) {
                         {element.views >= 1e9
                           ? `${(element.views / 1e9).toFixed(1)}B`
                           : element.views >= 1e6
-                          ? `${(element.views / 1e6).toFixed(1)}M`
-                          : element.views >= 1e3
-                          ? `${(element.views / 1e3).toFixed(1)}K`
-                          : element.views}{" "}
+                            ? `${(element.views / 1e6).toFixed(1)}M`
+                            : element.views >= 1e3
+                              ? `${(element.views / 1e3).toFixed(1)}K`
+                              : element.views}{" "}
                         views
                       </p>
+                      <p>&#x2022;</p>
                       <p className="video_published-date">
-                        &#x2022;{" "}
                         {(() => {
                           const timeDifference =
                             new Date() - new Date(element.uploaded_date);
