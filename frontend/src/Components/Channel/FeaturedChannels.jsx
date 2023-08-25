@@ -148,7 +148,7 @@ function FeaturedChannels(prop) {
           }
         >
           <img src={nothing} alt="no results" className="nothing-found" />
-          <p className="no-results">No channels found!</p>
+          <p className="no-results no-channel">No channels found!</p>
         </div>
       </>
     );

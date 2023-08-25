@@ -99,6 +99,7 @@ function ChannelPlaylists(prop) {
               width={150}
               height={16}
               style={{ borderRadius: "4px" }}
+              className="sk-create-playlist"
             />
             <div className="thischannel-playlists">
               {sampleArr &&
@@ -111,6 +112,7 @@ function ChannelPlaylists(prop) {
                           width={230}
                           height={129}
                           style={{ borderRadius: "9px" }}
+                          className="sk-playlist-thumbnail"
                         />
 
                         <div className="playlistt-details">
@@ -123,6 +125,7 @@ function ChannelPlaylists(prop) {
                               position: "relative",
                               top: "23px",
                             }}
+                            className="sk-playlist-name"
                           />
                           <Skeleton
                             count={1}
@@ -133,6 +136,7 @@ function ChannelPlaylists(prop) {
                               position: "relative",
                               top: "27px",
                             }}
+                            className="sk-playlist-desc"
                           />
                         </div>
                       </div>

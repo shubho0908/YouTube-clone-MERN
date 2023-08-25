@@ -605,6 +605,8 @@
 .feature-channel-name {
   font-size: 15px;
   margin-top: 12px !important;
+  width: 90%;
+  text-align: center;
 }
 
 .my-subscribed-channels {
@@ -704,6 +706,8 @@
   display: flex;
   align-items: center;
   color: white;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .delete-feature-btn {
@@ -1172,6 +1176,9 @@
   .thischannel-playlists {
     padding-bottom: 100px;
   }
+  .featured-channels-added {
+    padding-bottom: 100px;
+  }
 }
 
 @media (width<= 600px) {
@@ -1238,6 +1245,11 @@
     flex-direction: column;
     align-items: flex-start !important;
   }
+
+  .nothing-found {
+    width: 82vw !important;
+  }
+
   .channel-right-content {
     position: relative;
     right: auto;
@@ -1291,6 +1303,15 @@
   .no-results {
     top: 340px !important;
   }
+  .featured-channels-sections {
+    top: 320px;
+  }
+  .featured-channels-added {
+    top: 380px !important;
+  }
+  .no-channel {
+    top: 320px !important;
+  }
 }
 
 @media (width<= 510px) {
@@ -1300,6 +1321,7 @@
   .user-video {
     flex-direction: column;
   }
+
   .user-ka-video {
     right: 0px !important;
     bottom: 10px;
@@ -1319,8 +1341,16 @@
     top: 0px;
   }
 
+  .nothing-found {
+    top: 200px !important;
+  }
+
   .no-results {
     top: 430px !important;
+  }
+  .no-channel {
+    top: 330px !important;
+    font-size: 17px !important;
   }
 
   .mypopular-videos {
@@ -1442,6 +1472,13 @@
     height: 113px !important;
   }
 
+  .featured-channels-sections {
+    top: 420px;
+  }
+  .featured-channels-added {
+    top: 490px !important;
+  }
+
   /* SKELETONS */
 
   .sk-channel-customize {
@@ -1520,6 +1557,10 @@
     border-radius: 5px;
   }
 
+  .featured-channelss-new {
+    width: -webkit-fill-available;
+  }
+
   .sk-video-sec-thumbnail {
     width: 175px !important;
     height: 98px !important;
@@ -1541,6 +1582,10 @@
     font-size: 13.2px;
     border-radius: 5px;
   }
+  .sk-playlist-thumbnail {
+    width: 175px !important;
+    height: 98px !important;
+  }
 }
 
 @media (width<= 390px) {
@@ -1550,6 +1595,9 @@
   }
   .playlistt-details {
     width: 37vw !important;
+  }
+  .no-channel {
+    top: 300px !important;
   }
 }
 
@@ -1569,6 +1617,10 @@
   }
   .myvidthumbnail {
     width: 155px;
+  }
+  .sk-playlist-thumbnail {
+    width: 155px !important;
+    height: 87px !important;
   }
   .sk-video-sec-thumbnail {
     width: 155px !important;
