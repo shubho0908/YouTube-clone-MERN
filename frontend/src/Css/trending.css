@@ -114,6 +114,9 @@
     left: 30%;
     width: 66vw;
   }
+  .sk-trend-title {
+    width: 35vw !important;
+  }
 }
 
 @media (width<= 860px) {
@@ -177,6 +180,74 @@
     margin-top: 10px;
   }
   .trending-oneliner {
+    font-size: 15px;
+    flex-wrap: wrap;
+  }
+  .trending-videos-section {
+    padding-bottom: 80px;
+  }
+  .trending-oneliner {
+    flex-direction: row;
+    align-items: center;
+  }
+  .trend-channel-extras {
+    margin-top: 0px;
+  }
+  .trend-channel-name {
+    margin-right: 6px;
+  }
+
+  /* SKELETON CSS  */
+
+  .sk-trend-thumbnail {
+    width: 92vw !important;
+    height: 50vw !important;
+  }
+  .sk-trend-title,
+  .sk-trend-trending,
+  .sk-trend-extra1 {
+    left: 0px !important;
+  }
+  .sk-video-trend {
+    margin-top: 12px;
+  }
+  .sk-trending-data {
+    margin-bottom: 35px;
+  }
+  .sk-trend-title {
+    width: 85vw !important;
+  }
+  .sk-trend-extra1 {
+    width: 60vw !important;
+  }
+}
+
+@media (width<= 460px) {
+  .trending-duration {
+    left: 82vw;
+  }
+  .trending-batch {
+    font-size: 16px;
+  }
+  .trending-title {
+    font-size: 15.5px;
+  }
+  .trending-oneliner {
+    font-size: 14px;
+  }
+}
+
+@media (width<= 425px) {
+  .trendingIMG {
+    width: 65px;
+  }
+}
+
+@media (width<= 400px) {
+  .trending-duration {
+    left: 80vw;
+  }
+  .trending-title {
     font-size: 15px;
   }
 }

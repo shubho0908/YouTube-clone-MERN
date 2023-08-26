@@ -33,7 +33,7 @@ function Trending() {
 
   useEffect(() => {
     setTimeout(() => {
-      setLoading(false);
+      setLoading(true);
     }, 3200);
   }, []);
 
@@ -126,7 +126,7 @@ function Trending() {
                   <>
                     <SkeletonTheme baseColor="#353535" highlightColor="#444">
                       <div
-                        className="trending-video-data"
+                        className="trending-video-data sk-trending-data"
                         style={
                           loading === true
                             ? { display: "flex" }
@@ -138,8 +138,9 @@ function Trending() {
                           width={250}
                           height={141}
                           style={{ borderRadius: "12px" }}
+                          className="sk-trend-thumbnail"
                         />
-                        <div className="trending-video-texts">
+                        <div className="trending-video-texts sk-video-trend">
                           <Skeleton
                             count={1}
                             width={150}
@@ -149,6 +150,7 @@ function Trending() {
                               left: "30px",
                               top: "10px",
                             }}
+                            className="sk-trend-trending"
                           />
                           <Skeleton
                             count={1}
@@ -159,6 +161,7 @@ function Trending() {
                               left: "30px",
                               top: "15px",
                             }}
+                            className="sk-trend-title"
                           />
                           <Skeleton
                             count={1}
@@ -169,17 +172,9 @@ function Trending() {
                               left: "30px",
                               top: "20px",
                             }}
+                            className="sk-trend-extra1"
                           />
-                          <Skeleton
-                            count={1}
-                            width={500}
-                            height={20}
-                            style={{
-                              position: "relative",
-                              left: "30px",
-                              top: "28px",
-                            }}
-                          />
+
                         </div>
                       </div>
                     </SkeletonTheme>
@@ -200,8 +195,8 @@ function Trending() {
                       }}
                       style={
                         loading === false
-                          ? { visibility: "visible" }
-                          : { visibility: "hidden" }
+                          ? { visibility: "visible", display: "flex" }
+                          : { visibility: "hidden", display: "none" }
                       }
                     >
                       <img
@@ -242,10 +237,10 @@ function Trending() {
                               {element.views >= 1e9
                                 ? `${(element.views / 1e9).toFixed(1)}B`
                                 : element.views >= 1e6
-                                ? `${(element.views / 1e6).toFixed(1)}M`
-                                : element.views >= 1e3
-                                ? `${(element.views / 1e3).toFixed(1)}K`
-                                : element.views}{" "}
+                                  ? `${(element.views / 1e6).toFixed(1)}M`
+                                  : element.views >= 1e3
+                                    ? `${(element.views / 1e3).toFixed(1)}K`
+                                    : element.views}{" "}
                               views
                             </p>
                             <p className="t-uploaded-date">
