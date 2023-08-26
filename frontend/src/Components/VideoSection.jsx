@@ -216,7 +216,7 @@ function VideoSection() {
         //console.log(error.message);
       }
     };
-    const interval = setInterval(getChannel, 400);
+    const interval = setInterval(getChannel, 200);
 
     return () => clearInterval(interval);
   }, [email]);
@@ -235,7 +235,7 @@ function VideoSection() {
         //console.log(error.message);
       }
     };
-    const interval = setInterval(getTrendingData, 400);
+    const interval = setInterval(getTrendingData, 200);
 
     return () => clearInterval(interval);
   }, [id]);

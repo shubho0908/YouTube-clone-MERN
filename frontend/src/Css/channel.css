@@ -1702,3 +1702,22 @@
     font-size: 13.5px !important;
   }
 }
+
+@media (width<= 460px) {
+  .share-social {
+    justify-content: normal;
+  }
+  .share-social > img:nth-child(2),
+  .share-social > img:nth-child(3),
+  .share-social > img:nth-child(4),
+  .share-social > img:nth-child(5) {
+    margin-left: 10px;
+  }
+
+  .social-handles {
+    width: 62px;
+  }
+  .share-section {
+    top: 76%;
+  }
+}

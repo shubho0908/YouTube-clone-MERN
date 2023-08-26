@@ -33,7 +33,7 @@ function Trending() {
 
   useEffect(() => {
     setTimeout(() => {
-      setLoading(true);
+      setLoading(false);
     }, 3200);
   }, []);
 
@@ -47,9 +47,7 @@ function Trending() {
         const response = await fetch("http://localhost:3000/gettrending");
         const trending = await response.json();
         if (trending !== "NO DATA") {
-          const sortedTrending = trending.sort(
-            (a, b) => new Date(b.uploaded_date) - new Date(a.uploaded_date)
-          );
+          const sortedTrending = trending.sort((a, b) => b.views - a.views);
 
           setTrendingVideos(sortedTrending);
         } else {
@@ -174,7 +172,6 @@ function Trending() {
                             }}
                             className="sk-trend-extra1"
                           />
-
                         </div>
                       </div>
                     </SkeletonTheme>
@@ -237,10 +234,10 @@ function Trending() {
                               {element.views >= 1e9
                                 ? `${(element.views / 1e9).toFixed(1)}B`
                                 : element.views >= 1e6
-                                  ? `${(element.views / 1e6).toFixed(1)}M`
-                                  : element.views >= 1e3
-                                    ? `${(element.views / 1e3).toFixed(1)}K`
-                                    : element.views}{" "}
+                                ? `${(element.views / 1e6).toFixed(1)}M`
+                                : element.views >= 1e3
+                                ? `${(element.views / 1e3).toFixed(1)}K`
+                                : element.views}{" "}
                               views
                             </p>
                             <p className="t-uploaded-date">

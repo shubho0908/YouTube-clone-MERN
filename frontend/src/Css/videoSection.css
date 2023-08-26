@@ -1074,28 +1074,27 @@
   .comment-data {
     margin-bottom: 36px;
   }
-  .video-data123{
+  .video-data123 {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     margin-top: 25px !important;
-    
   }
-  .sk-recommend-vid{
+  .sk-recommend-vid {
     width: 88vw !important;
     height: 47vw !important;
   }
-  .sk-recommend-title{
+  .sk-recommend-title {
     width: 88vw !important;
     height: 22px !important;
   }
-  .sk-recommend-basic1{
+  .sk-recommend-basic1 {
     width: 70vw !important;
   }
-  .sk-recommend-basic2{
+  .sk-recommend-basic2 {
     width: 56vw !important;
   }
-  .sk-right{
+  .sk-right {
     margin-top: 25px !important;
   }
 }
@@ -1136,15 +1135,11 @@
     width: 30px;
     height: 30px;
   }
-  .creator > p {
-    font-size: 11.6px !important;
-  }
+
   .channel-left-data {
     margin-top: 12px;
   }
-  .channel-subs {
-    font-size: 11px;
-  }
+
   .channel-data2 {
     margin-left: 12px;
   }
@@ -1152,7 +1147,9 @@
     font-size: 12px;
     padding-left: 14px;
     padding-right: 14px;
-    margin-left: 26px;
+    position: absolute;
+    right: 30px;
+    height: 32px;
   }
 
   .share-txt,

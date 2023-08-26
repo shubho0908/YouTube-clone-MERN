@@ -8,6 +8,7 @@ import "../Css/share.css";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { MdOutlineContentCopy } from "react-icons/md";
 
 function Share() {
   const [copyText, setCopyText] = useState("Copy");
@@ -121,6 +122,18 @@ function Share() {
               {copyText}
             </button>
           </div>
+        </div>
+        <div className="share-link2">
+          <MdOutlineContentCopy
+            fontSize="28px"
+            color="white"
+            className="copybtn-2"
+            onClick={() => {
+              handleCopyLink();
+              CopiedNotify();
+            }}
+          />
+          <p>Copy Link</p>
         </div>
       </div>
     </>

@@ -8,6 +8,8 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import { BiTrendingUp } from "react-icons/bi";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function ChannelAbout(prop) {
   const [Email, setEmail] = useState();
@@ -16,6 +18,18 @@ function ChannelAbout(prop) {
   const [joinedDate, setjoinedDate] = useState();
   const [TotalViews, setTotalViews] = useState(0);
   const [loading, setLoading] = useState(true);
+
+  const CopiedNotify = () =>
+    toast.success("Link Copied!", {
+      position: "bottom-center",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
 
   useEffect(() => {
     const getUserMail = async () => {
@@ -26,7 +40,7 @@ function ChannelAbout(prop) {
         const userEmail = await response.json();
         setEmail(userEmail);
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
       }
     };
 
@@ -49,11 +63,10 @@ function ChannelAbout(prop) {
           const { description, sociallinks, joining } = await response.json();
           setDescription(description);
           setLinks(sociallinks);
-          console.log(sociallinks);
           setjoinedDate(joining);
         }
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
       }
     };
     GetAboutData();
@@ -70,7 +83,7 @@ function ChannelAbout(prop) {
           setTotalViews(totalViews);
         }
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
       }
     };
 
@@ -83,7 +96,7 @@ function ChannelAbout(prop) {
     navigator.clipboard
       .writeText(window.location.href)
       .then(() => {
-        alert("Link Copied!");
+        CopiedNotify();
       })
       .catch((error) => {
         console.log("Error copying link to clipboard:", error);
