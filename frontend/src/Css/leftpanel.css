@@ -17,6 +17,12 @@
   border-radius: 8px;
 }
 
+.changeBG-light {
+  background-color: #f0f0f0;
+
+  border-radius: 8px;
+}
+
 .sec-data {
   cursor: pointer;
   display: flex;
@@ -37,6 +43,12 @@
 
 .seperate {
   border: 1px solid #5b5d6265 !important;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.seperate-light {
+  border: 1px solid #bfbfbf65 !important;
   margin-top: 15px;
   margin-bottom: 15px;
 }

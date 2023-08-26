@@ -51,6 +51,10 @@ function LeftPanel() {
   const [savedPlaylist, setSavedPlaylist] = useState([]);
   const [togglepanel, setTogglePannel] = useState(false);
   const [closePanel, setClosePanel] = useState(false);
+  const [theme, setTheme] = useState(() => {
+    const Dark = localStorage.getItem("Dark");
+    return Dark ? JSON.parse(Dark) : true;
+  });
 
   useEffect(() => {
     if (token) {
@@ -172,7 +176,7 @@ function LeftPanel() {
   return (
     <>
       <div
-        className="main-left-section"
+        className={theme ? "main-left-section" : "main-left-section light-mode"}
         style={
           menuClicked === false ? { display: "none" } : { display: "block" }
         }
@@ -180,7 +184,9 @@ function LeftPanel() {
         <div className="first-section ">
           <div
             className={
-              selected === "home" ? "home sec-data changeBG" : "home sec-data"
+              selected === "home"
+                ? `home sec-data ${theme ? "changeBG" : "changeBG-light"}`
+                : "home sec-data"
             }
             onClick={() => {
               localStorage.setItem("selected", "home");
@@ -188,9 +194,15 @@ function LeftPanel() {
             }}
           >
             {selected === "home" ? (
-              <HomeIcon fontSize="medium" style={{ color: "white" }} />
+              <HomeIcon
+                fontSize="medium"
+                style={{ color: theme ? "white" : "black" }}
+              />
             ) : (
-              <HomeOutlinedIcon fontSize="medium" style={{ color: "white" }} />
+              <HomeOutlinedIcon
+                fontSize="medium"
+                style={{ color: theme ? "white" : "black" }}
+              />
             )}
 
             <p>Home</p>
@@ -198,7 +210,7 @@ function LeftPanel() {
           <div
             className={
               selected === "trending"
-                ? "trending sec-data changeBG"
+                ? `trending sec-data ${theme ? "changeBG" : "changeBG-light"}`
                 : "trending sec-data"
             }
             onClick={() => {
@@ -207,11 +219,14 @@ function LeftPanel() {
             }}
           >
             {selected === "trending" ? (
-              <WhatshotIcon fontSize="medium" style={{ color: "white" }} />
+              <WhatshotIcon
+                fontSize="medium"
+                style={{ color: theme ? "white" : "black" }}
+              />
             ) : (
               <WhatshotOutlinedIcon
                 fontSize="medium"
-                style={{ color: "white" }}
+                style={{ color: theme ? "white" : "black" }}
               />
             )}
             <p>Trending</p>
@@ -219,7 +234,7 @@ function LeftPanel() {
           <div
             className={
               selected === "subscription"
-                ? "subscription sec-data changeBG"
+                ? `subscription sec-data ${theme ? "changeBG" : "changeBG-light"}`
                 : "subscription sec-data"
             }
             onClick={() => {
@@ -233,11 +248,14 @@ function LeftPanel() {
             }}
           >
             {selected === "subscription" ? (
-              <SubscriptionsIcon fontSize="medium" style={{ color: "white" }} />
+              <SubscriptionsIcon
+                fontSize="medium"
+                style={{ color: theme ? "white" : "black" }}
+              />
             ) : (
               <SubscriptionsOutlinedIcon
                 fontSize="medium"
-                style={{ color: "white" }}
+                style={{ color: theme ? "white" : "black" }}
               />
             )}
             <p>Subscriptions</p>
@@ -317,12 +335,12 @@ function LeftPanel() {
               })}
           </div>
         </div>
-        <hr className="seperate" />
+        <hr className={theme ? "seperate" : "seperate-light"} />
         <div className="second-section">
           <div
             className={
               selected === "library"
-                ? "library sec-data changeBG"
+                ? `library sec-data ${theme ? "changeBG" : "changeBG-light"}`
                 : "library sec-data"
             }
             onClick={() => {
@@ -336,11 +354,14 @@ function LeftPanel() {
             }}
           >
             {selected === "library" ? (
-              <VideoLibraryIcon fontSize="medium" style={{ color: "white" }} />
+              <VideoLibraryIcon
+                fontSize="medium"
+                style={{ color: theme ? "white" : "black" }}
+              />
             ) : (
               <VideoLibraryOutlinedIcon
                 fontSize="medium"
-                style={{ color: "white" }}
+                style={{ color: theme ? "white" : "black" }}
               />
             )}
             <p>Library</p>
@@ -349,7 +370,7 @@ function LeftPanel() {
           <div
             className={
               selected === "watch-later"
-                ? "watch-later sec-data changeBG"
+                ? `watch-later sec-data ${theme ? "changeBG" : "changeBG-light"}`
                 : "watch-later sec-data"
             }
             onClick={() => {
@@ -363,11 +384,14 @@ function LeftPanel() {
             }}
           >
             {selected === "watch-later" ? (
-              <WatchLaterIcon fontSize="medium" style={{ color: "white" }} />
+              <WatchLaterIcon
+                fontSize="medium"
+                style={{ color: theme ? "white" : "black" }}
+              />
             ) : (
               <WatchLaterOutlinedIcon
                 fontSize="medium"
-                style={{ color: "white" }}
+                style={{ color: theme ? "white" : "black" }}
               />
             )}
             <p>Watch later</p>
@@ -375,7 +399,7 @@ function LeftPanel() {
           <div
             className={
               selected === "liked-video"
-                ? "liked-video sec-data changeBG"
+                ? `liked-video sec-data ${theme ? "changeBG" : "changeBG-light"}`
                 : "liked-video sec-data"
             }
             onClick={() => {
@@ -390,11 +414,14 @@ function LeftPanel() {
             }}
           >
             {selected === "liked-video" ? (
-              <ThumbUpIcon fontSize="medium" style={{ color: "white" }} />
+              <ThumbUpIcon
+                fontSize="medium"
+                style={{ color: theme ? "white" : "black" }}
+              />
             ) : (
               <ThumbUpOutlinedIcon
                 fontSize="medium"
-                style={{ color: "white" }}
+                style={{ color: theme ? "white" : "black" }}
               />
             )}
             <p>Liked videos</p>
@@ -414,7 +441,7 @@ function LeftPanel() {
                   >
                     <PlaylistPlayOutlinedIcon
                       fontSize="medium"
-                      style={{ color: "white" }}
+                      style={{ color: theme ? "white" : "black" }}
                     />
                     <Tooltip
                       TransitionComponent={Zoom}
@@ -443,7 +470,7 @@ function LeftPanel() {
                   >
                     <PlaylistPlayOutlinedIcon
                       fontSize="medium"
-                      style={{ color: "white" }}
+                      style={{ color: theme ? "white" : "black" }}
                     />
                     <Tooltip
                       TransitionComponent={Zoom}
@@ -460,14 +487,17 @@ function LeftPanel() {
                 );
               })}
           </div>
-          <hr className="seperate" />
+          <hr className={theme ? "seperate" : "seperate-light"} />
           <Tooltip
             TransitionComponent={Zoom}
             title="Made with 💖 by Shubhojeet"
             placement="bottom"
           >
             <div className="developer">
-              <CodeIcon fontSize="medium" style={{ color: "white" }} />
+              <CodeIcon
+                fontSize="medium"
+                style={{ color: theme ? "white" : "black" }}
+              />
               <a
                 href="https://github.com/shubho0908"
                 target="_blank"
@@ -482,7 +512,7 @@ function LeftPanel() {
 
       {/* SHORT HAND  */}
       <div
-        className="main-left-section main-2"
+        className={theme ? "main-left-section main-2" : "main-left-section main-2 light-mode"}
         style={
           menuClicked === false ? { display: "flex" } : { display: "none" }
         }
@@ -491,7 +521,7 @@ function LeftPanel() {
           <div
             className={
               selected === "home"
-                ? "home sec-data sec-data2 changeBG"
+                ? `home sec-data sec-data2 ${theme ? "changeBG" : "changeBG-light"}`
                 : "home sec-data sec-data2"
             }
             onClick={() => {
@@ -501,15 +531,21 @@ function LeftPanel() {
             }}
           >
             {selected === "home" ? (
-              <HomeIcon fontSize="medium" style={{ color: "white" }} />
+              <HomeIcon
+                fontSize="medium"
+                style={{ color: theme ? "white" : "black" }}
+              />
             ) : (
-              <HomeOutlinedIcon fontSize="medium" style={{ color: "white" }} />
+              <HomeOutlinedIcon
+                fontSize="medium"
+                style={{ color: theme ? "white" : "black" }}
+              />
             )}
           </div>
           <div
             className={
               selected === "trending"
-                ? "trending trending2 sec-data sec-data2 changeBG"
+                ? `trending trending2 sec-data sec-data2 ${theme ? "changeBG" : "changeBG-light"}`
                 : "trending trending2 sec-data sec-data2"
             }
             onClick={() => {
@@ -519,18 +555,21 @@ function LeftPanel() {
             }}
           >
             {selected === "trending" ? (
-              <WhatshotIcon fontSize="medium" style={{ color: "white" }} />
+              <WhatshotIcon
+                fontSize="medium"
+                style={{ color: theme ? "white" : "black" }}
+              />
             ) : (
               <WhatshotOutlinedIcon
                 fontSize="medium"
-                style={{ color: "white" }}
+                style={{ color: theme ? "white" : "black" }}
               />
             )}
           </div>
           <div
             className={
               selected === "subscription"
-                ? "subscription subscription2 sec-data sec-data2 changeBG"
+                ? `subscription subscription2 sec-data sec-data2 ${theme ? "changeBG" : "changeBG-light"}`
                 : "subscription subscription2 sec-data sec-data2"
             }
             onClick={() => {
@@ -544,11 +583,14 @@ function LeftPanel() {
             }}
           >
             {selected === "subscription" ? (
-              <SubscriptionsIcon fontSize="medium" style={{ color: "white" }} />
+              <SubscriptionsIcon
+                fontSize="medium"
+                style={{ color: theme ? "white" : "black" }}
+              />
             ) : (
               <SubscriptionsOutlinedIcon
                 fontSize="medium"
-                style={{ color: "white" }}
+                style={{ color: theme ? "white" : "black" }}
               />
             )}
           </div>
@@ -556,7 +598,11 @@ function LeftPanel() {
         {/* <hr className="seperate" /> */}
         <div className="second-section">
           <div
-            className="library library2 sec-data sec-data2"
+             className={
+              selected === "library"
+                ? `library library2 sec-data sec-data2 ${theme ? "changeBG" : "changeBG-light"}`
+                : "library library2 sec-data sec-data2"
+            }
             onClick={() => {
               if (token) {
                 localStorage.setItem("selected", "library");
@@ -568,18 +614,21 @@ function LeftPanel() {
             }}
           >
             {selected === "library" ? (
-              <VideoLibraryIcon fontSize="medium" style={{ color: "white" }} />
+              <VideoLibraryIcon
+                fontSize="medium"
+                style={{ color: theme ? "white" : "black" }}
+              />
             ) : (
               <VideoLibraryOutlinedIcon
                 fontSize="medium"
-                style={{ color: "white" }}
+                style={{ color: theme ? "white" : "black" }}
               />
             )}
           </div>
           <div
             className={
               selected === "watch-later"
-                ? "watch-later watch-later2 sec-data sec-data2 changeBG"
+                ? `watch-later watch-later2 sec-data sec-data2 ${theme ? "changeBG" : "changeBG-light"}`
                 : "watch-later watch-later2 sec-data sec-data2"
             }
             onClick={() => {
@@ -593,18 +642,21 @@ function LeftPanel() {
             }}
           >
             {selected === "watch-later" ? (
-              <WatchLaterIcon fontSize="medium" style={{ color: "white" }} />
+              <WatchLaterIcon
+                fontSize="medium"
+                style={{ color: theme ? "white" : "black" }}
+              />
             ) : (
               <WatchLaterOutlinedIcon
                 fontSize="medium"
-                style={{ color: "white" }}
+                style={{ color: theme ? "white" : "black" }}
               />
             )}
           </div>
           <div
             className={
               selected === "liked-video"
-                ? "liked-video liked-video2 sec-data sec-data2 changeBG"
+                ? `liked-video liked-video2 sec-data sec-data2 ${theme ? "changeBG" : "changeBG-light"}`
                 : "liked-video liked-video2 sec-data sec-data2"
             }
             onClick={() => {
@@ -619,11 +671,14 @@ function LeftPanel() {
             }}
           >
             {selected === "liked-video" ? (
-              <ThumbUpIcon fontSize="medium" style={{ color: "white" }} />
+              <ThumbUpIcon
+                fontSize="medium"
+                style={{ color: theme ? "white" : "black" }}
+              />
             ) : (
               <ThumbUpOutlinedIcon
                 fontSize="medium"
-                style={{ color: "white" }}
+                style={{ color: theme ? "white" : "black" }}
               />
             )}
           </div>
@@ -639,7 +694,7 @@ function LeftPanel() {
           <div
             className={
               selected === "home"
-                ? "home sec-data sec-data2 changeBG"
+                ? `home sec-data sec-data2 ${theme ? "changeBG" : "changeBG-light"}`
                 : "home sec-data sec-data2"
             }
             onClick={() => {
@@ -649,15 +704,21 @@ function LeftPanel() {
             }}
           >
             {selected === "home" ? (
-              <HomeIcon fontSize="medium" style={{ color: "white" }} />
+              <HomeIcon
+                fontSize="medium"
+                style={{ color: theme ? "white" : "black" }}
+              />
             ) : (
-              <HomeOutlinedIcon fontSize="medium" style={{ color: "white" }} />
+              <HomeOutlinedIcon
+                fontSize="medium"
+                style={{ color: theme ? "white" : "black" }}
+              />
             )}
           </div>
           <div
             className={
               selected === "trending"
-                ? "trending trending2 sec-data sec-data2 changeBG"
+                ? `trending trending2 sec-data sec-data2 ${theme ? "changeBG" : "changeBG-light"}`
                 : "trending trending2 sec-data sec-data2"
             }
             onClick={() => {
@@ -667,18 +728,21 @@ function LeftPanel() {
             }}
           >
             {selected === "trending" ? (
-              <WhatshotIcon fontSize="medium" style={{ color: "white" }} />
+              <WhatshotIcon
+                fontSize="medium"
+                style={{ color: theme ? "white" : "black" }}
+              />
             ) : (
               <WhatshotOutlinedIcon
                 fontSize="medium"
-                style={{ color: "white" }}
+                style={{ color: theme ? "white" : "black" }}
               />
             )}
           </div>
           <div
             className={
               selected === "subscription"
-                ? "subscription subscription2 sec-data sec-data2 changeBG"
+                ? `subscription subscription2 sec-data sec-data2 ${theme ? "changeBG" : "changeBG-light"}`
                 : "subscription subscription2 sec-data sec-data2"
             }
             onClick={() => {
@@ -692,11 +756,14 @@ function LeftPanel() {
             }}
           >
             {selected === "subscription" ? (
-              <SubscriptionsIcon fontSize="medium" style={{ color: "white" }} />
+              <SubscriptionsIcon
+                fontSize="medium"
+                style={{ color: theme ? "white" : "black" }}
+              />
             ) : (
               <SubscriptionsOutlinedIcon
                 fontSize="medium"
-                style={{ color: "white" }}
+                style={{ color: theme ? "white" : "black" }}
               />
             )}
           </div>
@@ -704,7 +771,11 @@ function LeftPanel() {
         {/* <hr className="seperate" /> */}
         <div className="second-section">
           <div
-            className="library library2 sec-data sec-data2"
+             className={
+              selected === "library"
+                ? `library library2 sec-data sec-data2 ${theme ? "changeBG" : "changeBG-light"}`
+                : "library library2 sec-data sec-data2"
+            }
             onClick={() => {
               if (token) {
                 localStorage.setItem("selected", "library");
@@ -716,18 +787,21 @@ function LeftPanel() {
             }}
           >
             {selected === "library" ? (
-              <VideoLibraryIcon fontSize="medium" style={{ color: "white" }} />
+              <VideoLibraryIcon
+                fontSize="medium"
+                style={{ color: theme ? "white" : "black" }}
+              />
             ) : (
               <VideoLibraryOutlinedIcon
                 fontSize="medium"
-                style={{ color: "white" }}
+                style={{ color: theme ? "white" : "black" }}
               />
             )}
           </div>
           <div
             className={
               selected === "watch-later"
-                ? "watch-later watch-later2 sec-data sec-data2 changeBG"
+                ? `watch-later watch-later2 sec-data sec-data2 ${theme ? "changeBG" : "changeBG-light"}`
                 : "watch-later watch-later2 sec-data sec-data2"
             }
             onClick={() => {
@@ -741,18 +815,21 @@ function LeftPanel() {
             }}
           >
             {selected === "watch-later" ? (
-              <WatchLaterIcon fontSize="medium" style={{ color: "white" }} />
+              <WatchLaterIcon
+                fontSize="medium"
+                style={{ color: theme ? "white" : "black" }}
+              />
             ) : (
               <WatchLaterOutlinedIcon
                 fontSize="medium"
-                style={{ color: "white" }}
+                style={{ color: theme ? "white" : "black" }}
               />
             )}
           </div>
           <div
             className={
               selected === "liked-video"
-                ? "liked-video liked-video2 sec-data sec-data2 changeBG"
+                ? `liked-video liked-video2 sec-data sec-data2 ${theme ? "changeBG" : "changeBG-light"}`
                 : "liked-video liked-video2 sec-data sec-data2"
             }
             onClick={() => {
@@ -767,11 +844,14 @@ function LeftPanel() {
             }}
           >
             {selected === "liked-video" ? (
-              <ThumbUpIcon fontSize="medium" style={{ color: "white" }} />
+              <ThumbUpIcon
+                fontSize="medium"
+                style={{ color: theme ? "white" : "black" }}
+              />
             ) : (
               <ThumbUpOutlinedIcon
                 fontSize="medium"
-                style={{ color: "white" }}
+                style={{ color: theme ? "white" : "black" }}
               />
             )}
           </div>
@@ -890,11 +970,14 @@ function LeftPanel() {
               }}
             >
               {selected === "home" ? (
-                <HomeIcon fontSize="medium" style={{ color: "white" }} />
+                <HomeIcon
+                  fontSize="medium"
+                  style={{ color: theme ? "white" : "black" }}
+                />
               ) : (
                 <HomeOutlinedIcon
                   fontSize="medium"
-                  style={{ color: "white" }}
+                  style={{ color: theme ? "white" : "black" }}
                 />
               )}
               <p>Home</p>
@@ -911,11 +994,14 @@ function LeftPanel() {
               }}
             >
               {selected === "trending" ? (
-                <WhatshotIcon fontSize="medium" style={{ color: "white" }} />
+                <WhatshotIcon
+                  fontSize="medium"
+                  style={{ color: theme ? "white" : "black" }}
+                />
               ) : (
                 <WhatshotOutlinedIcon
                   fontSize="medium"
-                  style={{ color: "white" }}
+                  style={{ color: theme ? "white" : "black" }}
                 />
               )}
               <p>Trending</p>
@@ -939,12 +1025,12 @@ function LeftPanel() {
               {selected === "subscription" ? (
                 <SubscriptionsIcon
                   fontSize="medium"
-                  style={{ color: "white" }}
+                  style={{ color: theme ? "white" : "black" }}
                 />
               ) : (
                 <SubscriptionsOutlinedIcon
                   fontSize="medium"
-                  style={{ color: "white" }}
+                  style={{ color: theme ? "white" : "black" }}
                 />
               )}
               <p>Subscriptions</p>
@@ -1024,7 +1110,7 @@ function LeftPanel() {
                 })}
             </div>
           </div>
-          <hr className="seperate" />
+          <hr className={theme ? "seperate" : "seperate-light"} />
           <div className="second-section">
             <div
               className={
@@ -1045,12 +1131,12 @@ function LeftPanel() {
               {selected === "library" ? (
                 <VideoLibraryIcon
                   fontSize="medium"
-                  style={{ color: "white" }}
+                  style={{ color: theme ? "white" : "black" }}
                 />
               ) : (
                 <VideoLibraryOutlinedIcon
                   fontSize="medium"
-                  style={{ color: "white" }}
+                  style={{ color: theme ? "white" : "black" }}
                 />
               )}
               <p>Library</p>
@@ -1073,11 +1159,14 @@ function LeftPanel() {
               }}
             >
               {selected === "watch-later" ? (
-                <WatchLaterIcon fontSize="medium" style={{ color: "white" }} />
+                <WatchLaterIcon
+                  fontSize="medium"
+                  style={{ color: theme ? "white" : "black" }}
+                />
               ) : (
                 <WatchLaterOutlinedIcon
                   fontSize="medium"
-                  style={{ color: "white" }}
+                  style={{ color: theme ? "white" : "black" }}
                 />
               )}
               <p>Watch later</p>
@@ -1100,11 +1189,14 @@ function LeftPanel() {
               }}
             >
               {selected === "liked-video" ? (
-                <ThumbUpIcon fontSize="medium" style={{ color: "white" }} />
+                <ThumbUpIcon
+                  fontSize="medium"
+                  style={{ color: theme ? "white" : "black" }}
+                />
               ) : (
                 <ThumbUpOutlinedIcon
                   fontSize="medium"
-                  style={{ color: "white" }}
+                  style={{ color: theme ? "white" : "black" }}
                 />
               )}
               <p>Liked videos</p>
@@ -1124,7 +1216,7 @@ function LeftPanel() {
                     >
                       <PlaylistPlayOutlinedIcon
                         fontSize="medium"
-                        style={{ color: "white" }}
+                        style={{ color: theme ? "white" : "black" }}
                       />
                       <Tooltip
                         TransitionComponent={Zoom}
@@ -1153,7 +1245,7 @@ function LeftPanel() {
                     >
                       <PlaylistPlayOutlinedIcon
                         fontSize="medium"
-                        style={{ color: "white" }}
+                        style={{ color: theme ? "white" : "black" }}
                       />
                       <Tooltip
                         TransitionComponent={Zoom}
@@ -1170,14 +1262,17 @@ function LeftPanel() {
                   );
                 })}
             </div>
-            <hr className="seperate" />
+            <hr className={theme ? "seperate" : "seperate-light"} />
             <Tooltip
               TransitionComponent={Zoom}
               title="Made with 💖 by Shubhojeet"
               placement="bottom"
             >
               <div className="developer">
-                <CodeIcon fontSize="medium" style={{ color: "white" }} />
+                <CodeIcon
+                  fontSize="medium"
+                  style={{ color: theme ? "white" : "black" }}
+                />
                 <a
                   href="https://github.com/shubho0908"
                   target="_blank"
@@ -1203,9 +1298,17 @@ function LeftPanel() {
             }}
           >
             {selected === "home" ? (
-              <GoHomeFill fontSize="28px" color="white" className="hor-icons" />
+              <GoHomeFill
+                fontSize="28px"
+                color={theme ? "white" : "black"}
+                className="hor-icons"
+              />
             ) : (
-              <GoHome fontSize="28px" color="white" className="hor-icons" />
+              <GoHome
+                fontSize="28px"
+                color={theme ? "white" : "black"}
+                className="hor-icons"
+              />
             )}
 
             <p>Home</p>
@@ -1218,11 +1321,15 @@ function LeftPanel() {
             }}
           >
             {selected === "trending" ? (
-              <HiMiniFire fontSize="28px" color="white" className="hor-icons" />
+              <HiMiniFire
+                fontSize="28px"
+                color={theme ? "white" : "black"}
+                className="hor-icons"
+              />
             ) : (
               <HiOutlineFire
                 fontSize="28px"
-                color="white"
+                color={theme ? "white" : "black"}
                 className="hor-icons"
               />
             )}
@@ -1230,7 +1337,7 @@ function LeftPanel() {
           </div>
           <IoAddCircleOutline
             fontSize="50px"
-            color="white"
+            color={theme ? "white" : "black"}
             className="addvid-icon"
           />
           <div
@@ -1248,13 +1355,13 @@ function LeftPanel() {
             {selected === "subscription" ? (
               <MdSubscriptions
                 fontSize="28px"
-                color="white"
+                color={theme ? "white" : "black"}
                 className="hor-icons"
               />
             ) : (
               <MdOutlineSubscriptions
                 fontSize="28px"
-                color="white"
+                color={theme ? "white" : "black"}
                 className="hor-icons"
               />
             )}
@@ -1275,13 +1382,13 @@ function LeftPanel() {
             {selected === "library" ? (
               <MdVideoLibrary
                 fontSize="28px"
-                color="white"
+                color={theme ? "white" : "black"}
                 className="hor-icons"
               />
             ) : (
               <MdOutlineVideoLibrary
                 fontSize="28px"
-                color="white"
+                color={theme ? "white" : "black"}
                 className="hor-icons"
               />
             )}

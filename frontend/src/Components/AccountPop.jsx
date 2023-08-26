@@ -17,7 +17,10 @@ function AccountPop() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [profile, setProfile] = useState("");
-  const [theme, setTheme] = useState("Dark");
+  const [theme, setTheme] = useState(() => {
+    const Dark = localStorage.getItem("Dark");
+    return Dark ? JSON.parse(Dark) : true;
+  });
   const [ChannelID, setChannelID] = useState();
   const [isBtnClicked, setIsBtnClicked] = useState(false);
   const [isChannel, setIsChannel] = useState(false);
@@ -35,6 +38,10 @@ function AccountPop() {
       }
     }
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem("Dark", JSON.stringify(theme));
+  }, [theme]);
 
   useEffect(() => {
     const getUserData = async () => {
@@ -166,7 +173,7 @@ function AccountPop() {
               fontSize="medium"
               style={{ color: "white" }}
             />
-            <p>Appearance: {theme}</p>
+            <p>Appearance: {theme ? "Dark" : "Light"}</p>
             <ArrowForwardIosRoundedIcon
               className="open"
               fontSize="small"
@@ -227,19 +234,31 @@ function AccountPop() {
         <div className="theme-section">
           <p className="caution">Settings applied to this browser only</p>
           <div className="theme-list">
-            <div className="dark-theme" onClick={() => setTheme("Dark")}>
+            <div
+              className="dark-theme"
+              onClick={() => {
+                setTheme(true);
+                window.location.reload();
+              }}
+            >
               <DoneOutlinedIcon
                 className="dark-arrow"
                 fontSize="medium"
-                style={theme === "Dark" ? { opacity: 1 } : { opacity: 0 }}
+                style={theme === true ? { opacity: 1 } : { opacity: 0 }}
               />
               <p>Dark theme</p>
             </div>
-            <div className="light-theme" onClick={() => setTheme("Light")}>
+            <div
+              className="light-theme"
+              onClick={() => {
+                setTheme(false);
+                window.location.reload();
+              }}
+            >
               <DoneOutlinedIcon
                 className="light-arrow"
                 fontSize="medium"
-                style={theme === "Light" ? { opacity: 1 } : { opacity: 0 }}
+                style={theme === false ? { opacity: 1 } : { opacity: 0 }}
               />
               <p>Light theme</p>
             </div>

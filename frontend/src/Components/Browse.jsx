@@ -8,6 +8,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import LeftPanel from "./LeftPanel";
 import Navbar from "./Navbar";
+import "../Css/theme.css";
 
 function Browse() {
   const [videos, setVideos] = useState("");
@@ -28,6 +29,10 @@ function Browse() {
   const [publishDate, setPublishDate] = useState();
   const [FilteredVideos, setFilteredVideos] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [theme, setTheme] = useState(() => {
+    const Dark = localStorage.getItem("Dark");
+    return Dark ? JSON.parse(Dark) : true;
+  });
 
   const token = localStorage.getItem("userToken");
 
@@ -128,6 +133,14 @@ function Browse() {
     }, 3600);
   }, []);
 
+  useEffect(() => {
+    if (theme === false && !window.location.href.includes("/studio")) {
+      document.body.style.backgroundColor = "white";
+    } else if (theme === true && !window.location.href.includes("/studio")) {
+      document.body.style.backgroundColor = "0f0f0f";
+    }
+  }, [theme]);
+
   //UPDATE VIEWS
 
   const updateViews = async (id) => {
@@ -148,27 +161,34 @@ function Browse() {
     <>
       <Navbar />
       <LeftPanel />
-      <SkeletonTheme baseColor="#353535" highlightColor="#444">
+      <SkeletonTheme
+        baseColor={theme ? "#353535" : "#aaaaaa"}
+        highlightColor={theme ? "#444" : "#b6b6b6"}
+      >
         <div
-          className="browse"
+          className={theme ? "browse" : "browse light-mode"}
           style={loading === true ? { display: "flex" } : { display: "none" }}
         >
           <div
-            className={menuClicked === true ? "browse-data" : "browse-data2"}
-            style={
-              menuClicked === false
-                ? { left: "74px" }
-                : { left: "250px" }
+            className={
+              menuClicked === true
+                ? `browse-data ${theme === false ? "light-mode" : "dark-mode"}`
+                : `browse-data2 ${theme === false ? "light-mode" : "dark-mode"}`
             }
+            style={menuClicked === false ? { left: "74px" } : { left: "250px" }}
           >
-            <div className="popular-categories">
+            <div
+              className={
+                theme ? "popular-categories" : "popular-categories light-mode"
+              }
+            >
               {Tags.map((element, index) => {
                 return (
                   <div
                     className={
                       TagsSelected === element
-                        ? `top-tags tag-color`
-                        : `top-tags`
+                        ? `top-tags ${theme ? "tag-color" : "tag-color-light"}`
+                        : `top-tags ${theme ? "" : "tagcolor-newlight"}`
                     }
                     key={index}
                   >
@@ -232,7 +252,7 @@ function Browse() {
         </div>
       </SkeletonTheme>
       <div
-        className="browse"
+        className={theme ? "browse" : "browse light-mode"}
         style={
           loading === true
             ? { visibility: "hidden", display: "none" }
@@ -240,19 +260,25 @@ function Browse() {
         }
       >
         <div
-          className={menuClicked === true ? "browse-data" : "browse-data2"}
-          style={
-            menuClicked === false
-              ? { left: "74px" }
-              : { left: "250px" }
+          className={
+            menuClicked === true
+              ? `browse-data ${theme === false ? "light-mode" : "dark-mode"}`
+              : `browse-data2 ${theme === false ? "light-mode" : "dark-mode"}`
           }
+          style={menuClicked === false ? { left: "74px" } : { left: "250px" }}
         >
-          <div className="popular-categories">
+          <div
+            className={
+              theme ? "popular-categories" : "popular-categories light-mode"
+            }
+          >
             {Tags.map((element, index) => {
               return (
                 <div
                   className={
-                    TagsSelected === element ? `top-tags tag-color` : `top-tags`
+                    TagsSelected === element
+                      ? `top-tags ${theme ? "tag-color" : "tag-color-light"}`
+                      : `top-tags ${theme ? "" : "tagcolor-newlight"}`
                   }
                   key={index}
                 >
@@ -279,13 +305,13 @@ function Browse() {
               style={
                 menuClicked === true
                   ? {
-                    paddingRight: "50px",
-                    display: TagsSelected === "All" ? "grid" : "none",
-                  }
+                      paddingRight: "50px",
+                      display: TagsSelected === "All" ? "grid" : "none",
+                    }
                   : {
-                    paddingRight: "0px",
-                    display: TagsSelected === "All" ? "grid" : "none",
-                  }
+                      paddingRight: "0px",
+                      display: TagsSelected === "All" ? "grid" : "none",
+                    }
               }
             >
               {thumbnails &&
@@ -326,7 +352,13 @@ function Browse() {
                             : Math.round(duration[index] % 60))}
                       </p>
 
-                      <div className="channel-basic-data">
+                      <div
+                        className={
+                          theme === true
+                            ? "channel-basic-data"
+                            : "channel-basic-data text-light-mode"
+                        }
+                      >
                         <div className="channel-pic">
                           <img
                             className="channel-profile"
@@ -338,7 +370,7 @@ function Browse() {
                           <p className="title" style={{ marginTop: "10px" }}>
                             {Titles[index] && Titles[index].length <= 60
                               ? Titles[index]
-                              : `${Titles[index].slice(0, 60)}..`}
+                              : `${Titles[index].slice(0, 55)}..`}
                           </p>
                           <div className="video-uploader">
                             <Tooltip
@@ -373,10 +405,10 @@ function Browse() {
                               {VideoViews[index] >= 1e9
                                 ? `${(VideoViews[index] / 1e9).toFixed(1)}B`
                                 : VideoViews[index] >= 1e6
-                                  ? `${(VideoViews[index] / 1e6).toFixed(1)}M`
-                                  : VideoViews[index] >= 1e3
-                                    ? `${(VideoViews[index] / 1e3).toFixed(1)}K`
-                                    : VideoViews[index]}{" "}
+                                ? `${(VideoViews[index] / 1e6).toFixed(1)}M`
+                                : VideoViews[index] >= 1e3
+                                ? `${(VideoViews[index] / 1e3).toFixed(1)}K`
+                                : VideoViews[index]}{" "}
                               views
                             </p>
                             <p
@@ -430,13 +462,13 @@ function Browse() {
               style={
                 menuClicked === true
                   ? {
-                    paddingRight: "50px",
-                    display: TagsSelected !== "All" ? "grid" : "none",
-                  }
+                      paddingRight: "50px",
+                      display: TagsSelected !== "All" ? "grid" : "none",
+                    }
                   : {
-                    paddingRight: "0px",
-                    display: TagsSelected !== "All" ? "grid" : "none",
-                  }
+                      paddingRight: "0px",
+                      display: TagsSelected !== "All" ? "grid" : "none",
+                    }
               }
             >
               {FilteredVideos &&
@@ -476,7 +508,13 @@ function Browse() {
                             : Math.round(element.videoLength % 60))}
                       </p>
 
-                      <div className="channel-basic-data">
+                      <div
+                        className={
+                          theme === true
+                            ? "channel-basic-data"
+                            : "channel-basic-data text-light-mode"
+                        }
+                      >
                         <div className="channel-pic">
                           <img
                             className="channel-profile"
@@ -515,10 +553,10 @@ function Browse() {
                               {element.views >= 1e9
                                 ? `${(element.views / 1e9).toFixed(1)}B`
                                 : element.views >= 1e6
-                                  ? `${(element.views / 1e6).toFixed(1)}M`
-                                  : element.views >= 1e3
-                                    ? `${(element.views / 1e3).toFixed(1)}K`
-                                    : element.views}{" "}
+                                ? `${(element.views / 1e6).toFixed(1)}M`
+                                : element.views >= 1e3
+                                ? `${(element.views / 1e3).toFixed(1)}K`
+                                : element.views}{" "}
                               views
                             </p>
                             <p

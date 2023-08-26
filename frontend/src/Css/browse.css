@@ -40,6 +40,16 @@
   color: #0f0f0f;
 }
 
+.tag-color-light {
+  background-color: black;
+  color: white;
+}
+
+.tagcolor-newlight {
+  background-color: #f0f0f0;
+  color: black;
+}
+
 .browse-data {
   background-color: #0f0f0f;
   width: calc(100% - 250px);

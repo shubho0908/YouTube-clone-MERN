@@ -21,8 +21,6 @@
   position: fixed;
   z-index: 4;
   width: -webkit-fill-available;
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px,
-    rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
 }
 
 .navbar2 {
@@ -76,6 +74,10 @@
   font-family: "Open Sans", sans-serif;
 }
 
+.light-border {
+  border: 0.5px solid rgb(108 108 108 / 35%);
+}
+
 .search-icon {
   cursor: pointer;
   padding-right: 10px;
@@ -87,6 +89,30 @@
   padding-left: 15px;
   padding-right: 15px;
 }
+
+.search-light-icon {
+  cursor: pointer;
+  padding-right: 10px;
+  background-color: #ebebeb65;
+  border-radius: inherit;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  padding: 6px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.video-light {
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+}
+
+.video-light:hover {
+  color: black;
+  background-color: #f0f0f0;
+}
+
 .search-icon2 {
   cursor: pointer;
   padding-right: 10px;
@@ -101,6 +127,19 @@
 #searchType {
   background-color: #0f0f0f;
   color: white;
+  border-radius: 25px;
+  border: none;
+  outline: none;
+  width: 45vw;
+  font-size: 16px;
+  padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+#searchType-light-mode {
+  background-color: #ffffff;
+  color: black;
   border-radius: 25px;
   border: none;
   outline: none;

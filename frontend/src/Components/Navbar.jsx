@@ -1,7 +1,5 @@
 //MUI Icons
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
-import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
-import VideoCallOutlinedIcon from "@mui/icons-material/VideoCallOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import ClearRoundedIcon from "@mui/icons-material/ClearRounded";
 import AccountPop from "./AccountPop";
@@ -9,6 +7,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import "../Css/navbar.css";
 import Logo from "../img/logo1.png";
+import Logo2 from "../img/logo2.png";
 import { useEffect, useState, useRef } from "react";
 import Signup from "./Signup";
 import Signin from "./Signin";
@@ -18,7 +17,9 @@ import jwtDecode from "jwt-decode";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
 import { FiSearch } from "react-icons/fi";
+import { IoIosSearch } from "react-icons/io";
 import { RxCross1 } from "react-icons/rx";
+import { AiOutlineVideoCameraAdd } from "react-icons/ai";
 
 function Navbar() {
   const { data } = useParams();
@@ -32,7 +33,10 @@ function Navbar() {
   const [searchedData, setSearchedData] = useState();
   const [loading, setLoading] = useState(true);
   const [newSearch, setNewSearch] = useState(false);
-
+  const [theme, setTheme] = useState(() => {
+    const Dark = localStorage.getItem("Dark");
+    return Dark ? JSON.parse(Dark) : true;
+  });
   const profileRef = useRef();
   const searchRef = useRef();
 
@@ -102,15 +106,15 @@ function Navbar() {
 
   return (
     <>
-      <div className="navbar">
+      <div className={theme === true ? "navbar" : "navbar light-mode"}>
         <div className="left-bar">
           <MenuRoundedIcon
             className="menu"
             fontSize="large"
-            style={{ color: "white" }}
+            style={{ color: theme ? "white" : "black" }}
           />
           <img
-            src={Logo}
+            src={theme ? Logo : Logo2}
             alt="logo"
             loading="lazy"
             className="youtubeLogo"
@@ -120,19 +124,19 @@ function Navbar() {
           />
         </div>
         <div className="middle-bar">
-          <div className="search">
+          <div className={theme ? "search" : "search light-mode light-border"}>
             <input
               type="text"
               placeholder="Type to search"
-              id="searchType"
+              id={theme ? "searchType" : "searchType-light-mode"}
               value={data2 ? data2 : searchedData}
               onChange={handleSearch}
               onKeyDown={handleKeyPress}
             />
-            <SearchRoundedIcon
-              className="search-icon"
-              fontSize="large"
-              style={{ color: "rgb(160, 160, 160)" }}
+            <IoIosSearch
+              className={theme ? "search-icon" : "search-light-icon"}
+              fontSize="28px"
+              style={{ color: theme ? "rgb(160, 160, 160)" : "black" }}
               onClick={() => {
                 if (searchedData) {
                   window.location.href = `/results/${searchedData}`;
@@ -160,10 +164,14 @@ function Navbar() {
             title="YouTube studio"
             placement="bottom"
           >
-            <VideoCallOutlinedIcon
-              className="icon-btns videocreate"
-              fontSize="large"
-              style={{ color: "rgb(160, 160, 160)" }}
+            <AiOutlineVideoCameraAdd
+              className={
+                theme
+                  ? "icon-btns videocreate"
+                  : "video-light"
+              }
+              fontSize="24px"
+              style={{ color: theme ? "rgb(160, 160, 160)" : "black" }}
               onClick={() => {
                 if (token) {
                   window.location.href = "/studio";
