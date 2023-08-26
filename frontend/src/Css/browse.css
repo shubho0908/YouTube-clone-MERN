@@ -140,7 +140,8 @@
 }
 
 .menu,
-.menu2 {
+.menu2,
+.menu-light {
   cursor: pointer;
   transition: all 0.15s ease;
   padding: 7px;
@@ -151,6 +152,10 @@
 .menu2:hover {
   color: white !important;
   background-color: #3d3f4365;
+}
+
+.menu-light:hover {
+  background-color: #f0f0f0 !important;
 }
 
 .channel-basic-data {

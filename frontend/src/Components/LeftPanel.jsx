@@ -12,6 +12,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
 import { useEffect, useState } from "react";
 import Logo from "../img/logo1.png";
+import Logo2 from "../img/logo2.png";
 import Signup from "./Signup";
 import Signin from "./Signin";
 import { useLocation } from "react-router-dom";
@@ -73,10 +74,36 @@ function LeftPanel() {
     };
 
     const menuButton = document.querySelector(".menu");
-    menuButton.addEventListener("click", handleMenuButtonClick);
+    if (menuButton) {
+      menuButton.addEventListener("click", handleMenuButtonClick);
+    }
 
     return () => {
-      menuButton.removeEventListener("click", handleMenuButtonClick);
+      if (menuButton) {
+        menuButton.removeEventListener("click", handleMenuButtonClick);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleMenuButtonClick = () => {
+      if (window.innerWidth >= 860) {
+        setMenuClicked((prevMenuClicked) => !prevMenuClicked);
+      } else {
+        document.body.classList.add("bg-css");
+        setTogglePannel(true);
+      }
+    };
+
+    const menuButton = document.querySelector(".menu-light");
+    if (menuButton) {
+      menuButton.addEventListener("click", handleMenuButtonClick);
+    }
+
+    return () => {
+      if (menuButton) {
+        menuButton.removeEventListener("click", handleMenuButtonClick);
+      }
     };
   }, []);
 
@@ -234,7 +261,9 @@ function LeftPanel() {
           <div
             className={
               selected === "subscription"
-                ? `subscription sec-data ${theme ? "changeBG" : "changeBG-light"}`
+                ? `subscription sec-data ${
+                    theme ? "changeBG" : "changeBG-light"
+                  }`
                 : "subscription sec-data"
             }
             onClick={() => {
@@ -273,7 +302,8 @@ function LeftPanel() {
               Subscriptions.map((element, index) => {
                 return (
                   <>
-                    <SkeletonTheme baseColor="#353535" highlightColor="#444">
+                    <SkeletonTheme  baseColor={theme ? "#353535" : "#aaaaaa"}
+                      highlightColor={theme ? "#444" : "#b6b6b6"}>
                       <div
                         className="mysubscriptions"
                         key={index}
@@ -370,7 +400,9 @@ function LeftPanel() {
           <div
             className={
               selected === "watch-later"
-                ? `watch-later sec-data ${theme ? "changeBG" : "changeBG-light"}`
+                ? `watch-later sec-data ${
+                    theme ? "changeBG" : "changeBG-light"
+                  }`
                 : "watch-later sec-data"
             }
             onClick={() => {
@@ -399,7 +431,9 @@ function LeftPanel() {
           <div
             className={
               selected === "liked-video"
-                ? `liked-video sec-data ${theme ? "changeBG" : "changeBG-light"}`
+                ? `liked-video sec-data ${
+                    theme ? "changeBG" : "changeBG-light"
+                  }`
                 : "liked-video sec-data"
             }
             onClick={() => {
@@ -512,7 +546,11 @@ function LeftPanel() {
 
       {/* SHORT HAND  */}
       <div
-        className={theme ? "main-left-section main-2" : "main-left-section main-2 light-mode"}
+        className={
+          theme
+            ? "main-left-section main-2"
+            : "main-left-section main-2 light-mode"
+        }
         style={
           menuClicked === false ? { display: "flex" } : { display: "none" }
         }
@@ -521,7 +559,9 @@ function LeftPanel() {
           <div
             className={
               selected === "home"
-                ? `home sec-data sec-data2 ${theme ? "changeBG" : "changeBG-light"}`
+                ? `home sec-data sec-data2 ${
+                    theme ? "changeBG" : "changeBG-light"
+                  }`
                 : "home sec-data sec-data2"
             }
             onClick={() => {
@@ -545,7 +585,9 @@ function LeftPanel() {
           <div
             className={
               selected === "trending"
-                ? `trending trending2 sec-data sec-data2 ${theme ? "changeBG" : "changeBG-light"}`
+                ? `trending trending2 sec-data sec-data2 ${
+                    theme ? "changeBG" : "changeBG-light"
+                  }`
                 : "trending trending2 sec-data sec-data2"
             }
             onClick={() => {
@@ -569,7 +611,9 @@ function LeftPanel() {
           <div
             className={
               selected === "subscription"
-                ? `subscription subscription2 sec-data sec-data2 ${theme ? "changeBG" : "changeBG-light"}`
+                ? `subscription subscription2 sec-data sec-data2 ${
+                    theme ? "changeBG" : "changeBG-light"
+                  }`
                 : "subscription subscription2 sec-data sec-data2"
             }
             onClick={() => {
@@ -598,9 +642,11 @@ function LeftPanel() {
         {/* <hr className="seperate" /> */}
         <div className="second-section">
           <div
-             className={
+            className={
               selected === "library"
-                ? `library library2 sec-data sec-data2 ${theme ? "changeBG" : "changeBG-light"}`
+                ? `library library2 sec-data sec-data2 ${
+                    theme ? "changeBG" : "changeBG-light"
+                  }`
                 : "library library2 sec-data sec-data2"
             }
             onClick={() => {
@@ -628,7 +674,9 @@ function LeftPanel() {
           <div
             className={
               selected === "watch-later"
-                ? `watch-later watch-later2 sec-data sec-data2 ${theme ? "changeBG" : "changeBG-light"}`
+                ? `watch-later watch-later2 sec-data sec-data2 ${
+                    theme ? "changeBG" : "changeBG-light"
+                  }`
                 : "watch-later watch-later2 sec-data sec-data2"
             }
             onClick={() => {
@@ -656,7 +704,9 @@ function LeftPanel() {
           <div
             className={
               selected === "liked-video"
-                ? `liked-video liked-video2 sec-data sec-data2 ${theme ? "changeBG" : "changeBG-light"}`
+                ? `liked-video liked-video2 sec-data sec-data2 ${
+                    theme ? "changeBG" : "changeBG-light"
+                  }`
                 : "liked-video liked-video2 sec-data sec-data2"
             }
             onClick={() => {
@@ -687,14 +737,20 @@ function LeftPanel() {
 
       {/* SHORT HAND - 2 */}
       <div
-        className="main-left-section main-2 main-3"
+        className={
+          theme
+            ? "main-left-section main-2 main-3"
+            : "main-left-section main-2 main-3 light-mode"
+        }
         style={{ display: "none" }}
       >
         <div className="first-section ">
           <div
             className={
               selected === "home"
-                ? `home sec-data sec-data2 ${theme ? "changeBG" : "changeBG-light"}`
+                ? `home sec-data sec-data2 ${
+                    theme ? "changeBG" : "changeBG-light"
+                  }`
                 : "home sec-data sec-data2"
             }
             onClick={() => {
@@ -718,7 +774,9 @@ function LeftPanel() {
           <div
             className={
               selected === "trending"
-                ? `trending trending2 sec-data sec-data2 ${theme ? "changeBG" : "changeBG-light"}`
+                ? `trending trending2 sec-data sec-data2 ${
+                    theme ? "changeBG" : "changeBG-light"
+                  }`
                 : "trending trending2 sec-data sec-data2"
             }
             onClick={() => {
@@ -742,7 +800,9 @@ function LeftPanel() {
           <div
             className={
               selected === "subscription"
-                ? `subscription subscription2 sec-data sec-data2 ${theme ? "changeBG" : "changeBG-light"}`
+                ? `subscription subscription2 sec-data sec-data2 ${
+                    theme ? "changeBG" : "changeBG-light"
+                  }`
                 : "subscription subscription2 sec-data sec-data2"
             }
             onClick={() => {
@@ -771,9 +831,11 @@ function LeftPanel() {
         {/* <hr className="seperate" /> */}
         <div className="second-section">
           <div
-             className={
+            className={
               selected === "library"
-                ? `library library2 sec-data sec-data2 ${theme ? "changeBG" : "changeBG-light"}`
+                ? `library library2 sec-data sec-data2 ${
+                    theme ? "changeBG" : "changeBG-light"
+                  }`
                 : "library library2 sec-data sec-data2"
             }
             onClick={() => {
@@ -801,7 +863,9 @@ function LeftPanel() {
           <div
             className={
               selected === "watch-later"
-                ? `watch-later watch-later2 sec-data sec-data2 ${theme ? "changeBG" : "changeBG-light"}`
+                ? `watch-later watch-later2 sec-data sec-data2 ${
+                    theme ? "changeBG" : "changeBG-light"
+                  }`
                 : "watch-later watch-later2 sec-data sec-data2"
             }
             onClick={() => {
@@ -829,7 +893,9 @@ function LeftPanel() {
           <div
             className={
               selected === "liked-video"
-                ? `liked-video liked-video2 sec-data sec-data2 ${theme ? "changeBG" : "changeBG-light"}`
+                ? `liked-video liked-video2 sec-data sec-data2 ${
+                    theme ? "changeBG" : "changeBG-light"
+                  }`
                 : "liked-video liked-video2 sec-data sec-data2"
             }
             onClick={() => {
@@ -926,14 +992,16 @@ function LeftPanel() {
       {/* SECONDARY PANEL  */}
       <div
         className={
-          closePanel === true ? "secondary-panel moveout" : "secondary-panel"
+          closePanel === true
+            ? `secondary-panel moveout ${theme ? "" : "light-mode"}`
+            : `secondary-panel ${theme ? "" : "light-mode"}`
         }
         style={{ display: togglepanel ? "block" : "none" }}
       >
         <div className="panel-topdata">
           <MenuRoundedIcon
             fontSize="large"
-            style={{ color: "white" }}
+            style={{ color: theme ? "white" : "black" }}
             className="close-sidepanel"
             onClick={() => {
               setClosePanel(true);
@@ -948,7 +1016,7 @@ function LeftPanel() {
             }}
           />
           <img
-            src={Logo}
+            src={theme ? Logo : Logo2}
             alt="logo"
             loading="lazy"
             style={{ marginLeft: "5px" }}
@@ -958,11 +1026,17 @@ function LeftPanel() {
             }}
           />
         </div>
-        <div className="main-left-section-new">
+        <div
+          className={
+            theme ? "main-left-section-new" : "main-left-section-new light-mode"
+          }
+        >
           <div className="first-section ">
             <div
               className={
-                selected === "home" ? "home sec-data changeBG" : "home sec-data"
+                selected === "home"
+                  ? `home sec-data ${theme ? "changeBG" : "changeBG-light"}`
+                  : "home sec-data"
               }
               onClick={() => {
                 localStorage.setItem("selected", "home");
@@ -985,7 +1059,7 @@ function LeftPanel() {
             <div
               className={
                 selected === "trending"
-                  ? "trending sec-data changeBG"
+                  ? `trending sec-data ${theme ? "changeBG" : "changeBG-light"}`
                   : "trending sec-data"
               }
               onClick={() => {
@@ -1009,7 +1083,9 @@ function LeftPanel() {
             <div
               className={
                 selected === "subscription"
-                  ? "subscription sec-data changeBG"
+                  ? `subscription sec-data ${
+                      theme ? "changeBG" : "changeBG-light"
+                    }`
                   : "subscription sec-data"
               }
               onClick={() => {
@@ -1048,7 +1124,8 @@ function LeftPanel() {
                 Subscriptions.map((element, index) => {
                   return (
                     <>
-                      <SkeletonTheme baseColor="#353535" highlightColor="#444">
+                      <SkeletonTheme  baseColor={theme ? "#353535" : "#aaaaaa"}
+                      highlightColor={theme ? "#444" : "#b6b6b6"}>
                         <div
                           className="mysubscriptions"
                           key={index}
@@ -1115,7 +1192,7 @@ function LeftPanel() {
             <div
               className={
                 selected === "library"
-                  ? "library sec-data changeBG"
+                  ? `library sec-data ${theme ? "changeBG" : "changeBG-light"}`
                   : "library sec-data"
               }
               onClick={() => {
@@ -1145,7 +1222,9 @@ function LeftPanel() {
             <div
               className={
                 selected === "watch-later"
-                  ? "watch-later sec-data changeBG"
+                  ? `watch-later sec-data ${
+                      theme ? "changeBG" : "changeBG-light"
+                    }`
                   : "watch-later sec-data"
               }
               onClick={() => {
@@ -1174,7 +1253,9 @@ function LeftPanel() {
             <div
               className={
                 selected === "liked-video"
-                  ? "liked-video sec-data changeBG"
+                  ? `liked-video sec-data ${
+                      theme ? "changeBG" : "changeBG-light"
+                    }`
                   : "liked-video sec-data"
               }
               onClick={() => {
@@ -1288,10 +1369,14 @@ function LeftPanel() {
 
       {/* HORIZONTAL PANEL */}
 
-      <div className="horizontal-panel">
+      <div
+        className={theme ? "horizontal-panel" : "horizontal-panel light-mode"}
+      >
         <div className="horizontal-main-section">
           <div
-            className="home-hori hori"
+            className={
+              theme ? "home-hori hori" : "home-hori hori text-light-mode"
+            }
             onClick={() => {
               localStorage.setItem("selected", "home");
               window.location.href = "/";
@@ -1314,7 +1399,11 @@ function LeftPanel() {
             <p>Home</p>
           </div>
           <div
-            className="trending-hori hori"
+            className={
+              theme
+                ? "trending-hori hori"
+                : "trending-hori hori text-light-mode"
+            }
             onClick={() => {
               localStorage.setItem("selected", "trending");
               window.location.href = "/trending";
@@ -1341,7 +1430,11 @@ function LeftPanel() {
             className="addvid-icon"
           />
           <div
-            className="subscriptions-hori hori"
+            className={
+              theme
+                ? "subscriptions-hori hori"
+                : "subscriptions-hori hori text-light-mode"
+            }
             onClick={() => {
               if (token) {
                 localStorage.setItem("selected", "subscription");
@@ -1368,7 +1461,9 @@ function LeftPanel() {
             <p>Subscriptions</p>
           </div>
           <div
-            className="library-hori hori"
+            className={
+              theme ? "library-hori hori" : "library-hori hori text-light-mode"
+            }
             onClick={() => {
               if (token) {
                 localStorage.setItem("selected", "library");

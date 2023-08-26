@@ -10,7 +10,7 @@ function ChannelVideos(prop) {
   const [videosort, setVideoSort] = useState();
   const token = localStorage.getItem("userToken");
   const [loading, setLoading] = useState(true);
-  const [showDiv, setShowDiv] = useState(false)
+  const [showDiv, setShowDiv] = useState(false);
 
   const navigate = useNavigate();
 
@@ -39,12 +39,19 @@ function ChannelVideos(prop) {
   useEffect(() => {
     const getUserVideos = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:3000/getuservideos/${Email || prop.newmail}`
-        );
-
-        const myvideos = await response.json();
-        setMyVideos(myvideos);
+        if (Email === prop.newmail) {
+          const response = await fetch(
+            `http://localhost:3000/getuservideos/${Email}`
+          );
+          const myvideos = await response.json();
+          setMyVideos(myvideos);
+        } else {
+          const response = await fetch(
+            `http://localhost:3000/getuservideos/${prop.newmail}`
+          );
+          const myvideos = await response.json();
+          setMyVideos(myvideos);
+        }
       } catch (error) {
         console.log(error.message);
       }
@@ -61,8 +68,7 @@ function ChannelVideos(prop) {
           "Content-Type": "application/json",
         },
       });
-      const result = await response.json();
-      console.log(result);
+      await response.json();
     } catch (error) {
       console.log(error.message);
     }
@@ -141,7 +147,10 @@ function ChannelVideos(prop) {
             {myVideos.length > 0 &&
               myVideos.map((index) => {
                 return (
-                  <div className="uploaded-video-contents sk-uploadcontent" key={index}>
+                  <div
+                    className="uploaded-video-contents sk-uploadcontent"
+                    key={index}
+                  >
                     <Skeleton
                       count={1}
                       width={300}
@@ -176,12 +185,19 @@ function ChannelVideos(prop) {
           </div>
           <div
             className="sk-uploadedvideos-sectionall2"
-            style={loading === true && showDiv ? { display: "flex" } : { display: "none" }}
+            style={
+              loading === true && showDiv
+                ? { display: "flex" }
+                : { display: "none" }
+            }
           >
             {myVideos.length > 0 &&
               myVideos.map((index) => {
                 return (
-                  <div className="uploaded-video-contents sk-uploadcontent" key={index}>
+                  <div
+                    className="uploaded-video-contents sk-uploadcontent"
+                    key={index}
+                  >
                     <Skeleton
                       count={1}
                       width={300}
@@ -266,10 +282,10 @@ function ChannelVideos(prop) {
                         {element.views >= 1e9
                           ? `${(element.views / 1e9).toFixed(1)}B`
                           : element.views >= 1e6
-                            ? `${(element.views / 1e6).toFixed(1)}M`
-                            : element.views >= 1e3
-                              ? `${(element.views / 1e3).toFixed(1)}K`
-                              : element.views}{" "}
+                          ? `${(element.views / 1e6).toFixed(1)}M`
+                          : element.views >= 1e3
+                          ? `${(element.views / 1e3).toFixed(1)}K`
+                          : element.views}{" "}
                         views
                       </p>
                       <p>&#x2022;</p>

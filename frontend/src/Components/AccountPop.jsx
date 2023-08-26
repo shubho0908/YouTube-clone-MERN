@@ -102,7 +102,9 @@ function AccountPop() {
   return (
     <>
       <div
-        className="account-pop"
+        className={
+          theme ? "account-pop" : "account-pop account-pop-light light-mode"
+        }
         style={
           isBtnClicked === false ? { display: "block" } : { display: "none" }
         }
@@ -129,10 +131,10 @@ function AccountPop() {
             </Tooltip>
           </div>
         </div>
-        <hr className="seperate" />
+        <hr className={theme ? "seperate" : "seperate-light"} />
         <div className="about-channel-section">
           <div
-            className="yourchannel c-sec"
+            className={theme ? "yourchannel c-sec" : "yourchannel c-sec2"}
             onClick={() => {
               if (isChannel === true) {
                 window.location.href = `/channel/${ChannelID}`;
@@ -143,24 +145,24 @@ function AccountPop() {
           >
             <AccountBoxOutlinedIcon
               fontSize="medium"
-              style={{ color: "white" }}
+              style={{ color: theme ? "white" : "black" }}
             />
             <p>Your channel</p>
           </div>
           <div
-            className="yourstudio c-sec"
+            className={theme ? "yourstudio c-sec" : "yourstudio c-sec2"}
             onClick={() => {
               window.location.href = "/studio";
             }}
           >
             <OndemandVideoOutlinedIcon
               fontSize="medium"
-              style={{ color: "white" }}
+              style={{ color: theme ? "white" : "black" }}
             />
             <p>YouTube Studio</p>
           </div>
           <div
-            className="apperance c-sec"
+            className={theme ? "apperance c-sec" : "apperance c-sec2"}
             onClick={() => {
               if (isBtnClicked === false) {
                 setIsBtnClicked(true);
@@ -171,39 +173,44 @@ function AccountPop() {
           >
             <DarkModeOutlinedIcon
               fontSize="medium"
-              style={{ color: "white" }}
+              style={{ color: theme ? "white" : "black" }}
             />
             <p>Appearance: {theme ? "Dark" : "Light"}</p>
             <ArrowForwardIosRoundedIcon
               className="open"
               fontSize="small"
-              style={{ color: "#ffffff8a" }}
+              style={{ color: theme ? "#ffffff8a" : "black" }}
             />
           </div>
         </div>
-        <hr className="seperate" />
+        <hr className={theme ? "seperate" : "seperate-light"} />
         <div className="extra1-section">
-          <div className="language c-sec">
+          <div className={theme ? "language c-sec" : "language c-sec2"}>
             <TranslateOutlinedIcon
               fontSize="medium"
-              style={{ color: "white" }}
+              style={{ color: theme ? "white" : "black" }}
             />
             <p>Language: English</p>
           </div>
           <div
-            className="exitout c-sec"
+            className={theme ? "exitout c-sec" : "exitout c-sec2"}
             onClick={() => {
               localStorage.removeItem("userToken");
               window.location.href = "/";
             }}
           >
-            <LogoutOutlinedIcon fontSize="medium" style={{ color: "white" }} />
+            <LogoutOutlinedIcon
+              fontSize="medium"
+              style={{ color: theme ? "white" : "black" }}
+            />
             <p>Sign Out</p>
           </div>
         </div>
       </div>
       <div
-        className="account-pop"
+        className={
+          theme ? "account-pop" : "account-pop account-pop-light light-mode"
+        }
         style={
           isBtnClicked === true
             ? { display: "block", paddingTop: "12px" }
@@ -212,9 +219,9 @@ function AccountPop() {
       >
         <div className="appearance-title">
           <ArrowBackOutlinedIcon
-            className="back-arrow"
+            className={theme ? "back-arrow" : "back-arroww2"}
             fontSize="medium"
-            style={{ color: "white" }}
+            style={{ color: theme ? "white" : "black" }}
             onClick={() => {
               if (isBtnClicked === true) {
                 setIsBtnClicked(false);
@@ -226,7 +233,7 @@ function AccountPop() {
           <p>Apperance</p>
         </div>
         <hr
-          className="seperate"
+          className={theme ? "seperate" : "seperate-light"}
           style={
             isBtnClicked === true ? { marginTop: "6px" } : { marginTop: "15px" }
           }
@@ -235,7 +242,7 @@ function AccountPop() {
           <p className="caution">Settings applied to this browser only</p>
           <div className="theme-list">
             <div
-              className="dark-theme"
+              className={theme ? "dark-theme" : "dark-theme2"}
               onClick={() => {
                 setTheme(true);
                 window.location.reload();
@@ -244,12 +251,13 @@ function AccountPop() {
               <DoneOutlinedIcon
                 className="dark-arrow"
                 fontSize="medium"
+                color={theme ? "white" : "black"}
                 style={theme === true ? { opacity: 1 } : { opacity: 0 }}
               />
               <p>Dark theme</p>
             </div>
             <div
-              className="light-theme"
+              className={theme ? "light-theme" : "light-theme2"}
               onClick={() => {
                 setTheme(false);
                 window.location.reload();
@@ -258,6 +266,7 @@ function AccountPop() {
               <DoneOutlinedIcon
                 className="light-arrow"
                 fontSize="medium"
+                color={theme ? "white" : "black"}
                 style={theme === false ? { opacity: 1 } : { opacity: 0 }}
               />
               <p>Light theme</p>

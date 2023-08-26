@@ -48,6 +48,10 @@ function Library() {
   });
   const [savedPlaylist, setSavedPlaylist] = useState([]);
   document.title = "Library - YouTube";
+  const [theme, setTheme] = useState(() => {
+    const Dark = localStorage.getItem("Dark");
+    return Dark ? JSON.parse(Dark) : true;
+  });
 
   useEffect(() => {
     setEmail(jwtDecode(token).email);
@@ -177,12 +181,41 @@ function Library() {
     };
 
     const menuButton = document.querySelector(".menu");
-    menuButton.addEventListener("click", handleMenuButtonClick);
+    if (menuButton) {
+      menuButton.addEventListener("click", handleMenuButtonClick);
+    }
 
     return () => {
-      menuButton.removeEventListener("click", handleMenuButtonClick);
+      if (menuButton) {
+        menuButton.removeEventListener("click", handleMenuButtonClick);
+      }
     };
   }, []);
+
+  useEffect(() => {
+    const handleMenuButtonClick = () => {
+      setMenuClicked((prevMenuClicked) => !prevMenuClicked);
+    };
+
+    const menuButton = document.querySelector(".menu-light");
+    if (menuButton) {
+      menuButton.addEventListener("click", handleMenuButtonClick);
+    }
+
+    return () => {
+      if (menuButton) {
+        menuButton.removeEventListener("click", handleMenuButtonClick);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (theme === false && !window.location.href.includes("/studio")) {
+      document.body.style.backgroundColor = "white";
+    } else if (theme === true && !window.location.href.includes("/studio")) {
+      document.body.style.backgroundColor = "0f0f0f";
+    }
+  }, [theme]);
 
   const watchLaterArray =
     watchlater && watchlater.length > 0 && watchlater.savedData !== "NO DATA"
@@ -212,7 +245,9 @@ function Library() {
         <LeftPanel />
         <div className="no-playlists">
           <img src={nothing} alt="no results" className="nothing-found" />
-          <p className="no-results">No data found!</p>
+          <p className={theme ? "no-results" : "no-results text-light-mode"}>
+            No data found!
+          </p>
         </div>
       </>
     );

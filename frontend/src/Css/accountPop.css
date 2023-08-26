@@ -13,6 +13,9 @@
   backdrop-filter: blur(8px);
   animation: slowdown 0.2s ease;
 }
+.account-pop-light {
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
 .account-pop2 {
   /* background-color: #282828; */
   background-color: #292929;
@@ -26,7 +29,8 @@
   border-radius: 10px;
   width: 280px;
   animation: slowdown 0.2s ease;
-  box-shadow: rgba(0, 0, 0, 0.079) 0px 10px 20px, rgba(0, 0, 0, 0.05) 0px 6px 6px;
+  box-shadow: rgba(0, 0, 0, 0.079) 0px 10px 20px,
+    rgba(0, 0, 0, 0.05) 0px 6px 6px;
 }
 
 @keyframes slowdown {
@@ -76,6 +80,23 @@
   margin-left: 28px;
 }
 
+.c-sec2 {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  line-height: 45px;
+  padding-left: 28px;
+  transition: all 0.15s ease;
+}
+
+.c-sec2:hover {
+  background-color: #f0f0f0;
+}
+
+.c-sec2 > p {
+  margin-left: 28px;
+}
+
 .open {
   margin-left: 35px;
 }
@@ -120,9 +141,23 @@
   margin-left: 35px;
 }
 
-.dark-arrow,
-.light-arrow {
-  color: white;
+.dark-theme2,
+.light-theme2 {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding-left: 25px;
+  transition: all 0.15s ease;
+}
+
+.dark-theme2:hover,
+.light-theme2:hover {
+  background-color: #f0f0f0;
+}
+
+.dark-theme2 > p,
+.light-theme2 > p {
+  margin-left: 35px;
 }
 
 .back-arrow {
@@ -134,4 +169,15 @@
 
 .back-arrow:hover {
   background-color: #3e3e3e;
+}
+
+.back-arroww2 {
+  cursor: pointer;
+  transition: all 0.15s ease;
+  padding: 7px;
+  border-radius: 100%;
+}
+
+.back-arroww2:hover {
+  background-color: #f0f0f0;
 }

@@ -22,8 +22,20 @@ function Trending() {
   });
   const token = localStorage.getItem("userToken");
   const [loading, setLoading] = useState(true);
+  const [theme, setTheme] = useState(() => {
+    const Dark = localStorage.getItem("Dark");
+    return Dark ? JSON.parse(Dark) : true;
+  });
 
   document.title = "Trending - YouTube";
+
+  useEffect(() => {
+    if (theme === false && !window.location.href.includes("/studio")) {
+      document.body.style.backgroundColor = "white";
+    } else if (theme === true && !window.location.href.includes("/studio")) {
+      document.body.style.backgroundColor = "0f0f0f";
+    }
+  }, [theme]);
 
   useEffect(() => {
     if (token) {
@@ -69,10 +81,31 @@ function Trending() {
     };
 
     const menuButton = document.querySelector(".menu");
-    menuButton.addEventListener("click", handleMenuButtonClick);
+    if (menuButton) {
+      menuButton.addEventListener("click", handleMenuButtonClick);
+    }
 
     return () => {
-      menuButton.removeEventListener("click", handleMenuButtonClick);
+      if (menuButton) {
+        menuButton.removeEventListener("click", handleMenuButtonClick);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleMenuButtonClick = () => {
+      setMenuClicked((prevMenuClicked) => !prevMenuClicked);
+    };
+
+    const menuButton = document.querySelector(".menu-light");
+    if (menuButton) {
+      menuButton.addEventListener("click", handleMenuButtonClick);
+    }
+
+    return () => {
+      if (menuButton) {
+        menuButton.removeEventListener("click", handleMenuButtonClick);
+      }
     };
   }, []);
 
@@ -113,16 +146,25 @@ function Trending() {
         <div className="main-trending-section2">
           <div className="trending-top">
             <img src={trending} alt="trending" className="trendingIMG" />
-            <p>Trending</p>
+            <p style={{ color: theme ? "white" : "black" }}>Trending</p>
           </div>
-          <hr className="seperate seperate-three" />
+          <hr
+            className={
+              theme
+                ? "seperate seperate-three"
+                : "seperate seperate-three seperate-light"
+            }
+          />
 
           <div className="trending-videos-section">
             {trendingVideos.length > 0 &&
               trendingVideos.map((element, index) => {
                 return (
                   <>
-                    <SkeletonTheme baseColor="#353535" highlightColor="#444">
+                    <SkeletonTheme
+                      baseColor={theme ? "#353535" : "#aaaaaa"}
+                      highlightColor={theme ? "#444" : "#b6b6b6"}
+                    >
                       <div
                         className="trending-video-data sk-trending-data"
                         style={
@@ -210,7 +252,15 @@ function Trending() {
                       </p>
                       <div className="trending-video-texts">
                         <p className="trending-batch">TRENDING #{index + 1}</p>
-                        <p className="trending-title">{element.Title}</p>
+                        <p
+                          className={
+                            theme
+                              ? "trending-title"
+                              : "trending-title text-light-mode"
+                          }
+                        >
+                          {element.Title}
+                        </p>
                         <div className="trending-oneliner">
                           <div className="trend-channel-name">
                             <p className="t-channelname">{element.uploader}</p>

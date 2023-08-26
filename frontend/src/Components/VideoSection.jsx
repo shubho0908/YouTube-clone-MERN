@@ -990,6 +990,11 @@ function VideoSection() {
     menu.style.display = "none";
   }
 
+  const menu2 = document.querySelector(".menu-light");
+  if (menu2 !== null) {
+    menu2.style.display = "none";
+  }
+
   const formatDescriptionWithLinks = (description) => {
     const linkPattern = /(http|https):\/\/www\.[^\s]+/g;
     const formattedDescription = description.replace(

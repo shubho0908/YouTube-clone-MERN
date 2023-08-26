@@ -109,7 +109,7 @@ function Navbar() {
       <div className={theme === true ? "navbar" : "navbar light-mode"}>
         <div className="left-bar">
           <MenuRoundedIcon
-            className="menu"
+            className={theme ? "menu" : "menu-light"}
             fontSize="large"
             style={{ color: theme ? "white" : "black" }}
           />
@@ -155,7 +155,7 @@ function Navbar() {
         >
           <FiSearch
             fontSize="24px"
-            color="#aaa"
+            color={theme ? "#aaa" : "black"}
             className="second-search"
             onClick={() => setNewSearch(true)}
           />
@@ -165,13 +165,9 @@ function Navbar() {
             placement="bottom"
           >
             <AiOutlineVideoCameraAdd
-              className={
-                theme
-                  ? "icon-btns videocreate"
-                  : "video-light"
-              }
+              className={theme ? "icon-btns videocreate" : "video-light"}
               fontSize="24px"
-              style={{ color: theme ? "rgb(160, 160, 160)" : "black" }}
+              style={{ color: theme ? "white" : "black" }}
               onClick={() => {
                 if (token) {
                   window.location.href = "/studio";
@@ -203,7 +199,10 @@ function Navbar() {
             />
             <p>Signin</p>
           </button>
-          <SkeletonTheme baseColor="#353535" highlightColor="#444">
+          <SkeletonTheme
+            baseColor={theme ? "#353535" : "#aaaaaa"}
+            highlightColor={theme ? "#444" : "#b6b6b6"}
+          >
             <div
               className="navimg"
               style={
@@ -312,7 +311,7 @@ function Navbar() {
         <AccountPop />
       </div>
       <div
-        className="new-searchbar"
+        className={theme ? "new-searchbar" : "new-searchbar2"}
         style={{
           display: newSearch && window.innerWidth <= 940 ? "flex" : "none",
         }}

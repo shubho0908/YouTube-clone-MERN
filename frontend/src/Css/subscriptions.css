@@ -14,7 +14,7 @@
   overflow: scroll;
 }
 
-.sub-channels {
+.sub-channels, .sub-channels2 {
   cursor: pointer;
   margin-top: 25px;
   display: flex;
@@ -30,6 +30,10 @@
   background-color: #333333;
 }
 
+.sub-channels2:hover {
+  background-color: #f0f0f0;
+}
+
 .all-subs-dataaa {
   position: relative;
   left: 300px;
@@ -40,7 +44,6 @@
 
 .sub-channelname {
   margin-top: 12px;
-  color: #aaa;
   width: 70%;
   text-align: center;
 }

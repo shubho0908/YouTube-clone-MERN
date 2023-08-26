@@ -20,7 +20,10 @@ function Subscriptions() {
     return menu ? JSON.parse(menu) : false;
   });
   const [loading, setLoading] = useState(true);
-
+  const [theme, setTheme] = useState(() => {
+    const Dark = localStorage.getItem("Dark");
+    return Dark ? JSON.parse(Dark) : true;
+  });
   const navigate = useNavigate();
   const token = localStorage.getItem("userToken");
   document.title = "Subscriptions - YouTube";
@@ -71,7 +74,7 @@ function Subscriptions() {
               `http://localhost:3000/getuservideos/${userEmail}`
             );
             const myvideos = await response2.json();
-  
+
             // Make sure myvideos is an array before using spread syntax
             if (Array.isArray(myvideos)) {
               newSubsVideos.push(...myvideos);
@@ -85,12 +88,11 @@ function Subscriptions() {
         console.log(error.message);
       }
     };
-  
+
     const interval = setInterval(getUserMail, 200);
-  
+
     return () => clearInterval(interval);
   }, [subscriptions]);
-  
 
   useEffect(() => {
     const handleMenuButtonClick = () => {
@@ -98,12 +100,41 @@ function Subscriptions() {
     };
 
     const menuButton = document.querySelector(".menu");
-    menuButton.addEventListener("click", handleMenuButtonClick);
+    if (menuButton) {
+      menuButton.addEventListener("click", handleMenuButtonClick);
+    }
 
     return () => {
-      menuButton.removeEventListener("click", handleMenuButtonClick);
+      if (menuButton) {
+        menuButton.removeEventListener("click", handleMenuButtonClick);
+      }
     };
   }, []);
+
+  useEffect(() => {
+    const handleMenuButtonClick = () => {
+      setMenuClicked((prevMenuClicked) => !prevMenuClicked);
+    };
+
+    const menuButton = document.querySelector(".menu-light");
+    if (menuButton) {
+      menuButton.addEventListener("click", handleMenuButtonClick);
+    }
+
+    return () => {
+      if (menuButton) {
+        menuButton.removeEventListener("click", handleMenuButtonClick);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (theme === false && !window.location.href.includes("/studio")) {
+      document.body.style.backgroundColor = "white";
+    } else if (theme === true && !window.location.href.includes("/studio")) {
+      document.body.style.backgroundColor = "0f0f0f";
+    }
+  }, [theme]);
 
   //UPDATE VIEWS
 
@@ -128,7 +159,9 @@ function Subscriptions() {
         <LeftPanel />
         <div className="searched-content">
           <img src={nothing} alt="no results" className="nothing-found" />
-          <p className="no-results">No subscriptions found!</p>
+          <p className={theme ? "no-results" : "no-results text-light-mode"}>
+            No subscriptions found!
+          </p>
         </div>
       </>
     );
@@ -148,8 +181,13 @@ function Subscriptions() {
           }
         >
           <div className="subscribed-channels">
-            <p className="main-txxt">Channels</p>
-            <SkeletonTheme baseColor="#353535" highlightColor="#444">
+            <p className={theme ? "main-txxt" : "main-txxt text-light-mode"}>
+              Channels
+            </p>
+            <SkeletonTheme
+              baseColor={theme ? "#353535" : "#aaaaaa"}
+              highlightColor={theme ? "#444" : "#b6b6b6"}
+            >
               <div
                 className="channels-full-list"
                 style={
@@ -174,7 +212,6 @@ function Subscriptions() {
                           style={{ position: "relative", top: "20px" }}
                           className="sk-channelname"
                         />
-                        
                       </div>
                     );
                   })}
@@ -187,7 +224,11 @@ function Subscriptions() {
                     : { display: "none" }
                 }
               >
-                <p className="main-txxt">Videos</p>
+                <p
+                  className={theme ? "main-txxt" : "main-txxt text-light-mode"}
+                >
+                  Videos
+                </p>
 
                 <div className="subs-videos-all">
                   {Array.from({ length: 10 }).map(() => (
@@ -240,18 +281,18 @@ function Subscriptions() {
               className="channels-full-list"
               style={
                 loading === true
-                  ? { visibility: "hidden", display:"none" }
-                  : { visibility: "visible", display:"flex" }
+                  ? { visibility: "hidden", display: "none" }
+                  : { visibility: "visible", display: "flex" }
               }
             >
               {subscriptions.length > 0 &&
                 subscriptions.map((element, index) => {
                   return (
                     <div
-                      className="sub-channels"
+                      className={theme ? "sub-channels" : "sub-channels2"}
                       key={index}
                       onClick={() => {
-                       window.location.href = `/channel/${element.channelID}`
+                        window.location.href = `/channel/${element.channelID}`;
                       }}
                     >
                       <img
@@ -259,7 +300,15 @@ function Subscriptions() {
                         alt="channelDP"
                         className="sub-channelDP"
                       />
-                      <p className="sub-channelname">{element.channelname}</p>
+                      <p
+                        className={
+                          theme
+                            ? "sub-channelname"
+                            : "sub-channelname text-light-mode"
+                        }
+                      >
+                        {element.channelname}
+                      </p>
                     </div>
                   );
                 })}
@@ -273,7 +322,9 @@ function Subscriptions() {
                 : { visibility: "visible", display: "block" }
             }
           >
-            <p className="main-txxt">Videos</p>
+            <p className={theme ? "main-txxt" : "main-txxt text-light-mode"}>
+              Videos
+            </p>
 
             <div className="subs-videos-all">
               {subsVideos.length > 0 &&
@@ -322,7 +373,13 @@ function Subscriptions() {
                               alt="channel-profile"
                             />
                           </div>
-                          <div className="channel-text-data2">
+                          <div
+                            className={
+                              theme
+                                ? "channel-text-data2"
+                                : "channel-text-data2 text-light-mode"
+                            }
+                          >
                             <p
                               className="title2"
                               style={{ marginTop: "10px", width: "88%" }}

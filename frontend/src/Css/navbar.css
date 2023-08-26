@@ -604,6 +604,24 @@ form > input::placeholder {
   animation: BG_FADE 0.4s ease;
 }
 
+.new-searchbar2 {
+  display: none; /*flex*/
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  z-index: 12;
+  width: -webkit-fill-available;
+  height: 100%;
+  backdrop-filter: blur(8px);
+  background: rgb(127, 127, 127);
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.436) 0%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  animation: BG_FADE 0.4s ease;
+}
+
 @keyframes BG_FADE {
   0% {
     opacity: 0;
@@ -696,7 +714,7 @@ form > input::placeholder {
   .youtubeLogo {
     padding-left: 0;
   }
-  .videocreate {
+  .videocreate, .video-light {
     display: none !important;
   }
   .right-bar {
