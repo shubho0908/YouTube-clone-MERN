@@ -638,7 +638,8 @@ function Library() {
                         <div className="extra-playlists-data">
                           <p className="playlist-ownner">
                             <div className="thisvide-oneliner-1">
-                              {element.playlist_owner}
+                              {element.playlist_owner ||
+                                element.playlist_videos[0].video_uploader}
                               <Tooltip
                                 TransitionComponent={Zoom}
                                 title="Verified"
@@ -742,7 +743,8 @@ function Library() {
                         <p>{element.playlist_name}</p>
                         <div className="extra-playlists-data">
                           <p className="playlist-ownner">
-                            {element.playlist_owner}
+                            {element.playlist_owner ||
+                              element.playlist_videos[0].video_uploader}
                           </p>
 
                           <div

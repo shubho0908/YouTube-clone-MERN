@@ -10,3 +10,7 @@
 .text-light-mode {
   color: black !important;
 }
+
+.text-dark-mode {
+  color: white !important;
+}

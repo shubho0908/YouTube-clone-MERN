@@ -637,7 +637,11 @@ function VideoSection() {
   if (!videoData) {
     return (
       <>
-        <div className={theme ? "main-video-section2" :"main-video-section2 light-mode"}>
+        <div
+          className={
+            theme ? "main-video-section2" : "main-video-section2 light-mode"
+          }
+        >
           <div className="spin23">
             <span className="loader2"></span>
           </div>
@@ -672,7 +676,11 @@ function VideoSection() {
   if (!matchedVideo) {
     return (
       <>
-        <div className={theme ? "main-video-section2" : "main-video-section2 light-mode"}>
+        <div
+          className={
+            theme ? "main-video-section2" : "main-video-section2 light-mode"
+          }
+        >
           <div className="spin23">
             <span className="loader2"></span>
           </div>
@@ -1024,7 +1032,11 @@ function VideoSection() {
       <div className="my-panelbar">
         <LeftPanel />
       </div>
-      <div className={theme ? "main-video-section" : "main-video-section light-mode"}>
+      <div
+        className={
+          theme ? "main-video-section" : "main-video-section light-mode"
+        }
+      >
         <div className="left-video-section2">
           <div className="videoframe">
             <video
@@ -1044,9 +1056,17 @@ function VideoSection() {
           >
             {checkTrending === true ? "#TRENDING" : ""}
           </p>
-          <p className={theme ? "vid-title" : "vid-title text-light-mode"}>{Title}</p>
+          <p className={theme ? "vid-title" : "vid-title text-light-mode"}>
+            {Title}
+          </p>
           <div className="some-channel-data">
-            <div className={theme ? "channel-left-data" : "channel-left-data text-light-mode"}>
+            <div
+              className={
+                theme
+                  ? "channel-left-data"
+                  : "channel-left-data text-light-mode"
+              }
+            >
               <img
                 src={ChannelProfile}
                 alt="channelDP"
@@ -1108,7 +1128,11 @@ function VideoSection() {
                 </button>
               ) : (
                 <button
-                  className="subscribe subscribe2"
+                  className={
+                    theme
+                      ? "subscribe subscribe2"
+                      : "subscribe subscribe2-light text-light-mode"
+                  }
                   disabled={email === usermail ? true : false}
                   onClick={() => {
                     SubscribeChannel();
@@ -1133,7 +1157,11 @@ function VideoSection() {
                   placement="top"
                 >
                   <div
-                    className={theme ? "like-data" : "like-data-light text-light-mode"}
+                    className={
+                      theme
+                        ? "like-data"
+                        : "like-data like-data-light text-light-mode"
+                    }
                     onClick={() => {
                       if (token) {
                         likeVideo();
@@ -1146,7 +1174,7 @@ function VideoSection() {
                     {isLiked === true && token ? (
                       <ThumbUpIcon
                         fontSize="medium"
-                        style={{ color: theme ?"white" : "black" }}
+                        style={{ color: theme ? "white" : "black" }}
                         className="like-icon"
                       />
                     ) : (
@@ -1167,7 +1195,11 @@ function VideoSection() {
                   placement="top"
                 >
                   <div
-                    className={theme ? "dislike-data" : "dislike-data-light text-light-mode"}
+                    className={
+                      theme
+                        ? "dislike-data"
+                        : "dislike-data dislike-data-light text-light-mode"
+                    }
                     onClick={() => {
                       if (token) {
                         DislikeVideo();
@@ -1191,7 +1223,9 @@ function VideoSection() {
                 placement="top"
               >
                 <div
-                  className={theme ? "share" : "share-light text-light-mode"}
+                  className={
+                    theme ? "share" : "share share-light text-light-mode"
+                  }
                   onClick={() => {
                     if (shareClicked === false) {
                       setShareClicked(true);
@@ -1204,7 +1238,10 @@ function VideoSection() {
                 >
                   <ReplyIcon
                     fontSize="medium"
-                    style={{ color: theme ? "white" :"black", transform: "rotateY(180deg)" }}
+                    style={{
+                      color: theme ? "white" : "black",
+                      transform: "rotateY(180deg)",
+                    }}
                     className="sharee-icon"
                   />
                   <p className="share-txt">Share</p>
@@ -1215,9 +1252,19 @@ function VideoSection() {
                 title="Download this video"
                 placement="top"
               >
-                <div className="download-btn" onClick={downloadVideo}>
+                <div
+                  className={
+                    theme
+                      ? "download-btn"
+                      : "download-btn download-btn-light text-light-mode"
+                  }
+                  onClick={downloadVideo}
+                >
                   <h3>
-                    <TfiDownload className="download-icon" />
+                    <TfiDownload
+                      className="download-icon"
+                      color={theme ? "white" : "black"}
+                    />
                   </h3>
                   <p className="download-txt">Download</p>
                 </div>
@@ -1228,7 +1275,11 @@ function VideoSection() {
                 placement="top"
               >
                 <div
-                  className="save-later"
+                  className={
+                    theme
+                      ? "save-later"
+                      : "save-later save-later-light text-light-mode"
+                  }
                   onClick={() => {
                     if (token) {
                       saveVideo();
@@ -1241,13 +1292,13 @@ function VideoSection() {
                   {isSaved === true ? (
                     <BookmarkAddedIcon
                       fontSize="medium"
-                      style={{ color: "white" }}
+                      style={{ color: theme ? "white" : "black" }}
                       className="save-video-icon"
                     />
                   ) : (
                     <BookmarkAddOutlinedIcon
                       fontSize="medium"
-                      style={{ color: "white" }}
+                      style={{ color: theme ? "white" : "black" }}
                       className="save-video-icon"
                     />
                   )}
@@ -1260,7 +1311,11 @@ function VideoSection() {
                 placement="top"
               >
                 <div
-                  className="add-playlist"
+                  className={
+                    theme
+                      ? "add-playlist"
+                      : "add-playlist add-playlist-light text-light-mode"
+                  }
                   onClick={() => {
                     if (playlistClicked === false && token) {
                       setPlaylistClicked(true);
@@ -1273,7 +1328,7 @@ function VideoSection() {
                 >
                   <PlaylistAddIcon
                     fontSize="medium"
-                    style={{ color: "white" }}
+                    style={{ color: theme ? "white" : "black" }}
                     className="playlist-iconn"
                   />
 
@@ -1297,7 +1352,11 @@ function VideoSection() {
                     placement="top"
                   >
                     <div
-                      className="like-data"
+                      className={
+                        theme
+                          ? "like-data"
+                          : "like-data like-data-light text-light-mode"
+                      }
                       onClick={() => {
                         if (token) {
                           likeVideo();
@@ -1310,13 +1369,13 @@ function VideoSection() {
                       {isLiked === true && token ? (
                         <ThumbUpIcon
                           fontSize="medium"
-                          style={{ color: "white" }}
+                          style={{ color: theme ? "white" : "black" }}
                           className="like-icon"
                         />
                       ) : (
                         <ThumbUpAltOutlinedIcon
                           fontSize="medium"
-                          style={{ color: "white" }}
+                          style={{ color: theme ? "white" : "black" }}
                           className="like-icon"
                         />
                       )}
@@ -1324,14 +1383,18 @@ function VideoSection() {
                       <p className="like-count">{VideoLikes}</p>
                     </div>
                   </Tooltip>
-                  <div className="vl"></div>
+                  <div className={theme ? "vl" : "vl-light"}></div>
                   <Tooltip
                     TransitionComponent={Zoom}
                     title="I dislike this"
                     placement="top"
                   >
                     <div
-                      className="dislike-data"
+                      className={
+                        theme
+                          ? "dislike-data"
+                          : "dislike-data dislike-data-light text-light-mode"
+                      }
                       onClick={() => {
                         if (token) {
                           DislikeVideo();
@@ -1343,7 +1406,7 @@ function VideoSection() {
                     >
                       <ThumbDownOutlinedIcon
                         fontSize="medium"
-                        style={{ color: "white" }}
+                        style={{ color: theme ? "white" : "black" }}
                         className="dislike-icon"
                       />
                     </div>
@@ -1355,7 +1418,9 @@ function VideoSection() {
                   placement="top"
                 >
                   <div
-                    className="share"
+                    className={
+                      theme ? "share" : "share share-light text-light-mode"
+                    }
                     onClick={() => {
                       if (shareClicked === false) {
                         setShareClicked(true);
@@ -1368,7 +1433,10 @@ function VideoSection() {
                   >
                     <ReplyIcon
                       fontSize="medium"
-                      style={{ color: "white", transform: "rotateY(180deg)" }}
+                      style={{
+                        color: theme ? "white" : "black",
+                        transform: "rotateY(180deg)",
+                      }}
                       className="sharee-icon"
                     />
                     <p className="share-txt">Share</p>
@@ -1379,7 +1447,14 @@ function VideoSection() {
                   title="Download this video"
                   placement="top"
                 >
-                  <div className="download-btn" onClick={downloadVideo}>
+                  <div
+                    className={
+                      theme
+                        ? "download-btn"
+                        : "download-btn download-btn-light text-light-mode"
+                    }
+                    onClick={downloadVideo}
+                  >
                     <h3>
                       <TfiDownload className="download-icon" />
                     </h3>
@@ -1392,7 +1467,11 @@ function VideoSection() {
                   placement="top"
                 >
                   <div
-                    className="save-later"
+                    className={
+                      theme
+                        ? "save-later"
+                        : " save-later save-later-light text-light-mode"
+                    }
                     onClick={() => {
                       if (token) {
                         saveVideo();
@@ -1405,13 +1484,13 @@ function VideoSection() {
                     {isSaved === true ? (
                       <BookmarkAddedIcon
                         fontSize="medium"
-                        style={{ color: "white" }}
+                        style={{ color: theme ? "white" : "black" }}
                         className="save-video-icon"
                       />
                     ) : (
                       <BookmarkAddOutlinedIcon
                         fontSize="medium"
-                        style={{ color: "white" }}
+                        style={{ color: theme ? "white" : "black" }}
                         className="save-video-icon"
                       />
                     )}
@@ -1434,7 +1513,11 @@ function VideoSection() {
                     placement="top"
                   >
                     <div
-                      className="like-data"
+                      className={
+                        theme
+                          ? "like-data"
+                          : "like-data like-data-light text-light-mode"
+                      }
                       onClick={() => {
                         if (token) {
                           likeVideo();
@@ -1447,13 +1530,13 @@ function VideoSection() {
                       {isLiked === true && token ? (
                         <ThumbUpIcon
                           fontSize="medium"
-                          style={{ color: "white" }}
+                          style={{ color: theme ? "white" : "black" }}
                           className="like-icon"
                         />
                       ) : (
                         <ThumbUpAltOutlinedIcon
                           fontSize="medium"
-                          style={{ color: "white" }}
+                          style={{ color: theme ? "white" : "black" }}
                           className="like-icon"
                         />
                       )}
@@ -1461,14 +1544,18 @@ function VideoSection() {
                       <p className="like-count">{VideoLikes}</p>
                     </div>
                   </Tooltip>
-                  <div className="vl"></div>
+                  <div className={theme ? "vl" : "vl-light"}></div>
                   <Tooltip
                     TransitionComponent={Zoom}
                     title="I dislike this"
                     placement="top"
                   >
                     <div
-                      className="dislike-data"
+                      className={
+                        theme
+                          ? "dislike-data"
+                          : "dislike-data dislike-data-light text-light-mode"
+                      }
                       onClick={() => {
                         if (token) {
                           DislikeVideo();
@@ -1480,7 +1567,7 @@ function VideoSection() {
                     >
                       <ThumbDownOutlinedIcon
                         fontSize="medium"
-                        style={{ color: "white" }}
+                        style={{ color: theme ? "white" : "black" }}
                         className="dislike-icon"
                       />
                     </div>
@@ -1492,7 +1579,9 @@ function VideoSection() {
                   placement="top"
                 >
                   <div
-                    className="share"
+                    className={
+                      theme ? "share" : "share share-light text-light-mode"
+                    }
                     onClick={() => {
                       if (shareClicked === false) {
                         setShareClicked(true);
@@ -1505,7 +1594,10 @@ function VideoSection() {
                   >
                     <ReplyIcon
                       fontSize="medium"
-                      style={{ color: "white", transform: "rotateY(180deg)" }}
+                      style={{
+                        color: theme ? "white" : "black",
+                        transform: "rotateY(180deg)",
+                      }}
                       className="sharee-icon"
                     />
                     <p className="share-txt">Share</p>
@@ -1516,7 +1608,14 @@ function VideoSection() {
                   title="Download this video"
                   placement="top"
                 >
-                  <div className="download-btn" onClick={downloadVideo}>
+                  <div
+                    className={
+                      theme
+                        ? "download-btn"
+                        : "download-btn download-btn-light text-light-mode"
+                    }
+                    onClick={downloadVideo}
+                  >
                     <h3>
                       <TfiDownload className="download-icon" />
                     </h3>
@@ -1531,7 +1630,11 @@ function VideoSection() {
                   placement="top"
                 >
                   <div
-                    className="add-playlist"
+                    className={
+                      theme
+                        ? "add-playlist"
+                        : "add-playlist add-playlist-light text-light-mode"
+                    }
                     onClick={() => {
                       if (playlistClicked === false && token) {
                         setPlaylistClicked(true);
@@ -1544,7 +1647,7 @@ function VideoSection() {
                   >
                     <PlaylistAddIcon
                       fontSize="medium"
-                      style={{ color: "white" }}
+                      style={{ color: theme ? "white" : "black" }}
                     />
 
                     <p>Playlist</p>
@@ -1558,7 +1661,11 @@ function VideoSection() {
                   placement="top"
                 >
                   <div
-                    className="save-later"
+                    className={
+                      theme
+                        ? "save-later"
+                        : "save-later save-later-light text-light-mode"
+                    }
                     onClick={() => {
                       if (token) {
                         saveVideo();
@@ -1571,13 +1678,13 @@ function VideoSection() {
                     {isSaved === true ? (
                       <BookmarkAddedIcon
                         fontSize="medium"
-                        style={{ color: "white" }}
+                        style={{ color: theme ? "white" : "black" }}
                         className="save-video-icon"
                       />
                     ) : (
                       <BookmarkAddOutlinedIcon
                         fontSize="medium"
-                        style={{ color: "white" }}
+                        style={{ color: theme ? "white" : "black" }}
                         className="save-video-icon"
                       />
                     )}
@@ -1590,7 +1697,11 @@ function VideoSection() {
                   placement="top"
                 >
                   <div
-                    className="add-playlist"
+                    className={
+                      theme
+                        ? "add-playlist"
+                        : "add-playlist add-playlist-light text-light-mode"
+                    }
                     onClick={() => {
                       if (playlistClicked === false && token) {
                         setPlaylistClicked(true);
@@ -1603,7 +1714,7 @@ function VideoSection() {
                   >
                     <PlaylistAddIcon
                       fontSize="medium"
-                      style={{ color: "white" }}
+                      style={{ color: theme ? "white" : "black" }}
                     />
 
                     <p>Playlist</p>
@@ -1612,7 +1723,13 @@ function VideoSection() {
               </div>
             </div>
           </div>
-          <div className="description-section2">
+          <div
+            className={
+              theme
+                ? "description-section2"
+                : "description-section2-light text-light-mode"
+            }
+          >
             <div className="views-date" style={{ fontSize: "15.5px" }}>
               <p>
                 {views >= 1e9
@@ -1706,7 +1823,11 @@ function VideoSection() {
             </div>
           </div>
           <div className="comments-section first-one">
-            <div className="total-comments">
+            <div
+              className={
+                theme ? "total-comments" : "total-comments text-light-mode"
+              }
+            >
               <p>
                 {comments && comments.length}{" "}
                 {comments && comments.length > 1 ? "Comments" : "Comment"}
@@ -1721,7 +1842,9 @@ function VideoSection() {
                   loading="lazy"
                 />
                 <input
-                  className="comment-input"
+                  className={
+                    theme ? "comment-input" : "comment-input text-light-mode"
+                  }
                   type="text"
                   name="myComment"
                   placeholder="Add a comment..."
@@ -1755,7 +1878,9 @@ function VideoSection() {
             {commentLoading === false ? (
               <div className="comment-btns" style={{ display: Display }}>
                 <button
-                  className="cancel-comment"
+                  className={
+                    theme ? "cancel-comment" : "cancel-comment text-light-mode"
+                  }
                   onClick={() => {
                     setDisplay((prevDisplay) =>
                       prevDisplay === "none" ? "block" : "none"
@@ -1765,7 +1890,7 @@ function VideoSection() {
                   Cancel
                 </button>
                 <button
-                  className="upload-comment"
+                  className={theme ? "upload-comment" : "upload-comment-light"}
                   onClick={() => {
                     if (token && isChannel === true && comment !== "") {
                       setComment("");
@@ -1807,7 +1932,13 @@ function VideoSection() {
                           loading="lazy"
                         />
                       </div>
-                      <div className="comment-right-data">
+                      <div
+                        className={
+                          theme
+                            ? "comment-right-data"
+                            : "comment-right-data text-light-mode"
+                        }
+                      >
                         <div className="comment-row1">
                           <p>{element.username}</p>
                           <p className="comment-time">
@@ -1850,7 +1981,10 @@ function VideoSection() {
                         <div className="comment-interaction">
                           <ThumbUpIcon
                             fontSize="small"
-                            style={{ color: "white", cursor: "pointer" }}
+                            style={{
+                              color: theme ? "white" : "black",
+                              cursor: "pointer",
+                            }}
                             onClick={() => {
                               if (token) {
                                 LikeComment(element._id);
@@ -1874,7 +2008,7 @@ function VideoSection() {
                               style={
                                 email === usermail
                                   ? {
-                                      color: "white",
+                                      color: theme ? "white" : "black",
                                       marginLeft: "20px",
                                       cursor: "pointer",
                                     }
@@ -1920,7 +2054,11 @@ function VideoSection() {
                           {element.user_email === email ||
                           email === usermail ? (
                             <button
-                              className="delete-comment-btn"
+                              className={
+                                theme
+                                  ? "delete-comment-btn"
+                                  : "delete-comment-btn-light text-dark-mode"
+                              }
                               style={{ marginLeft: "17px" }}
                               onClick={() => DeleteComment(element._id)}
                             >
@@ -1939,14 +2077,19 @@ function VideoSection() {
           </div>
         </div>
         {recommendLoading === true && (
-          <SkeletonTheme baseColor="#353535" highlightColor="#444">
+          <SkeletonTheme
+            baseColor={theme ? "#353535" : "#aaaaaa"}
+            highlightColor={theme ? "#444" : "#b6b6b6"}
+          >
             <div className="recommended-section">
               <div className="recommend-tags">
                 <div
                   className={
                     TagSelected === "All"
-                      ? `top-tags tag-one tag-color`
-                      : `top-tags tag-one`
+                      ? `top-tags tag-one ${
+                          theme ? "tag-color" : "tag-color-light"
+                        }`
+                      : `top-tags tag-one ${theme ? "" : "tagcolor-newlight"}`
                   }
                 >
                   <p onClick={() => setTagSelected("All")}>All</p>
@@ -1954,8 +2097,10 @@ function VideoSection() {
                 <div
                   className={
                     TagSelected === uploader
-                      ? `top-tags tag-two tag-color`
-                      : `top-tags tag-two`
+                      ? `top-tags tag-two ${
+                          theme ? "tag-color" : "tag-color-light"
+                        }`
+                      : `top-tags tag-two ${theme ? "" : "tagcolor-newlight"}`
                   }
                   style={{ marginLeft: "10px" }}
                 >
@@ -2024,8 +2169,10 @@ function VideoSection() {
             <div
               className={
                 TagSelected === "All"
-                  ? `top-tags tag-one tag-color`
-                  : `top-tags tag-one`
+                  ? `top-tags tag-one ${
+                      theme ? "tag-color" : "tag-color-light"
+                    }`
+                  : `top-tags tag-one ${theme ? "" : "tagcolor-newlight"}`
               }
             >
               <p onClick={() => setTagSelected("All")}>All</p>
@@ -2033,8 +2180,10 @@ function VideoSection() {
             <div
               className={
                 TagSelected === uploader
-                  ? `top-tags tag-two tag-color`
-                  : `top-tags tag-two`
+                  ? `top-tags tag-two ${
+                      theme ? "tag-color" : "tag-color-light"
+                    }`
+                  : `top-tags tag-two ${theme ? "" : "tagcolor-newlight"}`
               }
               style={{ marginLeft: "10px" }}
             >
@@ -2087,7 +2236,7 @@ function VideoSection() {
                       </p>
                     </div>
                     <div className="video-right-side">
-                      <p className="recommend-vid-title">{Titles[index]}</p>
+                      <p className={theme ? "recommend-vid-title" : "recommend-vid-title text-light-mode"}>{Titles[index]}</p>
                       <div className="recommend-uploader">
                         <p className="recommend-vid-uploader uploader">
                           {Uploader[index]}
@@ -2201,7 +2350,15 @@ function VideoSection() {
                       </p>
                     </div>
                     <div className="video-right-side">
-                      <p className={theme ?"recommend-vid-title" :"recommend-vid-title text-light-mode"}>{element.Title}</p>
+                      <p
+                        className={
+                          theme
+                            ? "recommend-vid-title"
+                            : "recommend-vid-title text-light-mode"
+                        }
+                      >
+                        {element.Title}
+                      </p>
                       <div className="recommend-uploader">
                         <p className="recommend-vid-uploader uploader">
                           {element.uploader}
@@ -2274,7 +2431,11 @@ function VideoSection() {
           {/* SECOND COMMENT OPTIONS  */}
 
           <div className="comments-section second-one">
-            <div className="total-comments">
+            <div
+              className={
+                theme ? "total-comments" : "total-comments text-light-mode"
+              }
+            >
               <p>
                 {comments && comments.length}{" "}
                 {comments && comments.length > 1 ? "Comments" : "Comment"}
@@ -2323,7 +2484,9 @@ function VideoSection() {
             {commentLoading === false ? (
               <div className="comment-btns" style={{ display: Display }}>
                 <button
-                  className="cancel-comment"
+                  className={
+                    theme ? "cancel-comment" : "cancel-comment text-light-mode"
+                  }
                   onClick={() => {
                     setDisplay((prevDisplay) =>
                       prevDisplay === "none" ? "block" : "none"
@@ -2333,7 +2496,7 @@ function VideoSection() {
                   Cancel
                 </button>
                 <button
-                  className="upload-comment"
+                  className={theme ? "upload-comment" : "upload-comment-light"}
                   onClick={() => {
                     if (token && isChannel === true && comment !== "") {
                       setComment("");
@@ -2375,7 +2538,13 @@ function VideoSection() {
                           loading="lazy"
                         />
                       </div>
-                      <div className="comment-right-data">
+                      <div
+                        className={
+                          theme
+                            ? "comment-right-data"
+                            : "comment-right-data text-light-mode"
+                        }
+                      >
                         <div className="comment-row1">
                           <p>{element.username}</p>
                           <p className="comment-time">
@@ -2418,7 +2587,10 @@ function VideoSection() {
                         <div className="comment-interaction">
                           <ThumbUpIcon
                             fontSize="small"
-                            style={{ color: "white", cursor: "pointer" }}
+                            style={{
+                              color: theme ? "white" : "black",
+                              cursor: "pointer",
+                            }}
                             onClick={() => {
                               if (token) {
                                 LikeComment(element._id);
@@ -2442,7 +2614,7 @@ function VideoSection() {
                               style={
                                 email === usermail
                                   ? {
-                                      color: "white",
+                                      color: theme ? "white" : "black",
                                       marginLeft: "20px",
                                       cursor: "pointer",
                                     }
@@ -2488,7 +2660,11 @@ function VideoSection() {
                           {element.user_email === email ||
                           email === usermail ? (
                             <button
-                              className="delete-comment-btn"
+                              className={
+                                theme
+                                  ? "delete-comment-btn"
+                                  : "delete-comment-btn-light text-dark-mode"
+                              }
                               style={{ marginLeft: "17px" }}
                               onClick={() => DeleteComment(element._id)}
                             >

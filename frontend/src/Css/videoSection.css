@@ -137,12 +137,13 @@
 }
 
 .subscribe-light {
+  color: white;
   cursor: pointer;
   border-radius: 25px;
   padding-left: 22px;
   padding-right: 22px;
   border: none;
-  background-color: #f0f0f0;
+  background-color: #1f1f1f;
   font-size: 15px;
   margin-left: 25px;
   transition: all 0.1s ease;
@@ -155,6 +156,10 @@
 .subscribe2 {
   background-color: #272727;
   color: white;
+}
+
+.subscribe2-light {
+  background-color: #f0f0f0;
 }
 
 .vl {
@@ -275,6 +280,19 @@
   transition: all 0.15s ease;
 }
 
+.download-btn-light {
+  cursor: pointer;
+  display: flex;
+  width: 115px;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #f0f0f0;
+  padding: 8px;
+  border-radius: 25px;
+  margin-left: 20px;
+  transition: all 0.15s ease;
+}
+
 .save-later {
   color: white;
   cursor: pointer;
@@ -289,6 +307,19 @@
   transition: all 0.15s ease;
 }
 
+.save-later-light {
+  cursor: pointer;
+  display: flex;
+  width: 75px;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #f0f0f0;
+  padding: 8px;
+  border-radius: 25px;
+  margin-left: 20px;
+  transition: all 0.15s ease;
+}
+
 .add-playlist {
   color: white;
   cursor: pointer;
@@ -297,6 +328,19 @@
   align-items: center;
   justify-content: space-around;
   background-color: #272727;
+  padding: 8px;
+  border-radius: 25px;
+  margin-left: 20px;
+  transition: all 0.15s ease;
+}
+
+.add-playlist-light {
+  cursor: pointer;
+  display: flex;
+  width: 90px;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #f0f0f0;
   padding: 8px;
   border-radius: 25px;
   margin-left: 20px;
@@ -321,6 +365,15 @@
   margin-top: 20px;
   background-color: #272727;
   color: white;
+  width: 98%;
+  padding: 15px;
+  border-radius: 10px;
+  height: fit-content;
+}
+
+.description-section2-light {
+  margin-top: 20px;
+  background-color: #f0f0f0;
   width: 98%;
   padding: 15px;
   border-radius: 10px;
@@ -448,6 +501,21 @@
   transition: all 0.1s ease;
 }
 
+.upload-comment-light {
+  cursor: pointer;
+  color: white;
+  border-radius: 20px;
+  padding-left: 18px;
+  padding-right: 18px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border: none;
+  background-color: #1f1f1f;
+  font-size: 15px;
+  margin-left: 25px;
+  transition: all 0.1s ease;
+}
+
 .delete-comment-btn {
   cursor: pointer;
   border-radius: 20px;
@@ -462,8 +530,24 @@
   transition: all 0.1s ease;
 }
 
+.delete-comment-btn-light {
+  cursor: pointer;
+  border-radius: 20px;
+  padding-left: 15px;
+  padding-right: 15px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  border: none;
+  background-color: #1f1f1f;
+  font-size: 14px;
+  margin-left: 17px;
+  transition: all 0.1s ease;
+}
+
 .delete-comment-btn:active,
-.upload-comment:active {
+.delete-comment-btn-light:active,
+.upload-comment:active,
+.upload-comment-light:active {
   transform: scale(0.9);
 }
 
@@ -905,7 +989,8 @@
     margin-top: 25px;
   }
 
-  .description-section2 {
+  .description-section2,
+  .description-section2-light {
     width: 95.4%;
   }
 }
@@ -967,6 +1052,7 @@
   }
   .comment-interaction > p,
   .delete-comment-btn,
+  .delete-comment-btn-light,
   .like-count {
     font-size: 13px;
   }
@@ -985,7 +1071,8 @@
   .dislike-icon {
     font-size: large !important;
   }
-  .vl {
+  .vl,
+  .vl-light {
     height: 24px;
   }
   .sharee-icon,
@@ -1056,7 +1143,8 @@
     margin-left: 40px;
     font-size: 12.5px;
   }
-  .vl {
+  .vl,
+  .vl-light {
     height: 22.5px;
   }
   .share-txt,
@@ -1177,7 +1265,8 @@
   .add-playlist {
     margin-left: 20px;
   }
-  .description-section2 {
+  .description-section2,
+  .description-section2-light {
     width: 93%;
   }
   .channelDP {
@@ -1229,7 +1318,8 @@
   .video-section23 {
     margin-top: 55px;
   }
-  .upload-comment {
+  .upload-comment,
+  .upload-comment-light {
     padding-left: 12px;
     padding-right: 12px;
     padding-top: 8px;
@@ -1244,6 +1334,7 @@
     width: 88vw;
   }
   .upload-comment,
+  .upload-comment-light,
   .cancel-comment {
     font-size: 12px;
   }
@@ -1267,6 +1358,7 @@
   }
   .comment-interaction > p,
   .delete-comment-btn,
+  .delete-comment-btn-light,
   .like-count {
     font-size: 12px;
   }
