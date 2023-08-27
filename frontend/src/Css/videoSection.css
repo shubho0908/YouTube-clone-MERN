@@ -844,7 +844,16 @@
   transition: all 0.13s ease;
 }
 
-.trending-tag:hover {
+.trending-tag-light {
+  cursor: pointer;
+  color: #0085e2;
+  position: relative;
+  top: 14px;
+  font-size: 18px;
+  transition: all 0.13s ease;
+}
+
+.trending-tag,.trending-tag-light :hover {
   text-decoration: underline;
 }
 

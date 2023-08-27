@@ -29,6 +29,10 @@ function Playlists() {
     return menu ? JSON.parse(menu) : false;
   });
   const [loading, setLoading] = useState(true);
+  const [theme, setTheme] = useState(() => {
+    const Dark = localStorage.getItem("Dark");
+    return Dark ? JSON.parse(Dark) : true;
+  });
 
   const [Email, setEmail] = useState();
   const [playlistsVideos, setPlaylistsVideos] = useState([]);
@@ -140,12 +144,41 @@ function Playlists() {
     };
 
     const menuButton = document.querySelector(".menu");
-    menuButton.addEventListener("click", handleMenuButtonClick);
+    if (menuButton) {
+      menuButton.addEventListener("click", handleMenuButtonClick);
+    }
 
     return () => {
-      menuButton.removeEventListener("click", handleMenuButtonClick);
+      if (menuButton) {
+        menuButton.removeEventListener("click", handleMenuButtonClick);
+      }
     };
   }, []);
+
+  useEffect(() => {
+    const handleMenuButtonClick = () => {
+      setMenuClicked((prevMenuClicked) => !prevMenuClicked);
+    };
+
+    const menuButton = document.querySelector(".menu-light");
+    if (menuButton) {
+      menuButton.addEventListener("click", handleMenuButtonClick);
+    }
+
+    return () => {
+      if (menuButton) {
+        menuButton.removeEventListener("click", handleMenuButtonClick);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (theme === false && !window.location.href.includes("/studio")) {
+      document.body.style.backgroundColor = "white";
+    } else if (theme === true && !window.location.href.includes("/studio")) {
+      document.body.style.backgroundColor = "0f0f0f";
+    }
+  }, [theme]);
 
   const updateViews = async (id) => {
     try {
@@ -327,7 +360,13 @@ function Playlists() {
     <>
       <Navbar />
       <LeftPanel />
-      <div className="liked-video-data">
+      <div
+        className={
+          theme
+            ? "liked-video-data"
+            : "liked-video-data light-mode text-light-mode"
+        }
+      >
         {playlistsVideos && playlistsVideos.length > 0 ? (
           <div
             className="like-video-sections"
@@ -338,7 +377,9 @@ function Playlists() {
             }
           >
             <div
-              className="like-left-section"
+              className={
+                theme ? "like-left-section" : "like-left-section-light"
+              }
               style={{
                 backgroundImage: `url(${playlistsVideos[0]?.thumbnail})`,
               }}
@@ -360,7 +401,10 @@ function Playlists() {
                       }
                     }}
                   >
-                    <SkeletonTheme baseColor="#353535" highlightColor="#444">
+                    <SkeletonTheme
+                      baseColor={theme ? "#353535" : "#aaaaaa"}
+                      highlightColor={theme ? "#444" : "#b6b6b6"}
+                    >
                       <div
                         className="thisimggg"
                         style={
@@ -654,7 +698,10 @@ function Playlists() {
                 </div>
               </div>
             </div>
-            <SkeletonTheme baseColor="#353535" highlightColor="#444">
+            <SkeletonTheme
+              baseColor={theme ? "#353535" : "#aaaaaa"}
+              highlightColor={theme ? "#444" : "#b6b6b6"}
+            >
               <div
                 className="like-right-section"
                 style={
@@ -664,7 +711,14 @@ function Playlists() {
                 {playlistsVideos.length > 0
                   ? playlistsVideos.map((index) => {
                       return (
-                        <div className="liked-all-videos" key={index}>
+                        <div
+                          className={
+                            theme
+                              ? "liked-all-videos"
+                              : "liked-all-videos liked-all-videos-light text-light-mode"
+                          }
+                          key={index}
+                        >
                           <div className="liked-videos-all-data">
                             <Skeleton
                               count={1}
@@ -713,7 +767,14 @@ function Playlists() {
               {playlistsVideos.length > 0
                 ? playlistsVideos.map((element, index) => {
                     return (
-                      <div className="liked-all-videos" key={index}>
+                      <div
+                        className={
+                          theme
+                            ? "liked-all-videos"
+                            : "liked-all-videos liked-all-videos-light text-light-mode"
+                        }
+                        key={index}
+                      >
                         <p style={{ color: "#aaa" }}>{index + 1}</p>
                         <div
                           className="liked-videos-all-data playlistvideos"
@@ -771,7 +832,13 @@ function Playlists() {
 
       {/* SECONDARY PLAYLIST  */}
 
-      <div className="liked-video-data-new">
+      <div
+        className={
+          theme
+            ? "liked-video-data-new"
+            : "liked-video-data-new light-mode text-light-mode"
+        }
+      >
         {playlistsVideos && playlistsVideos.length > 0 ? (
           <div
             className="like-video-sections2"
@@ -782,7 +849,9 @@ function Playlists() {
             }
           >
             <div
-              className="like-left-section2"
+              className={
+                theme ? "like-left-section2" : "like-left-section2-light"
+              }
               style={{
                 backgroundImage: `url(${playlistsVideos[0]?.thumbnail})`,
               }}
@@ -805,7 +874,10 @@ function Playlists() {
                         }
                       }}
                     >
-                      <SkeletonTheme baseColor="#353535" highlightColor="#444">
+                      <SkeletonTheme
+                        baseColor={theme ? "#353535" : "#aaaaaa"}
+                        highlightColor={theme ? "#444" : "#b6b6b6"}
+                      >
                         <div
                           className="thisimggg"
                           style={
@@ -1101,7 +1173,10 @@ function Playlists() {
                 </div>
               </div>
             </div>
-            <SkeletonTheme baseColor="#353535" highlightColor="#444">
+            <SkeletonTheme
+              baseColor={theme ? "#353535" : "#aaaaaa"}
+              highlightColor={theme ? "#444" : "#b6b6b6"}
+            >
               <div
                 className="like-right-section2"
                 style={
@@ -1111,7 +1186,14 @@ function Playlists() {
                 {playlistsVideos.length > 0
                   ? playlistsVideos.map((index) => {
                       return (
-                        <div className="liked-all-videos" key={index}>
+                        <div
+                          className={
+                            theme
+                              ? "liked-all-videos"
+                              : "liked-all-videos liked-all-videos-light text-light-mode"
+                          }
+                          key={index}
+                        >
                           <div className="liked-videos-all-data">
                             <Skeleton
                               count={1}
@@ -1160,7 +1242,14 @@ function Playlists() {
               {playlistsVideos.length > 0
                 ? playlistsVideos.map((element, index) => {
                     return (
-                      <div className="liked-all-videos" key={index}>
+                      <div
+                        className={
+                          theme
+                            ? "liked-all-videos"
+                            : "liked-all-videos liked-all-videos-light text-light-mode"
+                        }
+                        key={index}
+                      >
                         <p style={{ color: "#aaa" }}>{index + 1}</p>
                         <div
                           className="liked-videos-all-data playlistvideos"

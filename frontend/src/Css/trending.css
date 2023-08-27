@@ -95,6 +95,12 @@
   color: #3ea6ff;
 }
 
+.trending-batch-light {
+  margin-bottom: 5px;
+  font-size: 14.5px;
+  color: #0085e2;
+}
+
 /* MEDIA QUERIES */
 
 @media (width<= 1500px) {
@@ -172,7 +178,7 @@
     top: -36px !important;
     right: 0px !important;
   }
-  .trending-batch {
+  .trending-batch,.trending-batch-light {
     font-size: 17.5px;
   }
   .trending-title {
@@ -226,7 +232,7 @@
   .trending-duration {
     left: 82vw;
   }
-  .trending-batch {
+  .trending-batch,.trending-batch-light {
     font-size: 16px;
   }
   .trending-title {

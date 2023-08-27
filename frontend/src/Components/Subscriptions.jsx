@@ -197,7 +197,10 @@ function Subscriptions() {
                 {subscriptions.length > 0 &&
                   subscriptions.map((element, index) => {
                     return (
-                      <div className="sub-channels" key={index}>
+                      <div
+                        className={theme ? "sub-channels" : "sub-channels2"}
+                        key={index}
+                      >
                         <Skeleton
                           count={1}
                           width={100}

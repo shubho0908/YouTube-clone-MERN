@@ -15,6 +15,10 @@ function ChannelHome(prop) {
   const token = localStorage.getItem("userToken");
   const [loading, setLoading] = useState(true);
   const [showHome, setShowHome] = useState(false);
+  const [theme, setTheme] = useState(() => {
+    const Dark = localStorage.getItem("Dark");
+    return Dark ? JSON.parse(Dark) : true;
+  });
 
   useEffect(() => {
     if (token) {
@@ -37,6 +41,14 @@ function ChannelHome(prop) {
       setLoading(false);
     }, 3200);
   }, []);
+
+  useEffect(() => {
+    if (theme === false && !window.location.href.includes("/studio")) {
+      document.body.style.backgroundColor = "white";
+    } else if (theme === true && !window.location.href.includes("/studio")) {
+      document.body.style.backgroundColor = "0f0f0f";
+    }
+  }, [theme]);
 
   useEffect(() => {
     const getUserVideos = async () => {
@@ -95,7 +107,10 @@ function ChannelHome(prop) {
 
   return (
     <>
-      <SkeletonTheme baseColor="#353535" highlightColor="#444">
+      <SkeletonTheme
+        baseColor={theme ? "#353535" : "#aaaaaa"}
+        highlightColor={theme ? "#444" : "#b6b6b6"}
+      >
         <div
           className="myvideos-section sk-myvideos"
           style={{
@@ -199,7 +214,7 @@ function ChannelHome(prop) {
       >
         {myVideos.length > 0 ? (
           <div
-            className="user-video"
+            className={theme ? "user-video" : "user-video text-light-mode"}
             onClick={() => {
               if (token) {
                 updateViews(myVideos[0]._id);
@@ -214,7 +229,11 @@ function ChannelHome(prop) {
               className="myvideos-thumbnail"
               loading="lazy"
             />
-            <p className="myvideo-duration">
+            <p
+              className={
+                theme ? "myvideo-duration" : "myvideo-duration text-dark-mode"
+              }
+            >
               {Math.floor(myVideos[0].videoLength / 60) +
                 ":" +
                 (Math.round(myVideos[0].videoLength % 60) < 10
@@ -231,7 +250,13 @@ function ChannelHome(prop) {
               ) : (
                 <p className="myvideo-title">{myVideos[0].Title}</p>
               )}
-              <div className="video-oneliner-data">
+              <div
+                className={
+                  theme
+                    ? "video-oneliner-data"
+                    : "video-oneliner-data text-light-mode2"
+                }
+              >
                 <div className="videoliner-indata">
                   <p className="mychannelname">{myVideos[0].uploader}</p>
                   <Tooltip
@@ -288,13 +313,25 @@ function ChannelHome(prop) {
                 </div>
               </div>
               {window.innerWidth <= 1180 ? (
-                <p className="myvideo-description">
+                <p
+                  className={
+                    theme
+                      ? "myvideo-description"
+                      : "myvideo-description text-light-mode2"
+                  }
+                >
                   {myVideos[0].Description.length <= 120
                     ? myVideos[0].Description
                     : `${myVideos[0].Description.slice(0, 120)}...`}
                 </p>
               ) : (
-                <p className="myvideo-description">
+                <p
+                  className={
+                    theme
+                      ? "myvideo-description"
+                      : "myvideo-description text-light-mode2"
+                  }
+                >
                   {myVideos[0].Description.length <= 250
                     ? myVideos[0].Description
                     : `${myVideos[0].Description.slice(0, 250)}...`}
@@ -308,7 +345,10 @@ function ChannelHome(prop) {
       </div>
       <br />
 
-      <SkeletonTheme baseColor="#353535" highlightColor="#444">
+      <SkeletonTheme
+        baseColor={theme ? "#353535" : "#aaaaaa"}
+        highlightColor={theme ? "#444" : "#b6b6b6"}
+      >
         <div
           className="myuploaded-videos sk-myupload"
           style={{
@@ -365,7 +405,13 @@ function ChannelHome(prop) {
                         }}
                         className="sk-upload-extra"
                       />
-                      <div className="views-and-time">
+                      <div
+                        className={
+                          theme
+                            ? "views-and-time"
+                            : "views-and-time text-light-mode2"
+                        }
+                      >
                         <Skeleton
                           count={1}
                           width={140}
@@ -395,7 +441,11 @@ function ChannelHome(prop) {
               : "block",
         }}
       >
-        <div className="section-headtxt">
+        <div
+          className={
+            theme ? "section-headtxt" : "section-headtxt text-light-mode"
+          }
+        >
           <div className="inside-headtxt">
             <p className="section-title">Videos</p>
             <div
@@ -412,7 +462,10 @@ function ChannelHome(prop) {
                 }`;
               }}
             >
-              <PlayArrowIcon fontSize="medium" style={{ color: "white" }} />
+              <PlayArrowIcon
+                fontSize="medium"
+                style={{ color: theme ? "white" : "black" }}
+              />
               <p className="playall-txt">Play all</p>
             </div>
           </div>
@@ -463,12 +516,22 @@ function ChannelHome(prop) {
                         : Math.round(element.videoLength % 60))}
                   </p>
                   <div className="video-metadata2">
-                    <p className="video-title2">
+                    <p
+                      className={
+                        theme ? "video-title2" : "video-title2 text-light-mode"
+                      }
+                    >
                       {element.Title.length <= 50
                         ? element.Title
                         : `${element.Title.slice(0, 50)}...`}
                     </p>
-                    <div className="views-and-time">
+                    <div
+                      className={
+                        theme
+                          ? "views-and-time"
+                          : "views-and-time text-light-mode2"
+                      }
+                    >
                       <p className="myviews">
                         {element.views >= 1e9
                           ? `${(element.views / 1e9).toFixed(1)}B`
@@ -515,7 +578,10 @@ function ChannelHome(prop) {
         </div>
       </div>
 
-      <SkeletonTheme baseColor="#353535" highlightColor="#444">
+      <SkeletonTheme
+        baseColor={theme ? "#353535" : "#aaaaaa"}
+        highlightColor={theme ? "#444" : "#b6b6b6"}
+      >
         <div
           className="mypopular-videos sk-mypopular"
           style={{
@@ -559,7 +625,13 @@ function ChannelHome(prop) {
                         style={{ borderRadius: "4px" }}
                         className="sk-popular-title"
                       />
-                      <div className="views-and-time">
+                      <div
+                        className={
+                          theme
+                            ? "views-and-time"
+                            : "views-and-time text-light-mode2"
+                        }
+                      >
                         <Skeleton
                           count={1}
                           width={120}
@@ -585,7 +657,11 @@ function ChannelHome(prop) {
               : "block",
         }}
       >
-        <div className="section-headtxt">
+        <div
+          className={
+            theme ? "section-headtxt" : "section-headtxt text-light-mode"
+          }
+        >
           <div className="inside-headtxt">
             <p className="section-title">Popular videos</p>
             <div
@@ -602,7 +678,10 @@ function ChannelHome(prop) {
                 }`;
               }}
             >
-              <PlayArrowIcon fontSize="medium" style={{ color: "white" }} />
+              <PlayArrowIcon
+                fontSize="medium"
+                style={{ color: theme ? "white" : "black" }}
+              />
               <p className="playall-txt">Play all</p>
             </div>
           </div>
@@ -653,12 +732,22 @@ function ChannelHome(prop) {
                         : Math.round(element.videoLength % 60))}
                   </p>
                   <div className="video-metadata2">
-                    <p className="video-title2">
+                    <p
+                      className={
+                        theme ? "video-title2" : "video-title2 text-light-mode"
+                      }
+                    >
                       {element.Title.length <= 50
                         ? element.Title
                         : `${element.Title.slice(0, 50)}...`}
                     </p>
-                    <div className="views-and-time">
+                    <div
+                      className={
+                        theme
+                          ? "views-and-time"
+                          : "views-and-time text-light-mode2"
+                      }
+                    >
                       <p className="myviews">
                         {element.views >= 1e9
                           ? `${(element.views / 1e9).toFixed(1)}B`
@@ -744,7 +833,10 @@ function ChannelHome(prop) {
 
       {/* AFTER 540 WIDTH  */}
 
-      <SkeletonTheme baseColor="#353535" highlightColor="#444">
+      <SkeletonTheme
+        baseColor={theme ? "#353535" : "#aaaaaa"}
+        highlightColor={theme ? "#444" : "#b6b6b6"}
+      >
         <div className="home-pagevideos sk-homepage">
           <div
             className="myvideos-section sk-myvideos2"
@@ -892,7 +984,13 @@ function ChannelHome(prop) {
                           }}
                           className="sk-upload-extra"
                         />
-                        <div className="views-and-time">
+                        <div
+                          className={
+                            theme
+                              ? "views-and-time"
+                              : "views-and-time text-light-mode2"
+                          }
+                        >
                           <Skeleton
                             count={1}
                             width={140}
@@ -954,7 +1052,13 @@ function ChannelHome(prop) {
                           style={{ borderRadius: "4px" }}
                           className="sk-popular-title"
                         />
-                        <div className="views-and-time">
+                        <div
+                          className={
+                            theme
+                              ? "views-and-time"
+                              : "views-and-time text-light-mode2"
+                          }
+                        >
                           <Skeleton
                             count={1}
                             width={120}
@@ -992,7 +1096,7 @@ function ChannelHome(prop) {
         >
           {myVideos.length > 0 ? (
             <div
-              className="user-video"
+              className={theme ? "user-video" : "user-video text-light-mode"}
               onClick={() => {
                 if (token) {
                   updateViews(myVideos[0]._id);
@@ -1007,7 +1111,11 @@ function ChannelHome(prop) {
                 className="myvideos-thumbnail"
                 loading="lazy"
               />
-              <p className="myvideo-duration">
+              <p
+                className={
+                  theme ? "myvideo-duration" : "myvideo-duration text-dark-mode"
+                }
+              >
                 {Math.floor(myVideos[0].videoLength / 60) +
                   ":" +
                   (Math.round(myVideos[0].videoLength % 60) < 10
@@ -1024,7 +1132,13 @@ function ChannelHome(prop) {
                 ) : (
                   <p className="myvideo-title">{myVideos[0].Title}</p>
                 )}
-                <div className="video-oneliner-data">
+                <div
+                  className={
+                    theme
+                      ? "video-oneliner-data"
+                      : "video-oneliner-data text-light-mode2"
+                  }
+                >
                   <div className="videoliner-indata">
                     <p className="mychannelname">{myVideos[0].uploader}</p>
                     <Tooltip
@@ -1082,13 +1196,25 @@ function ChannelHome(prop) {
                   </div>
                 </div>
                 {window.innerWidth <= 1180 ? (
-                  <p className="myvideo-description">
+                  <p
+                    className={
+                      theme
+                        ? "myvideo-description"
+                        : "myvideo-description text-light-mode2"
+                    }
+                  >
                     {myVideos[0].Description.length <= 120
                       ? myVideos[0].Description
                       : `${myVideos[0].Description.slice(0, 120)}...`}
                   </p>
                 ) : (
-                  <p className="myvideo-description">
+                  <p
+                    className={
+                      theme
+                        ? "myvideo-description"
+                        : "myvideo-description text-light-mode2"
+                    }
+                  >
                     {myVideos[0].Description.length <= 250
                       ? myVideos[0].Description
                       : `${myVideos[0].Description.slice(0, 250)}...`}
@@ -1110,7 +1236,11 @@ function ChannelHome(prop) {
                 : "block",
           }}
         >
-          <div className="section-headtxt">
+          <div
+            className={
+              theme ? "section-headtxt" : "section-headtxt text-light-mode"
+            }
+          >
             <div className="inside-headtxt">
               <p className="section-title">Videos</p>
               <div
@@ -1127,7 +1257,10 @@ function ChannelHome(prop) {
                   }`;
                 }}
               >
-                <PlayArrowIcon fontSize="medium" style={{ color: "white" }} />
+                <PlayArrowIcon
+                  fontSize="medium"
+                  style={{ color: theme ? "white" : "black" }}
+                />
                 <p className="playall-txt">Play all</p>
               </div>
             </div>
@@ -1178,12 +1311,24 @@ function ChannelHome(prop) {
                           : Math.round(element.videoLength % 60))}
                     </p>
                     <div className="video-metadata2">
-                      <p className="video-title2">
+                      <p
+                        className={
+                          theme
+                            ? "video-title2"
+                            : "video-title2 text-light-mode"
+                        }
+                      >
                         {element.Title.length <= 50
                           ? element.Title
                           : `${element.Title.slice(0, 50)}...`}
                       </p>
-                      <div className="views-and-time">
+                      <div
+                        className={
+                          theme
+                            ? "views-and-time"
+                            : "views-and-time text-light-mode2"
+                        }
+                      >
                         <p className="myviews">
                           {element.views >= 1e9
                             ? `${(element.views / 1e9).toFixed(1)}B`
@@ -1241,7 +1386,11 @@ function ChannelHome(prop) {
                 : "block",
           }}
         >
-          <div className="section-headtxt">
+          <div
+            className={
+              theme ? "section-headtxt" : "section-headtxt text-light-mode"
+            }
+          >
             <div className="inside-headtxt">
               <p className="section-title">Popular videos</p>
               <div
@@ -1258,7 +1407,10 @@ function ChannelHome(prop) {
                   }`;
                 }}
               >
-                <PlayArrowIcon fontSize="medium" style={{ color: "white" }} />
+                <PlayArrowIcon
+                  fontSize="medium"
+                  style={{ color: theme ? "white" : "black" }}
+                />
                 <p className="playall-txt">Play all</p>
               </div>
             </div>
@@ -1309,12 +1461,24 @@ function ChannelHome(prop) {
                           : Math.round(element.videoLength % 60))}
                     </p>
                     <div className="video-metadata2">
-                      <p className="video-title2">
+                      <p
+                        className={
+                          theme
+                            ? "video-title2"
+                            : "video-title2 text-light-mode"
+                        }
+                      >
                         {element.Title.length <= 50
                           ? element.Title
                           : `${element.Title.slice(0, 50)}...`}
                       </p>
-                      <div className="views-and-time">
+                      <div
+                        className={
+                          theme
+                            ? "views-and-time"
+                            : "views-and-time text-light-mode2"
+                        }
+                      >
                         <p className="myviews">
                           {element.views >= 1e9
                             ? `${(element.views / 1e9).toFixed(1)}B`

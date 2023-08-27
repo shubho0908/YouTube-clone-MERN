@@ -251,7 +251,13 @@ function Trending() {
                             : Math.round(element.videoLength % 60))}
                       </p>
                       <div className="trending-video-texts">
-                        <p className="trending-batch">TRENDING #{index + 1}</p>
+                        <p
+                          className={
+                            theme ? "trending-batch" : "trending-batch-light"
+                          }
+                        >
+                          TRENDING #{index + 1}
+                        </p>
                         <p
                           className={
                             theme

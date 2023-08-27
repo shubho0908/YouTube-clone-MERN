@@ -1049,7 +1049,7 @@ function VideoSection() {
             </video>
           </div>
           <p
-            className="trending-tag"
+            className={theme ? "trending-tag" : "trending-tag-light"}
             onClick={() => {
               window.location.href = "/trending";
             }}
@@ -2236,7 +2236,15 @@ function VideoSection() {
                       </p>
                     </div>
                     <div className="video-right-side">
-                      <p className={theme ? "recommend-vid-title" : "recommend-vid-title text-light-mode"}>{Titles[index]}</p>
+                      <p
+                        className={
+                          theme
+                            ? "recommend-vid-title"
+                            : "recommend-vid-title text-light-mode"
+                        }
+                      >
+                        {Titles[index]}
+                      </p>
                       <div className="recommend-uploader">
                         <p className="recommend-vid-uploader uploader">
                           {Uploader[index]}

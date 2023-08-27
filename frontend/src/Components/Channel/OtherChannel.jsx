@@ -38,6 +38,10 @@ function OtherChannel() {
   const [Top, setTop] = useState("155px");
   const [coverIMG, setCoverIMG] = useState("");
   const [loading, setLoading] = useState(true);
+  const [theme, setTheme] = useState(() => {
+    const Dark = localStorage.getItem("Dark");
+    return Dark ? JSON.parse(Dark) : true;
+  });
 
   //TOAST FUNCTIONS
 
@@ -178,6 +182,14 @@ function OtherChannel() {
   }, [Section, coverIMG]);
 
   useEffect(() => {
+    if (theme === false && !window.location.href.includes("/studio")) {
+      document.body.style.backgroundColor = "white";
+    } else if (theme === true && !window.location.href.includes("/studio")) {
+      document.body.style.backgroundColor = "0f0f0f";
+    }
+  }, [theme]);
+
+  useEffect(() => {
     const checkSubscription = async () => {
       try {
         const response = await fetch(
@@ -259,7 +271,10 @@ function OtherChannel() {
           }
           style={{ top: Top }}
         >
-          <SkeletonTheme baseColor="#353535" highlightColor="#444">
+          <SkeletonTheme
+            baseColor={theme ? "#353535" : "#aaaaaa"}
+            highlightColor={theme ? "#444" : "#b6b6b6"}
+          >
             <div
               className="channel-top-content"
               style={
@@ -348,7 +363,13 @@ function OtherChannel() {
                 : { visibility: "visible", display: "flex" }
             }
           >
-            <div className="channel-left-content">
+            <div
+              className={
+                theme
+                  ? "channel-left-content"
+                  : "channel-left-content text-light-mode"
+              }
+            >
               <img
                 src={ChannelProfile}
                 alt="channelDP"
@@ -372,7 +393,11 @@ function OtherChannel() {
                       />
                     </Tooltip>
                   </div>
-                  <div className="channel-extra">
+                  <div
+                    className={
+                      theme ? "channel-extra" : "channel-extra text-light-mode2"
+                    }
+                  >
                     <p className="channeluser">@{username && username}</p>
                     <p className="my-subs">
                       {Subscribers && Subscribers} subscribers
@@ -382,7 +407,9 @@ function OtherChannel() {
                     </p>
                   </div>
                   <div
-                    className="more-about"
+                    className={
+                      theme ? "more-about" : "more-about text-light-mode2"
+                    }
                     onClick={() => {
                       localStorage.setItem("Section", "About");
                       window.location.reload();
@@ -429,7 +456,11 @@ function OtherChannel() {
                 ) : (
                   <div className="channel-right-content">
                     <button
-                      className="subscribethis-channel"
+                      className={
+                        theme
+                          ? "subscribethis-channel"
+                          : "subscribethis-channel-light text-dark-mode"
+                      }
                       style={
                         isSubscribed === true
                           ? { display: "none" }
@@ -447,7 +478,11 @@ function OtherChannel() {
                       Subscribe
                     </button>
                     <button
-                      className="subscribethis-channel2"
+                      className={
+                        theme
+                          ? "subscribethis-channel2"
+                          : "subscribethis-channel2-light"
+                      }
                       style={
                         isSubscribed === true
                           ? { display: "block" }
@@ -473,7 +508,7 @@ function OtherChannel() {
             <div className="different-sections">
               {Section === "Home" ? (
                 <p
-                  className="channel-home1"
+                  className={theme ? "channel-home1" : "channel-home2"}
                   onClick={() => {
                     localStorage.setItem("Section", "Home");
                     window.location.reload();
@@ -483,7 +518,9 @@ function OtherChannel() {
                 </p>
               ) : (
                 <p
-                  className="channel-home"
+                  className={
+                    theme ? "channel-home" : "channel-home text-light-mode2"
+                  }
                   onClick={() => {
                     localStorage.setItem("Section", "Home");
                     window.location.reload();
@@ -494,7 +531,7 @@ function OtherChannel() {
               )}
               {Section === "Videos" ? (
                 <p
-                  className="channel-videos1"
+                  className={theme ? "channel-videos1" : "channel-videos2"}
                   style={
                     myVideos && myVideos.message === "USER DOESN'T EXIST"
                       ? { display: "none" }
@@ -509,7 +546,9 @@ function OtherChannel() {
                 </p>
               ) : (
                 <p
-                  className="channel-videos"
+                  className={
+                    theme ? "channel-videos" : "channel-videos text-light-mode2"
+                  }
                   style={
                     myVideos && myVideos.message === "USER DOESN'T EXIST"
                       ? { display: "none" }
@@ -525,7 +564,9 @@ function OtherChannel() {
               )}
               {Section === "Playlists" ? (
                 <p
-                  className="channel-playlists1"
+                  className={
+                    theme ? "channel-playlists1" : "channel-playlists2"
+                  }
                   onClick={() => {
                     localStorage.setItem("Section", "Playlists");
                     window.location.reload();
@@ -535,7 +576,11 @@ function OtherChannel() {
                 </p>
               ) : (
                 <p
-                  className="channel-playlists"
+                  className={
+                    theme
+                      ? "channel-playlists"
+                      : "channel-playlists text-light-mode2"
+                  }
                   onClick={() => {
                     localStorage.setItem("Section", "Playlists");
                     window.location.reload();
@@ -546,7 +591,9 @@ function OtherChannel() {
               )}
               {Section === "Subscriptions" ? (
                 <p
-                  className="channel-subscriptions1"
+                  className={
+                    theme ? "channel-subscriptions1" : "channel-subscriptions2"
+                  }
                   onClick={() => {
                     localStorage.setItem("Section", "Subscriptions");
                     window.location.reload();
@@ -556,7 +603,11 @@ function OtherChannel() {
                 </p>
               ) : (
                 <p
-                  className="channel-subscriptions"
+                  className={
+                    theme
+                      ? "channel-subscriptions"
+                      : "channel-subscriptions text-light-mode2"
+                  }
                   onClick={() => {
                     localStorage.setItem("Section", "Subscriptions");
                     window.location.reload();
@@ -567,7 +618,7 @@ function OtherChannel() {
               )}
               {Section === "About" ? (
                 <p
-                  className="channel-about1"
+                  className={theme ? "channel-about1" : "channel-about2"}
                   onClick={() => {
                     localStorage.setItem("Section", "About");
                     window.location.reload();
@@ -577,7 +628,9 @@ function OtherChannel() {
                 </p>
               ) : (
                 <p
-                  className="channel-about"
+                  className={
+                    theme ? "channel-about" : "channel-about text-light-mode2"
+                  }
                   onClick={() => {
                     localStorage.setItem("Section", "About");
                     window.location.reload();

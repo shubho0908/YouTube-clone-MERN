@@ -48,7 +48,8 @@ body {
   height: 100vh;
 }
 
-.like-left-section {
+.like-left-section,
+.like-left-section-light {
   position: fixed;
   background-size: cover;
   border-radius: 15px;
@@ -67,7 +68,20 @@ body {
   z-index: 1;
 }
 
-.like-left-section2 {
+.like-left-section-light::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 15px;
+
+  z-index: 1;
+}
+
+.like-left-section2,
+.like-left-section2-light {
   position: relative;
   background-size: contain;
   border-top-left-radius: 15px;
@@ -87,6 +101,18 @@ body {
   border-top-right-radius: 15px;
   background: rgb(127, 127, 127);
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.436) 0%, #0f0f0f 100%);
+  z-index: 1;
+}
+
+.like-left-section2-light::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
   z-index: 1;
 }
 
@@ -193,7 +219,7 @@ body {
   top: 50px;
 }
 
-.liked-all-videos {
+.liked-all-videos, .liked-all-videos-light {
   display: flex;
   align-items: center;
   padding: 10px;
@@ -202,6 +228,12 @@ body {
 .liked-all-videos:hover {
   cursor: pointer;
   background-color: #272727;
+  border-radius: 10px;
+}
+
+.liked-all-videos-light:hover {
+  cursor: pointer;
+  background-color: #f0f0f0;
   border-radius: 10px;
 }
 
@@ -540,6 +572,9 @@ body {
   .playlist-first-thumbnail {
     width: 82vw !important;
   }
+  .playvideo-btn {
+    margin-top: 0px;
+  }
 }
 
 @media (width<= 585px) {
@@ -552,7 +587,7 @@ body {
   .first-thumbnail2 {
     width: 80.5vw !important;
   }
-  .liked-all-videos > p {
+  .liked-all-videos > p ,.liked-all-videos-light>p {
     display: none;
   }
   .durationn3 {

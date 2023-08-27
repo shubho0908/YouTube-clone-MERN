@@ -11,6 +11,10 @@
   color: black !important;
 }
 
+.text-light-mode2 {
+  color: rgb(96, 96, 96) !important;
+}
+
 .text-dark-mode {
   color: white !important;
 }

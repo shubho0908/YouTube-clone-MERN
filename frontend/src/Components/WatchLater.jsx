@@ -19,6 +19,10 @@ function WatchLater() {
   const [watchlater, setWatchLater] = useState([]);
   const [VideoViews, setVideoViews] = useState();
   const [loading, setLoading] = useState(true);
+  const [theme, setTheme] = useState(() => {
+    const Dark = localStorage.getItem("Dark");
+    return Dark ? JSON.parse(Dark) : true;
+  });
 
   const navigate = useNavigate();
   const token = localStorage.getItem("userToken");
@@ -35,6 +39,48 @@ function WatchLater() {
       setLoading(false);
     }, 4000);
   }, []);
+
+  useEffect(() => {
+    const handleMenuButtonClick = () => {
+      setMenuClicked((prevMenuClicked) => !prevMenuClicked);
+    };
+
+    const menuButton = document.querySelector(".menu");
+    if (menuButton) {
+      menuButton.addEventListener("click", handleMenuButtonClick);
+    }
+
+    return () => {
+      if (menuButton) {
+        menuButton.removeEventListener("click", handleMenuButtonClick);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleMenuButtonClick = () => {
+      setMenuClicked((prevMenuClicked) => !prevMenuClicked);
+    };
+
+    const menuButton = document.querySelector(".menu-light");
+    if (menuButton) {
+      menuButton.addEventListener("click", handleMenuButtonClick);
+    }
+
+    return () => {
+      if (menuButton) {
+        menuButton.removeEventListener("click", handleMenuButtonClick);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (theme === false && !window.location.href.includes("/studio")) {
+      document.body.style.backgroundColor = "white";
+    } else if (theme === true && !window.location.href.includes("/studio")) {
+      document.body.style.backgroundColor = "0f0f0f";
+    }
+  }, [theme]);
 
   useEffect(() => {
     localStorage.setItem("menuClicked", JSON.stringify(menuClicked));
@@ -59,19 +105,6 @@ function WatchLater() {
 
     return () => clearInterval(interval);
   }, [email]);
-
-  useEffect(() => {
-    const handleMenuButtonClick = () => {
-      setMenuClicked((prevMenuClicked) => !prevMenuClicked);
-    };
-
-    const menuButton = document.querySelector(".menu");
-    menuButton.addEventListener("click", handleMenuButtonClick);
-
-    return () => {
-      menuButton.removeEventListener("click", handleMenuButtonClick);
-    };
-  }, []);
 
   useEffect(() => {
     const getVideos = async () => {
@@ -119,7 +152,13 @@ function WatchLater() {
     <>
       <Navbar />
       <LeftPanel />
-      <div className="liked-video-data">
+      <div
+        className={
+          theme
+            ? "liked-video-data"
+            : "liked-video-data light-mode text-light-mode"
+        }
+      >
         {watchlater.length > 0 ? (
           <div
             className="like-video-sections"
@@ -130,7 +169,9 @@ function WatchLater() {
             }
           >
             <div
-              className="like-left-section"
+              className={
+                theme ? "like-left-section" : "like-left-section-light"
+              }
               style={{
                 backgroundImage: `url(${watchlater[0]?.thumbnailURL})`,
               }}
@@ -152,7 +193,10 @@ function WatchLater() {
                       }
                     }}
                   >
-                    <SkeletonTheme baseColor="#353535" highlightColor="#444">
+                    <SkeletonTheme
+                      baseColor={theme ? "#353535" : "#aaaaaa"}
+                      highlightColor={theme ? "#444" : "#b6b6b6"}
+                    >
                       <div
                         className="thisimggg"
                         style={
@@ -218,7 +262,10 @@ function WatchLater() {
                 </div>
               </div>
             </div>
-            <SkeletonTheme baseColor="#353535" highlightColor="#444">
+            <SkeletonTheme
+              baseColor={theme ? "#353535" : "#aaaaaa"}
+              highlightColor={theme ? "#444" : "#b6b6b6"}
+            >
               <div
                 className="like-right-section sk-right-like"
                 style={
@@ -277,7 +324,14 @@ function WatchLater() {
               {watchlater.length > 0
                 ? watchlater.map((element, index) => {
                     return (
-                      <div className="liked-all-videos" key={index}>
+                      <div
+                        className={
+                          theme
+                            ? "liked-all-videos"
+                            : "liked-all-videos liked-all-videos-light text-light-mode"
+                        }
+                        key={index}
+                      >
                         <p style={{ color: "#aaa" }}>{index + 1}</p>
                         <div
                           className="liked-videos-all-data"
@@ -337,7 +391,13 @@ function WatchLater() {
 
       {/* SECONDARY WATCH LATER */}
 
-      <div className="liked-video-data-new">
+      <div
+        className={
+          theme
+            ? "liked-video-data-new"
+            : "liked-video-data-new light-mode text-light-mode"
+        }
+      >
         {watchlater.length > 0 ? (
           <div
             className="like-video-sections2"
@@ -348,7 +408,9 @@ function WatchLater() {
             }
           >
             <div
-              className="like-left-section2"
+              className={
+                theme ? "like-left-section2" : "like-left-section2-light"
+              }
               style={{
                 backgroundImage: `url(${watchlater[0]?.thumbnailURL})`,
               }}
@@ -371,7 +433,10 @@ function WatchLater() {
                         }
                       }}
                     >
-                      <SkeletonTheme baseColor="#353535" highlightColor="#444">
+                      <SkeletonTheme
+                        baseColor={theme ? "#353535" : "#aaaaaa"}
+                        highlightColor={theme ? "#444" : "#b6b6b6"}
+                      >
                         <div
                           className="thisimggg"
                           style={
@@ -438,7 +503,10 @@ function WatchLater() {
                 </div>
               </div>
             </div>
-            <SkeletonTheme baseColor="#353535" highlightColor="#444">
+            <SkeletonTheme
+              baseColor={theme ? "#353535" : "#aaaaaa"}
+              highlightColor={theme ? "#444" : "#b6b6b6"}
+            >
               <div
                 className="like-right-section  sk-right-like"
                 style={
@@ -448,7 +516,14 @@ function WatchLater() {
                 {watchlater.length > 0
                   ? watchlater.map((element, index) => {
                       return (
-                        <div className="liked-all-videos" key={index}>
+                        <div
+                          className={
+                            theme
+                              ? "liked-all-videos"
+                              : "liked-all-videos liked-all-videos-light text-light-mode"
+                          }
+                          key={index}
+                        >
                           <div className="liked-videos-all-data">
                             <Skeleton
                               count={1}
@@ -497,7 +572,14 @@ function WatchLater() {
               {watchlater.length > 0
                 ? watchlater.map((element, index) => {
                     return (
-                      <div className="liked-all-videos" key={index}>
+                      <div
+                        className={
+                          theme
+                            ? "liked-all-videos"
+                            : "liked-all-videos liked-all-videos-light text-light-mode"
+                        }
+                        key={index}
+                      >
                         <p style={{ color: "#aaa" }}>{index + 1}</p>
                         <div
                           className="liked-videos-all-data2"
