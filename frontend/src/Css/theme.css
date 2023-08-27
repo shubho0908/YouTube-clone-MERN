@@ -18,3 +18,12 @@
 .text-dark-mode {
   color: white !important;
 }
+
+.btn-light-mode {
+  background-color: #f0f0f0 !important;
+  color: black !important;
+}
+
+.light-border1 {
+  border-bottom: 2px solid #bfbfbf65 !important;
+}

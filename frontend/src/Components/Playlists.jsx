@@ -794,7 +794,7 @@ function Playlists() {
                             alt="first-like-thumbnail"
                             loading="lazy"
                           />
-                          <p className="durationn3 playlist-duration">
+                          <p className={theme ? "durationn3 playlist-duration" : "durationn3 playlist-duration text-dark-mode"}>
                             {Math.floor(element.videolength / 60) +
                               ":" +
                               (Math.round(element.videolength % 60) < 10
@@ -1269,7 +1269,7 @@ function Playlists() {
                             alt="first-like-thumbnail"
                             loading="lazy"
                           />
-                          <p className="durationn3 playlist-duration">
+                          <p className={theme ? "durationn3 playlist-duration" : "durationn3 playlist-duration text-dark-mode"}>
                             {Math.floor(element.videolength / 60) +
                               ":" +
                               (Math.round(element.videolength % 60) < 10

@@ -27,6 +27,10 @@ function ChannelPlaylists(prop) {
   const token = localStorage.getItem("userToken");
   const [loading, setLoading] = useState(true);
   const sampleArr = [1, 2, 3, 4];
+  const [theme, setTheme] = useState(() => {
+    const Dark = localStorage.getItem("Dark");
+    return Dark ? JSON.parse(Dark) : true;
+  });
 
   useEffect(() => {
     if (token) {
@@ -76,7 +80,7 @@ function ChannelPlaylists(prop) {
     noPublicPlaylists
   ) {
     return (
-      <p className="no-results" style={{ color: "white", fontSize: "16px" }}>
+      <p className={theme ? "no-results" : "no-results text-light-mode"} style={{ color: "white", fontSize: "16px" }}>
         This channel doesn&apos;t have any playlists.
       </p>
     );
@@ -84,7 +88,10 @@ function ChannelPlaylists(prop) {
 
   return (
     <>
-      <SkeletonTheme baseColor="#353535" highlightColor="#444">
+      <SkeletonTheme
+        baseColor={theme ? "#353535" : "#aaaaaa"}
+        highlightColor={theme ? "#444" : "#b6b6b6"}
+      >
         <div
           className="channel-playlist-section"
           style={
@@ -152,13 +159,19 @@ function ChannelPlaylists(prop) {
         style={
           loading === false
             ? {
-                visibility: "visible",
-                display: "block",
-              }
+              visibility: "visible",
+              display: "block",
+            }
             : { visibility: "hidden", display: "none" }
         }
       >
-        <div className="created-playlist-section">
+        <div
+          className={
+            theme
+              ? "created-playlist-section"
+              : "created-playlist-section text-light-mode"
+          }
+        >
           <p>Created playlists</p>
           <div className="thischannel-playlists">
             {PlaylistData &&
@@ -175,7 +188,7 @@ function ChannelPlaylists(prop) {
                       key={index}
                       style={
                         prop.newmail !== email &&
-                        element.playlist_privacy === "Private"
+                          element.playlist_privacy === "Private"
                           ? { display: "none" }
                           : { display: "block" }
                       }
@@ -197,7 +210,11 @@ function ChannelPlaylists(prop) {
                         </div>
 
                         <div
-                          className="playlist-element"
+                          className={
+                            theme
+                              ? "playlist-element"
+                              : "playlist-element text-dark-mode"
+                          }
                           style={{ backgroundColor }}
                           onClick={() => {
                             window.location.href = `/video/${element.playlist_videos[0].videoID}`;
@@ -216,6 +233,11 @@ function ChannelPlaylists(prop) {
                         <p
                           onClick={() =>
                             (window.location.href = `/playlist/${element._id}`)
+                          }
+                          className={
+                            theme
+                              ? "view-playlist2"
+                              : "view-playlist2 text-light-mode2"
                           }
                         >
                           View full playlist

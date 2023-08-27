@@ -147,7 +147,7 @@
   top: 310px;
   color: white;
   padding-bottom: 30px;
-  border-bottom: 2px solid #5b5d6265 !important;
+  border-bottom: 2px solid #5b5d6265;
 }
 
 .user-video {
@@ -202,7 +202,7 @@
   position: absolute;
   top: 500px;
   padding-bottom: 15px;
-  border-bottom: 2px solid #5b5d6265 !important;
+  border-bottom: 2px solid #5b5d6265;
 }
 
 .mypopular-videos {
@@ -217,13 +217,15 @@
 }
 
 .section-headtxt,
-.playall-videos {
+.playall-videos,
+.playall-videos-light {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.playall-videos {
+.playall-videos,
+.playall-videos-light {
   cursor: pointer;
   margin-left: 15px;
   padding: 5px;
@@ -233,6 +235,10 @@
 
 .playall-videos:hover {
   background-color: #303030;
+}
+
+.playall-videos-light:hover {
+  background-color: #f0f0f0;
 }
 
 .my-all-videos-list,
@@ -373,6 +379,11 @@
   color: #242424;
 }
 
+.active-light {
+  background-color: #1f1f1f !important;
+  color: white !important;
+}
+
 .allvideo-sectionn {
   position: relative;
   top: 100px;
@@ -441,7 +452,6 @@
   border: none;
   background-color: white;
   font-size: 15px;
-  margin-left: 25px;
 }
 
 .subscribethis-channel-light {
@@ -454,7 +464,6 @@
   border: none;
   background-color: #1f1f1f;
   font-size: 15px;
-  margin-left: 25px;
 }
 
 .subscribethis-channel2 {
@@ -468,7 +477,6 @@
   background-color: #272727;
   color: white;
   font-size: 15px;
-  margin-left: 25px;
 }
 
 .subscribethis-channel2-light {
@@ -482,7 +490,6 @@
   background-color: #f0f0f0;
   color: black;
   font-size: 15px;
-  margin-left: 25px;
 }
 
 .channel-desc {
@@ -939,6 +946,28 @@
   animation: rotation 1s linear infinite;
 }
 
+.loader2-light {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: inline-block;
+  border-top: 3px solid #1f1f1f;
+  border-right: 3px solid transparent;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+.loader3-light {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  display: inline-block;
+  border-top: 3px solid #1f1f1f;
+  border-right: 3px solid transparent;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
 .videoliner-indata {
   display: flex;
   align-items: center;
@@ -971,6 +1000,12 @@
 
 .channel-settings {
   background-color: #242424;
+  padding: 12px;
+  border-radius: 100%;
+}
+
+.channel-settings-light {
+  background-color: #f0f0f0;
   padding: 12px;
   border-radius: 100%;
 }
@@ -1233,7 +1268,8 @@
   .mypopular-videos {
     padding-bottom: 120px;
   }
-  .channel-settings {
+  .channel-settings,
+  .channel-settings-light {
     font-size: 23px !important;
   }
   .myvideo-title {
@@ -1344,7 +1380,8 @@
     right: auto;
     margin-top: 15px;
   }
-  .channel-settings {
+  .channel-settings,
+  .channel-settings-light {
     display: none;
   }
   .customize-channel {
@@ -1472,9 +1509,10 @@
     flex-direction: column;
     align-items: center;
   }
-  .subscribethis-channel2, .subscribethis-channel2-light
-  .subscribethis-channel, .subscribethis-channel-light {
-    margin-left: 0px;
+  .subscribethis-channel2,
+  .subscribethis-channel2-light .subscribethis-channel,
+  .subscribethis-channel-light {
+    margin-left: 0px !important;
     width: -webkit-fill-available;
   }
   .channel-top-content {

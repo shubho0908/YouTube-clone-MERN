@@ -11,6 +11,10 @@ function ChannelVideos(prop) {
   const token = localStorage.getItem("userToken");
   const [loading, setLoading] = useState(true);
   const [showDiv, setShowDiv] = useState(false);
+  const [theme, setTheme] = useState(() => {
+    const Dark = localStorage.getItem("Dark");
+    return Dark ? JSON.parse(Dark) : true;
+  });
 
   const navigate = useNavigate();
 
@@ -110,7 +114,11 @@ function ChannelVideos(prop) {
         <div className="video-sorting">
           <button
             className={
-              videosort === "Latest" ? "latest-video active" : "latest-video"
+              videosort === "Latest"
+                ? `latest-video ${theme ? "" : "btn-light-mode"} active${
+                    theme ? "" : "-light"
+                  }`
+                : `latest-video ${theme ? "" : "btn-light-mode"}`
             }
             onClick={() => {
               setVideoSort("Latest");
@@ -120,7 +128,11 @@ function ChannelVideos(prop) {
           </button>
           <button
             className={
-              videosort === "Popular" ? "Popular-video active" : "Popular-video"
+              videosort === "Popular"
+                ? `Popular-video ${theme ? "" : "btn-light-mode"} active${
+                    theme ? "" : "-light"
+                  }`
+                : `Popular-video ${theme ? "" : "btn-light-mode"}`
             }
             onClick={() => {
               setVideoSort("Popular");
@@ -130,7 +142,11 @@ function ChannelVideos(prop) {
           </button>
           <button
             className={
-              videosort === "Oldest" ? "Oldest-video active" : "Oldest-video"
+              videosort === "Oldest"
+                ? `Oldest-video ${theme ? "" : "btn-light-mode"} active${
+                    theme ? "" : "-light"
+                  }`
+                : `Oldest-video ${theme ? "" : "btn-light-mode"}`
             }
             onClick={() => {
               setVideoSort("Oldest");
@@ -139,7 +155,10 @@ function ChannelVideos(prop) {
             Oldest
           </button>
         </div>
-        <SkeletonTheme baseColor="#353535" highlightColor="#444">
+        <SkeletonTheme
+          baseColor={theme ? "#353535" : "#aaaaaa"}
+          highlightColor={theme ? "#444" : "#b6b6b6"}
+        >
           <div
             className="sk-uploadedvideos-sectionall"
             style={loading === true ? { display: "grid" } : { display: "none" }}
@@ -271,13 +290,25 @@ function ChannelVideos(prop) {
                         ? "0" + Math.round(element.videoLength % 60)
                         : Math.round(element.videoLength % 60))}
                   </p>
-                  <div className="videos-metadataa">
+                  <div
+                    className={
+                      theme
+                        ? "videos-metadataa"
+                        : "videos-metadataa text-light-mode"
+                    }
+                  >
                     <p>
                       {element.Title.length <= 50
                         ? element.Title
                         : `${element.Title.slice(0, 50)}...`}
                     </p>
-                    <div className="views-and-time">
+                    <div
+                      className={
+                        theme
+                          ? "views-and-time"
+                          : "views-and-time text-light-mode2"
+                      }
+                    >
                       <p className="myviews">
                         {element.views >= 1e9
                           ? `${(element.views / 1e9).toFixed(1)}B`

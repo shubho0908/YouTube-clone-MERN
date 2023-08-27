@@ -174,7 +174,7 @@
 }
 
 .view-playlist2:hover {
-  color: black;
+  color: black !important;
 }
 
 .private-privacyy {

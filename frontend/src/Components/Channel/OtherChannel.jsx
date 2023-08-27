@@ -425,7 +425,11 @@ function OtherChannel() {
                 {newEmail === Email ? (
                   <div className="channel-right-content channel-dualbtns">
                     <button
-                      className="customize-channel"
+                      className={
+                        theme
+                          ? "customize-channel"
+                          : "customize-channel btn-light-mode"
+                      }
                       onClick={() => {
                         window.location.href = "/studio/customize";
                       }}
@@ -433,7 +437,9 @@ function OtherChannel() {
                       Customize channel
                     </button>
                     <button
-                      className="manage-videos"
+                      className={
+                        theme ? "manage-videos" : "manage-videos btn-light-mode"
+                      }
                       onClick={() => {
                         window.location.href = "/studio/video";
                       }}
@@ -448,8 +454,8 @@ function OtherChannel() {
                     >
                       <RiUserSettingsLine
                         fontSize="28px"
-                        color="white"
-                        className="channel-settings"
+                        color={theme ? "white" : "black"}
+                        className={theme ? "channel-settings" : "channel-settings channel-settings-light"}
                       />
                     </div>
                   </div>
@@ -642,7 +648,7 @@ function OtherChannel() {
             </div>
           </div>
           <br />
-          <hr className="seperate seperate-new" />
+          <hr className={theme ? "seperate seperate-new" : "seperate seperate-new seperate-light"} />
           {Section === "Home" || Section === "" ? (
             <ChannelHome newmail={Email} />
           ) : (
@@ -671,7 +677,7 @@ function OtherChannel() {
       ) : (
         <div className="main-trending-section">
           <div className="spin23" style={{ top: "200px" }}>
-            <span className="loader2"></span>
+            <span className={theme ? "loader2" : "loader2-light"}></span>
           </div>
         </div>
       )}

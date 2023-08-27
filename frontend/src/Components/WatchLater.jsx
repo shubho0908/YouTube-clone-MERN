@@ -353,7 +353,7 @@ function WatchLater() {
                             alt="first-like-thumbnail"
                             loading="lazy"
                           />
-                          <p className="durationn3">
+                          <p className={theme ? "durationn3" : "durationn3 text-dark-mode"}>
                             {Math.floor(element.videoLength / 60) +
                               ":" +
                               (Math.round(element.videoLength % 60) < 10
@@ -601,7 +601,7 @@ function WatchLater() {
                             alt="first-like-thumbnail"
                             loading="lazy"
                           />
-                          <p className="durationn3">
+                          <p className={theme ? "durationn3" : "durationn3 text-dark-mode"}>
                             {Math.floor(element.videoLength / 60) +
                               ":" +
                               (Math.round(element.videoLength % 60) < 10

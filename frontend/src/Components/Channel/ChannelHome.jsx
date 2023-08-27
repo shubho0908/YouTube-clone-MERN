@@ -203,7 +203,7 @@ function ChannelHome(prop) {
         </div>
       </SkeletonTheme>
       <div
-        className="myvideos-section before-channel"
+        className={theme ? "myvideos-section before-channel" : "myvideos-section before-channel light-border1"}
         style={{
           visibility: loading === true ? "hidden" : "visible",
           display:
@@ -432,7 +432,7 @@ function ChannelHome(prop) {
         </div>
       </SkeletonTheme>
       <div
-        className="myuploaded-videos before-channel"
+        className={theme ? "myuploaded-videos before-channel" : "myuploaded-videos before-channel light-border1"}
         style={{
           visibility: loading === true ? "hidden" : "visible",
           display:
@@ -449,7 +449,7 @@ function ChannelHome(prop) {
           <div className="inside-headtxt">
             <p className="section-title">Videos</p>
             <div
-              className="playall-videos"
+              className={theme ? "playall-videos" : "playall-videos-light"}
               onClick={() => {
                 if (token) {
                   updateViews(AllVideos.sort(sortByViews2)[0]._id);
@@ -665,7 +665,7 @@ function ChannelHome(prop) {
           <div className="inside-headtxt">
             <p className="section-title">Popular videos</p>
             <div
-              className="playall-videos"
+              className={theme ? "playall-videos" : "playall-videos-light"}
               onClick={() => {
                 if (token) {
                   updateViews(AllVideos.sort(sortByViews)[0]._id);
@@ -1244,7 +1244,7 @@ function ChannelHome(prop) {
             <div className="inside-headtxt">
               <p className="section-title">Videos</p>
               <div
-                className="playall-videos"
+                className={theme ? "playall-videos" : "playall-videos-light"}
                 onClick={() => {
                   if (token) {
                     updateViews(AllVideos.sort(sortByViews2)[0]._id);
@@ -1394,7 +1394,7 @@ function ChannelHome(prop) {
             <div className="inside-headtxt">
               <p className="section-title">Popular videos</p>
               <div
-                className="playall-videos"
+                className={theme ? "playall-videos" : "playall-videos-light"}
                 onClick={() => {
                   if (token) {
                     updateViews(AllVideos.sort(sortByViews)[0]._id);
