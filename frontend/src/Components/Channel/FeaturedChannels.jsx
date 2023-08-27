@@ -16,7 +16,10 @@ function FeaturedChannels(prop) {
   const [SaveChannel, setSaveChannel] = useState();
   const token = localStorage.getItem("userToken");
   const [loading, setLoading] = useState(true);
-
+  const [theme, setTheme] = useState(() => {
+    const Dark = localStorage.getItem("Dark");
+    return Dark ? JSON.parse(Dark) : true;
+  });
 
   useEffect(() => {
     if (token) {
@@ -121,7 +124,11 @@ function FeaturedChannels(prop) {
       <>
         <div className="featured-channels-sections">
           <div
-            className="featured-channel-btn"
+            className={
+              theme
+                ? "featured-channel-btn"
+                : "featured-channel-btn btn-light-mode"
+            }
             style={
               token && Email === prop.newmail
                 ? { display: "flex" }
@@ -135,7 +142,10 @@ function FeaturedChannels(prop) {
               }
             }}
           >
-            <PlaylistAddIcon fontSize="medium" style={{ color: "white" }} />
+            <PlaylistAddIcon
+              fontSize="medium"
+              style={{ color: theme ? "white" : "black" }}
+            />
             <p>Add channels</p>
           </div>
         </div>
@@ -159,9 +169,19 @@ function FeaturedChannels(prop) {
   ) {
     return (
       <>
-        <div className="featured-channels-sections">
+        <div
+          className={
+            theme
+              ? "featured-channels-sections"
+              : "featured-channels-sections text-light-mode"
+          }
+        >
           <div
-            className="featured-channel-btn"
+            className={
+              theme
+                ? "featured-channel-btn"
+                : "featured-channel-btn btn-light-mode"
+            }
             style={
               token && Email === prop.newmail
                 ? { display: "flex" }
@@ -175,13 +195,20 @@ function FeaturedChannels(prop) {
               }
             }}
           >
-            <PlaylistAddIcon fontSize="medium" style={{ color: "white" }} />
+            <PlaylistAddIcon
+              fontSize="medium"
+              style={{ color: theme ? "white" : "black" }}
+            />
             <p>Add channels</p>
           </div>
           <p
             style={
               prop.newmail !== Email
-                ? { color: "white", marginTop: "10px", marginBottom: "10px" }
+                ? {
+                    color: theme ? "white" : "black",
+                    marginTop: "10px",
+                    marginBottom: "10px",
+                  }
                 : { display: "none" }
             }
           >
@@ -189,7 +216,10 @@ function FeaturedChannels(prop) {
           </p>
         </div>
 
-        <SkeletonTheme baseColor="#353535" highlightColor="#444">
+        <SkeletonTheme
+          baseColor={theme ? "#353535" : "#aaaaaa"}
+          highlightColor={theme ? "#444" : "#b6b6b6"}
+        >
           <div
             className="featured-channels-added"
             style={{
@@ -205,8 +235,10 @@ function FeaturedChannels(prop) {
                   <div
                     className={
                       Email === prop.newmail
-                        ? `featured-channelss featured-channelss-new`
-                        : `featured-channelss`
+                        ? `featured-channelss featured-channelss-new ${
+                            theme ? "" : "feature-light"
+                          }`
+                        : `featured-channelss ${theme ? "" : "feature-light2"}`
                     }
                     key={index}
                   >
@@ -247,32 +279,40 @@ function FeaturedChannels(prop) {
                 <div
                   className={
                     Email === prop.newmail
-                      ? `featured-channelss featured-channelss-new`
-                      : `featured-channelss`
+                      ? `featured-channelss featured-channelss-new ${
+                          theme ? "" : "feature-light"
+                        }`
+                      : `featured-channelss ${theme ? "" : "feature-light2"}`
                   }
                   key={index}
                   onClick={() => {
                     if (Email !== prop.newmail) {
-                     window.location.href = `/channel/${element.channelID}`
+                      window.location.href = `/channel/${element.channelID}`;
                     }
                   }}
                 >
-                  <CloseRoundedIcon
-                    fontSize="large"
-                    style={{ color: "white" }}
-                    className="delete-feature-btn"
-                    onClick={() => {
-                      DeleteChannel(element.channelID);
-                    }}
-                  />
+                  <div className="feature-channel-extra-div">
+                    <CloseRoundedIcon
+                      fontSize="large"
+                      style={{ color: "white" }}
+                      className="delete-feature-btn"
+                      onClick={() => {
+                        DeleteChannel(element.channelID);
+                      }}
+                    />
 
-                  <img
-                    src={element.channelProfile}
-                    alt="channel profile"
-                    className="featured-channel-img"
-                  />
+                    <img
+                      src={element.channelProfile}
+                      alt="channel profile"
+                      className="featured-channel-img"
+                    />
+                  </div>
                   <p
-                    className="feature-channel-name"
+                    className={
+                      theme
+                        ? "feature-channel-name"
+                        : "feature-channel-name text-light-mode"
+                    }
                     style={{ marginTop: "6px" }}
                   >
                     {element.channelname}
@@ -289,7 +329,11 @@ function FeaturedChannels(prop) {
     <>
       <div className="featured-channels-sections">
         <div
-          className="featured-channel-btn"
+          className={
+            theme
+              ? "featured-channel-btn"
+              : "featured-channel-btn btn-light-mode"
+          }
           style={
             token && Email === prop.newmail
               ? { display: "flex" }
@@ -303,7 +347,10 @@ function FeaturedChannels(prop) {
             }
           }}
         >
-          <PlaylistAddIcon fontSize="medium" style={{ color: "white" }} />
+          <PlaylistAddIcon
+            fontSize="medium"
+            style={{ color: theme ? "white" : "black" }}
+          />
           <p>Add channels</p>
         </div>
         <div
@@ -338,7 +385,11 @@ function FeaturedChannels(prop) {
                       className="sub-channel-imgs"
                     />
                     <p
-                      className="feature-channel-name"
+                      className={
+                        theme
+                          ? "feature-channel-name"
+                          : "feature-channel-name text-light-mode"
+                      }
                       style={{ marginTop: "6px" }}
                     >
                       {element.channelname}

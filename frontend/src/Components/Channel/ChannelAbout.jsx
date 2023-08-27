@@ -18,6 +18,10 @@ function ChannelAbout(prop) {
   const [joinedDate, setjoinedDate] = useState();
   const [TotalViews, setTotalViews] = useState(0);
   const [loading, setLoading] = useState(true);
+  const [theme, setTheme] = useState(() => {
+    const Dark = localStorage.getItem("Dark");
+    return Dark ? JSON.parse(Dark) : true;
+  });
 
   const CopiedNotify = () =>
     toast.success("Link Copied!", {
@@ -119,7 +123,7 @@ function ChannelAbout(prop) {
         style={{ width: "-webkit-fill-available" }}
       >
         <div className="spin23" style={{ top: "50px" }}>
-          <span className="loader2"></span>
+          <span className={theme ? "loader2" : "loader2-light"}></span>
         </div>
       </div>
     );
@@ -129,7 +133,13 @@ function ChannelAbout(prop) {
     <>
       <div className="channel-about-section">
         <div className="left-about-section">
-          <div className="channel-description-section">
+          <div
+            className={
+              theme
+                ? "channel-description-section"
+                : "channel-description-section text-light-mode"
+            }
+          >
             <p>Description</p>
             <p
               className="channel-desc"
@@ -138,21 +148,41 @@ function ChannelAbout(prop) {
               }}
             />
           </div>
-          <hr className="seperate-two seperate" />
+          <hr
+            className={
+              theme
+                ? "seperate-two seperate"
+                : "seperate-two seperate seperate-light"
+            }
+          />
 
-          <div className="channel-details">
+          <div
+            className={
+              theme ? "channel-details" : "channel-details text-light-mode"
+            }
+          >
             <p>Details</p>
             <div className="enquiries">
-              <p>For business inquiries:</p>
+              <p className={theme ? "" : "text-light-mode2"}>
+                For business inquiries:
+              </p>
               <a className="channel-email" href={`mailto:${Email}`}>
                 {Email && Email}
               </a>
             </div>
           </div>
-          <hr className="seperate-two seperate" />
+          <hr
+            className={
+              theme
+                ? "seperate-two seperate"
+                : "seperate-two seperate seperate-light"
+            }
+          />
 
           <div
-            className="channel-links"
+            className={
+              theme ? "channel-links" : "channel-links text-light-mode"
+            }
             style={
               (links && links.length > 0 && links[0].facebook) ||
               (links && links.length > 0 && links[0].instagram) ||
@@ -243,9 +273,21 @@ function ChannelAbout(prop) {
             </div>
           </div>
         </div>
-        <div className="right-about-section">
+        <div
+          className={
+            theme
+              ? "right-about-section"
+              : "right-about-section text-light-mode"
+          }
+        >
           <p>Stats</p>
-          <hr className="seperate-three seperate" />
+          <hr
+            className={
+              theme
+                ? "seperate-three seperate"
+                : "seperate-three seperate seperate-light"
+            }
+          />
           {joinedDate ? (
             <p style={{ fontSize: "15px" }}>
               {joined.toLocaleDateString("en-US", {
@@ -257,7 +299,13 @@ function ChannelAbout(prop) {
           ) : (
             <p style={{ fontSize: "15px" }}>No data</p>
           )}
-          <hr className="seperate-three seperate" />
+          <hr
+            className={
+              theme
+                ? "seperate-three seperate"
+                : "seperate-three seperate seperate-light"
+            }
+          />
           <p>
             {typeof TotalViews === "number"
               ? TotalViews.toLocaleString()
@@ -265,7 +313,13 @@ function ChannelAbout(prop) {
             views
           </p>
 
-          <hr className="seperate-three seperate" />
+          <hr
+            className={
+              theme
+                ? "seperate-three seperate"
+                : "seperate-three seperate seperate-light"
+            }
+          />
           <Tooltip
             TransitionComponent={Zoom}
             title="Share channel"
@@ -274,7 +328,10 @@ function ChannelAbout(prop) {
             <ReplyOutlinedIcon
               className="share-playlist"
               fontSize="medium"
-              style={{ color: "white" }}
+              style={{
+                color: theme ? "white" : "black",
+                backgroundColor: theme ? "" : "#f0f0f0",
+              }}
               onClick={handleCopyLink}
             />
           </Tooltip>
@@ -282,11 +339,20 @@ function ChannelAbout(prop) {
 
         {/* SECOND RIGHT SECTION */}
 
-        <div className="right-about-section2">
+        <div
+          className={
+            theme
+              ? "right-about-section2"
+              : "right-about-section2 text-light-mode"
+          }
+        >
           <p>Stats</p>
           <div className="this-aboutall-data">
             <div className="about-joined-date">
-              <AiOutlineInfoCircle fontSize="24px" color="white" />
+              <AiOutlineInfoCircle
+                fontSize="24px"
+                color={theme ? "white" : "black"}
+              />
               {joinedDate ? (
                 <p style={{ fontSize: "15px" }}>
                   {joined.toLocaleDateString("en-US", {
@@ -300,7 +366,7 @@ function ChannelAbout(prop) {
               )}
             </div>
             <div className="about-totalviews-channel">
-              <BiTrendingUp fontSize="24px" color="white" />
+              <BiTrendingUp fontSize="24px" color={theme ? "white" : "black"} />
 
               <p>
                 {typeof TotalViews === "number"
@@ -319,7 +385,7 @@ function ChannelAbout(prop) {
             <ReplyOutlinedIcon
               className="share-playlist"
               fontSize="medium"
-              style={{ color: "white" }}
+              style={{ color: theme ? "white" : "black" }}
               onClick={handleCopyLink}
             />
           </Tooltip>

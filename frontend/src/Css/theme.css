@@ -27,3 +27,16 @@
 .light-border1 {
   border-bottom: 2px solid #bfbfbf65 !important;
 }
+
+.feature-light:hover {
+  background-color: #f0f0f0 !important;
+}
+
+.feature-light2:hover {
+  background-color: #f0f0f0 !important;
+}
+
+.feature-light:hover .featured-channel-img {
+  filter: brightness(0.6) !important;
+  opacity: 1 !important;
+}

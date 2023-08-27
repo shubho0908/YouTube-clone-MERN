@@ -28,6 +28,10 @@ function SearchResults() {
   const [userVideos, setUserVideos] = useState([]);
   const [isSubscribed, setIsSubscribed] = useState();
   const [loading, setLoading] = useState(true);
+  const [theme, setTheme] = useState(() => {
+    const Dark = localStorage.getItem("Dark");
+    return Dark ? JSON.parse(Dark) : true;
+  });
 
   //TOASTS
 
@@ -60,6 +64,14 @@ function SearchResults() {
       setmyEmail(jwtDecode(token).email);
     }
   }, [token]);
+
+  useEffect(() => {
+    if (theme === false && !window.location.href.includes("/studio")) {
+      document.body.style.backgroundColor = "white";
+    } else if (theme === true && !window.location.href.includes("/studio")) {
+      document.body.style.backgroundColor = "0f0f0f";
+    }
+  }, [theme]);
 
   useEffect(() => {
     const getSearchResult = async () => {
@@ -202,7 +214,10 @@ function SearchResults() {
       <>
         <Navbar />
         <LeftPanel />
-        <SkeletonTheme baseColor="#353535" highlightColor="#444">
+        <SkeletonTheme
+          baseColor={theme ? "#353535" : "#aaaaaa"}
+          highlightColor={theme ? "#444" : "#b6b6b6"}
+        >
           <div
             className="searched-content"
             style={{
@@ -218,7 +233,14 @@ function SearchResults() {
                 searchedChannelData.length > 0 &&
                 searchedChannelData.map((element, index) => {
                   return (
-                    <div className="search-channel" key={index}>
+                    <div
+                      className={
+                        theme
+                          ? "search-channel"
+                          : "search-channel text-light-mode"
+                      }
+                      key={index}
+                    >
                       <Skeleton
                         count={1}
                         width={130}
@@ -229,7 +251,12 @@ function SearchResults() {
                       <div className="channel-flex-data">
                         <div className="channel-extra-content">
                           <div className="channel-liner">
-                            <Skeleton count={1} width={300} height={18} className="sk-search-channel-name" />
+                            <Skeleton
+                              count={1}
+                              width={300}
+                              height={18}
+                              className="sk-search-channel-name"
+                            />
                           </div>
 
                           <div className="channel-liner">
@@ -256,7 +283,11 @@ function SearchResults() {
                   );
                 })}
             </div>
-            <hr className="seperate sep2" />
+            <hr
+              className={
+                theme ? "seperate sep2" : "seperate sep2 seperate-light"
+              }
+            />
             <div className="thischannel-videos-section">
               {searchedChannelData &&
                 searchedChannelData.length > 0 &&
@@ -282,12 +313,34 @@ function SearchResults() {
                             top: "4px",
                           }}
                         >
-                          <Skeleton count={1} width={420} height={18} className="sk-search-title" />
+                          <Skeleton
+                            count={1}
+                            width={420}
+                            height={18}
+                            className="sk-search-title"
+                          />
 
-                          <div className="thisvideo-onliner">
-                            <Skeleton count={1} width={180} height={18} className="sk-search-videodata" />
+                          <div
+                            className={
+                              theme
+                                ? "thisvideo-onliner"
+                                : "thisvideo-onliner text-light-mode2"
+                            }
+                          >
+                            <Skeleton
+                              count={1}
+                              width={180}
+                              height={18}
+                              className="sk-search-videodata"
+                            />
                           </div>
-                          <div className="thisvideo-channel">
+                          <div
+                            className={
+                              theme
+                                ? "thisvideo-channel"
+                                : "thisvideo-channel text-light-mode2"
+                            }
+                          >
                             <Skeleton
                               count={1}
                               width={30}
@@ -336,7 +389,14 @@ function SearchResults() {
               searchedChannelData.length > 0 &&
               searchedChannelData.map((element, index) => {
                 return (
-                  <div className="search-channel" key={index}>
+                  <div
+                    className={
+                      theme
+                        ? "search-channel"
+                        : "search-channel text-light-mode"
+                    }
+                    key={index}
+                  >
                     <img
                       src={element.channelProfile}
                       alt="channelDP"
@@ -371,14 +431,28 @@ function SearchResults() {
                         </div>
 
                         <div className="channel-liner">
-                          <p className="new-email">
+                          <p
+                            className={
+                              theme ? "new-email" : "new-email text-light-mode2"
+                            }
+                          >
                             {userEmail && "@" + userEmail.split("@")[0]}
                           </p>
-                          <p className="new-subs">
+                          <p
+                            className={
+                              theme ? "new-subs" : "new-subs text-light-mode2"
+                            }
+                          >
                             {element.subscribers} subscribers
                           </p>
                         </div>
-                        <p className="new-desc search-desc">
+                        <p
+                          className={
+                            theme
+                              ? "new-desc search-desc"
+                              : "new-desc search-desc text-light-mode2"
+                          }
+                        >
                           {" "}
                           {element.channelDescription.length <= 100
                             ? element.channelDescription
@@ -391,7 +465,11 @@ function SearchResults() {
                         ) : (
                           <>
                             <button
-                              className="subscribethis-channel"
+                              className={
+                                theme
+                                  ? "subscribethis-channel"
+                                  : "subscribethis-channel-light text-dark-mode"
+                              }
                               style={
                                 isSubscribed === true
                                   ? { display: "none" }
@@ -414,7 +492,11 @@ function SearchResults() {
                               Subscribe
                             </button>
                             <button
-                              className="subscribethis-channel2"
+                              className={
+                                theme
+                                  ? "subscribethis-channel2"
+                                  : "subscribethis-channel2-light"
+                              }
                               style={
                                 isSubscribed === true
                                   ? { display: "block" }
@@ -442,7 +524,11 @@ function SearchResults() {
                   </div>
                 );
               })}
-            <hr className="seperate sep2" />
+            <hr
+              className={
+                theme ? "seperate sep2" : "seperate sep2 seperate-light"
+              }
+            />
           </div>
           <div className="thischannel-videos-section">
             <p
@@ -489,7 +575,13 @@ function SearchResults() {
                             : Math.round(element.videoLength % 60))}
                       </p>
                       <div className="thischannel-video-data">
-                        <p className="thisvideo-title">
+                        <p
+                          className={
+                            theme
+                              ? "thisvideo-title"
+                              : "thisvideo-title text-light-mode"
+                          }
+                        >
                           {window.innerWidth <= 1200 ? (
                             <p>
                               {element.Title.length <= 50
@@ -500,15 +592,21 @@ function SearchResults() {
                             <p>{element.Title}</p>
                           )}
                         </p>
-                        <div className="thisvideo-onliner">
+                        <div
+                          className={
+                            theme
+                              ? "thisvideo-onliner"
+                              : "thisvideo-onliner text-light-mode2"
+                          }
+                        >
                           <p className="thisvideo-views">
                             {element.views >= 1e9
                               ? `${(element.views / 1e9).toFixed(1)}B`
                               : element.views >= 1e6
-                                ? `${(element.views / 1e6).toFixed(1)}M`
-                                : element.views >= 1e3
-                                  ? `${(element.views / 1e3).toFixed(1)}K`
-                                  : element.views}{" "}
+                              ? `${(element.views / 1e6).toFixed(1)}M`
+                              : element.views >= 1e3
+                              ? `${(element.views / 1e3).toFixed(1)}K`
+                              : element.views}{" "}
                             views
                           </p>
                           <p className="thisvideo-uploaded-date">
@@ -548,7 +646,13 @@ function SearchResults() {
                             })()}
                           </p>
                         </div>
-                        <div className="thisvideo-channel">
+                        <div
+                          className={
+                            theme
+                              ? "thisvideo-channel"
+                              : "thisvideo-channel text-light-mode2"
+                          }
+                        >
                           <img
                             src={element.ChannelProfile}
                             alt="profile"
@@ -571,13 +675,25 @@ function SearchResults() {
                           </Tooltip>
                         </div>
                         {window.innerWidth <= 970 ? (
-                          <p className="thisvideo-desc">
+                          <p
+                            className={
+                              theme
+                                ? "thisvideo-desc"
+                                : "thisvideo-desc text-light-mode2"
+                            }
+                          >
                             {element.Description.length <= 50
                               ? element.Description
                               : `${element.Description.slice(0, 50)}...`}
                           </p>
                         ) : (
-                          <p className="thisvideo-desc">
+                          <p
+                            className={
+                              theme
+                                ? "thisvideo-desc"
+                                : "thisvideo-desc text-light-mode2"
+                            }
+                          >
                             {element.Description.length <= 120
                               ? element.Description
                               : `${element.Description.slice(0, 120)}...`}
@@ -592,7 +708,13 @@ function SearchResults() {
                         />
                         <div className="new-channel-data-right">
                           <div className="thisvideos-top-right">
-                            <p className="thisvideo-title">
+                            <p
+                              className={
+                                theme
+                                  ? "thisvideo-title"
+                                  : "thisvideo-title text-light-mode"
+                              }
+                            >
                               {window.innerWidth <= 1200 ? (
                                 <p>
                                   {element.Title.length <= 50
@@ -605,7 +727,13 @@ function SearchResults() {
                             </p>
                           </div>
                           <div className="thisvideos-bottom-right">
-                            <div className="thisvideo-onliner">
+                            <div
+                              className={
+                                theme
+                                  ? "thisvideo-onliner"
+                                  : "thisvideo-onliner text-light-mode2"
+                              }
+                            >
                               <p className="thischannel-name">
                                 {element.uploader}
                               </p>
@@ -619,7 +747,7 @@ function SearchResults() {
                                   style={{
                                     color: "rgb(138, 138, 138)",
                                     marginLeft: "6px",
-                                    marginRight: "6px"
+                                    marginRight: "6px",
                                   }}
                                   className="channelVerify"
                                 />
@@ -629,17 +757,18 @@ function SearchResults() {
                                 {element.views >= 1e9
                                   ? `${(element.views / 1e9).toFixed(1)}B`
                                   : element.views >= 1e6
-                                    ? `${(element.views / 1e6).toFixed(1)}M`
-                                    : element.views >= 1e3
-                                      ? `${(element.views / 1e3).toFixed(1)}K`
-                                      : element.views}{" "}
+                                  ? `${(element.views / 1e6).toFixed(1)}M`
+                                  : element.views >= 1e3
+                                  ? `${(element.views / 1e3).toFixed(1)}K`
+                                  : element.views}{" "}
                                 views
                               </p>
                               <p className="thisvideo-uploaded-date">
                                 &#x2022;{" "}
                                 {(() => {
                                   const timeDifference =
-                                    new Date() - new Date(element.uploaded_date);
+                                    new Date() -
+                                    new Date(element.uploaded_date);
                                   const minutes = Math.floor(
                                     timeDifference / 60000
                                   );
@@ -676,13 +805,25 @@ function SearchResults() {
                         </div>
 
                         {window.innerWidth <= 970 ? (
-                          <p className="thisvideo-desc">
+                          <p
+                            className={
+                              theme
+                                ? "thisvideo-desc"
+                                : "thisvideo-desc text-light-mode2"
+                            }
+                          >
                             {element.Description.length <= 50
                               ? element.Description
                               : `${element.Description.slice(0, 50)}...`}
                           </p>
                         ) : (
-                          <p className="thisvideo-desc">
+                          <p
+                            className={
+                              theme
+                                ? "thisvideo-desc"
+                                : "thisvideo-desc text-light-mode2"
+                            }
+                          >
                             {element.Description.length <= 120
                               ? element.Description
                               : `${element.Description.slice(0, 120)}...`}
@@ -772,7 +913,10 @@ function SearchResults() {
       <>
         <Navbar />
         <LeftPanel />
-        <SkeletonTheme baseColor="#353535" highlightColor="#444">
+        <SkeletonTheme
+          baseColor={theme ? "#353535" : "#aaaaaa"}
+          highlightColor={theme ? "#444" : "#b6b6b6"}
+        >
           <div
             className="searched-content"
             style={{
@@ -806,12 +950,34 @@ function SearchResults() {
                             top: "4px",
                           }}
                         >
-                          <Skeleton count={1} width={420} height={18} className="sk-search-title" />
+                          <Skeleton
+                            count={1}
+                            width={420}
+                            height={18}
+                            className="sk-search-title"
+                          />
 
-                          <div className="thisvideo-onliner">
-                            <Skeleton count={1} width={180} height={18} className="sk-search-videodata" />
+                          <div
+                            className={
+                              theme
+                                ? "thisvideo-onliner"
+                                : "thisvideo-onliner text-light-mode2"
+                            }
+                          >
+                            <Skeleton
+                              count={1}
+                              width={180}
+                              height={18}
+                              className="sk-search-videodata"
+                            />
                           </div>
-                          <div className="thisvideo-channel">
+                          <div
+                            className={
+                              theme
+                                ? "thisvideo-channel"
+                                : "thisvideo-channel text-light-mode2"
+                            }
+                          >
                             <Skeleton
                               count={1}
                               width={30}
@@ -858,7 +1024,11 @@ function SearchResults() {
             {searchedVideoData &&
               searchedVideoData.length > 0 &&
               searchedVideoData.map((element, index) => {
-                <hr className="seperate sep2" />;
+                <hr
+                  className={
+                    theme ? "seperate sep2" : "seperate sep2 seperate-light"
+                  }
+                />;
                 return (
                   <div
                     className="searched-video-alldata"
@@ -887,7 +1057,13 @@ function SearchResults() {
                           : Math.round(element.videoLength % 60))}
                     </p>
                     <div className="thischannel-video-data">
-                      <p className="thisvideo-title">
+                      <p
+                        className={
+                          theme
+                            ? "thisvideo-title"
+                            : "thisvideo-title text-light-mode"
+                        }
+                      >
                         {window.innerWidth <= 1200 ? (
                           <p>
                             {element.Title.length <= 50
@@ -898,15 +1074,21 @@ function SearchResults() {
                           <p>{element.Title}</p>
                         )}
                       </p>
-                      <div className="thisvideo-onliner">
+                      <div
+                        className={
+                          theme
+                            ? "thisvideo-onliner"
+                            : "thisvideo-onliner text-light-mode2"
+                        }
+                      >
                         <p className="thisvideo-views">
                           {element.views >= 1e9
                             ? `${(element.views / 1e9).toFixed(1)}B`
                             : element.views >= 1e6
-                              ? `${(element.views / 1e6).toFixed(1)}M`
-                              : element.views >= 1e3
-                                ? `${(element.views / 1e3).toFixed(1)}K`
-                                : element.views}{" "}
+                            ? `${(element.views / 1e6).toFixed(1)}M`
+                            : element.views >= 1e3
+                            ? `${(element.views / 1e3).toFixed(1)}K`
+                            : element.views}{" "}
                           views
                         </p>
                         <p className="thisvideo-uploaded-date">
@@ -940,7 +1122,13 @@ function SearchResults() {
                           })()}
                         </p>
                       </div>
-                      <div className="thisvideo-channel">
+                      <div
+                        className={
+                          theme
+                            ? "thisvideo-channel"
+                            : "thisvideo-channel text-light-mode2"
+                        }
+                      >
                         <img
                           src={element.ChannelProfile}
                           alt="profile"
@@ -963,13 +1151,25 @@ function SearchResults() {
                         </Tooltip>
                       </div>
                       {window.innerWidth <= 970 ? (
-                        <p className="thisvideo-desc">
+                        <p
+                          className={
+                            theme
+                              ? "thisvideo-desc"
+                              : "thisvideo-desc text-light-mode2"
+                          }
+                        >
                           {element.Description.length <= 50
                             ? element.Description
                             : `${element.Description.slice(0, 50)}...`}
                         </p>
                       ) : (
-                        <p className="thisvideo-desc">
+                        <p
+                          className={
+                            theme
+                              ? "thisvideo-desc"
+                              : "thisvideo-desc text-light-mode2"
+                          }
+                        >
                           {element.Description.length <= 120
                             ? element.Description
                             : `${element.Description.slice(0, 120)}...`}
@@ -984,7 +1184,13 @@ function SearchResults() {
                       />
                       <div className="new-channel-data-right">
                         <div className="thisvideos-top-right">
-                          <p className="thisvideo-title">
+                          <p
+                            className={
+                              theme
+                                ? "thisvideo-title"
+                                : "thisvideo-title text-light-mode"
+                            }
+                          >
                             {window.innerWidth <= 1200 ? (
                               <p>
                                 {element.Title.length <= 50
@@ -997,7 +1203,13 @@ function SearchResults() {
                           </p>
                         </div>
                         <div className="thisvideos-bottom-right">
-                          <div className="thisvideo-onliner">
+                          <div
+                            className={
+                              theme
+                                ? "thisvideo-onliner"
+                                : "thisvideo-onliner text-light-mode2"
+                            }
+                          >
                             <p className="thischannel-name">
                               {element.uploader}
                             </p>
@@ -1011,7 +1223,7 @@ function SearchResults() {
                                 style={{
                                   color: "rgb(138, 138, 138)",
                                   marginLeft: "6px",
-                                  marginRight: "6px"
+                                  marginRight: "6px",
                                 }}
                                 className="channelVerify"
                               />
@@ -1021,10 +1233,10 @@ function SearchResults() {
                               {element.views >= 1e9
                                 ? `${(element.views / 1e9).toFixed(1)}B`
                                 : element.views >= 1e6
-                                  ? `${(element.views / 1e6).toFixed(1)}M`
-                                  : element.views >= 1e3
-                                    ? `${(element.views / 1e3).toFixed(1)}K`
-                                    : element.views}{" "}
+                                ? `${(element.views / 1e6).toFixed(1)}M`
+                                : element.views >= 1e3
+                                ? `${(element.views / 1e3).toFixed(1)}K`
+                                : element.views}{" "}
                               views
                             </p>
                             <p className="thisvideo-uploaded-date">
@@ -1068,13 +1280,25 @@ function SearchResults() {
                       </div>
 
                       {window.innerWidth <= 970 ? (
-                        <p className="thisvideo-desc">
+                        <p
+                          className={
+                            theme
+                              ? "thisvideo-desc"
+                              : "thisvideo-desc text-light-mode2"
+                          }
+                        >
                           {element.Description.length <= 50
                             ? element.Description
                             : `${element.Description.slice(0, 50)}...`}
                         </p>
                       ) : (
-                        <p className="thisvideo-desc">
+                        <p
+                          className={
+                            theme
+                              ? "thisvideo-desc"
+                              : "thisvideo-desc text-light-mode2"
+                          }
+                        >
                           {element.Description.length <= 120
                             ? element.Description
                             : `${element.Description.slice(0, 120)}...`}
@@ -1102,7 +1326,10 @@ function SearchResults() {
         <LeftPanel />
 
         {/* EDIT HERE  */}
-        <SkeletonTheme baseColor="#353535" highlightColor="#444">
+        <SkeletonTheme
+          baseColor={theme ? "#353535" : "#aaaaaa"}
+          highlightColor={theme ? "#444" : "#b6b6b6"}
+        >
           <div
             className="searched-content"
             style={{
@@ -1118,7 +1345,14 @@ function SearchResults() {
                 searchedChannelData.length > 0 &&
                 searchedChannelData.map((element, index) => {
                   return (
-                    <div className="search-channel" key={index}>
+                    <div
+                      className={
+                        theme
+                          ? "search-channel"
+                          : "search-channel text-light-mode"
+                      }
+                      key={index}
+                    >
                       <Skeleton
                         count={1}
                         width={130}
@@ -1129,7 +1363,12 @@ function SearchResults() {
                       <div className="channel-flex-data">
                         <div className="channel-extra-content">
                           <div className="channel-liner">
-                            <Skeleton count={1} width={300} height={18} className="sk-search-channel-name" />
+                            <Skeleton
+                              count={1}
+                              width={300}
+                              height={18}
+                              className="sk-search-channel-name"
+                            />
                           </div>
 
                           <div className="channel-liner">
@@ -1155,13 +1394,21 @@ function SearchResults() {
                     </div>
                   );
                 })}
-              <hr className="seperate sep2" />
+              <hr
+                className={
+                  theme ? "seperate sep2" : "seperate sep2 seperate-light"
+                }
+              />
             </div>
             <div className="searched-videos-section">
               {searchedVideoData &&
                 searchedVideoData.length > 0 &&
                 searchedVideoData.map((element, index) => {
-                  <hr className="seperate sep2" />;
+                  <hr
+                    className={
+                      theme ? "seperate sep2" : "seperate sep2 seperate-light"
+                    }
+                  />;
                   return (
                     <div className="sk-thischannel-all-data" key={index}>
                       <Skeleton
@@ -1180,12 +1427,34 @@ function SearchResults() {
                           top: "4px",
                         }}
                       >
-                        <Skeleton count={1} width={420} height={18} className="sk-search-title" />
+                        <Skeleton
+                          count={1}
+                          width={420}
+                          height={18}
+                          className="sk-search-title"
+                        />
 
-                        <div className="thisvideo-onliner">
-                          <Skeleton count={1} width={180} height={18} className="sk-search-videodata" />
+                        <div
+                          className={
+                            theme
+                              ? "thisvideo-onliner"
+                              : "thisvideo-onliner text-light-mode2"
+                          }
+                        >
+                          <Skeleton
+                            count={1}
+                            width={180}
+                            height={18}
+                            className="sk-search-videodata"
+                          />
                         </div>
-                        <div className="thisvideo-channel">
+                        <div
+                          className={
+                            theme
+                              ? "thisvideo-channel"
+                              : "thisvideo-channel text-light-mode2"
+                          }
+                        >
                           <Skeleton
                             count={1}
                             width={30}
@@ -1234,7 +1503,14 @@ function SearchResults() {
               searchedChannelData.length > 0 &&
               searchedChannelData.map((element, index) => {
                 return (
-                  <div className="search-channel" key={index}>
+                  <div
+                    className={
+                      theme
+                        ? "search-channel"
+                        : "search-channel text-light-mode"
+                    }
+                    key={index}
+                  >
                     <img
                       src={element.channelProfile}
                       alt="channelDP"
@@ -1269,14 +1545,28 @@ function SearchResults() {
                         </div>
 
                         <div className="channel-liner">
-                          <p className="new-email">
+                          <p
+                            className={
+                              theme ? "new-email" : "new-email text-light-mode2"
+                            }
+                          >
                             {userEmail && "@" + userEmail.split("@")[0]}
                           </p>
-                          <p className="new-subs">
+                          <p
+                            className={
+                              theme ? "new-subs" : "new-subs text-light-mode2"
+                            }
+                          >
                             {element.subscribers} subscribers
                           </p>
                         </div>
-                        <p className="new-desc search-desc">
+                        <p
+                          className={
+                            theme
+                              ? "new-desc search-desc"
+                              : "new-desc search-desc text-light-mode2"
+                          }
+                        >
                           {" "}
                           {element.channelDescription.length <= 100
                             ? element.channelDescription
@@ -1289,7 +1579,11 @@ function SearchResults() {
                         ) : (
                           <>
                             <button
-                              className="subscribethis-channel"
+                              className={
+                                theme
+                                  ? "subscribethis-channel"
+                                  : "subscribethis-channel-light text-dark-mode"
+                              }
                               style={
                                 isSubscribed === true
                                   ? { display: "none" }
@@ -1312,7 +1606,11 @@ function SearchResults() {
                               Subscribe
                             </button>
                             <button
-                              className="subscribethis-channel2"
+                              className={
+                                theme
+                                  ? "subscribethis-channel2"
+                                  : "subscribethis-channel2-light"
+                              }
                               style={
                                 isSubscribed === true
                                   ? { display: "block" }
@@ -1340,13 +1638,21 @@ function SearchResults() {
                   </div>
                 );
               })}
-            <hr className="seperate sep2" />
+            <hr
+              className={
+                theme ? "seperate sep2" : "seperate sep2 seperate-light"
+              }
+            />
           </div>
           <div className="searched-videos-section">
             {searchedVideoData &&
               searchedVideoData.length > 0 &&
               searchedVideoData.map((element, index) => {
-                <hr className="seperate sep2" />;
+                <hr
+                  className={
+                    theme ? "seperate sep2" : "seperate sep2 seperate-light"
+                  }
+                />;
                 return (
                   <div
                     className="searched-video-alldata"
@@ -1375,7 +1681,13 @@ function SearchResults() {
                           : Math.round(element.videoLength % 60))}
                     </p>
                     <div className="thischannel-video-data">
-                      <p className="thisvideo-title">
+                      <p
+                        className={
+                          theme
+                            ? "thisvideo-title"
+                            : "thisvideo-title text-light-mode"
+                        }
+                      >
                         {window.innerWidth <= 1200 ? (
                           <p>
                             {element.Title.length <= 50
@@ -1386,15 +1698,21 @@ function SearchResults() {
                           <p>{element.Title}</p>
                         )}
                       </p>
-                      <div className="thisvideo-onliner">
+                      <div
+                        className={
+                          theme
+                            ? "thisvideo-onliner"
+                            : "thisvideo-onliner text-light-mode2"
+                        }
+                      >
                         <p className="thisvideo-views">
                           {element.views >= 1e9
                             ? `${(element.views / 1e9).toFixed(1)}B`
                             : element.views >= 1e6
-                              ? `${(element.views / 1e6).toFixed(1)}M`
-                              : element.views >= 1e3
-                                ? `${(element.views / 1e3).toFixed(1)}K`
-                                : element.views}{" "}
+                            ? `${(element.views / 1e6).toFixed(1)}M`
+                            : element.views >= 1e3
+                            ? `${(element.views / 1e3).toFixed(1)}K`
+                            : element.views}{" "}
                           views
                         </p>
                         <p className="thisvideo-uploaded-date">
@@ -1428,7 +1746,13 @@ function SearchResults() {
                           })()}
                         </p>
                       </div>
-                      <div className="thisvideo-channel">
+                      <div
+                        className={
+                          theme
+                            ? "thisvideo-channel"
+                            : "thisvideo-channel text-light-mode2"
+                        }
+                      >
                         <img
                           src={element.ChannelProfile}
                           alt="profile"
@@ -1451,13 +1775,25 @@ function SearchResults() {
                         </Tooltip>
                       </div>
                       {window.innerWidth <= 970 ? (
-                        <p className="thisvideo-desc">
+                        <p
+                          className={
+                            theme
+                              ? "thisvideo-desc"
+                              : "thisvideo-desc text-light-mode2"
+                          }
+                        >
                           {element.Description.length <= 50
                             ? element.Description
                             : `${element.Description.slice(0, 50)}...`}
                         </p>
                       ) : (
-                        <p className="thisvideo-desc">
+                        <p
+                          className={
+                            theme
+                              ? "thisvideo-desc"
+                              : "thisvideo-desc text-light-mode2"
+                          }
+                        >
                           {element.Description.length <= 120
                             ? element.Description
                             : `${element.Description.slice(0, 120)}...`}
@@ -1471,98 +1807,122 @@ function SearchResults() {
                         className="thischannelDP"
                       />
                       <div className="new-channel-data-right">
-                      <div className="thisvideos-top-right">
-                        <p className="thisvideo-title">
-                          {window.innerWidth <= 1200 ? (
-                            <p>
-                              {element.Title.length <= 50
-                                ? element.Title
-                                : `${element.Title.slice(0, 50)}..`}
-                            </p>
-                          ) : (
-                            <p>{element.Title}</p>
-                          )}
-                        </p>
-                      </div>
-                      <div className="thisvideos-bottom-right">
-                        <div className="thisvideo-onliner">
-                          <p className="thischannel-name">
-                            {element.uploader}
-                          </p>
-                          <Tooltip
-                            TransitionComponent={Zoom}
-                            title="Verified"
-                            placement="top"
+                        <div className="thisvideos-top-right">
+                          <p
+                            className={
+                              theme
+                                ? "thisvideo-title"
+                                : "thisvideo-title text-light-mode"
+                            }
                           >
-                            <CheckCircleIcon
-                              fontSize="100px"
-                              style={{
-                                color: "rgb(138, 138, 138)",
-                                marginLeft: "6px",
-                                marginRight: "6px"
-                              }}
-                              className="channelVerify"
-                            />
-                          </Tooltip>
-                          &#x2022;
-                          <p className="thisvideo-views">
-                            {element.views >= 1e9
-                              ? `${(element.views / 1e9).toFixed(1)}B`
-                              : element.views >= 1e6
-                                ? `${(element.views / 1e6).toFixed(1)}M`
-                                : element.views >= 1e3
-                                  ? `${(element.views / 1e3).toFixed(1)}K`
-                                  : element.views}{" "}
-                            views
-                          </p>
-                          <p className="thisvideo-uploaded-date">
-                            &#x2022;{" "}
-                            {(() => {
-                              const timeDifference =
-                                new Date() - new Date(element.uploaded_date);
-                              const minutes = Math.floor(
-                                timeDifference / 60000
-                              );
-                              const hours = Math.floor(
-                                timeDifference / 3600000
-                              );
-                              const days = Math.floor(
-                                timeDifference / 86400000
-                              );
-                              const weeks = Math.floor(
-                                timeDifference / 604800000
-                              );
-                              const years = Math.floor(
-                                timeDifference / 31536000000
-                              );
-
-                              if (minutes < 1) {
-                                return "just now";
-                              } else if (minutes < 60) {
-                                return `${minutes} mins ago`;
-                              } else if (hours < 24) {
-                                return `${hours} hours ago`;
-                              } else if (days < 7) {
-                                return `${days} days ago`;
-                              } else if (weeks < 52) {
-                                return `${weeks} weeks ago`;
-                              } else {
-                                return `${years} years ago`;
-                              }
-                            })()}
+                            {window.innerWidth <= 1200 ? (
+                              <p>
+                                {element.Title.length <= 50
+                                  ? element.Title
+                                  : `${element.Title.slice(0, 50)}..`}
+                              </p>
+                            ) : (
+                              <p>{element.Title}</p>
+                            )}
                           </p>
                         </div>
-                      </div>
+                        <div className="thisvideos-bottom-right">
+                          <div
+                            className={
+                              theme
+                                ? "thisvideo-onliner"
+                                : "thisvideo-onliner text-light-mode2"
+                            }
+                          >
+                            <p className="thischannel-name">
+                              {element.uploader}
+                            </p>
+                            <Tooltip
+                              TransitionComponent={Zoom}
+                              title="Verified"
+                              placement="top"
+                            >
+                              <CheckCircleIcon
+                                fontSize="100px"
+                                style={{
+                                  color: "rgb(138, 138, 138)",
+                                  marginLeft: "6px",
+                                  marginRight: "6px",
+                                }}
+                                className="channelVerify"
+                              />
+                            </Tooltip>
+                            &#x2022;
+                            <p className="thisvideo-views">
+                              {element.views >= 1e9
+                                ? `${(element.views / 1e9).toFixed(1)}B`
+                                : element.views >= 1e6
+                                ? `${(element.views / 1e6).toFixed(1)}M`
+                                : element.views >= 1e3
+                                ? `${(element.views / 1e3).toFixed(1)}K`
+                                : element.views}{" "}
+                              views
+                            </p>
+                            <p className="thisvideo-uploaded-date">
+                              &#x2022;{" "}
+                              {(() => {
+                                const timeDifference =
+                                  new Date() - new Date(element.uploaded_date);
+                                const minutes = Math.floor(
+                                  timeDifference / 60000
+                                );
+                                const hours = Math.floor(
+                                  timeDifference / 3600000
+                                );
+                                const days = Math.floor(
+                                  timeDifference / 86400000
+                                );
+                                const weeks = Math.floor(
+                                  timeDifference / 604800000
+                                );
+                                const years = Math.floor(
+                                  timeDifference / 31536000000
+                                );
+
+                                if (minutes < 1) {
+                                  return "just now";
+                                } else if (minutes < 60) {
+                                  return `${minutes} mins ago`;
+                                } else if (hours < 24) {
+                                  return `${hours} hours ago`;
+                                } else if (days < 7) {
+                                  return `${days} days ago`;
+                                } else if (weeks < 52) {
+                                  return `${weeks} weeks ago`;
+                                } else {
+                                  return `${years} years ago`;
+                                }
+                              })()}
+                            </p>
+                          </div>
+                        </div>
                       </div>
 
                       {window.innerWidth <= 970 ? (
-                        <p className="thisvideo-desc">
+                        <p
+                          className={
+                            theme
+                              ? "thisvideo-desc"
+                              : "thisvideo-desc text-light-mode2"
+                          }
+                        >
                           {element.Description.length <= 50
                             ? element.Description
                             : `${element.Description.slice(0, 50)}...`}
                         </p>
                       ) : (
-                        <p className="thisvideo-desc">
+                        <p
+                          className={
+                            theme
+                              ? "thisvideo-desc"
+                              : "thisvideo-desc text-light-mode2"
+                          }
+                        >
                           {element.Description.length <= 120
                             ? element.Description
                             : `${element.Description.slice(0, 120)}...`}

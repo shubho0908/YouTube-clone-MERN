@@ -643,7 +643,7 @@ function VideoSection() {
           }
         >
           <div className="spin23">
-            <span className="loader2"></span>
+            <span className={theme ? "loader2" : "loader2-light"}></span>
           </div>
         </div>
       </>
@@ -682,7 +682,7 @@ function VideoSection() {
           }
         >
           <div className="spin23">
-            <span className="loader2"></span>
+            <span className={theme ? "loader2" : "loader2-light"}></span>
           </div>
         </div>
       </>
@@ -1871,7 +1871,7 @@ function VideoSection() {
                   className="spin22"
                   style={{ position: "relative", top: "20px" }}
                 >
-                  <div className="loader2"></div>
+                  <div className={theme ? "loader2" : "loader2-light"}></div>
                 </div>
               </div>
             )}
@@ -2485,7 +2485,7 @@ function VideoSection() {
                   className="spin22"
                   style={{ position: "relative", top: "20px" }}
                 >
-                  <div className="loader2"></div>
+                  <div className={theme ? "loader2" : "loader2-light"}></div>
                 </div>
               </div>
             )}

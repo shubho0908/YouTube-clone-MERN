@@ -784,6 +784,12 @@
   transition: all 0.15s ease;
 }
 
+.feature-channel-extra-div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .created-all-playlistss {
   cursor: pointer;
   margin-top: 20px;
@@ -1606,7 +1612,7 @@
     top: 420px;
   }
   .featured-channels-added {
-    top: 490px !important;
+    top: 470px !important;
   }
 
   .channel-about-section {

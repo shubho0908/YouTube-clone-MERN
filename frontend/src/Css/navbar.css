@@ -708,7 +708,7 @@ form > input::placeholder {
 }
 
 @media (max-width: 650px) {
-  .menu {
+  .menu, .menu-light {
     display: none !important;
   }
   .youtubeLogo {
