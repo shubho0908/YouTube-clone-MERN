@@ -279,7 +279,10 @@ function Library() {
         }}
       >
         {/* SKELETON WATCH LATER  */}
-        <SkeletonTheme baseColor="#353535" highlightColor="#444">
+        <SkeletonTheme
+          baseColor={theme ? "#353535" : "#aaaaaa"}
+          highlightColor={theme ? "#444" : "#b6b6b6"}
+        >
           <div
             className="watchlater-library"
             style={{
@@ -329,10 +332,16 @@ function Library() {
           }}
         >
           <div className="top-watchlater-library">
-            <div className="top-watch-left">
+            <div
+              className={
+                theme
+                  ? "top-watch-left"
+                  : "top-watch-left text-light-mode light-mode"
+              }
+            >
               <WatchLaterOutlinedIcon
                 fontSize="medium"
-                style={{ color: "white" }}
+                style={{ color: theme ? "white" : "black" }}
               />
               <p>Watch later</p>
               <p>{watchlater && watchlater.length}</p>
@@ -350,7 +359,13 @@ function Library() {
               ""
             )}
           </div>
-          <div className="watchlater-library-videos">
+          <div
+            className={
+              theme
+                ? "watchlater-library-videos"
+                : "watchlater-library-videos light-mode"
+            }
+          >
             {watchLaterArray &&
               watchLaterArray.map((element, index) => {
                 return (
@@ -443,7 +458,7 @@ function Library() {
         </div>
 
         <hr
-          className="seperate"
+          className={theme ? "seperate" : "seperate-light"}
           style={
             (PlaylistData && PlaylistData !== "No playlists available...") ||
             (savedPlaylist && savedPlaylist.length > 0)
@@ -453,7 +468,10 @@ function Library() {
         />
 
         {/* SKELETON PLAYLIST  */}
-        <SkeletonTheme baseColor="#353535" highlightColor="#444">
+        <SkeletonTheme
+          baseColor={theme ? "#353535" : "#aaaaaa"}
+          highlightColor={theme ? "#444" : "#b6b6b6"}
+        >
           <div
             className="playlists-library"
             style={{
@@ -541,10 +559,16 @@ function Library() {
           }}
         >
           <div className="topplaylist-section">
-            <div className="playlistt-left">
+            <div
+              className={
+                theme
+                  ? "playlistt-left"
+                  : "playlistt-left text-light-mode light-mode"
+              }
+            >
               <PlaylistPlayOutlinedIcon
                 fontSize="medium"
-                style={{ color: "white" }}
+                style={{ color: theme ? "white" : "black" }}
               />
               <p>Playlists</p>
               <p>{savedPlaylist.length + PlaylistData.length}</p>
@@ -603,7 +627,13 @@ function Library() {
                         />
                         <p>{element.playlist_videos.length} videos</p>
                       </div>
-                      <div className="playlistt-details">
+                      <div
+                        className={
+                          theme
+                            ? "playlistt-details"
+                            : "playlistt-details light-mode"
+                        }
+                      >
                         <p>{element.playlist_name}</p>
                         <div className="extra-playlists-data">
                           <p className="playlist-ownner">
@@ -626,7 +656,11 @@ function Library() {
                           </p>
 
                           <div
-                            className="private-privacyy"
+                            className={
+                              theme
+                                ? "private-privacyy"
+                                : "private-privacyy-light"
+                            }
                             style={
                               element.playlist_privacy === "Private"
                                 ? { display: "flex" }
@@ -635,7 +669,7 @@ function Library() {
                           >
                             <LockOutlinedIcon
                               fontSize="small"
-                              style={{ color: "#aaa" }}
+                              style={{ color: theme ? "#aaa" : "black" }}
                               className="privateone"
                             />
                             <p>Private</p>
@@ -645,7 +679,7 @@ function Library() {
                           onClick={() =>
                             (window.location.href = `/playlist/${element._id}`)
                           }
-                          className="view-playlist"
+                          className={theme ? "view-playlist" : "view-playlist2"}
                         >
                           View full playlist
                         </p>
@@ -712,7 +746,11 @@ function Library() {
                           </p>
 
                           <div
-                            className="private-privacyy"
+                            className={
+                              theme
+                                ? "private-privacyy"
+                                : "private-privacyy-light"
+                            }
                             style={
                               element.playlist_privacy === "Private"
                                 ? { display: "flex" }
@@ -721,7 +759,7 @@ function Library() {
                           >
                             <LockOutlinedIcon
                               fontSize="small"
-                              style={{ color: "#aaa" }}
+                              style={{ color: theme ? "#aaa" : "black" }}
                             />
                             <p>Private</p>
                           </div>
@@ -730,7 +768,7 @@ function Library() {
                           onClick={() =>
                             (window.location.href = `/playlist/${element._id}`)
                           }
-                          className="view-playlist"
+                          className={theme ? "view-playlist" : "view-playlist2"}
                         >
                           View full playlist
                         </p>
@@ -741,7 +779,7 @@ function Library() {
           </div>
         </div>
         <hr
-          className="seperate"
+          className={theme ? "seperate" : "seperate-light"}
           style={
             LikedVideosArray && LikedVideosArray !== "NO DATA"
               ? { display: "block" }
@@ -750,7 +788,10 @@ function Library() {
         />
 
         {/* SKELETON LIKE VIDEOS  */}
-        <SkeletonTheme baseColor="#353535" highlightColor="#444">
+        <SkeletonTheme
+          baseColor={theme ? "#353535" : "#aaaaaa"}
+          highlightColor={theme ? "#444" : "#b6b6b6"}
+        >
           <div
             className="likedvideos-library"
             style={{ display: LibraryLoading ? "block" : "none" }}
@@ -797,10 +838,14 @@ function Library() {
           }}
         >
           <div className="top-watchlater-library">
-            <div className="top-like-lefttt">
+            <div
+              className={
+                theme ? "top-like-lefttt" : "top-like-lefttt text-light-mode"
+              }
+            >
               <ThumbUpOutlinedIcon
                 fontSize="medium"
-                style={{ color: "white" }}
+                style={{ color: theme ? "white" : "black" }}
               />
               <p>Liked videos</p>
               <p>{videolike && videolike.length}</p>
@@ -841,7 +886,13 @@ function Library() {
                           ? "0" + Math.round(element.videoLength % 60)
                           : Math.round(element.videoLength % 60))}
                     </p>
-                    <div className="thislibrary-video-details">
+                    <div
+                      className={
+                        theme
+                          ? "thislibrary-video-details"
+                          : "thislibrary-video-details light-mode"
+                      }
+                    >
                       <p>
                         {element.Title && element.Title.length <= 46
                           ? element.Title

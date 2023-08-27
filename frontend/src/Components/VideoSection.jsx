@@ -60,6 +60,10 @@ function VideoSection() {
   const [seeDesc, setSeeDesc] = useState(false);
   const [commentLoading, setCommentLoading] = useState(false);
   const [commentOpacity, setCommentOpacity] = useState(1);
+  const [theme, setTheme] = useState(() => {
+    const Dark = localStorage.getItem("Dark");
+    return Dark ? JSON.parse(Dark) : true;
+  });
 
   //EXTRAS
 
@@ -163,6 +167,14 @@ function VideoSection() {
       setEmail(jwtDecode(token).email);
     }
   }, [token]);
+
+  useEffect(() => {
+    if (theme === false && !window.location.href.includes("/studio")) {
+      document.body.style.backgroundColor = "white";
+    } else if (theme === true && !window.location.href.includes("/studio")) {
+      document.body.style.backgroundColor = "0f0f0f";
+    }
+  }, [theme]);
 
   useEffect(() => {
     const handleClick = () => {
@@ -625,7 +637,7 @@ function VideoSection() {
   if (!videoData) {
     return (
       <>
-        <div className="main-video-section2">
+        <div className={theme ? "main-video-section2" :"main-video-section2 light-mode"}>
           <div className="spin23">
             <span className="loader2"></span>
           </div>
@@ -660,7 +672,7 @@ function VideoSection() {
   if (!matchedVideo) {
     return (
       <>
-        <div className="main-video-section2">
+        <div className={theme ? "main-video-section2" : "main-video-section2 light-mode"}>
           <div className="spin23">
             <span className="loader2"></span>
           </div>
@@ -1012,7 +1024,7 @@ function VideoSection() {
       <div className="my-panelbar">
         <LeftPanel />
       </div>
-      <div className="main-video-section">
+      <div className={theme ? "main-video-section" : "main-video-section light-mode"}>
         <div className="left-video-section2">
           <div className="videoframe">
             <video
@@ -1032,9 +1044,9 @@ function VideoSection() {
           >
             {checkTrending === true ? "#TRENDING" : ""}
           </p>
-          <p className="vid-title">{Title}</p>
+          <p className={theme ? "vid-title" : "vid-title text-light-mode"}>{Title}</p>
           <div className="some-channel-data">
-            <div className="channel-left-data">
+            <div className={theme ? "channel-left-data" : "channel-left-data text-light-mode"}>
               <img
                 src={ChannelProfile}
                 alt="channelDP"
@@ -1076,7 +1088,7 @@ function VideoSection() {
               </div>
               {isSubscribed === false || !token ? (
                 <button
-                  className="subscribe"
+                  className={theme ? "subscribe" : "subscribe-light"}
                   disabled={email === usermail ? true : false}
                   onClick={() => {
                     if (token) {
@@ -1121,7 +1133,7 @@ function VideoSection() {
                   placement="top"
                 >
                   <div
-                    className="like-data"
+                    className={theme ? "like-data" : "like-data-light text-light-mode"}
                     onClick={() => {
                       if (token) {
                         likeVideo();
@@ -1134,13 +1146,13 @@ function VideoSection() {
                     {isLiked === true && token ? (
                       <ThumbUpIcon
                         fontSize="medium"
-                        style={{ color: "white" }}
+                        style={{ color: theme ?"white" : "black" }}
                         className="like-icon"
                       />
                     ) : (
                       <ThumbUpAltOutlinedIcon
                         fontSize="medium"
-                        style={{ color: "white" }}
+                        style={{ color: theme ? "white" : "black" }}
                         className="like-icon"
                       />
                     )}
@@ -1148,14 +1160,14 @@ function VideoSection() {
                     <p className="like-count">{VideoLikes}</p>
                   </div>
                 </Tooltip>
-                <div className="vl"></div>
+                <div className={theme ? "vl" : "vl-light"}></div>
                 <Tooltip
                   TransitionComponent={Zoom}
                   title="I dislike this"
                   placement="top"
                 >
                   <div
-                    className="dislike-data"
+                    className={theme ? "dislike-data" : "dislike-data-light text-light-mode"}
                     onClick={() => {
                       if (token) {
                         DislikeVideo();
@@ -1167,7 +1179,7 @@ function VideoSection() {
                   >
                     <ThumbDownOutlinedIcon
                       fontSize="medium"
-                      style={{ color: "white" }}
+                      style={{ color: theme ? "white" : "black" }}
                       className="dislike-icon"
                     />
                   </div>
@@ -1179,7 +1191,7 @@ function VideoSection() {
                 placement="top"
               >
                 <div
-                  className="share"
+                  className={theme ? "share" : "share-light text-light-mode"}
                   onClick={() => {
                     if (shareClicked === false) {
                       setShareClicked(true);
@@ -1192,7 +1204,7 @@ function VideoSection() {
                 >
                   <ReplyIcon
                     fontSize="medium"
-                    style={{ color: "white", transform: "rotateY(180deg)" }}
+                    style={{ color: theme ? "white" :"black", transform: "rotateY(180deg)" }}
                     className="sharee-icon"
                   />
                   <p className="share-txt">Share</p>
@@ -2189,7 +2201,7 @@ function VideoSection() {
                       </p>
                     </div>
                     <div className="video-right-side">
-                      <p className="recommend-vid-title">{element.Title}</p>
+                      <p className={theme ?"recommend-vid-title" :"recommend-vid-title text-light-mode"}>{element.Title}</p>
                       <div className="recommend-uploader">
                         <p className="recommend-vid-uploader uploader">
                           {element.uploader}

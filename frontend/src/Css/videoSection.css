@@ -136,6 +136,22 @@
   transform: scale(0.92);
 }
 
+.subscribe-light {
+  cursor: pointer;
+  border-radius: 25px;
+  padding-left: 22px;
+  padding-right: 22px;
+  border: none;
+  background-color: #f0f0f0;
+  font-size: 15px;
+  margin-left: 25px;
+  transition: all 0.1s ease;
+}
+
+.subscribe-light:active {
+  transform: scale(0.92);
+}
+
 .subscribe2 {
   background-color: #272727;
   color: white;
@@ -145,6 +161,14 @@
   border-left: 1px solid rgba(128, 128, 128, 0.506);
   height: 30px;
   background-color: #272727;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.vl-light {
+  border-left: 1px solid rgba(187, 187, 187, 0.506);
+  height: 30px;
+  background-color: #f0f0f0;
   padding-top: 5px;
   padding-bottom: 5px;
 }
@@ -173,21 +197,33 @@
   transition: all 0.15s ease;
 }
 
-.like-data {
+.like-data-light,
+.dislike-data-light {
+  display: flex;
+  align-items: center;
+  background-color: #f0f0f0;
+  padding: 8px;
+  transition: all 0.15s ease;
+}
+
+.like-data,
+.like-data-light {
   border-top-left-radius: 25px;
   border-bottom-left-radius: 25px;
   padding-left: 15px;
   padding-right: 20px;
 }
 
-.dislike-data {
+.dislike-data,
+.dislike-data-light {
   border-top-right-radius: 25px;
   padding-right: 15px;
   padding-right: 20px;
   border-bottom-right-radius: 25px;
 }
 
-.like-data > p {
+.like-data > p,
+.like-data-light > p {
   margin-left: 10px;
 }
 
@@ -206,6 +242,19 @@
   align-items: center;
   justify-content: space-around;
   background-color: #272727;
+  padding: 8px;
+  border-radius: 25px;
+  margin-left: 20px;
+  transition: all 0.15s ease;
+}
+
+.share-light {
+  cursor: pointer;
+  display: flex;
+  width: 80px;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #f0f0f0;
   padding: 8px;
   border-radius: 25px;
   margin-left: 20px;

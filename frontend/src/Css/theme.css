@@ -4,9 +4,9 @@
 }
 .light-mode {
   background-color: white !important;
-  color: black;
+  color: black !important;
 }
 
 .text-light-mode {
-  color: black;
+  color: black !important;
 }

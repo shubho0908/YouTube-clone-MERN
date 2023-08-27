@@ -101,7 +101,7 @@
 .thisvide-oneliner-1 {
   font-size: 13.2px;
   color: #aaa;
-  margin-top: 10px;
+  margin-top: 3px;
   display: flex;
   align-items: center;
 }
@@ -150,7 +150,8 @@
   overflow: scroll;
 }
 
-.view-playlist {
+.view-playlist,
+.view-playlist2 {
   margin-top: 14px;
   font-size: 13px;
   color: #aaa;
@@ -172,6 +173,10 @@
   color: white;
 }
 
+.view-playlist2:hover {
+  color: black;
+}
+
 .private-privacyy {
   display: flex;
   align-items: center;
@@ -188,6 +193,24 @@
   margin-left: 5px;
   font-size: 13.5px;
   color: #aaa;
+}
+
+.private-privacyy-light {
+  display: flex;
+  align-items: center;
+  background-color: #f0f0f0;
+  padding: 3.5px;
+  width: fit-content;
+  padding-left: 4.5px;
+  padding-right: 4.5px;
+  margin-top: 8px;
+  border-radius: 4px;
+}
+
+.private-privacyy-light > p {
+  margin-left: 5px;
+  font-size: 13.5px;
+  color: rgb(31, 31, 31);
 }
 
 .extra-playlists-data {
@@ -273,7 +296,7 @@
   .private-privacyy > p {
     font-size: 12px;
   }
-  .playlistt-left{
+  .playlistt-left {
     font-size: 15px;
   }
 }
