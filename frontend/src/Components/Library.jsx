@@ -499,7 +499,11 @@ function Library() {
                       />
 
                       <div
-                        className="playlistt-details"
+                        className={
+                          theme
+                            ? "playlistt-details"
+                            : "playlistt-details text-light-mode"
+                        }
                         style={{ position: "relative", top: "12px" }}
                       >
                         <Skeleton count={1} width={220} height={22} />
@@ -528,7 +532,11 @@ function Library() {
                         />
 
                         <div
-                          className="playlistt-details"
+                          className={
+                            theme
+                              ? "playlistt-details"
+                              : "playlistt-details text-light-mode"
+                          }
                           style={{ position: "relative", top: "12px" }}
                         >
                           <Skeleton count={1} width={220} height={22} />
@@ -631,15 +639,20 @@ function Library() {
                         className={
                           theme
                             ? "playlistt-details"
-                            : "playlistt-details light-mode"
+                            : "playlistt-details text-light-mode"
                         }
                       >
                         <p>{element.playlist_name}</p>
                         <div className="extra-playlists-data">
-                          <p className="playlist-ownner">
+                          <p
+                            className={
+                              theme
+                                ? "playlist-ownner"
+                                : "playlist-ownner owner-light"
+                            }
+                          >
                             <div className="thisvide-oneliner-1">
-                              {element.playlist_owner ||
-                                element.playlist_videos[0].video_uploader}
+                              {element.playlist_owner}
                               <Tooltip
                                 TransitionComponent={Zoom}
                                 title="Verified"
@@ -739,12 +752,38 @@ function Library() {
                         />
                         <p>{element.playlist_videos.length} videos</p>
                       </div>
-                      <div className="playlistt-details">
+                      <div
+                        className={
+                          theme
+                            ? "playlistt-details"
+                            : "playlistt-details text-light-mode"
+                        }
+                      >
                         <p>{element.playlist_name}</p>
                         <div className="extra-playlists-data">
-                          <p className="playlist-ownner">
-                            {element.playlist_owner ||
-                              element.playlist_videos[0].video_uploader}
+                          <p
+                            className={
+                              theme
+                                ? "playlist-ownner"
+                                : "playlist-ownner owner-light"
+                            }
+                          >
+                            <div className="thisvide-oneliner-1">
+                              {element.playlist_owner}
+                              <Tooltip
+                                TransitionComponent={Zoom}
+                                title="Verified"
+                                placement="right"
+                              >
+                                <CheckCircleIcon
+                                  fontSize="100px"
+                                  style={{
+                                    color: "rgb(138, 138, 138)",
+                                    marginLeft: "4px",
+                                  }}
+                                />
+                              </Tooltip>
+                            </div>
                           </p>
 
                           <div

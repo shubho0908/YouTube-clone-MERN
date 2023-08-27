@@ -6,6 +6,7 @@ import jwtDecode from "jwt-decode";
 import ReactLoading from "react-loading";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import noImage from "../../img/no-video.jpg";
+import noImage2 from "../../img/novideo.png";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
@@ -203,7 +204,11 @@ function ChannelHome(prop) {
         </div>
       </SkeletonTheme>
       <div
-        className={theme ? "myvideos-section before-channel" : "myvideos-section before-channel light-border1"}
+        className={
+          theme
+            ? "myvideos-section before-channel"
+            : "myvideos-section before-channel light-border1"
+        }
         style={{
           visibility: loading === true ? "hidden" : "visible",
           display:
@@ -432,7 +437,11 @@ function ChannelHome(prop) {
         </div>
       </SkeletonTheme>
       <div
-        className={theme ? "myuploaded-videos before-channel" : "myuploaded-videos before-channel light-border1"}
+        className={
+          theme
+            ? "myuploaded-videos before-channel"
+            : "myuploaded-videos before-channel light-border1"
+        }
         style={{
           visibility: loading === true ? "hidden" : "visible",
           display:
@@ -806,7 +815,11 @@ function ChannelHome(prop) {
         <p>This channel doesn&apos;t have any content.</p>
       </div>
       <div
-        className="thischannel-no-content2"
+        className={
+          theme
+            ? "thischannel-no-content2"
+            : "thischannel-no-content2 text-light-mode"
+        }
         style={
           myVideos &&
           myVideos.message === "USER DOESN'T EXIST" &&
@@ -815,9 +828,13 @@ function ChannelHome(prop) {
             : { display: "none" }
         }
       >
-        <img src={noImage} alt="upload" className="novideo" />
+        <img
+          src={theme ? noImage : noImage2}
+          alt="upload"
+          className="novideo"
+        />
         <p>Upload a video to get started</p>
-        <p>
+        <p className={theme ? "" : "text-light-mode2"}>
           Start sharing your story and connecting with viewers. Videos you
           upload will show up here.
         </p>

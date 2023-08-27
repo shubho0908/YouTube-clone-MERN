@@ -267,7 +267,13 @@ function Trending() {
                         >
                           {element.Title}
                         </p>
-                        <div className="trending-oneliner">
+                        <div
+                          className={
+                            theme
+                              ? "trending-oneliner"
+                              : "trending-oneliner text-light-mode2"
+                          }
+                        >
                           <div className="trend-channel-name">
                             <p className="t-channelname">{element.uploader}</p>
                             <Tooltip
@@ -334,7 +340,13 @@ function Trending() {
                             </p>
                           </div>
                         </div>
-                        <p className="trending-desc">
+                        <p
+                          className={
+                            theme
+                              ? "trending-desc"
+                              : "trending-desc text-light-mode2"
+                          }
+                        >
                           {element.Description.length <= 140
                             ? element.Description
                             : `${element.Description.slice(0, 80)}...`}

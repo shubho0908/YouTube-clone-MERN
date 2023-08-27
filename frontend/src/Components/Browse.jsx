@@ -379,7 +379,11 @@ function Browse() {
                               placement="top"
                             >
                               <p
-                                className="uploader"
+                                className={
+                                  theme
+                                    ? "uploader"
+                                    : "uploader text-light-mode2"
+                                }
                                 style={{ marginTop: "10px" }}
                               >
                                 {uploader[index]}
@@ -400,7 +404,11 @@ function Browse() {
                               />
                             </Tooltip>
                           </div>
-                          <div className="view-time">
+                          <div
+                            className={
+                              theme ? "view-time" : "view-time text-light-mode2"
+                            }
+                          >
                             <p className="views">
                               {VideoViews[index] >= 1e9
                                 ? `${(VideoViews[index] / 1e9).toFixed(1)}B`
@@ -528,7 +536,9 @@ function Browse() {
                           </p>
                           <div className="video-uploader">
                             <p
-                              className="uploader"
+                              className={
+                                theme ? "uploader" : "uploader text-light-mode2"
+                              }
                               style={{ marginTop: "10px" }}
                             >
                               {element.uploader}
@@ -548,7 +558,11 @@ function Browse() {
                               />
                             </Tooltip>
                           </div>
-                          <div className="view-time">
+                          <div
+                            className={
+                              theme ? "view-time" : "view-time text-light-mode2"
+                            }
+                          >
                             <p className="views">
                               {element.views >= 1e9
                                 ? `${(element.views / 1e9).toFixed(1)}B`

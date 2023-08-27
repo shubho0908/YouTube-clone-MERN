@@ -158,7 +158,15 @@ function FeaturedChannels(prop) {
           }
         >
           <img src={nothing} alt="no results" className="nothing-found" />
-          <p className="no-results no-channel">No channels found!</p>
+          <p
+            className={
+              theme
+                ? "no-results no-channel"
+                : "no-results no-channel text-light-mode"
+            }
+          >
+            No channels found!
+          </p>
         </div>
       </>
     );
@@ -354,24 +362,31 @@ function FeaturedChannels(prop) {
           <p>Add channels</p>
         </div>
         <div
-          className="add-feature-channel"
-          style={
-            addChannelClicked === true
-              ? { display: "block" }
-              : { display: "none" }
+          className={
+            theme
+              ? "add-feature-channel"
+              : "add-feature-channel text-light-mode"
           }
+          style={{
+            display: addChannelClicked ? "block" : "none",
+          }}
         >
-          <p style={{ fontSize: "18.5px" }}>Your subscriptions</p>
+          <p style={{ fontSize: "16.5px", width: "max-content" }}>
+            Your subscriptions
+          </p>
           <div className="my-subscribed-channels">
-            {Subscriptions &&
-              Subscriptions.length > 0 &&
+            {Subscriptions && Subscriptions.length > 0 ? (
               Subscriptions.map((element, index) => {
                 return (
                   <div
                     className={
                       SelectedChannel === element.channelname
-                        ? `subscribed-channels-all locked`
-                        : `subscribed-channels-all`
+                        ? `subscribed-channels-all ${
+                            theme ? "locked" : "locked2"
+                          } ${theme ? "" : "feature-light2"}`
+                        : `subscribed-channels-all ${
+                            theme ? "" : "feature-light2"
+                          }`
                     }
                     key={index}
                     onClick={() => {
@@ -396,7 +411,20 @@ function FeaturedChannels(prop) {
                     </p>
                   </div>
                 );
-              })}
+              })
+            ) : (
+              <>
+                <p
+                  style={{
+                    color: theme ? "white" : "black",
+                    fontSize: "16.5px",
+                    width: "max-content",
+                  }}
+                >
+                  No subscriptions found!!
+                </p>
+              </>
+            )}
           </div>
           <div className="lasst-data">
             {SelectedChannel !== undefined ? (

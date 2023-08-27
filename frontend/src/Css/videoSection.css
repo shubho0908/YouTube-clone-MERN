@@ -853,7 +853,8 @@
   transition: all 0.13s ease;
 }
 
-.trending-tag,.trending-tag-light :hover {
+.trending-tag,
+.trending-tag-light :hover {
   text-decoration: underline;
 }
 
@@ -952,6 +953,7 @@
   }
   .recommended-section {
     top: 30px;
+    width: 1280px;
     left: 100px;
   }
   .video-right-side {
@@ -980,7 +982,7 @@
   }
   .recommended-section {
     left: auto !important;
-    right: 92px;
+    width: 1100px;
   }
 }
 
@@ -992,7 +994,7 @@
     width: 950px;
   }
   .recommended-section {
-    right: 20px;
+    width: 950px;
   }
   .channel-right-data {
     margin-top: 25px;
@@ -1135,18 +1137,18 @@
     margin-left: 0;
   }
   .vid-title {
-    font-size: 16px;
-    margin-top: 15px;
+    font-size: 16.5px;
+    margin-top: 20px;
   }
   .channelDP {
-    height: 35px;
-    width: 35px;
+    height: 38px;
+    width: 38px;
   }
   .creator > p {
-    font-size: 14px !important;
+    font-size: 15px !important;
   }
   .channel-subs {
-    font-size: 12px;
+    font-size: 13.2px;
   }
   .subscribe {
     margin-left: 40px;
@@ -1291,12 +1293,13 @@
     margin-left: 12px;
   }
   .subscribe {
-    font-size: 12px;
+    font-size: 12.8px;
     padding-left: 14px;
     padding-right: 14px;
     position: absolute;
     right: 30px;
     height: 32px;
+    margin-left: 0px;
   }
 
   .share-txt,

@@ -393,7 +393,11 @@ function Subscriptions() {
                             </p>
                             <div className="video-uploader2">
                               <p
-                                className="uploader2"
+                                className={
+                                  theme
+                                    ? "uploader2"
+                                    : "uploader2 text-light-mode2"
+                                }
                                 style={{ marginTop: "10px" }}
                               >
                                 {element.uploader}
@@ -413,7 +417,13 @@ function Subscriptions() {
                                 />
                               </Tooltip>
                             </div>
-                            <div className="view-time23">
+                            <div
+                              className={
+                                theme
+                                  ? "view-time23"
+                                  : "view-time23 text-light-mode2"
+                              }
+                            >
                               <p className="views2">
                                 {element.views >= 1e9
                                   ? `${(element.views / 1e9).toFixed(1)}B`

@@ -960,7 +960,7 @@ function VideoSection() {
           videoID: id,
           description: Description,
           videolength: videoLength,
-          video_uploader: uploader,
+          video_uploader: channelName,
           video_date: uploaded_date,
           video_views: views,
         };
@@ -1104,7 +1104,13 @@ function VideoSection() {
                     />
                   </Tooltip>
                 </div>
-                <p className="channel-subs">{Subscribers} subscribers</p>
+                <p
+                  className={
+                    theme ? "channel-subs" : "channel-subs text-light-mode2"
+                  }
+                >
+                  {Subscribers} subscribers
+                </p>
               </div>
               {isSubscribed === false || !token ? (
                 <button
@@ -2245,7 +2251,13 @@ function VideoSection() {
                       >
                         {Titles[index]}
                       </p>
-                      <div className="recommend-uploader">
+                      <div
+                        className={
+                          theme
+                            ? "recommend-uploader"
+                            : "recommend-uploader text-light-mode2"
+                        }
+                      >
                         <p className="recommend-vid-uploader uploader">
                           {Uploader[index]}
                         </p>
@@ -2367,7 +2379,13 @@ function VideoSection() {
                       >
                         {element.Title}
                       </p>
-                      <div className="recommend-uploader">
+                      <div
+                        className={
+                          theme
+                            ? "recommend-uploader"
+                            : "recommend-uploader text-light-mode2"
+                        }
+                      >
                         <p className="recommend-vid-uploader uploader">
                           {element.uploader}
                         </p>
