@@ -6,6 +6,10 @@
   background-color: white !important;
   color: black !important;
 }
+.light-mode::placeholder {
+  background-color: white !important;
+  color: #0f0f0f !important;
+}
 
 .text-light-mode {
   color: black !important;
@@ -39,6 +43,14 @@
   background-color: #f0f0f0 !important;
 }
 
+.feature-light3 {
+  transition: all 0.2s ease;
+}
+
+.feature-light3:hover {
+  background-color: #dbdbdb !important;
+}
+
 .feature-light:hover .featured-channel-img {
   filter: brightness(0.6) !important;
   opacity: 1 !important;
@@ -47,4 +59,17 @@
 .copy-light {
   background-color: #0556bf !important;
   color: white !important;
+}
+
+.signin-light {
+  background-color: white !important;
+  color: rgb(0, 162, 255) !important;
+}
+
+.signin-btn-light {
+  background-color: #1f1f1f !important;
+}
+
+.email-light {
+  border: 1px solid rgb(96, 96, 96);
 }

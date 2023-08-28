@@ -17,7 +17,6 @@ function Share() {
     return Dark ? JSON.parse(Dark) : true;
   });
 
-
   const CopiedNotify = () =>
     toast.success("Link Copied!", {
       position: "bottom-center",
@@ -40,9 +39,6 @@ function Share() {
         console.log("Error copying link to clipboard:", error);
       });
   };
-
- 
-  
 
   return (
     <>

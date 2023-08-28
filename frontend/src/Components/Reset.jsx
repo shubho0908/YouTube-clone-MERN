@@ -6,6 +6,11 @@ import "react-toastify/dist/ReactToastify.css";
 function Reset() {
   const [email, setEmail] = useState("");
   const [BtnLoading, setBtnLoading] = useState(false);
+  const [theme, setTheme] = useState(() => {
+    const Dark = localStorage.getItem("Dark");
+    return Dark ? JSON.parse(Dark) : true;
+  });
+
 
   //TOASTS
 
@@ -21,7 +26,7 @@ function Reset() {
       theme: "dark",
     });
 
-    const ErrorNotify = () =>
+  const ErrorNotify = () =>
     toast.error("Input fields can't be empty.", {
       position: "top-center",
       autoClose: 1200,
@@ -72,14 +77,16 @@ function Reset() {
             <input
               type="email"
               name="email2"
-              className="email"
+              className={
+                theme ? "email" : "email email-light light-mode text-light-mode"
+              }
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Email Address"
               required
             />
             {BtnLoading ? (
               <button
-                className="signup-btn"
+                className={theme ? "signup-btn" : "signup-btn signin-btn-light"}
                 type="submit"
                 disabled={BtnLoading ? true : false}
               >
@@ -87,7 +94,7 @@ function Reset() {
               </button>
             ) : (
               <button
-                className="signup-btn"
+                className={theme ? "signup-btn" : "signup-btn signin-btn-light"}
                 type="submit"
                 disabled={BtnLoading ? true : false}
               >

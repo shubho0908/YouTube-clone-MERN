@@ -5,6 +5,10 @@ import "react-toastify/dist/ReactToastify.css";
 
 function Signup() {
   const [data, setData] = useState({});
+  const [theme, setTheme] = useState(() => {
+    const Dark = localStorage.getItem("Dark");
+    return Dark ? JSON.parse(Dark) : true;
+  });
 
   //TOASTS
 
@@ -81,7 +85,11 @@ function Signup() {
           <input
             type="text"
             name="name"
-            className="username"
+            className={
+              theme
+                ? "username"
+                : "username email-light light-mode text-light-mode"
+            }
             placeholder="Name"
             required
             onChange={handleInputs}
@@ -89,7 +97,9 @@ function Signup() {
           <input
             type="email"
             name="email"
-            className="email"
+            className={
+              theme ? "email" : "email email-light light-mode text-light-mode"
+            }
             placeholder="Email Address"
             required
             onChange={handleInputs}
@@ -97,12 +107,19 @@ function Signup() {
           <input
             type="password"
             name="password"
-            className="password"
+            className={
+              theme
+                ? "password"
+                : "password email-light light-mode text-light-mode"
+            }
             placeholder="Passcode"
             required
             onChange={handleInputs}
           />
-          <button className="signup-btn" type="submit">
+          <button
+            className={theme ? "signup-btn" : "signup-btn signin-btn-light"}
+            type="submit"
+          >
             Create Your Account
           </button>
         </form>

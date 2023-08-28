@@ -7,6 +7,10 @@ import Reset from "./Reset";
 function Signin(prop) {
   const [data, setData] = useState({});
   const [showReset, setShowReset] = useState(false);
+  const [theme, setTheme] = useState(() => {
+    const Dark = localStorage.getItem("Dark");
+    return Dark ? JSON.parse(Dark) : true;
+  });
 
   useEffect(() => {
     if (prop.close === true) {
@@ -129,7 +133,9 @@ function Signin(prop) {
           <input
             type="email"
             name="email1"
-            className="email"
+            className={
+              theme ? "email" : "email email-light light-mode text-light-mode"
+            }
             placeholder="Email Address"
             onChange={handleInputs}
             required
@@ -137,15 +143,27 @@ function Signin(prop) {
           <input
             type="password"
             name="password1"
-            className="password"
+            className={
+              theme
+                ? "password"
+                : "password email-light light-mode text-light-mode"
+            }
             placeholder="Passcode"
             onChange={handleInputs}
             required
           />
-          <p className="forgot-password" onClick={() => setShowReset(true)}>
+          <p
+            className={
+              theme ? "forgot-password" : "forgot-password text-light-mode"
+            }
+            onClick={() => setShowReset(true)}
+          >
             Forgot password?
           </p>
-          <button className="signup-btn" type="submit">
+          <button
+            className={theme ? "signup-btn" : "signup-btn signin-btn-light"}
+            type="submit"
+          >
             Login to Your Account
           </button>
         </form>

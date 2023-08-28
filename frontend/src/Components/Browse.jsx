@@ -60,6 +60,23 @@ function Browse() {
   }, []);
 
   useEffect(() => {
+    const handleMenuButtonClick = () => {
+      setMenuClicked((prevMenuClicked) => !prevMenuClicked);
+    };
+
+    const menuButton = document.querySelector(".menu-light");
+    if (menuButton) {
+      menuButton.addEventListener("click", handleMenuButtonClick);
+    }
+
+    return () => {
+      if (menuButton) {
+        menuButton.removeEventListener("click", handleMenuButtonClick);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
     localStorage.setItem("menuClicked", JSON.stringify(menuClicked));
   }, [menuClicked]);
 
@@ -172,8 +189,8 @@ function Browse() {
           <div
             className={
               menuClicked === true
-                ? `browse-data ${theme === false ? "light-mode" : "dark-mode"}`
-                : `browse-data2 ${theme === false ? "light-mode" : "dark-mode"}`
+                ? `browse-data ${theme ? "" : "light-mode"}`
+                : `browse-data2 ${theme ? "" : "light-mode"}`
             }
             style={menuClicked === false ? { left: "74px" } : { left: "250px" }}
           >
@@ -262,10 +279,10 @@ function Browse() {
         <div
           className={
             menuClicked === true
-              ? `browse-data ${theme === false ? "light-mode" : "dark-mode"}`
-              : `browse-data2 ${theme === false ? "light-mode" : "dark-mode"}`
+              ? `browse-data ${theme ? "" : "light-mode"}`
+              : `browse-data2 ${theme ? "" : "light-mode"}`
           }
-          style={menuClicked === false ? { left: "74px" } : { left: "250px" }}
+          style={menuClicked === false ? { left: "74px " } : { left: "250px " }}
         >
           <div
             className={

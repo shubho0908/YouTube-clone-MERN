@@ -685,7 +685,7 @@ function OtherChannel() {
       {/* SIGNUP/SIGNIN  */}
 
       <div
-        className="auth-popup"
+        className={theme ? "auth-popup" : "auth-popup light-mode text-light-mode"}
         style={
           isbtnClicked === true ? { display: "block" } : { display: "none" }
         }

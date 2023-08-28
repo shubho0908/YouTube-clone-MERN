@@ -189,7 +189,7 @@ function Navbar() {
                 document.body.classList.remove("bg-css");
               }
             }}
-            className="signin"
+            className={theme ? "signin" : "signin signin-light"}
             style={token ? { display: "none" } : { display: "flex" }}
           >
             <AccountCircleOutlinedIcon
@@ -241,7 +241,7 @@ function Navbar() {
         </div>
       </div>
       <div
-        className="auth-popup"
+        className={theme ? "auth-popup" : "auth-popup light-mode text-light-mode"}
         style={
           isbtnClicked === true ? { display: "block" } : { display: "none" }
         }

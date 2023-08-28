@@ -709,6 +709,11 @@
   font-size: 15px;
 }
 
+.playlist-name-light::placeholder {
+  color: black !important;
+  font-size: 15px;
+}
+
 .first-que > p,
 .second-que > p,
 .combine2 > p {

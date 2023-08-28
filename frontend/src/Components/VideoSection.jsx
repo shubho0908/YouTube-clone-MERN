@@ -64,7 +64,6 @@ function VideoSection() {
     const Dark = localStorage.getItem("Dark");
     return Dark ? JSON.parse(Dark) : true;
   });
-  const copyRef = useRef();
 
   //EXTRAS
 
@@ -176,17 +175,6 @@ function VideoSection() {
       document.body.style.backgroundColor = "0f0f0f";
     }
   }, [theme]);
-
-  useEffect(() => {
-    const handler = (e) => {
-      if (!copyRef.current.contains(e.target)) {
-        setShareClicked(false);
-        document.body.classList.remove("bg-css");
-      }
-    };
-
-    document.addEventListener("mousedown", handler);
-  }, []);
 
   useEffect(() => {
     const handleClick = () => {
@@ -1745,7 +1733,7 @@ function VideoSection() {
             className={
               theme
                 ? "description-section2"
-                : "description-section2-light text-light-mode"
+                : "description-section2-light text-light-mode feature-light3"
             }
           >
             <div className="views-date" style={{ fontSize: "15.5px" }}>
@@ -2723,7 +2711,6 @@ function VideoSection() {
       </div>
       <div
         className="share-clicked"
-        ref={copyRef}
         style={
           shareClicked === true ? { display: "block" } : { display: "none" }
         }
@@ -2734,7 +2721,7 @@ function VideoSection() {
       {/* SIGNUP/SIGNIN  */}
 
       <div
-        className="auth-popup"
+         className={theme ? "auth-popup" : "auth-popup light-mode text-light-mode"}
         style={
           isbtnClicked === true ? { display: "block" } : { display: "none" }
         }
@@ -2799,7 +2786,9 @@ function VideoSection() {
       {/* PLAYLIST POPUP */}
 
       <div
-        className="playlist-pop"
+        className={
+          theme ? "playlist-pop" : "playlist-pop light-mode text-light-mode"
+        }
         style={{
           minHeight: createPlaylistClicked === false ? "262px" : "420px",
           display: playlistClicked === true ? "block" : "none",
@@ -2814,7 +2803,7 @@ function VideoSection() {
           <ClearRoundedIcon
             className="close-playlist-pop"
             fontSize="medium"
-            style={{ color: "white", cursor: "pointer" }}
+            style={{ color: theme ? "white" : "black", cursor: "pointer" }}
             onClick={() => {
               setPlaylistClicked(false);
               setcreatePlaylistClicked(false);
@@ -2849,7 +2838,7 @@ function VideoSection() {
                       <CheckBoxOutlineBlankIcon
                         className="tick-box"
                         fontSize="medium"
-                        style={{ color: "white" }}
+                        style={{ color: theme ? "white" : "black" }}
                         onClick={() => {
                           AddVideoToExistingPlaylist(element._id);
                         }}
@@ -2858,7 +2847,7 @@ function VideoSection() {
                       <CheckBoxIcon
                         className="tick-box"
                         fontSize="medium"
-                        style={{ color: "white" }}
+                        style={{ color: theme ? "white" : "black" }}
                         onClick={() => RemoveVideo(element._id)}
                       />
                     )}
@@ -2869,7 +2858,7 @@ function VideoSection() {
                       <PublicOutlinedIcon
                         className="new-privacy"
                         fontSize="medium"
-                        style={{ color: "white" }}
+                        style={{ color: theme ? "white" : "black" }}
                       />
                     ) : (
                       ""
@@ -2878,7 +2867,7 @@ function VideoSection() {
                       <LockOutlinedIcon
                         className="new-privacy"
                         fontSize="medium"
-                        style={{ color: "white" }}
+                        style={{ color: theme ? "white" : "black" }}
                       />
                     ) : (
                       ""
@@ -2903,7 +2892,7 @@ function VideoSection() {
         >
           <AddToPhotosOutlinedIcon
             fontSize="medium"
-            style={{ color: "white" }}
+            style={{ color: theme ? "white" : "black" }}
           />
           <p style={{ marginLeft: "12px" }}>Create new playlist</p>
         </div>
@@ -2920,7 +2909,11 @@ function VideoSection() {
             <input
               type="text"
               name="playlist_name"
-              className="playlist-name"
+              className={
+                theme
+                  ? "playlist-name"
+                  : "playlist-name playlist-name-light light-mode text-light-mode"
+              }
               placeholder="Enter playlist name..."
               value={playlistName}
               onChange={(e) => {
@@ -2943,7 +2936,11 @@ function VideoSection() {
             </div>
           </div>
           <div
-            className="choose-privacy"
+            className={
+              theme
+                ? "choose-privacy"
+                : "choose-privacy light-mode text-light-mode"
+            }
             style={
               privacyClicked === true
                 ? { display: "block" }
@@ -2951,7 +2948,9 @@ function VideoSection() {
             }
           >
             <div
-              className="first-privacy"
+              className={
+                theme ? "first-privacy" : "first-privacy feature-light"
+              }
               onClick={() => {
                 setPrivacy("Public");
                 setprivacyClicked(false);
@@ -2959,24 +2958,33 @@ function VideoSection() {
             >
               <PublicOutlinedIcon
                 fontSize="medium"
-                style={{ color: "white" }}
+                style={{ color: theme ? "white" : "black" }}
               />
               <div className="right-privacy">
                 <p>Public</p>
-                <p>Anyone can view</p>
+                <p className={theme ? "" : "text-light-mode2"}>
+                  Anyone can view
+                </p>
               </div>
             </div>
             <div
-              className="second-privacy"
+              className={
+                theme ? "second-privacy" : "second-privacy feature-light"
+              }
               onClick={() => {
                 setPrivacy("Private");
                 setprivacyClicked(false);
               }}
             >
-              <LockOutlinedIcon fontSize="medium" style={{ color: "white" }} />
+              <LockOutlinedIcon
+                fontSize="medium"
+                style={{ color: theme ? "white" : "black" }}
+              />
               <div className="right-privacy">
                 <p>Private</p>
-                <p>Only you can view</p>
+                <p className={theme ? "" : "text-light-mode2"}>
+                  Only you can view
+                </p>
               </div>
             </div>
           </div>
