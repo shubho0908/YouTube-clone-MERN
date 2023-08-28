@@ -555,7 +555,11 @@ function Playlists() {
                         />
                       </div>
                       <div
-                        className="choose-privacy2"
+                        className={
+                          theme
+                            ? "choose-privacy2"
+                            : "choose-privacy2 light-mode text-light-mode"
+                        }
                         ref={window.innerWidth >= 1290 ? privacyRef : null}
                         style={
                           privacyClicked === true
@@ -564,7 +568,11 @@ function Playlists() {
                         }
                       >
                         <div
-                          className="first-privacy"
+                          className={
+                            theme
+                              ? "first-privacy"
+                              : "first-privacy feature-light text-light-mode"
+                          }
                           onClick={() => {
                             setprivacyClicked(false);
                             setPrivacy("Public");
@@ -575,15 +583,21 @@ function Playlists() {
                         >
                           <PublicOutlinedIcon
                             fontSize="medium"
-                            style={{ color: "white" }}
+                            style={{ color: theme ? "white" : "black" }}
                           />
                           <div className="right-privacy">
                             <p>Public</p>
-                            <p>Anyone can view</p>
+                            <p className={theme ? "" : "text-light-mode2"}>
+                              Anyone can view
+                            </p>
                           </div>
                         </div>
                         <div
-                          className="second-privacy"
+                          className={
+                            theme
+                              ? "second-privacy"
+                              : "second-privacy feature-light text-light-mode"
+                          }
                           onClick={() => {
                             setprivacyClicked(false);
                             setPrivacy("Private");
@@ -594,11 +608,13 @@ function Playlists() {
                         >
                           <LockOutlinedIcon
                             fontSize="medium"
-                            style={{ color: "white" }}
+                            style={{ color: theme ? "white" : "black" }}
                           />
                           <div className="right-privacy">
                             <p>Private</p>
-                            <p>Only you can view</p>
+                            <p className={theme ? "" : "text-light-mode2"}>
+                              Only you can view
+                            </p>
                           </div>
                         </div>
                       </div>
@@ -794,7 +810,13 @@ function Playlists() {
                             alt="first-like-thumbnail"
                             loading="lazy"
                           />
-                          <p className={theme ? "durationn3 playlist-duration" : "durationn3 playlist-duration text-dark-mode"}>
+                          <p
+                            className={
+                              theme
+                                ? "durationn3 playlist-duration"
+                                : "durationn3 playlist-duration text-dark-mode"
+                            }
+                          >
                             {Math.floor(element.videolength / 60) +
                               ":" +
                               (Math.round(element.videolength % 60) < 10
@@ -1029,7 +1051,11 @@ function Playlists() {
                           />
                         </div>
                         <div
-                          className="choose-privacy2"
+                          className={
+                            theme
+                              ? "choose-privacy2"
+                              : "choose-privacy2 light-mode text-light-mode"
+                          }
                           ref={window.innerWidth <= 1290 ? privacyRef : null}
                           style={
                             privacyClicked === true
@@ -1038,7 +1064,11 @@ function Playlists() {
                           }
                         >
                           <div
-                            className="first-privacy"
+                            className={
+                              theme
+                                ? "first-privacy"
+                                : "first-privacy feature-light text-light-mode"
+                            }
                             onClick={() => {
                               setprivacyClicked(false);
                               setPrivacy("Public");
@@ -1049,15 +1079,21 @@ function Playlists() {
                           >
                             <PublicOutlinedIcon
                               fontSize="medium"
-                              style={{ color: "white" }}
+                              style={{ color: theme ? "white" : "black" }}
                             />
                             <div className="right-privacy">
                               <p>Public</p>
-                              <p>Anyone can view</p>
+                              <p className={theme ? "" : "text-light-mode2"}>
+                                Anyone can view
+                              </p>
                             </div>
                           </div>
                           <div
-                            className="second-privacy"
+                            className={
+                              theme
+                                ? "second-privacy"
+                                : "second-privacy feature-light text-light-mode"
+                            }
                             onClick={() => {
                               setprivacyClicked(false);
                               setPrivacy("Private");
@@ -1068,11 +1104,13 @@ function Playlists() {
                           >
                             <LockOutlinedIcon
                               fontSize="medium"
-                              style={{ color: "white" }}
+                              style={{ color: theme ? "white" : "black" }}
                             />
                             <div className="right-privacy">
                               <p>Private</p>
-                              <p>Only you can view</p>
+                              <p className={theme ? "" : "text-light-mode2"}>
+                                Only you can view
+                              </p>
                             </div>
                           </div>
                         </div>
@@ -1269,7 +1307,13 @@ function Playlists() {
                             alt="first-like-thumbnail"
                             loading="lazy"
                           />
-                          <p className={theme ? "durationn3 playlist-duration" : "durationn3 playlist-duration text-dark-mode"}>
+                          <p
+                            className={
+                              theme
+                                ? "durationn3 playlist-duration"
+                                : "durationn3 playlist-duration text-dark-mode"
+                            }
+                          >
                             {Math.floor(element.videolength / 60) +
                               ":" +
                               (Math.round(element.videolength % 60) < 10

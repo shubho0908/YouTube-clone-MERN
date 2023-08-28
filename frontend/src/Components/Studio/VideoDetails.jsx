@@ -124,6 +124,46 @@ function VideoDetails() {
       });
   };
 
+  useEffect(() => {
+    const handleClick = () => {
+      document
+        .querySelector(".main-video-details-section")
+        .classList.add("channel-dark");
+    };
+
+    const searchInp = document.getElementById("searchType2");
+
+    if (searchInp) {
+      searchInp.addEventListener("click", handleClick);
+    }
+
+    return () => {
+      if (searchInp) {
+        searchInp.removeEventListener("click", handleClick);
+      }
+    };
+  });
+
+  useEffect(() => {
+    const handleClick = () => {
+      document
+        .querySelector(".main-video-details-section")
+        .classList.remove("channel-dark");
+    };
+
+    const clearBtn = document.querySelector(".clear-search");
+
+    if (clearBtn) {
+      clearBtn.addEventListener("click", handleClick);
+    }
+
+    return () => {
+      if (clearBtn) {
+        clearBtn.removeEventListener("click", handleClick);
+      }
+    };
+  });
+
   const handleThumbnailUpload = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();

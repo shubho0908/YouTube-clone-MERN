@@ -388,7 +388,13 @@ function Library() {
                       alt="thumbnail"
                       className="thiswatch-thumbnail"
                     />
-                    <p className="thislibrary-duration">
+                    <p
+                      className={
+                        theme
+                          ? "thislibrary-duration"
+                          : "thislibrary-duration text-dark-mode"
+                      }
+                    >
                       {Math.floor(element.videoLength / 60) +
                         ":" +
                         (Math.round(element.videoLength % 60) < 10
@@ -950,7 +956,13 @@ function Library() {
                       alt="thumbnail"
                       className="thiswatch-thumbnail"
                     />
-                    <p className="thislibrary-duration">
+                    <p
+                      className={
+                        theme
+                          ? "thislibrary-duration"
+                          : "thislibrary-duration text-dark-mode"
+                      }
+                    >
                       {Math.floor(element.videoLength / 60) +
                         ":" +
                         (Math.round(element.videoLength % 60) < 10
