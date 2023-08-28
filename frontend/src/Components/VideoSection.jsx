@@ -64,6 +64,7 @@ function VideoSection() {
     const Dark = localStorage.getItem("Dark");
     return Dark ? JSON.parse(Dark) : true;
   });
+  const copyRef = useRef();
 
   //EXTRAS
 
@@ -175,6 +176,17 @@ function VideoSection() {
       document.body.style.backgroundColor = "0f0f0f";
     }
   }, [theme]);
+
+  useEffect(() => {
+    const handler = (e) => {
+      if (!copyRef.current.contains(e.target)) {
+        setShareClicked(false);
+        document.body.classList.remove("bg-css");
+      }
+    };
+
+    document.addEventListener("mousedown", handler);
+  }, []);
 
   useEffect(() => {
     const handleClick = () => {
@@ -2711,6 +2723,7 @@ function VideoSection() {
       </div>
       <div
         className="share-clicked"
+        ref={copyRef}
         style={
           shareClicked === true ? { display: "block" } : { display: "none" }
         }

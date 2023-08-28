@@ -77,10 +77,13 @@ function ChannelPlaylists(prop) {
   if (
     (loading === false && PlaylistData === "No playlists available...") ||
     (loading === false && PlaylistData.length === 0) ||
-    noPublicPlaylists
+    (email !== prop.newmail && noPublicPlaylists)
   ) {
     return (
-      <p className={theme ? "no-results" : "no-results text-light-mode"} style={{ color: "white", fontSize: "16px" }}>
+      <p
+        className={theme ? "no-results" : "no-results text-light-mode"}
+        style={{ color: "white", fontSize: "16px" }}
+      >
         This channel doesn&apos;t have any playlists.
       </p>
     );
@@ -159,9 +162,9 @@ function ChannelPlaylists(prop) {
         style={
           loading === false
             ? {
-              visibility: "visible",
-              display: "block",
-            }
+                visibility: "visible",
+                display: "block",
+              }
             : { visibility: "hidden", display: "none" }
         }
       >
@@ -188,7 +191,7 @@ function ChannelPlaylists(prop) {
                       key={index}
                       style={
                         prop.newmail !== email &&
-                          element.playlist_privacy === "Private"
+                        element.playlist_privacy === "Private"
                           ? { display: "none" }
                           : { display: "block" }
                       }

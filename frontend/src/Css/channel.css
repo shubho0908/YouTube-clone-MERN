@@ -146,6 +146,7 @@
   position: absolute;
   top: 310px;
   color: white;
+  width: inherit;
   padding-bottom: 30px;
   border-bottom: 2px solid #5b5d6265;
 }

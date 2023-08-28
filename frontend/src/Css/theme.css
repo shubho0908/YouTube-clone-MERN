@@ -43,3 +43,8 @@
   filter: brightness(0.6) !important;
   opacity: 1 !important;
 }
+
+.copy-light {
+  background-color: #0556bf !important;
+  color: white !important;
+}

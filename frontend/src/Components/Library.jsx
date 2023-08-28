@@ -311,7 +311,13 @@ function Library() {
                       >
                         <Skeleton count={1} width={220} height={22} />
                         <div className="thisvideo-extra-daataa">
-                          <div className="thisvide-oneliner-1">
+                          <div
+                            className={
+                              theme
+                                ? "thisvide-oneliner-1"
+                                : "thisvide-oneliner-1 text-light-mode2"
+                            }
+                          >
                             <Skeleton count={1} width={180} height={14} />
                           </div>
                           <div className="thisvide-oneliner-2"></div>
@@ -396,7 +402,13 @@ function Library() {
                           : `${element.Title.slice(0, 46)}..`}
                       </p>
                       <div className="thisvideo-extra-daataa">
-                        <div className="thisvide-oneliner-1">
+                        <div
+                          className={
+                            theme
+                              ? "thisvide-oneliner-1"
+                              : "thisvide-oneliner-1 text-light-mode2"
+                          }
+                        >
                           <p>{element.uploader}</p>
                           <Tooltip
                             TransitionComponent={Zoom}
@@ -413,7 +425,13 @@ function Library() {
                           </Tooltip>
                         </div>
                         <div className="thisvide-oneliner-2">
-                          <p className="thisvideo-uploaddate">
+                          <p
+                            className={
+                              theme
+                                ? "thisvideo-uploaddate"
+                                : "thisvideo-uploaddate text-light-mode2"
+                            }
+                          >
                             {(() => {
                               const timeDifference =
                                 new Date() - new Date(element.uploaded_date);
@@ -651,7 +669,13 @@ function Library() {
                                 : "playlist-ownner owner-light"
                             }
                           >
-                            <div className="thisvide-oneliner-1">
+                            <div
+                              className={
+                                theme
+                                  ? "thisvide-oneliner-1"
+                                  : "thisvide-oneliner-1 text-light-mode2"
+                              }
+                            >
                               {element.playlist_owner}
                               <Tooltip
                                 TransitionComponent={Zoom}
@@ -768,7 +792,13 @@ function Library() {
                                 : "playlist-ownner owner-light"
                             }
                           >
-                            <div className="thisvide-oneliner-1">
+                            <div
+                              className={
+                                theme
+                                  ? "thisvide-oneliner-1"
+                                  : "thisvide-oneliner-1 text-light-mode2"
+                              }
+                            >
                               {element.playlist_owner}
                               <Tooltip
                                 TransitionComponent={Zoom}
@@ -940,7 +970,13 @@ function Library() {
                           : `${element.Title.slice(0, 46)}..`}
                       </p>
                       <div className="thisvideo-extra-daataa">
-                        <div className="thisvide-oneliner-1">
+                        <div
+                          className={
+                            theme
+                              ? "thisvide-oneliner-1"
+                              : "thisvide-oneliner-1 text-light-mode2"
+                          }
+                        >
                           <p>{element.uploader}</p>
                           <Tooltip
                             TransitionComponent={Zoom}
@@ -957,7 +993,13 @@ function Library() {
                           </Tooltip>
                         </div>
                         <div className="thisvide-oneliner-2">
-                          <p className="thisvideo-uploaddate">
+                          <p
+                            className={
+                              theme
+                                ? "thisvideo-uploaddate"
+                                : "thisvideo-uploaddate text-light-mode2"
+                            }
+                          >
                             {(() => {
                               const timeDifference =
                                 new Date() - new Date(element.uploaded_date);

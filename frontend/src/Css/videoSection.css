@@ -356,6 +356,15 @@
   background-color: #3f3f3f;
 }
 
+.like-data-light:hover,
+.dislike-data-light:hover,
+.save-later-light:hover,
+.download-btn-light:hover,
+.share-light:hover,
+.add-playlist-light:hover {
+  background-color: #cacaca !important;
+}
+
 .views-date {
   display: flex;
   align-items: center;

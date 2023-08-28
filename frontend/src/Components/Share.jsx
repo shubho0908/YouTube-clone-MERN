@@ -12,6 +12,11 @@ import { MdOutlineContentCopy } from "react-icons/md";
 
 function Share() {
   const [copyText, setCopyText] = useState("Copy");
+  const [theme, setTheme] = useState(() => {
+    const Dark = localStorage.getItem("Dark");
+    return Dark ? JSON.parse(Dark) : true;
+  });
+
 
   const CopiedNotify = () =>
     toast.success("Link Copied!", {
@@ -36,14 +41,21 @@ function Share() {
       });
   };
 
+ 
+  
+
   return (
     <>
-      <div className="share-section">
+      <div
+        className={
+          theme ? "share-section" : "share-section light-mode text-light-mode"
+        }
+      >
         <div className="share-head">
           <p>Share</p>
           <CloseRoundedIcon
             fontSize="medium"
-            style={{ color: "white" }}
+            style={{ color: theme ? "white" : "black" }}
             className="cancel-share"
           />
         </div>
@@ -110,10 +122,14 @@ function Share() {
           />
         </div>
         <div className="share-link">
-          <div className="link-area">
+          <div
+            className={
+              theme ? "link-area" : "link-area light-mode text-light-mode"
+            }
+          >
             <p>{window.location.href}</p>
             <button
-              className="copy-link-btn"
+              className={theme ? "copy-link-btn" : "copy-link-btn copy-light"}
               onClick={() => {
                 handleCopyLink();
                 CopiedNotify();
