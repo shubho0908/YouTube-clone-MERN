@@ -35,7 +35,7 @@ function Signin(prop) {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "dark",
+      theme: theme ? "dark" : "light",
     });
 
   const InvalidNotify = () =>
@@ -47,7 +47,7 @@ function Signin(prop) {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "dark",
+      theme: theme ? "dark" : "light",
     });
 
   const ErrorNotify = () =>
@@ -59,7 +59,7 @@ function Signin(prop) {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "dark",
+      theme: theme ? "dark" : "light",
     });
 
   const NoUserNotify = () =>
@@ -71,7 +71,7 @@ function Signin(prop) {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "dark",
+      theme: theme ? "dark" : "light",
     });
 
   const handleInputs = (e) => {

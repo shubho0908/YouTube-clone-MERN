@@ -6,6 +6,8 @@ import "../../Css/channel.css";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function FeaturedChannels(prop) {
   const [addChannelClicked, setAddChannelClicked] = useState(false);
@@ -20,6 +22,34 @@ function FeaturedChannels(prop) {
     const Dark = localStorage.getItem("Dark");
     return Dark ? JSON.parse(Dark) : true;
   });
+
+  // TOASTS
+
+  const ChannelAdded = () =>
+    toast.success("Channel featured!", {
+      position: "bottom-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: theme ? "dark" : "light",
+    });
+
+  const AlreadyHas = (data) =>
+    toast.warning(data, {
+      position: "bottom-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: theme ? "dark" : "light",
+    });
+
+  // UseEffects
 
   useEffect(() => {
     if (token) {
@@ -92,8 +122,10 @@ function FeaturedChannels(prop) {
         );
 
         const featuredChannelData = await response.json();
-        if (featuredChannelData === "Data present already") {
-          alert(featuredChannelData);
+        if (featuredChannelData === "Channel added already") {
+          AlreadyHas(featuredChannelData);
+        } else {
+          ChannelAdded();
         }
       }
     } catch (error) {

@@ -109,7 +109,7 @@ function VideoSection() {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "dark",
+      theme: theme ? "dark" : "light",
     });
 
   const watchLaterNotify = () =>
@@ -121,7 +121,7 @@ function VideoSection() {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "dark",
+      theme: theme ? "dark" : "light",
     });
 
   const LikedNotify = () =>
@@ -133,7 +133,7 @@ function VideoSection() {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "dark",
+      theme: theme ? "dark" : "light",
     });
 
   const SubscribeNotify = () =>
@@ -145,7 +145,7 @@ function VideoSection() {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "dark",
+      theme: theme ? "dark" : "light",
     });
 
   const CommentDeleteNotify = () =>
@@ -157,7 +157,7 @@ function VideoSection() {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "dark",
+      theme: theme ? "dark" : "light",
     });
 
   // USE EFFECTS

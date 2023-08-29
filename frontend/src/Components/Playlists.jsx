@@ -58,7 +58,7 @@ function Playlists() {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "dark",
+      theme: theme ? "dark" : "light",
     });
 
   const RemovePlaylistNotify = () =>
@@ -70,7 +70,7 @@ function Playlists() {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "dark",
+      theme: theme ? "dark" : "light",
     });
 
   const CopiedNotify = () =>
@@ -82,7 +82,7 @@ function Playlists() {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "dark",
+      theme: theme ? "dark" : "light",
     });
 
   //USE EFFECTS

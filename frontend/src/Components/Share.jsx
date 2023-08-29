@@ -26,7 +26,7 @@ function Share() {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "dark",
+      theme: theme ? "dark" : "light",
     });
 
   const handleCopyLink = () => {

@@ -23,7 +23,7 @@ function Reset() {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "dark",
+      theme: theme ? "dark" : "light",
     });
 
   const ErrorNotify = () =>
@@ -35,7 +35,7 @@ function Reset() {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "dark",
+      theme: theme ? "dark" : "light",
     });
 
   const ResetData = async (e) => {

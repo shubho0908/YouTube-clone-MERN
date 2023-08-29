@@ -21,7 +21,7 @@ function Signup() {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "dark",
+     theme: theme ? "dark" : "light",
     });
 
   const ErrorNotify = () =>
@@ -33,7 +33,7 @@ function Signup() {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "dark",
+     theme: theme ? "dark" : "light",
     });
 
   const handleInputs = (e) => {
