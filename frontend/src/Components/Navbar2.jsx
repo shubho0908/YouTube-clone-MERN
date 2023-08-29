@@ -14,6 +14,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { BiSearch } from "react-icons/bi";
 
 function Navbar2() {
   const token = localStorage.getItem("userToken");
@@ -24,12 +25,24 @@ function Navbar2() {
   const [searchInput, setSearchInput] = useState();
   const [showResults, setShowResults] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [searchDesc, setSearchDesc] = useState(false);
+  const [searchClicked, setSearchClicked] = useState(false);
 
   useEffect(() => {
     if (token) {
       setEmail(jwtDecode(token).email);
     }
   }, [token]);
+
+  useEffect(() => {
+    function handleResize() {
+      setSearchDesc(window.innerWidth <= 1100);
+    }
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     setTimeout(() => {
@@ -102,13 +115,13 @@ function Navbar2() {
           <img
             src={StudioLogo}
             alt="logo"
-            className="youtubeLogo"
+            className="youtubeLogo2"
             onClick={() => {
               window.location.href = "/studio";
             }}
           />
         </div>
-        <div className="middle-bar">
+        <div className="middle-bar2">
           <div className="search2">
             <SearchRoundedIcon
               className="search-icon2"
@@ -206,11 +219,19 @@ function Navbar2() {
                               ? element.Title
                               : `${element.Title.slice(0, 30)}...`}
                           </p>
-                          <p>
-                            {element.Description.length <= 75
-                              ? element.Description
-                              : `${element.Description.slice(0, 75)}...`}
-                          </p>
+                          {searchDesc ? (
+                            <p>
+                              {element.Description.length <= 75
+                                ? element.Description
+                                : `${element.Description.slice(0, 30)}...`}
+                            </p>
+                          ) : (
+                            <p>
+                              {element.Description.length <= 75
+                                ? element.Description
+                                : `${element.Description.slice(0, 75)}...`}
+                            </p>
+                          )}
                           <div className="searchvid-edit-section">
                             <Tooltip
                               TransitionComponent={Zoom}
@@ -333,11 +354,19 @@ function Navbar2() {
                               ? element.Title
                               : `${element.Title.slice(0, 30)}...`}
                           </p>
-                          <p>
-                            {element.Description.length <= 75
-                              ? element.Description
-                              : `${element.Description.slice(0, 75)}...`}
-                          </p>
+                          {searchDesc ? (
+                            <p>
+                              {element.Description.length <= 75
+                                ? element.Description
+                                : `${element.Description.slice(0, 30)}...`}
+                            </p>
+                          ) : (
+                            <p>
+                              {element.Description.length <= 75
+                                ? element.Description
+                                : `${element.Description.slice(0, 75)}...`}
+                            </p>
+                          )}
                           <div className="searchvid-edit-section">
                             <Tooltip
                               TransitionComponent={Zoom}
@@ -434,10 +463,16 @@ function Navbar2() {
           className="right-bar2"
           style={
             !loading
-              ? { visibility: "visible", display: "block" }
+              ? { visibility: "visible", display: "flex" }
               : { visibility: "hidden", display: "none" }
           }
         >
+          <BiSearch
+            fontSize="28px"
+            color="rgb(160, 160, 160)"
+            className="studio-searchh"
+            onClick={() => setSearchClicked(true)}
+          />
           <img
             src={profilePic && profilePic}
             alt=""
@@ -452,6 +487,49 @@ function Navbar2() {
         style={showPop === true ? { display: "block" } : { display: "none" }}
       >
         <AccountPop2 />
+      </div>
+
+      {/* MOBILE SEARCH BAR */}
+
+      <div
+        className="new-studio-search-section"
+        style={{ display: searchClicked ? "flex" : "none" }}
+      >
+        <div className="search2-new">
+          <SearchRoundedIcon
+            className="search-icon2"
+            fontSize="medium"
+            style={{ color: "rgb(160, 160, 160)" }}
+          />
+          <input
+            type="text"
+            placeholder="Search across your channel"
+            id="searchType2-new"
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+            onClick={() => {}}
+          />
+          <CloseOutlinedIcon
+            fontSize="medium"
+            className="clear-search"
+            onClick={() => {
+              setSearchInput("");
+            }}
+            style={
+              showResults === true
+                ? {
+                    color: "rgb(160, 160, 160)",
+                    paddingRight: "12px",
+                    opacity: "1",
+                  }
+                : {
+                    opacity: "0",
+                    paddingRight: "12px",
+                    pointerEvents: "none",
+                  }
+            }
+          />
+        </div>
       </div>
     </>
   );

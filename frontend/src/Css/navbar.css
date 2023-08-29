@@ -39,8 +39,10 @@
 
 .left-bar,
 .middle-bar,
+.middle-bar2,
 .search,
 .search2,
+.search2-new,
 .right-bar {
   display: flex;
   align-items: center;
@@ -50,7 +52,8 @@
   padding-left: 15px;
 }
 
-.youtubeLogo {
+.youtubeLogo,
+.youtubeLogo2 {
   width: 110px;
   cursor: pointer;
   padding-left: 30px;
@@ -68,8 +71,19 @@
   background-color: #282828;
   border-radius: 5px;
   padding: 2px;
-  min-width: 580px;
-  max-width: 800px;
+  width: 45vw;
+
+  border: 0.5px solid rgba(255, 255, 255, 0.351);
+  font-family: "Open Sans", sans-serif;
+}
+
+.search2-new {
+  background-color: #282828;
+  border-radius: 5px;
+  padding: 2px;
+  width: 80vw;
+  position: absolute;
+  top: 8%;
   border: 0.5px solid rgba(255, 255, 255, 0.351);
   font-family: "Open Sans", sans-serif;
 }
@@ -156,8 +170,21 @@
   border-radius: 5px;
   border: none;
   outline: none;
-  min-width: 526px;
-  max-width: 750px;
+  width: 45vw;
+  font-size: 14.5px;
+  padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  font-family: "Open Sans", sans-serif;
+}
+
+#searchType2-new {
+  background-color: #282828;
+  color: white;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  width: 45vw;
   font-size: 14.5px;
   padding: 10px;
   padding-left: 20px;
@@ -414,7 +441,7 @@ form > input::placeholder {
 .nav-search-results {
   position: absolute;
   width: auto;
-  width: 650px;
+  width: 45.4vw;
   color: white;
   top: 77px;
   background-color: #282828;
@@ -427,7 +454,8 @@ form > input::placeholder {
 .nav-search-results2 {
   position: absolute;
   width: auto;
-  width: 648px;
+  width: 45.4vw;
+
   color: white;
   top: 77px;
   background-color: #282828;
@@ -450,6 +478,7 @@ form > input::placeholder {
 
 .searching-thumbnail {
   width: 140px;
+  height: fit-content;
 }
 
 .allsearch-video-data {
@@ -676,11 +705,38 @@ form > input::placeholder {
   color: white !important;
 }
 
+.studio-searchh {
+  display: none;
+}
+
+.new-studio-search-section {
+  display: none;
+  height: -webkit-fill-available;
+  width: -webkit-fill-available;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  z-index: 10;
+  backdrop-filter: blur(5px);
+  background: #00000059;
+}
+
 /* MEDIA QUERY */
 
 @media (max-width: 1700px) {
   .browse-data2 {
     width: 94% !important;
+  }
+}
+
+@media (width<= 1100px) {
+  #searchType2,
+  .search2 {
+    width: 52vw;
+  }
+  .nav-search-results,
+  .nav-search-results2 {
+    width: 52.4vw;
   }
 }
 
@@ -701,6 +757,20 @@ form > input::placeholder {
   }
 }
 
+@media (width<= 915px) {
+  .middle-bar2 {
+    display: none;
+  }
+  .studio-searchh {
+    display: block;
+  }
+  .right-bar2 {
+    align-items: center;
+    justify-content: space-between;
+    width: 110px;
+  }
+}
+
 @media (max-width: 850px) {
   .browse-data2 {
     width: 90% !important;
@@ -708,13 +778,15 @@ form > input::placeholder {
 }
 
 @media (max-width: 650px) {
-  .menu, .menu-light {
+  .menu,
+  .menu-light {
     display: none !important;
   }
   .youtubeLogo {
     padding-left: 0;
   }
-  .videocreate, .video-light {
+  .videocreate,
+  .video-light {
     display: none !important;
   }
   .right-bar {

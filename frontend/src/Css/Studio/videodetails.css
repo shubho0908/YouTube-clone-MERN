@@ -14,7 +14,6 @@
   left: 300px;
   width: 62%;
   animation: FADEINN 1s ease;
-
 }
 
 .currentvideo-title {
@@ -85,6 +84,7 @@
   position: absolute;
   left: 16px;
   top: 202px;
+  background-color: #282828;
 }
 
 .currentvideo-title-inp:focus {

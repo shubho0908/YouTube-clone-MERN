@@ -65,18 +65,6 @@ function Studio() {
 
   //TOAST FUNCTIONS
 
-  const UploadedNotify = () =>
-    toast.success("Video is published!", {
-      position: "bottom-center",
-      autoClose: 950,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "dark",
-    });
-
   const CancelNotify = () =>
     toast.warning("Video upload was cancelled!", {
       position: "bottom-center",
@@ -608,10 +596,7 @@ function Studio() {
           setIsPublished(true);
           setLoading(false);
           setIsClicked(false);
-          UploadedNotify();
-          setTimeout(() => {
-            window.location.reload();
-          }, 1000);
+          window.location.reload();
         } else {
           setLoading(true);
           setIsClicked(true);
