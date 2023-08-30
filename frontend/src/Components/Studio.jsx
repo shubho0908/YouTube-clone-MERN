@@ -22,7 +22,7 @@ import Dashboard from "./Studio/Dashboard";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ClearRoundedIcon from "@mui/icons-material/ClearRounded";
-import { TfiUpload } from "react-icons/tfi";
+import { LiaUploadSolid } from "react-icons/lia";
 
 //SOCIALS
 
@@ -43,7 +43,7 @@ function Studio() {
   const [ChannelAbout, setChannelAbout] = useState();
   const [isLoading, setisLoading] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
-  const [isVideoSelected, setIsVideoSelected] = useState(false);
+  const [isVideoSelected, setIsVideoSelected] = useState(true);
   const [isThumbnailSelected, setIsThumbnailSelected] = useState(false);
   const [videoName, setVideoName] = useState("Upload videos");
   const [VideoURL, setVideoURL] = useState("");
@@ -610,7 +610,7 @@ function Studio() {
           className="create-btn-short"
           onClick={() => setIsClicked(true)}
         >
-          <TfiUpload fontSize="16px" color="#b1b1b1" />
+          <LiaUploadSolid fontSize="22px" color="#b1b1b1" />
         </div>
         <div
           className="create-channel"

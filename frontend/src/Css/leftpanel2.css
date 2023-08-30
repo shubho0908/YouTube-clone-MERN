@@ -156,7 +156,7 @@
   }
   .studio-horizontal-menu {
     position: fixed;
-    z-index: 10;
+    z-index: 6;
     display: flex !important;
     align-items: center;
     justify-content: space-between;

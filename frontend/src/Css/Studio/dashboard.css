@@ -434,3 +434,9 @@
     padding-bottom: 180px !important;
   }
 }
+
+@media (width<= 450px) {
+  .dashboard-top {
+    font-size: 21px;
+  }
+}
