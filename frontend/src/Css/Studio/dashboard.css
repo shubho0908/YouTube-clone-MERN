@@ -416,3 +416,21 @@
     left: 125px !important;
   }
 }
+
+@media (width<= 650px) {
+  .left-dashboard-data {
+    position: relative;
+    top: 10px;
+  }
+  .dashboard-data {
+    left: 6% !important;
+    margin-right: 20px;
+  }
+  .performed-vid-data > img {
+    width: 100% !important;
+    height: auto !important;
+  }
+  .dash-data-all {
+    padding-bottom: 180px !important;
+  }
+}

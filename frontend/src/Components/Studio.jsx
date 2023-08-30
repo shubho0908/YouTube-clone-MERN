@@ -22,6 +22,7 @@ import Dashboard from "./Studio/Dashboard";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ClearRoundedIcon from "@mui/icons-material/ClearRounded";
+import { TfiUpload } from "react-icons/tfi";
 
 //SOCIALS
 
@@ -121,23 +122,6 @@ function Studio() {
   }, []);
 
   useEffect(() => {
-    const handleClick = () => {
-      console.log("Button clicked");
-      setIsClicked(true);
-    };
-
-    const createBtn = document.querySelector(".create-btn");
-
-    if (createBtn) {
-      createBtn.addEventListener("click", handleClick);
-
-      return () => {
-        createBtn.removeEventListener("click", handleClick);
-      };
-    }
-  }, []);
-
-  useEffect(() => {
     const getVideos = async () => {
       try {
         if (email !== undefined) {
@@ -156,23 +140,6 @@ function Studio() {
 
     return () => clearInterval(interval);
   }, [email]);
-
-  useEffect(() => {
-    const handleClick = () => {
-      console.log("Button clicked");
-      setIsClicked(true);
-    };
-
-    const createBtn = document.querySelector(".create-btn2");
-
-    if (createBtn) {
-      createBtn.addEventListener("click", handleClick);
-
-      return () => {
-        createBtn.removeEventListener("click", handleClick);
-      };
-    }
-  }, []);
 
   useEffect(() => {
     const handleClick = () => {
@@ -617,6 +584,7 @@ function Studio() {
       <div className="studio">
         <div
           className="create-btn"
+          onClick={() => setIsClicked(true)}
           style={isChannel === true ? { display: "flex" } : { display: "none" }}
         >
           <VideoCallOutlinedIcon
@@ -633,8 +601,16 @@ function Studio() {
               : { display: "none" }
           }
           className="create-btn2"
+          onClick={() => setIsClicked(true)}
         >
           CREATE
+        </div>
+        <div
+          style={isChannel === true ? { display: "flex" } : { display: "none" }}
+          className="create-btn-short"
+          onClick={() => setIsClicked(true)}
+        >
+          <TfiUpload fontSize="16px" color="#b1b1b1" />
         </div>
         <div
           className="create-channel"

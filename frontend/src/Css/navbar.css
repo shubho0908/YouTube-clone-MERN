@@ -449,8 +449,26 @@ form > input::placeholder {
   z-index: 2;
 }
 
+.create-btn-short {
+  display: none !important;
+  cursor: pointer;
+  align-items: center;
+  position: absolute;
+  top: 100px;
+  right: 35px;
+  z-index: 2;
+  background-color: #282828;
+  padding: 12px;
+  border: 1px solid rgba(128, 128, 128, 0.333);
+  border-radius: 100%;
+}
+
 .create-btn:hover {
   background-color: #242424;
+}
+
+.create-btn-short:hover {
+  color: white !important;
 }
 
 .create-btn > p {
@@ -827,6 +845,9 @@ form > input::placeholder {
   .youtubeLogo2 {
     padding-left: 10px;
   }
+  .right-bar2 {
+    margin-right: 12px !important;
+  }
 }
 
 @media (max-width: 850px) {
@@ -877,6 +898,12 @@ form > input::placeholder {
   }
   .forgot-password {
     font-size: 12.5px;
+  }
+  .create-btn {
+    display: none !important;
+  }
+  .create-btn-short {
+    display: flex !important;
   }
 }
 
