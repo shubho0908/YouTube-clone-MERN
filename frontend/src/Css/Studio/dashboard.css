@@ -409,6 +409,9 @@
     left: 0px;
     top: 30%;
   }
+  .sk-dash-third {
+    margin-left: 0px !important;
+  }
 }
 
 @media (width<= 860px) {
@@ -418,7 +421,8 @@
 }
 
 @media (width<= 650px) {
-  .left-dashboard-data {
+  .left-dashboard-data,
+  .sk-dash {
     position: relative;
     top: 10px;
   }
@@ -438,5 +442,13 @@
 @media (width<= 450px) {
   .dashboard-top {
     font-size: 21px;
+  }
+  .sk-dash-first,
+  .sk-dash-second,
+  .sk-dash-third {
+    width: 88vw !important;
+  }
+  .sk-dash-title {
+    width: 200px !important;
   }
 }

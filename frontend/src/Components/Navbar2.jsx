@@ -142,7 +142,7 @@ function Navbar2() {
             fontSize="large"
             style={{ color: "white" }}
           />
-         
+
           <img
             src={StudioLogo}
             alt="logo"
@@ -194,12 +194,14 @@ function Navbar2() {
           </div>
           <div
             className="nav-search-results"
-            style={
-              (showResults === true && searchInput === "") ||
-              (showResults === true && searchInput === undefined)
-                ? { display: "block" }
-                : { display: "none" }
-            }
+            style={{
+              display:
+                (showResults === true && searchInput === "") ||
+                (showResults === true && searchInput === undefined)
+                  ? "block"
+                  : "none",
+              height: userVideos && userVideos.length >= 4 ? "450px" : "auto",
+            }}
           >
             <div className="just-abovetxt">
               <p className="top-search-head">Your recent videos</p>
@@ -326,13 +328,16 @@ function Navbar2() {
           </div>
           <div
             className="nav-search-results2"
-            style={
-              showResults === true &&
-              filteredVideos &&
-              filteredVideos.length > 0
-                ? { display: "block" }
-                : { display: "none" }
-            }
+            style={{
+              display:
+                showResults === true &&
+                filteredVideos &&
+                filteredVideos.length > 0
+                  ? "block"
+                  : "none",
+              height:
+                filteredVideos && filteredVideos.length >= 4 ? "450px" : "auto",
+            }}
           >
             <div className="just-abovetxt">
               <p className="top-search-head">
@@ -458,15 +463,16 @@ function Navbar2() {
           </div>
           <div
             className="nav-search-results2"
-            style={
-              showResults === true &&
-              searchInput !== undefined &&
-              searchInput.length !== 0 &&
-              filteredVideos &&
-              filteredVideos.length === 0
-                ? { display: "block" }
-                : { display: "none" }
-            }
+            style={{
+              display:
+                showResults === true &&
+                searchInput !== undefined &&
+                searchInput.length !== 0 &&
+                filteredVideos &&
+                filteredVideos.length === 0
+                  ? "block"
+                  : "none",
+            }}
           >
             <div className="just-abovetxt">
               <p className="top-search-head">
@@ -479,7 +485,7 @@ function Navbar2() {
         </div>
         <SkeletonTheme baseColor="#353535" highlightColor="#444">
           <div
-            className="right-bar2"
+            className="right-bar2 sk-right-bar2"
             style={loading ? { display: "block" } : { display: "none" }}
           >
             <Skeleton
@@ -566,12 +572,14 @@ function Navbar2() {
         <div className="show-mobile-search-results">
           <div
             className="nav-search-results mobile-search-data"
-            style={
-              (showResults2 === true && searchInput2 === "") ||
-              (showResults2 === true && searchInput2 === undefined)
-                ? { display: "block" }
-                : { display: "none" }
-            }
+            style={{
+              display:
+                (showResults2 === true && searchInput2 === "") ||
+                (showResults2 === true && searchInput2 === undefined)
+                  ? "block"
+                  : "none",
+              height: userVideos && userVideos.length >= 4 ? "400px" : "auto",
+            }}
           >
             <div className="just-abovetxt">
               <p className="top-search-head">Your recent videos</p>
@@ -698,13 +706,16 @@ function Navbar2() {
           </div>
           <div
             className="nav-search-results2 mobile-search-data"
-            style={
-              showResults2 === true &&
-              filteredVideos2 &&
-              filteredVideos2.length > 0
-                ? { display: "block" }
-                : { display: "none" }
-            }
+            style={{
+              display:
+                showResults2 === true &&
+                filteredVideos2 &&
+                filteredVideos2.length > 0
+                  ? "block"
+                  : "none",
+              height: filteredVideos2 && filteredVideos2.length >= 2 ? "400px" : "auto",
+
+            }}
           >
             <div className="just-abovetxt">
               <p className="top-search-head">
@@ -850,8 +861,6 @@ function Navbar2() {
           </div>
         </div>
       </div>
-
-
     </>
   );
 }

@@ -137,15 +137,26 @@ function Dashboard() {
           className="dashboard-data"
           style={{ left: menu ? "125px" : "310px" }}
         >
-          <Skeleton count={1} width={250} height={25} />
-          <div className="dash-data-all">
+          <Skeleton
+            count={1}
+            width={250}
+            height={25}
+            className="sk-dash-title"
+          />
+          <div className="dash-data-all sk-dash">
             <div className="performed-vid-data">
-              <Skeleton count={1} width={400} height={550} />
+              <Skeleton
+                count={1}
+                width={400}
+                height={550}
+                className="sk-dash-first"
+              />
               <Skeleton
                 count={1}
                 width={400}
                 height={450}
                 style={{ marginTop: "20px" }}
+                className="sk-dash-second"
               />
             </div>
             <Skeleton
@@ -153,6 +164,7 @@ function Dashboard() {
               width={400}
               height={450}
               style={{ marginTop: "25px", marginLeft: "20px" }}
+              className="sk-dash-third"
             />
           </div>
         </div>
@@ -340,9 +352,9 @@ function Dashboard() {
                           className="expandd"
                           style={
                             dropDown === false &&
-                            myVideos &&
-                            myVideos.message !== "USER DOESN'T EXIST" &&
-                            myVideos.length > 1
+                              myVideos &&
+                              myVideos.message !== "USER DOESN'T EXIST" &&
+                              myVideos.length > 1
                               ? { color: "#aaa", cursor: "pointer" }
                               : { display: "none" }
                           }
@@ -353,9 +365,9 @@ function Dashboard() {
                           className="expandd"
                           style={
                             dropDown === true &&
-                            myVideos &&
-                            myVideos.message !== "USER DOESN'T EXIST" &&
-                            myVideos.length > 1
+                              myVideos &&
+                              myVideos.message !== "USER DOESN'T EXIST" &&
+                              myVideos.length > 1
                               ? { color: "#aaa", cursor: "pointer" }
                               : { display: "none" }
                           }
@@ -367,9 +379,9 @@ function Dashboard() {
                       className="extra-performance-data"
                       style={
                         myVideos &&
-                        myVideos.message !== "USER DOESN'T EXIST" &&
-                        myVideos.length > 1 &&
-                        dropDown === true
+                          myVideos.message !== "USER DOESN'T EXIST" &&
+                          myVideos.length > 1 &&
+                          dropDown === true
                           ? { display: "block" }
                           : { display: "none" }
                       }
@@ -381,8 +393,8 @@ function Dashboard() {
                             new Date() -
                             new Date(
                               myVideos &&
-                                myVideos.length > 0 &&
-                                myVideos[0].uploaded_date
+                              myVideos.length > 0 &&
+                              myVideos[0].uploaded_date
                             );
                           const minutes = Math.floor(timeDifference / 60000);
                           const hours = Math.floor(timeDifference / 3600000);
@@ -425,9 +437,8 @@ function Dashboard() {
                             />
                           </div>
                           <div
-                            className={`all-sortedvideos-dash ${
-                              showSortedVideos ? "visible" : ""
-                            }`}
+                            className={`all-sortedvideos-dash ${showSortedVideos ? "visible" : ""
+                              }`}
                           >
                             <p>Top recent videos</p>
                             <p>Views</p>
@@ -454,9 +465,9 @@ function Dashboard() {
                                           {element.Title.length <= 25
                                             ? element.Title
                                             : `${element.Title.slice(
-                                                0,
-                                                25
-                                              )}...`}
+                                              0,
+                                              25
+                                            )}...`}
                                         </p>
                                       </div>
                                     </div>

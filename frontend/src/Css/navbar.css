@@ -587,6 +587,8 @@ form > input::placeholder {
 
 .my-five-videos {
   margin-top: 16px;
+  height: 88.2%;
+  overflow: scroll;
 }
 
 .studio-dark::before {
@@ -833,6 +835,9 @@ form > input::placeholder {
     justify-content: space-between;
     width: 110px;
   }
+  .sk-right-bar2 {
+    width: auto !important;
+  }
 }
 
 @media (width<= 860px) {
@@ -907,6 +912,22 @@ form > input::placeholder {
   }
 }
 
+@media (width<= 600px) {
+  .allsearch-video-data {
+    flex-direction: column;
+    padding-bottom: 15px;
+  }
+  .searchvid-date {
+    margin-top: 15px;
+  }
+  .mobile-search-data {
+    height: 400px !important;
+  }
+  .my-five-videos {
+    height: 92% !important;
+  }
+}
+
 @media (width<=500px) {
   .cancel {
     top: 10px;
@@ -945,6 +966,33 @@ form > input::placeholder {
   }
 }
 
+@media (width<= 470px) {
+  .searchdata-one {
+    flex-direction: column;
+  }
+  .searchvid-data {
+    right: 0px;
+    top: 0px;
+  }
+  .searchvid-duration {
+    top: -24px;
+    left: 87.6%;
+  }
+  .searching-thumbnail {
+    width: 100%;
+    height: auto;
+  }
+  .mobile-search-data {
+    height: 520px !important;
+  }
+  .searchvid-edit-section {
+    top: 15px;
+  }
+  .searchvid-date {
+    margin-top: 25px;
+  }
+}
+
 @media (width <= 380px) {
   .right-bar {
     width: 88px;
@@ -960,5 +1008,15 @@ form > input::placeholder {
   }
   .already {
     font-size: 13.8px;
+  }
+  .searchvid-duration {
+    left: 84.6%;
+  }
+  .search2-new,
+  #searchType2-new {
+    width: 90vw !important;
+  }
+  .mobile-search-data {
+    width: 90.6vw !important;
   }
 }
