@@ -24,8 +24,11 @@ function Navbar2() {
   const [showPop, setShowPop] = useState(false);
   const [searchInput, setSearchInput] = useState();
   const [showResults, setShowResults] = useState(false);
+  const [searchInput2, setSearchInput2] = useState();
+  const [showResults2, setShowResults2] = useState(false);
   const [loading, setLoading] = useState(true);
   const [searchDesc, setSearchDesc] = useState(false);
+  const [MobileSearch, setMobileSearch] = useState(false);
   const [searchClicked, setSearchClicked] = useState(false);
 
   useEffect(() => {
@@ -37,6 +40,16 @@ function Navbar2() {
   useEffect(() => {
     function handleResize() {
       setSearchDesc(window.innerWidth <= 1100);
+    }
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    function handleResize() {
+      setMobileSearch(window.innerWidth <= 915);
     }
 
     handleResize();
@@ -103,6 +116,23 @@ function Navbar2() {
         )
     );
 
+  const filteredVideos2 =
+    userVideos &&
+    userVideos.length > 0 &&
+    userVideos.filter(
+      (video) =>
+        video.Title.toLowerCase().includes(
+          searchInput2 !== undefined &&
+            searchInput2 !== "" &&
+            searchInput2.toLowerCase()
+        ) ||
+        video.Description.toLowerCase().includes(
+          searchInput2 !== undefined &&
+            searchInput2 !== "" &&
+            searchInput2.toLowerCase()
+        )
+    );
+
   return (
     <>
       <div className="navbar2">
@@ -112,6 +142,7 @@ function Navbar2() {
             fontSize="large"
             style={{ color: "white" }}
           />
+         
           <img
             src={StudioLogo}
             alt="logo"
@@ -476,7 +507,7 @@ function Navbar2() {
           <img
             src={profilePic && profilePic}
             alt=""
-            className="profile-pic"
+            className="profile-pic2"
             style={token ? { display: "block" } : { display: "none" }}
             onClick={() => setShowPop(!showPop)}
           />
@@ -493,7 +524,7 @@ function Navbar2() {
 
       <div
         className="new-studio-search-section"
-        style={{ display: searchClicked ? "flex" : "none" }}
+        style={{ display: searchClicked && MobileSearch ? "flex" : "none" }}
       >
         <div className="search2-new">
           <SearchRoundedIcon
@@ -506,17 +537,19 @@ function Navbar2() {
             placeholder="Search across your channel"
             id="searchType2-new"
             value={searchInput}
-            onChange={(e) => setSearchInput(e.target.value)}
-            onClick={() => {}}
+            onChange={(e) => setSearchInput2(e.target.value)}
+            onClick={() => setShowResults2(true)}
           />
           <CloseOutlinedIcon
             fontSize="medium"
             className="clear-search"
             onClick={() => {
-              setSearchInput("");
+              setSearchInput2("");
+              setShowResults2(false);
+              setSearchClicked(false);
             }}
             style={
-              showResults === true
+              showResults2 === true
                 ? {
                     color: "rgb(160, 160, 160)",
                     paddingRight: "12px",
@@ -530,7 +563,295 @@ function Navbar2() {
             }
           />
         </div>
+        <div className="show-mobile-search-results">
+          <div
+            className="nav-search-results mobile-search-data"
+            style={
+              (showResults2 === true && searchInput2 === "") ||
+              (showResults2 === true && searchInput2 === undefined)
+                ? { display: "block" }
+                : { display: "none" }
+            }
+          >
+            <div className="just-abovetxt">
+              <p className="top-search-head">Your recent videos</p>
+              {userVideos && userVideos.length >= 4 ? (
+                <p
+                  className="show-all"
+                  onClick={() => {
+                    window.location.href = "/studio/video";
+                  }}
+                >
+                  Show all
+                </p>
+              ) : (
+                ""
+              )}
+            </div>
+            <hr className="seperate extra-seperate" />
+            <div className="my-five-videos">
+              {userVideos &&
+                userVideos.length > 0 &&
+                userVideos.slice(0, 4).map((element, index) => {
+                  const uploaded = new Date(element.uploaded_date);
+                  return (
+                    <div className="allsearch-video-data" key={index}>
+                      <div className="searchdata-one">
+                        <img
+                          src={element.thumbnailURL}
+                          alt="thumbnail"
+                          className="searching-thumbnail"
+                          onClick={() => {
+                            window.location.href = `/studio/video/edit/${element._id}`;
+                          }}
+                        />
+                        <p className="searchvid-duration">
+                          {Math.floor(element.videoLength / 60) +
+                            ":" +
+                            (Math.round(element.videoLength % 60) < 10
+                              ? "0" + Math.round(element.videoLength % 60)
+                              : Math.round(element.videoLength % 60))}
+                        </p>
+                        <div className="searchvid-data">
+                          <p
+                            onClick={() => {
+                              window.location.href = `/studio/video/edit/${element._id}`;
+                            }}
+                          >
+                            {element.Title.length <= 30
+                              ? element.Title
+                              : `${element.Title.slice(0, 30)}...`}
+                          </p>
+                          {searchDesc ? (
+                            <p>
+                              {element.Description.length <= 75
+                                ? element.Description
+                                : `${element.Description.slice(0, 30)}...`}
+                            </p>
+                          ) : (
+                            <p>
+                              {element.Description.length <= 75
+                                ? element.Description
+                                : `${element.Description.slice(0, 75)}...`}
+                            </p>
+                          )}
+                          <div className="searchvid-edit-section">
+                            <Tooltip
+                              TransitionComponent={Zoom}
+                              title="Details"
+                              placement="bottom"
+                            >
+                              <ModeEditOutlineOutlinedIcon
+                                className="edit-this"
+                                fontSize="medium"
+                                style={{ color: "#aaa" }}
+                                onClick={() => {
+                                  window.location.href = `/studio/video/edit/${element._id}`;
+                                }}
+                              />
+                            </Tooltip>
+                            <Tooltip
+                              TransitionComponent={Zoom}
+                              title="Comments"
+                              placement="bottom"
+                            >
+                              <ChatOutlinedIcon
+                                className="comment-this"
+                                fontSize="medium"
+                                style={{ color: "#aaa" }}
+                                onClick={() => {
+                                  window.location.href = `/studio/video/comments/${element._id}`;
+                                }}
+                              />
+                            </Tooltip>
+                            <Tooltip
+                              TransitionComponent={Zoom}
+                              title="View on YouTube"
+                              placement="bottom"
+                            >
+                              <YouTubeIcon
+                                className="watch-this"
+                                fontSize="medium"
+                                style={{ color: "#aaa" }}
+                                onClick={() => {
+                                  window.location.href = `/video/${element._id}`;
+                                }}
+                              />
+                            </Tooltip>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="searchvid-date">
+                        <p>
+                          {uploaded.toLocaleDateString("en-US", {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                          })}
+                        </p>
+                        <p>Published</p>
+                      </div>
+                    </div>
+                  );
+                })}
+            </div>
+          </div>
+          <div
+            className="nav-search-results2 mobile-search-data"
+            style={
+              showResults2 === true &&
+              filteredVideos2 &&
+              filteredVideos2.length > 0
+                ? { display: "block" }
+                : { display: "none" }
+            }
+          >
+            <div className="just-abovetxt">
+              <p className="top-search-head">
+                Videos ({filteredVideos2 && filteredVideos2.length})
+              </p>
+              {filteredVideos2 && filteredVideos2.length >= 4 ? (
+                <p
+                  className="show-all"
+                  onClick={() => {
+                    window.location.href = "/studio/video";
+                  }}
+                >
+                  Show all
+                </p>
+              ) : (
+                ""
+              )}
+            </div>
+            <hr className="seperate extra-seperate" />
+            <div className="my-five-videos">
+              {filteredVideos2 &&
+                filteredVideos2.length > 0 &&
+                filteredVideos2.map((element, index) => {
+                  const uploaded = new Date(element.uploaded_date);
+                  return (
+                    <div className="allsearch-video-data" key={index}>
+                      <div className="searchdata-one">
+                        <img
+                          src={element.thumbnailURL}
+                          alt="thumbnail"
+                          className="searching-thumbnail"
+                          onClick={() => {
+                            window.location.href = `/studio/video/edit/${element._id}`;
+                          }}
+                        />
+                        <p className="searchvid-duration">
+                          {Math.floor(element.videoLength / 60) +
+                            ":" +
+                            (Math.round(element.videoLength % 60) < 10
+                              ? "0" + Math.round(element.videoLength % 60)
+                              : Math.round(element.videoLength % 60))}
+                        </p>
+                        <div className="searchvid-data">
+                          <p
+                            onClick={() => {
+                              window.location.href = `/studio/video/edit/${element._id}`;
+                            }}
+                          >
+                            {element.Title.length <= 30
+                              ? element.Title
+                              : `${element.Title.slice(0, 30)}...`}
+                          </p>
+                          {searchDesc ? (
+                            <p>
+                              {element.Description.length <= 75
+                                ? element.Description
+                                : `${element.Description.slice(0, 30)}...`}
+                            </p>
+                          ) : (
+                            <p>
+                              {element.Description.length <= 75
+                                ? element.Description
+                                : `${element.Description.slice(0, 75)}...`}
+                            </p>
+                          )}
+                          <div className="searchvid-edit-section">
+                            <Tooltip
+                              TransitionComponent={Zoom}
+                              title="Details"
+                              placement="bottom"
+                            >
+                              <ModeEditOutlineOutlinedIcon
+                                className="edit-this"
+                                fontSize="medium"
+                                style={{ color: "#aaa" }}
+                                onClick={() => {
+                                  window.location.href = `/studio/video/edit/${element._id}`;
+                                }}
+                              />
+                            </Tooltip>
+                            <Tooltip
+                              TransitionComponent={Zoom}
+                              title="Comments"
+                              placement="bottom"
+                            >
+                              <ChatOutlinedIcon
+                                className="comment-this"
+                                fontSize="medium"
+                                style={{ color: "#aaa" }}
+                              />
+                            </Tooltip>
+                            <Tooltip
+                              TransitionComponent={Zoom}
+                              title="View on YouTube"
+                              placement="bottom"
+                            >
+                              <YouTubeIcon
+                                className="watch-this"
+                                fontSize="medium"
+                                style={{ color: "#aaa" }}
+                                onClick={() => {
+                                  window.location.href = `/video/${element._id}`;
+                                }}
+                              />
+                            </Tooltip>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="searchvid-date">
+                        <p>
+                          {uploaded.toLocaleDateString("en-US", {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                          })}
+                        </p>
+                        <p>Published</p>
+                      </div>
+                    </div>
+                  );
+                })}
+            </div>
+          </div>
+          <div
+            className="nav-search-results2 mobile-search-data"
+            style={
+              showResults2 === true &&
+              searchInput2 !== undefined &&
+              searchInput2.length !== 0 &&
+              filteredVideos2 &&
+              filteredVideos2.length === 0
+                ? { display: "block" }
+                : { display: "none" }
+            }
+          >
+            <div className="just-abovetxt">
+              <p className="top-search-head">
+                Videos ({filteredVideos2 && filteredVideos2.length})
+              </p>
+            </div>
+            <hr className="seperate extra-seperate" />
+            <div className="my-five-videos"></div>
+          </div>
+        </div>
       </div>
+
+
     </>
   );
 }

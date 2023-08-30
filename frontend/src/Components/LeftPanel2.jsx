@@ -13,6 +13,13 @@ import { CiShare1 } from "react-icons/ci";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
 
+// REACT ICONS
+
+import { MdDashboard } from "react-icons/md";
+import { MdOutlineVideoLibrary } from "react-icons/md";
+import { BiCommentDetail } from "react-icons/bi";
+import { MdOutlineAutoFixHigh } from "react-icons/md";
+
 function LeftPanel2() {
   const [email, setEmail] = useState("");
   const token = localStorage.getItem("userToken");
@@ -131,7 +138,7 @@ function LeftPanel2() {
   return (
     <>
       <div
-        className="main-section2"
+        className="main-section2 long-left"
         style={
           studioMenuClicked === true
             ? { display: "none" }
@@ -281,7 +288,7 @@ function LeftPanel2() {
       {/* SHORT HAND  */}
 
       <div
-        className="main-section2"
+        className="main-section2 short-left"
         style={
           studioMenuClicked === false
             ? { display: "none" }
@@ -450,6 +457,249 @@ function LeftPanel2() {
               />
             </Tooltip>
           </div>
+        </div>
+      </div>
+
+      {/* SHORT HAND 2 */}
+
+      <div className="main-section2 short-left2">
+        <SkeletonTheme baseColor="#353535" highlightColor="#444">
+          <div
+            className="first-panel"
+            style={
+              loading === true ? { display: "block" } : { display: "none" }
+            }
+          >
+            <Skeleton
+              count={1}
+              width={50}
+              height={50}
+              style={{ borderRadius: "100%" }}
+            />
+          </div>
+        </SkeletonTheme>
+        <div
+          className="first-panel"
+          style={
+            loading === false
+              ? { visibility: "visible", display: "block" }
+              : { visibility: "hidden", display: "none" }
+          }
+        >
+          <Tooltip
+            TransitionComponent={Zoom}
+            title="View channel on YouTube"
+            placement="top"
+          >
+            <img
+              src={profileIMG ? profileIMG : avatar}
+              alt=""
+              className="profile_img"
+              style={{ width: "50px", height: "50px" }}
+              onClick={() => {
+                if (channelId !== undefined) {
+                  window.location.href = `/channel/${channelId}`;
+                }
+              }}
+            />
+          </Tooltip>
+          <CiShare1 className="view-channel3" fontSize="20px" />
+        </div>
+        <div className="second-panel">
+          <div
+            className={
+              StudioSection === "Dashboard"
+                ? "studio-active panel"
+                : "dashboard panel"
+            }
+            onClick={() => {
+              localStorage.setItem("Studio-Section", "Dashboard");
+              window.location.href = "/studio";
+            }}
+          >
+            <Tooltip
+              TransitionComponent={Zoom}
+              title="Dashboard"
+              placement="bottom"
+            >
+              <DashboardIcon
+                className={
+                  StudioSection === "Dashboard" ? "studio-icon2" : "studio-icon"
+                }
+                fontSize="medium"
+                style={{
+                  color: "#A9A9A9",
+                  paddingLeft: "25px !important",
+                  paddingTop: "16px",
+                  paddingBottom: "16px",
+                }}
+              />
+            </Tooltip>
+          </div>
+          <div
+            className={
+              StudioSection === "Content"
+                ? "studio-active panel"
+                : "content panel"
+            }
+            onClick={() => {
+              localStorage.setItem("Studio-Section", "Content");
+              window.location.href = "/studio/video";
+            }}
+          >
+            <Tooltip
+              TransitionComponent={Zoom}
+              title="Content"
+              placement="bottom"
+            >
+              <VideoLibraryOutlinedIcon
+                className={
+                  StudioSection === "Content" ? "studio-icon2" : "studio-icon"
+                }
+                fontSize="medium"
+                style={{
+                  color: "#A9A9A9",
+                  paddingTop: "16px",
+                  paddingBottom: "16px",
+                }}
+              />
+            </Tooltip>
+          </div>
+          <div
+            className={
+              StudioSection === "Comments"
+                ? "studio-active panel"
+                : "comments panel"
+            }
+            onClick={() => {
+              localStorage.setItem("Studio-Section", "Comments");
+              window.location.href = "/studio/comments";
+            }}
+          >
+            <Tooltip
+              TransitionComponent={Zoom}
+              title="Comments"
+              placement="bottom"
+            >
+              <ChatOutlinedIcon
+                className={
+                  StudioSection === "Comments" ? "studio-icon2" : "studio-icon"
+                }
+                fontSize="medium"
+                style={{
+                  color: "#A9A9A9",
+                  paddingTop: "16px",
+                  paddingBottom: "16px",
+                }}
+              />
+            </Tooltip>
+          </div>
+          <div
+            className={
+              StudioSection === "Customization"
+                ? "studio-active panel"
+                : "customization panel"
+            }
+            onClick={() => {
+              localStorage.setItem("Studio-Section", "Customization");
+              window.location.href = "/studio/customize";
+            }}
+          >
+            <Tooltip
+              TransitionComponent={Zoom}
+              title="Customization"
+              placement="bottom"
+            >
+              <AutoFixHighOutlinedIcon
+                className={
+                  StudioSection === "Customization"
+                    ? "studio-icon2"
+                    : "studio-icon"
+                }
+                fontSize="medium"
+                style={{
+                  color: "#A9A9A9",
+                  paddingTop: "16px",
+                  paddingBottom: "16px",
+                }}
+              />
+            </Tooltip>
+          </div>
+        </div>
+      </div>
+
+      {/* HORIZONTAL MENU BAR */}
+
+      <div className="studio-horizontal-menu">
+        <div className="hori-dashboard">
+          <Tooltip
+            TransitionComponent={Zoom}
+            title="Dashboard"
+            placement="bottom"
+          >
+            <MdDashboard
+              className={
+                StudioSection === "Dashboard" ? "studio-icon3" : "studio-icon"
+              }
+              fontSize="26px"
+              style={{
+                color: "#A9A9A9",
+              }}
+            />
+          </Tooltip>
+        </div>
+        <div className="hori-content">
+          <Tooltip
+            TransitionComponent={Zoom}
+            title="Content"
+            placement="bottom"
+          >
+            <MdOutlineVideoLibrary
+              className={
+                StudioSection === "Content" ? "studio-icon3" : "studio-icon"
+              }
+              fontSize="26px"
+              style={{
+                color: "#A9A9A9",
+              }}
+            />
+          </Tooltip>
+        </div>
+        <div className="hori-comments">
+          <Tooltip
+            TransitionComponent={Zoom}
+            title="Comments"
+            placement="bottom"
+          >
+            <BiCommentDetail
+              className={
+                StudioSection === "Comments" ? "studio-icon3" : "studio-icon"
+              }
+              fontSize="26px"
+              style={{
+                color: "#A9A9A9",
+              }}
+            />
+          </Tooltip>
+        </div>
+        <div className="hori-customize">
+          <Tooltip
+            TransitionComponent={Zoom}
+            title="Customization"
+            placement="bottom"
+          >
+            <MdOutlineAutoFixHigh
+              className={
+                StudioSection === "Customization"
+                  ? "studio-icon3"
+                  : "studio-icon"
+              }
+              fontSize="26px"
+              style={{
+                color: "#A9A9A9",
+              }}
+            />
+          </Tooltip>
         </div>
       </div>
     </>

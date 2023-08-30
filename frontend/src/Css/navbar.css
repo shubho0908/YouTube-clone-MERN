@@ -86,6 +86,19 @@
   top: 8%;
   border: 0.5px solid rgba(255, 255, 255, 0.351);
   font-family: "Open Sans", sans-serif;
+  animation: FADE_COME2 0.4s ease;
+}
+
+@keyframes FADE_COME2 {
+  0% {
+    opacity: 0;
+    top: 12%;
+  }
+
+  100% {
+    opacity: 1;
+    top: 8%;
+  }
 }
 
 .light-border {
@@ -184,7 +197,7 @@
   border-radius: 5px;
   border: none;
   outline: none;
-  width: 45vw;
+  width: 80vw;
   font-size: 14.5px;
   padding: 10px;
   padding-left: 20px;
@@ -407,6 +420,14 @@ form > input::placeholder {
 }
 
 .profile-pic {
+  cursor: pointer;
+  width: 42px;
+  height: 42px;
+  object-fit: cover;
+  border-radius: 100%;
+}
+
+.profile-pic2 {
   cursor: pointer;
   width: 42px;
   height: 42px;
@@ -717,8 +738,33 @@ form > input::placeholder {
   justify-content: center;
   position: fixed;
   z-index: 10;
-  backdrop-filter: blur(5px);
-  background: #00000059;
+  backdrop-filter: blur(8px);
+  background: #00000087;
+  animation: BG_FADE 0.4s ease;
+}
+
+.show-mobile-search-results {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-search-data {
+  width: 80.4vw !important;
+  top: 122px;
+  animation: blowdownwards2 0.2s ease !important;
+}
+
+@keyframes blowdownwards2 {
+  0% {
+    top: 105px;
+    opacity: 0;
+  }
+
+  100% {
+    top: 122px;
+    opacity: 1;
+  }
 }
 
 /* MEDIA QUERY */
@@ -768,6 +814,18 @@ form > input::placeholder {
     align-items: center;
     justify-content: space-between;
     width: 110px;
+  }
+}
+
+@media (width<= 860px) {
+  .menu2 {
+    display: none !important;
+  }
+  .navbar2 {
+    padding: 13px;
+  }
+  .youtubeLogo2 {
+    padding-left: 10px;
   }
 }
 

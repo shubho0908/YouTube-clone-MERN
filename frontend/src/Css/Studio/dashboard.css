@@ -411,5 +411,8 @@
   }
 }
 
-@media (width<= 760px) {
+@media (width<= 860px) {
+  .dashboard-data {
+    left: 125px !important;
+  }
 }
