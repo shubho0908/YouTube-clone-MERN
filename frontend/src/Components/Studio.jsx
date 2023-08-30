@@ -43,7 +43,7 @@ function Studio() {
   const [ChannelAbout, setChannelAbout] = useState();
   const [isLoading, setisLoading] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
-  const [isVideoSelected, setIsVideoSelected] = useState(true);
+  const [isVideoSelected, setIsVideoSelected] = useState(false);
   const [isThumbnailSelected, setIsThumbnailSelected] = useState(false);
   const [videoName, setVideoName] = useState("Upload videos");
   const [VideoURL, setVideoURL] = useState("");
@@ -319,6 +319,14 @@ function Studio() {
       setVideoName(fileName.substring(0, fileName.lastIndexOf(".")));
       uploadVideo(file);
     }
+  };
+
+  const ClearState = () => {
+    setIsClicked(false);
+    setIsVideoSelected(false);
+    setIsThumbnailSelected(false);
+    setVideoName("Upload videos");
+    setVideoDescription("");
   };
 
   const uploadVideo = async (videoFile) => {
@@ -868,7 +876,7 @@ function Studio() {
           <div className="top-head">
             {videoName.length <= 70
               ? videoName
-              : `${videoName.slice(0, 70)}...`}{" "}
+              : `${videoName.slice(0, 40)}...`}{" "}
             <CloseRoundedIcon
               className="close"
               fontSize="large"
@@ -887,7 +895,7 @@ function Studio() {
                   }, 1000);
                 }
                 if (isClicked === true) {
-                  setIsClicked(false);
+                  ClearState();
                 }
               }}
             />
