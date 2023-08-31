@@ -30,10 +30,10 @@ function Basic() {
   const [fblink, setfbLink] = useState("");
   const [twitterlink, settwitterLink] = useState("");
   const [weblink, setwebLink] = useState("");
+  const [copy, setCopy] = useState(false);
 
   //TOASTS
 
-  
   const CopiedNotify = () =>
     toast.success("Link Copied!", {
       position: "bottom-center",
@@ -102,12 +102,22 @@ function Basic() {
       .writeText(`${channelUrl}/${channelID}`)
       .then(() => {
         handleChannelIDClick();
-        CopiedNotify()
+        CopiedNotify();
       })
       .catch((error) => {
         console.log("Error copying link to clipboard:", error);
       });
   };
+
+  useEffect(() => {
+    function handleResize() {
+      setCopy(window.innerWidth <= 930);
+    }
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   //POST REQUEST
 
@@ -300,19 +310,27 @@ function Basic() {
             />
           ) : (
             <>
-              <input
-                type="text"
-                className="channel-name-inp2"
-                value={`${channelUrl}/${channelID}`}
-                onClick={handleCopyLink}
-                ref={channelIDInputRef}
-              />
-              <ContentCopyOutlinedIcon
-                className="coppy-id"
-                onClick={handleCopyLink}
-                fontSize="medium"
-                style={{ color: "white" }}
-              />
+              <div className="channellink-copy">
+                <input
+                  type="text"
+                  className="channel-name-inp2"
+                  value={`${channelUrl}/${
+                    copy
+                      ? channelID.length >= 30
+                        ? channelID
+                        : `${channelID.slice(0, 10)}...`
+                      : channelID
+                  }`}
+                  onClick={handleCopyLink}
+                  ref={channelIDInputRef}
+                />
+                <ContentCopyOutlinedIcon
+                  className="coppy-id"
+                  onClick={handleCopyLink}
+                  fontSize="medium"
+                  style={{ color: "white" }}
+                />
+              </div>
             </>
           )}
         </div>

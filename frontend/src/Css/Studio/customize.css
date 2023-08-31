@@ -196,6 +196,7 @@
 .basic-info-section {
   position: relative;
   padding-left: 40px;
+  padding-right: 40px;
   top: 30px;
 }
 
@@ -283,16 +284,21 @@
 
 .coppy-id {
   cursor: pointer;
-  position: absolute;
-  top: 65px;
-  right: 14px;
+  position: relative;
+  top: 8px;
+  right: 45px;
   padding: 5px;
   border-radius: 10%;
   transition: all 0.12s ease;
 }
 
+.channellink-copy {
+  display: flex;
+  align-items: center;
+}
+
 .coppy-id:hover {
-  background-color: rgba(255, 255, 255, 0.119);
+  background-color: rgb(66, 66, 66);
 }
 
 .coppy-id:active {
@@ -495,4 +501,118 @@
 
 .addthis-icon:hover {
   background-color: #323232;
+}
+
+/* MEDIA QUERIES */
+
+@media (width<= 1020px) {
+  .picture-section,
+  .banner-section {
+    flex-direction: column;
+  }
+
+  .pic-extra-content {
+    margin-left: 0px;
+    flex-direction: column-reverse;
+  }
+}
+
+@media (width<= 860px) {
+  .channel-customize-section {
+    left: 90px !important;
+  }
+}
+
+@media (width<= 650px) {
+  .channel-customize-section {
+    left: 0px !important;
+  }
+  .cover-update-section {
+    padding-bottom: 100px;
+  }
+  .right-redirects > p,
+  .save-customize {
+    font-size: 13.5px;
+  }
+  .coppy-id {
+    padding: 8px;
+    background-color: #1f1f1f;
+  }
+}
+
+@media (width<= 580px) {
+  .customize-header > p {
+    font-size: 22px;
+  }
+  .left-redirects > p {
+    font-size: 12.6px;
+  }
+  .profile-update-section,
+  .cover-update-section {
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+
+  .right-redirects > p:nth-child(1) {
+    display: none;
+  }
+  .customize-header,
+  .left-redirects {
+    padding-left: 26px;
+  }
+
+  .branding-txt1::before {
+    left: 20px !important;
+  }
+  .basic-txt1::before {
+    left: 116px !important;
+  }
+  .basic-info-section{
+    padding-left: 25px;
+    padding-right: 25px;
+  }
+}
+
+@media (width<= 450px) {
+  .pic-div {
+    width: 230px !important;
+    height: 129px !important;
+  }
+
+  .sk-custom-banner {
+    width: 230px !important;
+    height: 129px !important;
+  }
+
+  .channel-image {
+    width: 115px;
+    height: 115px;
+  }
+
+  .sk-custom-dp {
+    width: 115px !important;
+    height: 115px !important;
+  }
+
+  .profile-update-section,
+  .cover-update-section {
+    padding-right: 0px;
+  }
+  .profile-desc-txt,
+  .banner-desc,
+  .basic-name-desc,
+  .basic-channelurl-desc,
+  .basic-link-desc {
+    font-size: 12.5px;
+  }
+}
+
+@media (width<= 400px) {
+  .profile-desc-txt {
+    width: 80%;
+  }
+  .pic-extra-content {
+    width: 80%;
+  }
+
 }

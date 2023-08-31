@@ -318,6 +318,7 @@ function Branding() {
                   style={{
                     borderRadius: "100%",
                   }}
+                  className="sk-custom-dp"
                 />
               </div>
             </SkeletonTheme>
@@ -370,7 +371,7 @@ function Branding() {
                     : { display: "none" }
                 }
               >
-                <Skeleton count={1} width={290} height={160} />
+                <Skeleton count={1} width={290} height={160} className="sk-custom-banner"/>
               </div>
             </SkeletonTheme>
             <div
