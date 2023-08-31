@@ -99,6 +99,10 @@
   transition: all 0.16s ease;
 }
 
+.studio-icon-new {
+  transition: all 0.16s ease;
+}
+
 .studio-icon2 {
   padding-left: 25px;
   transition: all 0.16s ease;

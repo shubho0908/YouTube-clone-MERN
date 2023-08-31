@@ -58,7 +58,7 @@ function Comments() {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 2800);
+    }, 3000);
   }, []);
 
   useEffect(() => {
@@ -217,15 +217,15 @@ function Comments() {
           .toLowerCase()
           .includes(
             filterComment !== undefined &&
-              filterComment !== "" &&
-              filterComment.toLowerCase()
+            filterComment !== "" &&
+            filterComment.toLowerCase()
           ) ||
         item.username
           .toLowerCase()
           .includes(
             filterComment !== undefined &&
-              filterComment !== "" &&
-              filterComment.toLowerCase()
+            filterComment !== "" &&
+            filterComment.toLowerCase()
           )
     );
 
@@ -243,7 +243,7 @@ function Comments() {
         <div className="channel-comments-mid" style={{ left: menu ? "128px" : "312px" }}>
           <p>Comments</p>
         </div>
-        <hr className="breakkk" style={{ left: menu ? "90px" : "262px" }}/>
+        <hr className="breakkk" style={{ left: menu ? "90px" : "262px" }} />
         <div className="filter-comments" style={{ left: menu ? "90px" : "270px" }}>
           <FilterListOutlinedIcon
             fontSize="medium"
@@ -566,7 +566,7 @@ function Comments() {
                         <div className="thiscomment-rightone">
                           <p>
                             {element.videoData &&
-                            element.videoData.Title.length <= 40
+                              element.videoData.Title.length <= 40
                               ? element.videoData.Title
                               : `${element.videoData.Title.slice(0, 40)}...`}
                           </p>
@@ -735,7 +735,7 @@ function Comments() {
                       <div className="thiscomment-rightone">
                         <p>
                           {element.videoData &&
-                          element.videoData.Title.length <= 40
+                            element.videoData.Title.length <= 40
                             ? element.videoData.Title
                             : `${element.videoData.Title.slice(0, 40)}...`}
                         </p>

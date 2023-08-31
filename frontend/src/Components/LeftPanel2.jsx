@@ -631,7 +631,13 @@ function LeftPanel2() {
       {/* HORIZONTAL MENU BAR */}
 
       <div className="studio-horizontal-menu">
-        <div className="hori-dashboard">
+        <div
+          className="hori-dashboard"
+          onClick={() => {
+            localStorage.setItem("Studio-Section", "Dashboard");
+            window.location.href = "/studio";
+          }}
+        >
           <Tooltip
             TransitionComponent={Zoom}
             title="Dashboard"
@@ -639,7 +645,9 @@ function LeftPanel2() {
           >
             <MdDashboard
               className={
-                StudioSection === "Dashboard" ? "studio-icon3" : "studio-icon"
+                StudioSection === "Dashboard"
+                  ? "studio-icon3"
+                  : "studio-icon-new"
               }
               fontSize="26px"
               style={{
@@ -648,7 +656,13 @@ function LeftPanel2() {
             />
           </Tooltip>
         </div>
-        <div className="hori-content">
+        <div
+          className="hori-content"
+          onClick={() => {
+            localStorage.setItem("Studio-Section", "Content");
+            window.location.href = "/studio/video";
+          }}
+        >
           <Tooltip
             TransitionComponent={Zoom}
             title="Content"
@@ -656,7 +670,7 @@ function LeftPanel2() {
           >
             <MdOutlineVideoLibrary
               className={
-                StudioSection === "Content" ? "studio-icon3" : "studio-icon"
+                StudioSection === "Content" ? "studio-icon3" : "studio-icon-new"
               }
               fontSize="26px"
               style={{
@@ -665,7 +679,13 @@ function LeftPanel2() {
             />
           </Tooltip>
         </div>
-        <div className="hori-comments">
+        <div
+          className="hori-comments"
+          onClick={() => {
+            localStorage.setItem("Studio-Section", "Comments");
+            window.location.href = "/studio/comments";
+          }}
+        >
           <Tooltip
             TransitionComponent={Zoom}
             title="Comments"
@@ -673,7 +693,9 @@ function LeftPanel2() {
           >
             <BiCommentDetail
               className={
-                StudioSection === "Comments" ? "studio-icon3" : "studio-icon"
+                StudioSection === "Comments"
+                  ? "studio-icon3"
+                  : "studio-icon-new"
               }
               fontSize="26px"
               style={{
@@ -682,7 +704,13 @@ function LeftPanel2() {
             />
           </Tooltip>
         </div>
-        <div className="hori-customize">
+        <div
+          className="hori-customize"
+          onClick={() => {
+            localStorage.setItem("Studio-Section", "Customization");
+            window.location.href = "/studio/customize";
+          }}
+        >
           <Tooltip
             TransitionComponent={Zoom}
             title="Customization"
@@ -692,7 +720,7 @@ function LeftPanel2() {
               className={
                 StudioSection === "Customization"
                   ? "studio-icon3"
-                  : "studio-icon"
+                  : "studio-icon-new"
               }
               fontSize="26px"
               style={{

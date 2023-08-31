@@ -7,9 +7,8 @@
   left: 310px;
 }
 
-.video-all-comments-section{
+.video-all-comments-section {
   animation: FADEINN 1s ease;
-
 }
 
 .channel-comments-top > p:nth-child(1) {
@@ -273,4 +272,61 @@
 .cancel-sort:hover {
   cursor: pointer;
   color: white !important;
+}
+
+/* MEDIA QUERIES */
+
+@media (width<= 1050px) {
+  .user-comment-data {
+    width: 930px;
+  }
+  .channel-comments-list {
+    overflow: scroll;
+  }
+}
+
+@media (width<= 860px) {
+  .filter-comments,
+  .channel-comments-list {
+    left: 90px !important;
+  }
+  .channel-comments-top {
+    left: 120px !important;
+  }
+  .channel-comments-mid {
+    left: 128px !important;
+  }
+  .user-comment-data {
+    width: 780px;
+  }
+}
+
+@media (width<= 650px) {
+  .filter-comments,
+  .channel-comments-list {
+    left: 0px !important;
+  }
+  .channel-comments-top {
+    left: 34px !important;
+  }
+  .channel-comments-mid {
+    left: 38px !important;
+  }
+}
+
+@media (width<= 460px) {
+  .channel-comments-top > p:nth-child(1) {
+    font-size: 21.5px;
+  }
+  .user-channelprofileee {
+    width: 38px;
+    height: 38px;
+  }
+  .name-time {
+    font-size: 12.5px !important;
+  }
+  .channelp {
+    width: 22px;
+    height: 22px;
+  }
 }
