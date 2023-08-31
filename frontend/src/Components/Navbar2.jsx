@@ -5,7 +5,7 @@ import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 import "../Css/navbar.css";
 import StudioLogo from "../img/studio.png";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import jwtDecode from "jwt-decode";
 import AccountPop2 from "./AccountPop2";
 import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
@@ -24,18 +24,30 @@ function Navbar2() {
   const [showPop, setShowPop] = useState(false);
   const [searchInput, setSearchInput] = useState();
   const [showResults, setShowResults] = useState(false);
-  const [searchInput2, setSearchInput2] = useState();
+  const [searchInput2, setSearchInput2] = useState("");
   const [showResults2, setShowResults2] = useState(false);
   const [loading, setLoading] = useState(true);
   const [searchDesc, setSearchDesc] = useState(false);
   const [MobileSearch, setMobileSearch] = useState(false);
   const [searchClicked, setSearchClicked] = useState(false);
+  const searchRef = useRef();
 
   useEffect(() => {
     if (token) {
       setEmail(jwtDecode(token).email);
     }
   }, [token]);
+
+  useEffect(() => {
+    const handler = (e) => {
+      if (!searchRef.current.contains(e.target)) {
+        setSearchClicked(false);
+        setSearchInput2("");
+        setShowResults2(false)
+      }
+    };
+    document.addEventListener("mousedown", handler);
+  }, []);
 
   useEffect(() => {
     function handleResize() {
@@ -532,7 +544,7 @@ function Navbar2() {
         className="new-studio-search-section"
         style={{ display: searchClicked && MobileSearch ? "flex" : "none" }}
       >
-        <div className="search2-new">
+        <div className="search2-new" ref={searchRef}>
           <SearchRoundedIcon
             className="search-icon2"
             fontSize="medium"
@@ -542,7 +554,7 @@ function Navbar2() {
             type="text"
             placeholder="Search across your channel"
             id="searchType2-new"
-            value={searchInput}
+            value={searchInput2}
             onChange={(e) => setSearchInput2(e.target.value)}
             onClick={() => setShowResults2(true)}
           />
@@ -713,8 +725,10 @@ function Navbar2() {
                 filteredVideos2.length > 0
                   ? "block"
                   : "none",
-              height: filteredVideos2 && filteredVideos2.length >= 2 ? "400px" : "auto",
-
+              height:
+                filteredVideos2 && filteredVideos2.length >= 2
+                  ? "400px"
+                  : "auto",
             }}
           >
             <div className="just-abovetxt">

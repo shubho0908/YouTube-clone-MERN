@@ -39,8 +39,7 @@ function Content() {
     return menu ? JSON.parse(menu) : false;
   });
 
-  document.title = "Channel content - YouTube Studio"
-
+  document.title = "Channel content - YouTube Studio";
 
   useEffect(() => {
     const token = localStorage.getItem("userToken");
@@ -623,7 +622,9 @@ function Content() {
             </p>
             <div className="thisdelete-video-details">
               <p className="delete-title">
-                {DeleteVideoData && DeleteVideoData.Title}
+                {DeleteVideoData && DeleteVideoData.Title.length <= 15
+                  ? DeleteVideoData.Title
+                  : `${DeleteVideoData && DeleteVideoData.Title.slice(0, 15)}...`}
               </p>
               <p className="delete-uploaded">
                 {"Uploaded " +

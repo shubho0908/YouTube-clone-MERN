@@ -166,7 +166,6 @@
 /* Style the table rows */
 .videos-table td {
   border: none;
-  border-bottom: 1px solid rgba(128, 128, 128, 0.333);
   padding: 12px;
   text-align: center;
   color: white;
@@ -213,6 +212,7 @@
 .table-roww {
   cursor: pointer;
   transition: all 0.15s ease;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.333);
 }
 
 .table-roww:hover {
@@ -446,4 +446,86 @@
 .no-skeleton2 {
   display: flex;
   flex-direction: column;
+}
+
+/* MEDIA QUERIES */
+
+@media (width<= 1190px) {
+  .videos-table {
+    width: max-content;
+  }
+  .channels-uploaded-videos-section {
+    overflow: scroll;
+    height: 100% !important;
+  }
+}
+
+@media (width<= 860px) {
+  .channel-content-top {
+    left: 125px !important;
+  }
+  .breakkk,
+  .channels-uploaded-videos-section {
+    left: 90px !important;
+  }
+}
+
+@media (width<= 650px) {
+  .channel-content-top {
+    left: 34px !important;
+  }
+  .breakkk,
+  .channels-uploaded-videos-section {
+    left: 0px !important;
+  }
+}
+
+@media (width<= 630px) {
+  .last-delete-warning {
+    width: 85vw !important;
+  }
+}
+
+@media (width<= 460px) {
+  .deletevideo-thumbnail {
+    width: 110px;
+  }
+  .thisdelete-duration {
+    top: 37px;
+    right: 30px;
+    font-size: 10px;
+  }
+  .delete-consent > p {
+    font-size: 13px;
+  }
+  .delete-video-buttons {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .extra-two-delete-btns {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .cancel-delete {
+    right: 0px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+  .delete-uploaded,
+  .delete-views {
+    font-size: 12px;
+  }
+  .channel-content-top > p:nth-child(1) {
+    font-size: 21.5px;
+  }
+  .channel-videosss {
+    margin-top: 35px;
+  }
+}
+
+@media (width<= 420px) {
+  .last-delete-warning {
+    width: 80.5vw !important;
+  }
 }
