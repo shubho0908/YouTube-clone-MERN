@@ -696,6 +696,9 @@
   .selected-visibility {
     width: max-content;
   }
+  .create-btn2{
+    left: 259px;
+  }
 }
 
 @media (width<= 720px) {
@@ -724,6 +727,10 @@
   .save-video-data-disable {
     font-size: 14.5px;
     width: 105px;
+  }
+  .create-btn2{
+    left: 173px;
+    top: 497px;
   }
 }
 
@@ -773,4 +780,8 @@
   .close2{
     left: 172px;
   }
+  .create-btn2 {
+    left: 33%;
+    top: 535px;
+}
 }

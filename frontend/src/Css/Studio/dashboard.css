@@ -437,6 +437,9 @@
   .dash-data-all {
     padding-bottom: 180px !important;
   }
+  .left-performed-icons {
+    width: 165px !important;
+  }
 }
 
 @media (width<= 450px) {
@@ -451,4 +454,5 @@
   .sk-dash-title {
     width: 200px !important;
   }
+
 }

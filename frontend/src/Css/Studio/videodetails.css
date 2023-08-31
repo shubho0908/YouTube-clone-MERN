@@ -191,7 +191,7 @@
 
 .uploadnew-thumbnaill {
   cursor: pointer;
-  width: fit-content;
+  width: max-content;
   border: 0.5px dashed #aaaaaa4b;
   padding: 24px;
   padding-left: 38px;

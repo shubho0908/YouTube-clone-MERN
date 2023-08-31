@@ -478,6 +478,9 @@
   .channels-uploaded-videos-section {
     left: 0px !important;
   }
+  .novideo-available {
+    left: 10px !important;
+  }
 }
 
 @media (width<= 630px) {

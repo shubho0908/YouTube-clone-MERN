@@ -282,6 +282,7 @@
   }
   .channel-comments-list {
     overflow: scroll;
+    height: 65%;
   }
 }
 
