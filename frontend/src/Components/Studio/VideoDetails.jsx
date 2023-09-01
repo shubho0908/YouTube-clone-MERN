@@ -17,6 +17,7 @@ import WestIcon from "@mui/icons-material/West";
 import { storage } from "../../Firebase";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { GrUndo } from "react-icons/gr";
 
 function VideoDetails() {
   const { id } = useParams();
@@ -326,6 +327,12 @@ function VideoDetails() {
             >
               UNDO CHANGES
             </button>
+            <GrUndo
+              fontSize="24px"
+              color="white"
+              className="undo-edit"
+              onClick={confirmReload}
+            />
             <button
               className={
                 changes === false ? "disabled-btn2" : "video-editbtnss"

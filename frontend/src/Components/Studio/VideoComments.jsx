@@ -10,6 +10,7 @@ import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import Tooltip from "@mui/material/Tooltip";
+import WestIcon from "@mui/icons-material/West";
 import Zoom from "@mui/material/Zoom";
 import noImage from "../../img/no-comment.png";
 import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
@@ -221,22 +222,28 @@ function VideoComments() {
     <>
       <Navbar2 />
       <LeftPanel3 />
+      <div
+        className="back-menu-edit"
+        onClick={() => (window.location.href = "/studio/comments")}
+      >
+        <WestIcon fontSize="medium" style={{ color: "#aaa" }} />
+      </div>
       <div className="video-all-comments-section">
         <div
-          className="channel-comments-top"
+          className="vid-comments-top"
           style={{ left: menu ? "125px" : "310px" }}
         >
           <p>Video comments</p>
         </div>
         <div
-          className="channel-comments-mid"
+          className="vid-comments-mid"
           style={{ left: menu ? "130px" : "312px" }}
         >
           <p>Comments</p>
         </div>
-        <hr className="breakkk" style={{ left: menu ? "88px" : "262px" }} />
+        <hr className="breakkk breakk-vid-comment" style={{ left: menu ? "88px" : "262px" }} />
         <div
-          className="filter-comments"
+          className="vid-filter-comments"
           style={{ left: menu ? "90px" : "270px" }}
         >
           <FilterListOutlinedIcon
@@ -308,7 +315,7 @@ function VideoComments() {
           </div>
         </div>
         <div
-          className="channel-comments-list"
+          className="vid-comments-list"
           style={{ left: menu ? "90px" : "270px" }}
         >
           <div className="overall-comments">

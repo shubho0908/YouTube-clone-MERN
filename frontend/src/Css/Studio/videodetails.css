@@ -287,6 +287,17 @@
   font-size: 15px;
 }
 
+.thissection-btns {
+  display: flex;
+  align-items: center;
+}
+
+.undo-edit {
+  display: none;
+  position: relative;
+  right: 18px;
+}
+
 .thissection-btns > button:nth-child(1) {
   cursor: pointer;
   background-color: #ffffff00;
@@ -298,7 +309,7 @@
   right: 20px;
 }
 
-.thissection-btns > button:nth-child(2) {
+.thissection-btns > button:nth-child(3) {
   cursor: pointer;
   background-color: #3eaffe;
   color: #282828;
@@ -312,7 +323,7 @@
   transition: all 0.15s ease;
 }
 
-.thissection-btns > button:nth-child(2):active {
+.thissection-btns > button:nth-child(3):active {
   transform: scale(0.92);
 }
 
@@ -475,7 +486,7 @@
   .thissection-btns > button:nth-child(1) {
     font-size: 13px;
   }
-  .thissection-btns > button:nth-child(2) {
+  .thissection-btns > button:nth-child(3) {
     font-size: 14px;
   }
   .playable-videoedit {
@@ -523,6 +534,9 @@
   .currentvideo-desc-inp,
   .preview-part2 > p:nth-child(2) {
     font-size: 13.6px;
+  }
+  .undo-edit {
+    display: block !important;
   }
 }
 

@@ -1,7 +1,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap");
 
-.channel-comments-top {
+.channel-comments-top,
+.vid-comments-top {
   position: absolute;
   top: 105px;
   left: 310px;
@@ -19,7 +20,16 @@
   width: -webkit-fill-available;
 }
 
-.channel-comments-mid {
+.vid-comments-top > p:nth-child(1) {
+  color: white;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  width: -webkit-fill-available;
+}
+
+.channel-comments-mid,
+.vid-comments-mid {
   position: absolute;
   top: 165px;
   left: 312px;
@@ -36,7 +46,28 @@
   font-weight: 600;
 }
 
+.vid-comments-mid > p {
+  cursor: pointer;
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+  color: #3eaffe;
+  font-weight: 600;
+}
+
 .channel-comments-mid > p::before {
+  content: "";
+  position: absolute;
+  bottom: -18px;
+  left: -5px;
+  height: 4px;
+  width: 85px;
+  background-color: #3eaffe;
+  border-radius: 50px;
+  transform: scaleX(1);
+  transition: all 0.2s linear;
+}
+
+.vid-comments-mid > p::before {
   content: "";
   position: absolute;
   bottom: -18px;
@@ -58,7 +89,8 @@
   border-bottom: 1px solid rgba(128, 128, 128, 0.333);
 }
 
-.filter-comments {
+.filter-comments,
+.vid-filter-comments {
   position: absolute;
   top: 205px;
   left: 270px;
@@ -82,6 +114,17 @@
   color: white;
 }
 
+.vid-filter-comments > input {
+  background-color: #ffffff00;
+  border: none;
+  outline: none;
+  margin-left: 10px;
+  width: -webkit-fill-available;
+  margin-left: 12px;
+  font-size: 15px;
+  color: white;
+}
+
 .user-channelprofileee {
   width: 45px;
   height: 45px;
@@ -89,7 +132,8 @@
   border-radius: 100%;
 }
 
-.channel-comments-list {
+.channel-comments-list,
+.vid-comments-list {
   position: absolute;
   top: 260px;
   width: -webkit-fill-available;
@@ -280,7 +324,8 @@
   .user-comment-data {
     width: 930px;
   }
-  .channel-comments-list {
+  .channel-comments-list,
+  .vid-comments-list {
     overflow: scroll;
     height: 65%;
   }
@@ -288,13 +333,17 @@
 
 @media (width<= 860px) {
   .filter-comments,
-  .channel-comments-list {
+  .vid-filter-comments,
+  .channel-comments-list,
+  .vid-comments-list {
     left: 90px !important;
   }
-  .channel-comments-top {
+  .channel-comments-top,
+  .vid-comments-top {
     left: 120px !important;
   }
-  .channel-comments-mid {
+  .channel-comments-mid,
+  .vid-comments-mid {
     left: 128px !important;
   }
   .user-comment-data {
@@ -319,6 +368,9 @@
   .channel-comments-top > p:nth-child(1) {
     font-size: 21.5px;
   }
+  .vid-comments-top > p:nth-child(1) {
+    font-size: 21.5px;
+  }
   .user-channelprofileee {
     width: 38px;
     height: 38px;
@@ -329,5 +381,26 @@
   .channelp {
     width: 22px;
     height: 22px;
+  }
+  .vid-comments-top {
+    left: 25px !important;
+    top: 145px !important;
+  }
+  .vid-comments-mid {
+    left: 30px !important;
+    top: 200px !important;
+  }
+  .vid-filter-comments,
+  .vid-comments-list {
+    left: 0px !important;
+  }
+  .breakk-vid-comment {
+    top: 215px !important;
+  }
+  .vid-filter-comments {
+    top: 240px !important;
+  }
+  .vid-comments-list {
+    top: 295px !important;
   }
 }
