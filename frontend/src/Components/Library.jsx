@@ -349,7 +349,9 @@ function Library() {
                 fontSize="medium"
                 style={{ color: theme ? "white" : "black" }}
               />
-              <p>Watch later</p>
+              <p onClick={() => (window.location.href = "/watchlater")}>
+                Watch later
+              </p>
               <p>{watchlater && watchlater.length}</p>
             </div>
             {watchLaterArray && watchLaterArray.length >= 6 ? (
@@ -924,7 +926,9 @@ function Library() {
                 fontSize="medium"
                 style={{ color: theme ? "white" : "black" }}
               />
-              <p>Liked videos</p>
+              <p onClick={() => (window.location.href = "/likedVideos")}>
+                Liked videos
+              </p>
               <p>{videolike && videolike.length}</p>
             </div>
             {LikedVideosArray && LikedVideosArray.length >= 6 ? (

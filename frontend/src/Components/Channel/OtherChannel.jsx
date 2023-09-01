@@ -402,9 +402,13 @@ function OtherChannel() {
                     <p className="my-subs">
                       {Subscribers && Subscribers} subscribers
                     </p>
-                    <p className="my-videoscount">
-                      {myVideos && myVideos.length} videos
-                    </p>
+                    {myVideos && myVideos.message !== "USER DOESN'T EXIST" ? (
+                      <p className="my-videoscount">
+                        {myVideos && myVideos.length} videos
+                      </p>
+                    ) : (
+                      <p className="my-videoscount">0 videos</p>
+                    )}
                   </div>
                   <div
                     className={
@@ -455,7 +459,11 @@ function OtherChannel() {
                       <RiUserSettingsLine
                         fontSize="28px"
                         color={theme ? "white" : "black"}
-                        className={theme ? "channel-settings" : "channel-settings channel-settings-light"}
+                        className={
+                          theme
+                            ? "channel-settings"
+                            : "channel-settings channel-settings-light"
+                        }
                       />
                     </div>
                   </div>
@@ -648,7 +656,13 @@ function OtherChannel() {
             </div>
           </div>
           <br />
-          <hr className={theme ? "seperate seperate-new" : "seperate seperate-new seperate-light"} />
+          <hr
+            className={
+              theme
+                ? "seperate seperate-new"
+                : "seperate seperate-new seperate-light"
+            }
+          />
           {Section === "Home" || Section === "" ? (
             <ChannelHome newmail={Email} />
           ) : (
@@ -685,7 +699,9 @@ function OtherChannel() {
       {/* SIGNUP/SIGNIN  */}
 
       <div
-        className={theme ? "auth-popup" : "auth-popup light-mode text-light-mode"}
+        className={
+          theme ? "auth-popup" : "auth-popup light-mode text-light-mode"
+        }
         style={
           isbtnClicked === true ? { display: "block" } : { display: "none" }
         }

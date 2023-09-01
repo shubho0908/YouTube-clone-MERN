@@ -145,7 +145,7 @@ function LikeVideos() {
             className="like-video-sections"
             style={
               menuClicked === false
-                ? { left: "80px", width: "100%" }
+                ? { left: "80px"}
                 : { left: "255px" }
             }
           >
@@ -395,7 +395,7 @@ function LikeVideos() {
             className="like-video-sections2"
             style={
               menuClicked === false
-                ? { left: "80px", width: "100%" }
+                ? { left: "80px" }
                 : { left: "255px" }
             }
           >
