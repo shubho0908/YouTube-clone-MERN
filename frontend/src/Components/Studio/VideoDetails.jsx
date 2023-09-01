@@ -1,7 +1,7 @@
 import LeftPanel3 from "../LeftPanel3";
 import Navbar2 from "../Navbar2";
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import "../../Css/Studio/videodetails.css";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 import HdIcon from "@mui/icons-material/Hd";
@@ -13,6 +13,7 @@ import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import ArrowDropDownOutlinedIcon from "@mui/icons-material/ArrowDropDownOutlined";
 import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import WestIcon from "@mui/icons-material/West";
 import { storage } from "../../Firebase";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -38,6 +39,7 @@ function VideoDetails() {
     const menu = localStorage.getItem("studioMenuClicked2");
     return menu ? JSON.parse(menu) : false;
   });
+  const optionRef = useRef();
 
   document.title = "Video details - YouTube Studio";
 
@@ -103,6 +105,16 @@ function VideoDetails() {
     setTimeout(() => {
       setFakeLoading(false);
     }, 3000);
+  }, []);
+
+  useEffect(() => {
+    const handler = (e) => {
+      if (!optionRef.current.contains(e.target)) {
+        setOptionClicked(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handler);
   }, []);
 
   useEffect(() => {
@@ -288,6 +300,13 @@ function VideoDetails() {
       <LeftPanel3 />
 
       <div
+        className="back-menu-edit"
+        onClick={() => (window.location.href = "/studio/video")}
+      >
+        <WestIcon fontSize="medium" style={{ color: "#aaa" }} />
+      </div>
+
+      <div
         className="main-video-details-section"
         style={{
           opacity: opacity,
@@ -460,6 +479,7 @@ function VideoDetails() {
                     </div>
                     <div
                       className="extra-img-options"
+                      ref={optionRef}
                       style={
                         OptionClicked === true
                           ? { display: "flex" }
@@ -511,7 +531,10 @@ function VideoDetails() {
                     </div>
                   </div>
                 </div>
-                <div className="currnt-video-tags-section" style={{marginTop: thumbnailSelected ? "0px" : "30px"}}>
+                <div
+                  className="currnt-video-tags-section"
+                  style={{ marginTop: thumbnailSelected ? "0px" : "30px" }}
+                >
                   <p>Tags</p>
                   <p>
                     Tags can be useful if content in your video is commonly
@@ -573,13 +596,13 @@ function VideoDetails() {
                     onClick={handleCopyLink}
                   />
                   <div className="copyvideokalink">
-                  <ContentCopyIcon
-                    fontSize="medium"
-                    className="copythis-btn-new"
-                    style={{ color: "#aaaaaab0" }}
-                    onClick={handleCopyLink}
-                  />
-                  <p>Copy Link</p>
+                    <ContentCopyIcon
+                      fontSize="medium"
+                      className="copythis-btn-new"
+                      style={{ color: "#aaaaaab0" }}
+                      onClick={handleCopyLink}
+                    />
+                    <p>Copy Link</p>
                   </div>
                 </div>
                 <div className="preview-part2">
