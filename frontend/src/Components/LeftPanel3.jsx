@@ -366,6 +366,126 @@ function LeftPanel2() {
           </div>
         </div>
       </div>
+
+      {/* ANOTHER SHORT HAND  */}
+
+      <div className="main-section3-new">
+        <div
+          className="first-panel first-panel1"
+          onClick={() => {
+            if (window.location.href.includes(`/studio/video/edit/${id}`)) {
+              window.location.href = "/studio/video";
+            } else {
+              window.location.href = "/studio/comments";
+            }
+          }}
+        >
+          <div className="about-video" style={{ right: "0px" }}>
+            <WestIcon fontSize="medium" style={{ color: "#aaa" }} />
+          </div>
+        </div>
+        {/* START HERE  */}
+        <SkeletonTheme baseColor="#353535" highlightColor="#444">
+          <div
+            className="mid-panel"
+            style={
+              loading === true ? { display: "block" } : { display: "none" }
+            }
+          >
+            <div className="redirect-video">
+              <Skeleton count={1} width={75} height={42} />
+            </div>
+          </div>
+        </SkeletonTheme>
+        {/* END HERE  */}
+        <div
+          className="mid-panel"
+          style={
+            videodata && loading === false
+              ? { visibility: "visible", display: "block" }
+              : { visibility: "hidden", display: "none" }
+          }
+        >
+          <div
+            className="redirect-video"
+            onClick={() => {
+              if (videodata) {
+                window.location.href = `/video/${videodata._id}`;
+              }
+            }}
+          >
+            <img
+              src={videodata && videodata.thumbnailURL}
+              alt="thumbnail"
+              className="current-video-thumbnail"
+              style={{ width: "70px" }}
+            />
+            <Tooltip
+              TransitionComponent={Zoom}
+              title="View on YouTube"
+              placement="bottom"
+            >
+              <YouTubeIcon
+                className="watch-video2"
+                fontSize="medium"
+                style={{ color: "white" }}
+              />
+            </Tooltip>
+          </div>
+        </div>
+        <div className="second-panel">
+          <div
+            className={
+              VideoEditSection === "Details"
+                ? "studio-active panel"
+                : "details panel"
+            }
+            onClick={() => {
+              localStorage.setItem("Video-Edit Section", "Details");
+              window.location.href = `/studio/video/edit/${id}`;
+            }}
+          >
+            <ModeEditOutlineOutlinedIcon
+              className={
+                VideoEditSection === "Details" ? "studio-icon2" : "studio-icon"
+              }
+              fontSize="medium"
+              style={{
+                color: "#A9A9A9",
+                paddingLeft: "25px !important",
+                paddingTop: "16px",
+                paddingBottom: "16px",
+              }}
+            />
+          </div>
+          <div
+            className={
+              VideoEditSection === "Video-Comments"
+                ? "studio-active panel"
+                : "comments panel"
+            }
+            onClick={() => {
+              localStorage.setItem("Video-Edit Section", "Video-Comments");
+              window.location.href = `/studio/video/comments/${id}`;
+            }}
+          >
+            <ChatOutlinedIcon
+              className={
+                VideoEditSection === "Video-Comments"
+                  ? "studio-icon2"
+                  : "studio-icon"
+              }
+              fontSize="medium"
+              style={{
+                color: "#A9A9A9",
+                paddingLeft: "25px !important",
+                paddingTop: "16px",
+                paddingBottom: "16px",
+              }}
+            />
+          </div>
+        </div>
+      </div>
     </>
   );
 }

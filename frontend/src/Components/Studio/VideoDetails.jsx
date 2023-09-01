@@ -372,7 +372,7 @@ function VideoDetails() {
                 </p>
                 <div className="mythumbnails-sectionn">
                   {thumbnailImage ? (
-                    <div className="currentthumbnail-data">
+                    <div className="currentthumbnail-data choosed-one">
                       <img
                         src={URL.createObjectURL(thumbnailImage)}
                         alt="thumbnail"
@@ -511,7 +511,7 @@ function VideoDetails() {
                     </div>
                   </div>
                 </div>
-                <div className="currnt-video-tags-section">
+                <div className="currnt-video-tags-section" style={{marginTop: thumbnailSelected ? "0px" : "30px"}}>
                   <p>Tags</p>
                   <p>
                     Tags can be useful if content in your video is commonly
@@ -540,6 +540,7 @@ function VideoDetails() {
               <iframe
                 width="360"
                 height="220"
+                className="playable-videoedit"
                 src={videodata && videodata.videoURL}
                 title="YouTube video player"
                 frameBorder="0"
@@ -571,6 +572,15 @@ function VideoDetails() {
                     style={{ color: "#aaaaaab0" }}
                     onClick={handleCopyLink}
                   />
+                  <div className="copyvideokalink">
+                  <ContentCopyIcon
+                    fontSize="medium"
+                    className="copythis-btn-new"
+                    style={{ color: "#aaaaaab0" }}
+                    onClick={handleCopyLink}
+                  />
+                  <p>Copy Link</p>
+                  </div>
                 </div>
                 <div className="preview-part2">
                   <p>Filename</p>
