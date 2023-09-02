@@ -1,6 +1,5 @@
 import jwtDecode from "jwt-decode";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import "../Css/accountPop.css";
 import avatar from "../img/avatar.png";
 import AccountBoxOutlinedIcon from "@mui/icons-material/AccountBoxOutlined";
@@ -22,7 +21,7 @@ function AccountPop() {
   const [ChannelID, setChannelID] = useState();
   const [isBtnClicked, setIsBtnClicked] = useState(false);
 
-  const navigate = useNavigate();
+
 
   useEffect(() => {
     const token = localStorage.getItem("userToken");

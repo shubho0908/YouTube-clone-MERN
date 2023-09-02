@@ -302,8 +302,10 @@ function LeftPanel() {
               Subscriptions.map((element, index) => {
                 return (
                   <>
-                    <SkeletonTheme  baseColor={theme ? "#353535" : "#aaaaaa"}
-                      highlightColor={theme ? "#444" : "#b6b6b6"}>
+                    <SkeletonTheme
+                      baseColor={theme ? "#353535" : "#aaaaaa"}
+                      highlightColor={theme ? "#444" : "#b6b6b6"}
+                    >
                       <div
                         className="mysubscriptions"
                         key={index}
@@ -927,7 +929,9 @@ function LeftPanel() {
       {/* SIGNUP/SIGNIN  */}
 
       <div
-         className={theme ? "auth-popup" : "auth-popup light-mode text-light-mode"}
+        className={
+          theme ? "auth-popup" : "auth-popup light-mode text-light-mode"
+        }
         style={
           isbtnClicked === true ? { display: "block" } : { display: "none" }
         }
@@ -1124,8 +1128,10 @@ function LeftPanel() {
                 Subscriptions.map((element, index) => {
                   return (
                     <>
-                      <SkeletonTheme  baseColor={theme ? "#353535" : "#aaaaaa"}
-                      highlightColor={theme ? "#444" : "#b6b6b6"}>
+                      <SkeletonTheme
+                        baseColor={theme ? "#353535" : "#aaaaaa"}
+                        highlightColor={theme ? "#444" : "#b6b6b6"}
+                      >
                         <div
                           className="mysubscriptions"
                           key={index}
@@ -1428,6 +1434,7 @@ function LeftPanel() {
             fontSize="50px"
             color={theme ? "white" : "black"}
             className="addvid-icon"
+            onClick={() => (window.location.href = "/studio")}
           />
           <div
             className={

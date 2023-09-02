@@ -58,6 +58,18 @@ function VideoDetails() {
       theme: "dark",
     });
 
+    const CopiedNotify = () =>
+    toast.success("Link Copied!", {
+      position: "bottom-center",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+
   //USE EFFECTS
 
   useEffect(() => {
@@ -130,7 +142,7 @@ function VideoDetails() {
     navigator.clipboard
       .writeText(`${videolink}/${videodata && videodata._id}`)
       .then(() => {
-        alert("Link Copied!");
+        CopiedNotify()
       })
       .catch((error) => {
         console.log("Error copying link to clipboard:", error);

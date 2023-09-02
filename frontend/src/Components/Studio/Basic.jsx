@@ -46,6 +46,18 @@ function Basic() {
       theme: "dark",
     });
 
+    const ErrorNotify = () =>
+    toast.error("Input fields can't be empty.", {
+      position: "top-center",
+      autoClose: 1200,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+
   //USE EFFECTS
 
   useEffect(() => {
@@ -189,7 +201,7 @@ function Basic() {
 
     const handleMenuButtonClick = () => {
       if (channelDescription === "" || channelName === "") {
-        alert("Input fields can't be empty");
+        ErrorNotify()
       } else {
         if (Basicchanges) {
           saveData();

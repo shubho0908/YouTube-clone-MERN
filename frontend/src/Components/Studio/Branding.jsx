@@ -2,7 +2,6 @@ import jwtDecode from "jwt-decode";
 import { useState, useEffect } from "react";
 import defaultimg from "../../img/avatar.png";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import ReactLoading from "react-loading";
 import { storage } from "../../Firebase";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";

@@ -31,6 +31,7 @@ function Navbar2() {
   const [MobileSearch, setMobileSearch] = useState(false);
   const [searchClicked, setSearchClicked] = useState(false);
   const searchRef = useRef();
+  const accountRef = useRef();
 
   useEffect(() => {
     if (token) {
@@ -43,7 +44,16 @@ function Navbar2() {
       if (!searchRef.current.contains(e.target)) {
         setSearchClicked(false);
         setSearchInput2("");
-        setShowResults2(false)
+        setShowResults2(false);
+      }
+    };
+    document.addEventListener("mousedown", handler);
+  }, []);
+
+  useEffect(() => {
+    const handler = (e) => {
+      if (!accountRef.current.contains(e.target)) {
+        setShowPop(false);
       }
     };
     document.addEventListener("mousedown", handler);
@@ -533,6 +543,7 @@ function Navbar2() {
       </div>
       <div
         className="ac-pop"
+        ref={accountRef}
         style={showPop === true ? { display: "block" } : { display: "none" }}
       >
         <AccountPop2 />

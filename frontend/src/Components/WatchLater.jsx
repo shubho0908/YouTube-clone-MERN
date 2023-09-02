@@ -383,7 +383,7 @@ function WatchLater() {
         ) : (
           <div className="main-trending-section">
             <div className="spin23" style={{ top: "200px" }}>
-              <span className="loader2"></span>
+              <span className={theme ? "loader2" : "loader2-light"}></span>
             </div>
           </div>
         )}
@@ -631,7 +631,7 @@ function WatchLater() {
         ) : (
           <div className="main-trending-section">
             <div className="spin23" style={{ top: "200px" }}>
-              <span className="loader2"></span>
+              <span className={theme ? "loader2" : "loader2-light"}></span>
             </div>
           </div>
         )}

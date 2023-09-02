@@ -21,6 +21,8 @@ import VisibilityOffOutlinedIcon from "@mui/icons-material/VisibilityOffOutlined
 import noImage from "../../img/no-video2.png";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Content() {
   const [userVideos, setUserVideos] = useState([]);
@@ -40,6 +42,22 @@ function Content() {
   });
 
   document.title = "Channel content - YouTube Studio";
+
+  //TOASTS
+
+  const CopiedNotify = () =>
+    toast.success("Link Copied!", {
+      position: "bottom-center",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
+
+  //USE EFFECTS
 
   useEffect(() => {
     const token = localStorage.getItem("userToken");
@@ -197,7 +215,7 @@ function Content() {
     navigator.clipboard
       .writeText(`${videoUrl}/${id}`)
       .then(() => {
-        alert("Link Copied!");
+        CopiedNotify()
       })
       .catch((error) => {
         console.log("Error copying link to clipboard:", error);
@@ -613,12 +631,12 @@ function Content() {
                   DeleteVideoData && DeleteVideoData.videoLength % 60
                 ) < 10
                   ? "0" +
-                    Math.round(
-                      DeleteVideoData && DeleteVideoData.videoLength % 60
-                    )
+                  Math.round(
+                    DeleteVideoData && DeleteVideoData.videoLength % 60
+                  )
                   : Math.round(
-                      DeleteVideoData && DeleteVideoData.videoLength % 60
-                    ))}
+                    DeleteVideoData && DeleteVideoData.videoLength % 60
+                  ))}
             </p>
             <div className="thisdelete-video-details">
               <p className="delete-title">
