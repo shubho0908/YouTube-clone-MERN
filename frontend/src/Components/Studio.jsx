@@ -43,7 +43,7 @@ function Studio() {
   const [ChannelAbout, setChannelAbout] = useState();
   const [isLoading, setisLoading] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
-  const [isVideoSelected, setIsVideoSelected] = useState(false);
+  const [isVideoSelected, setIsVideoSelected] = useState(true);
   const [isThumbnailSelected, setIsThumbnailSelected] = useState(false);
   const [videoName, setVideoName] = useState("Upload videos");
   const [VideoURL, setVideoURL] = useState("");
@@ -63,6 +63,10 @@ function Studio() {
   const [isVisibilityClicked, setisVisibilityClicked] = useState(false);
   const [myVideos, setMyVideos] = useState([]);
   const [isPublished, setIsPublished] = useState(false);
+  const [theme, setTheme] = useState(() => {
+    const Dark = localStorage.getItem("Dark");
+    return Dark ? JSON.parse(Dark) : true;
+  });
 
   //TOAST FUNCTIONS
 
@@ -120,6 +124,14 @@ function Studio() {
     const token = localStorage.getItem("userToken");
     setEmail(jwtDecode(token).email);
   }, []);
+
+  useEffect(() => {
+    if (theme === false && window.location.href.includes("/studio")) {
+      document.body.style.backgroundColor = "#F9F9F9";
+    } else if (theme === true && window.location.href.includes("/studio")) {
+      document.body.style.backgroundColor = "rgb(31, 31, 31)";
+    }
+  }, [theme]);
 
   useEffect(() => {
     const getVideos = async () => {
@@ -589,7 +601,7 @@ function Studio() {
     <>
       <Navbar2 />
       <LeftPanel2 />
-      <div className="studio">
+      <div className={theme ? "studio" : "studio-light"}>
         <div
           className="create-btn"
           onClick={() => setIsClicked(true)}
@@ -600,7 +612,7 @@ function Studio() {
             fontSize="large"
             style={{ color: "#FF4E45" }}
           />
-          <p>CREATE</p>
+          <p className={theme ? "" : "text-light-mode"}>CREATE</p>
         </div>
         <div
           style={
@@ -864,7 +876,11 @@ function Studio() {
           </form>
         </div>
         <div
-          className="upload-content"
+          className={
+            theme
+              ? "upload-content"
+              : "upload-content light-mode text-light-mode"
+          }
           onDrop={handleDrop}
           onDragOver={(e) => e.preventDefault()}
           style={
@@ -900,7 +916,11 @@ function Studio() {
               }}
             />
           </div>
-          <hr className="seperate seperate2" />
+          <hr
+            className={
+              theme ? "seperate seperate2" : "seperate seperate2 seperate-light"
+            }
+          />
           <div
             className="middle-data"
             style={
@@ -911,7 +931,7 @@ function Studio() {
           >
             <img
               src={Upload}
-              className="upload-img"
+              className={theme ? "upload-img" : "upload-img upload-img-light"}
               onClick={handleUploadImageClick}
               onDrop={handleDrop}
               onDragOver={(e) => e.preventDefault()}
@@ -919,7 +939,9 @@ function Studio() {
             <p>Drag and drop video files to upload</p>
             <p>Your videos will be private until you publish them.</p>
             <div className="upload-btn-wrapper">
-              <button className="btn">SELECT FILES</button>
+              <button className={theme ? "btn" : "btn text-dark-mode"}>
+                SELECT FILES
+              </button>
               <input
                 id="videoFileInput"
                 type="file"
@@ -943,7 +965,7 @@ function Studio() {
                   <p>Details</p>
                   <input
                     type="text"
-                    className="video-title"
+                    className={theme ? "video-title" : "video-title light-mode"}
                     value={videoName}
                     placeholder="Title (required)"
                     required
@@ -951,14 +973,18 @@ function Studio() {
                   />
                   <textarea
                     type="text"
-                    className="video-description"
+                    className={
+                      theme
+                        ? "video-description"
+                        : "video-description light-mode"
+                    }
                     placeholder="Description"
                     onChange={(e) => setVideoDescription(e.target.value)}
                     spellCheck="true"
                   />
                   <input
                     type="text"
-                    className="video-tags"
+                    className={theme ? "video-tags" : "video-tags light-mode"}
                     placeholder="Tags"
                     onChange={(e) => setVideoTags(e.target.value)}
                   />
@@ -1011,7 +1037,7 @@ function Studio() {
                   <CloseRoundedIcon
                     className="close close2"
                     fontSize="medium"
-                    style={{ color: "gray" }}
+                    style={{ color: theme ? "gray" : "white" }}
                     onClick={() => {
                       setIsThumbnailSelected(false);
                     }}
@@ -1026,7 +1052,11 @@ function Studio() {
               <div className="video-tag-section"></div>
             </div>
             <div className="right-video-section">
-              <div className="preview-video">
+              <div
+                className={
+                  theme ? "preview-video" : "preview-video preview-light"
+                }
+              >
                 <div
                   className="preview-img"
                   style={
@@ -1049,7 +1079,11 @@ function Studio() {
                 ) : null}
               </div>
 
-              <div className="preview-bottom">
+              <div
+                className={
+                  theme ? "preview-bottom" : "preview-bottom preview-light2"
+                }
+              >
                 <div className="file-details">
                   <p>Filename</p>
                   <p>{videoName}</p>
@@ -1059,7 +1093,11 @@ function Studio() {
               <div className="video-visibility">
                 <p>Visibility</p>
                 <div
-                  className="selected-visibility"
+                  className={
+                    theme
+                      ? "selected-visibility"
+                      : "selected-visibility text-light-mode"
+                  }
                   onClick={() => {
                     if (isVisibilityClicked === false) {
                       setisVisibilityClicked(true);
@@ -1071,11 +1109,15 @@ function Studio() {
                   <p>{visibility}</p>
                   <ArrowDropDownRoundedIcon
                     fontSize="large"
-                    style={{ color: "white" }}
+                    style={{ color: theme ? "white" : "black" }}
                   />
                 </div>
                 {isVisibilityClicked === true ? (
-                  <div className="show-visibility">
+                  <div
+                    className={
+                      theme ? "show-visibility" : "show-visibility studio-light"
+                    }
+                  >
                     <p
                       className="public"
                       style={
@@ -1090,7 +1132,11 @@ function Studio() {
                     >
                       Public
                     </p>
-                    <hr className="seperatee" />
+                    <hr
+                      className={
+                        theme ? "seperatee" : "seperatee seperate-light"
+                      }
+                    />
                     <p
                       className="private"
                       style={
@@ -1120,7 +1166,13 @@ function Studio() {
                 : { display: "none" }
             }
           >
-            <hr className="seperate seperate2" />
+            <hr
+              className={
+                theme
+                  ? "seperate seperate2"
+                  : "seperate seperate2 seperate-light"
+              }
+            />
             <div className="last-btn">
               <div className="left-icons">
                 <CloudUploadIcon
