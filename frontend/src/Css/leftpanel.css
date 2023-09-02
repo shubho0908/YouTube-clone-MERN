@@ -170,11 +170,16 @@
   padding: 16px;
   width: 225px;
   line-height: 48px;
+  position: relative;
+  top: 70px;
 }
 
 .panel-topdata {
   padding: 20px;
-  position: relative;
+  position: fixed;
+  z-index: 1;
+  width: 215px;
+  background-color: #0f0f0f;
 }
 
 .close-sidepannel {

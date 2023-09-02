@@ -648,6 +648,12 @@ form > input::placeholder {
   color: white !important;
 }
 
+.edit-this-light:hover,
+.comment-this-light:hover,
+.watch-this-light:hover {
+  color: gray !important;
+}
+
 .searchvid-data > p:nth-child(1):hover {
   text-decoration: underline;
 }
@@ -773,6 +779,11 @@ form > input::placeholder {
   width: 80.4vw !important;
   top: 122px;
   animation: blowdownwards2 0.2s ease !important;
+}
+
+.menu2-light:hover {
+  color: black !important;
+  background-color: #f1f1f1;
 }
 
 @keyframes blowdownwards2 {

@@ -43,7 +43,7 @@ function Studio() {
   const [ChannelAbout, setChannelAbout] = useState();
   const [isLoading, setisLoading] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
-  const [isVideoSelected, setIsVideoSelected] = useState(true);
+  const [isVideoSelected, setIsVideoSelected] = useState(false);
   const [isThumbnailSelected, setIsThumbnailSelected] = useState(false);
   const [videoName, setVideoName] = useState("Upload videos");
   const [VideoURL, setVideoURL] = useState("");
@@ -601,9 +601,9 @@ function Studio() {
     <>
       <Navbar2 />
       <LeftPanel2 />
-      <div className={theme ? "studio" : "studio-light"}>
+      <div className={theme ? "studio" : "studio studio-light"}>
         <div
-          className="create-btn"
+          className={theme ? "create-btn" : "create-btn create-btn-light"}
           onClick={() => setIsClicked(true)}
           style={isChannel === true ? { display: "flex" } : { display: "none" }}
         >
@@ -620,14 +620,16 @@ function Studio() {
               ? { display: "block" }
               : { display: "none" }
           }
-          className="create-btn2"
+          className={theme ? "create-btn2" : "create-btn2 create-btn-light"}
           onClick={() => setIsClicked(true)}
         >
           CREATE
         </div>
         <div
           style={isChannel === true ? { display: "flex" } : { display: "none" }}
-          className="create-btn-short"
+          className={
+            theme ? "create-btn-short" : "create-btn-short create-btn-light"
+          }
           onClick={() => setIsClicked(true)}
         >
           <LiaUploadSolid fontSize="22px" color="#b1b1b1" />
@@ -1132,11 +1134,7 @@ function Studio() {
                     >
                       Public
                     </p>
-                    <hr
-                      className={
-                        theme ? "seperatee" : "seperatee seperate-light"
-                      }
-                    />
+                    <hr className="seperatee" />
                     <p
                       className="private"
                       style={
@@ -1256,8 +1254,10 @@ function Studio() {
                 <button
                   className={
                     loading || Progress !== 100
-                      ? "save-video-data-disable"
-                      : "save-video-data"
+                      ? `save-video-data-disable ${
+                          theme ? "" : "text-dark-mode"
+                        }`
+                      : `save-video-data ${theme ? "" : "text-dark-mode"}`
                   }
                   onClick={PublishData}
                   disabled={loading === true || Progress !== 100 ? true : false}

@@ -33,6 +33,10 @@ function LeftPanel2() {
   const StudioSection = localStorage.getItem("Studio-Section");
   const location = useLocation();
   const [loading, setLoading] = useState(true);
+  const [theme, setTheme] = useState(() => {
+    const Dark = localStorage.getItem("Dark");
+    return Dark ? JSON.parse(Dark) : true;
+  });
 
   useEffect(() => {
     const handleMenuButtonClick = () => {
@@ -138,7 +142,7 @@ function LeftPanel2() {
   return (
     <>
       <div
-        className="main-section2 long-left"
+        className={theme ? "main-section2 long-left" : "main-section2 long-left light-mode text-light-mode"}
         style={
           studioMenuClicked === true
             ? { display: "none" }
@@ -203,8 +207,8 @@ function LeftPanel2() {
           <div
             className={
               StudioSection === "Dashboard"
-                ? "studio-active panel"
-                : "dashboard panel"
+                ? `${theme ? "studio-active" : "studio-active-light"} panel ${theme ? "" : "panel-light"}`
+                : `dashboard panel ${theme ? "" : "panel-light"}`
             }
             onClick={() => {
               localStorage.setItem("Studio-Section", "Dashboard");
@@ -223,8 +227,8 @@ function LeftPanel2() {
           <div
             className={
               StudioSection === "Content"
-                ? "studio-active panel"
-                : "content panel"
+                ? `${theme ? "studio-active" : "studio-active-light"} panel ${theme ? "" : "panel-light"}`
+                : `content panel ${theme ? "" : "panel-light"}`
             }
             onClick={() => {
               localStorage.setItem("Studio-Section", "Content");
@@ -243,8 +247,8 @@ function LeftPanel2() {
           <div
             className={
               StudioSection === "Comments"
-                ? "studio-active panel"
-                : "comments panel"
+                ? `${theme ? "studio-active" : "studio-active-light"} panel ${theme ? "" : "panel-light"}`
+                : `comments panel ${theme ? "" : "panel-light"}`
             }
             onClick={() => {
               localStorage.setItem("Studio-Section", "Comments");
@@ -263,8 +267,8 @@ function LeftPanel2() {
           <div
             className={
               StudioSection === "Customization"
-                ? "studio-active panel"
-                : "customization panel"
+                ? `${theme ? "studio-active" : "studio-active-light"} panel ${theme ? "" : "panel-light"}`
+                : `customization panel ${theme ? "" : "panel-light"}`
             }
             onClick={() => {
               localStorage.setItem("Studio-Section", "Customization");
@@ -341,8 +345,8 @@ function LeftPanel2() {
           <div
             className={
               StudioSection === "Dashboard"
-                ? "studio-active panel"
-                : "dashboard panel"
+                ? `${theme ? "studio-active" : "studio-active-light"} panel ${theme ? "" : "panel-light"}`
+                : `dashboard panel ${theme ? "" : "panel-light"}`
             }
             onClick={() => {
               localStorage.setItem("Studio-Section", "Dashboard");
@@ -371,8 +375,8 @@ function LeftPanel2() {
           <div
             className={
               StudioSection === "Content"
-                ? "studio-active panel"
-                : "content panel"
+                ? `${theme ? "studio-active" : "studio-active-light"} panel ${theme ? "" : "panel-light"}`
+                : `content panel ${theme ? "" : "panel-light"}`
             }
             onClick={() => {
               localStorage.setItem("Studio-Section", "Content");
@@ -400,8 +404,8 @@ function LeftPanel2() {
           <div
             className={
               StudioSection === "Comments"
-                ? "studio-active panel"
-                : "comments panel"
+                ? `${theme ? "studio-active" : "studio-active-light"} panel ${theme ? "" : "panel-light"}`
+                : `comments panel ${theme ? "" : "panel-light"}`
             }
             onClick={() => {
               localStorage.setItem("Studio-Section", "Comments");
@@ -429,8 +433,8 @@ function LeftPanel2() {
           <div
             className={
               StudioSection === "Customization"
-                ? "studio-active panel"
-                : "customization panel"
+                ? `${theme ? "studio-active" : "studio-active-light"} panel ${theme ? "" : "panel-light"}`
+                : `customization panel ${theme ? "" : "panel-light"}`
             }
             onClick={() => {
               localStorage.setItem("Studio-Section", "Customization");
@@ -509,8 +513,8 @@ function LeftPanel2() {
           <div
             className={
               StudioSection === "Dashboard"
-                ? "studio-active panel"
-                : "dashboard panel"
+                ? `${theme ? "studio-active" : "studio-active-light"} panel ${theme ? "" : "panel-light"}`
+                : `dashboard panel ${theme ? "" : "panel-light"}`
             }
             onClick={() => {
               localStorage.setItem("Studio-Section", "Dashboard");
@@ -539,8 +543,8 @@ function LeftPanel2() {
           <div
             className={
               StudioSection === "Content"
-                ? "studio-active panel"
-                : "content panel"
+                ? `${theme ? "studio-active" : "studio-active-light"} panel ${theme ? "" : "panel-light"}`
+                : `content panel ${theme ? "" : "panel-light"}`
             }
             onClick={() => {
               localStorage.setItem("Studio-Section", "Content");
@@ -568,8 +572,8 @@ function LeftPanel2() {
           <div
             className={
               StudioSection === "Comments"
-                ? "studio-active panel"
-                : "comments panel"
+                ? `${theme ? "studio-active" : "studio-active-light"} panel ${theme ? "" : "panel-light"}`
+                : `comments panel ${theme ? "" : "panel-light"}`
             }
             onClick={() => {
               localStorage.setItem("Studio-Section", "Comments");
@@ -597,8 +601,8 @@ function LeftPanel2() {
           <div
             className={
               StudioSection === "Customization"
-                ? "studio-active panel"
-                : "customization panel"
+                ? `${theme ? "studio-active" : "studio-active-light"} panel ${theme ? "" : "panel-light"}`
+                : `customization panel ${theme ? "" : "panel-light"}`
             }
             onClick={() => {
               localStorage.setItem("Studio-Section", "Customization");

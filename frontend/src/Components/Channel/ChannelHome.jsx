@@ -803,7 +803,11 @@ function ChannelHome(prop) {
         </div>
       </div>
       <div
-        className="thischannel-no-content"
+        className={
+          theme
+            ? "thischannel-no-content"
+            : "thischannel-no-content text-light-mode"
+        }
         style={
           myVideos &&
           myVideos.message === "USER DOESN'T EXIST" &&

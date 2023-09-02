@@ -81,14 +81,31 @@
   color: black !important;
 }
 
-.upload-img-light{
+.upload-img-light {
   filter: invert(1);
 }
 
-.preview-light{
+.create-btn-light:hover {
   background-color: #e4e4e4 !important;
 }
 
-.preview-light2{
+.preview-light {
+  background-color: #e4e4e4 !important;
+}
+
+.preview-light2 {
   background-color: #f9f9f9 !important;
+}
+
+.search2-light {
+  border: 1px solid black !important;
+}
+
+.clear-light:hover {
+  color: rgb(25, 25, 25) !important;
+}
+
+.videodata-light:hover {
+  background-color: #e4e4e4 !important;
+  color: black !important;
 }

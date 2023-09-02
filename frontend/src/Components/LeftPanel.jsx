@@ -1002,7 +1002,7 @@ function LeftPanel() {
         }
         style={{ display: togglepanel ? "block" : "none" }}
       >
-        <div className="panel-topdata">
+        <div className={theme ? "panel-topdata" : "panel-topdata light-mode"}>
           <MenuRoundedIcon
             fontSize="large"
             style={{ color: theme ? "white" : "black" }}

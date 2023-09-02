@@ -65,6 +65,10 @@
   background-color: #1f1f1f;
 }
 
+.panel-light:hover{
+  background-color: #e4e4e4 !important;
+}
+
 .panel > p {
   padding-left: 25px;
 }
@@ -82,15 +86,27 @@
   transition: all 0.15s ease;
 }
 
-.studio-active > .studio-icon {
+.studio-active-light {
+  background-color: #f1f1f1;
+  border-left: 5px solid #fe3e2b;
+  transition: all 0.15s ease;
+}
+
+.studio-active > .studio-icon,
+.studio-active-light > .studio-icon {
   color: #fe3e2b !important;
 }
-.studio-active > .studio-icon2 {
+.studio-active > .studio-icon2,
+.studio-active-light > .studio-icon2 {
   color: #fe3e2b !important;
 }
 
 .studio-active > p {
   background-color: #1e1e1e;
+  color: #fe3e2b;
+}
+
+.studio-active-light > p {
   color: #fe3e2b;
 }
 
@@ -108,9 +124,8 @@
   transition: all 0.16s ease;
 }
 
-.studio-icon3{
+.studio-icon3 {
   color: #fe3e2b !important;
-
 }
 
 .view-channel2 {

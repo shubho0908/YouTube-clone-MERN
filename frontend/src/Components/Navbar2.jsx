@@ -5,6 +5,7 @@ import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 import "../Css/navbar.css";
 import StudioLogo from "../img/studio.png";
+import StudioLogo2 from "../img/studio2.png";
 import { useEffect, useState, useRef } from "react";
 import jwtDecode from "jwt-decode";
 import AccountPop2 from "./AccountPop2";
@@ -30,6 +31,10 @@ function Navbar2() {
   const [searchDesc, setSearchDesc] = useState(false);
   const [MobileSearch, setMobileSearch] = useState(false);
   const [searchClicked, setSearchClicked] = useState(false);
+  const [theme, setTheme] = useState(() => {
+    const Dark = localStorage.getItem("Dark");
+    return Dark ? JSON.parse(Dark) : true;
+  });
   const searchRef = useRef();
   const accountRef = useRef();
 
@@ -128,13 +133,13 @@ function Navbar2() {
       (video) =>
         video.Title.toLowerCase().includes(
           searchInput !== undefined &&
-            searchInput !== "" &&
-            searchInput.toLowerCase()
+          searchInput !== "" &&
+          searchInput.toLowerCase()
         ) ||
         video.Description.toLowerCase().includes(
           searchInput !== undefined &&
-            searchInput !== "" &&
-            searchInput.toLowerCase()
+          searchInput !== "" &&
+          searchInput.toLowerCase()
         )
     );
 
@@ -145,28 +150,28 @@ function Navbar2() {
       (video) =>
         video.Title.toLowerCase().includes(
           searchInput2 !== undefined &&
-            searchInput2 !== "" &&
-            searchInput2.toLowerCase()
+          searchInput2 !== "" &&
+          searchInput2.toLowerCase()
         ) ||
         video.Description.toLowerCase().includes(
           searchInput2 !== undefined &&
-            searchInput2 !== "" &&
-            searchInput2.toLowerCase()
+          searchInput2 !== "" &&
+          searchInput2.toLowerCase()
         )
     );
 
   return (
     <>
-      <div className="navbar2">
+      <div className={theme ? "navbar2" : "navbar2 light-mode text-light-mode"}>
         <div className="left-bar">
           <MenuRoundedIcon
-            className="menu2"
+            className={theme ? "menu2" : "menu2 menu2-light"}
             fontSize="large"
-            style={{ color: "white" }}
+            style={{ color: theme ? "white" : "black" }}
           />
 
           <img
-            src={StudioLogo}
+            src={theme ? StudioLogo : StudioLogo2}
             alt="logo"
             className="youtubeLogo2"
             onClick={() => {
@@ -175,16 +180,23 @@ function Navbar2() {
           />
         </div>
         <div className="middle-bar2">
-          <div className="search2">
+          <div
+            className={
+              theme
+                ? "search2"
+                : "search2 search2-light light-mode text-light-mode"
+            }
+          >
             <SearchRoundedIcon
               className="search-icon2"
               fontSize="medium"
-              style={{ color: "rgb(160, 160, 160)" }}
+              style={{ color: theme ? "rgb(160, 160, 160)" : "black" }}
             />
             <input
               type="text"
               placeholder="Search across your channel"
               id="searchType2"
+              className={theme ? "" : "light-mode text-light-mode"}
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
               onClick={() => {
@@ -194,7 +206,7 @@ function Navbar2() {
             />
             <CloseOutlinedIcon
               fontSize="medium"
-              className="clear-search"
+              className={theme ? "clear-search" : "clear-search clear-light"}
               onClick={() => {
                 setShowResults(false);
                 setSearchInput("");
@@ -202,24 +214,28 @@ function Navbar2() {
               style={
                 showResults === true
                   ? {
-                      color: "rgb(160, 160, 160)",
-                      paddingRight: "12px",
-                      opacity: "1",
-                    }
+                    color: theme ? "rgb(160, 160, 160)" : "black",
+                    paddingRight: "12px",
+                    opacity: "1",
+                  }
                   : {
-                      opacity: "0",
-                      paddingRight: "12px",
-                      pointerEvents: "none",
-                    }
+                    opacity: "0",
+                    paddingRight: "12px",
+                    pointerEvents: "none",
+                  }
               }
             />
           </div>
           <div
-            className="nav-search-results"
+            className={
+              theme
+                ? "nav-search-results"
+                : "nav-search-results light-mode text-light-mode"
+            }
             style={{
               display:
                 (showResults === true && searchInput === "") ||
-                (showResults === true && searchInput === undefined)
+                  (showResults === true && searchInput === undefined)
                   ? "block"
                   : "none",
               height: userVideos && userVideos.length >= 4 ? "450px" : "auto",
@@ -240,14 +256,27 @@ function Navbar2() {
                 ""
               )}
             </div>
-            <hr className="seperate extra-seperate" />
+            <hr
+              className={
+                theme
+                  ? "seperate extra-seperate"
+                  : "seperate extra-seperate seperate-light"
+              }
+            />
             <div className="my-five-videos">
               {userVideos &&
                 userVideos.length > 0 &&
                 userVideos.slice(0, 4).map((element, index) => {
                   const uploaded = new Date(element.uploaded_date);
                   return (
-                    <div className="allsearch-video-data" key={index}>
+                    <div
+                      className={
+                        theme
+                          ? "allsearch-video-data"
+                          : "allsearch-video-data videodata-light"
+                      }
+                      key={index}
+                    >
                       <div className="searchdata-one">
                         <img
                           src={element.thumbnailURL}
@@ -257,7 +286,13 @@ function Navbar2() {
                             window.location.href = `/studio/video/edit/${element._id}`;
                           }}
                         />
-                        <p className="searchvid-duration">
+                        <p
+                          className={
+                            theme
+                              ? "searchvid-duration"
+                              : "searchvid-duration text-dark-mode"
+                          }
+                        >
                           {Math.floor(element.videoLength / 60) +
                             ":" +
                             (Math.round(element.videoLength % 60) < 10
@@ -275,13 +310,13 @@ function Navbar2() {
                               : `${element.Title.slice(0, 30)}...`}
                           </p>
                           {searchDesc ? (
-                            <p>
+                            <p className={theme ? "" : "text-light-mode2"}>
                               {element.Description.length <= 75
                                 ? element.Description
                                 : `${element.Description.slice(0, 30)}...`}
                             </p>
                           ) : (
-                            <p>
+                            <p className={theme ? "" : "text-light-mode2"}>
                               {element.Description.length <= 75
                                 ? element.Description
                                 : `${element.Description.slice(0, 75)}...`}
@@ -294,9 +329,11 @@ function Navbar2() {
                               placement="bottom"
                             >
                               <ModeEditOutlineOutlinedIcon
-                                className="edit-this"
+                                className={
+                                  theme ? "edit-this" : "edit-this-light"
+                                }
                                 fontSize="medium"
-                                style={{ color: "#aaa" }}
+                                style={{ color: theme ? "#aaa" : "black" }}
                                 onClick={() => {
                                   window.location.href = `/studio/video/edit/${element._id}`;
                                 }}
@@ -308,9 +345,11 @@ function Navbar2() {
                               placement="bottom"
                             >
                               <ChatOutlinedIcon
-                                className="comment-this"
+                                className={
+                                  theme ? "comment-this" : "comment-this-light"
+                                }
                                 fontSize="medium"
-                                style={{ color: "#aaa" }}
+                                style={{ color: theme ? "#aaa" : "black" }}
                                 onClick={() => {
                                   window.location.href = `/studio/video/comments/${element._id}`;
                                 }}
@@ -322,9 +361,11 @@ function Navbar2() {
                               placement="bottom"
                             >
                               <YouTubeIcon
-                                className="watch-this"
+                                className={
+                                  theme ? "watch-this" : "watch-this-light"
+                                }
                                 fontSize="medium"
-                                style={{ color: "#aaa" }}
+                                style={{ color: theme ? "#aaa" : "black" }}
                                 onClick={() => {
                                   window.location.href = `/video/${element._id}`;
                                 }}
@@ -341,7 +382,9 @@ function Navbar2() {
                             day: "numeric",
                           })}
                         </p>
-                        <p>Published</p>
+                        <p className={theme ? "" : "text-light-mode2"}>
+                          Published
+                        </p>
                       </div>
                     </div>
                   );
@@ -349,12 +392,16 @@ function Navbar2() {
             </div>
           </div>
           <div
-            className="nav-search-results2"
+            className={
+              theme
+                ? "nav-search-results2"
+                : "nav-search-results2 light-mode text-light-mode"
+            }
             style={{
               display:
                 showResults === true &&
-                filteredVideos &&
-                filteredVideos.length > 0
+                  filteredVideos &&
+                  filteredVideos.length > 0
                   ? "block"
                   : "none",
               height:
@@ -378,14 +425,27 @@ function Navbar2() {
                 ""
               )}
             </div>
-            <hr className="seperate extra-seperate" />
+            <hr
+              className={
+                theme
+                  ? "seperate extra-seperate"
+                  : "seperate extra-seperate seperate-light"
+              }
+            />
             <div className="my-five-videos">
               {filteredVideos &&
                 filteredVideos.length > 0 &&
                 filteredVideos.map((element, index) => {
                   const uploaded = new Date(element.uploaded_date);
                   return (
-                    <div className="allsearch-video-data" key={index}>
+                    <div
+                      className={
+                        theme
+                          ? "allsearch-video-data"
+                          : "allsearch-video-data videodata-light"
+                      }
+                      key={index}
+                    >
                       <div className="searchdata-one">
                         <img
                           src={element.thumbnailURL}
@@ -395,7 +455,13 @@ function Navbar2() {
                             window.location.href = `/studio/video/edit/${element._id}`;
                           }}
                         />
-                        <p className="searchvid-duration">
+                        <p
+                          className={
+                            theme
+                              ? "searchvid-duration"
+                              : "searchvid-duration text-dark-mode"
+                          }
+                        >
                           {Math.floor(element.videoLength / 60) +
                             ":" +
                             (Math.round(element.videoLength % 60) < 10
@@ -413,13 +479,13 @@ function Navbar2() {
                               : `${element.Title.slice(0, 30)}...`}
                           </p>
                           {searchDesc ? (
-                            <p>
+                            <p className={theme ? "" : "text-light-mode2"}>
                               {element.Description.length <= 75
                                 ? element.Description
                                 : `${element.Description.slice(0, 30)}...`}
                             </p>
                           ) : (
-                            <p>
+                            <p className={theme ? "" : "text-light-mode2"}>
                               {element.Description.length <= 75
                                 ? element.Description
                                 : `${element.Description.slice(0, 75)}...`}
@@ -432,9 +498,11 @@ function Navbar2() {
                               placement="bottom"
                             >
                               <ModeEditOutlineOutlinedIcon
-                                className="edit-this"
+                                className={
+                                  theme ? "edit-this" : "edit-this-light"
+                                }
                                 fontSize="medium"
-                                style={{ color: "#aaa" }}
+                                style={{ color: theme ? "#aaa" : "black" }}
                                 onClick={() => {
                                   window.location.href = `/studio/video/edit/${element._id}`;
                                 }}
@@ -446,9 +514,11 @@ function Navbar2() {
                               placement="bottom"
                             >
                               <ChatOutlinedIcon
-                                className="comment-this"
+                                className={
+                                  theme ? "comment-this" : "comment-this-light"
+                                }
                                 fontSize="medium"
-                                style={{ color: "#aaa" }}
+                                style={{ color: theme ? "#aaa" : "black" }}
                               />
                             </Tooltip>
                             <Tooltip
@@ -457,9 +527,11 @@ function Navbar2() {
                               placement="bottom"
                             >
                               <YouTubeIcon
-                                className="watch-this"
+                                className={
+                                  theme ? "watch-this" : "watch-this-light"
+                                }
                                 fontSize="medium"
-                                style={{ color: "#aaa" }}
+                                style={{ color: theme ? "#aaa" : "black" }}
                                 onClick={() => {
                                   window.location.href = `/video/${element._id}`;
                                 }}
@@ -476,7 +548,9 @@ function Navbar2() {
                             day: "numeric",
                           })}
                         </p>
-                        <p>Published</p>
+                        <p className={theme ? "" : "text-light-mode2"}>
+                          Published
+                        </p>
                       </div>
                     </div>
                   );
@@ -484,14 +558,18 @@ function Navbar2() {
             </div>
           </div>
           <div
-            className="nav-search-results2"
+            className={
+              theme
+                ? "nav-search-results2"
+                : "nav-search-results2 light-mode text-light-mode"
+            }
             style={{
               display:
                 showResults === true &&
-                searchInput !== undefined &&
-                searchInput.length !== 0 &&
-                filteredVideos &&
-                filteredVideos.length === 0
+                  searchInput !== undefined &&
+                  searchInput.length !== 0 &&
+                  filteredVideos &&
+                  filteredVideos.length === 0
                   ? "block"
                   : "none",
             }}
@@ -501,7 +579,13 @@ function Navbar2() {
                 Videos ({filteredVideos && filteredVideos.length})
               </p>
             </div>
-            <hr className="seperate extra-seperate" />
+            <hr
+              className={
+                theme
+                  ? "seperate extra-seperate"
+                  : "seperate extra-seperate seperate-light"
+              }
+            />
             <div className="my-five-videos"></div>
           </div>
         </div>
@@ -528,7 +612,7 @@ function Navbar2() {
         >
           <BiSearch
             fontSize="28px"
-            color="rgb(160, 160, 160)"
+            color={theme ? "rgb(160, 160, 160)" : "black"}
             className="studio-searchh"
             onClick={() => setSearchClicked(true)}
           />
@@ -555,16 +639,22 @@ function Navbar2() {
         className="new-studio-search-section"
         style={{ display: searchClicked && MobileSearch ? "flex" : "none" }}
       >
-        <div className="search2-new" ref={searchRef}>
+        <div
+          className={
+            theme ? "search2-new" : "search2-new light-mode text-light-mode"
+          }
+          ref={searchRef}
+        >
           <SearchRoundedIcon
             className="search-icon2"
             fontSize="medium"
-            style={{ color: "rgb(160, 160, 160)" }}
+            style={{ color: theme ? "rgb(160, 160, 160)" : "black" }}
           />
           <input
             type="text"
             placeholder="Search across your channel"
             id="searchType2-new"
+            className={theme ? "" : "light-mode text-light-mode"}
             value={searchInput2}
             onChange={(e) => setSearchInput2(e.target.value)}
             onClick={() => setShowResults2(true)}
@@ -580,25 +670,29 @@ function Navbar2() {
             style={
               showResults2 === true
                 ? {
-                    color: "rgb(160, 160, 160)",
-                    paddingRight: "12px",
-                    opacity: "1",
-                  }
+                  color: theme ? "rgb(160, 160, 160)" : "black",
+                  paddingRight: "12px",
+                  opacity: "1",
+                }
                 : {
-                    opacity: "0",
-                    paddingRight: "12px",
-                    pointerEvents: "none",
-                  }
+                  opacity: "0",
+                  paddingRight: "12px",
+                  pointerEvents: "none",
+                }
             }
           />
         </div>
         <div className="show-mobile-search-results">
           <div
-            className="nav-search-results mobile-search-data"
+            className={
+              theme
+                ? "nav-search-results mobile-search-data"
+                : "nav-search-results mobile-search-data light-mode text-light-mode"
+            }
             style={{
               display:
                 (showResults2 === true && searchInput2 === "") ||
-                (showResults2 === true && searchInput2 === undefined)
+                  (showResults2 === true && searchInput2 === undefined)
                   ? "block"
                   : "none",
               height: userVideos && userVideos.length >= 4 ? "400px" : "auto",
@@ -619,14 +713,27 @@ function Navbar2() {
                 ""
               )}
             </div>
-            <hr className="seperate extra-seperate" />
+            <hr
+              className={
+                theme
+                  ? "seperate extra-seperate"
+                  : "seperate extra-seperate seperate-light"
+              }
+            />
             <div className="my-five-videos">
               {userVideos &&
                 userVideos.length > 0 &&
                 userVideos.slice(0, 4).map((element, index) => {
                   const uploaded = new Date(element.uploaded_date);
                   return (
-                    <div className="allsearch-video-data" key={index}>
+                    <div
+                      className={
+                        theme
+                          ? "allsearch-video-data"
+                          : "allsearch-video-data videodata-light"
+                      }
+                      key={index}
+                    >
                       <div className="searchdata-one">
                         <img
                           src={element.thumbnailURL}
@@ -636,7 +743,13 @@ function Navbar2() {
                             window.location.href = `/studio/video/edit/${element._id}`;
                           }}
                         />
-                        <p className="searchvid-duration">
+                        <p
+                          className={
+                            theme
+                              ? "searchvid-duration"
+                              : "searchvid-duration text-dark-mode"
+                          }
+                        >
                           {Math.floor(element.videoLength / 60) +
                             ":" +
                             (Math.round(element.videoLength % 60) < 10
@@ -654,13 +767,13 @@ function Navbar2() {
                               : `${element.Title.slice(0, 30)}...`}
                           </p>
                           {searchDesc ? (
-                            <p>
+                            <p className={theme ? "" : "text-light-mode2"}>
                               {element.Description.length <= 75
                                 ? element.Description
                                 : `${element.Description.slice(0, 30)}...`}
                             </p>
                           ) : (
-                            <p>
+                            <p className={theme ? "" : "text-light-mode2"}>
                               {element.Description.length <= 75
                                 ? element.Description
                                 : `${element.Description.slice(0, 75)}...`}
@@ -673,9 +786,11 @@ function Navbar2() {
                               placement="bottom"
                             >
                               <ModeEditOutlineOutlinedIcon
-                                className="edit-this"
+                                className={
+                                  theme ? "edit-this" : "edit-this-light"
+                                }
                                 fontSize="medium"
-                                style={{ color: "#aaa" }}
+                                style={{ color: theme ? "#aaa" : "black" }}
                                 onClick={() => {
                                   window.location.href = `/studio/video/edit/${element._id}`;
                                 }}
@@ -687,9 +802,11 @@ function Navbar2() {
                               placement="bottom"
                             >
                               <ChatOutlinedIcon
-                                className="comment-this"
+                                className={
+                                  theme ? "comment-this" : "comment-this-light"
+                                }
                                 fontSize="medium"
-                                style={{ color: "#aaa" }}
+                                style={{ color: theme ? "#aaa" : "black" }}
                                 onClick={() => {
                                   window.location.href = `/studio/video/comments/${element._id}`;
                                 }}
@@ -701,9 +818,11 @@ function Navbar2() {
                               placement="bottom"
                             >
                               <YouTubeIcon
-                                className="watch-this"
+                                className={
+                                  theme ? "watch-this" : "watch-this-light"
+                                }
                                 fontSize="medium"
-                                style={{ color: "#aaa" }}
+                                style={{ color: theme ? "#aaa" : "black" }}
                                 onClick={() => {
                                   window.location.href = `/video/${element._id}`;
                                 }}
@@ -720,7 +839,9 @@ function Navbar2() {
                             day: "numeric",
                           })}
                         </p>
-                        <p>Published</p>
+                        <p className={theme ? "" : "text-light-mode2"}>
+                          Published
+                        </p>
                       </div>
                     </div>
                   );
@@ -728,12 +849,16 @@ function Navbar2() {
             </div>
           </div>
           <div
-            className="nav-search-results2 mobile-search-data"
+            className={
+              theme
+                ? "nav-search-results2 mobile-search-data"
+                : "nav-search-results2 mobile-search-data light-mode text-light-mode"
+            }
             style={{
               display:
                 showResults2 === true &&
-                filteredVideos2 &&
-                filteredVideos2.length > 0
+                  filteredVideos2 &&
+                  filteredVideos2.length > 0
                   ? "block"
                   : "none",
               height:
@@ -759,14 +884,27 @@ function Navbar2() {
                 ""
               )}
             </div>
-            <hr className="seperate extra-seperate" />
+            <hr
+              className={
+                theme
+                  ? "seperate extra-seperate"
+                  : "seperate extra-seperate seperate-light"
+              }
+            />
             <div className="my-five-videos">
               {filteredVideos2 &&
                 filteredVideos2.length > 0 &&
                 filteredVideos2.map((element, index) => {
                   const uploaded = new Date(element.uploaded_date);
                   return (
-                    <div className="allsearch-video-data" key={index}>
+                    <div
+                      className={
+                        theme
+                          ? "allsearch-video-data"
+                          : "allsearch-video-data videodata-light"
+                      }
+                      key={index}
+                    >
                       <div className="searchdata-one">
                         <img
                           src={element.thumbnailURL}
@@ -776,7 +914,13 @@ function Navbar2() {
                             window.location.href = `/studio/video/edit/${element._id}`;
                           }}
                         />
-                        <p className="searchvid-duration">
+                        <p
+                          className={
+                            theme
+                              ? "searchvid-duration"
+                              : "searchvid-duration text-dark-mode"
+                          }
+                        >
                           {Math.floor(element.videoLength / 60) +
                             ":" +
                             (Math.round(element.videoLength % 60) < 10
@@ -794,13 +938,13 @@ function Navbar2() {
                               : `${element.Title.slice(0, 30)}...`}
                           </p>
                           {searchDesc ? (
-                            <p>
+                            <p className={theme ? "" : "text-light-mode2"}>
                               {element.Description.length <= 75
                                 ? element.Description
                                 : `${element.Description.slice(0, 30)}...`}
                             </p>
                           ) : (
-                            <p>
+                            <p className={theme ? "" : "text-light-mode2"}>
                               {element.Description.length <= 75
                                 ? element.Description
                                 : `${element.Description.slice(0, 75)}...`}
@@ -813,9 +957,11 @@ function Navbar2() {
                               placement="bottom"
                             >
                               <ModeEditOutlineOutlinedIcon
-                                className="edit-this"
+                                className={
+                                  theme ? "edit-this" : "edit-this-light"
+                                }
                                 fontSize="medium"
-                                style={{ color: "#aaa" }}
+                                style={{ color: theme ? "#aaa" : "black" }}
                                 onClick={() => {
                                   window.location.href = `/studio/video/edit/${element._id}`;
                                 }}
@@ -827,9 +973,11 @@ function Navbar2() {
                               placement="bottom"
                             >
                               <ChatOutlinedIcon
-                                className="comment-this"
+                                className={
+                                  theme ? "comment-this" : "comment-this-light"
+                                }
                                 fontSize="medium"
-                                style={{ color: "#aaa" }}
+                                style={{ color: theme ? "#aaa" : "black" }}
                               />
                             </Tooltip>
                             <Tooltip
@@ -838,9 +986,11 @@ function Navbar2() {
                               placement="bottom"
                             >
                               <YouTubeIcon
-                                className="watch-this"
+                                className={
+                                  theme ? "watch-this" : "watch-this-light"
+                                }
                                 fontSize="medium"
-                                style={{ color: "#aaa" }}
+                                style={{ color: theme ? "#aaa" : "black" }}
                                 onClick={() => {
                                   window.location.href = `/video/${element._id}`;
                                 }}
@@ -857,7 +1007,9 @@ function Navbar2() {
                             day: "numeric",
                           })}
                         </p>
-                        <p>Published</p>
+                        <p className={theme ? "" : "text-light-mode2"}>
+                          Published
+                        </p>
                       </div>
                     </div>
                   );
@@ -865,13 +1017,17 @@ function Navbar2() {
             </div>
           </div>
           <div
-            className="nav-search-results2 mobile-search-data"
+            className={
+              theme
+                ? "nav-search-results2 mobile-search-data"
+                : "nav-search-results2 mobile-search-data light-mode text-light-mode"
+            }
             style={
               showResults2 === true &&
-              searchInput2 !== undefined &&
-              searchInput2.length !== 0 &&
-              filteredVideos2 &&
-              filteredVideos2.length === 0
+                searchInput2 !== undefined &&
+                searchInput2.length !== 0 &&
+                filteredVideos2 &&
+                filteredVideos2.length === 0
                 ? { display: "block" }
                 : { display: "none" }
             }
@@ -881,7 +1037,13 @@ function Navbar2() {
                 Videos ({filteredVideos2 && filteredVideos2.length})
               </p>
             </div>
-            <hr className="seperate extra-seperate" />
+            <hr
+              className={
+                theme
+                  ? "seperate extra-seperate"
+                  : "seperate extra-seperate seperate-light"
+              }
+            />
             <div className="my-five-videos"></div>
           </div>
         </div>
