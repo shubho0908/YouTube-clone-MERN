@@ -25,6 +25,10 @@ function Dashboard() {
     const menu = localStorage.getItem("studioMenuClicked");
     return menu ? JSON.parse(menu) : false;
   });
+  const [theme, setTheme] = useState(() => {
+    const Dark = localStorage.getItem("Dark");
+    return Dark ? JSON.parse(Dark) : true;
+  });
 
   document.title = "Channel dashboard - YouTube Studio";
 
@@ -183,10 +187,16 @@ function Dashboard() {
               transition: menu ? "all .1s ease" : "none",
             }}
           >
-            <p className="dashboard-top">Channel dashboard</p>
+            <p
+              className={
+                theme ? "dashboard-top" : "dashboard-top text-light-mode"
+              }
+            >
+              Channel dashboard
+            </p>
             <div className="dash-data-all">
               <div className="left-dashboard-data">
-                <div className="uploadnew-video-dash">
+                <div className={theme ? "uploadnew-video-dash" : "uploadnew-video-dash light-mode text-light-mode"}>
                   <div className="dashed-dash">
                     <div className="dash-dataimp">
                       <img
@@ -194,9 +204,9 @@ function Dashboard() {
                         alt="upload"
                         className="noupload-img"
                       />
-                      <p>Want to see metrics on your recent video?</p>
-                      <p>Upload and publish a video to get started.</p>
-                      <button className="uploadnewone-video">
+                      <p className={theme ? "" : "text-light-mode2"}>Want to see metrics on your recent video?</p>
+                      <p className={theme ? "" : "text-light-mode2"}>Upload and publish a video to get started.</p>
+                      <button className={theme ? "uploadnewone-video" : "uploadnewone-video text-dark-mode"}>
                         UPLOAD VIDEOS
                       </button>
                     </div>
@@ -204,7 +214,13 @@ function Dashboard() {
                 </div>
               </div>
               <div className="right-dashboard-data">
-                <div className="dashboard-analytics">
+                <div
+                  className={
+                    theme
+                      ? "dashboard-analytics"
+                      : "dashboard-analytics light-mode text-light-mode"
+                  }
+                >
                   <p>Channel analytics</p>
                   <div className="subscriber-analytics">
                     <p>Current subscribers</p>
@@ -238,16 +254,22 @@ function Dashboard() {
             transition: menu ? "all .1s ease" : "none",
           }}
         >
-          <p className="dashboard-top">Channel dashboard</p>
+          <p
+            className={
+              theme ? "dashboard-top" : "dashboard-top text-light-mode"
+            }
+          >
+            Channel dashboard
+          </p>
           <div className="dash-data-all">
             <div className="left-dashboard-data">
-              <div className="uploadnew-video-dash">
+              <div className={theme ? "uploadnew-video-dash" : "uploadnew-video-dash light-mode text-light-mode"}>
                 <div className="dashed-dash">
                   <div className="dash-dataimp">
                     <img src={noVideo} alt="upload" className="noupload-img" />
-                    <p>Want to see metrics on your recent video?</p>
-                    <p>Upload and publish a video to get started.</p>
-                    <button className="uploadnewone-video">
+                    <p className={theme ? "" : "text-light-mode2"}>Want to see metrics on your recent video?</p>
+                    <p className={theme ? "" : "text-light-mode2"}>Upload and publish a video to get started.</p>
+                    <button className={theme ? "uploadnewone-video" : "uploadnewone-video text-dark-mode"}>
                       UPLOAD VIDEOS
                     </button>
                   </div>
@@ -255,7 +277,13 @@ function Dashboard() {
               </div>
             </div>
             <div className="right-dashboard-data">
-              <div className="dashboard-analytics">
+              <div
+                className={
+                  theme
+                    ? "dashboard-analytics"
+                    : "dashboard-analytics light-mode text-light-mode"
+                }
+              >
                 <p>Channel analytics</p>
                 <div className="subscriber-analytics">
                   <p>Current subscribers</p>
@@ -290,10 +318,22 @@ function Dashboard() {
             transition: menu ? "all .1s ease" : "none",
           }}
         >
-          <p className="dashboard-top">Channel dashboard</p>
+          <p
+            className={
+              theme ? "dashboard-top" : "dashboard-top text-light-mode"
+            }
+          >
+            Channel dashboard
+          </p>
           <div className="dash-data-all">
             <div className="left-dashboard-data">
-              <div className="dashboard-performance">
+              <div
+                className={
+                  theme
+                    ? "dashboard-performance"
+                    : "dashboard-performance light-mode text-light-mode"
+                }
+              >
                 <div className="video-performance">
                   <p>Bestest video performance</p>
                   <div className="performed-vid-data">
@@ -312,9 +352,9 @@ function Dashboard() {
                         <div className="performed-video-views">
                           <BarChartOutlinedIcon
                             fontSize="small"
-                            style={{ color: "#aaa" }}
+                            style={{ color: theme ? "#aaa" : "#606060" }}
                           />
-                          <p>
+                          <p className={theme ? "" : "text-light-mode2"}>
                             {myVideos &&
                               myVideos.message !== "USER DOESN'T EXIST" &&
                               myVideos.length > 0 &&
@@ -324,9 +364,9 @@ function Dashboard() {
                         <div className="performed-video-comments">
                           <ChatOutlinedIcon
                             fontSize="small"
-                            style={{ color: "#aaa" }}
+                            style={{ color: theme ? "#aaa" : "#606060" }}
                           />
-                          <p>
+                          <p className={theme ? "" : "text-light-mode2"}>
                             {myVideos &&
                               myVideos.message !== "USER DOESN'T EXIST" &&
                               myVideos.length > 0 &&
@@ -336,9 +376,9 @@ function Dashboard() {
                         <div className="performed-video-likes">
                           <ThumbUpOutlinedIcon
                             fontSize="small"
-                            style={{ color: "#aaa" }}
+                            style={{ color: theme ? "#aaa" : "#606060" }}
                           />
-                          <p>
+                          <p className={theme ? "" : "text-light-mode2"}>
                             {myVideos &&
                               myVideos.message !== "USER DOESN'T EXIST" &&
                               myVideos.length > 0 &&
@@ -349,12 +389,12 @@ function Dashboard() {
                       <div className="right-performed-icons">
                         <KeyboardArrowDownOutlinedIcon
                           fontSize="medium"
-                          className="expandd"
+                          className={theme ? "expandd" : "expandd expand-light"}
                           style={
                             dropDown === false &&
-                              myVideos &&
-                              myVideos.message !== "USER DOESN'T EXIST" &&
-                              myVideos.length > 1
+                            myVideos &&
+                            myVideos.message !== "USER DOESN'T EXIST" &&
+                            myVideos.length > 1
                               ? { color: "#aaa", cursor: "pointer" }
                               : { display: "none" }
                           }
@@ -362,12 +402,12 @@ function Dashboard() {
                         />
                         <KeyboardArrowUpIcon
                           fontSize="medium"
-                          className="expandd"
+                          className={theme ? "expandd" : "expandd expand-light"}
                           style={
                             dropDown === true &&
-                              myVideos &&
-                              myVideos.message !== "USER DOESN'T EXIST" &&
-                              myVideos.length > 1
+                            myVideos &&
+                            myVideos.message !== "USER DOESN'T EXIST" &&
+                            myVideos.length > 1
                               ? { color: "#aaa", cursor: "pointer" }
                               : { display: "none" }
                           }
@@ -379,22 +419,22 @@ function Dashboard() {
                       className="extra-performance-data"
                       style={
                         myVideos &&
-                          myVideos.message !== "USER DOESN'T EXIST" &&
-                          myVideos.length > 1 &&
-                          dropDown === true
+                        myVideos.message !== "USER DOESN'T EXIST" &&
+                        myVideos.length > 1 &&
+                        dropDown === true
                           ? { display: "block" }
                           : { display: "none" }
                       }
                     >
-                      <p>
+                      <p className={theme ? "" : "text-light-mode2"}>
                         First{" "}
                         {(() => {
                           const timeDifference =
                             new Date() -
                             new Date(
                               myVideos &&
-                              myVideos.length > 0 &&
-                              myVideos[0].uploaded_date
+                                myVideos.length > 0 &&
+                                myVideos[0].uploaded_date
                             );
                           const minutes = Math.floor(timeDifference / 60000);
                           const hours = Math.floor(timeDifference / 3600000);
@@ -432,16 +472,23 @@ function Dashboard() {
                             </p>
                             <ChevronRightIcon
                               fontSize="medium"
-                              className="right-arrw"
+                              className={
+                                theme ? "right-arrw" : "right-arrw-light"
+                              }
                               style={{ color: "#aaa" }}
                             />
                           </div>
                           <div
-                            className={`all-sortedvideos-dash ${showSortedVideos ? "visible" : ""
-                              }`}
+                            className={`${
+                              theme
+                                ? "all-sortedvideos-dash"
+                                : "all-sortedvideos-dash light-mode text-light-mode"
+                            } ${showSortedVideos ? "visible" : ""}`}
                           >
                             <p>Top recent videos</p>
-                            <p>Views</p>
+                            <p className={theme ? "" : "text-light-mode2"}>
+                              Views
+                            </p>
 
                             {sortedVideos &&
                               sortedVideos.map((element, index) => {
@@ -451,7 +498,11 @@ function Dashboard() {
                                     key={index}
                                   >
                                     <div className="leftsort-list">
-                                      <p style={{ color: "#aaa" }}>
+                                      <p
+                                        style={{
+                                          color: theme ? "#aaa" : "#606060",
+                                        }}
+                                      >
                                         {index + 1}
                                       </p>
                                       <div className="sorted-viddataaa">
@@ -465,9 +516,9 @@ function Dashboard() {
                                           {element.Title.length <= 25
                                             ? element.Title
                                             : `${element.Title.slice(
-                                              0,
-                                              25
-                                            )}...`}
+                                                0,
+                                                25
+                                              )}...`}
                                         </p>
                                       </div>
                                     </div>
@@ -505,14 +556,27 @@ function Dashboard() {
                   </div>
                 </div>
               </div>
-              <div className="published-videos-dash">
+              <div
+                className={
+                  theme
+                    ? "published-videos-dash"
+                    : "published-videos-dash light-mode text-light-mode"
+                }
+              >
                 <p className="publish-toop">Published videos</p>
                 <div className="all-publishvid-data">
                   {myVideos &&
                     myVideos.length > 0 &&
                     myVideos.map((element, index) => {
                       return (
-                        <div className="dashboard-publishvideos" key={index}>
+                        <div
+                          className={
+                            theme
+                              ? "dashboard-publishvideos"
+                              : "dashboard-publishvideos dashboard-publishvideos-light"
+                          }
+                          key={index}
+                        >
                           <img
                             src={element.thumbnailURL}
                             alt="thumbnail"
@@ -531,31 +595,39 @@ function Dashboard() {
                               <div className="publishviews">
                                 <BarChartOutlinedIcon
                                   fontSize="small"
-                                  style={{ color: "#aaa" }}
+                                  style={{ color: theme ? "#aaa" : "#606060" }}
                                 />
-                                <p>{element.views}</p>
+                                <p className={theme ? "" : "text-light-mode2"}>
+                                  {element.views}
+                                </p>
                               </div>
                               <div className="publishcomments">
                                 <ChatOutlinedIcon
                                   fontSize="small"
-                                  style={{ color: "#aaa" }}
+                                  style={{ color: theme ? "#aaa" : "#606060" }}
                                 />
-                                <p>{element.comments.length}</p>
+                                <p className={theme ? "" : "text-light-mode2"}>
+                                  {element.comments.length}
+                                </p>
                               </div>
                               <div className="publishlikes">
                                 <ThumbUpOutlinedIcon
                                   fontSize="small"
-                                  style={{ color: "#aaa" }}
+                                  style={{ color: theme ? "#aaa" : "#606060" }}
                                 />
-                                <p>{element.likes}</p>
+                                <p className={theme ? "" : "text-light-mode2"}>
+                                  {element.likes}
+                                </p>
                               </div>
                             </div>
                             <div className="bottompublish2">
                               <div className="publishviews">
                                 <ModeEditOutlineOutlinedIcon
-                                  className="make-white"
+                                  className={
+                                    theme ? "make-white" : "make-white-light"
+                                  }
                                   fontSize="small"
-                                  style={{ color: "#aaa" }}
+                                  style={{ color: theme ? "#aaa" : "#606060" }}
                                   onClick={() =>
                                     (window.location.href = `/studio/video/edit/${element._id}`)
                                   }
@@ -563,9 +635,11 @@ function Dashboard() {
                               </div>
                               <div className="publishcomments">
                                 <ChatOutlinedIcon
-                                  className="make-white"
+                                  className={
+                                    theme ? "make-white" : "make-white-light"
+                                  }
                                   fontSize="small"
-                                  style={{ color: "#aaa" }}
+                                  style={{ color: theme ? "#aaa" : "#606060" }}
                                   onClick={() =>
                                     (window.location.href = `/studio/video/comments/${element._id}`)
                                   }
@@ -573,9 +647,11 @@ function Dashboard() {
                               </div>
                               <div className="publishlikes">
                                 <YouTubeIcon
-                                  className="make-white"
+                                  className={
+                                    theme ? "make-white" : "make-white-light"
+                                  }
                                   fontSize="small"
-                                  style={{ color: "#aaa" }}
+                                  style={{ color: theme ? "#aaa" : "#606060" }}
                                   onClick={() =>
                                     (window.location.href = `/video/${element._id}`)
                                   }
@@ -596,7 +672,13 @@ function Dashboard() {
               </div>
             </div>
             <div className="right-dashboard-data">
-              <div className="dashboard-analytics">
+              <div
+                className={
+                  theme
+                    ? "dashboard-analytics"
+                    : "dashboard-analytics light-mode text-light-mode"
+                }
+              >
                 <p>Channel analytics</p>
                 <div className="subscriber-analytics">
                   <p>Current subscribers</p>
@@ -615,7 +697,7 @@ function Dashboard() {
                 </div>
                 <div className="channel-top-videos-analytics">
                   <p>Top videos</p>
-                  <p>Views</p>
+                  <p className={theme ? "" : "text-light-mode2"}>Views</p>
                   <div className="channel-top-videosdata">
                     {sortedVideos &&
                       sortedVideos.map((element, index) => {

@@ -142,7 +142,11 @@ function LeftPanel2() {
   return (
     <>
       <div
-        className={theme ? "main-section2 long-left" : "main-section2 long-left light-mode text-light-mode"}
+        className={
+          theme
+            ? "main-section2 long-left"
+            : "main-section2 long-left light-mode text-light-mode"
+        }
         style={
           studioMenuClicked === true
             ? { display: "none" }
@@ -197,17 +201,21 @@ function LeftPanel2() {
               }}
             />
           </Tooltip>
-          <CiShare1 className="view-channel2" fontSize="25px" />
+          <CiShare1 className="view-channel2" fontSize="25px" color="white" />
           <div className="about-channel">
             <p className="your-channel">Your Channel</p>
-            <p className="c-name">{channel}</p>
+            <p className={theme ? "c-name" : "c-name text-light-mode2"}>
+              {channel}
+            </p>
           </div>
         </div>
         <div className="second-panel">
           <div
             className={
               StudioSection === "Dashboard"
-                ? `${theme ? "studio-active" : "studio-active-light"} panel ${theme ? "" : "panel-light"}`
+                ? `${theme ? "studio-active" : "studio-active-light"} panel ${
+                    theme ? "" : "panel-light"
+                  }`
                 : `dashboard panel ${theme ? "" : "panel-light"}`
             }
             onClick={() => {
@@ -227,7 +235,9 @@ function LeftPanel2() {
           <div
             className={
               StudioSection === "Content"
-                ? `${theme ? "studio-active" : "studio-active-light"} panel ${theme ? "" : "panel-light"}`
+                ? `${theme ? "studio-active" : "studio-active-light"} panel ${
+                    theme ? "" : "panel-light"
+                  }`
                 : `content panel ${theme ? "" : "panel-light"}`
             }
             onClick={() => {
@@ -247,7 +257,9 @@ function LeftPanel2() {
           <div
             className={
               StudioSection === "Comments"
-                ? `${theme ? "studio-active" : "studio-active-light"} panel ${theme ? "" : "panel-light"}`
+                ? `${theme ? "studio-active" : "studio-active-light"} panel ${
+                    theme ? "" : "panel-light"
+                  }`
                 : `comments panel ${theme ? "" : "panel-light"}`
             }
             onClick={() => {
@@ -267,7 +279,9 @@ function LeftPanel2() {
           <div
             className={
               StudioSection === "Customization"
-                ? `${theme ? "studio-active" : "studio-active-light"} panel ${theme ? "" : "panel-light"}`
+                ? `${theme ? "studio-active" : "studio-active-light"} panel ${
+                    theme ? "" : "panel-light"
+                  }`
                 : `customization panel ${theme ? "" : "panel-light"}`
             }
             onClick={() => {
@@ -292,7 +306,11 @@ function LeftPanel2() {
       {/* SHORT HAND  */}
 
       <div
-        className="main-section2 short-left"
+        className={
+          theme
+            ? "main-section2 short-left"
+            : "main-section2 short-left light-mode text-light-mode"
+        }
         style={
           studioMenuClicked === false
             ? { display: "none" }
@@ -345,7 +363,9 @@ function LeftPanel2() {
           <div
             className={
               StudioSection === "Dashboard"
-                ? `${theme ? "studio-active" : "studio-active-light"} panel ${theme ? "" : "panel-light"}`
+                ? `${theme ? "studio-active" : "studio-active-light"} panel ${
+                    theme ? "" : "panel-light"
+                  }`
                 : `dashboard panel ${theme ? "" : "panel-light"}`
             }
             onClick={() => {
@@ -375,7 +395,9 @@ function LeftPanel2() {
           <div
             className={
               StudioSection === "Content"
-                ? `${theme ? "studio-active" : "studio-active-light"} panel ${theme ? "" : "panel-light"}`
+                ? `${theme ? "studio-active" : "studio-active-light"} panel ${
+                    theme ? "" : "panel-light"
+                  }`
                 : `content panel ${theme ? "" : "panel-light"}`
             }
             onClick={() => {
@@ -404,7 +426,9 @@ function LeftPanel2() {
           <div
             className={
               StudioSection === "Comments"
-                ? `${theme ? "studio-active" : "studio-active-light"} panel ${theme ? "" : "panel-light"}`
+                ? `${theme ? "studio-active" : "studio-active-light"} panel ${
+                    theme ? "" : "panel-light"
+                  }`
                 : `comments panel ${theme ? "" : "panel-light"}`
             }
             onClick={() => {
@@ -433,7 +457,9 @@ function LeftPanel2() {
           <div
             className={
               StudioSection === "Customization"
-                ? `${theme ? "studio-active" : "studio-active-light"} panel ${theme ? "" : "panel-light"}`
+                ? `${theme ? "studio-active" : "studio-active-light"} panel ${
+                    theme ? "" : "panel-light"
+                  }`
                 : `customization panel ${theme ? "" : "panel-light"}`
             }
             onClick={() => {
@@ -466,7 +492,13 @@ function LeftPanel2() {
 
       {/* SHORT HAND 2 */}
 
-      <div className="main-section2 short-left2">
+      <div
+        className={
+          theme
+            ? "main-section2 short-left2"
+            : "main-section2 short-left2 light-mode text-light-mode"
+        }
+      >
         <SkeletonTheme baseColor="#353535" highlightColor="#444">
           <div
             className="first-panel"
@@ -513,7 +545,9 @@ function LeftPanel2() {
           <div
             className={
               StudioSection === "Dashboard"
-                ? `${theme ? "studio-active" : "studio-active-light"} panel ${theme ? "" : "panel-light"}`
+                ? `${theme ? "studio-active" : "studio-active-light"} panel ${
+                    theme ? "" : "panel-light"
+                  }`
                 : `dashboard panel ${theme ? "" : "panel-light"}`
             }
             onClick={() => {
@@ -543,7 +577,9 @@ function LeftPanel2() {
           <div
             className={
               StudioSection === "Content"
-                ? `${theme ? "studio-active" : "studio-active-light"} panel ${theme ? "" : "panel-light"}`
+                ? `${theme ? "studio-active" : "studio-active-light"} panel ${
+                    theme ? "" : "panel-light"
+                  }`
                 : `content panel ${theme ? "" : "panel-light"}`
             }
             onClick={() => {
@@ -572,7 +608,9 @@ function LeftPanel2() {
           <div
             className={
               StudioSection === "Comments"
-                ? `${theme ? "studio-active" : "studio-active-light"} panel ${theme ? "" : "panel-light"}`
+                ? `${theme ? "studio-active" : "studio-active-light"} panel ${
+                    theme ? "" : "panel-light"
+                  }`
                 : `comments panel ${theme ? "" : "panel-light"}`
             }
             onClick={() => {
@@ -601,7 +639,9 @@ function LeftPanel2() {
           <div
             className={
               StudioSection === "Customization"
-                ? `${theme ? "studio-active" : "studio-active-light"} panel ${theme ? "" : "panel-light"}`
+                ? `${theme ? "studio-active" : "studio-active-light"} panel ${
+                    theme ? "" : "panel-light"
+                  }`
                 : `customization panel ${theme ? "" : "panel-light"}`
             }
             onClick={() => {
@@ -634,7 +674,13 @@ function LeftPanel2() {
 
       {/* HORIZONTAL MENU BAR */}
 
-      <div className="studio-horizontal-menu">
+      <div
+        className={
+          theme
+            ? "studio-horizontal-menu"
+            : "studio-horizontal-menu light-mode text-light-mode"
+        }
+      >
         <div
           className="hori-dashboard"
           onClick={() => {
