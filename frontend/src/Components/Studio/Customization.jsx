@@ -15,6 +15,10 @@ function Customization() {
     const menu = localStorage.getItem("studioMenuClicked");
     return menu ? JSON.parse(menu) : false;
   });
+  const [theme, setTheme] = useState(() => {
+    const Dark = localStorage.getItem("Dark");
+    return Dark ? JSON.parse(Dark) : true;
+  });
 
   document.title = "Channel customization - YouTube Studio";
 
@@ -44,6 +48,17 @@ function Customization() {
       setEmail(jwtDecode(token).email);
     }
   }, [token]);
+
+  useEffect(() => {
+    if (theme === false && window.location.href.includes("/studio/customize")) {
+      document.body.style.backgroundColor = "white";
+    } else if (
+      theme === true &&
+      window.location.href.includes("/studio/customize")
+    ) {
+      document.body.style.backgroundColor = "#282828";
+    }
+  }, [theme]);
 
   useEffect(() => {
     const handleClick = () => {
@@ -116,20 +131,28 @@ function Customization() {
           }}
         >
           <div className="customize-header">
-            <p>Channel customization</p>
+            <p className={theme ? "" : "text-light-mode"}>
+              Channel customization
+            </p>
           </div>
           <div className="redirectss">
             <div className="left-redirects">
               <p
                 className={
-                  currentTab === "branding" ? "branding-txt1" : "branding-txt"
+                  currentTab === "branding"
+                    ? `branding-txt1 ${theme ? "" : "text-light-mode2"}`
+                    : `branding-txt ${theme ? "" : "text-light-mode2"}`
                 }
                 onClick={() => setCurrentTab("branding")}
               >
                 Branding
               </p>
               <p
-                className={currentTab === "basic" ? "basic-txt1" : "basic-txt"}
+                className={
+                  currentTab === "basic"
+                    ? `basic-txt1 ${theme ? "" : "text-light-mode2"}`
+                    : `basic-txt ${theme ? "" : "text-light-mode2"}`
+                }
                 style={{ marginLeft: "40px" }}
                 onClick={() => setCurrentTab("basic")}
               >

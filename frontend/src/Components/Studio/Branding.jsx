@@ -20,6 +20,10 @@ function Branding() {
   const [channelID, setChannelID] = useState();
   const [loading, setLoading] = useState(false);
   const [fakeLoading, setFakeLoading] = useState(true);
+  const [theme, setTheme] = useState(() => {
+    const Dark = localStorage.getItem("Dark");
+    return Dark ? JSON.parse(Dark) : true;
+  });
 
   //TOAST FUNCTIONS
 
@@ -32,7 +36,7 @@ function Branding() {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "dark",
+      theme: theme ? "dark" : "light",
     });
 
   //USE EFFECTS
@@ -292,16 +296,33 @@ function Branding() {
         }}
       >
         <div className="profile-update-section">
-          <p className="profile-head-txt">Picture</p>
-          <p className="profile-desc-txt">
+          <p
+            className={
+              theme ? "profile-head-txt" : "profile-head-txt text-light-mode"
+            }
+          >
+            Picture
+          </p>
+          <p
+            className={
+              theme ? "profile-desc-txt" : "profile-desc-txt text-light-mode2"
+            }
+          >
             Your profile picture will appear where your channel is presented on
             YouTube, like next to your videos and comments.
           </p>
-          <p className="profile-desc-txt">
+          <p
+            className={
+              theme ? "profile-desc-txt" : "profile-desc-txt text-light-mode2"
+            }
+          >
             (Please refresh the page if the images don’t load properly.)
           </p>
           <div className="picture-section">
-            <SkeletonTheme baseColor="#353535" highlightColor="#444">
+            <SkeletonTheme
+              baseColor={theme ? "#353535" : "#aaaaaa"}
+              highlightColor={theme ? "#444" : "#b6b6b6"}
+            >
               <div
                 className="pic-div"
                 style={
@@ -335,11 +356,20 @@ function Branding() {
                 className="channel-image"
               />
             </div>
-            <div className="pic-extra-content">
+            <div
+              className={
+                theme
+                  ? "pic-extra-content"
+                  : "pic-extra-content text-light-mode2"
+              }
+            >
               It’s recommended to use a picture that’s at least 98 x 98 pixels
               and 4MB or less. Use a PNG or GIF (no animations) file. Make sure
               your picture follows the YouTube Community Guidelines.
-              <label className="change-image" htmlFor="profile-image-input">
+              <label
+                className={theme ? "change-image" : "change-image blue-txt"}
+                htmlFor="profile-image-input"
+              >
                 CHANGE
               </label>
               <input
@@ -353,15 +383,24 @@ function Branding() {
           </div>
         </div>
         <div className="cover-update-section">
-          <p className="cover-head">Banner image</p>
-          <p className="banner-desc">
+          <p className={theme ? "cover-head" : "cover-head text-light-mode"}>
+            Banner image
+          </p>
+          <p className={theme ? "banner-desc" : "banner-desc text-light-mode2"}>
             This image will appear across the top of your channel
           </p>
-          <p className="profile-desc-txt">
+          <p
+            className={
+              theme ? "profile-desc-txt" : "profile-desc-txt text-light-mode2"
+            }
+          >
             (Please refresh the page if the images don’t load properly.)
           </p>
           <div className="banner-section">
-            <SkeletonTheme baseColor="#353535" highlightColor="#444">
+            <SkeletonTheme
+              baseColor={theme ? "#353535" : "#aaaaaa"}
+              highlightColor={theme ? "#444" : "#b6b6b6"}
+            >
               <div
                 className="pic-div"
                 style={
@@ -370,7 +409,12 @@ function Branding() {
                     : { display: "none" }
                 }
               >
-                <Skeleton count={1} width={290} height={160} className="sk-custom-banner"/>
+                <Skeleton
+                  count={1}
+                  width={290}
+                  height={160}
+                  className="sk-custom-banner"
+                />
               </div>
             </SkeletonTheme>
             <div
@@ -391,10 +435,19 @@ function Branding() {
                 ""
               )}
             </div>
-            <div className="pic-extra-content">
+            <div
+              className={
+                theme
+                  ? "pic-extra-content"
+                  : "pic-extra-content text-light-mode2"
+              }
+            >
               For the best results on all devices, use an image that’s at least
               2048 x 1152 pixels and 6MB or less.
-              <label className="change-image" htmlFor="banner-image-input">
+              <label
+                className={theme ? "change-image" : "change-image blue-txt"}
+                htmlFor="banner-image-input"
+              >
                 CHANGE
               </label>
               <input

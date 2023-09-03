@@ -355,7 +355,9 @@ function Comments() {
                                   <ThumbUpIcon
                                     fontSize="small"
                                     className="thiscomment-like-btn"
-                                    style={{ color: "#white" }}
+                                    style={{
+                                      color: theme ? "white" : "#606060",
+                                    }}
                                   />
                                 </Tooltip>
                               </div>
@@ -385,7 +387,9 @@ function Comments() {
                                   <FavoriteBorderOutlinedIcon
                                     fontSize="small"
                                     className="heartcmmt-btn"
-                                    style={{ color: "#aaa" }}
+                                    style={{
+                                      color: theme ? "#aaa" : "#606060",
+                                    }}
                                   />
                                 </Tooltip>
                               )}
@@ -397,7 +401,7 @@ function Comments() {
                               >
                                 <DeleteOutlineOutlinedIcon
                                   fontSize="small"
-                                  style={{ color: "#aaa" }}
+                                  style={{ color: theme ? "#aaa" : "#606060" }}
                                   className="deletethis-cmmt"
                                 />
                               </Tooltip>
@@ -417,7 +421,13 @@ function Comments() {
                               borderRadius: "3px",
                             }}
                           />
-                          <div className={theme ? "thiscomment-rightone" : "thiscomment-rightone text-light-mode"}>
+                          <div
+                            className={
+                              theme
+                                ? "thiscomment-rightone"
+                                : "thiscomment-rightone text-light-mode"
+                            }
+                          >
                             <Skeleton
                               count={1}
                               width={260}
@@ -616,7 +626,13 @@ function Comments() {
                           alt="thumbnail"
                           className="commentvideo-thumbnail"
                         />
-                        <div className={theme ? "thiscomment-rightone" : "thiscomment-rightone text-light-mode"}>
+                        <div
+                          className={
+                            theme
+                              ? "thiscomment-rightone"
+                              : "thiscomment-rightone text-light-mode"
+                          }
+                        >
                           <p>
                             {element.videoData &&
                             element.videoData.Title.length <= 40
@@ -804,7 +820,13 @@ function Comments() {
                         alt="thumbnail"
                         className="commentvideo-thumbnail"
                       />
-                      <div className={theme ? "thiscomment-rightone" : "thiscomment-rightone text-light-mode"}>
+                      <div
+                        className={
+                          theme
+                            ? "thiscomment-rightone"
+                            : "thiscomment-rightone text-light-mode"
+                        }
+                      >
                         <p>
                           {element.videoData &&
                           element.videoData.Title.length <= 40
@@ -822,7 +844,9 @@ function Comments() {
                 <div className="user-comment-data2">
                   <div className="no-comment-found">
                     <img src={noImage} alt="no-comment" className="nocmmt" />
-                    <p>No comments found. Try searching for something else.</p>
+                    <p className={theme ? "" : "text-light-mode2"}>
+                      No comments found. Try searching for something else.
+                    </p>
                   </div>
                 </div>
               )}
@@ -831,7 +855,9 @@ function Comments() {
               <div className="user-comment-data2">
                 <div className="no-comment-found">
                   <img src={noImage} alt="no-comment" className="nocmmt" />
-                  <p>No comments found.</p>
+                  <p className={theme ? "" : "text-light-mode2"}>
+                    No comments found.
+                  </p>
                 </div>
               </div>
             )}
