@@ -153,7 +153,8 @@ function LeftPanel2() {
             : { display: "flex", width: "270px" }
         }
       >
-        <SkeletonTheme baseColor="#353535" highlightColor="#444">
+        <SkeletonTheme baseColor={theme ? "#353535" : "#aaaaaa"}
+        highlightColor={theme ? "#444" : "#b6b6b6"}>
           <div
             className="first-panel"
             style={
@@ -317,7 +318,8 @@ function LeftPanel2() {
             : { display: "flex", width: "90px" }
         }
       >
-        <SkeletonTheme baseColor="#353535" highlightColor="#444">
+        <SkeletonTheme baseColor={theme ? "#353535" : "#aaaaaa"}
+        highlightColor={theme ? "#444" : "#b6b6b6"}>
           <div
             className="first-panel"
             style={
@@ -499,7 +501,8 @@ function LeftPanel2() {
             : "main-section2 short-left2 light-mode text-light-mode"
         }
       >
-        <SkeletonTheme baseColor="#353535" highlightColor="#444">
+        <SkeletonTheme baseColor={theme ? "#353535" : "#aaaaaa"}
+        highlightColor={theme ? "#444" : "#b6b6b6"}>
           <div
             className="first-panel"
             style={

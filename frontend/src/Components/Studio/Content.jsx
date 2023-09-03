@@ -40,6 +40,10 @@ function Content() {
     const menu = localStorage.getItem("studioMenuClicked");
     return menu ? JSON.parse(menu) : false;
   });
+  const [theme, setTheme] = useState(() => {
+    const Dark = localStorage.getItem("Dark");
+    return Dark ? JSON.parse(Dark) : true;
+  });
 
   document.title = "Channel content - YouTube Studio";
 
@@ -63,6 +67,17 @@ function Content() {
     const token = localStorage.getItem("userToken");
     setEmail(jwtDecode(token).email);
   }, []);
+
+  useEffect(() => {
+    if (theme === false && window.location.href.includes("/studio/video")) {
+      document.body.style.backgroundColor = "white";
+    } else if (
+      theme === true &&
+      window.location.href.includes("/studio/video")
+    ) {
+      document.body.style.backgroundColor = "#282828";
+    }
+  }, [theme]);
 
   useEffect(() => {
     const handleMenuButtonClick = () => {
@@ -215,7 +230,7 @@ function Content() {
     navigator.clipboard
       .writeText(`${videoUrl}/${id}`)
       .then(() => {
-        CopiedNotify()
+        CopiedNotify();
       })
       .catch((error) => {
         console.log("Error copying link to clipboard:", error);
@@ -243,7 +258,7 @@ function Content() {
           className="channel-content-top"
           style={{ left: menu ? "125px" : "310px" }}
         >
-          <p>Channel content</p>
+          <p className={theme ? "" : "text-light-mode"}>Channel content</p>
           <p className="channel-videosss">Videos</p>
         </div>
         <hr
@@ -257,7 +272,7 @@ function Content() {
           {sortedUserVideos && sortedUserVideos.length > 0 && (
             <table className="videos-table">
               <thead>
-                <tr style={{ color: "#aaa", fontSize: "14px" }}>
+                <tr style={{ color: theme ? "#aaa" : "black", fontSize: "14px" }}>
                   <th
                     style={{
                       textAlign: "left",
@@ -270,16 +285,16 @@ function Content() {
                   <th>Visibility</th>
                   <th onClick={handleSortByDate} className="date-table-head">
                     <div className="table-row">
-                      <p>Date</p>
+                      <p className={theme ? "" :"text-light-mode"}>Date</p>
                       {changeSort === false ? (
                         <SouthIcon
                           fontSize="200px"
-                          style={{ color: "white", marginLeft: "5px" }}
+                          style={{ color: theme ? "white" : "black", marginLeft: "5px" }}
                         />
                       ) : (
                         <NorthOutlinedIcon
                           fontSize="200px"
-                          style={{ color: "white", marginLeft: "5px" }}
+                          style={{ color: theme ? "white" : "black", marginLeft: "5px" }}
                         />
                       )}
                     </div>
@@ -295,7 +310,7 @@ function Content() {
                   return (
                     <tr
                       key={index}
-                      className="table-roww"
+                      className={theme ? "table-roww" : "table-roww preview-lightt"}
                       style={
                         loading === true
                           ? { pointerEvents: "none" }
@@ -304,8 +319,8 @@ function Content() {
                     >
                       <td className="video-cell">
                         <SkeletonTheme
-                          baseColor="#353535"
-                          highlightColor="#444"
+                          baseColor={theme ? "#353535" : "#aaaaaa"}
+                          highlightColor={theme ? "#444" : "#b6b6b6"}
                         >
                           <div
                             className="no-skeleton"
@@ -349,8 +364,8 @@ function Content() {
                         </div>
                         <div className="studio-video-details">
                           <SkeletonTheme
-                            baseColor="#353535"
-                            highlightColor="#444"
+                           baseColor={theme ? "#353535" : "#aaaaaa"}
+                           highlightColor={theme ? "#444" : "#b6b6b6"}
                           >
                             <div
                               className="no-skeleton2"
@@ -403,7 +418,7 @@ function Content() {
                             }
                           >
                             <p
-                              className="studio-video-title"
+                              className={theme ? "studio-video-title" : "studio-video-title text-light-mode"}
                               onClick={() => {
                                 window.location.href = `/studio/video/edit/${element._id}`;
                               }}
@@ -413,7 +428,7 @@ function Content() {
                                 : `${element.Title.slice(0, 40)}...`}
                             </p>
                             {element.Description ? (
-                              <p className="studio-video-desc">
+                              <p className={theme ? "studio-video-desc" : "studio-video-desc text-light-mode2"}>
                                 {element.Description.length <= 85
                                   ? element.Description
                                   : `${element.Description.slice(0, 85)}...`}
@@ -431,7 +446,7 @@ function Content() {
                               <ModeEditOutlineOutlinedIcon
                                 className="video-edit-icons"
                                 fontSize="medium"
-                                style={{ color: "#aaa" }}
+                                style={{ color: theme ? "#aaa" : "#606060" }}
                                 onClick={() => {
                                   window.location.href = `/studio/video/edit/${element._id}`;
                                 }}
@@ -445,7 +460,7 @@ function Content() {
                               <ChatOutlinedIcon
                                 className="video-edit-icons"
                                 fontSize="medium"
-                                style={{ color: "#aaa" }}
+                                style={{ color: theme ? "#aaa" : "#606060" }}
                                 onClick={() => {
                                   window.location.href = `/studio/video/comments/${element._id}`;
                                 }}
@@ -459,7 +474,7 @@ function Content() {
                               <YouTubeIcon
                                 className="video-edit-icons"
                                 fontSize="medium"
-                                style={{ color: "#aaa" }}
+                                style={{ color: theme ? "#aaa" : "#606060" }}
                                 onClick={() => {
                                   window.location.href = `/video/${element._id}`;
                                 }}
@@ -473,12 +488,12 @@ function Content() {
                               <MoreVertOutlinedIcon
                                 className="video-edit-icons"
                                 fontSize="medium"
-                                style={{ color: "#aaa" }}
+                                style={{ color: theme ? "#aaa" : "#606060" }}
                                 onClick={() => setShowOptions(!showOptions)}
                               />
                             </Tooltip>
                             <div
-                              className="extra-options-menu"
+                              className={theme ? "extra-options-menu" : "extra-options-menu light-mode"}
                               style={
                                 showOptions === true
                                   ? { display: "flex" }
@@ -486,7 +501,7 @@ function Content() {
                               }
                             >
                               <div
-                                className="edit-video-data-row option-row"
+                                className={theme ? "edit-video-data-row option-row" : "edit-video-data-row option-row preview-lightt"}
                                 onClick={() => {
                                   window.location.href = `/studio/video/edit/${element._id}`;
                                 }}
@@ -494,12 +509,12 @@ function Content() {
                                 <ModeEditOutlineOutlinedIcon
                                   className="video-edit-icons"
                                   fontSize="medium"
-                                  style={{ color: "#aaa" }}
+                                  style={{ color: theme ? "#aaa" : "#606060" }}
                                 />
                                 <p>Edit title and description</p>
                               </div>
                               <div
-                                className="share-video-data-row option-row"
+                                className={theme ? "share-video-data-row option-row" : "share-video-data-row option-row preview-lightt"}
                                 onClick={() => {
                                   handleCopyLink(element._id);
                                   setShowOptions(false);
@@ -508,12 +523,12 @@ function Content() {
                                 <ShareOutlinedIcon
                                   className="video-edit-icons"
                                   fontSize="medium"
-                                  style={{ color: "#aaa" }}
+                                  style={{ color: theme ? "#aaa" : "#606060" }}
                                 />
                                 <p>Get shareable link</p>
                               </div>
                               <div
-                                className="download-video-data-row option-row"
+                                className={theme ? "download-video-data-row option-row" : "download-video-data-row option-row preview-lightt"}
                                 onClick={() => {
                                   downloadVideo(element.videoURL);
                                   setShowOptions(false);
@@ -523,14 +538,14 @@ function Content() {
                                   className="video-edit-icons"
                                   fontSize="medium"
                                   style={{
-                                    color: "#aaa",
+                                    color: theme ? "#aaa" : "#606060",
                                     transform: "rotate(90deg)",
                                   }}
                                 />
                                 <p>Download</p>
                               </div>
                               <div
-                                className="delete-video-data-row option-row"
+                                className={theme ? "delete-video-data-row option-row" : "delete-video-data-row option-row preview-lightt"}
                                 onClick={() => {
                                   setDeleteVideoID(element._id);
                                   if (element._id !== undefined) {
@@ -543,7 +558,7 @@ function Content() {
                                 <DeleteOutlineOutlinedIcon
                                   className="video-edit-icons"
                                   fontSize="medium"
-                                  style={{ color: "#aaa" }}
+                                  style={{ color: theme ? "#aaa" : "#606060" }}
                                 />
                                 <p>Delete forever</p>
                               </div>
@@ -631,18 +646,20 @@ function Content() {
                   DeleteVideoData && DeleteVideoData.videoLength % 60
                 ) < 10
                   ? "0" +
-                  Math.round(
-                    DeleteVideoData && DeleteVideoData.videoLength % 60
-                  )
+                    Math.round(
+                      DeleteVideoData && DeleteVideoData.videoLength % 60
+                    )
                   : Math.round(
-                    DeleteVideoData && DeleteVideoData.videoLength % 60
-                  ))}
+                      DeleteVideoData && DeleteVideoData.videoLength % 60
+                    ))}
             </p>
             <div className="thisdelete-video-details">
               <p className="delete-title">
                 {DeleteVideoData && DeleteVideoData.Title.length <= 15
                   ? DeleteVideoData.Title
-                  : `${DeleteVideoData && DeleteVideoData.Title.slice(0, 15)}...`}
+                  : `${
+                      DeleteVideoData && DeleteVideoData.Title.slice(0, 15)
+                    }...`}
               </p>
               <p className="delete-uploaded">
                 {"Uploaded " +

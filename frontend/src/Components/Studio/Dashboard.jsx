@@ -136,7 +136,8 @@ function Dashboard() {
 
   if (loading === true) {
     return (
-      <SkeletonTheme baseColor="#353535" highlightColor="#444">
+      <SkeletonTheme baseColor={theme ? "#353535" : "#aaaaaa"}
+      highlightColor={theme ? "#444" : "#b6b6b6"}>
         <div
           className="dashboard-data"
           style={{ left: menu ? "125px" : "310px" }}

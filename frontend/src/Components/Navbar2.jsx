@@ -333,7 +333,7 @@ function Navbar2() {
                                   theme ? "edit-this" : "edit-this-light"
                                 }
                                 fontSize="medium"
-                                style={{ color: theme ? "#aaa" : "black" }}
+                                style={{ color: theme ? "#aaa" : "#606060" }}
                                 onClick={() => {
                                   window.location.href = `/studio/video/edit/${element._id}`;
                                 }}
@@ -349,7 +349,7 @@ function Navbar2() {
                                   theme ? "comment-this" : "comment-this-light"
                                 }
                                 fontSize="medium"
-                                style={{ color: theme ? "#aaa" : "black" }}
+                                style={{ color: theme ? "#aaa" : "#606060" }}
                                 onClick={() => {
                                   window.location.href = `/studio/video/comments/${element._id}`;
                                 }}
@@ -365,7 +365,7 @@ function Navbar2() {
                                   theme ? "watch-this" : "watch-this-light"
                                 }
                                 fontSize="medium"
-                                style={{ color: theme ? "#aaa" : "black" }}
+                                style={{ color: theme ? "#aaa" : "#606060" }}
                                 onClick={() => {
                                   window.location.href = `/video/${element._id}`;
                                 }}
@@ -502,7 +502,7 @@ function Navbar2() {
                                   theme ? "edit-this" : "edit-this-light"
                                 }
                                 fontSize="medium"
-                                style={{ color: theme ? "#aaa" : "black" }}
+                                style={{ color: theme ? "#aaa" : "#606060" }}
                                 onClick={() => {
                                   window.location.href = `/studio/video/edit/${element._id}`;
                                 }}
@@ -518,7 +518,7 @@ function Navbar2() {
                                   theme ? "comment-this" : "comment-this-light"
                                 }
                                 fontSize="medium"
-                                style={{ color: theme ? "#aaa" : "black" }}
+                                style={{ color: theme ? "#aaa" : "#606060" }}
                               />
                             </Tooltip>
                             <Tooltip
@@ -531,7 +531,7 @@ function Navbar2() {
                                   theme ? "watch-this" : "watch-this-light"
                                 }
                                 fontSize="medium"
-                                style={{ color: theme ? "#aaa" : "black" }}
+                                style={{ color: theme ? "#aaa" : "#606060" }}
                                 onClick={() => {
                                   window.location.href = `/video/${element._id}`;
                                 }}
@@ -589,7 +589,8 @@ function Navbar2() {
             <div className="my-five-videos"></div>
           </div>
         </div>
-        <SkeletonTheme baseColor="#353535" highlightColor="#444">
+        <SkeletonTheme baseColor={theme ? "#353535" : "#aaaaaa"}
+        highlightColor={theme ? "#444" : "#b6b6b6"}>
           <div
             className="right-bar2 sk-right-bar2"
             style={loading ? { display: "block" } : { display: "none" }}
@@ -790,7 +791,7 @@ function Navbar2() {
                                   theme ? "edit-this" : "edit-this-light"
                                 }
                                 fontSize="medium"
-                                style={{ color: theme ? "#aaa" : "black" }}
+                                style={{ color: theme ? "#aaa" : "#606060" }}
                                 onClick={() => {
                                   window.location.href = `/studio/video/edit/${element._id}`;
                                 }}
@@ -806,7 +807,7 @@ function Navbar2() {
                                   theme ? "comment-this" : "comment-this-light"
                                 }
                                 fontSize="medium"
-                                style={{ color: theme ? "#aaa" : "black" }}
+                                style={{ color: theme ? "#aaa" : "#606060" }}
                                 onClick={() => {
                                   window.location.href = `/studio/video/comments/${element._id}`;
                                 }}
@@ -822,7 +823,7 @@ function Navbar2() {
                                   theme ? "watch-this" : "watch-this-light"
                                 }
                                 fontSize="medium"
-                                style={{ color: theme ? "#aaa" : "black" }}
+                                style={{ color: theme ? "#aaa" : "#606060" }}
                                 onClick={() => {
                                   window.location.href = `/video/${element._id}`;
                                 }}
@@ -961,7 +962,7 @@ function Navbar2() {
                                   theme ? "edit-this" : "edit-this-light"
                                 }
                                 fontSize="medium"
-                                style={{ color: theme ? "#aaa" : "black" }}
+                                style={{ color: theme ? "#aaa" : "#606060" }}
                                 onClick={() => {
                                   window.location.href = `/studio/video/edit/${element._id}`;
                                 }}
@@ -977,7 +978,7 @@ function Navbar2() {
                                   theme ? "comment-this" : "comment-this-light"
                                 }
                                 fontSize="medium"
-                                style={{ color: theme ? "#aaa" : "black" }}
+                                style={{ color: theme ? "#aaa" : "#606060" }}
                               />
                             </Tooltip>
                             <Tooltip
@@ -990,7 +991,7 @@ function Navbar2() {
                                   theme ? "watch-this" : "watch-this-light"
                                 }
                                 fontSize="medium"
-                                style={{ color: theme ? "#aaa" : "black" }}
+                                style={{ color: theme ? "#aaa" : "#606060" }}
                                 onClick={() => {
                                   window.location.href = `/video/${element._id}`;
                                 }}
