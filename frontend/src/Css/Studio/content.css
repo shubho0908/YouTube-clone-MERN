@@ -257,6 +257,10 @@
   color: white !important;
 }
 
+.video-edit-icons-light:hover {
+  color: rgb(137, 137, 137) !important;
+}
+
 .extra-options-menu {
   position: absolute;
   top: -10px;

@@ -94,7 +94,7 @@
 }
 
 .preview-lightt:hover {
-  background-color: #e4e4e4 !important;
+  background-color: #e4e4e4ac !important;
 }
 
 .preview-light2 {
@@ -112,4 +112,8 @@
 .videodata-light:hover {
   background-color: #e4e4e4 !important;
   color: black !important;
+}
+
+.blue-txt{
+  color: #0798ff !important;
 }

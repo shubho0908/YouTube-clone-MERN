@@ -25,9 +25,12 @@ function Comments() {
     const menu = localStorage.getItem("studioMenuClicked");
     return menu ? JSON.parse(menu) : false;
   });
+  const [theme, setTheme] = useState(() => {
+    const Dark = localStorage.getItem("Dark");
+    return Dark ? JSON.parse(Dark) : true;
+  });
 
-  document.title = "Channel comments - YouTube Studio"
-
+  document.title = "Channel comments - YouTube Studio";
 
   useEffect(() => {
     const handleMenuButtonClick = () => {
@@ -60,6 +63,17 @@ function Comments() {
       setLoading(false);
     }, 3000);
   }, []);
+
+  useEffect(() => {
+    if (theme === false && window.location.href.includes("/studio/comments")) {
+      document.body.style.backgroundColor = "white";
+    } else if (
+      theme === true &&
+      window.location.href.includes("/studio/comments")
+    ) {
+      document.body.style.backgroundColor = "#282828";
+    }
+  }, [theme]);
 
   useEffect(() => {
     const handleClick = () => {
@@ -217,15 +231,15 @@ function Comments() {
           .toLowerCase()
           .includes(
             filterComment !== undefined &&
-            filterComment !== "" &&
-            filterComment.toLowerCase()
+              filterComment !== "" &&
+              filterComment.toLowerCase()
           ) ||
         item.username
           .toLowerCase()
           .includes(
             filterComment !== undefined &&
-            filterComment !== "" &&
-            filterComment.toLowerCase()
+              filterComment !== "" &&
+              filterComment.toLowerCase()
           )
     );
 
@@ -238,27 +252,37 @@ function Comments() {
           className="channel-comments-top"
           style={{ left: menu ? "125px" : "310px" }}
         >
-          <p>Channel comments</p>
+          <p className={theme ? "" : "text-light-mode"}>Channel comments</p>
         </div>
-        <div className="channel-comments-mid" style={{ left: menu ? "128px" : "312px" }}>
-          <p>Comments</p>
+        <div
+          className="channel-comments-mid"
+          style={{ left: menu ? "128px" : "312px" }}
+        >
+          <p className={theme ? "" : "blue-txt"}>Comments</p>
         </div>
         <hr className="breakkk" style={{ left: menu ? "90px" : "262px" }} />
-        <div className="filter-comments" style={{ left: menu ? "90px" : "270px" }}>
+        <div
+          className="filter-comments"
+          style={{ left: menu ? "90px" : "270px" }}
+        >
           <FilterListOutlinedIcon
             fontSize="medium"
-            style={{ color: "#aaa", cursor: "pointer" }}
+            style={{ color: theme ? "#aaa" : "#606060", cursor: "pointer" }}
           />
 
           <input
             type="text"
             name="comment-search"
+            className={theme ? "" : "text-light-mode"}
             value={filterComment}
             placeholder="Filter"
             onChange={(e) => setFilterComment(e.target.value)}
           />
         </div>
-        <div className="channel-comments-list" style={{ left: menu ? "90px" : "270px" }}>
+        <div
+          className="channel-comments-list"
+          style={{ left: menu ? "90px" : "270px" }}
+        >
           <div className="overall-comments">
             {AllComments &&
               AllComments.length > 0 &&
@@ -267,9 +291,16 @@ function Comments() {
                 return (
                   <>
                     {/* START HERE  */}
-                    <SkeletonTheme baseColor="#353535" highlightColor="#444">
+                    <SkeletonTheme
+                      baseColor={theme ? "#353535" : "#aaaaaa"}
+                      highlightColor={theme ? "#444" : "#b6b6b6"}
+                    >
                       <div
-                        className="user-comment-data"
+                        className={
+                          theme
+                            ? "user-comment-data"
+                            : "user-comment-data preview-lightt"
+                        }
                         key={index}
                         style={
                           loading === true
@@ -287,7 +318,13 @@ function Comments() {
                             }}
                           />
                           <div className="comment-rightt-data">
-                            <div className="name-time">
+                            <div
+                              className={
+                                theme
+                                  ? "name-time"
+                                  : "name-time text-light-mode2"
+                              }
+                            >
                               <Skeleton
                                 count={1}
                                 width={200}
@@ -380,7 +417,7 @@ function Comments() {
                               borderRadius: "3px",
                             }}
                           />
-                          <div className="thiscomment-rightone">
+                          <div className={theme ? "thiscomment-rightone" : "thiscomment-rightone text-light-mode"}>
                             <Skeleton
                               count={1}
                               width={260}
@@ -406,7 +443,11 @@ function Comments() {
 
                     {/* END HERE  */}
                     <div
-                      className="user-comment-data"
+                      className={
+                        theme
+                          ? "user-comment-data"
+                          : "user-comment-data preview-lightt"
+                      }
                       key={index}
                       style={
                         loading === false
@@ -421,7 +462,11 @@ function Comments() {
                           className="user-channelprofileee"
                         />
                         <div className="comment-rightt-data">
-                          <div className="name-time">
+                          <div
+                            className={
+                              theme ? "name-time" : "name-time text-light-mode2"
+                            }
+                          >
                             <p>{element.username}</p>
                             <FiberManualRecordIcon
                               className="dot-seperate"
@@ -467,7 +512,12 @@ function Comments() {
                               })()}
                             </p>
                           </div>
-                          <p style={{ marginTop: "8px" }}>{element.comment}</p>
+                          <p
+                            className={theme ? "" : "text-light-mode"}
+                            style={{ marginTop: "8px" }}
+                          >
+                            {element.comment}
+                          </p>
                           <div className="comment-all-btns">
                             <div className="cmmt-like">
                               <Tooltip
@@ -478,13 +528,16 @@ function Comments() {
                                 <ThumbUpIcon
                                   fontSize="small"
                                   className="thiscomment-like-btn"
-                                  style={{ color: "#white" }}
+                                  style={{ color: theme ? "white" : "#606060" }}
                                   onClick={() => {
                                     LikeComment(element.videoid, element._id);
                                   }}
                                 />
                               </Tooltip>
-                              <p style={{ marginLeft: "10px" }}>
+                              <p
+                                className={theme ? "" : "text-light-mode"}
+                                style={{ marginLeft: "10px" }}
+                              >
                                 {element.likes}
                               </p>
                             </div>
@@ -522,7 +575,7 @@ function Comments() {
                                 <FavoriteBorderOutlinedIcon
                                   fontSize="small"
                                   className="heartcmmt-btn"
-                                  style={{ color: "#aaa" }}
+                                  style={{ color: theme ? "#aaa" : "#606060" }}
                                   onClick={() => {
                                     HeartComment(element.videoid, element._id);
                                   }}
@@ -537,7 +590,7 @@ function Comments() {
                             >
                               <DeleteOutlineOutlinedIcon
                                 fontSize="small"
-                                style={{ color: "#aaa" }}
+                                style={{ color: theme ? "#aaa" : "#606060" }}
                                 className="deletethis-cmmt"
                                 onClick={() => {
                                   DeleteComment(element.videoid, element._id);
@@ -563,10 +616,10 @@ function Comments() {
                           alt="thumbnail"
                           className="commentvideo-thumbnail"
                         />
-                        <div className="thiscomment-rightone">
+                        <div className={theme ? "thiscomment-rightone" : "thiscomment-rightone text-light-mode"}>
                           <p>
                             {element.videoData &&
-                              element.videoData.Title.length <= 40
+                            element.videoData.Title.length <= 40
                               ? element.videoData.Title
                               : `${element.videoData.Title.slice(0, 40)}...`}
                           </p>
@@ -582,7 +635,14 @@ function Comments() {
               filterComments.length > 0 &&
               filterComments.map((element, index) => {
                 return (
-                  <div className="user-comment-data" key={index}>
+                  <div
+                    className={
+                      theme
+                        ? "user-comment-data"
+                        : "user-comment-data preview-lightt"
+                    }
+                    key={index}
+                  >
                     <div className="leftside-viddata">
                       <img
                         src={element.user_profile}
@@ -590,7 +650,11 @@ function Comments() {
                         className="user-channelprofileee"
                       />
                       <div className="comment-rightt-data">
-                        <div className="name-time">
+                        <div
+                          className={
+                            theme ? "name-time" : "name-time text-light-mode2"
+                          }
+                        >
                           <p>{element.username}</p>
                           <FiberManualRecordIcon
                             className="dot-seperate"
@@ -636,7 +700,12 @@ function Comments() {
                             })()}
                           </p>
                         </div>
-                        <p style={{ marginTop: "8px" }}>{element.comment}</p>
+                        <p
+                          className={theme ? "" : "text-light-mode"}
+                          style={{ marginTop: "8px" }}
+                        >
+                          {element.comment}
+                        </p>
                         <div className="comment-all-btns">
                           <div className="cmmt-like">
                             <Tooltip
@@ -647,13 +716,16 @@ function Comments() {
                               <ThumbUpIcon
                                 fontSize="small"
                                 className="thiscomment-like-btn"
-                                style={{ color: "#white" }}
+                                style={{ color: theme ? "white" : "#606060" }}
                                 onClick={() => {
                                   LikeComment(element.videoid, element._id);
                                 }}
                               />
                             </Tooltip>
-                            <p style={{ marginLeft: "10px" }}>
+                            <p
+                              className={theme ? "" : "text-light-mode"}
+                              style={{ marginLeft: "10px" }}
+                            >
                               {element.likes}
                             </p>
                           </div>
@@ -691,7 +763,7 @@ function Comments() {
                               <FavoriteBorderOutlinedIcon
                                 fontSize="small"
                                 className="heartcmmt-btn"
-                                style={{ color: "#aaa" }}
+                                style={{ color: theme ? "#aaa" : "#606060" }}
                                 onClick={() => {
                                   HeartComment(element.videoid, element._id);
                                 }}
@@ -706,7 +778,7 @@ function Comments() {
                           >
                             <DeleteOutlineOutlinedIcon
                               fontSize="small"
-                              style={{ color: "#aaa" }}
+                              style={{ color: theme ? "#aaa" : "#606060" }}
                               className="deletethis-cmmt"
                               onClick={() => {
                                 DeleteComment(element.videoid, element._id);
@@ -732,10 +804,10 @@ function Comments() {
                         alt="thumbnail"
                         className="commentvideo-thumbnail"
                       />
-                      <div className="thiscomment-rightone">
+                      <div className={theme ? "thiscomment-rightone" : "thiscomment-rightone text-light-mode"}>
                         <p>
                           {element.videoData &&
-                            element.videoData.Title.length <= 40
+                          element.videoData.Title.length <= 40
                             ? element.videoData.Title
                             : `${element.videoData.Title.slice(0, 40)}...`}
                         </p>

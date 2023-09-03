@@ -259,7 +259,11 @@ function Content() {
           style={{ left: menu ? "125px" : "310px" }}
         >
           <p className={theme ? "" : "text-light-mode"}>Channel content</p>
-          <p className="channel-videosss">Videos</p>
+          <p
+            className={theme ? "channel-videosss" : "channel-videosss blue-txt"}
+          >
+            Videos
+          </p>
         </div>
         <hr
           className="breakk2 breakkk"
@@ -272,7 +276,9 @@ function Content() {
           {sortedUserVideos && sortedUserVideos.length > 0 && (
             <table className="videos-table">
               <thead>
-                <tr style={{ color: theme ? "#aaa" : "black", fontSize: "14px" }}>
+                <tr
+                  style={{ color: theme ? "#aaa" : "black", fontSize: "14px" }}
+                >
                   <th
                     style={{
                       textAlign: "left",
@@ -285,16 +291,22 @@ function Content() {
                   <th>Visibility</th>
                   <th onClick={handleSortByDate} className="date-table-head">
                     <div className="table-row">
-                      <p className={theme ? "" :"text-light-mode"}>Date</p>
+                      <p className={theme ? "" : "text-light-mode"}>Date</p>
                       {changeSort === false ? (
                         <SouthIcon
                           fontSize="200px"
-                          style={{ color: theme ? "white" : "black", marginLeft: "5px" }}
+                          style={{
+                            color: theme ? "white" : "black",
+                            marginLeft: "5px",
+                          }}
                         />
                       ) : (
                         <NorthOutlinedIcon
                           fontSize="200px"
-                          style={{ color: theme ? "white" : "black", marginLeft: "5px" }}
+                          style={{
+                            color: theme ? "white" : "black",
+                            marginLeft: "5px",
+                          }}
                         />
                       )}
                     </div>
@@ -310,7 +322,9 @@ function Content() {
                   return (
                     <tr
                       key={index}
-                      className={theme ? "table-roww" : "table-roww preview-lightt"}
+                      className={
+                        theme ? "table-roww" : "table-roww preview-lightt"
+                      }
                       style={
                         loading === true
                           ? { pointerEvents: "none" }
@@ -364,8 +378,8 @@ function Content() {
                         </div>
                         <div className="studio-video-details">
                           <SkeletonTheme
-                           baseColor={theme ? "#353535" : "#aaaaaa"}
-                           highlightColor={theme ? "#444" : "#b6b6b6"}
+                            baseColor={theme ? "#353535" : "#aaaaaa"}
+                            highlightColor={theme ? "#444" : "#b6b6b6"}
                           >
                             <div
                               className="no-skeleton2"
@@ -418,7 +432,11 @@ function Content() {
                             }
                           >
                             <p
-                              className={theme ? "studio-video-title" : "studio-video-title text-light-mode"}
+                              className={
+                                theme
+                                  ? "studio-video-title"
+                                  : "studio-video-title text-light-mode"
+                              }
                               onClick={() => {
                                 window.location.href = `/studio/video/edit/${element._id}`;
                               }}
@@ -428,7 +446,13 @@ function Content() {
                                 : `${element.Title.slice(0, 40)}...`}
                             </p>
                             {element.Description ? (
-                              <p className={theme ? "studio-video-desc" : "studio-video-desc text-light-mode2"}>
+                              <p
+                                className={
+                                  theme
+                                    ? "studio-video-desc"
+                                    : "studio-video-desc text-light-mode2"
+                                }
+                              >
                                 {element.Description.length <= 85
                                   ? element.Description
                                   : `${element.Description.slice(0, 85)}...`}
@@ -444,7 +468,11 @@ function Content() {
                               placement="bottom"
                             >
                               <ModeEditOutlineOutlinedIcon
-                                className="video-edit-icons"
+                                className={
+                                  theme
+                                    ? "video-edit-icons"
+                                    : "video-edit-icons-light"
+                                }
                                 fontSize="medium"
                                 style={{ color: theme ? "#aaa" : "#606060" }}
                                 onClick={() => {
@@ -458,7 +486,11 @@ function Content() {
                               placement="bottom"
                             >
                               <ChatOutlinedIcon
-                                className="video-edit-icons"
+                                className={
+                                  theme
+                                    ? "video-edit-icons"
+                                    : "video-edit-icons-light"
+                                }
                                 fontSize="medium"
                                 style={{ color: theme ? "#aaa" : "#606060" }}
                                 onClick={() => {
@@ -472,7 +504,11 @@ function Content() {
                               placement="bottom"
                             >
                               <YouTubeIcon
-                                className="video-edit-icons"
+                                className={
+                                  theme
+                                    ? "video-edit-icons"
+                                    : "video-edit-icons-light"
+                                }
                                 fontSize="medium"
                                 style={{ color: theme ? "#aaa" : "#606060" }}
                                 onClick={() => {
@@ -486,14 +522,22 @@ function Content() {
                               placement="bottom"
                             >
                               <MoreVertOutlinedIcon
-                                className="video-edit-icons"
+                                className={
+                                  theme
+                                    ? "video-edit-icons"
+                                    : "video-edit-icons-light"
+                                }
                                 fontSize="medium"
                                 style={{ color: theme ? "#aaa" : "#606060" }}
                                 onClick={() => setShowOptions(!showOptions)}
                               />
                             </Tooltip>
                             <div
-                              className={theme ? "extra-options-menu" : "extra-options-menu light-mode"}
+                              className={
+                                theme
+                                  ? "extra-options-menu"
+                                  : "extra-options-menu light-mode"
+                              }
                               style={
                                 showOptions === true
                                   ? { display: "flex" }
@@ -501,41 +545,65 @@ function Content() {
                               }
                             >
                               <div
-                                className={theme ? "edit-video-data-row option-row" : "edit-video-data-row option-row preview-lightt"}
+                                className={
+                                  theme
+                                    ? "edit-video-data-row option-row"
+                                    : "edit-video-data-row option-row preview-lightt"
+                                }
                                 onClick={() => {
                                   window.location.href = `/studio/video/edit/${element._id}`;
                                 }}
                               >
                                 <ModeEditOutlineOutlinedIcon
-                                  className="video-edit-icons"
+                                  className={
+                                    theme
+                                      ? "video-edit-icons"
+                                      : "video-edit-icons-light"
+                                  }
                                   fontSize="medium"
                                   style={{ color: theme ? "#aaa" : "#606060" }}
                                 />
                                 <p>Edit title and description</p>
                               </div>
                               <div
-                                className={theme ? "share-video-data-row option-row" : "share-video-data-row option-row preview-lightt"}
+                                className={
+                                  theme
+                                    ? "share-video-data-row option-row"
+                                    : "share-video-data-row option-row preview-lightt"
+                                }
                                 onClick={() => {
                                   handleCopyLink(element._id);
                                   setShowOptions(false);
                                 }}
                               >
                                 <ShareOutlinedIcon
-                                  className="video-edit-icons"
+                                  className={
+                                    theme
+                                      ? "video-edit-icons"
+                                      : "video-edit-icons-light"
+                                  }
                                   fontSize="medium"
                                   style={{ color: theme ? "#aaa" : "#606060" }}
                                 />
                                 <p>Get shareable link</p>
                               </div>
                               <div
-                                className={theme ? "download-video-data-row option-row" : "download-video-data-row option-row preview-lightt"}
+                                className={
+                                  theme
+                                    ? "download-video-data-row option-row"
+                                    : "download-video-data-row option-row preview-lightt"
+                                }
                                 onClick={() => {
                                   downloadVideo(element.videoURL);
                                   setShowOptions(false);
                                 }}
                               >
                                 <KeyboardTabOutlinedIcon
-                                  className="video-edit-icons"
+                                  className={
+                                    theme
+                                      ? "video-edit-icons"
+                                      : "video-edit-icons-light"
+                                  }
                                   fontSize="medium"
                                   style={{
                                     color: theme ? "#aaa" : "#606060",
@@ -545,7 +613,11 @@ function Content() {
                                 <p>Download</p>
                               </div>
                               <div
-                                className={theme ? "delete-video-data-row option-row" : "delete-video-data-row option-row preview-lightt"}
+                                className={
+                                  theme
+                                    ? "delete-video-data-row option-row"
+                                    : "delete-video-data-row option-row preview-lightt"
+                                }
                                 onClick={() => {
                                   setDeleteVideoID(element._id);
                                   if (element._id !== undefined) {
@@ -556,7 +628,11 @@ function Content() {
                                 }}
                               >
                                 <DeleteOutlineOutlinedIcon
-                                  className="video-edit-icons"
+                                  className={
+                                    theme
+                                      ? "video-edit-icons"
+                                      : "video-edit-icons-light"
+                                  }
                                   fontSize="medium"
                                   style={{ color: theme ? "#aaa" : "#606060" }}
                                 />
@@ -576,16 +652,23 @@ function Content() {
                           ) : (
                             <VisibilityOffOutlinedIcon
                               fontSize="small"
-                              style={{ color: "rgb(170 170 170 / 53%)" }}
+                              style={{
+                                color: theme
+                                  ? "rgb(170 170 170 / 53%)"
+                                  : "#909090",
+                              }}
                             />
                           )}
-                          <p style={{ marginLeft: "8px" }}>
+                          <p
+                            className={theme ? "" : "text-light-mode2"}
+                            style={{ marginLeft: "8px" }}
+                          >
                             {element.visibility}
                           </p>
                         </div>
                       </td>
                       <td>
-                        <p>
+                        <p className={theme ? "" : "text-light-mode2"}>
                           {uploaded.toLocaleDateString("en-US", {
                             year: "numeric",
                             month: "long",
@@ -594,13 +677,19 @@ function Content() {
                         </p>
                       </td>
                       <td>
-                        <p>{element.views && element.views.toLocaleString()}</p>
+                        <p className={theme ? "" : "text-light-mode2"}>
+                          {element.views && element.views.toLocaleString()}
+                        </p>
                       </td>
                       <td>
-                        <p>{element.comments && element.comments.length}</p>
+                        <p className={theme ? "" : "text-light-mode2"}>
+                          {element.comments && element.comments.length}
+                        </p>
                       </td>
                       <td>
-                        <p>{element.likes}</p>
+                        <p className={theme ? "" : "text-light-mode2"}>
+                          {element.likes}
+                        </p>
                       </td>
                     </tr>
                   );
