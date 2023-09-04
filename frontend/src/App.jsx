@@ -45,6 +45,7 @@ function App() {
         </Helmet>
         <Routes>
           <Route path="/" element={<Browse />} />
+          <Route path="/home" element={<Browse />} />
           <Route path="/studio" element={token ? <Studio /> : <Error />} />
           <Route
             path="/studio/customize"
@@ -85,6 +86,7 @@ function App() {
             element={token ? <Subscriptions /> : <Error />}
           />
           <Route path="/video/:id" element={<VideoSection />} />
+          <Route path="/*" element={<Error />} />
         </Routes>
       </BrowserRouter>
     </>

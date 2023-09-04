@@ -79,7 +79,7 @@ function Studio() {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "dark",
+      theme: theme ? "dark" : "light",
     });
 
   const ErrorNotify = () =>
@@ -91,7 +91,7 @@ function Studio() {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "dark",
+      theme: theme ? "dark" : "light",
     });
 
   const VideoErrorNotify = () =>
@@ -103,7 +103,7 @@ function Studio() {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "dark",
+      theme: theme ? "dark" : "light",
     });
 
   const ThumbnailNotify = () =>
@@ -115,7 +115,7 @@ function Studio() {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "dark",
+      theme: theme ? "dark" : "light",
     });
 
   //USE EFFECTS

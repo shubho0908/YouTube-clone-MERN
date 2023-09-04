@@ -36,6 +36,18 @@ function Signup() {
      theme: theme ? "dark" : "light",
     });
 
+  const EmailErrorNotify = (data) =>
+    toast.error(data, {
+      position: "top-center",
+      autoClose: 1200,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+     theme: theme ? "dark" : "light",
+    });
+
   const handleInputs = (e) => {
     setData({
       ...data,
@@ -65,6 +77,9 @@ function Signup() {
           window.location.reload();
           document.body.classList.remove("bg-class");
         }, 2000);
+      }
+      else{
+        EmailErrorNotify(message)
       }
     } catch (error) {
       alert(error.message);
