@@ -3,7 +3,6 @@ import "../Css/error.css";
 import { useState } from "react";
 
 function Error() {
-
   const [theme, setTheme] = useState(() => {
     const Dark = localStorage.getItem("Dark");
     return Dark ? JSON.parse(Dark) : true;
@@ -19,7 +18,9 @@ function Error() {
           <h1>Oops!</h1>
           <p>Sorry, we&apos;re not able to find what you were looking for.</p>
           <button
-            className={theme ? "revert-home" : "revert-home text-light-mode error-light"}
+            className={
+              theme ? "revert-home" : "revert-home text-light-mode error-light"
+            }
             onClick={() => (window.location.href = "/")}
           >
             GO TO HOMEPAGE
