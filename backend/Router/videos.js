@@ -297,16 +297,14 @@ Videos.get("/checkwatchlater/:id/:email", async (req, res) => {
     }
 
     const userIndex = user.watchLater.findIndex(
-      (data) => data.savedVideoID.toString() === id
+      (data) => data.savedVideoID.toString() === id.toString()
     );
 
     if (userIndex === -1) {
       return res.status(404).json({ error: "Video not found" });
+    } else {
+      res.json("Found");
     }
-
-    const savedID = user.watchLater[userIndex].savedVideoID;
-
-    res.json(savedID);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

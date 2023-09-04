@@ -400,10 +400,10 @@ function VideoSection() {
           const response = await fetch(
             `http://localhost:3000/checkwatchlater/${id}/${email}`
           );
-          const savedID = await response.json();
-          if (savedID === id) {
+          const data = await response.json();
+          if (data === "Found") {
             setIsSaved(true);
-          } else if (savedID !== id) {
+          } else {
             setIsSaved(false);
           }
         }
@@ -2721,7 +2721,9 @@ function VideoSection() {
       {/* SIGNUP/SIGNIN  */}
 
       <div
-         className={theme ? "auth-popup" : "auth-popup light-mode text-light-mode"}
+        className={
+          theme ? "auth-popup" : "auth-popup light-mode text-light-mode"
+        }
         style={
           isbtnClicked === true ? { display: "block" } : { display: "none" }
         }
