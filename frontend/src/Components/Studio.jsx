@@ -634,7 +634,7 @@ function Studio() {
           <LiaUploadSolid fontSize="22px" color={theme ? "#b1b1b1" : "#606060"} />
         </div>
         <div
-          className="create-channel"
+          className={theme ? "create-channel" : "create-channel light-mode text-light-mode"}
           style={
             isChannel === false ? { display: "flex" } : { display: "none" }
           }
@@ -648,14 +648,14 @@ function Studio() {
             }}
           />
           <p className="channel-head">Create Your Channel</p>
-          <p className="channel-slogan">
+          <p className={theme ? "channel-slogan" : "channel-slogan text-light-mode2"}>
             Share Your Story: Inspire and Connect with a YouTube Channel!
           </p>
           <form onSubmit={saveChannelData} className="channel-deatils">
             <div className="profile-pic-section">
               <img src={previewImage} alt="" className="selected-pic" />
               <div className="upload-btn-wrapper">
-                <button className="btn">SELECT</button>
+                <button className={theme ? "btn" : "btn text-dark-mode"}>SELECT</button>
                 <input
                   type="file"
                   name="myfile"
@@ -666,7 +666,7 @@ function Studio() {
             </div>
             <div className="channel-name">
               <input
-                className="channelName"
+                className={theme ? "channelName" : "channelName light-mode text-light-mode new-light-border"}
                 type="text"
                 name="channelname"
                 placeholder="Channel Name"
@@ -674,7 +674,7 @@ function Studio() {
                 required
               />
               <textarea
-                className="channelAbout"
+                className={theme ? "channelAbout" : "channelAbout light-mode text-light-mode new-light-border"}
                 type="text"
                 name="channelAbout"
                 placeholder="About channel"
@@ -688,7 +688,7 @@ function Studio() {
                 placement="top"
               >
                 <div
-                  className="add-links"
+                  className={theme ? "add-links" : "add-links light-mode new-light-border"}
                   onClick={() => {
                     if (linksClicked === false) {
                       setLinksClicked(true);
@@ -697,11 +697,11 @@ function Studio() {
                     }
                   }}
                 >
-                  <LinkIcon fontSize="medium" style={{ color: "white" }} />
+                  <LinkIcon fontSize="medium" style={{ color: theme ?"white" : "black" }} />
                 </div>
               </Tooltip>
               <div
-                className="social-icons-links"
+                className={theme ? "social-icons-links" : "social-icons-links add-social-light"}
                 style={
                   linksClicked === true
                     ? { display: "block" }
@@ -710,8 +710,8 @@ function Studio() {
               >
                 <FacebookIcon
                   fontSize="large"
-                  className="social_links"
-                  style={{ color: "white", marginRight: "15px" }}
+                  className={theme ? "social_links" : "social_links-light"}
+                  style={{ color: theme ? "white" : "#606060", marginRight: "15px" }}
                   onClick={() => {
                     if (iconClicked !== "Facebook") {
                       setIconClicked("Facebook");
@@ -722,8 +722,8 @@ function Studio() {
                 />
                 <InstagramIcon
                   fontSize="large"
-                  className="social_links"
-                  style={{ color: "white", marginRight: "15px" }}
+                  className={theme ? "social_links" : "social_links-light"}
+                  style={{ color: theme ? "white" : "#606060", marginRight: "15px" }}
                   onClick={() => {
                     if (iconClicked !== "Instagram") {
                       setIconClicked("Instagram");
@@ -734,8 +734,8 @@ function Studio() {
                 />
                 <TwitterIcon
                   fontSize="large"
-                  className="social_links"
-                  style={{ color: "white", marginRight: "15px" }}
+                  className={theme ? "social_links" : "social_links-light"}
+                  style={{ color: theme ? "white" : "#606060", marginRight: "15px" }}
                   onClick={() => {
                     if (iconClicked !== "Twitter") {
                       setIconClicked("Twitter");
@@ -746,8 +746,8 @@ function Studio() {
                 />
                 <LanguageIcon
                   fontSize="large"
-                  className="social_links"
-                  style={{ color: "white" }}
+                  className={theme ? "social_links" : "social_links-light"}
+                  style={{ color: theme ? "white" : "#606060" }}
                   onClick={() => {
                     if (iconClicked !== "Website") {
                       setIconClicked("Website");
@@ -775,13 +775,13 @@ function Studio() {
                 >
                   <FacebookIcon
                     fontSize="large"
-                    style={{ color: "white" }}
-                    className="fb-input-icon"
+                    style={{ color: theme ? "white" : "#606060" }}
+                    className={theme ? "fb-input-icon" : "fb-input-icon social-lightt new-light-border"}
                   />
                   <input
                     type="text"
                     name="fb-link"
-                    className="fb-input"
+                    className={theme ? "fb-input" : "fb-input light-mode text-light-mode new-light-border"}
                     onChange={handleFacebookLink}
                   />
                 </div>
@@ -795,13 +795,13 @@ function Studio() {
                 >
                   <InstagramIcon
                     fontSize="large"
-                    style={{ color: "white" }}
-                    className="insta-input-icon"
+                    style={{ color: theme ? "white" : "#606060" }}
+                    className={theme ? "insta-input-icon" : "insta-input-icon social-lightt new-light-border"}
                   />
                   <input
                     type="text"
                     name="insta-link"
-                    className="insta-input"
+                    className={theme ? "insta-input" : "insta-input light-mode text-light-mode new-light-border"}
                     onChange={handleInstagramLink}
                   />
                 </div>
@@ -815,13 +815,13 @@ function Studio() {
                 >
                   <TwitterIcon
                     fontSize="large"
-                    style={{ color: "white" }}
-                    className="twitter-input-icon"
+                    style={{ color: theme ? "white" : "#606060" }}
+                    className={theme ? "twitter-input-icon" : "twitter-input-icon social-lightt new-light-border"}
                   />
                   <input
                     type="text"
                     name="twitter-link"
-                    className="twitter-input"
+                    className={theme ? "twitter-input" : "twitter-input light-mode text-light-mode new-light-border"}
                     onChange={handleTwitterLink}
                   />
                 </div>
@@ -835,13 +835,13 @@ function Studio() {
                 >
                   <LanguageIcon
                     fontSize="large"
-                    style={{ color: "white" }}
-                    className="website-input-icon"
+                    style={{ color: theme ? "white" : "#606060" }}
+                    className={theme ? "website-input-icon" : "website-input-icon social-lightt new-light-border"}
                   />
                   <input
                     type="text"
                     name="website-link"
-                    className="website-input"
+                    className={theme ? "website-input" : "website-input light-mode text-light-mode new-light-border"}
                     onChange={handleWebsiteLink}
                   />
                 </div>
@@ -849,7 +849,7 @@ function Studio() {
             </div>
             {isLoading === false ? (
               <button
-                className={isLoading ? "save-data-disable" : "save-data"}
+                className={isLoading ? `save-data-disable ${theme ? "" : "text-dark-mode"}` : `save-data ${theme ? "" : "text-dark-mode"}`}
                 type="submit"
                 style={
                   linksClicked === true
@@ -1066,7 +1066,7 @@ function Studio() {
                       : { display: "block" }
                   }
                 >
-                  <p>Uploading video...</p>
+                  <p className={theme ? "" : "text-light-mode"}>Uploading video...</p>
                 </div>
                 {Progress === 100 && VideoURL !== "" ? (
                   <iframe
