@@ -519,6 +519,9 @@ function Navbar2() {
                                 }
                                 fontSize="medium"
                                 style={{ color: theme ? "#aaa" : "#606060" }}
+                                onClick={() => {
+                                  window.location.href = `/studio/video/comments/${element._id}`;
+                                }}
                               />
                             </Tooltip>
                             <Tooltip
@@ -979,6 +982,9 @@ function Navbar2() {
                                 }
                                 fontSize="medium"
                                 style={{ color: theme ? "#aaa" : "#606060" }}
+                                onClick={() => {
+                                  window.location.href = `/studio/video/comments/${element._id}`;
+                                }}
                               />
                             </Tooltip>
                             <Tooltip

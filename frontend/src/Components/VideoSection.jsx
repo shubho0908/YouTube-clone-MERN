@@ -87,6 +87,7 @@ function VideoSection() {
   const [UserPlaylist, setUserPlaylist] = useState([]);
   const [playlistID, setplaylistID] = useState([]);
   const [isHeart, setIsHeart] = useState([]);
+  const [rec, setRecommend] = useState(false);
 
   //Get Channel Data
   const [youtuberName, setyoutuberName] = useState();
@@ -167,6 +168,16 @@ function VideoSection() {
       setEmail(jwtDecode(token).email);
     }
   }, [token]);
+
+  useEffect(() => {
+    function handleResize() {
+      setRecommend(window.innerWidth <= 1100);
+    }
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     if (theme === false && !window.location.href.includes("/studio")) {
@@ -1114,7 +1125,7 @@ function VideoSection() {
               </div>
               {isSubscribed === false || !token ? (
                 <button
-                  className={theme ? "subscribe" : "subscribe-light"}
+                  className={theme ? "subscribe" : `subscribe-light ${email === usermail ? "dull-subs" : ""}`}
                   disabled={email === usermail ? true : false}
                   onClick={() => {
                     if (token) {
@@ -2205,6 +2216,7 @@ function VideoSection() {
             }
           >
             {thumbnails &&
+              !rec &&
               thumbnails.map((element, index) => {
                 return (
                   <div
@@ -2258,7 +2270,128 @@ function VideoSection() {
                             : "recommend-uploader text-light-mode2"
                         }
                       >
-                        <p className="recommend-vid-uploader uploader">
+                        <p className="recommend-vid-uploader uploader nohover">
+                          {Uploader[index]}
+                        </p>
+                        <Tooltip
+                          TransitionComponent={Zoom}
+                          title="Verified"
+                          placement="right"
+                        >
+                          <CheckCircleIcon
+                            fontSize="100px"
+                            style={{
+                              color: "rgb(138, 138, 138)",
+                              marginLeft: "4px",
+                            }}
+                          />
+                        </Tooltip>
+                      </div>
+                      <div className="view-time">
+                        <p className="views">
+                          {Views[index] >= 1e9
+                            ? `${(Views[index] / 1e9).toFixed(1)}B`
+                            : Views[index] >= 1e6
+                            ? `${(Views[index] / 1e6).toFixed(1)}M`
+                            : Views[index] >= 1e3
+                            ? `${(Views[index] / 1e3).toFixed(1)}K`
+                            : Views[index]}{" "}
+                          views
+                        </p>
+                        <p
+                          className="upload-time"
+                          style={{ marginLeft: "4px" }}
+                        >
+                          &#x2022;{" "}
+                          {(() => {
+                            const timeDifference =
+                              new Date() - new Date(publishdate[index]);
+                            const minutes = Math.floor(timeDifference / 60000);
+                            const hours = Math.floor(timeDifference / 3600000);
+                            const days = Math.floor(timeDifference / 86400000);
+                            const weeks = Math.floor(
+                              timeDifference / 604800000
+                            );
+                            const years = Math.floor(
+                              timeDifference / 31536000000
+                            );
+
+                            if (minutes < 1) {
+                              return "just now";
+                            } else if (minutes < 60) {
+                              return `${minutes} mins ago`;
+                            } else if (hours < 24) {
+                              return `${hours} hours ago`;
+                            } else if (days < 7) {
+                              return `${days} days ago`;
+                            } else if (weeks < 52) {
+                              return `${weeks} weeks ago`;
+                            } else {
+                              return `${years} years ago`;
+                            }
+                          })()}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            {thumbnails &&
+              rec &&
+              thumbnails.slice(0, 12).map((element, index) => {
+                return (
+                  <div
+                    className="video-data12"
+                    style={
+                      element === thumbnailURL
+                        ? { display: "none" }
+                        : { display: "flex" }
+                    }
+                    key={index}
+                    onClick={() => {
+                      if (token) {
+                        updateViews(VideoID[index]);
+                        setTimeout(() => {
+                          window.location.href = `/video/${VideoID[index]}`;
+                        }, 400);
+                      } else {
+                        window.location.href = `/video/${VideoID[index]}`;
+                      }
+                    }}
+                  >
+                    <div className="video-left-side">
+                      <img
+                        src={element}
+                        alt=""
+                        className="recommend-thumbnails"
+                        loading="lazy"
+                      />
+                      <p className="duration duration2">
+                        {Math.floor(duration[index] / 60) +
+                          ":" +
+                          (Math.round(duration[index] % 60) < 10
+                            ? "0" + Math.round(duration[index] % 60)
+                            : Math.round(duration[index] % 60))}
+                      </p>
+                    </div>
+                    <div className="video-right-side">
+                      <p
+                        className={
+                          theme
+                            ? "recommend-vid-title"
+                            : "recommend-vid-title text-light-mode"
+                        }
+                      >
+                        {Titles[index]}
+                      </p>
+                      <div
+                        className={
+                          theme
+                            ? "recommend-uploader"
+                            : "recommend-uploader text-light-mode2"
+                        }
+                      >
+                        <p className="recommend-vid-uploader uploader nohover">
                           {Uploader[index]}
                         </p>
                         <Tooltip
@@ -2331,7 +2464,7 @@ function VideoSection() {
               TagSelected !== "All" ? { display: "flex" } : { display: "none" }
             }
           >
-            {userVideos &&
+            {userVideos && !rec &&
               userVideos.length > 0 &&
               userVideos.map((element, index) => {
                 return (
@@ -2386,7 +2519,128 @@ function VideoSection() {
                             : "recommend-uploader text-light-mode2"
                         }
                       >
-                        <p className="recommend-vid-uploader uploader">
+                        <p className="recommend-vid-uploader uploader nohover">
+                          {element.uploader}
+                        </p>
+                        <Tooltip
+                          TransitionComponent={Zoom}
+                          title="Verified"
+                          placement="right"
+                        >
+                          <CheckCircleIcon
+                            fontSize="100px"
+                            style={{
+                              color: "rgb(138, 138, 138)",
+                              marginLeft: "4px",
+                            }}
+                          />
+                        </Tooltip>
+                      </div>
+                      <div className="view-time">
+                        <p className="views">
+                          {element.views >= 1e9
+                            ? `${(element.views / 1e9).toFixed(1)}B`
+                            : element.views >= 1e6
+                            ? `${(element.views / 1e6).toFixed(1)}M`
+                            : element.views >= 1e3
+                            ? `${(element.views / 1e3).toFixed(1)}K`
+                            : element.views}{" "}
+                          views
+                        </p>
+                        <p
+                          className="upload-time"
+                          style={{ marginLeft: "4px" }}
+                        >
+                          &#x2022;{" "}
+                          {(() => {
+                            const timeDifference =
+                              new Date() - new Date(element.uploaded_date);
+                            const minutes = Math.floor(timeDifference / 60000);
+                            const hours = Math.floor(timeDifference / 3600000);
+                            const days = Math.floor(timeDifference / 86400000);
+                            const weeks = Math.floor(
+                              timeDifference / 604800000
+                            );
+                            const years = Math.floor(
+                              timeDifference / 31536000000
+                            );
+
+                            if (minutes < 1) {
+                              return "just now";
+                            } else if (minutes < 60) {
+                              return `${minutes} mins ago`;
+                            } else if (hours < 24) {
+                              return `${hours} hours ago`;
+                            } else if (days < 7) {
+                              return `${days} days ago`;
+                            } else if (weeks < 52) {
+                              return `${weeks} weeks ago`;
+                            } else {
+                              return `${years} years ago`;
+                            }
+                          })()}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            {userVideos && rec &&
+              userVideos.length > 0 &&
+              userVideos.slice(0,12).map((element, index) => {
+                return (
+                  <div
+                    className="video-data12"
+                    style={
+                      element.thumbnailURL === thumbnailURL
+                        ? { display: "none" }
+                        : { display: "flex" }
+                    }
+                    key={index}
+                    onClick={() => {
+                      if (token) {
+                        updateViews(element._id);
+                        setTimeout(() => {
+                          window.location.href = `/video/${element._id}`;
+                        }, 400);
+                      } else {
+                        window.location.href = `/video/${element._id}`;
+                      }
+                    }}
+                  >
+                    <div className="video-left-side">
+                      <img
+                        src={element.thumbnailURL}
+                        alt=""
+                        className="recommend-thumbnails"
+                        loading="lazy"
+                      />
+                      <p className="duration duration2">
+                        {Math.floor(element.videoLength / 60) +
+                          ":" +
+                          (Math.round(element.videoLength % 60) < 10
+                            ? "0" + Math.round(element.videoLength % 60)
+                            : Math.round(element.videoLength % 60))}
+                      </p>
+                    </div>
+                    <div className="video-right-side">
+                      <p
+                        className={
+                          theme
+                            ? "recommend-vid-title"
+                            : "recommend-vid-title text-light-mode"
+                        }
+                      >
+                        {element.Title}
+                      </p>
+                      <div
+                        className={
+                          theme
+                            ? "recommend-uploader"
+                            : "recommend-uploader text-light-mode2"
+                        }
+                      >
+                        <p className="recommend-vid-uploader uploader nohover">
                           {element.uploader}
                         </p>
                         <Tooltip

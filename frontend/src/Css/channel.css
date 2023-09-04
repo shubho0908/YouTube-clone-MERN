@@ -655,7 +655,7 @@
   position: absolute;
   padding: 25px;
   padding-left: 0;
-  z-index: 15;
+  z-index: 5;
   color: white;
   font-size: 20px;
   border-radius: 12px;
@@ -1295,7 +1295,7 @@
   .thischannel-playlists {
     padding-bottom: 100px;
   }
-  .featured-channels-added {
+  .featured-channels-added, .add-feature-channel {
     padding-bottom: 100px;
   }
   .channel-about-section {
@@ -1478,14 +1478,14 @@
   }
 
   .nothing-found {
-    top: 200px !important;
+    top: 260px !important;
   }
 
   .no-results {
     top: 430px !important;
   }
   .no-channel {
-    top: 330px !important;
+    top: 370px !important;
     font-size: 17px !important;
   }
 
@@ -1724,7 +1724,7 @@
   }
 
   .featured-channelss-new {
-    width: -webkit-fill-available;
+    width: fit-content;
   }
 
   .sk-video-sec-thumbnail {
@@ -1763,7 +1763,7 @@
     width: 37vw !important;
   }
   .no-channel {
-    top: 300px !important;
+    top: 360px !important;
   }
 }
 

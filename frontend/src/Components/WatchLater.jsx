@@ -275,7 +275,7 @@ function WatchLater() {
                 {watchlater.length > 0
                   ? watchlater.map((element, index) => {
                       return (
-                        <div className="liked-all-videos" key={index}>
+                        <div className={theme ? "liked-all-videos" : "liked-all-videos liked-all-videos-light"} key={index}>
                           <div className="liked-videos-all-data">
                             <Skeleton
                               count={1}
