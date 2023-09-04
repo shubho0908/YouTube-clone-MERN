@@ -51,7 +51,7 @@ function LikeVideos() {
         const result = await response.json();
         setLikedVideos(result);
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
       }
     };
 
@@ -112,7 +112,7 @@ function LikeVideos() {
       });
       await response.json();
     } catch (error) {
-      console.log(error.message);
+      // console.log(error.message);
     }
   };
 

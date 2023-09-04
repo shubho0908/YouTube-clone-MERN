@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import "../Css/accountPop.css";
 import avatar from "../img/avatar.png";
 import AccountBoxOutlinedIcon from "@mui/icons-material/AccountBoxOutlined";
-import OndemandVideoOutlinedIcon from "@mui/icons-material/OndemandVideoOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 import TranslateOutlinedIcon from "@mui/icons-material/TranslateOutlined";
@@ -12,6 +11,7 @@ import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 import DoneOutlinedIcon from "@mui/icons-material/DoneOutlined";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
+import {SiYoutubestudio} from "react-icons/si"
 
 function AccountPop() {
   const [name, setName] = useState("");
@@ -155,8 +155,8 @@ function AccountPop() {
               window.location.href = "/studio";
             }}
           >
-            <OndemandVideoOutlinedIcon
-              fontSize="medium"
+            <SiYoutubestudio
+              fontSize="21px"
               style={{ color: theme ? "white" : "black" }}
             />
             <p>YouTube Studio</p>

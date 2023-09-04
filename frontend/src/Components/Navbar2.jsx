@@ -99,7 +99,7 @@ function Navbar2() {
         const { profile } = await response.json();
         setProfilePic(profile);
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
       }
     };
 
@@ -117,7 +117,7 @@ function Navbar2() {
         const data = await response.json();
         setUserVideos(data);
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
       }
     };
 

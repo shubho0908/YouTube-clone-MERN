@@ -52,7 +52,7 @@ function Subscriptions() {
         const result = await response.json();
         setSubscriptions(result);
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
       }
     };
     const interval = setInterval(getSubscriptions, 100);
@@ -85,7 +85,7 @@ function Subscriptions() {
           setSubsVideos(newSubsVideos);
         }
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
       }
     };
 
@@ -148,7 +148,7 @@ function Subscriptions() {
       });
       await response.json();
     } catch (error) {
-      console.log(error.message);
+      // console.log(error.message);
     }
   };
 

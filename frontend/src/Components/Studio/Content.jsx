@@ -711,7 +711,11 @@ function Content() {
         </div>
       </div>
       <div
-        className="last-delete-warning"
+        className={
+          theme
+            ? "last-delete-warning"
+            : "last-delete-warning light-mode text-light-mode"
+        }
         style={
           isDeleteClicked === true && DeleteVideoData
             ? { display: "block" }
@@ -722,7 +726,11 @@ function Content() {
           <p>Permanently delete this video?</p>
         </div>
         <div className="deleted-video-data">
-          <div className="thisdelete-data">
+          <div
+            className={
+              theme ? "thisdelete-data" : "thisdelete-data social-lightt"
+            }
+          >
             <img
               src={DeleteVideoData && DeleteVideoData.thumbnailURL}
               alt="thumbnail"
@@ -750,7 +758,11 @@ function Content() {
                       DeleteVideoData && DeleteVideoData.Title.slice(0, 15)
                     }...`}
               </p>
-              <p className="delete-uploaded">
+              <p
+                className={
+                  theme ? "delete-uploaded" : "delete-uploaded text-light-mode2"
+                }
+              >
                 {"Uploaded " +
                   DeleteVideoUploadDate.toLocaleDateString("en-US", {
                     year: "numeric",
@@ -758,7 +770,11 @@ function Content() {
                     day: "numeric",
                   })}
               </p>
-              <p className="delete-views">
+              <p
+                className={
+                  theme ? "delete-views" : "delete-views text-light-mode2"
+                }
+              >
                 {DeleteVideoData && DeleteVideoData.views + " views"}
               </p>
             </div>
@@ -772,7 +788,7 @@ function Content() {
             fontSize="medium"
             style={
               boxclicked === false
-                ? { color: "#aaa", cursor: "pointer" }
+                ? { color: theme ? "#aaa" : "#606060", cursor: "pointer" }
                 : { display: "none" }
             }
           />
@@ -783,7 +799,7 @@ function Content() {
             fontSize="medium"
             style={
               boxclicked === true
-                ? { color: "white", cursor: "pointer" }
+                ? { color: theme ? "white" : "606060", cursor: "pointer" }
                 : { display: "none" }
             }
           />
@@ -794,7 +810,11 @@ function Content() {
         </div>
         <div className="delete-video-buttons">
           <button
-            className="download-delete-video delete-css"
+            className={
+              theme
+                ? "download-delete-video delete-css"
+                : "download-delete-video delete-css blue-txt"
+            }
             onClick={() => {
               if (DeleteVideoData) {
                 downloadVideo(DeleteVideoData.videoURL);
@@ -805,7 +825,11 @@ function Content() {
           </button>
           <div className="extra-two-delete-btns">
             <button
-              className="cancel-delete delete-css"
+              className={
+                theme
+                  ? "cancel-delete delete-css"
+                  : "cancel-delete delete-css blue-txt"
+              }
               onClick={() => {
                 setIsDeleteClicked(false);
                 document.body.classList.remove("bg-css2");
@@ -815,7 +839,13 @@ function Content() {
               CANCEL
             </button>
             <button
-              className="delete-video-btn delete-css"
+              className={
+                theme
+                  ? "delete-video-btn delete-css"
+                  : `delete-video-btn delete-css ${
+                      !boxclicked ? "" : "blue-txt"
+                    }`
+              }
               disabled={!boxclicked}
               onClick={() => {
                 if (boxclicked === true && DeleteVideoData) {

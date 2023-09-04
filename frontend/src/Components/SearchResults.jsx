@@ -82,7 +82,7 @@ function SearchResults() {
         setsearchedVideoData(videoData);
         setsearchedChannelData(channelData);
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
       }
     };
     getSearchResult();
@@ -110,7 +110,7 @@ function SearchResults() {
           setUserEmail(userEmail);
         }
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
       }
     };
 
@@ -131,7 +131,7 @@ function SearchResults() {
           setUserVideos(myvideos);
         }
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
       }
     };
 
@@ -153,7 +153,7 @@ function SearchResults() {
           }
         }
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
       }
     };
 
@@ -174,7 +174,7 @@ function SearchResults() {
       });
       await response.json();
     } catch (error) {
-      console.log(error.message);
+      // console.log(error.message);
     }
   };
 
@@ -201,7 +201,7 @@ function SearchResults() {
       );
       await response.json();
     } catch (error) {
-      console.log(error.message);
+      // console.log(error.message);
     }
   };
 
@@ -1948,7 +1948,7 @@ function SearchResults() {
         <LeftPanel />
         <div className="searched-content">
           <img src={nothing} alt="no results" className="nothing-found" />
-          <p className="no-results">No results found!</p>
+          <p className={theme ? "no-results" : "no-results text-light-mode"}>No results found!</p>
         </div>
       </>
     );

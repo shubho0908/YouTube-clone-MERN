@@ -57,7 +57,7 @@ function ChannelVideos(prop) {
           setMyVideos(myvideos);
         }
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
       }
     };
 
@@ -74,7 +74,7 @@ function ChannelVideos(prop) {
       });
       await response.json();
     } catch (error) {
-      console.log(error.message);
+      // console.log(error.message);
     }
   };
 

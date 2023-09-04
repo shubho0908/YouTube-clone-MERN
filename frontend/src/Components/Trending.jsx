@@ -66,7 +66,7 @@ function Trending() {
           setTrendingVideos(trending);
         }
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
       }
     };
 
@@ -121,7 +121,7 @@ function Trending() {
       });
       await response.json();
     } catch (error) {
-      console.log(error.message);
+      // console.log(error.message);
     }
   };
 

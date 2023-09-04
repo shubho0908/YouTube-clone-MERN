@@ -61,7 +61,7 @@ function ChannelPlaylists(prop) {
           setPlaylistData(playlistData);
         }
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
       }
     };
     getPlaylistData();

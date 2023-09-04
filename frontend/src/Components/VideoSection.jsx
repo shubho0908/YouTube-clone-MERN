@@ -749,7 +749,7 @@ function VideoSection() {
         }
       );
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
       if (data === "Liked") {
         LikedNotify();
         setLikeLoading(false);

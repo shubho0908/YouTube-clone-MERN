@@ -97,7 +97,7 @@ function WatchLater() {
           setWatchLater(savedData);
         }
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
       }
     };
 
@@ -114,7 +114,7 @@ function WatchLater() {
 
         setVideoViews(views);
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
       }
     };
 
@@ -131,7 +131,7 @@ function WatchLater() {
       });
       await response.json();
     } catch (error) {
-      console.log(error.message);
+      // console.log(error.message);
     }
   };
 

@@ -68,7 +68,7 @@ function ChannelHome(prop) {
           setMyVideos(myvideos);
         }
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
       }
     };
 
@@ -83,10 +83,9 @@ function ChannelHome(prop) {
           "Content-Type": "application/json",
         },
       });
-      const result = await response.json();
-      console.log(result);
+      await response.json();
     } catch (error) {
-      console.log(error.message);
+      // console.log(error.message);
     }
   };
 

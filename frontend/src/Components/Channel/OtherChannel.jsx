@@ -80,7 +80,7 @@ function OtherChannel() {
         const userEmail = await response.json();
         setEmail(userEmail);
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
       }
     };
 
@@ -100,7 +100,7 @@ function OtherChannel() {
         setChannelProfile(profile);
         setChannelname(ChannelName);
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
       }
     };
 
@@ -119,7 +119,7 @@ function OtherChannel() {
         const coverimg = await response.json();
         setCoverIMG(coverimg);
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
       }
     };
 
@@ -135,7 +135,7 @@ function OtherChannel() {
         const { subscribers } = await response.json();
         setSubscribers(subscribers);
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
       }
     };
 
@@ -153,7 +153,7 @@ function OtherChannel() {
         const myvideos = await response.json();
         setMyVideos(myvideos);
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
       }
     };
     getUserVideos();
@@ -202,7 +202,7 @@ function OtherChannel() {
           setIsSubscribed(false);
         }
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
       }
     };
 
@@ -242,7 +242,7 @@ function OtherChannel() {
         SubscribeNotify();
       }
     } catch (error) {
-      console.log(error.message);
+      // console.log(error.message);
     }
   };
 

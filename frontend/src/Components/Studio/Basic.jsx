@@ -191,8 +191,7 @@ function Basic() {
           }
         );
 
-        const Data = await response.json();
-        console.log(Data);
+        await response.json();
       }
     } catch (error) {
       setLoading(false);

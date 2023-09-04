@@ -190,7 +190,7 @@ function Playlists() {
       });
       await response.json();
     } catch (error) {
-      console.log(error.message);
+      // console.log(error.message);
     }
   };
 
@@ -251,7 +251,7 @@ function Playlists() {
 
       await response.json();
     } catch (error) {
-      console.log(error.message);
+      // console.log(error.message);
     }
   };
 
@@ -268,7 +268,7 @@ function Playlists() {
       );
       await response.json();
     } catch (error) {
-      console.log(error.message);
+      // console.log(error.message);
     }
   };
 
@@ -297,7 +297,7 @@ function Playlists() {
       );
       await response.json();
     } catch (error) {
-      console.log(error.message);
+      // console.log(error.message);
     }
   };
 
@@ -319,7 +319,7 @@ function Playlists() {
         RemovePlaylistNotify();
       }
     } catch (error) {
-      console.log(error.message);
+      // console.log(error.message);
     }
   };
 

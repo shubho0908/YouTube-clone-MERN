@@ -106,7 +106,7 @@ function LeftPanel2() {
           setChannel(ChannelName);
         }
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
       }
     };
 
@@ -128,7 +128,7 @@ function LeftPanel2() {
           setChannelId(channelID);
         }
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
       }
     };
 

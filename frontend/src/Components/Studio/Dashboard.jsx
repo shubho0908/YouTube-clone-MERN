@@ -111,7 +111,7 @@ function Dashboard() {
           setTotalViews(totalViews);
         }
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
       }
     };
 

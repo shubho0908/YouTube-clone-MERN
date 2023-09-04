@@ -121,7 +121,7 @@ function Browse() {
         setVisibility(Visibility);
         setVideoData(videoData);
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
       }
     };
 
@@ -170,7 +170,7 @@ function Browse() {
       });
       await response.json();
     } catch (error) {
-      console.log(error.message);
+      // console.log(error.message);
     }
   };
 

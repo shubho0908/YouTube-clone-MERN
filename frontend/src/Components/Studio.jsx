@@ -233,7 +233,7 @@ function Studio() {
         const { channel } = await response.json();
         setisChannel(channel);
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
       }
     };
 
@@ -352,7 +352,7 @@ function Studio() {
 
       videoElement.onloadedmetadata = async function () {
         const duration = videoElement.duration; // Duration in seconds
-        console.log("Video duration:", duration);
+        // console.log("Video duration:", duration);
         setDuration(duration);
 
         uploadTask.on(
@@ -372,7 +372,7 @@ function Studio() {
             // Handle successful upload
             try {
               const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-              console.log("Video download URL:", downloadURL);
+              // console.log("Video download URL:", downloadURL);
               setVideoURL(downloadURL);
               // Do something with the download URL, e.g., save it to the database
             } catch (error) {
@@ -384,7 +384,7 @@ function Studio() {
 
       videoElement.src = URL.createObjectURL(videoFile);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   };
 
@@ -402,7 +402,6 @@ function Studio() {
   //SAVE DATA TO DB
 
   const saveChannelData = async (e) => {
-    console.log(selectedImage, ChannelName, ChannelAbout);
     e.preventDefault();
     if (selectedImage === null || ChannelName === "" || ChannelAbout === "") {
       ErrorNotify();
@@ -445,7 +444,7 @@ function Studio() {
         window.location.reload();
       }
     } catch (error) {
-      console.log(error.message);
+      // console.log(error.message);
     } finally {
       setisLoading(false);
     }
@@ -592,7 +591,7 @@ function Studio() {
           }, 1500);
         }
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
       }
     }
   };
@@ -628,11 +627,11 @@ function Studio() {
         <div
           style={isChannel === true ? { display: "flex" } : { display: "none" }}
           className={
-            theme ? "create-btn-short" : "create-btn-short create-btn-light"
+            theme ? "create-btn-short" : "create-btn-short light-mode"
           }
           onClick={() => setIsClicked(true)}
         >
-          <LiaUploadSolid fontSize="22px" color="#b1b1b1" />
+          <LiaUploadSolid fontSize="22px" color={theme ? "#b1b1b1" : "#606060"} />
         </div>
         <div
           className="create-channel"

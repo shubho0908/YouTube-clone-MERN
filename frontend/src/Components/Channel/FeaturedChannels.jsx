@@ -74,7 +74,7 @@ function FeaturedChannels(prop) {
           setSubscriptions(result);
         }
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
       }
     };
     const interval = setInterval(getSubscriptions, 100);
@@ -91,7 +91,7 @@ function FeaturedChannels(prop) {
         const featuredChannelData = await response.json();
         setFeaturedChannelsData(featuredChannelData);
       } catch (error) {
-        console.log(error.message);
+        // console.log(error.message);
       }
     };
     const interval = setInterval(getFeaturedChannels, 100);
@@ -129,7 +129,7 @@ function FeaturedChannels(prop) {
         }
       }
     } catch (error) {
-      console.log(error.message);
+      // console.log(error.message);
     }
   };
 
@@ -147,7 +147,7 @@ function FeaturedChannels(prop) {
 
       await response.json();
     } catch (error) {
-      console.log(error.message);
+      // console.log(error.message);
     }
   };
 

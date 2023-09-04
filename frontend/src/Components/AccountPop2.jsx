@@ -120,7 +120,7 @@ function AccountPop() {
           >
             <AccountBoxOutlinedIcon
               fontSize="medium"
-              style={{ color: "#909090" }}
+              style={{ color: theme ? "#909090" : "black" }}
             />
             <p>Your channel</p>
           </div>
@@ -132,7 +132,10 @@ function AccountPop() {
               window.location.href = "/";
             }}
           >
-            <YouTubeIcon fontSize="medium" style={{ color: "#909090" }} />
+            <YouTubeIcon
+              fontSize="medium"
+              style={{ color: theme ? "#909090" : "black" }}
+            />
             <p>YouTube</p>
           </div>
           <div
@@ -149,7 +152,7 @@ function AccountPop() {
           >
             <DarkModeOutlinedIcon
               fontSize="medium"
-              style={{ color: "#909090" }}
+              style={{ color: theme ? "#909090" : "black" }}
             />
             <p>Appearance: {theme ? "Dark" : "Light"}</p>
             <ArrowForwardIosRoundedIcon
@@ -168,7 +171,7 @@ function AccountPop() {
           >
             <TranslateOutlinedIcon
               fontSize="medium"
-              style={{ color: "#909090" }}
+              style={{ color: theme ? "#909090" : "black" }}
             />
             <p>Language: English</p>
           </div>
@@ -181,7 +184,7 @@ function AccountPop() {
           >
             <LogoutOutlinedIcon
               fontSize="medium"
-              style={{ color: "#909090" }}
+              style={{ color: theme ? "#909090" : "black" }}
             />
             <p>Sign Out</p>
           </div>
@@ -243,7 +246,7 @@ function AccountPop() {
               <DoneOutlinedIcon
                 className="light-arrow"
                 fontSize="medium"
-                 style={{ opacity: !theme ? "1" : "0" }}
+                style={{ opacity: !theme ? "1" : "0" }}
               />
               <p>Light theme</p>
             </div>
