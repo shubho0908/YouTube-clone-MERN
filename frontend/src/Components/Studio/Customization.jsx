@@ -170,7 +170,7 @@ function Customization() {
               >
                 VIEW CHANNEL
               </p>
-              <button className="save-customize">PUBLISH</button>
+              <button className={theme ?"save-customize" : "save-customize text-dark-mode"}>PUBLISH</button>
             </div>
           </div>
           <hr className="breakk" />

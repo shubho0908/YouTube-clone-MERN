@@ -40,6 +40,10 @@ function VideoDetails() {
     const menu = localStorage.getItem("studioMenuClicked2");
     return menu ? JSON.parse(menu) : false;
   });
+  const [theme, setTheme] = useState(() => {
+    const Dark = localStorage.getItem("Dark");
+    return Dark ? JSON.parse(Dark) : true;
+  });
   const optionRef = useRef();
 
   document.title = "Video details - YouTube Studio";
@@ -55,10 +59,10 @@ function VideoDetails() {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "dark",
+      theme: theme ? "dark" : "light",
     });
 
-    const CopiedNotify = () =>
+  const CopiedNotify = () =>
     toast.success("Link Copied!", {
       position: "bottom-center",
       autoClose: 1000,
@@ -67,7 +71,7 @@ function VideoDetails() {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-      theme: "dark",
+      theme: theme ? "dark" : "light",
     });
 
   //USE EFFECTS
@@ -88,6 +92,17 @@ function VideoDetails() {
       }
     };
   }, []);
+
+  useEffect(() => {
+    if (theme === false && window.location.href.includes("/studio/video")) {
+      document.body.style.backgroundColor = "white";
+    } else if (
+      theme === true &&
+      window.location.href.includes("/studio/video")
+    ) {
+      document.body.style.backgroundColor = "#282828";
+    }
+  }, [theme]);
 
   useEffect(() => {
     localStorage.setItem("studioMenuClicked2", JSON.stringify(menu));
@@ -142,7 +157,7 @@ function VideoDetails() {
     navigator.clipboard
       .writeText(`${videolink}/${videodata && videodata._id}`)
       .then(() => {
-        CopiedNotify()
+        CopiedNotify();
       })
       .catch((error) => {
         console.log("Error copying link to clipboard:", error);
@@ -330,7 +345,13 @@ function VideoDetails() {
         }}
       >
         <div className="current-editvideodata">
-          <p className="current-tophead">Video details</p>
+          <p
+            className={
+              theme ? "current-tophead" : "current-tophead text-light-mode"
+            }
+          >
+            Video details
+          </p>
           <div className="thissection-btns">
             <button
               className={changes === false ? "disabled-btn" : "video-editbtnss"}
@@ -373,7 +394,11 @@ function VideoDetails() {
                 <input
                   type="text"
                   name="video-title"
-                  className="currentvideo-title-inp"
+                  className={
+                    theme
+                      ? "currentvideo-title-inp"
+                      : "currentvideo-title-inp text-light-mode new-light-border"
+                  }
                   value={previewTitle}
                   required
                   onChange={(e) => {
@@ -390,7 +415,11 @@ function VideoDetails() {
                   type="text"
                   name="video-desc"
                   required
-                  className="currentvideo-desc-inp"
+                  className={
+                    theme
+                      ? "currentvideo-desc-inp"
+                      : "currentvideo-desc-inp new-light-border text-light-mode"
+                  }
                   onChange={(e) => {
                     setPreviewDescription(e.target.value);
                     setChanges(true);
@@ -399,18 +428,29 @@ function VideoDetails() {
                   value={previewDescription}
                   maxLength={5000}
                 />
-                <p className="desc-sample-txt">Description</p>
+                <p
+                  className={
+                    theme
+                      ? "desc-sample-txt"
+                      : "desc-sample-txt desc-light-mode"
+                  }
+                >
+                  Description
+                </p>
               </div>
               <div className="currentvideo-thumbnailedit">
-                <p>Thumbnail</p>
-                <p>
+                <p className={theme ? "" : "text-light-mode"}>Thumbnail</p>
+                <p className={theme ? "" : "text-light-mode2"}>
                   Select or upload a picture that shows what&apos;s in your
                   video. A good thumbnail stands out and draws viewers&apos;
                   attention.
                 </p>
                 <div className="mythumbnails-sectionn">
                   {thumbnailImage ? (
-                    <div className="currentthumbnail-data choosed-one">
+                    <div
+                      className="currentthumbnail-data choosed-one"
+                      style={{ bottom: thumbnailSelected ? "25px" : "0px" }}
+                    >
                       <img
                         src={URL.createObjectURL(thumbnailImage)}
                         alt="thumbnail"
@@ -418,7 +458,9 @@ function VideoDetails() {
                         style={
                           thumbnailSelected === true && videodata
                             ? {
-                                border: "2.2px solid white",
+                                border: `2.2px solid ${
+                                  theme ? "white" : "#606060"
+                                }`,
                                 borderRadius: "3px",
                                 opacity: "1",
                               }
@@ -433,7 +475,11 @@ function VideoDetails() {
                   ) : (
                     <label
                       htmlFor="thumbnail-upload"
-                      className="uploadnew-thumbnaill"
+                      className={
+                        theme
+                          ? "uploadnew-thumbnaill"
+                          : "uploadnew-thumbnaill new-light-border2"
+                      }
                     >
                       <AddPhotoAlternateOutlinedIcon
                         fontSize="medium"
@@ -459,7 +505,9 @@ function VideoDetails() {
                           top: "10px",
                         }}
                       >
-                        <span className="loader2"></span>
+                        <span
+                          className={theme ? "loader2" : "loader2-light"}
+                        ></span>
                       </div>
                     ) : (
                       <img
@@ -469,7 +517,9 @@ function VideoDetails() {
                         style={
                           videodata && thumbnailSelected === false
                             ? {
-                                border: "2.2px solid white",
+                                border: `2.2px solid ${
+                                  theme ? "white" : "#606060"
+                                }`,
                                 borderRadius: "3px",
                                 opacity: "1",
                               }
@@ -554,8 +604,8 @@ function VideoDetails() {
                   className="currnt-video-tags-section"
                   style={{ marginTop: thumbnailSelected ? "0px" : "30px" }}
                 >
-                  <p>Tags</p>
-                  <p>
+                  <p className={theme ? "" : "text-light-mode"}>Tags</p>
+                  <p className={theme ? "" : "text-light-mode2"}>
                     Tags can be useful if content in your video is commonly
                     misspelled. Otherwise, tags play a minimal role in helping
                     viewers find your video.
@@ -563,7 +613,11 @@ function VideoDetails() {
                   <input
                     type="text"
                     name="video-title"
-                    className="currentvid-tagsinp"
+                    className={
+                      theme
+                        ? "currentvid-tagsinp"
+                        : "currentvid-tagsinp new-light-border text-light-mode"
+                    }
                     value={previewTags}
                     required
                     onChange={(e) => {
@@ -588,10 +642,18 @@ function VideoDetails() {
                 frameBorder="0"
                 allowFullScreen
               ></iframe>
-              <div className="preview-data-details">
+              <div
+                className={
+                  theme
+                    ? "preview-data-details"
+                    : "preview-data-details preview-light2 text-light-mode"
+                }
+              >
                 <div className="preview-part1">
                   <div className="video-linkleft">
-                    <p>Video link</p>
+                    <p className={theme ? "" : "text-light-mode2"}>
+                      Video link
+                    </p>
                     <p
                       className="current-videolink"
                       onClick={() => {
@@ -610,14 +672,14 @@ function VideoDetails() {
                   </div>
                   <ContentCopyIcon
                     fontSize="medium"
-                    className="copythis-btn"
+                    className={theme ? "copythis-btn" : "copy-light-btn"}
                     style={{ color: "#aaaaaab0" }}
                     onClick={handleCopyLink}
                   />
                   <div className="copyvideokalink">
                     <ContentCopyIcon
                       fontSize="medium"
-                      className="copythis-btn-new"
+                      className={theme ? "copythis-btn-new" : "copy-light-btn2"}
                       style={{ color: "#aaaaaab0" }}
                       onClick={handleCopyLink}
                     />
@@ -625,7 +687,7 @@ function VideoDetails() {
                   </div>
                 </div>
                 <div className="preview-part2">
-                  <p>Filename</p>
+                  <p className={theme ? "" : "text-light-mode2"}>Filename</p>
                   <p>
                     {videodata && videodata.Title.length <= 35
                       ? videodata && videodata.Title
@@ -633,7 +695,9 @@ function VideoDetails() {
                   </p>
                 </div>
                 <div className="preview-part3">
-                  <p>Video quality</p>
+                  <p className={theme ? "" : "text-light-mode2"}>
+                    Video quality
+                  </p>
                   <HdIcon
                     fontSize="large"
                     style={{ color: "#3ea6ff", marginTop: "6px" }}
@@ -642,12 +706,16 @@ function VideoDetails() {
               </div>
             </div>
             <div
-              className="video-visibility-section"
+              className={
+                theme
+                  ? "video-visibility-section"
+                  : "video-visibility-section new-light-border"
+              }
               onClick={() => {
                 setprivacyClicked(!privacyClicked);
               }}
             >
-              <p>Visibility</p>
+              <p className={theme ? "" : "text-light-mode2"}>Visibility</p>
               <div className="visibility-current-data">
                 <div className="privacy-current">
                   {updatePrivacy === "Public" ||
@@ -661,14 +729,20 @@ function VideoDetails() {
                   ) : (
                     <VisibilityOffOutlinedIcon
                       fontSize="small"
-                      style={{ color: "rgb(170 170 170 / 53%)" }}
+                      style={{
+                        color: theme ? "rgb(170 170 170 / 53%)" : "#606060",
+                      }}
                     />
                   )}
 
                   {updatePrivacy === null ? (
-                    <p>{videodata && videodata.visibility}</p>
+                    <p className={theme ? "" : "text-light-mode"}>
+                      {videodata && videodata.visibility}
+                    </p>
                   ) : (
-                    <p>{updatePrivacy}</p>
+                    <p className={theme ? "" : "text-light-mode"}>
+                      {updatePrivacy}
+                    </p>
                   )}
                 </div>
                 <ArrowDropDownOutlinedIcon
@@ -678,7 +752,11 @@ function VideoDetails() {
               </div>
             </div>
             <div
-              className="select-any-visibility"
+              className={
+                theme
+                  ? "select-any-visibility"
+                  : "select-any-visibility light-mode"
+              }
               style={
                 privacyClicked === true
                   ? { display: "block" }
@@ -686,7 +764,11 @@ function VideoDetails() {
               }
             >
               <div
-                className="thispublic-visibility"
+                className={
+                  theme
+                    ? "thispublic-visibility"
+                    : "thispublic-visibility preview-lightt"
+                }
                 onClick={() => {
                   setprivacy("Public");
                   setprivacyClicked(false);
@@ -697,10 +779,14 @@ function VideoDetails() {
                   fontSize="small"
                   style={{ color: "#2ba640" }}
                 />
-                <p>Public</p>
+                <p className={theme ? "" : "text-light-mode"}>Public</p>
               </div>
               <div
-                className="thisprivate-visibility"
+                className={
+                  theme
+                    ? "thisprivate-visibility"
+                    : "thisprivate-visibility preview-lightt"
+                }
                 onClick={() => {
                   setprivacy("Private");
                   setprivacyClicked(false);
@@ -709,9 +795,11 @@ function VideoDetails() {
               >
                 <VisibilityOffOutlinedIcon
                   fontSize="small"
-                  style={{ color: "rgb(170 170 170 / 53%)" }}
+                  style={{
+                    color: theme ? "rgb(170 170 170 / 53%)" : "#606060",
+                  }}
                 />
-                <p>Private</p>
+                <p className={theme ? "" : "text-light-mode"}>Private</p>
               </div>
             </div>
           </div>

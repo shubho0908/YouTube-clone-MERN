@@ -236,6 +236,7 @@
   bottom: 102px;
   right: 41px;
   padding: 5px;
+  width: fit-content;
 }
 
 .choosed-one {
@@ -554,7 +555,7 @@
     align-items: flex-start;
   }
   .current-videolink,
-  .copythis-btn {
+  .copythis-btn,.copy-light-btn {
     display: none !important;
   }
   .copyvideokalink {

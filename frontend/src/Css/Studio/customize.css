@@ -505,7 +505,7 @@
   }
 }
 
-.addthis-icon {
+.addthis-icon,.addthis-icon-light {
   cursor: pointer;
   padding-top: 8px;
   padding-bottom: 8px;
@@ -515,6 +515,10 @@
 
 .addthis-icon:hover {
   background-color: #323232;
+}
+
+.addthis-icon-light:hover {
+  background-color: #efefef !important;
 }
 
 /* MEDIA QUERIES */

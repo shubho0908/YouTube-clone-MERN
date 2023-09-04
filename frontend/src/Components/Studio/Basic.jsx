@@ -255,14 +255,20 @@ function Basic() {
           >
             Name
           </p>
-          <p className={theme ? "basic-name-desc" : "basic-name-desc text-light-mode2"}>
+          <p
+            className={
+              theme ? "basic-name-desc" : "basic-name-desc text-light-mode2"
+            }
+          >
             Choose a channel name that represents you and your content. Changes
             made to your name and picture are visible only on YouTube.
           </p>
           {channelName === undefined ? (
             <input
               type="text"
-              className={theme ? "channel-name-inp" : "channel-name-inp text-light-mode"}
+              className={
+                theme ? "channel-name-inp" : "channel-name-inp text-light-mode"
+              }
               value="Loading..."
               style={{ pointerEvents: "none", cursor: "wait" }}
               placeholder="Enter channel name"
@@ -270,7 +276,9 @@ function Basic() {
           ) : (
             <input
               type="text"
-              className={theme ? "channel-name-inp" : "channel-name-inp text-light-mode"}
+              className={
+                theme ? "channel-name-inp" : "channel-name-inp text-light-mode"
+              }
               value={channelName}
               required
               placeholder="Enter channel name"
@@ -282,11 +290,21 @@ function Basic() {
           )}
         </div>
         <div className="basic-description-section">
-          <p className={theme ? "basic-desc-head" : "basic-desc-head text-light-mode"}>Description</p>
+          <p
+            className={
+              theme ? "basic-desc-head" : "basic-desc-head text-light-mode"
+            }
+          >
+            Description
+          </p>
           {channelDescription === undefined ? (
             <textarea
               name="channel-desc"
-              className={theme ? "basic-channel-desc" : "basic-channel-desc text-light-mode"}
+              className={
+                theme
+                  ? "basic-channel-desc"
+                  : "basic-channel-desc text-light-mode"
+              }
               style={{ pointerEvents: "none", cursor: "wait" }}
               value="Loading..."
               cols="30"
@@ -296,7 +314,11 @@ function Basic() {
           ) : (
             <textarea
               name="channel-desc"
-              className={theme ? "basic-channel-desc" : "basic-channel-desc text-light-mode"}
+              className={
+                theme
+                  ? "basic-channel-desc"
+                  : "basic-channel-desc text-light-mode"
+              }
               required
               value={channelDescription}
               style={{
@@ -317,8 +339,22 @@ function Basic() {
           )}
         </div>
         <div className="basic-channelurl-section">
-          <p className={theme ? "basic-channelurl-head" : "basic-channelurl-head text-light-mode"}>Channel URL</p>
-          <p className={theme ? "basic-channelurl-desc" : "basic-channelurl-desc text-light-mode2"}>
+          <p
+            className={
+              theme
+                ? "basic-channelurl-head"
+                : "basic-channelurl-head text-light-mode"
+            }
+          >
+            Channel URL
+          </p>
+          <p
+            className={
+              theme
+                ? "basic-channelurl-desc"
+                : "basic-channelurl-desc text-light-mode2"
+            }
+          >
             This is the standard web address for your channel. It includes your
             unique channel ID, which is the numbers and letters at the end of
             the URL.
@@ -326,7 +362,11 @@ function Basic() {
           {channelID === "" || channelID === "undefined" ? (
             <input
               type="text"
-              className={theme ? "channel-name-inp2" : "channel-name-inp2 text-light-mode preview-light"}
+              className={
+                theme
+                  ? "channel-name-inp2"
+                  : "channel-name-inp2 text-light-mode preview-light"
+              }
               value="Loading..."
               style={{ pointerEvents: "none" }}
             />
@@ -335,7 +375,11 @@ function Basic() {
               <div className="channellink-copy">
                 <input
                   type="text"
-                  className={theme ? "channel-name-inp2" : "channel-name-inp2 text-light-mode preview-light"}
+                  className={
+                    theme
+                      ? "channel-name-inp2"
+                      : "channel-name-inp2 text-light-mode preview-light"
+                  }
                   value={`${channelUrl}/${
                     copy
                       ? channelID.length >= 30
@@ -357,8 +401,20 @@ function Basic() {
           )}
         </div>
         <div className="basic-links-section">
-          <p className={theme ? "basic-channelurl-head" : "basic-channelurl-head text-light-mode"}>Links</p>
-          <p className={theme ? "basic-link-desc" : "basic-link-desc text-light-mode2"}>
+          <p
+            className={
+              theme
+                ? "basic-channelurl-head"
+                : "basic-channelurl-head text-light-mode"
+            }
+          >
+            Links
+          </p>
+          <p
+            className={
+              theme ? "basic-link-desc" : "basic-link-desc text-light-mode2"
+            }
+          >
             Share external links with your viewers. They&apos;ll be visible on
             your channel&apos;s about page. Note: To delete/remove the pre-added
             link kindly leave the input field empty.
@@ -372,12 +428,20 @@ function Basic() {
                     <div className="users-instalink">
                       <InstagramIcon
                         fontSize="large"
-                        className={theme ? "studio-social-icons" : "studio-social-icons social-lightt"}
+                        className={
+                          theme
+                            ? "studio-social-icons"
+                            : "studio-social-icons social-lightt"
+                        }
                         style={{ color: theme ? "white" : "#606060" }}
                       />
                       <input
                         type="text"
-                        className={theme ? "edit-instalink" : "edit-instalink text-light-mode"}
+                        className={
+                          theme
+                            ? "edit-instalink"
+                            : "edit-instalink text-light-mode"
+                        }
                         value={instalink}
                         onChange={(e) => {
                           setInstaLink(e.target.value);
@@ -385,7 +449,9 @@ function Basic() {
                         }}
                       />
                       <CloseIcon
-                        className={theme ? "delete-social" : "delete-social-light"}
+                        className={
+                          theme ? "delete-social" : "delete-social-light"
+                        }
                         style={{ color: theme ? "#aaaaaa89" : "#606060" }}
                         onClick={() => {
                           setLinkChanges(true);
@@ -404,12 +470,20 @@ function Basic() {
                     >
                       <InstagramIcon
                         fontSize="large"
-                        className={theme ? "studio-social-icons" : "studio-social-icons social-lightt"}
+                        className={
+                          theme
+                            ? "studio-social-icons"
+                            : "studio-social-icons social-lightt"
+                        }
                         style={{ color: theme ? "white" : "#606060" }}
                       />
                       <input
                         type="text"
-                        className={theme ? "edit-instalink" : "edit-instalink text-light-mode"}
+                        className={
+                          theme
+                            ? "edit-instalink"
+                            : "edit-instalink text-light-mode"
+                        }
                         value={instalink}
                         onChange={(e) => {
                           setInstaLink(e.target.value);
@@ -417,8 +491,10 @@ function Basic() {
                         }}
                       />
                       <CloseIcon
-                        className={theme ? "delete-social" : "delete-social-light"}
-                        style={{ color: theme?  "#aaaaaa89" : "#606060" }}
+                        className={
+                          theme ? "delete-social" : "delete-social-light"
+                        }
+                        style={{ color: theme ? "#aaaaaa89" : "#606060" }}
                         onClick={() => {
                           setInstaSelected(false);
                           setLinkChanges(true);
@@ -431,12 +507,18 @@ function Basic() {
                     <div className="users-fblink">
                       <FacebookIcon
                         fontSize="large"
-                       className={theme ? "studio-social-icons" : "studio-social-icons social-lightt"}
+                        className={
+                          theme
+                            ? "studio-social-icons"
+                            : "studio-social-icons social-lightt"
+                        }
                         style={{ color: theme ? "white" : "#606060" }}
                       />
                       <input
                         type="text"
-                        className={theme ? "edit-fblink" : "edit-fblink text-light-mode"}
+                        className={
+                          theme ? "edit-fblink" : "edit-fblink text-light-mode"
+                        }
                         value={fblink}
                         onChange={(e) => {
                           setfbLink(e.target.value);
@@ -444,7 +526,9 @@ function Basic() {
                         }}
                       />
                       <CloseIcon
-                        className={theme ? "delete-social" : "delete-social-light"}
+                        className={
+                          theme ? "delete-social" : "delete-social-light"
+                        }
                         style={{ color: theme ? "#aaaaaa89" : "#606060" }}
                         onClick={() => {
                           setLinkChanges(true);
@@ -463,12 +547,18 @@ function Basic() {
                     >
                       <FacebookIcon
                         fontSize="large"
-                        className={theme ? "studio-social-icons" : "studio-social-icons social-lightt"}
-                        style={{ color: theme ? "white" :"#606060" }}
+                        className={
+                          theme
+                            ? "studio-social-icons"
+                            : "studio-social-icons social-lightt"
+                        }
+                        style={{ color: theme ? "white" : "#606060" }}
                       />
                       <input
                         type="text"
-                        className={theme ? "edit-fblink" : "edit-fblink text-light-mode"}
+                        className={
+                          theme ? "edit-fblink" : "edit-fblink text-light-mode"
+                        }
                         value={fblink}
                         onChange={(e) => {
                           setfbLink(e.target.value);
@@ -476,7 +566,9 @@ function Basic() {
                         }}
                       />
                       <CloseIcon
-                        className={theme ? "delete-social" : "delete-social-light"}
+                        className={
+                          theme ? "delete-social" : "delete-social-light"
+                        }
                         style={{ color: theme ? "#aaaaaa89" : "#606060" }}
                         onClick={() => {
                           setFBSelected(false);
@@ -490,12 +582,20 @@ function Basic() {
                     <div className="users-twitterlink">
                       <TwitterIcon
                         fontSize="large"
-                        className={theme ? "studio-social-icons" : "studio-social-icons social-lightt"}
+                        className={
+                          theme
+                            ? "studio-social-icons"
+                            : "studio-social-icons social-lightt"
+                        }
                         style={{ color: theme ? "white" : "#606060" }}
                       />
                       <input
                         type="text"
-                        className={theme ? "edit-twitterlink" : "edit-twitterlink text-light-mode"}
+                        className={
+                          theme
+                            ? "edit-twitterlink"
+                            : "edit-twitterlink text-light-mode"
+                        }
                         value={twitterlink}
                         onChange={(e) => {
                           settwitterLink(e.target.value);
@@ -503,8 +603,10 @@ function Basic() {
                         }}
                       />
                       <CloseIcon
-                        className={theme ? "delete-social" : "delete-social-light"}
-                        style={{ color: theme ? "#aaaaaa89" :"#606060" }}
+                        className={
+                          theme ? "delete-social" : "delete-social-light"
+                        }
+                        style={{ color: theme ? "#aaaaaa89" : "#606060" }}
                         onClick={() => {
                           setLinkChanges(true);
                           settwitterLink("");
@@ -522,12 +624,20 @@ function Basic() {
                     >
                       <TwitterIcon
                         fontSize="large"
-                        className={theme ? "studio-social-icons" : "studio-social-icons social-lightt"}
+                        className={
+                          theme
+                            ? "studio-social-icons"
+                            : "studio-social-icons social-lightt"
+                        }
                         style={{ color: theme ? "white" : "#606060" }}
                       />
                       <input
                         type="text"
-                        className={theme ? "edit-twitterlink" : "edit-twitterlink text-light-mode"}
+                        className={
+                          theme
+                            ? "edit-twitterlink"
+                            : "edit-twitterlink text-light-mode"
+                        }
                         value={twitterlink}
                         onChange={(e) => {
                           settwitterLink(e.target.value);
@@ -535,8 +645,10 @@ function Basic() {
                         }}
                       />
                       <CloseIcon
-                        className={theme ? "delete-social" : "delete-social-light"}
-                        style={{ color: theme ? "#aaaaaa89" :"#606060" }}
+                        className={
+                          theme ? "delete-social" : "delete-social-light"
+                        }
+                        style={{ color: theme ? "#aaaaaa89" : "#606060" }}
                         onClick={() => {
                           setTwitterSelected(false);
                           setLinkChanges(true);
@@ -549,12 +661,20 @@ function Basic() {
                     <div className="users-weblink">
                       <LanguageIcon
                         fontSize="large"
-                        className={theme ? "studio-social-icons" : "studio-social-icons social-lightt"}
+                        className={
+                          theme
+                            ? "studio-social-icons"
+                            : "studio-social-icons social-lightt"
+                        }
                         style={{ color: theme ? "white" : "#606060" }}
                       />
                       <input
                         type="text"
-                        className={theme ? "edit-weblink" : "edit-weblink text-light-mode"}
+                        className={
+                          theme
+                            ? "edit-weblink"
+                            : "edit-weblink text-light-mode"
+                        }
                         value={weblink}
                         onChange={(e) => {
                           setwebLink(e.target.value);
@@ -562,7 +682,9 @@ function Basic() {
                         }}
                       />
                       <CloseIcon
-                        className={theme ? "delete-social" : "delete-social-light"}
+                        className={
+                          theme ? "delete-social" : "delete-social-light"
+                        }
                         style={{ color: theme ? "#aaaaaa89" : "#606060" }}
                         onClick={() => {
                           setLinkChanges(true);
@@ -581,12 +703,20 @@ function Basic() {
                     >
                       <LanguageIcon
                         fontSize="large"
-                        className={theme ? "studio-social-icons" : "studio-social-icons social-lightt"}
+                        className={
+                          theme
+                            ? "studio-social-icons"
+                            : "studio-social-icons social-lightt"
+                        }
                         style={{ color: theme ? "white" : "#606060" }}
                       />
                       <input
                         type="text"
-                        className={theme?  "edit-weblink" : "edit-weblink text-light-mode"}
+                        className={
+                          theme
+                            ? "edit-weblink"
+                            : "edit-weblink text-light-mode"
+                        }
                         value={weblink}
                         onChange={(e) => {
                           setwebLink(e.target.value);
@@ -594,8 +724,10 @@ function Basic() {
                         }}
                       />
                       <CloseIcon
-                        className={theme ? "delete-social" : "delete-social-light"}
-                        style={{ color: theme ? "#aaaaaa89" :"#606060" }}
+                        className={
+                          theme ? "delete-social" : "delete-social-light"
+                        }
+                        style={{ color: theme ? "#aaaaaa89" : "#606060" }}
                         onClick={() => {
                           setWebSelected(false);
                           setLinkChanges(true);
@@ -612,14 +744,20 @@ function Basic() {
                     <p>ADD LINK</p>
                   </div>
                   <div
-                    className="add-more-socials"
+                    className={
+                      theme
+                        ? "add-more-socials"
+                        : "add-more-socials add-social-light"
+                    }
                     style={addLink ? { display: "flex" } : { display: "none" }}
                   >
                     {!element.instagram && (
                       <InstagramIcon
                         fontSize="large"
-                        className="addthis-icon"
-                        style={{ color: "white" }}
+                        className={
+                          theme ? "addthis-icon" : "addthis-icon-light"
+                        }
+                        style={{ color: theme ? "white" : "#1f1f1f" }}
                         onClick={() => {
                           setInstaSelected(!instaSelected);
                           setAddLink(false);
@@ -629,8 +767,10 @@ function Basic() {
                     {!element.facebook && (
                       <FacebookIcon
                         fontSize="large"
-                        className="addthis-icon"
-                        style={{ color: "white" }}
+                        className={
+                          theme ? "addthis-icon" : "addthis-icon-light"
+                        }
+                        style={{ color: theme ? "white" : "#1f1f1f" }}
                         onClick={() => {
                           setFBSelected(!FBSelected);
                           setAddLink(false);
@@ -640,8 +780,10 @@ function Basic() {
                     {!element.twitter && (
                       <TwitterIcon
                         fontSize="large"
-                        className="addthis-icon"
-                        style={{ color: "white" }}
+                        className={
+                          theme ? "addthis-icon" : "addthis-icon-light"
+                        }
+                        style={{ color: theme ? "white" : "#1f1f1f" }}
                         onClick={() => {
                           setTwitterSelected(!TwitterSelected);
                           setAddLink(false);
@@ -651,8 +793,10 @@ function Basic() {
                     {!element.website && (
                       <LanguageIcon
                         fontSize="large"
-                        className="addthis-icon"
-                        style={{ color: "white" }}
+                        className={
+                          theme ? "addthis-icon" : "addthis-icon-light"
+                        }
+                        style={{ color: theme ? "white" : "#1f1f1f" }}
                         onClick={() => {
                           setWebSelected(!WebSelected);
                           setAddLink(false);

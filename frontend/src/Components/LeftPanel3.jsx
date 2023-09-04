@@ -20,6 +20,10 @@ function LeftPanel2() {
     const menu = localStorage.getItem("studioMenuClicked2");
     return menu ? JSON.parse(menu) : false;
   });
+  const [theme, setTheme] = useState(() => {
+    const Dark = localStorage.getItem("Dark");
+    return Dark ? JSON.parse(Dark) : true;
+  });
 
   useEffect(() => {
     const handleMenuButtonClick = () => {
@@ -94,13 +98,19 @@ function LeftPanel2() {
   return (
     <>
       <div
-        className="main-section3"
+        className={
+          theme ? "main-section3" : "main-section3 light-mode text-light-mode"
+        }
         style={
           studioMenuClicked === true ? { display: "none" } : { display: "flex" }
         }
       >
         <div
-          className="first-panel first-panel1"
+          className={
+            theme
+              ? "first-panel first-panel1"
+              : "first-panel first-panel1 preview-lightt"
+          }
           onClick={() => {
             if (window.location.href.includes(`/studio/video/edit/${id}`)) {
               window.location.href = "/studio/video";
@@ -119,7 +129,10 @@ function LeftPanel2() {
           </div>
         </div>
         {/* START HERE  */}
-        <SkeletonTheme baseColor="#353535" highlightColor="#444">
+        <SkeletonTheme
+          baseColor={theme ? "#353535" : "#aaaaaa"}
+          highlightColor={theme ? "#444" : "#b6b6b6"}
+        >
           <div
             className="mid-panel"
             style={
@@ -183,7 +196,13 @@ function LeftPanel2() {
               title={videodata && videodata.Title}
               placement="bottom"
             >
-              <p className="current-video-title">
+              <p
+                className={
+                  theme
+                    ? "current-video-title"
+                    : "current-video-title text-light-mode2"
+                }
+              >
                 {videodata && videodata.Title.length <= 38
                   ? videodata && videodata.Title
                   : `${videodata && videodata.Title.slice(0, 38)}...`}
@@ -195,8 +214,10 @@ function LeftPanel2() {
           <div
             className={
               VideoEditSection === "Details"
-                ? "studio-active panel"
-                : "details panel"
+                ? `${theme ? "studio-active" : "studio-active-light"} panel ${
+                    theme ? "" : "panel-light"
+                  }`
+                : `details panel ${theme ? "" : "panel-light"}`
             }
             onClick={() => {
               localStorage.setItem("Video-Edit Section", "Details");
@@ -215,8 +236,10 @@ function LeftPanel2() {
           <div
             className={
               VideoEditSection === "Video-Comments"
-                ? "studio-active panel"
-                : "comments panel"
+                ? `${theme ? "studio-active" : "studio-active-light"} panel ${
+                    theme ? "" : "panel-light"
+                  }`
+                : `comments panel ${theme ? "" : "panel-light"}`
             }
             onClick={() => {
               localStorage.setItem("Video-Edit Section", "Video-Comments");
@@ -240,7 +263,7 @@ function LeftPanel2() {
       {/* SHORT HAND  */}
 
       <div
-        className="main-section3"
+        className={theme ? "main-section3" : "main-section3 light-mode"}
         style={
           studioMenuClicked === false
             ? { display: "none" }
@@ -248,7 +271,11 @@ function LeftPanel2() {
         }
       >
         <div
-          className="first-panel first-panel1"
+          className={
+            theme
+              ? "first-panel first-panel1"
+              : "first-panel first-panel1 preview-lightt"
+          }
           onClick={() => {
             if (window.location.href.includes(`/studio/video/edit/${id}`)) {
               window.location.href = "/studio/video";
@@ -265,7 +292,10 @@ function LeftPanel2() {
           </div>
         </div>
         {/* START HERE  */}
-        <SkeletonTheme baseColor="#353535" highlightColor="#444">
+        <SkeletonTheme
+          baseColor={theme ? "#353535" : "#aaaaaa"}
+          highlightColor={theme ? "#444" : "#b6b6b6"}
+        >
           <div
             className="mid-panel"
             style={
@@ -317,8 +347,10 @@ function LeftPanel2() {
           <div
             className={
               VideoEditSection === "Details"
-                ? "studio-active panel"
-                : "details panel"
+                ? `${theme ? "studio-active" : "studio-active-light"} panel ${
+                    theme ? "" : "panel-light"
+                  }`
+                : `details panel ${theme ? "" : "panel-light"}`
             }
             onClick={() => {
               localStorage.setItem("Video-Edit Section", "Details");
@@ -341,8 +373,10 @@ function LeftPanel2() {
           <div
             className={
               VideoEditSection === "Video-Comments"
-                ? "studio-active panel"
-                : "comments panel"
+                ? `${theme ? "studio-active" : "studio-active-light"} panel ${
+                    theme ? "" : "panel-light"
+                  }`
+                : `comments panel ${theme ? "" : "panel-light"}`
             }
             onClick={() => {
               localStorage.setItem("Video-Edit Section", "Video-Comments");
@@ -369,9 +403,15 @@ function LeftPanel2() {
 
       {/* ANOTHER SHORT HAND  */}
 
-      <div className="main-section3-new">
+      <div
+        className={theme ? "main-section3-new" : "main-section3-new light-mode"}
+      >
         <div
-          className="first-panel first-panel1"
+          className={
+            theme
+              ? "first-panel first-panel1"
+              : "first-panel first-panel1 preview-lightt"
+          }
           onClick={() => {
             if (window.location.href.includes(`/studio/video/edit/${id}`)) {
               window.location.href = "/studio/video";
@@ -385,7 +425,10 @@ function LeftPanel2() {
           </div>
         </div>
         {/* START HERE  */}
-        <SkeletonTheme baseColor="#353535" highlightColor="#444">
+        <SkeletonTheme
+          baseColor={theme ? "#353535" : "#aaaaaa"}
+          highlightColor={theme ? "#444" : "#b6b6b6"}
+        >
           <div
             className="mid-panel"
             style={
@@ -437,8 +480,10 @@ function LeftPanel2() {
           <div
             className={
               VideoEditSection === "Details"
-                ? "studio-active panel"
-                : "details panel"
+                ? `${theme ? "studio-active" : "studio-active-light"} panel ${
+                    theme ? "" : "panel-light"
+                  }`
+                : `details panel ${theme ? "" : "panel-light"}`
             }
             onClick={() => {
               localStorage.setItem("Video-Edit Section", "Details");
@@ -461,8 +506,10 @@ function LeftPanel2() {
           <div
             className={
               VideoEditSection === "Video-Comments"
-                ? "studio-active panel"
-                : "comments panel"
+                ? `${theme ? "studio-active" : "studio-active-light"} panel ${
+                    theme ? "" : "panel-light"
+                  }`
+                : `comments panel ${theme ? "" : "panel-light"}`
             }
             onClick={() => {
               localStorage.setItem("Video-Edit Section", "Video-Comments");

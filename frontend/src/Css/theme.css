@@ -121,3 +121,29 @@
 .social-lightt{
   background-color: #e4e4e4 !important;
 }
+
+.add-social-light{
+  background-color: #e4e4e4 !important;
+  color: #606060 !important;
+}
+
+.new-light-border{
+  border: 1px solid #606060a0 !important;
+}
+
+.new-light-border2{
+  border: 1px dashed #606060a0 !important;
+}
+
+.desc-light-mode{
+  background-color: white !important;
+}
+
+.copy-light-btn, .copy-light-btn2{
+  cursor: pointer;
+  color: #7d7d7d !important;
+}
+
+.copy-light-btn:hover,.copy-light-btn2:hover{
+  color: #9e9e9e !important;
+}
