@@ -240,7 +240,7 @@ function ChannelPlaylists(prop) {
                           className={
                             theme
                               ? "view-playlist2"
-                              : "view-playlist2 text-light-mode2"
+                              : "view-playlist2-light text-light-mode2"
                           }
                         >
                           View full playlist

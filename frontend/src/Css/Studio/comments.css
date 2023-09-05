@@ -232,6 +232,7 @@
 .right-sidevideo {
   display: flex;
   align-items: start;
+  width: 375px;
 }
 .thiscomment-rightone > p {
   width: 70%;

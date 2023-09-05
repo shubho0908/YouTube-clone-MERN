@@ -994,7 +994,7 @@
 }
 
 .playlistt-details > p:nth-child(2):hover {
-  color: white;
+  color: white !important;
 }
 
 .left-about-section {
@@ -1363,9 +1363,18 @@
     left: 15px;
     width: 44.5vw !important;
   }
+  .playlists-details2 {
+    bottom: 0px;
+    left: 0px !important;
+    width: 44.5vw !important;
+  }
   .playlist-main-img {
     width: 230px !important;
     height: 129px !important;
+  }
+  .created-all-playlistss2{
+    width: 230px !important;
+
   }
   .playlistt-details > p:nth-child(2) {
     margin-top: 8px;
@@ -1610,6 +1619,11 @@
     height: 113px !important;
   }
 
+  .created-all-playlistss2{
+    width: 200px !important;
+
+  }
+
   .featured-channels-sections {
     top: 420px;
   }
@@ -1759,6 +1773,11 @@
     width: 180px !important;
     height: 101px !important;
   }
+  .created-all-playlistss2{
+    width: 180px !important;
+
+  }
+
   .playlistt-details {
     width: 37vw !important;
   }

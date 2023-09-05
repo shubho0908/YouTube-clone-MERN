@@ -346,7 +346,7 @@ function Playlists() {
       <>
         <Navbar />
         <LeftPanel />
-        <div className="searched-content2">
+        <div className="searched-content">
           <img src={nothing} alt="no results" className="nothing-found" />
           <p className="no-results">No videos found!</p>
         </div>
@@ -364,9 +364,14 @@ function Playlists() {
       <>
         <Navbar />
         <LeftPanel />
-        <div className="searched-content2">
+        <div className="searched-content">
           <img src={nothing} alt="no results" className="nothing-found" />
-          <p className="no-results" style={{ fontSize: "16.8px" }}>
+          <p
+            className={
+              theme ? "no-results text-dark-mode" : "no-results text-light-mode"
+            }
+            style={{ fontSize: "16.8px" }}
+          >
             This playlist is set to private by the user!
           </p>
         </div>
@@ -1453,22 +1458,41 @@ function Playlists() {
       {/* DELETE PLAYLIST POPUP */}
 
       <div
-        className={theme ? "delete-playlist-pop" : "delete-playlist-pop light-mode"}
+        className={
+          theme ? "delete-playlist-pop" : "delete-playlist-pop light-mode"
+        }
         ref={deleteRef}
         style={{ display: deleteClicked ? "block" : "none" }}
       >
         <p className="delete-playlist-top">Delete playlist</p>
         <div className="delete-mid">
-          <p className={theme ? "delete-playlist-mid" : "delete-playlist-mid text-light-mode2"}>
-            Are your sure you want to delete <b>{PlaylistName && PlaylistName}</b>?
+          <p
+            className={
+              theme
+                ? "delete-playlist-mid"
+                : "delete-playlist-mid text-light-mode2"
+            }
+          >
+            Are your sure you want to delete{" "}
+            <b>{PlaylistName && PlaylistName}</b>?
           </p>
-          <p className={theme  ? "delete-playlist-mid2" : "delete-playlist-mid2 text-light-mode2"}>
+          <p
+            className={
+              theme
+                ? "delete-playlist-mid2"
+                : "delete-playlist-mid2 text-light-mode2"
+            }
+          >
             Note: Deleting playlists is a permanent action and cannot be undone.
           </p>
         </div>
         <div className="delete-playlist-bottom">
           <button
-            className={theme ? "delete-playlist-cancel" : "delete-playlist-cancel delete-playlist-cancel-light"}
+            className={
+              theme
+                ? "delete-playlist-cancel"
+                : "delete-playlist-cancel delete-playlist-cancel-light"
+            }
             onClick={() => {
               setDeleteClicked(false);
               document.body.classList.remove("bg-css");
@@ -1477,7 +1501,9 @@ function Playlists() {
             Cancel
           </button>
           <button
-            className={theme ? "delete-playlist-ok" : "delete-playlist-ok blue-txt"}
+            className={
+              theme ? "delete-playlist-ok" : "delete-playlist-ok blue-txt"
+            }
             onClick={() => {
               DeletePlaylist();
               setTimeout(() => {

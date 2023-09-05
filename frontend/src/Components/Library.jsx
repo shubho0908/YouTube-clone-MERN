@@ -286,7 +286,12 @@ function Library() {
           <div
             className="watchlater-library"
             style={{
-              display: LibraryLoading ? "block" : "none",
+              display:
+                LibraryLoading &&
+                watchlater &&
+                watchlater.savedData !== "NO DATA"
+                  ? "block"
+                  : "none",
               marginBottom: "20px",
             }}
           >
@@ -334,7 +339,12 @@ function Library() {
           className="watchlater-library"
           style={{
             visibility: LibraryLoading ? "hidden" : "visible",
-            display: !LibraryLoading ? "block" : "none",
+            display:
+              !LibraryLoading &&
+              watchlater &&
+              watchlater.savedData !== "NO DATA"
+                ? "block"
+                : "none",
           }}
         >
           <div className="top-watchlater-library">
@@ -486,8 +496,7 @@ function Library() {
         <hr
           className={theme ? "seperate" : "seperate-light"}
           style={
-            (PlaylistData && PlaylistData !== "No playlists available...") ||
-            (savedPlaylist && savedPlaylist.length > 0)
+            watchlater && watchlater.savedData !== "NO DATA"
               ? { display: "block" }
               : { display: "none" }
           }
@@ -527,8 +536,8 @@ function Library() {
                       <div
                         className={
                           theme
-                            ? "playlistt-details"
-                            : "playlistt-details text-light-mode"
+                            ? "playlistt-details playlists-details2"
+                            : "playlistt-details playlists-details2 text-light-mode"
                         }
                         style={{ position: "relative", top: "12px" }}
                       >
@@ -560,8 +569,8 @@ function Library() {
                         <div
                           className={
                             theme
-                              ? "playlistt-details"
-                              : "playlistt-details text-light-mode"
+                              ? "playlistt-details playlists-details2"
+                              : "playlistt-details playlists-details2 text-light-mode"
                           }
                           style={{ position: "relative", top: "12px" }}
                         >
@@ -664,8 +673,8 @@ function Library() {
                       <div
                         className={
                           theme
-                            ? "playlistt-details"
-                            : "playlistt-details text-light-mode"
+                            ? "playlistt-details playlists-details2"
+                            : "playlistt-details playlists-details2 text-light-mode"
                         }
                       >
                         <p>{element.playlist_name}</p>
@@ -787,8 +796,8 @@ function Library() {
                       <div
                         className={
                           theme
-                            ? "playlistt-details"
-                            : "playlistt-details text-light-mode"
+                            ? "playlistt-details playlists-details2"
+                            : "playlistt-details playlists-details2 text-light-mode"
                         }
                       >
                         <p>{element.playlist_name}</p>
@@ -860,7 +869,7 @@ function Library() {
         <hr
           className={theme ? "seperate" : "seperate-light"}
           style={
-            LikedVideosArray && LikedVideosArray !== "NO DATA"
+            videolike && videolike !== "NO DATA"
               ? { display: "block" }
               : { display: "none" }
           }
@@ -873,7 +882,12 @@ function Library() {
         >
           <div
             className="likedvideos-library"
-            style={{ display: LibraryLoading ? "block" : "none" }}
+            style={{
+              display:
+                LibraryLoading && (videolike && videolike !== "NO DATA")
+                  ? "block"
+                  : "none",
+            }}
           >
             <div className="top-watchlater-library">
               <Skeleton count={1} width={160} height={22} />
@@ -913,7 +927,10 @@ function Library() {
           className="likedvideos-library"
           style={{
             visibility: LibraryLoading ? "hidden" : "visible",
-            display: LibraryLoading ? "none" : "block",
+            display:
+              LibraryLoading || (videolike && videolike === "NO DATA")
+                ? "none"
+                : "block",
           }}
         >
           <div className="top-watchlater-library">
