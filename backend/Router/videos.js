@@ -380,7 +380,7 @@ Videos.get("/checktrending/:videoID/:email", async (req, res) => {
       videoid: videoID,
     });
 
-    if (timeDiffHours < 24 && Views >= 2 && !trendingVideo) {
+    if (timeDiffHours < 24 && Views >= 25 && !trendingVideo) {
       const trending = new TrendingData({
         email: email,
         thumbnailURL: mainVideo.thumbnailURL,

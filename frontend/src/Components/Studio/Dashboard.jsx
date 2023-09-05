@@ -518,7 +518,7 @@ function Dashboard() {
                                             ? element.Title
                                             : `${element.Title.slice(
                                                 0,
-                                                25
+                                                20
                                               )}...`}
                                         </p>
                                       </div>
@@ -590,7 +590,7 @@ function Dashboard() {
                             <div className="toppublish">
                               {element.Title.length <= 42
                                 ? element.Title
-                                : `${element.Title.slice(0, 42)}...`}
+                                : `${element.Title.slice(0, 35)}...`}
                             </div>
                             <div className="bottompublish">
                               <div className="publishviews">
@@ -711,7 +711,7 @@ function Dashboard() {
                             >
                               {element.Title.length <= 25
                                 ? element.Title
-                                : `${element.Title.slice(0, 25)}...`}
+                                : `${element.Title.slice(0, 20)}...`}
                             </p>
                             <p style={{ color: "white" }}>{element.views}</p>
                           </div>

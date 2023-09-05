@@ -318,8 +318,8 @@ function Studio() {
     const file = e.target.files[0];
     const fileSizeInMB = file.size / (1024 * 1024); // Convert file size to MB
 
-    if (fileSizeInMB > 25) {
-      alert("Please select a video file with a size of up to 25MB.");
+    if (fileSizeInMB > 50) {
+      alert("Please select a video file with a size of up to 50MB.");
       return;
     }
 
