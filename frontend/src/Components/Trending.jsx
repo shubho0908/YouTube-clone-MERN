@@ -132,7 +132,7 @@ function Trending() {
         <LeftPanel />
         <div className="searched-content">
           <img src={nothing} alt="no results" className="nothing-found" />
-          <p className="no-results">No videos are currently trending!</p>
+          <p className={theme ? "no-results" : "no-results text-light-mode"}>No videos are currently trending!</p>
         </div>
       </>
     );

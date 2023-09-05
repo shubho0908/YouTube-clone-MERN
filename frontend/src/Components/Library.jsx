@@ -243,7 +243,7 @@ function Library() {
       <>
         <Navbar />
         <LeftPanel />
-        <div className="no-playlists">
+        <div className="searched-content">
           <img src={nothing} alt="no results" className="nothing-found" />
           <p className={theme ? "no-results" : "no-results text-light-mode"}>
             No data found!

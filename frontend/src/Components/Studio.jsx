@@ -641,8 +641,8 @@ function Studio() {
         >
           <ClearRoundedIcon
             fontSize="large"
-            className="close-channel"
-            style={{ color: "rgb(170 170 170 / 50%)" }}
+            className={theme ? "close-channel" : "close-channel-light"}
+            style={{ color: theme ? "rgb(170 170 170 / 50%)" : "#606060" }}
             onClick={() => {
               window.location.href = "/";
             }}
@@ -697,7 +697,7 @@ function Studio() {
                     }
                   }}
                 >
-                  <LinkIcon fontSize="medium" style={{ color: theme ?"white" : "black" }} />
+                  <LinkIcon fontSize="medium" style={{ color: theme ? "white" : "black" }} />
                 </div>
               </Tooltip>
               <div
@@ -1196,11 +1196,11 @@ function Studio() {
                   style={
                     Progress === 100
                       ? {
-                          display: "block",
-                          color: "#3ea6ff",
-                          marginRight: "6px",
-                          animation: "none",
-                        }
+                        display: "block",
+                        color: "#3ea6ff",
+                        marginRight: "6px",
+                        animation: "none",
+                      }
                       : { display: "none" }
                   }
                 />
@@ -1210,11 +1210,11 @@ function Studio() {
                   style={
                     Progress >= 60
                       ? {
-                          display: "block",
-                          color: "#3ea6ff",
-                          marginLeft: "6px",
-                          animation: "none",
-                        }
+                        display: "block",
+                        color: "#3ea6ff",
+                        marginLeft: "6px",
+                        animation: "none",
+                      }
                       : { display: "none" }
                   }
                 />
@@ -1253,9 +1253,8 @@ function Studio() {
                 <button
                   className={
                     loading || Progress !== 100
-                      ? `save-video-data-disable ${
-                          theme ? "" : "text-dark-mode"
-                        }`
+                      ? `save-video-data-disable ${theme ? "" : "text-dark-mode"
+                      }`
                       : `save-video-data ${theme ? "" : "text-dark-mode"}`
                   }
                   onClick={PublishData}

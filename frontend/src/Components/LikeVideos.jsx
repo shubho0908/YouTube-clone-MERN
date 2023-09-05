@@ -119,11 +119,13 @@ function LikeVideos() {
   if (videolike === "NO DATA") {
     return (
       <>
-        <Navbar />
+       <Navbar />
         <LeftPanel />
-        <div className="searched-content2">
+        <div className="searched-content">
           <img src={nothing} alt="no results" className="nothing-found" />
-          <p className="no-results">No liked videos found!</p>
+          <p className={theme ? "no-results" : "no-results text-light-mode"}>
+            No videos found!
+          </p>
         </div>
       </>
     );

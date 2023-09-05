@@ -137,7 +137,8 @@
   }
 }
 
-.social_links,.social_links-light {
+.social_links,
+.social_links-light {
   cursor: pointer;
   transition: all 0.15s ease;
 }
@@ -626,7 +627,7 @@
   z-index: 2;
 }
 
-.close-channel {
+.close-channel,.close-channel-light {
   cursor: pointer;
   position: absolute;
   right: 12px;
@@ -696,8 +697,19 @@
   .selected-visibility {
     width: max-content;
   }
-  .create-btn2{
+  .create-btn2 {
     left: 259px;
+  }
+
+  /* CREATE CHANNEL  */
+
+  .channel-head {
+    font-size: 28px;
+  }
+
+  .channel-slogan {
+    font-size: 15px;
+    text-align: center;
   }
 }
 
@@ -728,7 +740,7 @@
     font-size: 14.5px;
     width: 105px;
   }
-  .create-btn2{
+  .create-btn2 {
     left: 173px;
     top: 497px;
   }
@@ -757,7 +769,9 @@
     height: 82%;
   }
 
-  .details-section, .thumbnail-section,.right-video-section{
+  .details-section,
+  .thumbnail-section,
+  .right-video-section {
     padding-left: 25px;
     padding-right: 25px;
   }
@@ -777,11 +791,40 @@
   .left-ic {
     font-size: 1.9rem !important;
   }
-  .close2{
+  .close2 {
     left: 172px;
   }
   .create-btn2 {
     left: 33%;
     top: 535px;
-}
+  }
+
+  /* CREATE CHANNEL  */
+
+  .create-channel {
+    width: 72vw !important;
+  }
+  .channel-head {
+    font-size: 24px;
+    text-align: center;
+  }
+  .channel-slogan {
+    font-size: 14px;
+  }
+  .selected-pic {
+    width: 90px;
+    height: 90px;
+  }
+  .channelName,
+  .channelAbout {
+    height: 18px;
+    font-size: 14.6px;
+    width: 78vw !important;
+  }
+  .fb-input,
+  .insta-input,
+  .twitter-input,
+  .website-input {
+    font-size: 15px;
+  }
 }
