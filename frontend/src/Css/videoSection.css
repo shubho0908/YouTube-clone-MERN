@@ -83,6 +83,7 @@
 
 .videos-desc > a {
   color: #3eaffe;
+  text-decoration: none;
 }
 
 .vid-title {
@@ -387,10 +388,6 @@
   padding: 15px;
   border-radius: 10px;
   height: fit-content;
-}
-
-.desc-data {
-  text-align: justify;
 }
 
 .left-video-section2 {

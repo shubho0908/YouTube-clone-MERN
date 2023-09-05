@@ -1025,10 +1025,10 @@
   display: flex;
   align-items: center;
 }
-
+/* 
 .myviews {
   margin-right: 5px;
-}
+} */
 
 .keep-playlist-one {
   width: fit-content;

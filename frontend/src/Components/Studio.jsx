@@ -318,8 +318,8 @@ function Studio() {
     const file = e.target.files[0];
     const fileSizeInMB = file.size / (1024 * 1024); // Convert file size to MB
 
-    if (fileSizeInMB > 50) {
-      alert("Please select a video file with a size of up to 50MB.");
+    if (fileSizeInMB > 30) {
+      alert("Please select a video file with a size of up to 30MB.");
       return;
     }
 
@@ -462,8 +462,8 @@ function Studio() {
     const file = e.dataTransfer.files[0];
     const fileSizeInMB = file.size / (1024 * 1024);
 
-    if (fileSizeInMB > 25) {
-      alert("Please select a video file with a size of up to 25MB.");
+    if (fileSizeInMB > 30) {
+      alert("Please select a video file with a size of up to 30MB.");
       return;
     }
 
@@ -670,6 +670,7 @@ function Studio() {
                 type="text"
                 name="channelname"
                 placeholder="Channel Name"
+                maxLength={25}
                 onChange={handleChannelname}
                 required
               />
@@ -681,6 +682,7 @@ function Studio() {
                 onChange={handleChannelabout}
                 style={{ width: "93%", resize: "vertical" }}
                 required
+
               />
               <Tooltip
                 TransitionComponent={Zoom}

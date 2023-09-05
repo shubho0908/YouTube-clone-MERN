@@ -1027,7 +1027,7 @@ function VideoSection() {
   }
 
   const formatDescriptionWithLinks = (description) => {
-    const linkPattern = /(http|https):\/\/www\.[^\s]+/g;
+    const linkPattern = /(http|https):\/\/(www\.)?[^\s]+/g;
     const formattedDescription = description.replace(
       linkPattern,
       (match) => `<a href="${match}" target="_blank">${match}</a>`
@@ -1125,7 +1125,13 @@ function VideoSection() {
               </div>
               {isSubscribed === false || !token ? (
                 <button
-                  className={theme ? "subscribe" : `subscribe-light ${email === usermail ? "dull-subs" : ""}`}
+                  className={
+                    theme
+                      ? "subscribe"
+                      : `subscribe-light ${
+                          email === usermail ? "dull-subs" : ""
+                        }`
+                  }
                   disabled={email === usermail ? true : false}
                   onClick={() => {
                     if (token) {
@@ -2270,7 +2276,13 @@ function VideoSection() {
                             : "recommend-uploader text-light-mode2"
                         }
                       >
-                        <p className="recommend-vid-uploader uploader nohover">
+                        <p
+                          className={
+                            theme
+                              ? "recommend-vid-uploader uploader"
+                              : "recommend-vid-uploader uploader nohover"
+                          }
+                        >
                           {Uploader[index]}
                         </p>
                         <Tooltip
@@ -2391,7 +2403,13 @@ function VideoSection() {
                             : "recommend-uploader text-light-mode2"
                         }
                       >
-                        <p className="recommend-vid-uploader uploader nohover">
+                        <p
+                          className={
+                            theme
+                              ? "recommend-vid-uploader uploader"
+                              : "recommend-vid-uploader uploader nohover"
+                          }
+                        >
                           {Uploader[index]}
                         </p>
                         <Tooltip
@@ -2464,7 +2482,8 @@ function VideoSection() {
               TagSelected !== "All" ? { display: "flex" } : { display: "none" }
             }
           >
-            {userVideos && !rec &&
+            {userVideos &&
+              !rec &&
               userVideos.length > 0 &&
               userVideos.map((element, index) => {
                 return (
@@ -2519,7 +2538,13 @@ function VideoSection() {
                             : "recommend-uploader text-light-mode2"
                         }
                       >
-                        <p className="recommend-vid-uploader uploader nohover">
+                        <p
+                          className={
+                            theme
+                              ? "recommend-vid-uploader uploader"
+                              : "recommend-vid-uploader uploader nohover"
+                          }
+                        >
                           {element.uploader}
                         </p>
                         <Tooltip
@@ -2585,9 +2610,10 @@ function VideoSection() {
                   </div>
                 );
               })}
-            {userVideos && rec &&
+            {userVideos &&
+              rec &&
               userVideos.length > 0 &&
-              userVideos.slice(0,12).map((element, index) => {
+              userVideos.slice(0, 12).map((element, index) => {
                 return (
                   <div
                     className="video-data12"
@@ -2640,7 +2666,13 @@ function VideoSection() {
                             : "recommend-uploader text-light-mode2"
                         }
                       >
-                        <p className="recommend-vid-uploader uploader nohover">
+                        <p
+                          className={
+                            theme
+                              ? "recommend-vid-uploader uploader"
+                              : "recommend-vid-uploader uploader nohover"
+                          }
+                        >
                           {element.uploader}
                         </p>
                         <Tooltip
