@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import ClearRoundedIcon from "@mui/icons-material/ClearRounded";
 import { useNavigate } from "react-router-dom";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import nothing from "../img/nothing.png";
@@ -14,6 +15,8 @@ import PlaylistAddOutlinedIcon from "@mui/icons-material/PlaylistAddOutlined";
 import PlaylistAddCheckOutlinedIcon from "@mui/icons-material/PlaylistAddCheckOutlined";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import jwtDecode from "jwt-decode";
+import Signup from "./Signup";
+import Signin from "./Signin";
 import PublicOutlinedIcon from "@mui/icons-material/PublicOutlined";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Tooltip from "@mui/material/Tooltip";
@@ -33,6 +36,8 @@ function Playlists() {
     const Dark = localStorage.getItem("Dark");
     return Dark ? JSON.parse(Dark) : true;
   });
+  const [isbtnClicked, setisbtnClicked] = useState(false);
+  const [isSwitch, setisSwitched] = useState(false);
 
   const [Email, setEmail] = useState();
   const [playlistsVideos, setPlaylistsVideos] = useState([]);
@@ -42,10 +47,12 @@ function Playlists() {
   const [channelID, setChannelID] = useState();
   const [PlaylistName, setPlaylistName] = useState("");
   const [isSaved, setIsSaved] = useState(false);
+  const [deleteClicked, setDeleteClicked] = useState(false);
   const navigate = useNavigate();
   const token = localStorage.getItem("userToken");
 
   const privacyRef = useRef();
+  const deleteRef = useRef();
 
   //TOAST FUNCTIONS
 
@@ -103,6 +110,17 @@ function Playlists() {
     const handler = (e) => {
       if (!privacyRef.current.contains(e.target)) {
         setprivacyClicked(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handler);
+  }, []);
+
+  useEffect(() => {
+    const handler = (e) => {
+      if (!deleteRef.current.contains(e.target)) {
+        setDeleteClicked(false);
+        document.body.classList.remove("bg-css");
       }
     };
 
@@ -370,11 +388,7 @@ function Playlists() {
         {playlistsVideos && playlistsVideos.length > 0 ? (
           <div
             className="like-video-sections"
-            style={
-              menuClicked === false
-                ? { left: "80px" }
-                : { left: "255px" }
-            }
+            style={menuClicked === false ? { left: "80px" } : { left: "255px" }}
           >
             <div
               className={
@@ -640,7 +654,14 @@ function Playlists() {
                               ? { display: "none" }
                               : { display: "block", color: "white" }
                           }
-                          onClick={SaveOtherPlaylist}
+                          onClick={() => {
+                            if (token) {
+                              SaveOtherPlaylist();
+                            } else {
+                              setisbtnClicked(true);
+                              document.body.classList.add("bg-css");
+                            }
+                          }}
                         />
                       </Tooltip>
                     ) : (
@@ -657,7 +678,14 @@ function Playlists() {
                               ? { display: "none" }
                               : { display: "block", color: "white" }
                           }
-                          onClick={SaveOtherPlaylist}
+                          onClick={() => {
+                            if (token) {
+                              SaveOtherPlaylist();
+                            } else {
+                              setisbtnClicked(true);
+                              document.body.classList.add("bg-css");
+                            }
+                          }}
                         />
                       </Tooltip>
                     )}
@@ -687,10 +715,8 @@ function Playlists() {
                             : { display: "none" }
                         }
                         onClick={() => {
-                          DeletePlaylist();
-                          setTimeout(() => {
-                            window.location.href = "/";
-                          }, 300);
+                          setDeleteClicked(true);
+                          document.body.classList.add("bg-css");
                         }}
                       />
                     </Tooltip>
@@ -726,49 +752,49 @@ function Playlists() {
               >
                 {playlistsVideos.length > 0
                   ? playlistsVideos.map((index) => {
-                    return (
-                      <div
-                        className={
-                          theme
-                            ? "liked-all-videos"
-                            : "liked-all-videos liked-all-videos-light text-light-mode"
-                        }
-                        key={index}
-                      >
-                        <div className="liked-videos-all-data">
-                          <Skeleton
-                            count={1}
-                            width={180}
-                            height={101}
-                            style={{ borderRadius: "12px" }}
-                            className="sk-watch-thumbnail"
-                          />
-                          <div
-                            className="its-content"
-                            style={{
-                              position: "relative",
-                              left: "10px",
-                              top: "6px",
-                            }}
-                          >
+                      return (
+                        <div
+                          className={
+                            theme
+                              ? "liked-all-videos"
+                              : "liked-all-videos liked-all-videos-light text-light-mode"
+                          }
+                          key={index}
+                        >
+                          <div className="liked-videos-all-data">
                             <Skeleton
                               count={1}
-                              width={450}
-                              height={20}
-                              className="sk-watch-title"
+                              width={180}
+                              height={101}
+                              style={{ borderRadius: "12px" }}
+                              className="sk-watch-thumbnail"
                             />
-                            <Skeleton
-                              count={1}
-                              width={250}
-                              height={16}
-                              style={{ position: "relative", top: "10px" }}
-                              className="sk-watch-channel"
-                            />
+                            <div
+                              className="its-content"
+                              style={{
+                                position: "relative",
+                                left: "10px",
+                                top: "6px",
+                              }}
+                            >
+                              <Skeleton
+                                count={1}
+                                width={450}
+                                height={20}
+                                className="sk-watch-title"
+                              />
+                              <Skeleton
+                                count={1}
+                                width={250}
+                                height={16}
+                                style={{ position: "relative", top: "10px" }}
+                                className="sk-watch-channel"
+                              />
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    );
-                  })
+                      );
+                    })
                   : ""}
               </div>
             </SkeletonTheme>
@@ -782,64 +808,64 @@ function Playlists() {
             >
               {playlistsVideos.length > 0
                 ? playlistsVideos.map((element, index) => {
-                  return (
-                    <div
-                      className={
-                        theme
-                          ? "liked-all-videos"
-                          : "liked-all-videos liked-all-videos-light text-light-mode"
-                      }
-                      key={index}
-                    >
-                      <p style={{ color: "#aaa" }}>{index + 1}</p>
+                    return (
                       <div
-                        className="liked-videos-all-data playlistvideos"
-                        onClick={() => {
-                          if (token) {
-                            updateViews(element.videoID);
-                            setTimeout(() => {
-                              window.location.href = `/video/${element.videoID}`;
-                            }, 400);
-                          } else {
-                            window.location.href = `/video/${element.videoID}`;
-                          }
-                        }}
+                        className={
+                          theme
+                            ? "liked-all-videos"
+                            : "liked-all-videos liked-all-videos-light text-light-mode"
+                        }
+                        key={index}
                       >
-                        <img
-                          src={element.thumbnail}
-                          alt="first-like-thumbnail"
-                          loading="lazy"
-                        />
-                        <p
-                          className={
-                            theme
-                              ? "durationn3 playlist-duration"
-                              : "durationn3 playlist-duration text-dark-mode"
-                          }
+                        <p style={{ color: "#aaa" }}>{index + 1}</p>
+                        <div
+                          className="liked-videos-all-data playlistvideos"
+                          onClick={() => {
+                            if (token) {
+                              updateViews(element.videoID);
+                              setTimeout(() => {
+                                window.location.href = `/video/${element.videoID}`;
+                              }, 400);
+                            } else {
+                              window.location.href = `/video/${element.videoID}`;
+                            }
+                          }}
                         >
-                          {Math.floor(element.videolength / 60) +
-                            ":" +
-                            (Math.round(element.videolength % 60) < 10
-                              ? "0" + Math.round(element.videolength % 60)
-                              : Math.round(element.videolength % 60))}
-                        </p>
-                        <div className="its-content playlist-contentt">
-                          {window.innerWidth <= 1000 ? (
-                            <p>
-                              {element.title.length <= 50
-                                ? element.title
-                                : `${element.title.slice(0, 50)}..`}
-                            </p>
-                          ) : (
-                            <p>{element.title}</p>
-                          )}
+                          <img
+                            src={element.thumbnail}
+                            alt="first-like-thumbnail"
+                            loading="lazy"
+                          />
+                          <p
+                            className={
+                              theme
+                                ? "durationn3 playlist-duration"
+                                : "durationn3 playlist-duration text-dark-mode"
+                            }
+                          >
+                            {Math.floor(element.videolength / 60) +
+                              ":" +
+                              (Math.round(element.videolength % 60) < 10
+                                ? "0" + Math.round(element.videolength % 60)
+                                : Math.round(element.videolength % 60))}
+                          </p>
+                          <div className="its-content playlist-contentt">
+                            {window.innerWidth <= 1000 ? (
+                              <p>
+                                {element.title.length <= 50
+                                  ? element.title
+                                  : `${element.title.slice(0, 50)}..`}
+                              </p>
+                            ) : (
+                              <p>{element.title}</p>
+                            )}
 
-                          <p>{element.video_uploader}</p>
+                            <p>{element.video_uploader}</p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  );
-                })
+                    );
+                  })
                 : ""}
             </div>
           </div>
@@ -864,11 +890,7 @@ function Playlists() {
         {playlistsVideos && playlistsVideos.length > 0 ? (
           <div
             className="like-video-sections2"
-            style={
-              menuClicked === false
-                ? { left: "80px" }
-                : { left: "255px" }
-            }
+            style={menuClicked === false ? { left: "80px" } : { left: "255px" }}
           >
             <div
               className={
@@ -1025,7 +1047,7 @@ function Playlists() {
                         className="update-privacy"
                         style={
                           playlistDetails &&
-                            playlistDetails.owner_email === Email
+                          playlistDetails.owner_email === Email
                             ? { display: "block" }
                             : { display: "none" }
                         }
@@ -1136,7 +1158,14 @@ function Playlists() {
                                 ? { display: "none" }
                                 : { display: "block", color: "white" }
                             }
-                            onClick={SaveOtherPlaylist}
+                            onClick={() => {
+                              if (token) {
+                                SaveOtherPlaylist();
+                              } else {
+                                setisbtnClicked(true);
+                                document.body.classList.add("bg-css");
+                              }
+                            }}
                           />
                         </Tooltip>
                       ) : (
@@ -1153,7 +1182,14 @@ function Playlists() {
                                 ? { display: "none" }
                                 : { display: "block", color: "white" }
                             }
-                            onClick={SaveOtherPlaylist}
+                            onClick={() => {
+                              if (token) {
+                                SaveOtherPlaylist();
+                              } else {
+                                setisbtnClicked(true);
+                                document.body.classList.add("bg-css");
+                              }
+                            }}
                           />
                         </Tooltip>
                       )}
@@ -1183,10 +1219,8 @@ function Playlists() {
                               : { display: "none" }
                           }
                           onClick={() => {
-                            DeletePlaylist();
-                            setTimeout(() => {
-                              window.location.href = "/";
-                            }, 300);
+                            setDeleteClicked(true);
+                            document.body.classList.add("bg-css");
                           }}
                         />
                       </Tooltip>
@@ -1223,49 +1257,49 @@ function Playlists() {
               >
                 {playlistsVideos.length > 0
                   ? playlistsVideos.map((index) => {
-                    return (
-                      <div
-                        className={
-                          theme
-                            ? "liked-all-videos"
-                            : "liked-all-videos liked-all-videos-light text-light-mode"
-                        }
-                        key={index}
-                      >
-                        <div className="liked-videos-all-data">
-                          <Skeleton
-                            count={1}
-                            width={180}
-                            height={101}
-                            style={{ borderRadius: "12px" }}
-                            className="sk-watch-thumbnail"
-                          />
-                          <div
-                            className="its-content"
-                            style={{
-                              position: "relative",
-                              left: "10px",
-                              top: "6px",
-                            }}
-                          >
+                      return (
+                        <div
+                          className={
+                            theme
+                              ? "liked-all-videos"
+                              : "liked-all-videos liked-all-videos-light text-light-mode"
+                          }
+                          key={index}
+                        >
+                          <div className="liked-videos-all-data">
                             <Skeleton
                               count={1}
-                              width={450}
-                              height={20}
-                              className="sk-watch-title"
+                              width={180}
+                              height={101}
+                              style={{ borderRadius: "12px" }}
+                              className="sk-watch-thumbnail"
                             />
-                            <Skeleton
-                              count={1}
-                              width={250}
-                              height={16}
-                              style={{ position: "relative", top: "10px" }}
-                              className="sk-watch-channel"
-                            />
+                            <div
+                              className="its-content"
+                              style={{
+                                position: "relative",
+                                left: "10px",
+                                top: "6px",
+                              }}
+                            >
+                              <Skeleton
+                                count={1}
+                                width={450}
+                                height={20}
+                                className="sk-watch-title"
+                              />
+                              <Skeleton
+                                count={1}
+                                width={250}
+                                height={16}
+                                style={{ position: "relative", top: "10px" }}
+                                className="sk-watch-channel"
+                              />
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    );
-                  })
+                      );
+                    })
                   : ""}
               </div>
             </SkeletonTheme>
@@ -1279,64 +1313,64 @@ function Playlists() {
             >
               {playlistsVideos.length > 0
                 ? playlistsVideos.map((element, index) => {
-                  return (
-                    <div
-                      className={
-                        theme
-                          ? "liked-all-videos"
-                          : "liked-all-videos liked-all-videos-light text-light-mode"
-                      }
-                      key={index}
-                    >
-                      <p style={{ color: "#aaa" }}>{index + 1}</p>
+                    return (
                       <div
-                        className="liked-videos-all-data playlistvideos"
-                        onClick={() => {
-                          if (token) {
-                            updateViews(element.videoID);
-                            setTimeout(() => {
-                              window.location.href = `/video/${element.videoID}`;
-                            }, 400);
-                          } else {
-                            window.location.href = `/video/${element.videoID}`;
-                          }
-                        }}
+                        className={
+                          theme
+                            ? "liked-all-videos"
+                            : "liked-all-videos liked-all-videos-light text-light-mode"
+                        }
+                        key={index}
                       >
-                        <img
-                          src={element.thumbnail}
-                          alt="first-like-thumbnail"
-                          loading="lazy"
-                        />
-                        <p
-                          className={
-                            theme
-                              ? "durationn3 playlist-duration"
-                              : "durationn3 playlist-duration text-dark-mode"
-                          }
+                        <p style={{ color: "#aaa" }}>{index + 1}</p>
+                        <div
+                          className="liked-videos-all-data playlistvideos"
+                          onClick={() => {
+                            if (token) {
+                              updateViews(element.videoID);
+                              setTimeout(() => {
+                                window.location.href = `/video/${element.videoID}`;
+                              }, 400);
+                            } else {
+                              window.location.href = `/video/${element.videoID}`;
+                            }
+                          }}
                         >
-                          {Math.floor(element.videolength / 60) +
-                            ":" +
-                            (Math.round(element.videolength % 60) < 10
-                              ? "0" + Math.round(element.videolength % 60)
-                              : Math.round(element.videolength % 60))}
-                        </p>
-                        <div className="its-content playlist-contentt">
-                          {window.innerWidth <= 1000 ? (
-                            <p>
-                              {element.title.length <= 50
-                                ? element.title
-                                : `${element.title.slice(0, 50)}..`}
-                            </p>
-                          ) : (
-                            <p>{element.title}</p>
-                          )}
+                          <img
+                            src={element.thumbnail}
+                            alt="first-like-thumbnail"
+                            loading="lazy"
+                          />
+                          <p
+                            className={
+                              theme
+                                ? "durationn3 playlist-duration"
+                                : "durationn3 playlist-duration text-dark-mode"
+                            }
+                          >
+                            {Math.floor(element.videolength / 60) +
+                              ":" +
+                              (Math.round(element.videolength % 60) < 10
+                                ? "0" + Math.round(element.videolength % 60)
+                                : Math.round(element.videolength % 60))}
+                          </p>
+                          <div className="its-content playlist-contentt">
+                            {window.innerWidth <= 1000 ? (
+                              <p>
+                                {element.title.length <= 50
+                                  ? element.title
+                                  : `${element.title.slice(0, 50)}..`}
+                              </p>
+                            ) : (
+                              <p>{element.title}</p>
+                            )}
 
-                          <p>{element.video_uploader}</p>
+                            <p>{element.video_uploader}</p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  );
-                })
+                    );
+                  })
                 : ""}
             </div>
           </div>
@@ -1347,6 +1381,113 @@ function Playlists() {
             </div>
           </div>
         )}
+      </div>
+
+      {/* SIGNUP/SIGNIN  */}
+
+      <div
+        className={
+          theme ? "auth-popup" : "auth-popup light-mode text-light-mode"
+        }
+        style={
+          isbtnClicked === true ? { display: "block" } : { display: "none" }
+        }
+      >
+        <ClearRoundedIcon
+          onClick={() => {
+            if (isbtnClicked === false) {
+              setisbtnClicked(true);
+            } else {
+              setisbtnClicked(false);
+              document.body.classList.remove("bg-css");
+            }
+          }}
+          className="cancel"
+          fontSize="large"
+          style={{ color: "gray" }}
+        />
+        <div
+          className="signup-last"
+          style={
+            isSwitch === false ? { display: "block" } : { display: "none" }
+          }
+        >
+          <Signup />
+          <div className="already">
+            <p>Already have an account?</p>
+            <p
+              onClick={() => {
+                if (isSwitch === false) {
+                  setisSwitched(true);
+                } else {
+                  setisSwitched(false);
+                }
+              }}
+            >
+              Signin
+            </p>
+          </div>
+        </div>
+        <div
+          className="signin-last"
+          style={isSwitch === true ? { display: "block" } : { display: "none" }}
+        >
+          <Signin />
+          <div className="already">
+            <p>Don&apos;t have an account?</p>
+            <p
+              onClick={() => {
+                if (isSwitch === false) {
+                  setisSwitched(true);
+                } else {
+                  setisSwitched(false);
+                }
+              }}
+            >
+              Signup
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* DELETE PLAYLIST POPUP */}
+
+      <div
+        className={theme ? "delete-playlist-pop" : "delete-playlist-pop light-mode"}
+        ref={deleteRef}
+        style={{ display: deleteClicked ? "block" : "none" }}
+      >
+        <p className="delete-playlist-top">Delete playlist</p>
+        <div className="delete-mid">
+          <p className={theme ? "delete-playlist-mid" : "delete-playlist-mid text-light-mode2"}>
+            Are your sure you want to delete <b>{PlaylistName && PlaylistName}</b>?
+          </p>
+          <p className={theme  ? "delete-playlist-mid2" : "delete-playlist-mid2 text-light-mode2"}>
+            Note: Deleting playlists is a permanent action and cannot be undone.
+          </p>
+        </div>
+        <div className="delete-playlist-bottom">
+          <button
+            className={theme ? "delete-playlist-cancel" : "delete-playlist-cancel delete-playlist-cancel-light"}
+            onClick={() => {
+              setDeleteClicked(false);
+              document.body.classList.remove("bg-css");
+            }}
+          >
+            Cancel
+          </button>
+          <button
+            className={theme ? "delete-playlist-ok" : "delete-playlist-ok blue-txt"}
+            onClick={() => {
+              DeletePlaylist();
+              setTimeout(() => {
+                window.location.href = "/";
+              }, 400);
+            }}
+          >
+            Delete
+          </button>
+        </div>
       </div>
     </>
   );
