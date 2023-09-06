@@ -151,7 +151,7 @@ function Content() {
       try {
         if (Email !== undefined) {
           const response = await fetch(
-            `http://localhost:3000/getuservideos/${Email}`
+            `https://youtube-clone-mern-backend.vercel.app/getuservideos/${Email}`
           );
 
           const data = await response.json();
@@ -172,7 +172,7 @@ function Content() {
       try {
         if (DeleteVideoID !== undefined) {
           const response = await fetch(
-            `http://localhost:3000/getdeletevideodata/${DeleteVideoID}`
+            `https://youtube-clone-mern-backend.vercel.app/getdeletevideodata/${DeleteVideoID}`
           );
 
           const data = await response.json();
@@ -210,7 +210,7 @@ function Content() {
     try {
       if (id !== undefined) {
         const response = await fetch(
-          `http://localhost:3000/deletevideo/${id}`,
+          `https://youtube-clone-mern-backend.vercel.app/deletevideo/${id}`,
           {
             method: "POST",
             headers: {

@@ -46,7 +46,7 @@ function LikeVideos() {
     const getLikeVideos = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/getlikevideos/${email}`
+          `https://youtube-clone-mern-backend.vercel.app/getlikevideos/${email}`
         );
         const result = await response.json();
         setLikedVideos(result);
@@ -104,7 +104,7 @@ function LikeVideos() {
 
   const updateViews = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3000/updateview/${id}`, {
+      const response = await fetch(`https://youtube-clone-mern-backend.vercel.app/updateview/${id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

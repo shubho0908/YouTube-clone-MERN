@@ -123,7 +123,7 @@ function VideoComments() {
       try {
         if (Email !== undefined) {
           const response = await fetch(
-            `http://localhost:3000/getchannel/${Email}`
+            `https://youtube-clone-mern-backend.vercel.app/getchannel/${Email}`
           );
           const { profile } = await response.json();
           setProfile(profile);
@@ -142,7 +142,7 @@ function VideoComments() {
       try {
         if (id !== undefined) {
           const response = await fetch(
-            `http://localhost:3000/getvideocommentsbyid/${id}`
+            `https://youtube-clone-mern-backend.vercel.app/getvideocommentsbyid/${id}`
           );
           const comments = await response.json();
           setVideoComments(comments);
@@ -160,7 +160,7 @@ function VideoComments() {
     try {
       if (commentId !== undefined && id !== undefined && Email !== undefined) {
         const response = await fetch(
-          `http://localhost:3000/likecomment/${id}/${commentId}/${Email}`,
+          `https://youtube-clone-mern-backend.vercel.app/likecomment/${id}/${commentId}/${Email}`,
           {
             method: "POST",
             headers: {
@@ -178,7 +178,7 @@ function VideoComments() {
   const HeartComment = async (id, commentID) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/heartcomment/${id}/${commentID}`,
+        `https://youtube-clone-mern-backend.vercel.app/heartcomment/${id}/${commentID}`,
         {
           method: "POST",
           headers: {
@@ -195,7 +195,7 @@ function VideoComments() {
   const DeleteComment = async (id, commentId) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/deletecomment/${id}/${commentId}/${Email}`,
+        `https://youtube-clone-mern-backend.vercel.app/deletecomment/${id}/${commentId}/${Email}`,
         {
           method: "POST",
           headers: {

@@ -136,7 +136,7 @@ function Playlists() {
       try {
         if (id !== undefined) {
           const response = await fetch(
-            `http://localhost:3000/getplaylists/${id}`
+            `https://youtube-clone-mern-backend.vercel.app/getplaylists/${id}`
           );
           const { playlistVideos, myPlaylists } = await response.json();
           setPlaylistsVideos(playlistVideos);
@@ -200,7 +200,7 @@ function Playlists() {
 
   const updateViews = async (id) => {
     try {
-      const response = await fetch(`http://localhost:3000/updateview/${id}`, {
+      const response = await fetch(`https://youtube-clone-mern-backend.vercel.app/updateview/${id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -217,7 +217,7 @@ function Playlists() {
       try {
         if (playlistDetails.owner_email !== undefined) {
           const response = await fetch(
-            `http://localhost:3000/getchannelid/${playlistDetails.owner_email}`
+            `https://youtube-clone-mern-backend.vercel.app/getchannelid/${playlistDetails.owner_email}`
           );
           const { channelID } = await response.json();
           setChannelID(channelID);
@@ -237,7 +237,7 @@ function Playlists() {
       try {
         if (id !== undefined && Email !== undefined) {
           const response = await fetch(
-            `http://localhost:3000/getsavedplaylist/${id}/${Email}`
+            `https://youtube-clone-mern-backend.vercel.app/getsavedplaylist/${id}/${Email}`
           );
           const data = await response.json();
           if (data === "Found") {
@@ -259,7 +259,7 @@ function Playlists() {
 
   const saveEditData = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/saveplaylist/${id}`, {
+      const response = await fetch(`https://youtube-clone-mern-backend.vercel.app/saveplaylist/${id}`, {
         method: "POST",
         body: JSON.stringify({ playlist_name: PlaylistName }),
         headers: {
@@ -276,7 +276,7 @@ function Playlists() {
   const DeletePlaylist = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3000/deleteplaylist/${id}`,
+        `https://youtube-clone-mern-backend.vercel.app/deleteplaylist/${id}`,
         {
           method: "POST",
           headers: {
@@ -304,7 +304,7 @@ function Playlists() {
   const setPrivacy = async (privacy) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/saveplaylistprivacy/${id}`,
+        `https://youtube-clone-mern-backend.vercel.app/saveplaylistprivacy/${id}`,
         {
           method: "POST",
           body: JSON.stringify({ privacy }),
@@ -322,7 +322,7 @@ function Playlists() {
   const SaveOtherPlaylist = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3000/addotherplaylist/${id}/${Email}`,
+        `https://youtube-clone-mern-backend.vercel.app/addotherplaylist/${id}/${Email}`,
         {
           method: "POST",
           headers: {

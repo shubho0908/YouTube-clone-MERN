@@ -68,7 +68,7 @@ function FeaturedChannels(prop) {
       try {
         if (prop.newmail !== undefined) {
           const response = await fetch(
-            `http://localhost:3000/getsubscriptions/${prop.newmail}`
+            `https://youtube-clone-mern-backend.vercel.app/getsubscriptions/${prop.newmail}`
           );
           const result = await response.json();
           setSubscriptions(result);
@@ -86,7 +86,7 @@ function FeaturedChannels(prop) {
     const getFeaturedChannels = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/getfeaturedchannels/${prop.newmail}`
+          `https://youtube-clone-mern-backend.vercel.app/getfeaturedchannels/${prop.newmail}`
         );
         const featuredChannelData = await response.json();
         setFeaturedChannelsData(featuredChannelData);
@@ -111,7 +111,7 @@ function FeaturedChannels(prop) {
         };
 
         const response = await fetch(
-          `http://localhost:3000/savefeaturedchannel/${prop.newmail}`,
+          `https://youtube-clone-mern-backend.vercel.app/savefeaturedchannel/${prop.newmail}`,
           {
             method: "POST",
             body: JSON.stringify(data),
@@ -136,7 +136,7 @@ function FeaturedChannels(prop) {
   const DeleteChannel = async (channelid) => {
     try {
       const response = await fetch(
-        `http://localhost:3000/deletefeaturedchannel/${Email}/${channelid}`,
+        `https://youtube-clone-mern-backend.vercel.app/deletefeaturedchannel/${Email}/${channelid}`,
         {
           method: "POST",
           headers: {

@@ -72,7 +72,7 @@ function Navbar() {
       try {
         if (email) {
           const response = await fetch(
-            `http://localhost:3000/getuserimage/${email}`
+            `https://youtube-clone-mern-backend.vercel.app/getuserimage/${email}`
           );
           const { channelIMG } = await response.json();
           setProfilePic(channelIMG);

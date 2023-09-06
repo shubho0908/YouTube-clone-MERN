@@ -45,7 +45,7 @@ function Reset() {
       return;
     } else {
       setBtnLoading(true);
-      const response = await fetch(`http://localhost:3000/resetlink`, {
+      const response = await fetch(`https://youtube-clone-mern-backend.vercel.app/resetlink`, {
         method: "POST",
         body: JSON.stringify({ email }),
         headers: {

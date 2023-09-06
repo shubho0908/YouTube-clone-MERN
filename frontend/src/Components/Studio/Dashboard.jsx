@@ -63,7 +63,7 @@ function Dashboard() {
       try {
         if (Email !== undefined) {
           const response = await fetch(
-            `http://localhost:3000/getuservideos/${Email}`
+            `https://youtube-clone-mern-backend.vercel.app/getuservideos/${Email}`
           );
           const data = await response.json();
           setMyVideos(data);
@@ -83,7 +83,7 @@ function Dashboard() {
       try {
         if (Email !== undefined) {
           const response = await fetch(
-            `http://localhost:3000/getsubscribers/${Email}`
+            `https://youtube-clone-mern-backend.vercel.app/getsubscribers/${Email}`
           );
           const subscribers = await response.json();
 
@@ -105,7 +105,7 @@ function Dashboard() {
       try {
         if (Email !== undefined) {
           const response = await fetch(
-            `http://localhost:3000/totalviews/${Email}`
+            `https://youtube-clone-mern-backend.vercel.app/totalviews/${Email}`
           );
           const totalViews = await response.json();
           setTotalViews(totalViews);

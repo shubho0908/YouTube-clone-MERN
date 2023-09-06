@@ -85,7 +85,7 @@ function Library() {
       try {
         if (email !== undefined) {
           const response = await fetch(
-            `http://localhost:3000/getplaylistdata/${email}`
+            `https://youtube-clone-mern-backend.vercel.app/getplaylistdata/${email}`
           );
           const playlistData = await response.json();
           setPlaylistData(playlistData);
@@ -102,7 +102,7 @@ function Library() {
       try {
         if (email !== undefined) {
           const response = await fetch(
-            `http://localhost:3000/getwatchlater/${email}`
+            `https://youtube-clone-mern-backend.vercel.app/getwatchlater/${email}`
           );
           const savedData = await response.json();
           setWatchLater(savedData);
@@ -121,7 +121,7 @@ function Library() {
     const getLikeVideos = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/getlikevideos/${email}`
+          `https://youtube-clone-mern-backend.vercel.app/getlikevideos/${email}`
         );
         const result = await response.json();
         setLikedVideos(result);
@@ -140,7 +140,7 @@ function Library() {
       try {
         if (email !== undefined) {
           const response = await fetch(
-            `http://localhost:3000/getchannelid/${email}`
+            `https://youtube-clone-mern-backend.vercel.app/getchannelid/${email}`
           );
           const { channelID } = await response.json();
           setChannelID(channelID);
@@ -160,7 +160,7 @@ function Library() {
       try {
         if (email !== undefined) {
           const response = await fetch(
-            `http://localhost:3000/getsavedplaylist/${email}`
+            `https://youtube-clone-mern-backend.vercel.app/getsavedplaylist/${email}`
           );
           const matchingPlaylists = await response.json();
           setSavedPlaylist(matchingPlaylists);

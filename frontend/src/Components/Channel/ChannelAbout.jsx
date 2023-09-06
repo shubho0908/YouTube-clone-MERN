@@ -39,7 +39,7 @@ function ChannelAbout(prop) {
     const getUserMail = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/getotherchannel/${prop.channelid}`
+          `https://youtube-clone-mern-backend.vercel.app/getotherchannel/${prop.channelid}`
         );
         const userEmail = await response.json();
         setEmail(userEmail);
@@ -62,7 +62,7 @@ function ChannelAbout(prop) {
       try {
         if (Email !== undefined) {
           const response = await fetch(
-            `http://localhost:3000/getabout/${Email}`
+            `https://youtube-clone-mern-backend.vercel.app/getabout/${Email}`
           );
           const { description, sociallinks, joining } = await response.json();
           setDescription(description);
@@ -81,7 +81,7 @@ function ChannelAbout(prop) {
       try {
         if (Email !== undefined) {
           const response = await fetch(
-            `http://localhost:3000/totalviews/${Email}`
+            `https://youtube-clone-mern-backend.vercel.app/totalviews/${Email}`
           );
           const totalViews = await response.json();
           setTotalViews(totalViews);

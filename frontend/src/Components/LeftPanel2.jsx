@@ -99,7 +99,7 @@ function LeftPanel2() {
       try {
         if (email !== undefined) {
           const response = await fetch(
-            `http://localhost:3000/getchannel/${email}`
+            `https://youtube-clone-mern-backend.vercel.app/getchannel/${email}`
           );
           const { profile, ChannelName } = await response.json();
           setProfileIMG(profile);
@@ -122,7 +122,7 @@ function LeftPanel2() {
       try {
         if (email !== undefined) {
           const response = await fetch(
-            `http://localhost:3000/getchannelid/${email}`
+            `https://youtube-clone-mern-backend.vercel.app/getchannelid/${email}`
           );
           const { channelID } = await response.json();
           setChannelId(channelID);
