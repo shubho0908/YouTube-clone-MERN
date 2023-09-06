@@ -15,7 +15,7 @@ const Studio = require("./studio");
 router.use(cors(
 
   {
-    origin: ["https://youtube-clone-mern.vercel.app/"],
+    origin: ["https://youtube-clone-mern.vercel.app"],
     methods: ["POST", "GET"],
     credentials:true
   }
