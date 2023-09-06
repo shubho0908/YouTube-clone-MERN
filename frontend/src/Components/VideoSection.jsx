@@ -14,7 +14,7 @@ import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlin
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbDownOutlinedIcon from "@mui/icons-material/ThumbDownOutlined";
 import ReplyIcon from "@mui/icons-material/Reply";
-import { TfiDownload } from "react-icons/Tfi";
+import { LiaDownloadSolid } from "react-icons/lia";
 import BookmarkAddOutlinedIcon from "@mui/icons-material/BookmarkAddOutlined";
 import avatar from "../img/avatar.png";
 import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
@@ -1284,7 +1284,7 @@ function VideoSection() {
                   onClick={downloadVideo}
                 >
                   <h3>
-                    <TfiDownload
+                    <LiaDownloadSolid
                       className="download-icon"
                       color={theme ? "white" : "black"}
                     />
@@ -1479,7 +1479,7 @@ function VideoSection() {
                     onClick={downloadVideo}
                   >
                     <h3>
-                      <TfiDownload className="download-icon" />
+                      <LiaDownloadSolid className="download-icon" />
                     </h3>
                     <p className="download-txt">Download</p>
                   </div>
@@ -1640,7 +1640,7 @@ function VideoSection() {
                     onClick={downloadVideo}
                   >
                     <h3>
-                      <TfiDownload className="download-icon" />
+                      <LiaDownloadSolid className="download-icon" />
                     </h3>
                     <p className="download-txt">Download</p>
                   </div>
