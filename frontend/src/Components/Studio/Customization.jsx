@@ -103,7 +103,7 @@ function Customization() {
       try {
         if (email !== undefined) {
           const response = await fetch(
-            `http://localhost:3000/getchannelid/${email}`
+            `https://youtube-clone-mern-backend.vercel.app/getchannelid/${email}`
           );
           const { channelID } = await response.json();
           setChannelID(channelID);

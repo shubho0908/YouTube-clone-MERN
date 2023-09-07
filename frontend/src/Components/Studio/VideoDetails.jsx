@@ -113,7 +113,7 @@ function VideoDetails() {
       try {
         if (id !== undefined) {
           const response = await fetch(
-            `http://localhost:3000/getvideodata/${id}`
+            `https://youtube-clone-mern-backend.vercel.app/getvideodata/${id}`
           );
           const data = await response.json();
           setVideoData(data);
@@ -302,7 +302,7 @@ function VideoDetails() {
       };
 
       const response = await fetch(
-        `http://localhost:3000/savevideoeditdetails/${id}`,
+        `https://youtube-clone-mern-backend.vercel.app/savevideoeditdetails/${id}`,
         {
           method: "POST",
           body: JSON.stringify(data),

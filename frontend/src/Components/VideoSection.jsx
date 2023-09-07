@@ -211,7 +211,7 @@ function VideoSection() {
       try {
         if (email !== undefined) {
           const response = await fetch(
-            `http://localhost:3000/checkchannel/${email}`
+            `https://youtube-clone-mern-backend.vercel.app/checkchannel/${email}`
           );
           const channelname = await response.json();
           setChannelName(channelname);
@@ -229,7 +229,7 @@ function VideoSection() {
       try {
         if (email !== undefined) {
           const response = await fetch(
-            `http://localhost:3000/getchannel/${email}`
+            `https://youtube-clone-mern-backend.vercel.app/getchannel/${email}`
           );
           const { channel, profile } = await response.json();
           setisChannel(channel);
@@ -249,7 +249,7 @@ function VideoSection() {
       try {
         if (id !== undefined) {
           const response = await fetch(
-            `http://localhost:3000/gettrendingdata/${id}`
+            `https://youtube-clone-mern-backend.vercel.app/gettrendingdata/${id}`
           );
           const data = await response.json();
           setCheckTrending(data);
@@ -268,7 +268,7 @@ function VideoSection() {
       try {
         if (id !== undefined && usermail !== undefined) {
           const response = await fetch(
-            `http://localhost:3000/checktrending/${id}/${usermail}`
+            `https://youtube-clone-mern-backend.vercel.app/checktrending/${id}/${usermail}`
           );
           await response.json();
         }
@@ -285,7 +285,7 @@ function VideoSection() {
     const getVideoData = async () => {
       try {
         if (id !== undefined) {
-          const response = await fetch(`http://localhost:3000/videodata/${id}`);
+          const response = await fetch(`https://youtube-clone-mern-backend.vercel.app/videodata/${id}`);
           const video = await response.json();
           setVideoData(video);
         }
@@ -300,7 +300,7 @@ function VideoSection() {
   useEffect(() => {
     const getVideos = async () => {
       try {
-        const response = await fetch("http://localhost:3000/getvideos");
+        const response = await fetch("https://youtube-clone-mern-backend.vercel.app/getvideos");
         const {
           videoURLs,
           thumbnailURLs,
@@ -347,7 +347,7 @@ function VideoSection() {
     const getLikes = async () => {
       try {
         if (id !== undefined) {
-          const response = await fetch(`http://localhost:3000/getlike/${id}/`);
+          const response = await fetch(`https://youtube-clone-mern-backend.vercel.app/getlike/${id}/`);
           const likes = await response.json();
           setVideoLikes(likes);
         }
@@ -366,7 +366,7 @@ function VideoSection() {
       try {
         if (id !== undefined && email !== undefined) {
           const response = await fetch(
-            `http://localhost:3000/getuserlikes/${id}/${email}`
+            `https://youtube-clone-mern-backend.vercel.app/getuserlikes/${id}/${email}`
           );
           const { existingLikedVideo } = await response.json();
           if (!existingLikedVideo) {
@@ -389,7 +389,7 @@ function VideoSection() {
       try {
         if (id !== undefined) {
           const response = await fetch(
-            `http://localhost:3000/likecomment/${id}`
+            `https://youtube-clone-mern-backend.vercel.app/likecomment/${id}`
           );
           const result = await response.json();
           setCommentLikes(result);
@@ -409,7 +409,7 @@ function VideoSection() {
       try {
         if (id !== undefined && email !== undefined) {
           const response = await fetch(
-            `http://localhost:3000/checkwatchlater/${id}/${email}`
+            `https://youtube-clone-mern-backend.vercel.app/checkwatchlater/${id}/${email}`
           );
           const data = await response.json();
           if (data === "Found") {
@@ -433,7 +433,7 @@ function VideoSection() {
       try {
         if (id !== undefined) {
           const response = await fetch(
-            `http://localhost:3000/getcomments/${id}`
+            `https://youtube-clone-mern-backend.vercel.app/getcomments/${id}`
           );
           const result = await response.json();
           setComments(result);
@@ -452,7 +452,7 @@ function VideoSection() {
       try {
         if (id !== undefined) {
           const response = await fetch(
-            `http://localhost:3000/otherchannel/${id}`
+            `https://youtube-clone-mern-backend.vercel.app/otherchannel/${id}`
           );
           const userEmail = await response.json();
           setUserMail(userEmail);
@@ -472,7 +472,7 @@ function VideoSection() {
       try {
         if (usermail !== undefined) {
           const response = await fetch(
-            `http://localhost:3000/getchannelid/${usermail}`
+            `https://youtube-clone-mern-backend.vercel.app/getchannelid/${usermail}`
           );
           const { channelID, subscribers } = await response.json();
           setChannelID(channelID);
@@ -493,7 +493,7 @@ function VideoSection() {
       try {
         if (usermail !== undefined) {
           const response = await fetch(
-            `http://localhost:3000/subscribe/${usermail}`
+            `https://youtube-clone-mern-backend.vercel.app/subscribe/${usermail}`
           );
           const { channel, profile, channelid } = await response.json();
           setyoutuberName(channel);
@@ -515,7 +515,7 @@ function VideoSection() {
       try {
         if (email !== undefined && channelID !== undefined) {
           const response = await fetch(
-            `http://localhost:3000/checksubscription/${channelID}/${email}`
+            `https://youtube-clone-mern-backend.vercel.app/checksubscription/${channelID}/${email}`
           );
           const { existingChannelID } = await response.json();
           if (existingChannelID !== undefined) {
@@ -539,7 +539,7 @@ function VideoSection() {
       try {
         if (usermail !== undefined) {
           const response = await fetch(
-            `http://localhost:3000/getuservideos/${usermail}`
+            `https://youtube-clone-mern-backend.vercel.app/getuservideos/${usermail}`
           );
           const myvideos = await response.json();
           setUserVideos(myvideos);
@@ -557,7 +557,7 @@ function VideoSection() {
       try {
         if (email !== undefined) {
           const response = await fetch(
-            `http://localhost:3000/getplaylistdata/${email}`
+            `https://youtube-clone-mern-backend.vercel.app/getplaylistdata/${email}`
           );
           const playlists = await response.json();
           setUserPlaylist(playlists);
@@ -577,7 +577,7 @@ function VideoSection() {
       try {
         if (id !== undefined && email !== undefined) {
           const response = await fetch(
-            `http://localhost:3000/getvideodataplaylist/${email}/${id}`
+            `https://youtube-clone-mern-backend.vercel.app/getvideodataplaylist/${email}/${id}`
           );
           const playlistIdsWithVideo = await response.json();
           setplaylistID(playlistIdsWithVideo);
@@ -597,7 +597,7 @@ function VideoSection() {
       try {
         if (id !== undefined) {
           const response = await fetch(
-            `http://localhost:3000/getheartcomment/${id}`
+            `https://youtube-clone-mern-backend.vercel.app/getheartcomment/${id}`
           );
           const heart = await response.json();
           setIsHeart(heart);
@@ -627,7 +627,7 @@ function VideoSection() {
         comment,
         email,
       };
-      const response = await fetch(`http://localhost:3000/comments/${id}`, {
+      const response = await fetch(`https://youtube-clone-mern-backend.vercel.app/comments/${id}`, {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
@@ -740,7 +740,7 @@ function VideoSection() {
       setLikeLoading(true);
 
       const response = await fetch(
-        `http://localhost:3000/like/${id}/${email}/${usermail}`,
+        `https://youtube-clone-mern-backend.vercel.app/like/${id}/${email}/${usermail}`,
         {
           method: "POST",
           headers: {
@@ -767,7 +767,7 @@ function VideoSection() {
     try {
       if (commentId !== undefined && id !== undefined && email !== undefined) {
         const response = await fetch(
-          `http://localhost:3000/likecomment/${id}/${commentId}/${email}`,
+          `https://youtube-clone-mern-backend.vercel.app/likecomment/${id}/${commentId}/${email}`,
           {
             method: "POST",
             headers: {
@@ -786,7 +786,7 @@ function VideoSection() {
     try {
       if (id !== undefined && channelID !== undefined) {
         const response = await fetch(
-          `http://localhost:3000/heartcomment/${id}/${commentID}`,
+          `https://youtube-clone-mern-backend.vercel.app/heartcomment/${id}/${commentID}`,
           {
             method: "POST",
             headers: {
@@ -806,7 +806,7 @@ function VideoSection() {
       setCommentOpacity(0.34);
 
       const response = await fetch(
-        `http://localhost:3000/deletecomment/${id}/${commentId}/${email}`,
+        `https://youtube-clone-mern-backend.vercel.app/deletecomment/${id}/${commentId}/${email}`,
         {
           method: "POST",
           headers: {
@@ -828,7 +828,7 @@ function VideoSection() {
   const DislikeVideo = async () => {
     try {
       const response = await fetch(
-        `http://localhost:3000/dislikevideo/${id}/${email}`,
+        `https://youtube-clone-mern-backend.vercel.app/dislikevideo/${id}/${email}`,
         {
           method: "POST",
           headers: {
@@ -855,7 +855,7 @@ function VideoSection() {
     try {
       if (id !== undefined && email !== undefined) {
         const response = await fetch(
-          `http://localhost:3000/watchlater/${id}/${email}/${usermail}`,
+          `https://youtube-clone-mern-backend.vercel.app/watchlater/${id}/${email}/${usermail}`,
           {
             method: "POST",
             headers: {
@@ -881,7 +881,7 @@ function VideoSection() {
         youtubeChannelID,
       };
       const response = await fetch(
-        `http://localhost:3000/subscribe/${channelID}/${email}/${usermail}`,
+        `https://youtube-clone-mern-backend.vercel.app/subscribe/${channelID}/${email}/${usermail}`,
         {
           method: "POST",
           body: JSON.stringify(channelData),
@@ -902,7 +902,7 @@ function VideoSection() {
   const updateViews = async (id) => {
     try {
       if (id !== undefined) {
-        const response = await fetch(`http://localhost:3000/updateview/${id}`, {
+        const response = await fetch(`https://youtube-clone-mern-backend.vercel.app/updateview/${id}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -938,7 +938,7 @@ function VideoSection() {
         };
 
         const response = await fetch(
-          `http://localhost:3000/addplaylist/${email}`,
+          `https://youtube-clone-mern-backend.vercel.app/addplaylist/${email}`,
           {
             method: "POST",
             body: JSON.stringify(data),
@@ -977,7 +977,7 @@ function VideoSection() {
         };
 
         const response = await fetch(
-          `http://localhost:3000/addvideotoplaylist/${email}`,
+          `https://youtube-clone-mern-backend.vercel.app/addvideotoplaylist/${email}`,
           {
             method: "POST",
             body: JSON.stringify(data),
@@ -1001,7 +1001,7 @@ function VideoSection() {
     try {
       if (email !== undefined && id !== undefined && playlistID !== undefined) {
         const response = await fetch(
-          `http://localhost:3000/removevideo/${email}/${id}/${playlistID}`,
+          `https://youtube-clone-mern-backend.vercel.app/removevideo/${email}/${id}/${playlistID}`,
           {
             method: "POST",
             headers: {

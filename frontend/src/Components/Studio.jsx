@@ -138,7 +138,7 @@ function Studio() {
       try {
         if (email !== undefined) {
           const response = await fetch(
-            `http://localhost:3000/getuservideos/${email}`
+            `https://youtube-clone-mern-backend.vercel.app/getuservideos/${email}`
           );
           const data = await response.json();
           setMyVideos(data);
@@ -228,7 +228,7 @@ function Studio() {
     const ChannelAvailable = async () => {
       try {
         const response = await fetch(
-          `http://localhost:3000/getchannel/${email}`
+          `https://youtube-clone-mern-backend.vercel.app/getchannel/${email}`
         );
         const { channel } = await response.json();
         setisChannel(channel);
@@ -431,7 +431,7 @@ function Studio() {
       };
 
       // Proceed with saving the channel data
-      const response = await fetch("http://localhost:3000/savechannel", {
+      const response = await fetch("https://youtube-clone-mern-backend.vercel.app/savechannel", {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
@@ -568,7 +568,7 @@ function Studio() {
           Visibility: visibility,
         };
         // Send the POST request
-        const response = await fetch("http://localhost:3000/publish", {
+        const response = await fetch("https://youtube-clone-mern-backend.vercel.app/publish", {
           method: "POST",
           body: JSON.stringify(data),
           headers: {

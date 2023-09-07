@@ -141,7 +141,7 @@ function LeftPanel() {
       try {
         if (Email !== undefined) {
           const response = await fetch(
-            `http://localhost:3000/getsubscriptions/${Email}`
+            `https://youtube-clone-mern-backend.vercel.app/getsubscriptions/${Email}`
           );
           const result = await response.json();
           setSubscriptions(result);
@@ -160,7 +160,7 @@ function LeftPanel() {
       try {
         if (Email !== undefined) {
           const response = await fetch(
-            `http://localhost:3000/getplaylistdata/${Email}`
+            `https://youtube-clone-mern-backend.vercel.app/getplaylistdata/${Email}`
           );
           const playlistData = await response.json();
           setPlaylistData(playlistData);
@@ -179,7 +179,7 @@ function LeftPanel() {
       try {
         if (Email !== undefined) {
           const response = await fetch(
-            `http://localhost:3000/getsavedplaylist/${Email}`
+            `https://youtube-clone-mern-backend.vercel.app/getsavedplaylist/${Email}`
           );
           const matchingPlaylists = await response.json();
           setSavedPlaylist(matchingPlaylists);
