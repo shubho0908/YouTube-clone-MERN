@@ -1,0 +1,58 @@
+{
+  "builds": [
+    {
+      "src": "/server.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "build/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/studio/(.*)",
+      "dest": "/server.js"
+    },
+    {
+      "src": "/likedVideos",
+      "dest": "/server.js"
+    },
+    {
+      "src": "/watchlater",
+      "dest": "/server.js"
+    },
+    {
+      "src": "/library",
+      "dest": "/server.js"
+    },
+    {
+      "src": "/channel/(.*)",
+      "dest": "/server.js"
+    },
+    {
+      "src": "/trending",
+      "dest": "/server.js"
+    },
+    {
+      "src": "/results/(.*)",
+      "dest": "/server.js"
+    },
+    {
+      "src": "/playlist/(.*)",
+      "dest": "/server.js"
+    },
+    {
+      "src": "/subscriptions",
+      "dest": "/server.js"
+    },
+    {
+      "src": "/video/(.*)",
+      "dest": "/server.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/server.js"
+    }
+  ]
+}
