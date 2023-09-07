@@ -277,7 +277,9 @@ function WatchLater() {
                 {watchlater.length > 0
                   ? watchlater.map((element, index) => {
                       return (
-                        <div className={theme ? "liked-all-videos" : "liked-all-videos liked-all-videos-light"} key={index}>
+                        <div className={theme ? "liked-all-videos" : "liked-all-videos liked-all-videos-light"} key={index}
+                        style={{ display: element.videoprivacy === "Public" ? "flex" : "none" }}
+                        >
                           <div className="liked-videos-all-data">
                             <Skeleton
                               count={1}
@@ -333,6 +335,7 @@ function WatchLater() {
                             : "liked-all-videos liked-all-videos-light text-light-mode"
                         }
                         key={index}
+                        style={{ display: element.videoprivacy === "Public" ? "flex" : "none" }}
                       >
                         <p style={{ color: "#aaa" }}>{index + 1}</p>
                         <div
@@ -525,6 +528,7 @@ function WatchLater() {
                               : "liked-all-videos liked-all-videos-light text-light-mode"
                           }
                           key={index}
+                          style={{ display: element.videoprivacy === "Public" ? "flex" : "none" }}
                         >
                           <div className="liked-videos-all-data">
                             <Skeleton
@@ -581,6 +585,7 @@ function WatchLater() {
                             : "liked-all-videos liked-all-videos-light text-light-mode"
                         }
                         key={index}
+                        style={{ display: element.videoprivacy === "Public" ? "flex" : "none" }}
                       >
                         <p style={{ color: "#aaa" }}>{index + 1}</p>
                         <div

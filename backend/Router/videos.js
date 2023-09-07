@@ -272,6 +272,7 @@ Videos.post("/watchlater/:id/:email/:email2", async (req, res) => {
         views: WatchLater.views,
         uploaded_date: WatchLater.uploaded_date,
         savedVideoID: WatchLater._id,
+        videoprivacy: WatchLater.visibility
       });
       res.json("Saved");
     } else {
