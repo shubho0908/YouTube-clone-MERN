@@ -9,50 +9,9 @@
       "use": "@vercel/static"
     }
   ],
-  "routes": [
-    {
-      "src": "/studio/(.*)",
-      "dest": "/"
-    },
-    {
-      "src": "/likedVideos",
-      "dest": "/"
-    },
-    {
-      "src": "/watchlater",
-      "dest": "/"
-    },
-    {
-      "src": "/library",
-      "dest": "/"
-    },
-    {
-      "src": "/channel/(.*)",
-      "dest": "/server.js"
-    },
-    {
-      "src": "/trending",
-      "dest": "/"
-    },
-    {
-      "src": "/results/(.*)",
-      "dest": "/"
-    },
-    {
-      "src": "/playlist/(.*)",
-      "dest": "/"
-    },
-    {
-      "src": "/subscriptions",
-      "dest": "/"
-    },
-    {
-      "src": "/video/(.*)",
-      "dest": "/"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/"
-    }
-  ]
+  {
+    "rewrites":  [
+      {"source": "/(.*)", "destination": "/"}
+    ]
+  }
 }
