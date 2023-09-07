@@ -47,7 +47,7 @@ function Subscriptions() {
     const getSubscriptions = async () => {
       try {
         const response = await fetch(
-          `https://youtube-clone-mern-backend.vercel.app/getsubscriptions/${email}`
+          `http://localhost:3000/getsubscriptions/${email}`
         );
         const result = await response.json();
         setSubscriptions(result);
@@ -67,11 +67,11 @@ function Subscriptions() {
           const newSubsVideos = [];
           for (const element of subscriptions) {
             const response = await fetch(
-              `https://youtube-clone-mern-backend.vercel.app/getotherchannel/${element.channelID}`
+              `http://localhost:3000/getotherchannel/${element.channelID}`
             );
             const userEmail = await response.json();
             const response2 = await fetch(
-              `https://youtube-clone-mern-backend.vercel.app/getuservideos/${userEmail}`
+              `http://localhost:3000/getuservideos/${userEmail}`
             );
             const myvideos = await response2.json();
 
@@ -140,7 +140,7 @@ function Subscriptions() {
 
   const updateViews = async (id) => {
     try {
-      const response = await fetch(`https://youtube-clone-mern-backend.vercel.app/updateview/${id}`, {
+      const response = await fetch(`http://localhost:3000/updateview/${id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

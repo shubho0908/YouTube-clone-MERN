@@ -120,7 +120,7 @@ function Comments() {
       try {
         if (Email !== undefined) {
           const response = await fetch(
-            `https://youtube-clone-mern-backend.vercel.app/getchannel/${Email}`
+            `http://localhost:3000/getchannel/${Email}`
           );
           const { profile } = await response.json();
           setProfile(profile);
@@ -139,7 +139,7 @@ function Comments() {
       try {
         if (Email !== undefined) {
           const response = await fetch(
-            `https://youtube-clone-mern-backend.vercel.app/getallcomments/${Email}`
+            `http://localhost:3000/getallcomments/${Email}`
           );
           const { comments } = await response.json();
 
@@ -147,7 +147,7 @@ function Comments() {
           const commentsWithVideoData = await Promise.all(
             comments.map(async (comment) => {
               const videoResponse = await fetch(
-                `https://youtube-clone-mern-backend.vercel.app/getdeletevideodata/${comment.videoid}`
+                `http://localhost:3000/getdeletevideodata/${comment.videoid}`
               );
               const videoData = await videoResponse.json();
 
@@ -173,7 +173,7 @@ function Comments() {
     try {
       if (commentId !== undefined && id !== undefined && Email !== undefined) {
         const response = await fetch(
-          `https://youtube-clone-mern-backend.vercel.app/likecomment/${id}/${commentId}/${Email}`,
+          `http://localhost:3000/likecomment/${id}/${commentId}/${Email}`,
           {
             method: "POST",
             headers: {
@@ -191,7 +191,7 @@ function Comments() {
   const HeartComment = async (id, commentID) => {
     try {
       const response = await fetch(
-        `https://youtube-clone-mern-backend.vercel.app/heartcomment/${id}/${commentID}`,
+        `http://localhost:3000/heartcomment/${id}/${commentID}`,
         {
           method: "POST",
           headers: {
@@ -208,7 +208,7 @@ function Comments() {
   const DeleteComment = async (id, commentId) => {
     try {
       const response = await fetch(
-        `https://youtube-clone-mern-backend.vercel.app/deletecomment/${id}/${commentId}/${Email}`,
+        `http://localhost:3000/deletecomment/${id}/${commentId}/${Email}`,
         {
           method: "POST",
           headers: {

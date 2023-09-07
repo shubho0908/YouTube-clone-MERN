@@ -47,7 +47,7 @@ function AccountPop() {
       try {
         if (email) {
           const response = await fetch(
-            `https://youtube-clone-mern-backend.vercel.app/getuserimage/${email}`
+            `http://localhost:3000/getuserimage/${email}`
           );
           const { channelIMG } = await response.json();
           setProfile(channelIMG);
@@ -65,7 +65,7 @@ function AccountPop() {
       try {
         if (email) {
           const response = await fetch(
-            `https://youtube-clone-mern-backend.vercel.app/getchannelid/${email}`
+            `http://localhost:3000/getchannelid/${email}`
           );
           const { channelID } = await response.json();
           setChannelID(channelID);

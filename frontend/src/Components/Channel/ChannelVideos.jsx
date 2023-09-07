@@ -45,13 +45,13 @@ function ChannelVideos(prop) {
       try {
         if (Email === prop.newmail) {
           const response = await fetch(
-            `https://youtube-clone-mern-backend.vercel.app/getuservideos/${Email}`
+            `http://localhost:3000/getuservideos/${Email}`
           );
           const myvideos = await response.json();
           setMyVideos(myvideos);
         } else {
           const response = await fetch(
-            `https://youtube-clone-mern-backend.vercel.app/getuservideos/${prop.newmail}`
+            `http://localhost:3000/getuservideos/${prop.newmail}`
           );
           const myvideos = await response.json();
           setMyVideos(myvideos);
@@ -66,7 +66,7 @@ function ChannelVideos(prop) {
 
   const updateViews = async (id) => {
     try {
-      const response = await fetch(`https://youtube-clone-mern-backend.vercel.app/updateview/${id}`, {
+      const response = await fetch(`http://localhost:3000/updateview/${id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

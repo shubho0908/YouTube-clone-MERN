@@ -55,7 +55,7 @@ function ChannelPlaylists(prop) {
       try {
         if (prop.newmail !== undefined) {
           const response = await fetch(
-            `https://youtube-clone-mern-backend.vercel.app/getplaylistdata/${prop.newmail}`
+            `http://localhost:3000/getplaylistdata/${prop.newmail}`
           );
           const playlistData = await response.json();
           setPlaylistData(playlistData);

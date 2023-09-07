@@ -94,7 +94,7 @@ function Navbar2() {
     const getData = async () => {
       try {
         const response = await fetch(
-          `https://youtube-clone-mern-backend.vercel.app/getchannel/${email}`
+          `http://localhost:3000/getchannel/${email}`
         );
         const { profile } = await response.json();
         setProfilePic(profile);
@@ -112,7 +112,7 @@ function Navbar2() {
     const getVideos = async () => {
       try {
         const response = await fetch(
-          `https://youtube-clone-mern-backend.vercel.app/getuservideos/${email}`
+          `http://localhost:3000/getuservideos/${email}`
         );
         const data = await response.json();
         setUserVideos(data);

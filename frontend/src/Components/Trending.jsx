@@ -56,7 +56,7 @@ function Trending() {
   useEffect(() => {
     const getTrending = async () => {
       try {
-        const response = await fetch("https://youtube-clone-mern-backend.vercel.app/gettrending");
+        const response = await fetch("http://localhost:3000/gettrending");
         const trending = await response.json();
         if (trending !== "NO DATA") {
           const sortedTrending = trending.sort((a, b) => b.views - a.views);
@@ -113,7 +113,7 @@ function Trending() {
 
   const updateViews = async (id) => {
     try {
-      const response = await fetch(`https://youtube-clone-mern-backend.vercel.app/updateview/${id}`, {
+      const response = await fetch(`http://localhost:3000/updateview/${id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

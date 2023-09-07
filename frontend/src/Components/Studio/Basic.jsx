@@ -81,7 +81,7 @@ function Basic() {
     const getChannelData = async () => {
       try {
         const response = await fetch(
-          `https://youtube-clone-mern-backend.vercel.app/getchannel/${Email}`
+          `http://localhost:3000/getchannel/${Email}`
         );
         const { ChannelName } = await response.json();
         setChannelName(ChannelName);
@@ -93,7 +93,7 @@ function Basic() {
     const getChannelData2 = async () => {
       try {
         const response = await fetch(
-          `https://youtube-clone-mern-backend.vercel.app/getchannelid/${Email}`
+          `http://localhost:3000/getchannelid/${Email}`
         );
         const data = await response.json();
         const { channelDescription, channelID, links } = data;
@@ -150,7 +150,7 @@ function Basic() {
           channelID: channelID,
         };
         const response = await fetch(
-          `https://youtube-clone-mern-backend.vercel.app/savelinksdata/${Email}`,
+          `http://localhost:3000/savelinksdata/${Email}`,
           {
             method: "POST",
             body: JSON.stringify(data),
@@ -181,7 +181,7 @@ function Basic() {
           channelID,
         };
         const response = await fetch(
-          `https://youtube-clone-mern-backend.vercel.app/updatechanneldata/${Email}`,
+          `http://localhost:3000/updatechanneldata/${Email}`,
           {
             method: "POST",
             body: JSON.stringify(data),

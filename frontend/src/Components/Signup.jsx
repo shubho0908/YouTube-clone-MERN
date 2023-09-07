@@ -62,7 +62,7 @@ function Signup() {
       return;
     }
     try {
-      const response = await fetch("https://youtube-clone-mern-backend.vercel.app/signup", {
+      const response = await fetch("http://localhost:3000/signup", {
         method: "POST",
         body: JSON.stringify(data),
         headers: {

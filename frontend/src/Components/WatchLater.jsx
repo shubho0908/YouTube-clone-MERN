@@ -91,7 +91,7 @@ function WatchLater() {
       try {
         if (email !== undefined) {
           const response = await fetch(
-            `https://youtube-clone-mern-backend.vercel.app/getwatchlater/${email}`
+            `http://localhost:3000/getwatchlater/${email}`
           );
           const savedData = await response.json();
           setWatchLater(savedData);
@@ -109,7 +109,7 @@ function WatchLater() {
   useEffect(() => {
     const getVideos = async () => {
       try {
-        const response = await fetch("https://youtube-clone-mern-backend.vercel.app/getvideos");
+        const response = await fetch("http://localhost:3000/getvideos");
         const { views } = await response.json();
 
         setVideoViews(views);
@@ -123,7 +123,7 @@ function WatchLater() {
 
   const updateViews = async (id) => {
     try {
-      const response = await fetch(`https://youtube-clone-mern-backend.vercel.app/updateview/${id}`, {
+      const response = await fetch(`http://localhost:3000/updateview/${id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
