@@ -137,6 +137,9 @@ const UserData = new mongoose.Schema({
       Title: {
         type: String,
       },
+      videoprivacy: {
+        type: String,
+      },
       uploader: {
         type: String,
       },
@@ -187,6 +190,9 @@ const UserData = new mongoose.Schema({
         type: String,
       },
       ChannelProfile: {
+        type: String,
+      },
+      videoprivacy: {
         type: String,
       },
       Title: {

@@ -33,6 +33,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import LeftPanel from "./LeftPanel";
+import Error from "./Error"
 
 function VideoSection() {
   const { id } = useParams();
@@ -285,7 +286,9 @@ function VideoSection() {
     const getVideoData = async () => {
       try {
         if (id !== undefined) {
-          const response = await fetch(`https://youtube-clone-mern-backend.vercel.app/videodata/${id}`);
+          const response = await fetch(
+            `https://youtube-clone-mern-backend.vercel.app/videodata/${id}`
+          );
           const video = await response.json();
           setVideoData(video);
         }
@@ -300,7 +303,9 @@ function VideoSection() {
   useEffect(() => {
     const getVideos = async () => {
       try {
-        const response = await fetch("https://youtube-clone-mern-backend.vercel.app/getvideos");
+        const response = await fetch(
+          "https://youtube-clone-mern-backend.vercel.app/getvideos"
+        );
         const {
           videoURLs,
           thumbnailURLs,
@@ -347,7 +352,9 @@ function VideoSection() {
     const getLikes = async () => {
       try {
         if (id !== undefined) {
-          const response = await fetch(`https://youtube-clone-mern-backend.vercel.app/getlike/${id}/`);
+          const response = await fetch(
+            `https://youtube-clone-mern-backend.vercel.app/getlike/${id}/`
+          );
           const likes = await response.json();
           setVideoLikes(likes);
         }
@@ -627,13 +634,16 @@ function VideoSection() {
         comment,
         email,
       };
-      const response = await fetch(`https://youtube-clone-mern-backend.vercel.app/comments/${id}`, {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `https://youtube-clone-mern-backend.vercel.app/comments/${id}`,
+        {
+          method: "POST",
+          body: JSON.stringify(data),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       const Data = await response.json();
       if (Data === "Uploaded") {
         setCommentLoading(false);
@@ -730,7 +740,7 @@ function VideoSection() {
     views,
     videoLength,
     uploaded_date,
-    visibility
+    visibility,
   } = matchedVideo;
 
   document.title =
@@ -903,12 +913,15 @@ function VideoSection() {
   const updateViews = async (id) => {
     try {
       if (id !== undefined) {
-        const response = await fetch(`https://youtube-clone-mern-backend.vercel.app/updateview/${id}`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+        const response = await fetch(
+          `https://youtube-clone-mern-backend.vercel.app/updateview/${id}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
         await response.json();
       }
     } catch (error) {
@@ -936,7 +949,7 @@ function VideoSection() {
           video_uploader: uploader,
           video_date: uploaded_date,
           video_views: views,
-          videoprivacy: visibility
+          videoprivacy: visibility,
         };
 
         const response = await fetch(
@@ -976,7 +989,7 @@ function VideoSection() {
           video_uploader: channelName,
           video_date: uploaded_date,
           video_views: views,
-          videoprivacy: visibility
+          videoprivacy: visibility,
         };
 
         const response = await fetch(
@@ -1037,6 +1050,14 @@ function VideoSection() {
     );
     return formattedDescription.replace(/\n/g, "<br>");
   };
+
+  if (email !== usermail && visibility === "Private") {
+    return (
+      <>
+        <Error />
+      </>
+    );
+  }
 
   return (
     <>
@@ -1131,9 +1152,8 @@ function VideoSection() {
                   className={
                     theme
                       ? "subscribe"
-                      : `subscribe-light ${
-                          email === usermail ? "dull-subs" : ""
-                        }`
+                      : `subscribe-light ${email === usermail ? "dull-subs" : ""
+                      }`
                   }
                   disabled={email === usermail ? true : false}
                   onClick={() => {
@@ -1761,10 +1781,10 @@ function VideoSection() {
                 {views >= 1e9
                   ? `${(views / 1e9).toFixed(1)}B`
                   : views >= 1e6
-                  ? `${(views / 1e6).toFixed(1)}M`
-                  : views >= 1e3
-                  ? `${(views / 1e3).toFixed(1)}K`
-                  : views}{" "}
+                    ? `${(views / 1e6).toFixed(1)}M`
+                    : views >= 1e3
+                      ? `${(views / 1e3).toFixed(1)}K`
+                      : views}{" "}
                 views
               </p>
               <p style={{ marginLeft: "10px" }}>
@@ -2034,10 +2054,10 @@ function VideoSection() {
                               style={
                                 email === usermail
                                   ? {
-                                      color: theme ? "white" : "black",
-                                      marginLeft: "20px",
-                                      cursor: "pointer",
-                                    }
+                                    color: theme ? "white" : "black",
+                                    marginLeft: "20px",
+                                    cursor: "pointer",
+                                  }
                                   : { display: "none" }
                               }
                               className="heart-comment"
@@ -2078,7 +2098,7 @@ function VideoSection() {
                           )}
 
                           {element.user_email === email ||
-                          email === usermail ? (
+                            email === usermail ? (
                             <button
                               className={
                                 theme
@@ -2112,9 +2132,8 @@ function VideoSection() {
                 <div
                   className={
                     TagSelected === "All"
-                      ? `top-tags tag-one ${
-                          theme ? "tag-color" : "tag-color-light"
-                        }`
+                      ? `top-tags tag-one ${theme ? "tag-color" : "tag-color-light"
+                      }`
                       : `top-tags tag-one ${theme ? "" : "tagcolor-newlight"}`
                   }
                 >
@@ -2123,9 +2142,8 @@ function VideoSection() {
                 <div
                   className={
                     TagSelected === uploader
-                      ? `top-tags tag-two ${
-                          theme ? "tag-color" : "tag-color-light"
-                        }`
+                      ? `top-tags tag-two ${theme ? "tag-color" : "tag-color-light"
+                      }`
                       : `top-tags tag-two ${theme ? "" : "tagcolor-newlight"}`
                   }
                   style={{ marginLeft: "10px" }}
@@ -2195,9 +2213,8 @@ function VideoSection() {
             <div
               className={
                 TagSelected === "All"
-                  ? `top-tags tag-one ${
-                      theme ? "tag-color" : "tag-color-light"
-                    }`
+                  ? `top-tags tag-one ${theme ? "tag-color" : "tag-color-light"
+                  }`
                   : `top-tags tag-one ${theme ? "" : "tagcolor-newlight"}`
               }
             >
@@ -2206,9 +2223,8 @@ function VideoSection() {
             <div
               className={
                 TagSelected === uploader
-                  ? `top-tags tag-two ${
-                      theme ? "tag-color" : "tag-color-light"
-                    }`
+                  ? `top-tags tag-two ${theme ? "tag-color" : "tag-color-light"
+                  }`
                   : `top-tags tag-two ${theme ? "" : "tagcolor-newlight"}`
               }
               style={{ marginLeft: "10px" }}
@@ -2307,10 +2323,10 @@ function VideoSection() {
                           {Views[index] >= 1e9
                             ? `${(Views[index] / 1e9).toFixed(1)}B`
                             : Views[index] >= 1e6
-                            ? `${(Views[index] / 1e6).toFixed(1)}M`
-                            : Views[index] >= 1e3
-                            ? `${(Views[index] / 1e3).toFixed(1)}K`
-                            : Views[index]}{" "}
+                              ? `${(Views[index] / 1e6).toFixed(1)}M`
+                              : Views[index] >= 1e3
+                                ? `${(Views[index] / 1e3).toFixed(1)}K`
+                                : Views[index]}{" "}
                           views
                         </p>
                         <p
@@ -2434,10 +2450,10 @@ function VideoSection() {
                           {Views[index] >= 1e9
                             ? `${(Views[index] / 1e9).toFixed(1)}B`
                             : Views[index] >= 1e6
-                            ? `${(Views[index] / 1e6).toFixed(1)}M`
-                            : Views[index] >= 1e3
-                            ? `${(Views[index] / 1e3).toFixed(1)}K`
-                            : Views[index]}{" "}
+                              ? `${(Views[index] / 1e6).toFixed(1)}M`
+                              : Views[index] >= 1e3
+                                ? `${(Views[index] / 1e3).toFixed(1)}K`
+                                : Views[index]}{" "}
                           views
                         </p>
                         <p
@@ -2569,10 +2585,10 @@ function VideoSection() {
                           {element.views >= 1e9
                             ? `${(element.views / 1e9).toFixed(1)}B`
                             : element.views >= 1e6
-                            ? `${(element.views / 1e6).toFixed(1)}M`
-                            : element.views >= 1e3
-                            ? `${(element.views / 1e3).toFixed(1)}K`
-                            : element.views}{" "}
+                              ? `${(element.views / 1e6).toFixed(1)}M`
+                              : element.views >= 1e3
+                                ? `${(element.views / 1e3).toFixed(1)}K`
+                                : element.views}{" "}
                           views
                         </p>
                         <p
@@ -2697,10 +2713,10 @@ function VideoSection() {
                           {element.views >= 1e9
                             ? `${(element.views / 1e9).toFixed(1)}B`
                             : element.views >= 1e6
-                            ? `${(element.views / 1e6).toFixed(1)}M`
-                            : element.views >= 1e3
-                            ? `${(element.views / 1e3).toFixed(1)}K`
-                            : element.views}{" "}
+                              ? `${(element.views / 1e6).toFixed(1)}M`
+                              : element.views >= 1e3
+                                ? `${(element.views / 1e3).toFixed(1)}K`
+                                : element.views}{" "}
                           views
                         </p>
                         <p
@@ -2929,10 +2945,10 @@ function VideoSection() {
                               style={
                                 email === usermail
                                   ? {
-                                      color: theme ? "white" : "black",
-                                      marginLeft: "20px",
-                                      cursor: "pointer",
-                                    }
+                                    color: theme ? "white" : "black",
+                                    marginLeft: "20px",
+                                    cursor: "pointer",
+                                  }
                                   : { display: "none" }
                               }
                               className="heart-comment"
@@ -2973,7 +2989,7 @@ function VideoSection() {
                           )}
 
                           {element.user_email === email ||
-                          email === usermail ? (
+                            email === usermail ? (
                             <button
                               className={
                                 theme
@@ -3109,7 +3125,7 @@ function VideoSection() {
           }
         >
           {!UserPlaylist ||
-          UserPlaylist.includes("No playlists available...") ? (
+            UserPlaylist.includes("No playlists available...") ? (
             <p>No Playlists available...</p>
           ) : (
             ""
@@ -3125,7 +3141,7 @@ function VideoSection() {
                     {(playlistID &&
                       playlistID.length > 0 &&
                       playlistID.includes(element._id) === false) ||
-                    playlistID === "Video doesn't exist in any playlist" ? (
+                      playlistID === "Video doesn't exist in any playlist" ? (
                       <CheckBoxOutlineBlankIcon
                         className="tick-box"
                         fontSize="medium"

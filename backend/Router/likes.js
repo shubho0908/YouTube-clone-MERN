@@ -46,6 +46,7 @@ Likes.post("/like/:id/:email/:email2", async (req, res) => {
         views: likedData.views,
         uploaded_date: likedData.uploaded_date,
         likedVideoID: likedData._id,
+        videoprivacy: likedData.visibility
       });
       video.VideoData[videoIndex].likes += 1;
       res.json("Liked");

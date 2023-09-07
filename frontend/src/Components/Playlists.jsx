@@ -843,7 +843,7 @@ function Playlists() {
                             element.videoprivacy === "Public" ? "flex" : "none",
                         }}
                       >
-                        <p style={{ color: "#aaa" }}>{index}</p>
+                        <p style={{ color: "#aaa" }}>{index+1}</p>
                         <div
                           className="liked-videos-all-data playlistvideos"
                           onClick={() => {

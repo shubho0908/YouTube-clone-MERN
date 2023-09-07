@@ -1078,7 +1078,9 @@
   .like-count {
     font-size: 13px;
   }
-  .subscribe,.subscribe-light, .subscribe2-light {
+  .subscribe,
+  .subscribe-light,
+  .subscribe2-light {
     font-size: 13.5px;
     padding-left: 18px;
     padding-right: 18px;
@@ -1161,7 +1163,9 @@
   .channel-subs {
     font-size: 13.2px;
   }
-  .subscribe,.subscribe-light, .subscribe2-light {
+  .subscribe,
+  .subscribe-light,
+  .subscribe2-light {
     margin-left: 40px;
     font-size: 12.5px;
   }
@@ -1303,7 +1307,9 @@
   .channel-data2 {
     margin-left: 12px;
   }
-  .subscribe, .subscribe-light, .subscribe2-light {
+  .subscribe,
+  .subscribe-light,
+  .subscribe2-light {
     font-size: 12.8px;
     padding-left: 14px;
     padding-right: 14px;
