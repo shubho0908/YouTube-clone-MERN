@@ -121,6 +121,7 @@ Studio.post("/savevideoeditdetails/:videoId", async (req, res) => {
         $set: {
           "likedVideos.$.thumbnailURL": thumbnail,
           "likedVideos.$.Title": title,
+          "likedVideos.$.videoprivacy": privacy,
         },
       }
     );
@@ -131,6 +132,7 @@ Studio.post("/savevideoeditdetails/:videoId", async (req, res) => {
         $set: {
           "watchLater.$.thumbnailURL": thumbnail,
           "watchLater.$.Title": title,
+          "watchLater.$.videoprivacy": privacy,
         },
       }
     );
