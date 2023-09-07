@@ -1434,7 +1434,15 @@ function LeftPanel() {
             fontSize="50px"
             color={theme ? "white" : "black"}
             className="addvid-icon"
-            onClick={() => (window.location.href = "/studio")}
+            onClick={() => {
+              if (token) {
+                (window.location.href = "/studio")
+              }
+              else{
+                setisbtnClicked(true);
+                document.body.classList.add("bg-css");
+              }
+            }}
           />
           <div
             className={
