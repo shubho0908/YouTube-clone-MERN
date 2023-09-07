@@ -139,12 +139,10 @@ Studio.post("/savevideoeditdetails/:videoId", async (req, res) => {
       { "Playlists.playlist_videos.videoID": videoId },
       {
         $set: {
-          "Playlists.$[playlist].playlist_videos.$[video]": {
-            thumbnail: thumbnail,
-            title: title,
-            description: desc,
-            videoprivacy: privacy
-          },
+          "Playlists.$[playlist].playlist_videos.$[video].thumbnail": thumbnail,
+          "Playlists.$[playlist].playlist_videos.$[video].title": title,
+          "Playlists.$[playlist].playlist_videos.$[video].description": desc,
+          "Playlists.$[playlist].playlist_videos.$[video].videoprivacy": privacy,
         },
       },
       {
@@ -154,6 +152,7 @@ Studio.post("/savevideoeditdetails/:videoId", async (req, res) => {
         ],
       }
     );
+    
 
     res.status(200).json({ message: "Video updated successfully" });
   } catch (error) {
