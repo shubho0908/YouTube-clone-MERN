@@ -143,6 +143,7 @@ Studio.post("/savevideoeditdetails/:videoId", async (req, res) => {
             thumbnail: thumbnail,
             title: title,
             description: desc,
+            videoprivacy: privacy
           },
         },
       },

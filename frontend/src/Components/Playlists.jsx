@@ -200,12 +200,15 @@ function Playlists() {
 
   const updateViews = async (id) => {
     try {
-      const response = await fetch(`https://youtube-clone-mern-backend.vercel.app/updateview/${id}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `https://youtube-clone-mern-backend.vercel.app/updateview/${id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       await response.json();
     } catch (error) {
       // console.log(error.message);
@@ -259,13 +262,16 @@ function Playlists() {
 
   const saveEditData = async () => {
     try {
-      const response = await fetch(`https://youtube-clone-mern-backend.vercel.app/saveplaylist/${id}`, {
-        method: "POST",
-        body: JSON.stringify({ playlist_name: PlaylistName }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `https://youtube-clone-mern-backend.vercel.app/saveplaylist/${id}`,
+        {
+          method: "POST",
+          body: JSON.stringify({ playlist_name: PlaylistName }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       await response.json();
     } catch (error) {
@@ -341,7 +347,12 @@ function Playlists() {
     }
   };
 
-  if (playlistsVideos === "No Playlists Found") {
+  if (
+    playlistsVideos === "No Playlists Found" ||
+    (playlistsVideos &&
+      playlistsVideos.length === 1 &&
+      playlistsVideos[0].videoprivacy === "Private")
+  ) {
     return (
       <>
         <Navbar />
@@ -756,7 +767,7 @@ function Playlists() {
                 }
               >
                 {playlistsVideos.length > 0
-                  ? playlistsVideos.map((index) => {
+                  ? playlistsVideos.map((element, index) => {
                       return (
                         <div
                           className={
@@ -765,6 +776,12 @@ function Playlists() {
                               : "liked-all-videos liked-all-videos-light text-light-mode"
                           }
                           key={index}
+                          style={{
+                            display:
+                              element.videoprivacy === "Public"
+                                ? "flex"
+                                : "none",
+                          }}
                         >
                           <div className="liked-videos-all-data">
                             <Skeleton
@@ -821,7 +838,10 @@ function Playlists() {
                             : "liked-all-videos liked-all-videos-light text-light-mode"
                         }
                         key={index}
-                        style={{display:element.videoprivacy === "Public" ? "flex" : "none"}}
+                        style={{
+                          display:
+                            element.videoprivacy === "Public" ? "flex" : "none",
+                        }}
                       >
                         <p style={{ color: "#aaa" }}>{index + 1}</p>
                         <div
@@ -1262,7 +1282,7 @@ function Playlists() {
                 }
               >
                 {playlistsVideos.length > 0
-                  ? playlistsVideos.map((index) => {
+                  ? playlistsVideos.map((element, index) => {
                       return (
                         <div
                           className={
@@ -1271,6 +1291,12 @@ function Playlists() {
                               : "liked-all-videos liked-all-videos-light text-light-mode"
                           }
                           key={index}
+                          style={{
+                            display:
+                              element.videoprivacy === "Public"
+                                ? "flex"
+                                : "none",
+                          }}
                         >
                           <div className="liked-videos-all-data">
                             <Skeleton
@@ -1327,6 +1353,10 @@ function Playlists() {
                             : "liked-all-videos liked-all-videos-light text-light-mode"
                         }
                         key={index}
+                        style={{
+                          display:
+                            element.videoprivacy === "Public" ? "flex" : "none",
+                        }}
                       >
                         <p style={{ color: "#aaa" }}>{index + 1}</p>
                         <div
