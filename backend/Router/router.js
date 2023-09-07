@@ -13,13 +13,11 @@ const Studio = require("./studio");
 
 // Middlewares
 router.use(
-  cors()
-
-  // {
-  //   origin: ["https://shubho-youtube-mern.netlify.app"],
-  //   methods: ["POST", "GET"],
-  //   credentials:true
-  // }
+  cors({
+    origin: ["https://shubho-youtube-mern.netlify.app"],
+    methods: ["POST", "GET"],
+    credentials: true,
+  })
 );
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
