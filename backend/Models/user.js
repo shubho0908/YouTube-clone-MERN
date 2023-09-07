@@ -48,6 +48,9 @@ const Playlists = new mongoose.Schema({
       video_date: {
         type: String,
       },
+      videoprivacy: {
+        type: String,
+      },
       video_views: {
         type: Number,
       },

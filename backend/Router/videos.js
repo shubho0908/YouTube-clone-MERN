@@ -490,6 +490,7 @@ Videos.post("/addplaylist/:email", async (req, res) => {
       video_uploader,
       video_date,
       video_views,
+      videoprivacy
     } = req.body;
 
     const user = await userData.findOne({ email });
@@ -514,6 +515,7 @@ Videos.post("/addplaylist/:email", async (req, res) => {
           video_uploader,
           video_date,
           video_views,
+          videoprivacy
         },
       ],
     });
@@ -559,6 +561,7 @@ Videos.post("/addvideotoplaylist/:email", async (req, res) => {
       video_uploader,
       video_date,
       video_views,
+      videoprivacy
     } = req.body;
 
     const user = await userData.findOne({ email });
@@ -592,6 +595,7 @@ Videos.post("/addvideotoplaylist/:email", async (req, res) => {
       video_uploader,
       video_date,
       video_views,
+      videoprivacy
     };
 
     playlistToUpdate.playlist_videos.push(newVideo);

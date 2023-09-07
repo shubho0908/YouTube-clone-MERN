@@ -821,6 +821,7 @@ function Playlists() {
                             : "liked-all-videos liked-all-videos-light text-light-mode"
                         }
                         key={index}
+                        style={{display:element.videoprivacy === "Public" ? "flex" : "none"}}
                       >
                         <p style={{ color: "#aaa" }}>{index + 1}</p>
                         <div

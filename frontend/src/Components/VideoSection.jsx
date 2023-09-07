@@ -730,6 +730,7 @@ function VideoSection() {
     views,
     videoLength,
     uploaded_date,
+    visibility
   } = matchedVideo;
 
   document.title =
@@ -935,6 +936,7 @@ function VideoSection() {
           video_uploader: uploader,
           video_date: uploaded_date,
           video_views: views,
+          videoprivacy: visibility
         };
 
         const response = await fetch(
@@ -974,6 +976,7 @@ function VideoSection() {
           video_uploader: channelName,
           video_date: uploaded_date,
           video_views: views,
+          videoprivacy: visibility
         };
 
         const response = await fetch(
