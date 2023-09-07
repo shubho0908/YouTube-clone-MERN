@@ -2781,7 +2781,9 @@ function VideoSection() {
                   loading="lazy"
                 />
                 <input
-                  className="comment-input"
+                  className={
+                    theme ? "comment-input" : "comment-input text-light-mode"
+                  }
                   type="text"
                   name="myComment"
                   placeholder="Add a comment..."
