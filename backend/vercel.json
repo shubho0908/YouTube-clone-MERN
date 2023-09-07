@@ -12,19 +12,19 @@
   "routes": [
     {
       "src": "/studio/(.*)",
-      "dest": "/server.js"
+      "dest": "/"
     },
     {
       "src": "/likedVideos",
-      "dest": "/server.js"
+      "dest": "/"
     },
     {
       "src": "/watchlater",
-      "dest": "/server.js"
+      "dest": "/"
     },
     {
       "src": "/library",
-      "dest": "/server.js"
+      "dest": "/"
     },
     {
       "src": "/channel/(.*)",
@@ -32,27 +32,27 @@
     },
     {
       "src": "/trending",
-      "dest": "/server.js"
+      "dest": "/"
     },
     {
       "src": "/results/(.*)",
-      "dest": "/server.js"
+      "dest": "/"
     },
     {
       "src": "/playlist/(.*)",
-      "dest": "/server.js"
+      "dest": "/"
     },
     {
       "src": "/subscriptions",
-      "dest": "/server.js"
+      "dest": "/"
     },
     {
       "src": "/video/(.*)",
-      "dest": "/server.js"
+      "dest": "/"
     },
     {
       "src": "/(.*)",
-      "dest": "/server.js"
+      "dest": "/"
     }
   ]
 }
