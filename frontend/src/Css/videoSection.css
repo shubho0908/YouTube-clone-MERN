@@ -1395,3 +1395,10 @@
     font-size: larger !important;
   }
 }
+
+
+@media (width<= 370px) {
+  .description-section2, .description-section2-light{
+    width: 92% !important;
+  }
+}
