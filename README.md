@@ -21,6 +21,7 @@ https://github.com/shubho0908/YouTube-clone-MERN/assets/81776711/72a75a7e-e20b-4
 - Video storage using Firebase Storage.
 - YouTube studio to manage channel and content.
 - Responsive design for mobile and desktop.
+- And much more...
 
 ## Technologies Used
 
