@@ -110,11 +110,7 @@ function LeftPanel2() {
       }
     };
 
-    const interval = setInterval(getData, 100);
-
-    return () => {
-      clearInterval(interval);
-    };
+    getData()
   }, [email]);
 
   useEffect(() => {
@@ -132,11 +128,7 @@ function LeftPanel2() {
       }
     };
 
-    const interval = setInterval(getChannelId, 100);
-
-    return () => {
-      clearInterval(interval);
-    };
+    getChannelId()
   }, [email]);
 
   return (

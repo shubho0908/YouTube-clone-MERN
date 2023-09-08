@@ -162,9 +162,7 @@ function Content() {
       }
     };
 
-    const interval = setInterval(GetUserVideos, 100);
-
-    return () => clearInterval(interval);
+    GetUserVideos()
   }, [Email]);
 
   useEffect(() => {
@@ -183,9 +181,7 @@ function Content() {
       }
     };
 
-    const interval = setInterval(GetDeleteVideoData, 100);
-
-    return () => clearInterval(interval);
+    GetDeleteVideoData()
   }, [DeleteVideoID]);
 
   const handleSortByDate = () => {

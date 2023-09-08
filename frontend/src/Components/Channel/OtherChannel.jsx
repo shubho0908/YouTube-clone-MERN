@@ -84,9 +84,7 @@ function OtherChannel() {
       }
     };
 
-    const interval = setInterval(getUserMail, 200);
-
-    return () => clearInterval(interval);
+    getUserMail()
   }, [id]);
 
   useEffect(() => {

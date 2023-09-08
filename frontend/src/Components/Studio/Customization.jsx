@@ -113,9 +113,7 @@ function Customization() {
       }
     };
 
-    const interval = setInterval(getChannelID, 100);
-
-    return () => clearInterval(interval);
+    getChannelID()
   }, [email]);
 
   return (

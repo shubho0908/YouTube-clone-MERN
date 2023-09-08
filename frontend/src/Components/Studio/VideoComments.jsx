@@ -132,9 +132,7 @@ function VideoComments() {
         //console.log(error.message);
       }
     };
-    const interval = setInterval(getChannel, 100);
-
-    return () => clearInterval(interval);
+    getChannel()
   }, [Email]);
 
   useEffect(() => {

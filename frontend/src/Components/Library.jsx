@@ -112,9 +112,7 @@ function Library() {
       }
     };
 
-    const interval = setInterval(getWatchLater, 100);
-
-    return () => clearInterval(interval);
+    getWatchLater()
   }, [email]);
 
   useEffect(() => {
@@ -130,9 +128,7 @@ function Library() {
       }
     };
 
-    const interval = setInterval(getLikeVideos, 100);
-
-    return () => clearInterval(interval);
+    getLikeVideos()
   }, [email]);
 
   useEffect(() => {
@@ -150,9 +146,7 @@ function Library() {
       }
     };
 
-    const interval = setInterval(getChannelID, 100);
-
-    return () => clearInterval(interval);
+    getChannelID()
   }, [email]);
 
   useEffect(() => {
@@ -170,9 +164,7 @@ function Library() {
       }
     };
 
-    const interval = setInterval(GetSavedPlaylist, 250);
-
-    return () => clearInterval(interval);
+    GetSavedPlaylist()
   }, [email]);
 
   useEffect(() => {

@@ -103,9 +103,7 @@ function Navbar2() {
       }
     };
 
-    const interval = setInterval(getData, 200);
-
-    return () => clearInterval(interval);
+    getData()
   }, [email]);
 
   useEffect(() => {
@@ -121,9 +119,7 @@ function Navbar2() {
       }
     };
 
-    const interval = setInterval(getVideos, 200);
-
-    return () => clearInterval(interval);
+    getVideos()
   }, [email]);
 
   const filteredVideos =

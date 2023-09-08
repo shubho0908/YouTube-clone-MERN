@@ -73,9 +73,7 @@ function Dashboard() {
       }
     };
 
-    const interval = setInterval(getVideos, 100);
-
-    return () => clearInterval(interval);
+    getVideos()
   }, [Email]);
 
   useEffect(() => {
@@ -95,9 +93,7 @@ function Dashboard() {
       }
     };
 
-    const interval = setInterval(getSubscribers, 100);
-
-    return () => clearInterval(interval);
+    getSubscribers()
   }, [Email]);
 
   useEffect(() => {

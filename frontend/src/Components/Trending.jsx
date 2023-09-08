@@ -69,10 +69,7 @@ function Trending() {
         // console.log(error.message);
       }
     };
-
-    const interval = setInterval(getTrending, 100);
-
-    return () => clearInterval(interval);
+    getTrending()
   }, []);
 
   useEffect(() => {

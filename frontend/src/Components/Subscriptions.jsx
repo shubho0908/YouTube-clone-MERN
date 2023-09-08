@@ -55,9 +55,7 @@ function Subscriptions() {
         // console.log(error.message);
       }
     };
-    const interval = setInterval(getSubscriptions, 100);
-
-    return () => clearInterval(interval);
+    getSubscriptions()
   }, [email]);
 
   useEffect(() => {
@@ -89,9 +87,7 @@ function Subscriptions() {
       }
     };
 
-    const interval = setInterval(getUserMail, 200);
-
-    return () => clearInterval(interval);
+    getUserMail()
   }, [subscriptions]);
 
   useEffect(() => {

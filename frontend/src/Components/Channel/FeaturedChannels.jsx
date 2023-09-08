@@ -77,9 +77,7 @@ function FeaturedChannels(prop) {
         // console.log(error.message);
       }
     };
-    const interval = setInterval(getSubscriptions, 100);
-
-    return () => clearInterval(interval);
+    getSubscriptions()
   }, [prop.newmail]);
 
   useEffect(() => {

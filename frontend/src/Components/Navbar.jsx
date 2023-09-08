@@ -82,9 +82,7 @@ function Navbar() {
       }
     };
 
-    const interval = setInterval(getData, 200);
-
-    return () => clearInterval(interval);
+    getData()
   }, [email]);
 
   useEffect(() => {

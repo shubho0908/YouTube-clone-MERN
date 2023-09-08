@@ -230,9 +230,7 @@ function Playlists() {
       }
     };
 
-    const interval = setInterval(getChannelID, 100);
-
-    return () => clearInterval(interval);
+    getChannelID()
   });
 
   useEffect(() => {

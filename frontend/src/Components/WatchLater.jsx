@@ -101,9 +101,7 @@ function WatchLater() {
       }
     };
 
-    const interval = setInterval(getWatchLater, 100);
-
-    return () => clearInterval(interval);
+    getWatchLater()
   }, [email]);
 
   useEffect(() => {

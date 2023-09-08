@@ -148,9 +148,7 @@ function Studio() {
       }
     };
 
-    const interval = setInterval(getVideos, 100);
-
-    return () => clearInterval(interval);
+    getVideos()
   }, [email]);
 
   useEffect(() => {
@@ -237,11 +235,7 @@ function Studio() {
       }
     };
 
-    const interval = setInterval(ChannelAvailable, 100);
-
-    return () => {
-      clearInterval(interval);
-    };
+    ChannelAvailable()
   }, [email]);
 
   //IMAGE UPLOAD

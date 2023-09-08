@@ -240,9 +240,7 @@ function VideoSection() {
         //console.log(error.message);
       }
     };
-    const interval = setInterval(getChannel, 200);
-
-    return () => clearInterval(interval);
+    getChannel()
   }, [email]);
 
   useEffect(() => {
@@ -259,9 +257,7 @@ function VideoSection() {
         //console.log(error.message);
       }
     };
-    const interval = setInterval(getTrendingData, 200);
-
-    return () => clearInterval(interval);
+    getTrendingData()
   }, [id]);
 
   useEffect(() => {
@@ -277,9 +273,7 @@ function VideoSection() {
         //console.log(error.message);
       }
     };
-    const interval = setInterval(PushTrending, 400);
-
-    return () => clearInterval(interval);
+    PushTrending()
   }, [id, usermail]);
 
   useEffect(() => {
@@ -469,9 +463,7 @@ function VideoSection() {
       }
     };
 
-    const interval = setInterval(getOtherChannel, 200);
-
-    return () => clearInterval(interval);
+    getOtherChannel()
   }, [id]);
 
   useEffect(() => {
@@ -490,9 +482,7 @@ function VideoSection() {
       }
     };
 
-    const interval = setInterval(getChannelID, 400);
-
-    return () => clearInterval(interval);
+    getChannelID()
   }, [usermail]);
 
   useEffect(() => {
@@ -512,9 +502,7 @@ function VideoSection() {
       }
     };
 
-    const interval = setInterval(GetChannelData, 400);
-
-    return () => clearInterval(interval);
+    GetChannelData()
   }, [usermail]);
 
   useEffect(() => {
