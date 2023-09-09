@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 const userData = require("../Models/user");
 const auth = express.Router();
 const nodemailer = require("nodemailer");
-const URL = "http://localhost:3000";
+const URL = "https://youtube-clone-mern-backend.vercel.app";
 
 auth.post("/signup", async (req, res) => {
   try {
