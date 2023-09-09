@@ -279,7 +279,7 @@ Studio.get("/:userId/:token", async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({
-      message: "NOT WORKING",
+      message: error.message,
     });
   }
 });
