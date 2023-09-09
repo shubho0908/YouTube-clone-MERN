@@ -618,10 +618,14 @@ function VideoSection() {
   const uploadComment = async () => {
     try {
       setCommentLoading(true);
+      const response1 = await fetch(
+        `https://youtube-clone-mern-backend.vercel.app/getchannelid/${email}`
+      );
+      const { channelID } = await response1.json();
       const data = {
         comment,
         email,
-        youtubeChannelID,
+        channelID,
       };
       const response = await fetch(
         `https://youtube-clone-mern-backend.vercel.app/comments/${id}`,
