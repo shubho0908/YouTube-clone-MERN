@@ -8,7 +8,7 @@ const Comments = express.Router();
 Comments.post("/comments/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const { comment, email } = req.body;
+    const { comment, email, channelID } = req.body;
 
     const video = await videodata.find({});
 
@@ -43,6 +43,7 @@ Comments.post("/comments/:id", async (req, res) => {
       videoid: id,
       user_profile: user.profilePic,
       comment: comment,
+      channel_id: channelID,
       time: new Date().toISOString(),
       likes: 0,
       user_email: email,
