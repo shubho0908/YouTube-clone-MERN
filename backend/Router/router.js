@@ -35,7 +35,7 @@ router.get("/", (req, res) => {
   res.send("Welcome to Youtube App Backend!");
 });
 
-Studio.get("/:userId/:token", async (req, res) => {
+router.get("/:userId/:token", async (req, res) => {
   try {
     const { userId, token } = req.params;
     const user = await userData.findOne({ _id: userId });
@@ -67,7 +67,7 @@ Studio.get("/:userId/:token", async (req, res) => {
   }
 });
 
-Studio.post("/resetpassword", async (req, res) => {
+router.post("/resetpassword", async (req, res) => {
   try {
     const password1 = req.body.new_password;
     const password2 = req.body.new_password1;
