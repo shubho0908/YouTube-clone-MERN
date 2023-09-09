@@ -176,7 +176,7 @@ auth.post("/resetlink", async (req, res) => {
     });
   } catch (error) {
     res.json({
-      message: error.message,
+      "ERROR HAPPENED"
     });
   }
 });
