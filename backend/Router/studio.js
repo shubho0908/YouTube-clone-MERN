@@ -144,8 +144,7 @@ Studio.post("/savevideoeditdetails/:videoId", async (req, res) => {
           "Playlists.$[playlist].playlist_videos.$[video].thumbnail": thumbnail,
           "Playlists.$[playlist].playlist_videos.$[video].title": title,
           "Playlists.$[playlist].playlist_videos.$[video].description": desc,
-          "Playlists.$[playlist].playlist_videos.$[video].videoprivacy":
-            privacy,
+          "Playlists.$[playlist].playlist_videos.$[video].videoprivacy": privacy,
         },
       },
       {
@@ -155,6 +154,7 @@ Studio.post("/savevideoeditdetails/:videoId", async (req, res) => {
         ],
       }
     );
+    
 
     res.status(200).json({ message: "Video updated successfully" });
   } catch (error) {
@@ -269,14 +269,14 @@ Studio.get("/:userId/:token", async (req, res) => {
       });
     }
 
-    // jwt.verify(token, process.env.SECRET_KEY, (err, payload) => {
-    //   if (err) {
-    //     return res.status(401).json({ message: "Token verification failed" });
-    //   }
-    res.render("reset-password", {
-      email: "Hello",
+    jwt.verify(token, process.env.SECRET_KEY, (err, payload) => {
+      if (err) {
+        return res.status(401).json({ message: "Token verification failed" });
+      }
+      res.render("reset-password", {
+        email: payload.email,
+      });
     });
-    // });
   } catch (error) {
     res.status(500).json({
       message: error.message,
