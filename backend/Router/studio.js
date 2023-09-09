@@ -144,7 +144,8 @@ Studio.post("/savevideoeditdetails/:videoId", async (req, res) => {
           "Playlists.$[playlist].playlist_videos.$[video].thumbnail": thumbnail,
           "Playlists.$[playlist].playlist_videos.$[video].title": title,
           "Playlists.$[playlist].playlist_videos.$[video].description": desc,
-          "Playlists.$[playlist].playlist_videos.$[video].videoprivacy": privacy,
+          "Playlists.$[playlist].playlist_videos.$[video].videoprivacy":
+            privacy,
         },
       },
       {
@@ -154,7 +155,6 @@ Studio.post("/savevideoeditdetails/:videoId", async (req, res) => {
         ],
       }
     );
-    
 
     res.status(200).json({ message: "Video updated successfully" });
   } catch (error) {
@@ -252,71 +252,71 @@ Studio.post("/savelinksdata/:email", async (req, res) => {
   }
 });
 
-// Studio.get("/:userId/:token", async (req, res) => {
-//   try {
-//     const { userId, token } = req.params;
-//     const user = await userData.findOne({ _id: userId });
+Studio.get("/:userId/:token", async (req, res) => {
+  try {
+    const { userId, token } = req.params;
+    const user = await userData.findOne({ _id: userId });
 
-//     if (!user) {
-//       return res.status(404).json({
-//         message: "USER DOESN'T EXIST",
-//       });
-//     }
+    if (!user) {
+      return res.status(404).json({
+        message: "USER DOESN'T EXIST",
+      });
+    }
 
-//     if (!token) {
-//       return res.status(404).json({
-//         message: "INVALID TOKEN",
-//       });
-//     }
+    if (!token) {
+      return res.status(404).json({
+        message: "INVALID TOKEN",
+      });
+    }
 
-//     jwt.verify(token, process.env.SECRET_KEY, (err, payload) => {
-//       if (err) {
-//         return res.status(401).json({ message: "Token verification failed" });
-//       }
-//       res.render("reset-password", {
-//         email: payload.email,
-//       });
-//     });
-//   } catch (error) {
-//     res.status(500).json({
-//       message: error.message,
-//     });
-//   }
-// });
+    // jwt.verify(token, process.env.SECRET_KEY, (err, payload) => {
+    //   if (err) {
+    //     return res.status(401).json({ message: "Token verification failed" });
+    //   }
+    res.render("reset-password", {
+      email: payload.email,
+    });
+    // });
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+});
 
-// Studio.post("/resetpassword", async (req, res) => {
-//   try {
-//     const password1 = req.body.new_password;
-//     const password2 = req.body.new_password1;
-//     const email = req.body.email;
+Studio.post("/resetpassword", async (req, res) => {
+  try {
+    const password1 = req.body.new_password;
+    const password2 = req.body.new_password1;
+    const email = req.body.email;
 
-//     if (password1 === "" || password2 === "") {
-//       return res.send("Input fields can't be empty!");
-//     } else if (password1 !== password2) {
-//       return res.send("Passwords don't match!");
-//     } else {
-//       const user = await userData.findOne({ email });
+    if (password1 === "" || password2 === "") {
+      return res.send("Input fields can't be empty!");
+    } else if (password1 !== password2) {
+      return res.send("Passwords don't match!");
+    } else {
+      const user = await userData.findOne({ email });
 
-//       if (!user) {
-//         return res.send("USER DOESN'T EXIST");
-//       }
+      if (!user) {
+        return res.send("USER DOESN'T EXIST");
+      }
 
-//       const checkPassword = await bcrypt.compare(password1, user.password);
+      const checkPassword = await bcrypt.compare(password1, user.password);
 
-//       if (checkPassword) {
-//         return res.send("New Password can't be the same as the Old Password.");
-//       } else {
-//         const hashedPassword = await bcrypt.hash(password1, 11);
-//         user.password = hashedPassword;
-//         await user.save();
-//         return res.render("done");
-//       }
-//     }
-//   } catch (error) {
-//     res.status(500).json({
-//       message: error.message,
-//     });
-//   }
-// });
+      if (checkPassword) {
+        return res.send("New Password can't be the same as the Old Password.");
+      } else {
+        const hashedPassword = await bcrypt.hash(password1, 11);
+        user.password = hashedPassword;
+        await user.save();
+        return res.render("done");
+      }
+    }
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+});
 
 module.exports = Studio;
