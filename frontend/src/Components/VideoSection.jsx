@@ -621,7 +621,7 @@ function VideoSection() {
       const data = {
         comment,
         email,
-        channelID,
+        youtubeChannelID,
       };
       const response = await fetch(
         `https://youtube-clone-mern-backend.vercel.app/comments/${id}`,
