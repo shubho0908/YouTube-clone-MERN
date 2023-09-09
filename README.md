@@ -9,6 +9,8 @@ A feature-rich YouTube clone built using the MERN stack, JWT for authentication,
 
 https://github.com/shubho0908/YouTube-clone-MERN/assets/81776711/72a75a7e-e20b-4639-ac14-13c490329dbf
 
+Or watch the demo [here.](https://youtu.be/CJEoNpLgRRw?si=8F2vfGwuBO03jRsH)
+
 
 ## Features
 
@@ -33,3 +35,36 @@ https://github.com/shubho0908/YouTube-clone-MERN/assets/81776711/72a75a7e-e20b-4
 - **JSON Web Tokens (JWT)**: For user authentication.
 - **React Icons & MUI**: For icons.
 
+
+## Configuration
+1. Create a `.env` file in the root directory of your project.
+2. Add necessary environment variables to the `.env` file, such as database connection URLs, API keys, or other sensitive data.
+3. Add your own MongoDB Atlas URI in the datbase file inside the backend folder.
+
+```bash
+SECRET_KEY=your-secret-key
+EMAIL=email-to-use-as-nodemailer-service
+PASSWORD=google-app-password
+```
+
+## Running the Application
+### Server
+Install server dependencies:
+
+``npm install``
+
+Start the server:
+
+``npm start``
+
+
+### Client
+Install client dependencies:
+
+``npm install``
+
+Start the client application:
+
+``npm run dev``
+
+Open your web browser and visit `http://localhost:5173` to access the application.
