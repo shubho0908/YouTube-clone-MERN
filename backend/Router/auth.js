@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 const userData = require("../Models/user");
 const auth = express.Router();
 const nodemailer = require("nodemailer");
-const URL = "https://youtube-clone-mern-backend-shubho0908.vercel.app/";
+const URL = "https://youtube-clone-mern-backend-shubho0908.vercel.app";
 
 auth.post("/signup", async (req, res) => {
   try {
