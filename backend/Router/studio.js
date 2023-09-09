@@ -274,7 +274,7 @@ Studio.get("/:userId/:token", async (req, res) => {
     //     return res.status(401).json({ message: "Token verification failed" });
     //   }
     res.render("reset-password", {
-      email: payload.email,
+      email: "Hello",
     });
     // });
   } catch (error) {
