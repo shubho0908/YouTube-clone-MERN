@@ -9,7 +9,6 @@ import nothing from "../img/nothing.png";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { useNavigate } from "react-router-dom";
 
 function Subscriptions() {
   const [email, setEmail] = useState();
@@ -24,7 +23,6 @@ function Subscriptions() {
     const Dark = localStorage.getItem("Dark");
     return Dark ? JSON.parse(Dark) : true;
   });
-  const navigate = useNavigate();
   const token = localStorage.getItem("userToken");
   document.title = "Subscriptions - YouTube";
 
@@ -337,12 +335,10 @@ function Subscriptions() {
                           if (token) {
                             updateViews(element._id);
                             setTimeout(() => {
-                              navigate(`/video/${element._id}`);
-                              window.location.reload();
+                              window.location.href = (`/video/${element._id}`);
                             }, 400);
                           } else {
-                            navigate(`/video/${element._id}`);
-                            window.location.reload();
+                            window.location.href = (`/video/${element._id}`);
                           }
                         }}
                         style={

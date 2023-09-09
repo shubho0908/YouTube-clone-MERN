@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
-import { useNavigate } from "react-router-dom";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import LeftPanel from "./LeftPanel";
@@ -35,8 +34,6 @@ function Browse() {
   });
 
   const token = localStorage.getItem("userToken");
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -95,7 +92,9 @@ function Browse() {
   useEffect(() => {
     const getVideos = async () => {
       try {
-        const response = await fetch("https://youtube-clone-mern-backend.vercel.app/getvideos");
+        const response = await fetch(
+          "https://youtube-clone-mern-backend.vercel.app/getvideos"
+        );
         const {
           videoURLs,
           thumbnailURLs,
@@ -162,12 +161,15 @@ function Browse() {
 
   const updateViews = async (id) => {
     try {
-      const response = await fetch(`https://youtube-clone-mern-backend.vercel.app/updateview/${id}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `https://youtube-clone-mern-backend.vercel.app/updateview/${id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       await response.json();
     } catch (error) {
       // console.log(error.message);
@@ -347,12 +349,10 @@ function Browse() {
                         if (token) {
                           updateViews(VideoID[index]);
                           setTimeout(() => {
-                            navigate(`/video/${VideoID[index]}`);
-                            window.location.reload();
+                            window.location.href = `/video/${VideoID[index]}`;
                           }, 400);
                         }
-                        navigate(`/video/${VideoID[index]}`);
-                        window.location.reload();
+                        window.location.href = `/video/${VideoID[index]}`;
                       }}
                     >
                       <img
@@ -511,12 +511,10 @@ function Browse() {
                         if (token) {
                           updateViews(element._id);
                           setTimeout(() => {
-                            navigate(`/video/${element._id}`);
-                            window.location.reload();
+                            window.location.href = `/video/${element._id}`;
                           }, 400);
                         }
-                        navigate(`/video/${element._id}`);
-                        window.location.reload();
+                        window.location.href = `/video/${element._id}`;
                       }}
                     >
                       <img

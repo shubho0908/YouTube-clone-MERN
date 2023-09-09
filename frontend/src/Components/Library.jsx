@@ -1,7 +1,6 @@
 import Navbar from "./Navbar";
 import LeftPanel from "./LeftPanel";
 import WatchLaterOutlinedIcon from "@mui/icons-material/WatchLaterOutlined";
-import { useNavigate } from "react-router-dom";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import jwtDecode from "jwt-decode";
 import nothing from "../img/nothing.png";
@@ -37,7 +36,6 @@ function Library() {
   const [playlistColors, setPlaylistColors] = useState([]);
   const [channelID, setChannelID] = useState();
   const [videolike, setLikedVideos] = useState([]);
-  const navigate = useNavigate();
   const [email, setEmail] = useState();
   const token = localStorage.getItem("userToken");
   const [loading, setLoading] = useState(true);
@@ -383,8 +381,7 @@ function Library() {
                     className="thiswatchlater-videoss"
                     key={index}
                     onClick={() => {
-                      navigate(`/video/${element.savedVideoID}`);
-                      window.location.reload();
+                      window.location.href = (`/video/${element.savedVideoID}`);
                     }}
                   >
                     <img

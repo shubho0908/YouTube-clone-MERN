@@ -2,7 +2,6 @@ import Navbar from "./Navbar";
 import LeftPanel from "./LeftPanel";
 import { useEffect, useState } from "react";
 import jwtDecode from "jwt-decode";
-import { useNavigate } from "react-router-dom";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import nothing from "../img/nothing.png";
 import "../Css/likevideos.css";
@@ -22,7 +21,6 @@ function LikeVideos() {
     const Dark = localStorage.getItem("Dark");
     return Dark ? JSON.parse(Dark) : true;
   });
-  const navigate = useNavigate();
   const token = localStorage.getItem("userToken");
   document.title = "Liked videos - YouTube";
 
@@ -104,12 +102,15 @@ function LikeVideos() {
 
   const updateViews = async (id) => {
     try {
-      const response = await fetch(`https://youtube-clone-mern-backend.vercel.app/updateview/${id}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `https://youtube-clone-mern-backend.vercel.app/updateview/${id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       await response.json();
     } catch (error) {
       // console.log(error.message);
@@ -145,11 +146,7 @@ function LikeVideos() {
         {videolike.length > 0 ? (
           <div
             className="like-video-sections"
-            style={
-              menuClicked === false
-                ? { left: "80px" }
-                : { left: "255px" }
-            }
+            style={menuClicked === false ? { left: "80px" } : { left: "255px" }}
           >
             <div
               className={
@@ -167,12 +164,10 @@ function LikeVideos() {
                       if (token) {
                         updateViews(videolike[0].likedVideoID);
                         setTimeout(() => {
-                          navigate(`/video/${videolike[0].likedVideoID}`);
-                          window.location.reload();
+                          window.location.href = `/video/${videolike[0].likedVideoID}`;
                         }, 400);
                       } else {
-                        navigate(`/video/${videolike[0].likedVideoID}`);
-                        window.location.reload();
+                        window.location.href = `/video/${videolike[0].likedVideoID}`;
                       }
                     }}
                   >
@@ -231,12 +226,10 @@ function LikeVideos() {
                     if (token) {
                       updateViews(videolike[0].likedVideoID);
                       setTimeout(() => {
-                        navigate(`/video/${videolike[0].likedVideoID}`);
-                        window.location.reload();
+                        window.location.href = `/video/${videolike[0].likedVideoID}`;
                       }, 400);
                     } else {
-                      navigate(`/video/${videolike[0].likedVideoID}`);
-                      window.location.reload();
+                      window.location.href = `/video/${videolike[0].likedVideoID}`;
                     }
                   }}
                 >
@@ -257,50 +250,55 @@ function LikeVideos() {
               >
                 {videolike.length > 0
                   ? videolike.map((element, index) => {
-                    return (
-                      <div
-                        className={
-                          theme
-                            ? "liked-all-videos"
-                            : "liked-all-videos liked-all-videos-light text-light-mode"
-                        }
-                        key={index}
-                        style={{ display: element.videoprivacy === "Public" ? "flex" : "none" }}
-                      >
-                        <div className="liked-videos-all-data">
-                          <Skeleton
-                            count={1}
-                            width={180}
-                            height={101}
-                            style={{ borderRadius: "12px" }}
-                            className="sk-watch-thumbnail"
-                          />
-                          <div
-                            className="its-content"
-                            style={{
-                              position: "relative",
-                              left: "10px",
-                              top: "6px",
-                            }}
-                          >
+                      return (
+                        <div
+                          className={
+                            theme
+                              ? "liked-all-videos"
+                              : "liked-all-videos liked-all-videos-light text-light-mode"
+                          }
+                          key={index}
+                          style={{
+                            display:
+                              element.videoprivacy === "Public"
+                                ? "flex"
+                                : "none",
+                          }}
+                        >
+                          <div className="liked-videos-all-data">
                             <Skeleton
                               count={1}
-                              width={450}
-                              height={20}
-                              className="sk-watch-title"
+                              width={180}
+                              height={101}
+                              style={{ borderRadius: "12px" }}
+                              className="sk-watch-thumbnail"
                             />
-                            <Skeleton
-                              count={1}
-                              width={250}
-                              height={16}
-                              style={{ position: "relative", top: "10px" }}
-                              className="sk-watch-channel"
-                            />
+                            <div
+                              className="its-content"
+                              style={{
+                                position: "relative",
+                                left: "10px",
+                                top: "6px",
+                              }}
+                            >
+                              <Skeleton
+                                count={1}
+                                width={450}
+                                height={20}
+                                className="sk-watch-title"
+                              />
+                              <Skeleton
+                                count={1}
+                                width={250}
+                                height={16}
+                                style={{ position: "relative", top: "10px" }}
+                                className="sk-watch-channel"
+                              />
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    );
-                  })
+                      );
+                    })
                   : ""}
               </div>
             </SkeletonTheme>
@@ -314,66 +312,66 @@ function LikeVideos() {
             >
               {videolike.length > 0
                 ? videolike.map((element, index) => {
-                  return (
-                    <div
-                      className={
-                        theme
-                          ? "liked-all-videos"
-                          : "liked-all-videos liked-all-videos-light text-light-mode"
-                      }
-                      key={index}
-                      style={{ display: element.videoprivacy === "Public" ? "flex" : "none" }}
-
-                    >
-                      <p style={{ color: "#aaa" }}>{index + 1}</p>
+                    return (
                       <div
-                        className="liked-videos-all-data"
-                        onClick={() => {
-                          if (token) {
-                            updateViews(element.likedVideoID);
-                            setTimeout(() => {
-                              navigate(`/video/${element.likedVideoID}`);
-                              window.location.reload();
-                            }, 400);
-                          } else {
-                            navigate(`/video/${element.likedVideoID}`);
-                            window.location.reload();
-                          }
+                        className={
+                          theme
+                            ? "liked-all-videos"
+                            : "liked-all-videos liked-all-videos-light text-light-mode"
+                        }
+                        key={index}
+                        style={{
+                          display:
+                            element.videoprivacy === "Public" ? "flex" : "none",
                         }}
                       >
-                        <img
-                          src={element.thumbnailURL}
-                          alt="first-like-thumbnail"
-                          loading="lazy"
-                        />
-                        <p
-                          className={
-                            theme ? "durationn3" : "durationn3 text-dark-mode"
-                          }
+                        <p style={{ color: "#aaa" }}>{index + 1}</p>
+                        <div
+                          className="liked-videos-all-data"
+                          onClick={() => {
+                            if (token) {
+                              updateViews(element.likedVideoID);
+                              setTimeout(() => {
+                                window.location.href = `/video/${element.likedVideoID}`;
+                              }, 400);
+                            } else {
+                              window.location.href = `/video/${element.likedVideoID}`;
+                            }
+                          }}
                         >
-                          {Math.floor(element.videoLength / 60) +
-                            ":" +
-                            (Math.round(element.videoLength % 60) < 10
-                              ? "0" + Math.round(element.videoLength % 60)
-                              : Math.round(element.videoLength % 60))}
-                        </p>
-                        <div className="its-content">
-                          {window.innerWidth <= 1000 ? (
-                            <p>
-                              {element.Title.length <= 50
-                                ? element.Title
-                                : `${element.Title.slice(0, 50)}..`}
-                            </p>
-                          ) : (
-                            <p>{element.Title}</p>
-                          )}
+                          <img
+                            src={element.thumbnailURL}
+                            alt="first-like-thumbnail"
+                            loading="lazy"
+                          />
+                          <p
+                            className={
+                              theme ? "durationn3" : "durationn3 text-dark-mode"
+                            }
+                          >
+                            {Math.floor(element.videoLength / 60) +
+                              ":" +
+                              (Math.round(element.videoLength % 60) < 10
+                                ? "0" + Math.round(element.videoLength % 60)
+                                : Math.round(element.videoLength % 60))}
+                          </p>
+                          <div className="its-content">
+                            {window.innerWidth <= 1000 ? (
+                              <p>
+                                {element.Title.length <= 50
+                                  ? element.Title
+                                  : `${element.Title.slice(0, 50)}..`}
+                              </p>
+                            ) : (
+                              <p>{element.Title}</p>
+                            )}
 
-                          <p>{element.uploader}</p>
+                            <p>{element.uploader}</p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  );
-                })
+                    );
+                  })
                 : ""}
             </div>
           </div>
@@ -398,11 +396,7 @@ function LikeVideos() {
         {videolike.length > 0 ? (
           <div
             className="like-video-sections2"
-            style={
-              menuClicked === false
-                ? { left: "80px" }
-                : { left: "255px" }
-            }
+            style={menuClicked === false ? { left: "80px" } : { left: "255px" }}
           >
             <div
               className={
@@ -421,12 +415,10 @@ function LikeVideos() {
                         if (token) {
                           updateViews(videolike[0].likedVideoID);
                           setTimeout(() => {
-                            navigate(`/video/${videolike[0].likedVideoID}`);
-                            window.location.reload();
+                            window.location.href = `/video/${videolike[0].likedVideoID}`;
                           }, 400);
                         } else {
-                          navigate(`/video/${videolike[0].likedVideoID}`);
-                          window.location.reload();
+                          window.location.href = `/video/${videolike[0].likedVideoID}`;
                         }
                       }}
                     >
@@ -486,12 +478,10 @@ function LikeVideos() {
                     if (token) {
                       updateViews(videolike[0].likedVideoID);
                       setTimeout(() => {
-                        navigate(`/video/${videolike[0].likedVideoID}`);
-                        window.location.reload();
+                        window.location.href = `/video/${videolike[0].likedVideoID}`;
                       }, 400);
                     } else {
-                      navigate(`/video/${videolike[0].likedVideoID}`);
-                      window.location.reload();
+                      window.location.href = `/video/${videolike[0].likedVideoID}`;
                     }
                   }}
                 >
@@ -512,51 +502,55 @@ function LikeVideos() {
               >
                 {videolike.length > 0
                   ? videolike.map((element, index) => {
-                    return (
-                      <div
-                        className={
-                          theme
-                            ? "liked-all-videos"
-                            : "liked-all-videos liked-all-videos-light text-light-mode"
-                        }
-                        key={index}
-                        style={{ display: element.videoprivacy === "Public" ? "flex" : "none" }}
-
-                      >
-                        <div className="liked-videos-all-data">
-                          <Skeleton
-                            count={1}
-                            width={180}
-                            height={101}
-                            style={{ borderRadius: "12px" }}
-                            className="sk-watch-thumbnail"
-                          />
-                          <div
-                            className="its-content"
-                            style={{
-                              position: "relative",
-                              left: "10px",
-                              top: "6px",
-                            }}
-                          >
+                      return (
+                        <div
+                          className={
+                            theme
+                              ? "liked-all-videos"
+                              : "liked-all-videos liked-all-videos-light text-light-mode"
+                          }
+                          key={index}
+                          style={{
+                            display:
+                              element.videoprivacy === "Public"
+                                ? "flex"
+                                : "none",
+                          }}
+                        >
+                          <div className="liked-videos-all-data">
                             <Skeleton
                               count={1}
-                              width={450}
-                              height={20}
-                              className="sk-watch-title"
+                              width={180}
+                              height={101}
+                              style={{ borderRadius: "12px" }}
+                              className="sk-watch-thumbnail"
                             />
-                            <Skeleton
-                              count={1}
-                              width={250}
-                              height={16}
-                              style={{ position: "relative", top: "10px" }}
-                              className="sk-watch-channel"
-                            />
+                            <div
+                              className="its-content"
+                              style={{
+                                position: "relative",
+                                left: "10px",
+                                top: "6px",
+                              }}
+                            >
+                              <Skeleton
+                                count={1}
+                                width={450}
+                                height={20}
+                                className="sk-watch-title"
+                              />
+                              <Skeleton
+                                count={1}
+                                width={250}
+                                height={16}
+                                style={{ position: "relative", top: "10px" }}
+                                className="sk-watch-channel"
+                              />
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    );
-                  })
+                      );
+                    })
                   : ""}
               </div>
             </SkeletonTheme>
@@ -570,66 +564,66 @@ function LikeVideos() {
             >
               {videolike.length > 0
                 ? videolike.map((element, index) => {
-                  return (
-                    <div
-                      className={
-                        theme
-                          ? "liked-all-videos"
-                          : "liked-all-videos liked-all-videos-light text-light-mode"
-                      }
-                      key={index}
-                      style={{ display: element.videoprivacy === "Public" ? "flex" : "none" }}
-
-                    >
-                      <p style={{ color: "#aaa" }}>{index + 1}</p>
+                    return (
                       <div
-                        className="liked-videos-all-data2"
-                        onClick={() => {
-                          if (token) {
-                            updateViews(element.likedVideoID);
-                            setTimeout(() => {
-                              navigate(`/video/${element.likedVideoID}`);
-                              window.location.reload();
-                            }, 400);
-                          } else {
-                            navigate(`/video/${element.likedVideoID}`);
-                            window.location.reload();
-                          }
+                        className={
+                          theme
+                            ? "liked-all-videos"
+                            : "liked-all-videos liked-all-videos-light text-light-mode"
+                        }
+                        key={index}
+                        style={{
+                          display:
+                            element.videoprivacy === "Public" ? "flex" : "none",
                         }}
                       >
-                        <img
-                          src={element.thumbnailURL}
-                          alt="first-like-thumbnail"
-                          loading="lazy"
-                        />
-                        <p
-                          className={
-                            theme ? "durationn3" : "durationn3 text-dark-mode"
-                          }
+                        <p style={{ color: "#aaa" }}>{index + 1}</p>
+                        <div
+                          className="liked-videos-all-data2"
+                          onClick={() => {
+                            if (token) {
+                              updateViews(element.likedVideoID);
+                              setTimeout(() => {
+                                window.location.href = `/video/${element.likedVideoID}`;
+                              }, 400);
+                            } else {
+                              window.location.href = `/video/${element.likedVideoID}`;
+                            }
+                          }}
                         >
-                          {Math.floor(element.videoLength / 60) +
-                            ":" +
-                            (Math.round(element.videoLength % 60) < 10
-                              ? "0" + Math.round(element.videoLength % 60)
-                              : Math.round(element.videoLength % 60))}
-                        </p>
-                        <div className="its-content2">
-                          {window.innerWidth <= 1000 ? (
-                            <p>
-                              {element.Title.length <= 50
-                                ? element.Title
-                                : `${element.Title.slice(0, 50)}..`}
-                            </p>
-                          ) : (
-                            <p>{element.Title}</p>
-                          )}
+                          <img
+                            src={element.thumbnailURL}
+                            alt="first-like-thumbnail"
+                            loading="lazy"
+                          />
+                          <p
+                            className={
+                              theme ? "durationn3" : "durationn3 text-dark-mode"
+                            }
+                          >
+                            {Math.floor(element.videoLength / 60) +
+                              ":" +
+                              (Math.round(element.videoLength % 60) < 10
+                                ? "0" + Math.round(element.videoLength % 60)
+                                : Math.round(element.videoLength % 60))}
+                          </p>
+                          <div className="its-content2">
+                            {window.innerWidth <= 1000 ? (
+                              <p>
+                                {element.Title.length <= 50
+                                  ? element.Title
+                                  : `${element.Title.slice(0, 50)}..`}
+                              </p>
+                            ) : (
+                              <p>{element.Title}</p>
+                            )}
 
-                          <p>{element.uploader}</p>
+                            <p>{element.uploader}</p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  );
-                })
+                    );
+                  })
                 : ""}
             </div>
           </div>

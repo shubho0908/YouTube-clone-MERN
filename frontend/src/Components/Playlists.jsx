@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import ClearRoundedIcon from "@mui/icons-material/ClearRounded";
-import { useNavigate } from "react-router-dom";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import nothing from "../img/nothing.png";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -48,7 +47,6 @@ function Playlists() {
   const [PlaylistName, setPlaylistName] = useState("");
   const [isSaved, setIsSaved] = useState(false);
   const [deleteClicked, setDeleteClicked] = useState(false);
-  const navigate = useNavigate();
   const token = localStorage.getItem("userToken");
 
   const privacyRef = useRef();
@@ -230,7 +228,7 @@ function Playlists() {
       }
     };
 
-    getChannelID()
+    getChannelID();
   });
 
   useEffect(() => {
@@ -420,12 +418,10 @@ function Playlists() {
                       if (token) {
                         updateViews(playlistsVideos[0].videoID);
                         setTimeout(() => {
-                          navigate(`/video/${playlistsVideos[0].videoID}`);
-                          window.location.reload();
+                          window.location.href = `/video/${playlistsVideos[0].videoID}`;
                         }, 400);
                       } else {
-                        navigate(`/video/${playlistsVideos[0].videoID}`);
-                        window.location.reload();
+                        window.location.href = `/video/${playlistsVideos[0].videoID}`;
                       }
                     }}
                   >
@@ -841,7 +837,7 @@ function Playlists() {
                             element.videoprivacy === "Public" ? "flex" : "none",
                         }}
                       >
-                        <p style={{ color: "#aaa" }}>{index+1}</p>
+                        <p style={{ color: "#aaa" }}>{index + 1}</p>
                         <div
                           className="liked-videos-all-data playlistvideos"
                           onClick={() => {
@@ -933,12 +929,10 @@ function Playlists() {
                         if (token) {
                           updateViews(playlistsVideos[0].videoID);
                           setTimeout(() => {
-                            navigate(`/video/${playlistsVideos[0].videoID}`);
-                            window.location.reload();
+                            window.location.href = `/video/${playlistsVideos[0].videoID}`;
                           }, 400);
                         } else {
-                          navigate(`/video/${playlistsVideos[0].videoID}`);
-                          window.location.reload();
+                          window.location.href = `/video/${playlistsVideos[0].videoID}`;
                         }
                       }}
                     >

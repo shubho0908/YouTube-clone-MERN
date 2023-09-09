@@ -2,7 +2,6 @@ import Navbar from "./Navbar";
 import LeftPanel from "./LeftPanel";
 import trending from "../img/trending.jpg";
 import "../Css/trending.css";
-import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import jwtDecode from "jwt-decode";
@@ -15,7 +14,6 @@ import "react-loading-skeleton/dist/skeleton.css";
 function Trending() {
   const [Email, setEmail] = useState();
   const [trendingVideos, setTrendingVideos] = useState([]);
-  const navigate = useNavigate();
   const [menuClicked, setMenuClicked] = useState(() => {
     const menu = localStorage.getItem("menuClicked");
     return menu ? JSON.parse(menu) : false;
@@ -221,12 +219,10 @@ function Trending() {
                         if (token) {
                           updateViews(element.videoid);
                           setTimeout(() => {
-                            navigate(`/video/${element.videoid}`);
-                            window.location.reload();
+                            window.location.href = (`/video/${element.videoid}`);
                           }, 400);
                         } else {
-                          navigate(`/video/${element.videoid}`);
-                          window.location.reload();
+                          window.location.href = (`/video/${element.videoid}`);
                         }
                       }}
                       style={

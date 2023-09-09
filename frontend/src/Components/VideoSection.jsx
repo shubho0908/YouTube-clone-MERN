@@ -1991,6 +1991,7 @@ function VideoSection() {
                                 window.location.href = `/channel/${element.channel_id}`;
                               }
                             }}
+                            style={{ cursor: "pointer" }}
                           >
                             {element.username}
                           </p>
@@ -2880,9 +2881,9 @@ function VideoSection() {
                           alt="commentDP"
                           className="commentDP"
                           loading="lazy"
-                          onClick={()=>{
+                          onClick={() => {
                             if (element.channel_id !== undefined) {
-                              window.location.href = `/channel/${element.channel_id}`
+                              window.location.href = `/channel/${element.channel_id}`;
                             }
                           }}
                         />
@@ -2896,12 +2897,15 @@ function VideoSection() {
                       >
                         <div className="comment-row1">
                           <p
-                           onClick={()=>{
-                            if (element.channel_id !== undefined) {
-                              window.location.href = `/channel/${element.channel_id}`
-                            }
-                          }}
-                          >{element.username}</p>
+                            onClick={() => {
+                              if (element.channel_id !== undefined) {
+                                window.location.href = `/channel/${element.channel_id}`;
+                              }
+                            }}
+                            style={{ cursor: "pointer" }}
+                          >
+                            {element.username}
+                          </p>
                           <p className="comment-time">
                             {(() => {
                               const timeDifference =
