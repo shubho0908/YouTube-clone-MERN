@@ -53,6 +53,7 @@ auth.post("/signup", async (req, res) => {
         </div>
       `,
     };
+    
 
     // Send the email
     transporter.sendMail(mailOptions, (error, info) => {
@@ -157,6 +158,7 @@ auth.post("/resetlink", async (req, res) => {
         </div>
       `,
     };
+    
 
     // Send the email
     transporter.sendMail(mailOptions, (error, info) => {
@@ -173,7 +175,9 @@ auth.post("/resetlink", async (req, res) => {
       }
     });
   } catch (error) {
-    res.json("ERROR HAPPENED");
+    res.json({
+      message: error.message,
+    });
   }
 });
 
