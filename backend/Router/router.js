@@ -40,7 +40,7 @@ router.get("/:userId/:token", async (req, res) => {
     const { userId, token } = req.params;
     const user = await userData.findOne({ _id: userId });
 
-    const newToken = token.toString()
+    const newToken = token.toString();
 
     if (!user) {
       return res.status(404).json({
@@ -58,9 +58,10 @@ router.get("/:userId/:token", async (req, res) => {
       if (err) {
         return res.status(401).json({ message: "Token verification failed" });
       }
-      res.render("reset-password", {
-        email: payload.email,
-      });
+      // res.render("reset-password", {
+      //   email: payload.email,
+      // });
+      res.render("WELCOME BHAI");
     });
   } catch (error) {
     res.status(500).json({
