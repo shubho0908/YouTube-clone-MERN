@@ -252,7 +252,7 @@ Studio.post("/savelinksdata/:email", async (req, res) => {
   }
 });
 
-Studio.get("https://youtube-clone-mern-backend.vercel.app/:userId/:token", async (req, res) => {
+Studio.get("/:userId/:token", async (req, res) => {
   try {
     const { userId, token } = req.params;
     const user = await userData.findOne({ _id: userId });
