@@ -40,19 +40,21 @@ router.get("/:userId/:token", async (req, res) => {
     const { userId, token } = req.params;
     const user = await userData.findOne({ _id: userId });
 
+    const newToken = token.toString()
+
     if (!user) {
       return res.status(404).json({
         message: "USER DOESN'T EXIST",
       });
     }
 
-    if (!token) {
+    if (!newToken || !token) {
       return res.status(404).json({
         message: "INVALID TOKEN",
       });
     }
 
-    jwt.verify(token, process.env.SECRET_KEY, (err, payload) => {
+    jwt.verify(newToken, process.env.SECRET_KEY, (err, payload) => {
       if (err) {
         return res.status(401).json({ message: "Token verification failed" });
       }
