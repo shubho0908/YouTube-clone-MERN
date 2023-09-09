@@ -1949,182 +1949,187 @@ function VideoSection() {
 
             <div className="video-comments">
               {comments.map(async (element, index) => {
-                const data = await fetch(
-                  `https://youtube-clone-mern-backend.vercel.app/getchannelid/${element.user_email}`
-                );
-                const { channelID } = await data.json();
-
-                return (
-                  <>
-                    <div
-                      className="comment-data"
-                      key={index}
-                      style={{
-                        transition: "all 0.15s ease",
-                        opacity: commentOpacity,
-                      }}
-                    >
-                      <div className="comment-left-data">
-                        <img
-                          src={element.user_profile}
-                          alt="commentDP"
-                          className="commentDP"
-                          loading="lazy"
-                          onClick={() => {
-                            if (channelID !== undefined) {
-                              window.location.href = `/channel/${channelID}`;
-                            }
-                          }}
-                        />
-                      </div>
+                try {
+                  const data = await fetch(
+                    `https://youtube-clone-mern-backend.vercel.app/getchannelid/${element.user_email}`
+                  );
+                  const { channelID } = await data.json();
+  
+                  return (
+                    <>
                       <div
-                        className={
-                          theme
-                            ? "comment-right-data"
-                            : "comment-right-data text-light-mode"
-                        }
+                        className="comment-data"
+                        key={index}
+                        style={{
+                          transition: "all 0.15s ease",
+                          opacity: commentOpacity,
+                        }}
                       >
-                        <div className="comment-row1">
-                          <p
+                        <div className="comment-left-data">
+                          <img
+                            src={element.user_profile}
+                            alt="commentDP"
+                            className="commentDP"
+                            loading="lazy"
                             onClick={() => {
                               if (channelID !== undefined) {
                                 window.location.href = `/channel/${channelID}`;
                               }
                             }}
-                          >
-                            {element.username}
-                          </p>
-                          <p className="comment-time">
-                            {(() => {
-                              const timeDifference =
-                                new Date() - new Date(element.time);
-                              const minutes = Math.floor(
-                                timeDifference / 60000
-                              );
-                              const hours = Math.floor(
-                                timeDifference / 3600000
-                              );
-                              const days = Math.floor(
-                                timeDifference / 86400000
-                              );
-                              const weeks = Math.floor(
-                                timeDifference / 604800000
-                              );
-                              const years = Math.floor(
-                                timeDifference / 31536000000
-                              );
-
-                              if (minutes < 1) {
-                                return "just now";
-                              } else if (minutes < 60) {
-                                return `${minutes} mins ago`;
-                              } else if (hours < 24) {
-                                return `${hours} hours ago`;
-                              } else if (days < 7) {
-                                return `${days} days ago`;
-                              } else if (weeks < 52) {
-                                return `${weeks} weeks ago`;
-                              } else {
-                                return `${years} years ago`;
-                              }
-                            })()}
-                          </p>
-                        </div>
-                        <p className="main-comment">{element.comment}</p>
-                        <div className="comment-interaction">
-                          <ThumbUpIcon
-                            fontSize="small"
-                            style={{
-                              color: theme ? "white" : "black",
-                              cursor: "pointer",
-                            }}
-                            onClick={() => {
-                              if (token) {
-                                LikeComment(element._id);
-                              } else {
-                                setisbtnClicked(true);
-                                document.body.classList.add("bg-css");
-                              }
-                            }}
-                            className="comment-like"
                           />
-
-                          <p style={{ marginLeft: "16px" }}>
-                            {CommentLikes &&
-                              CommentLikes[index] &&
-                              CommentLikes[index].likes}
-                          </p>
-
-                          {isHeart[index] === false ? (
-                            <FavoriteBorderOutlinedIcon
-                              fontSize="small"
-                              style={
-                                email === usermail
-                                  ? {
-                                      color: theme ? "white" : "black",
-                                      marginLeft: "20px",
-                                      cursor: "pointer",
-                                    }
-                                  : { display: "none" }
-                              }
-                              className="heart-comment"
+                        </div>
+                        <div
+                          className={
+                            theme
+                              ? "comment-right-data"
+                              : "comment-right-data text-light-mode"
+                          }
+                        >
+                          <div className="comment-row1">
+                            <p
                               onClick={() => {
-                                if (email === usermail) {
-                                  HeartComment(element._id);
+                                if (channelID !== undefined) {
+                                  window.location.href = `/channel/${channelID}`;
                                 }
                               }}
-                            />
-                          ) : (
-                            <Tooltip
-                              TransitionComponent={Zoom}
-                              title="Liked!"
-                              placement="bottom"
                             >
-                              <div
-                                className="heart-liked"
-                                style={{ cursor: "pointer" }}
+                              {element.username}
+                            </p>
+                            <p className="comment-time">
+                              {(() => {
+                                const timeDifference =
+                                  new Date() - new Date(element.time);
+                                const minutes = Math.floor(
+                                  timeDifference / 60000
+                                );
+                                const hours = Math.floor(
+                                  timeDifference / 3600000
+                                );
+                                const days = Math.floor(
+                                  timeDifference / 86400000
+                                );
+                                const weeks = Math.floor(
+                                  timeDifference / 604800000
+                                );
+                                const years = Math.floor(
+                                  timeDifference / 31536000000
+                                );
+  
+                                if (minutes < 1) {
+                                  return "just now";
+                                } else if (minutes < 60) {
+                                  return `${minutes} mins ago`;
+                                } else if (hours < 24) {
+                                  return `${hours} hours ago`;
+                                } else if (days < 7) {
+                                  return `${days} days ago`;
+                                } else if (weeks < 52) {
+                                  return `${weeks} weeks ago`;
+                                } else {
+                                  return `${years} years ago`;
+                                }
+                              })()}
+                            </p>
+                          </div>
+                          <p className="main-comment">{element.comment}</p>
+                          <div className="comment-interaction">
+                            <ThumbUpIcon
+                              fontSize="small"
+                              style={{
+                                color: theme ? "white" : "black",
+                                cursor: "pointer",
+                              }}
+                              onClick={() => {
+                                if (token) {
+                                  LikeComment(element._id);
+                                } else {
+                                  setisbtnClicked(true);
+                                  document.body.classList.add("bg-css");
+                                }
+                              }}
+                              className="comment-like"
+                            />
+  
+                            <p style={{ marginLeft: "16px" }}>
+                              {CommentLikes &&
+                                CommentLikes[index] &&
+                                CommentLikes[index].likes}
+                            </p>
+  
+                            {isHeart[index] === false ? (
+                              <FavoriteBorderOutlinedIcon
+                                fontSize="small"
+                                style={
+                                  email === usermail
+                                    ? {
+                                        color: theme ? "white" : "black",
+                                        marginLeft: "20px",
+                                        cursor: "pointer",
+                                      }
+                                    : { display: "none" }
+                                }
+                                className="heart-comment"
                                 onClick={() => {
                                   if (email === usermail) {
                                     HeartComment(element._id);
                                   }
                                 }}
+                              />
+                            ) : (
+                              <Tooltip
+                                TransitionComponent={Zoom}
+                                title="Liked!"
+                                placement="bottom"
                               >
-                                <img
-                                  src={ChannelProfile}
-                                  alt="commentDP"
-                                  className="heartDP"
-                                  loading="lazy"
-                                />
-                                <FavoriteIcon
-                                  fontSize="100px"
-                                  style={{ color: "rgb(220, 2, 2)" }}
-                                  className="comment-heart"
-                                />
-                              </div>
-                            </Tooltip>
-                          )}
-
-                          {element.user_email === email ||
-                          email === usermail ? (
-                            <button
-                              className={
-                                theme
-                                  ? "delete-comment-btn"
-                                  : "delete-comment-btn-light text-dark-mode"
-                              }
-                              style={{ marginLeft: "17px" }}
-                              onClick={() => DeleteComment(element._id)}
-                            >
-                              Delete
-                            </button>
-                          ) : (
-                            ""
-                          )}
+                                <div
+                                  className="heart-liked"
+                                  style={{ cursor: "pointer" }}
+                                  onClick={() => {
+                                    if (email === usermail) {
+                                      HeartComment(element._id);
+                                    }
+                                  }}
+                                >
+                                  <img
+                                    src={ChannelProfile}
+                                    alt="commentDP"
+                                    className="heartDP"
+                                    loading="lazy"
+                                  />
+                                  <FavoriteIcon
+                                    fontSize="100px"
+                                    style={{ color: "rgb(220, 2, 2)" }}
+                                    className="comment-heart"
+                                  />
+                                </div>
+                              </Tooltip>
+                            )}
+  
+                            {element.user_email === email ||
+                            email === usermail ? (
+                              <button
+                                className={
+                                  theme
+                                    ? "delete-comment-btn"
+                                    : "delete-comment-btn-light text-dark-mode"
+                                }
+                                style={{ marginLeft: "17px" }}
+                                onClick={() => DeleteComment(element._id)}
+                              >
+                                Delete
+                              </button>
+                            ) : (
+                              ""
+                            )}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </>
-                );
+                    </>
+                  );
+                } catch (error) {
+                  console.error('Error fetching data:', error);
+                  return null; 
+                }
               })}
             </div>
           </div>
@@ -2862,183 +2867,189 @@ function VideoSection() {
               ""
             )}
 
-            <div className="video-comments">
+<div className="video-comments">
               {comments.map(async (element, index) => {
-                const data = await fetch(
-                  `https://youtube-clone-mern-backend.vercel.app/getchannelid/${element.user_email}`
-                );
-                const { channelID } = await data.json();
-                return (
-                  <>
-                    <div
-                      className="comment-data"
-                      key={index}
-                      style={{
-                        transition: "all 0.15s ease",
-                        opacity: commentOpacity,
-                      }}
-                    >
-                      <div className="comment-left-data">
-                        <img
-                          src={element.user_profile}
-                          alt="commentDP"
-                          className="commentDP"
-                          loading="lazy"
-                          onClick={() => {
-                            if (channelID !== undefined) {
-                              window.location.href = `/channel/${channelID}`;
-                            }
-                          }}
-                        />
-                      </div>
+                try {
+                  const data = await fetch(
+                    `https://youtube-clone-mern-backend.vercel.app/getchannelid/${element.user_email}`
+                  );
+                  const { channelID } = await data.json();
+  
+                  return (
+                    <>
                       <div
-                        className={
-                          theme
-                            ? "comment-right-data"
-                            : "comment-right-data text-light-mode"
-                        }
+                        className="comment-data"
+                        key={index}
+                        style={{
+                          transition: "all 0.15s ease",
+                          opacity: commentOpacity,
+                        }}
                       >
-                        <div className="comment-row1">
-                          <p
+                        <div className="comment-left-data">
+                          <img
+                            src={element.user_profile}
+                            alt="commentDP"
+                            className="commentDP"
+                            loading="lazy"
                             onClick={() => {
                               if (channelID !== undefined) {
                                 window.location.href = `/channel/${channelID}`;
                               }
                             }}
-                          >
-                            {element.username}
-                          </p>
-                          <p className="comment-time">
-                            {(() => {
-                              const timeDifference =
-                                new Date() - new Date(element.time);
-                              const minutes = Math.floor(
-                                timeDifference / 60000
-                              );
-                              const hours = Math.floor(
-                                timeDifference / 3600000
-                              );
-                              const days = Math.floor(
-                                timeDifference / 86400000
-                              );
-                              const weeks = Math.floor(
-                                timeDifference / 604800000
-                              );
-                              const years = Math.floor(
-                                timeDifference / 31536000000
-                              );
-
-                              if (minutes < 1) {
-                                return "just now";
-                              } else if (minutes < 60) {
-                                return `${minutes} mins ago`;
-                              } else if (hours < 24) {
-                                return `${hours} hours ago`;
-                              } else if (days < 7) {
-                                return `${days} days ago`;
-                              } else if (weeks < 52) {
-                                return `${weeks} weeks ago`;
-                              } else {
-                                return `${years} years ago`;
-                              }
-                            })()}
-                          </p>
-                        </div>
-                        <p className="main-comment">{element.comment}</p>
-                        <div className="comment-interaction">
-                          <ThumbUpIcon
-                            fontSize="small"
-                            style={{
-                              color: theme ? "white" : "black",
-                              cursor: "pointer",
-                            }}
-                            onClick={() => {
-                              if (token) {
-                                LikeComment(element._id);
-                              } else {
-                                setisbtnClicked(true);
-                                document.body.classList.add("bg-css");
-                              }
-                            }}
-                            className="comment-like"
                           />
-
-                          <p style={{ marginLeft: "16px" }}>
-                            {CommentLikes &&
-                              CommentLikes[index] &&
-                              CommentLikes[index].likes}
-                          </p>
-
-                          {isHeart[index] === false ? (
-                            <FavoriteBorderOutlinedIcon
-                              fontSize="small"
-                              style={
-                                email === usermail
-                                  ? {
-                                      color: theme ? "white" : "black",
-                                      marginLeft: "20px",
-                                      cursor: "pointer",
-                                    }
-                                  : { display: "none" }
-                              }
-                              className="heart-comment"
+                        </div>
+                        <div
+                          className={
+                            theme
+                              ? "comment-right-data"
+                              : "comment-right-data text-light-mode"
+                          }
+                        >
+                          <div className="comment-row1">
+                            <p
                               onClick={() => {
-                                if (email === usermail) {
-                                  HeartComment(element._id);
+                                if (channelID !== undefined) {
+                                  window.location.href = `/channel/${channelID}`;
                                 }
                               }}
-                            />
-                          ) : (
-                            <Tooltip
-                              TransitionComponent={Zoom}
-                              title="Liked!"
-                              placement="bottom"
                             >
-                              <div
-                                className="heart-liked"
-                                style={{ cursor: "pointer" }}
+                              {element.username}
+                            </p>
+                            <p className="comment-time">
+                              {(() => {
+                                const timeDifference =
+                                  new Date() - new Date(element.time);
+                                const minutes = Math.floor(
+                                  timeDifference / 60000
+                                );
+                                const hours = Math.floor(
+                                  timeDifference / 3600000
+                                );
+                                const days = Math.floor(
+                                  timeDifference / 86400000
+                                );
+                                const weeks = Math.floor(
+                                  timeDifference / 604800000
+                                );
+                                const years = Math.floor(
+                                  timeDifference / 31536000000
+                                );
+  
+                                if (minutes < 1) {
+                                  return "just now";
+                                } else if (minutes < 60) {
+                                  return `${minutes} mins ago`;
+                                } else if (hours < 24) {
+                                  return `${hours} hours ago`;
+                                } else if (days < 7) {
+                                  return `${days} days ago`;
+                                } else if (weeks < 52) {
+                                  return `${weeks} weeks ago`;
+                                } else {
+                                  return `${years} years ago`;
+                                }
+                              })()}
+                            </p>
+                          </div>
+                          <p className="main-comment">{element.comment}</p>
+                          <div className="comment-interaction">
+                            <ThumbUpIcon
+                              fontSize="small"
+                              style={{
+                                color: theme ? "white" : "black",
+                                cursor: "pointer",
+                              }}
+                              onClick={() => {
+                                if (token) {
+                                  LikeComment(element._id);
+                                } else {
+                                  setisbtnClicked(true);
+                                  document.body.classList.add("bg-css");
+                                }
+                              }}
+                              className="comment-like"
+                            />
+  
+                            <p style={{ marginLeft: "16px" }}>
+                              {CommentLikes &&
+                                CommentLikes[index] &&
+                                CommentLikes[index].likes}
+                            </p>
+  
+                            {isHeart[index] === false ? (
+                              <FavoriteBorderOutlinedIcon
+                                fontSize="small"
+                                style={
+                                  email === usermail
+                                    ? {
+                                        color: theme ? "white" : "black",
+                                        marginLeft: "20px",
+                                        cursor: "pointer",
+                                      }
+                                    : { display: "none" }
+                                }
+                                className="heart-comment"
                                 onClick={() => {
                                   if (email === usermail) {
                                     HeartComment(element._id);
                                   }
                                 }}
+                              />
+                            ) : (
+                              <Tooltip
+                                TransitionComponent={Zoom}
+                                title="Liked!"
+                                placement="bottom"
                               >
-                                <img
-                                  src={ChannelProfile}
-                                  alt="commentDP"
-                                  className="heartDP"
-                                  loading="lazy"
-                                />
-                                <FavoriteIcon
-                                  fontSize="100px"
-                                  style={{ color: "rgb(220, 2, 2)" }}
-                                  className="comment-heart"
-                                />
-                              </div>
-                            </Tooltip>
-                          )}
-
-                          {element.user_email === email ||
-                          email === usermail ? (
-                            <button
-                              className={
-                                theme
-                                  ? "delete-comment-btn"
-                                  : "delete-comment-btn-light text-dark-mode"
-                              }
-                              style={{ marginLeft: "17px" }}
-                              onClick={() => DeleteComment(element._id)}
-                            >
-                              Delete
-                            </button>
-                          ) : (
-                            ""
-                          )}
+                                <div
+                                  className="heart-liked"
+                                  style={{ cursor: "pointer" }}
+                                  onClick={() => {
+                                    if (email === usermail) {
+                                      HeartComment(element._id);
+                                    }
+                                  }}
+                                >
+                                  <img
+                                    src={ChannelProfile}
+                                    alt="commentDP"
+                                    className="heartDP"
+                                    loading="lazy"
+                                  />
+                                  <FavoriteIcon
+                                    fontSize="100px"
+                                    style={{ color: "rgb(220, 2, 2)" }}
+                                    className="comment-heart"
+                                  />
+                                </div>
+                              </Tooltip>
+                            )}
+  
+                            {element.user_email === email ||
+                            email === usermail ? (
+                              <button
+                                className={
+                                  theme
+                                    ? "delete-comment-btn"
+                                    : "delete-comment-btn-light text-dark-mode"
+                                }
+                                style={{ marginLeft: "17px" }}
+                                onClick={() => DeleteComment(element._id)}
+                              >
+                                Delete
+                              </button>
+                            ) : (
+                              ""
+                            )}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </>
-                );
+                    </>
+                  );
+                } catch (error) {
+                  console.error('Error fetching data:', error);
+                  return null; 
+                }
               })}
             </div>
           </div>
