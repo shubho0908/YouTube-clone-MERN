@@ -482,7 +482,9 @@ function VideoSection() {
       }
     };
 
-    getChannelID();
+    const interval = setInterval(getChannelID, 200);
+
+    return () => clearInterval(interval);
   }, [usermail]);
 
   useEffect(() => {
