@@ -89,7 +89,6 @@ function VideoSection() {
   const [playlistID, setplaylistID] = useState([]);
   const [isHeart, setIsHeart] = useState([]);
   const [rec, setRecommend] = useState(false);
-  const [subscribeClicked, setSubsClicked] = useState(false)
 
   //Get Channel Data
   const [youtuberName, setyoutuberName] = useState();
@@ -484,7 +483,7 @@ function VideoSection() {
     };
 
     getChannelID()
-  }, [usermail, subscribeClicked]);
+  }, [usermail]);
 
   useEffect(() => {
     const GetChannelData = async () => {
@@ -879,7 +878,6 @@ function VideoSection() {
   };
 
   const SubscribeChannel = async () => {
-    setSubsClicked(!subscribeClicked)
     try {
       const channelData = {
         youtuberName,
