@@ -89,6 +89,7 @@ function VideoSection() {
   const [playlistID, setplaylistID] = useState([]);
   const [isHeart, setIsHeart] = useState([]);
   const [rec, setRecommend] = useState(false);
+  const [subscribeClicked, setSubsClicked] = useState(false)
 
   //Get Channel Data
   const [youtuberName, setyoutuberName] = useState();
@@ -482,10 +483,8 @@ function VideoSection() {
       }
     };
 
-    const interval = setInterval(getChannelID, 200);
-
-    return () => clearInterval(interval);
-  }, [usermail]);
+    getChannelID()
+  }, [usermail, subscribeClicked]);
 
   useEffect(() => {
     const GetChannelData = async () => {
@@ -880,6 +879,7 @@ function VideoSection() {
   };
 
   const SubscribeChannel = async () => {
+    setSubsClicked(!subscribeClicked)
     try {
       const channelData = {
         youtuberName,
@@ -1147,9 +1147,8 @@ function VideoSection() {
                   className={
                     theme
                       ? "subscribe"
-                      : `subscribe-light ${
-                          email === usermail ? "dull-subs" : ""
-                        }`
+                      : `subscribe-light ${email === usermail ? "dull-subs" : ""
+                      }`
                   }
                   disabled={email === usermail ? true : false}
                   onClick={() => {
@@ -1777,10 +1776,10 @@ function VideoSection() {
                 {views >= 1e9
                   ? `${(views / 1e9).toFixed(1)}B`
                   : views >= 1e6
-                  ? `${(views / 1e6).toFixed(1)}M`
-                  : views >= 1e3
-                  ? `${(views / 1e3).toFixed(1)}K`
-                  : views}{" "}
+                    ? `${(views / 1e6).toFixed(1)}M`
+                    : views >= 1e3
+                      ? `${(views / 1e3).toFixed(1)}K`
+                      : views}{" "}
                 views
               </p>
               <p style={{ marginLeft: "10px" }}>
@@ -2064,10 +2063,10 @@ function VideoSection() {
                               style={
                                 email === usermail
                                   ? {
-                                      color: theme ? "white" : "black",
-                                      marginLeft: "20px",
-                                      cursor: "pointer",
-                                    }
+                                    color: theme ? "white" : "black",
+                                    marginLeft: "20px",
+                                    cursor: "pointer",
+                                  }
                                   : { display: "none" }
                               }
                               className="heart-comment"
@@ -2108,7 +2107,7 @@ function VideoSection() {
                           )}
 
                           {element.user_email === email ||
-                          email === usermail ? (
+                            email === usermail ? (
                             <button
                               className={
                                 theme
@@ -2142,9 +2141,8 @@ function VideoSection() {
                 <div
                   className={
                     TagSelected === "All"
-                      ? `top-tags tag-one ${
-                          theme ? "tag-color" : "tag-color-light"
-                        }`
+                      ? `top-tags tag-one ${theme ? "tag-color" : "tag-color-light"
+                      }`
                       : `top-tags tag-one ${theme ? "" : "tagcolor-newlight"}`
                   }
                 >
@@ -2153,9 +2151,8 @@ function VideoSection() {
                 <div
                   className={
                     TagSelected === uploader
-                      ? `top-tags tag-two ${
-                          theme ? "tag-color" : "tag-color-light"
-                        }`
+                      ? `top-tags tag-two ${theme ? "tag-color" : "tag-color-light"
+                      }`
                       : `top-tags tag-two ${theme ? "" : "tagcolor-newlight"}`
                   }
                   style={{ marginLeft: "10px" }}
@@ -2225,9 +2222,8 @@ function VideoSection() {
             <div
               className={
                 TagSelected === "All"
-                  ? `top-tags tag-one ${
-                      theme ? "tag-color" : "tag-color-light"
-                    }`
+                  ? `top-tags tag-one ${theme ? "tag-color" : "tag-color-light"
+                  }`
                   : `top-tags tag-one ${theme ? "" : "tagcolor-newlight"}`
               }
             >
@@ -2236,9 +2232,8 @@ function VideoSection() {
             <div
               className={
                 TagSelected === uploader
-                  ? `top-tags tag-two ${
-                      theme ? "tag-color" : "tag-color-light"
-                    }`
+                  ? `top-tags tag-two ${theme ? "tag-color" : "tag-color-light"
+                  }`
                   : `top-tags tag-two ${theme ? "" : "tagcolor-newlight"}`
               }
               style={{ marginLeft: "10px" }}
@@ -2337,10 +2332,10 @@ function VideoSection() {
                           {Views[index] >= 1e9
                             ? `${(Views[index] / 1e9).toFixed(1)}B`
                             : Views[index] >= 1e6
-                            ? `${(Views[index] / 1e6).toFixed(1)}M`
-                            : Views[index] >= 1e3
-                            ? `${(Views[index] / 1e3).toFixed(1)}K`
-                            : Views[index]}{" "}
+                              ? `${(Views[index] / 1e6).toFixed(1)}M`
+                              : Views[index] >= 1e3
+                                ? `${(Views[index] / 1e3).toFixed(1)}K`
+                                : Views[index]}{" "}
                           views
                         </p>
                         <p
@@ -2464,10 +2459,10 @@ function VideoSection() {
                           {Views[index] >= 1e9
                             ? `${(Views[index] / 1e9).toFixed(1)}B`
                             : Views[index] >= 1e6
-                            ? `${(Views[index] / 1e6).toFixed(1)}M`
-                            : Views[index] >= 1e3
-                            ? `${(Views[index] / 1e3).toFixed(1)}K`
-                            : Views[index]}{" "}
+                              ? `${(Views[index] / 1e6).toFixed(1)}M`
+                              : Views[index] >= 1e3
+                                ? `${(Views[index] / 1e3).toFixed(1)}K`
+                                : Views[index]}{" "}
                           views
                         </p>
                         <p
@@ -2599,10 +2594,10 @@ function VideoSection() {
                           {element.views >= 1e9
                             ? `${(element.views / 1e9).toFixed(1)}B`
                             : element.views >= 1e6
-                            ? `${(element.views / 1e6).toFixed(1)}M`
-                            : element.views >= 1e3
-                            ? `${(element.views / 1e3).toFixed(1)}K`
-                            : element.views}{" "}
+                              ? `${(element.views / 1e6).toFixed(1)}M`
+                              : element.views >= 1e3
+                                ? `${(element.views / 1e3).toFixed(1)}K`
+                                : element.views}{" "}
                           views
                         </p>
                         <p
@@ -2727,10 +2722,10 @@ function VideoSection() {
                           {element.views >= 1e9
                             ? `${(element.views / 1e9).toFixed(1)}B`
                             : element.views >= 1e6
-                            ? `${(element.views / 1e6).toFixed(1)}M`
-                            : element.views >= 1e3
-                            ? `${(element.views / 1e3).toFixed(1)}K`
-                            : element.views}{" "}
+                              ? `${(element.views / 1e6).toFixed(1)}M`
+                              : element.views >= 1e3
+                                ? `${(element.views / 1e3).toFixed(1)}K`
+                                : element.views}{" "}
                           views
                         </p>
                         <p
@@ -2975,10 +2970,10 @@ function VideoSection() {
                               style={
                                 email === usermail
                                   ? {
-                                      color: theme ? "white" : "black",
-                                      marginLeft: "20px",
-                                      cursor: "pointer",
-                                    }
+                                    color: theme ? "white" : "black",
+                                    marginLeft: "20px",
+                                    cursor: "pointer",
+                                  }
                                   : { display: "none" }
                               }
                               className="heart-comment"
@@ -3019,7 +3014,7 @@ function VideoSection() {
                           )}
 
                           {element.user_email === email ||
-                          email === usermail ? (
+                            email === usermail ? (
                             <button
                               className={
                                 theme
@@ -3155,7 +3150,7 @@ function VideoSection() {
           }
         >
           {!UserPlaylist ||
-          UserPlaylist.includes("No playlists available...") ? (
+            UserPlaylist.includes("No playlists available...") ? (
             <p>No Playlists available...</p>
           ) : (
             ""
@@ -3171,7 +3166,7 @@ function VideoSection() {
                     {(playlistID &&
                       playlistID.length > 0 &&
                       playlistID.includes(element._id) === false) ||
-                    playlistID === "Video doesn't exist in any playlist" ? (
+                      playlistID === "Video doesn't exist in any playlist" ? (
                       <CheckBoxOutlineBlankIcon
                         className="tick-box"
                         fontSize="medium"
