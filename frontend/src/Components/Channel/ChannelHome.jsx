@@ -369,7 +369,7 @@ function ChannelHome(prop) {
             marginTop: "8px",
             top:
               myVideos.length > 0 && myVideos[0].visibility === "Private"
-                ? "282px"
+                ? "290px"
                 : "500px",
           }}
         >
@@ -387,7 +387,14 @@ function ChannelHome(prop) {
               AllVideos.length > 0 &&
               AllVideos.sort(sortByViews2).map((element, index) => {
                 return (
-                  <div className="uploadedvideo-alldata" key={index}>
+                  <div
+                    className="uploadedvideo-alldata"
+                    key={index}
+                    style={{
+                      display:
+                        element.visibility === "Public" ? "block" : "none",
+                    }}
+                  >
                     <Skeleton
                       count={1}
                       width={220}
@@ -512,6 +519,9 @@ function ChannelHome(prop) {
                 <div
                   className="uploadedvideo-alldata"
                   key={index}
+                  style={{
+                    display: element.visibility === "Public" ? "block" : "none",
+                  }}
                   onClick={() => {
                     if (token) {
                       updateViews(element._id);
@@ -631,7 +641,14 @@ function ChannelHome(prop) {
               AllVideos.length > 0 &&
               AllVideos.sort(sortByViews).map((element, index) => {
                 return (
-                  <div className="uploadedvideo-alldata" key={index}>
+                  <div
+                    className="uploadedvideo-alldata"
+                    style={{
+                      display:
+                        element.visibility === "Public" ? "block" : "none",
+                    }}
+                    key={index}
+                  >
                     <Skeleton
                       count={1}
                       width={220}
@@ -735,6 +752,9 @@ function ChannelHome(prop) {
               return (
                 <div
                   className="uploadedvideo-alldata"
+                  style={{
+                    display: element.visibility === "Public" ? "block" : "none",
+                  }}
                   key={index}
                   onClick={() => {
                     if (token) {
@@ -979,10 +999,6 @@ function ChannelHome(prop) {
                   ? "none"
                   : "block",
               marginTop: "8px",
-              top:
-                myVideos.length > 0 && myVideos[0].visibility === "Private"
-                  ? "282px"
-                  : "500px",
             }}
           >
             <div className="section-headtxt">
@@ -999,7 +1015,14 @@ function ChannelHome(prop) {
                 AllVideos.length > 0 &&
                 AllVideos.sort(sortByViews2).map((element, index) => {
                   return (
-                    <div className="uploadedvideo-alldata" key={index}>
+                    <div
+                      className="uploadedvideo-alldata"
+                      style={{
+                        display:
+                          element.visibility === "Public" ? "block" : "none",
+                      }}
+                      key={index}
+                    >
                       <Skeleton
                         count={1}
                         width={220}
@@ -1064,10 +1087,6 @@ function ChannelHome(prop) {
                   ? "none"
                   : "block",
               marginTop: "16px",
-              top:
-                myVideos.length > 0 && myVideos[0].visibility === "Private"
-                  ? "605px"
-                  : "810px",
             }}
           >
             <div className="section-headtxt">
@@ -1083,7 +1102,14 @@ function ChannelHome(prop) {
                 AllVideos.length > 0 &&
                 AllVideos.sort(sortByViews).map((element, index) => {
                   return (
-                    <div className="uploadedvideo-alldata" key={index}>
+                    <div
+                      className="uploadedvideo-alldata"
+                      style={{
+                        display:
+                          element.visibility === "Public" ? "block" : "none",
+                      }}
+                      key={index}
+                    >
                       <Skeleton
                         count={1}
                         width={220}
@@ -1285,6 +1311,10 @@ function ChannelHome(prop) {
               myVideos && myVideos.message === "USER DOESN'T EXIST"
                 ? "none"
                 : "block",
+            top:
+              myVideos.length > 0 && myVideos[0].visibility === "Private"
+                ? "0px"
+                : "20px",
           }}
         >
           <div
@@ -1336,6 +1366,10 @@ function ChannelHome(prop) {
                 return (
                   <div
                     className="uploadedvideo-alldata"
+                    style={{
+                      display:
+                        element.visibility === "Public" ? "block" : "none",
+                    }}
                     key={index}
                     onClick={() => {
                       if (token) {
@@ -1486,6 +1520,10 @@ function ChannelHome(prop) {
                 return (
                   <div
                     className="uploadedvideo-alldata"
+                    style={{
+                      display:
+                        element.visibility === "Public" ? "block" : "none",
+                    }}
                     key={index}
                     onClick={() => {
                       if (token) {

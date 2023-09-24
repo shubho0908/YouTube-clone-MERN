@@ -1051,6 +1051,10 @@
   margin-left: 25px;
 }
 
+.not-thiss{
+  display: none !important;
+}
+
 /* MEDIA QUERIES */
 
 @media (width<= 1825px) {
@@ -1326,7 +1330,7 @@
     flex-direction: column;
   }
   .uploaded-video-contents {
-    display: flex;
+    display: flex !important;
     align-items: flex-start;
     width: 91.5vw;
   }

@@ -66,12 +66,15 @@ function ChannelVideos(prop) {
 
   const updateViews = async (id) => {
     try {
-      const response = await fetch(`https://youtube-clone-mern-backend.vercel.app/updateview/${id}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `https://youtube-clone-mern-backend.vercel.app/updateview/${id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       await response.json();
     } catch (error) {
       // console.log(error.message);
@@ -164,11 +167,15 @@ function ChannelVideos(prop) {
             style={loading === true ? { display: "grid" } : { display: "none" }}
           >
             {myVideos.length > 0 &&
-              myVideos.map((index) => {
+              myVideos.map((element, index) => {
                 return (
                   <div
                     className="uploaded-video-contents sk-uploadcontent"
                     key={index}
+                    style={{
+                      display:
+                        element.visibility === "Public" ? "block" : "none",
+                    }}
                   >
                     <Skeleton
                       count={1}
@@ -211,11 +218,15 @@ function ChannelVideos(prop) {
             }
           >
             {myVideos.length > 0 &&
-              myVideos.map((index) => {
+              myVideos.map((element, index) => {
                 return (
                   <div
                     className="uploaded-video-contents sk-uploadcontent"
                     key={index}
+                    style={{
+                      display:
+                        element.visibility === "Public" ? "block" : "none",
+                    }}
                   >
                     <Skeleton
                       count={1}
@@ -262,8 +273,15 @@ function ChannelVideos(prop) {
             myVideos.map((element, index) => {
               return (
                 <div
-                  className="uploaded-video-contents"
+                  className={`${
+                    element.visibility === "Private"
+                      ? "not-thiss"
+                      : "uploaded-video-contents"
+                  }`}
                   key={index}
+                  style={{
+                    display: element.visibility === "Public" ? "block" : "none",
+                  }}
                   onClick={() => {
                     if (token) {
                       updateViews(element._id);
