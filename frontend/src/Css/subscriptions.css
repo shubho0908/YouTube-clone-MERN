@@ -14,7 +14,8 @@
   overflow: scroll;
 }
 
-.sub-channels, .sub-channels2 {
+.sub-channels,
+.sub-channels2 {
   cursor: pointer;
   margin-top: 25px;
   display: flex;
@@ -155,7 +156,7 @@
   .sk-channelname {
     display: none !important;
   }
-  .sk-subs{
+  .sk-subs {
     top: 0 !important;
   }
 }

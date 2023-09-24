@@ -77,12 +77,15 @@ function ChannelHome(prop) {
 
   const updateViews = async (id) => {
     try {
-      const response = await fetch(`https://youtube-clone-mern-backend.vercel.app/updateview/${id}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `https://youtube-clone-mern-backend.vercel.app/updateview/${id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       await response.json();
     } catch (error) {
       // console.log(error.message);
@@ -121,7 +124,7 @@ function ChannelHome(prop) {
                 : "block",
           }}
         >
-          {myVideos.length > 0 ? (
+          {myVideos.length > 0 && myVideos[0].visibility === "Public" ? (
             <div className="user-video">
               <Skeleton
                 count={1}
@@ -216,7 +219,7 @@ function ChannelHome(prop) {
               : "block",
         }}
       >
-        {myVideos.length > 0 ? (
+        {myVideos.length > 0 && myVideos[0].visibility === "Public" ? (
           <div
             className={theme ? "user-video" : "user-video text-light-mode"}
             onClick={() => {
@@ -362,6 +365,10 @@ function ChannelHome(prop) {
                 ? "none"
                 : "block",
             marginTop: "8px",
+            top:
+              myVideos.length > 0 && myVideos[0].visibility === "Private"
+                ? "282px"
+                : "500px",
           }}
         >
           <div className="section-headtxt">
@@ -447,6 +454,10 @@ function ChannelHome(prop) {
             myVideos && myVideos.message === "USER DOESN'T EXIST"
               ? "none"
               : "block",
+          top:
+            myVideos.length > 0 && myVideos[0].visibility === "Private"
+              ? "282px"
+              : "500px",
         }}
       >
         <div
@@ -599,6 +610,10 @@ function ChannelHome(prop) {
                 ? "none"
                 : "block",
             marginTop: "16px",
+            top:
+              myVideos.length > 0 && myVideos[0].visibility === "Private"
+                ? "605px"
+                : "810px",
           }}
         >
           <div className="section-headtxt">
@@ -663,6 +678,10 @@ function ChannelHome(prop) {
             myVideos && myVideos.message === "USER DOESN'T EXIST"
               ? "none"
               : "block",
+          top:
+            myVideos.length > 0 && myVideos[0].visibility === "Private"
+              ? "605px"
+              : "810px",
         }}
       >
         <div
@@ -957,6 +976,10 @@ function ChannelHome(prop) {
                   ? "none"
                   : "block",
               marginTop: "8px",
+              top:
+                myVideos.length > 0 && myVideos[0].visibility === "Private"
+                  ? "282px"
+                  : "500px",
             }}
           >
             <div className="section-headtxt">
@@ -1038,6 +1061,10 @@ function ChannelHome(prop) {
                   ? "none"
                   : "block",
               marginTop: "16px",
+              top:
+                myVideos.length > 0 && myVideos[0].visibility === "Private"
+                  ? "605px"
+                  : "810px",
             }}
           >
             <div className="section-headtxt">
@@ -1254,6 +1281,10 @@ function ChannelHome(prop) {
               myVideos && myVideos.message === "USER DOESN'T EXIST"
                 ? "none"
                 : "block",
+            top:
+              myVideos.length > 0 && myVideos[0].visibility === "Private"
+                ? "282px"
+                : "500px",
           }}
         >
           <div
@@ -1404,6 +1435,10 @@ function ChannelHome(prop) {
               myVideos && myVideos.message === "USER DOESN'T EXIST"
                 ? "none"
                 : "block",
+            top:
+              myVideos.length > 0 && myVideos[0].visibility === "Private"
+                ? "605px"
+                : "810px",
           }}
         >
           <div

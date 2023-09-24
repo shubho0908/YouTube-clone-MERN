@@ -53,7 +53,7 @@ function Subscriptions() {
         // console.log(error.message);
       }
     };
-    getSubscriptions()
+    getSubscriptions();
   }, [email]);
 
   useEffect(() => {
@@ -85,7 +85,7 @@ function Subscriptions() {
       }
     };
 
-    getUserMail()
+    getUserMail();
   }, [subscriptions]);
 
   useEffect(() => {
@@ -134,12 +134,15 @@ function Subscriptions() {
 
   const updateViews = async (id) => {
     try {
-      const response = await fetch(`https://youtube-clone-mern-backend.vercel.app/updateview/${id}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `https://youtube-clone-mern-backend.vercel.app/updateview/${id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       await response.json();
     } catch (error) {
       // console.log(error.message);
@@ -335,17 +338,17 @@ function Subscriptions() {
                           if (token) {
                             updateViews(element._id);
                             setTimeout(() => {
-                              window.location.href = (`/video/${element._id}`);
+                              window.location.href = `/video/${element._id}`;
                             }, 400);
                           } else {
-                            window.location.href = (`/video/${element._id}`);
+                            window.location.href = `/video/${element._id}`;
                           }
                         }}
-                        style={
-                          loading === true
-                            ? { visibility: "hidden", display: "none" }
-                            : { visibility: "visible", display: "block" }
-                        }
+                        style={{
+                          visibility: loading ? "hidden" : "none",
+                          display:
+                            element.visibility === "Public" ? "block" : "none",
+                        }}
                       >
                         <img
                           src={element.thumbnailURL}
