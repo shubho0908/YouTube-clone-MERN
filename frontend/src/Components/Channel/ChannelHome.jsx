@@ -119,6 +119,7 @@ function ChannelHome(prop) {
           style={{
             display:
               (myVideos && myVideos.message === "USER DOESN'T EXIST") ||
+              (myVideos.length > 0 && myVideos[0].visibility === "Private") ||
               loading === false
                 ? "none"
                 : "block",
@@ -457,7 +458,7 @@ function ChannelHome(prop) {
               : "block",
           top:
             myVideos.length > 0 && myVideos[0].visibility === "Private"
-              ? "282px"
+              ? "300px"
               : "500px",
         }}
       >
@@ -681,7 +682,7 @@ function ChannelHome(prop) {
               : "block",
           top:
             myVideos.length > 0 && myVideos[0].visibility === "Private"
-              ? "605px"
+              ? "620px"
               : "810px",
         }}
       >
@@ -883,6 +884,7 @@ function ChannelHome(prop) {
             style={{
               display:
                 (myVideos && myVideos.message === "USER DOESN'T EXIST") ||
+                (myVideos.length > 0 && myVideos[0].visibility === "Private") ||
                 loading === false
                   ? "none"
                   : "block",
@@ -1283,10 +1285,6 @@ function ChannelHome(prop) {
               myVideos && myVideos.message === "USER DOESN'T EXIST"
                 ? "none"
                 : "block",
-            top:
-              myVideos.length > 0 && myVideos[0].visibility === "Private"
-                ? "282px"
-                : "500px",
           }}
         >
           <div
@@ -1437,10 +1435,6 @@ function ChannelHome(prop) {
               myVideos && myVideos.message === "USER DOESN'T EXIST"
                 ? "none"
                 : "block",
-            top:
-              myVideos.length > 0 && myVideos[0].visibility === "Private"
-                ? "605px"
-                : "810px",
           }}
         >
           <div
