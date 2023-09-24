@@ -1984,7 +1984,7 @@ function SearchResults() {
       </>
     );
   } else if (
-    searchedVideoData.length === 1 &&
+    searchedVideoData.length === 1 && searchedVideoData !== "NO DATA" &&
     searchedVideoData[0].visibility === "Private"
   ) {
     return (
