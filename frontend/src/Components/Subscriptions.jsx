@@ -345,7 +345,7 @@ function Subscriptions() {
                           }
                         }}
                         style={{
-                          visibility: loading ? "hidden" : "none",
+                          visibility: loading ? "hidden" : "visible",
                           display:
                             element.visibility === "Public" ? "block" : "none",
                         }}
