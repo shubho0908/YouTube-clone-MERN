@@ -937,10 +937,17 @@ function SearchResults() {
             <div className="searched-videos-section">
               {searchedVideoData &&
                 searchedVideoData.length > 0 &&
-                searchedVideoData.map((index) => {
+                searchedVideoData.map((element, index) => {
                   return (
                     <>
-                      <div className="sk-thischannel-all-data" key={index}>
+                      <div
+                        className="sk-thischannel-all-data"
+                        style={{
+                          display:
+                            element.visibility === "Public" ? "flex" : "none",
+                        }}
+                        key={index}
+                      >
                         <Skeleton
                           count={1}
                           width={350}
@@ -1963,6 +1970,22 @@ function SearchResults() {
     searchedChannelData === "" ||
     searchedVideoData === "NO DATA" ||
     searchedVideoData === ""
+  ) {
+    return (
+      <>
+        <Navbar />
+        <LeftPanel />
+        <div className="searched-content">
+          <img src={nothing} alt="no results" className="nothing-found" />
+          <p className={theme ? "no-results" : "no-results text-light-mode"}>
+            No results found!
+          </p>
+        </div>
+      </>
+    );
+  } else if (
+    searchedVideoData.length === 1 &&
+    searchedVideoData[0].visibility === "Private"
   ) {
     return (
       <>
