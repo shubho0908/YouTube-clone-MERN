@@ -700,7 +700,7 @@ function ChannelHome(prop) {
           top:
             myVideos.length > 0 && myVideos[0].visibility === "Private"
               ? "620px"
-              : "810px",
+              : "816px",
         }}
       >
         <div
