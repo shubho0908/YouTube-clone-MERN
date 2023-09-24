@@ -76,7 +76,9 @@ function SearchResults() {
   useEffect(() => {
     const getSearchResult = async () => {
       try {
-        const response = await fetch(`https://youtube-clone-mern-backend.vercel.app/search/${data}`);
+        const response = await fetch(
+          `https://youtube-clone-mern-backend.vercel.app/search/${data}`
+        );
         const Data = await response.json();
         const { videoData, channelData } = Data;
         setsearchedVideoData(videoData);
@@ -166,12 +168,15 @@ function SearchResults() {
 
   const updateViews = async (id) => {
     try {
-      const response = await fetch(`https://youtube-clone-mern-backend.vercel.app/updateview/${id}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `https://youtube-clone-mern-backend.vercel.app/updateview/${id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       await response.json();
     } catch (error) {
       // console.log(error.message);
@@ -839,7 +844,9 @@ function SearchResults() {
         {/* SIGNUP/SIGNIN  */}
 
         <div
-       className={theme ? "auth-popup" : "auth-popup light-mode text-light-mode"}
+          className={
+            theme ? "auth-popup" : "auth-popup light-mode text-light-mode"
+          }
           style={
             isbtnClicked === true ? { display: "block" } : { display: "none" }
           }
@@ -1033,6 +1040,10 @@ function SearchResults() {
                   <div
                     className="searched-video-alldata"
                     key={index}
+                    style={{
+                      display:
+                        element.visibility === "Public" ? "flex" : "none",
+                    }}
                     onClick={() => {
                       if (token) {
                         updateViews(element._id);
@@ -1410,7 +1421,14 @@ function SearchResults() {
                     }
                   />;
                   return (
-                    <div className="sk-thischannel-all-data" key={index}>
+                    <div
+                      className="sk-thischannel-all-data"
+                      key={index}
+                      style={{
+                        display:
+                          element.visibility === "Public" ? "flex" : "none",
+                      }}
+                    >
                       <Skeleton
                         count={1}
                         width={350}
@@ -1657,6 +1675,10 @@ function SearchResults() {
                   <div
                     className="searched-video-alldata"
                     key={index}
+                    style={{
+                      display:
+                        element.visibility === "Public" ? "flex" : "none",
+                    }}
                     onClick={() => {
                       if (token) {
                         updateViews(element._id);
@@ -1948,7 +1970,9 @@ function SearchResults() {
         <LeftPanel />
         <div className="searched-content">
           <img src={nothing} alt="no results" className="nothing-found" />
-          <p className={theme ? "no-results" : "no-results text-light-mode"}>No results found!</p>
+          <p className={theme ? "no-results" : "no-results text-light-mode"}>
+            No results found!
+          </p>
         </div>
       </>
     );
