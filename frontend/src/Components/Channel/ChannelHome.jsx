@@ -214,7 +214,8 @@ function ChannelHome(prop) {
         style={{
           visibility: loading === true ? "hidden" : "visible",
           display:
-            myVideos && myVideos.message === "USER DOESN'T EXIST"
+            (myVideos && myVideos.message === "USER DOESN'T EXIST") ||
+            (myVideos.length > 0 && myVideos[0].visibility === "Public")
               ? "none"
               : "block",
         }}
@@ -1136,7 +1137,8 @@ function ChannelHome(prop) {
           style={{
             visibility: loading === true ? "hidden" : "visible",
             display:
-              myVideos && myVideos.message === "USER DOESN'T EXIST"
+              (myVideos && myVideos.message === "USER DOESN'T EXIST") ||
+              (myVideos.length > 0 && myVideos[0].visibility === "Public")
                 ? "none"
                 : "block",
           }}
