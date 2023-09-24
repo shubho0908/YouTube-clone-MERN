@@ -1331,6 +1331,22 @@ function SearchResults() {
       </>
     );
   } else if (
+    searchedVideoData.length === 1 &&
+    searchedVideoData[0].visibility === "Private"
+  ) {
+    return (
+      <>
+        <Navbar />
+        <LeftPanel />
+        <div className="searched-content">
+          <img src={nothing} alt="no results" className="nothing-found" />
+          <p className={theme ? "no-results" : "no-results text-light-mode"}>
+            No results found!
+          </p>
+        </div>
+      </>
+    );
+  } else if (
     searchedChannelData &&
     searchedChannelData.length > 0 &&
     searchedChannelData !== "NO DATA" &&
@@ -1970,22 +1986,6 @@ function SearchResults() {
     searchedChannelData === "" ||
     searchedVideoData === "NO DATA" ||
     searchedVideoData === ""
-  ) {
-    return (
-      <>
-        <Navbar />
-        <LeftPanel />
-        <div className="searched-content">
-          <img src={nothing} alt="no results" className="nothing-found" />
-          <p className={theme ? "no-results" : "no-results text-light-mode"}>
-            No results found!
-          </p>
-        </div>
-      </>
-    );
-  } else if (
-    searchedVideoData.length === 1 && searchedVideoData !== "NO DATA" &&
-    searchedVideoData[0].visibility === "Private"
   ) {
     return (
       <>
