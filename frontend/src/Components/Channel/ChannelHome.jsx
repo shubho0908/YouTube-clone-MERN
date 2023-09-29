@@ -11,6 +11,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 function ChannelHome(prop) {
+  const backendURL = "https://youtube-clone-mern-backend.vercel.app"
   const [myVideos, setMyVideos] = useState([]);
   const [Email, setEmail] = useState();
   const token = localStorage.getItem("userToken");
@@ -56,13 +57,13 @@ function ChannelHome(prop) {
       try {
         if (Email === prop.newmail) {
           const response = await fetch(
-            `https://youtube-clone-mern-backend.vercel.app/getuservideos/${Email}`
+            `${backendURL}/getuservideos/${Email}`
           );
           const myvideos = await response.json();
           setMyVideos(myvideos);
         } else {
           const response = await fetch(
-            `https://youtube-clone-mern-backend.vercel.app/getuservideos/${prop.newmail}`
+            `${backendURL}/getuservideos/${prop.newmail}`
           );
           const myvideos = await response.json();
           setMyVideos(myvideos);
@@ -78,7 +79,7 @@ function ChannelHome(prop) {
   const updateViews = async (id) => {
     try {
       const response = await fetch(
-        `https://youtube-clone-mern-backend.vercel.app/updateview/${id}`,
+        `${backendURL}/updateview/${id}`,
         {
           method: "POST",
           headers: {

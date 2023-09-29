@@ -4,7 +4,6 @@ import trending from "../img/trending.jpg";
 import "../Css/trending.css";
 import { useEffect, useState } from "react";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import jwtDecode from "jwt-decode";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
 import nothing from "../img/nothing.png";
@@ -12,7 +11,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 function Trending() {
-  const [Email, setEmail] = useState();
+  const backendURL = "https://youtube-clone-mern-backend.vercel.app";
   const [trendingVideos, setTrendingVideos] = useState([]);
   const [menuClicked, setMenuClicked] = useState(() => {
     const menu = localStorage.getItem("menuClicked");
@@ -36,12 +35,6 @@ function Trending() {
   }, [theme]);
 
   useEffect(() => {
-    if (token) {
-      setEmail(jwtDecode(token).email);
-    }
-  }, [token]);
-
-  useEffect(() => {
     setTimeout(() => {
       setLoading(false);
     }, 3200);
@@ -54,7 +47,9 @@ function Trending() {
   useEffect(() => {
     const getTrending = async () => {
       try {
-        const response = await fetch("https://youtube-clone-mern-backend.vercel.app/gettrending");
+        const response = await fetch(
+          "https://youtube-clone-mern-backend.vercel.app/gettrending"
+        );
         const trending = await response.json();
         if (trending !== "NO DATA") {
           const sortedTrending = trending.sort((a, b) => b.views - a.views);
@@ -67,7 +62,7 @@ function Trending() {
         // console.log(error.message);
       }
     };
-    getTrending()
+    getTrending();
   }, []);
 
   useEffect(() => {
@@ -108,7 +103,7 @@ function Trending() {
 
   const updateViews = async (id) => {
     try {
-      const response = await fetch(`https://youtube-clone-mern-backend.vercel.app/updateview/${id}`, {
+      const response = await fetch(`${backendURL}/updateview/${id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -127,7 +122,9 @@ function Trending() {
         <LeftPanel />
         <div className="searched-content">
           <img src={nothing} alt="no results" className="nothing-found" />
-          <p className={theme ? "no-results" : "no-results text-light-mode"}>No videos are currently trending!</p>
+          <p className={theme ? "no-results" : "no-results text-light-mode"}>
+            No videos are currently trending!
+          </p>
         </div>
       </>
     );
@@ -219,10 +216,10 @@ function Trending() {
                         if (token) {
                           updateViews(element.videoid);
                           setTimeout(() => {
-                            window.location.href = (`/video/${element.videoid}`);
+                            window.location.href = `/video/${element.videoid}`;
                           }, 400);
                         } else {
-                          window.location.href = (`/video/${element.videoid}`);
+                          window.location.href = `/video/${element.videoid}`;
                         }
                       }}
                       style={

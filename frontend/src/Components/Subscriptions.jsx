@@ -11,6 +11,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 function Subscriptions() {
+  const backendURL = "https://youtube-clone-mern-backend.vercel.app"
   const [email, setEmail] = useState();
   const [subscriptions, setSubscriptions] = useState([]);
   const [subsVideos, setSubsVideos] = useState([]);
@@ -45,7 +46,7 @@ function Subscriptions() {
     const getSubscriptions = async () => {
       try {
         const response = await fetch(
-          `https://youtube-clone-mern-backend.vercel.app/getsubscriptions/${email}`
+          `${backendURL}/getsubscriptions/${email}`
         );
         const result = await response.json();
         setSubscriptions(result);
@@ -63,11 +64,11 @@ function Subscriptions() {
           const newSubsVideos = [];
           for (const element of subscriptions) {
             const response = await fetch(
-              `https://youtube-clone-mern-backend.vercel.app/getotherchannel/${element.channelID}`
+              `${backendURL}/getotherchannel/${element.channelID}`
             );
             const userEmail = await response.json();
             const response2 = await fetch(
-              `https://youtube-clone-mern-backend.vercel.app/getuservideos/${userEmail}`
+              `${backendURL}/getuservideos/${userEmail}`
             );
             const myvideos = await response2.json();
 
@@ -135,7 +136,7 @@ function Subscriptions() {
   const updateViews = async (id) => {
     try {
       const response = await fetch(
-        `https://youtube-clone-mern-backend.vercel.app/updateview/${id}`,
+        `${backendURL}/updateview/${id}`,
         {
           method: "POST",
           headers: {

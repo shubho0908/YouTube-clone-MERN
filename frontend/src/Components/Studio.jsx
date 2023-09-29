@@ -32,6 +32,7 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import LanguageIcon from "@mui/icons-material/Language";
 
 function Studio() {
+  const backendURL = "https://youtube-clone-mern-backend.vercel.app"
   const [email, setEmail] = useState("");
   const [isChannel, setisChannel] = useState();
   const [selectedImage, setSelectedImage] = useState(null);
@@ -138,7 +139,7 @@ function Studio() {
       try {
         if (email !== undefined) {
           const response = await fetch(
-            `https://youtube-clone-mern-backend.vercel.app/getuservideos/${email}`
+            `${backendURL}/getuservideos/${email}`
           );
           const data = await response.json();
           setMyVideos(data);
@@ -226,7 +227,7 @@ function Studio() {
     const ChannelAvailable = async () => {
       try {
         const response = await fetch(
-          `https://youtube-clone-mern-backend.vercel.app/getchannel/${email}`
+          `${backendURL}/getchannel/${email}`
         );
         const { channel } = await response.json();
         setisChannel(channel);

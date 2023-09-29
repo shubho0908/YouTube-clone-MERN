@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function Signup() {
+  const backendURL = "https://youtube-clone-mern-backend.vercel.app"
   const [data, setData] = useState({});
   const [theme, setTheme] = useState(() => {
     const Dark = localStorage.getItem("Dark");
@@ -62,7 +63,7 @@ function Signup() {
       return;
     }
     try {
-      const response = await fetch("https://youtube-clone-mern-backend.vercel.app/signup", {
+      const response = await fetch(`${backendURL}/signup`, {
         method: "POST",
         body: JSON.stringify(data),
         headers: {

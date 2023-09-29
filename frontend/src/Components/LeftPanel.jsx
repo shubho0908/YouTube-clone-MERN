@@ -37,6 +37,7 @@ import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import { MdVideoLibrary } from "react-icons/md";
 
 function LeftPanel() {
+  const backendURL = "https://youtube-clone-mern-backend.vercel.app"
   const [menuClicked, setMenuClicked] = useState(() => {
     const menu = localStorage.getItem("menuClicked");
     return menu ? JSON.parse(menu) : false;
@@ -141,7 +142,7 @@ function LeftPanel() {
       try {
         if (Email !== undefined) {
           const response = await fetch(
-            `https://youtube-clone-mern-backend.vercel.app/getsubscriptions/${Email}`
+            `${backendURL}/getsubscriptions/${Email}`
           );
           const result = await response.json();
           setSubscriptions(result);
@@ -160,7 +161,7 @@ function LeftPanel() {
       try {
         if (Email !== undefined) {
           const response = await fetch(
-            `https://youtube-clone-mern-backend.vercel.app/getplaylistdata/${Email}`
+            `${backendURL}/getplaylistdata/${Email}`
           );
           const playlistData = await response.json();
           setPlaylistData(playlistData);
@@ -179,7 +180,7 @@ function LeftPanel() {
       try {
         if (Email !== undefined) {
           const response = await fetch(
-            `https://youtube-clone-mern-backend.vercel.app/getsavedplaylist/${Email}`
+            `${backendURL}/getsavedplaylist/${Email}`
           );
           const matchingPlaylists = await response.json();
           setSavedPlaylist(matchingPlaylists);

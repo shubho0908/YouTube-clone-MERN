@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function ChannelAbout(prop) {
+  const backendURL = "https://youtube-clone-mern-backend.vercel.app"
   const [Email, setEmail] = useState();
   const [description, setDescription] = useState();
   const [links, setLinks] = useState();
@@ -39,7 +40,7 @@ function ChannelAbout(prop) {
     const getUserMail = async () => {
       try {
         const response = await fetch(
-          `https://youtube-clone-mern-backend.vercel.app/getotherchannel/${prop.channelid}`
+          `${backendURL}/getotherchannel/${prop.channelid}`
         );
         const userEmail = await response.json();
         setEmail(userEmail);
@@ -62,7 +63,7 @@ function ChannelAbout(prop) {
       try {
         if (Email !== undefined) {
           const response = await fetch(
-            `https://youtube-clone-mern-backend.vercel.app/getabout/${Email}`
+            `${backendURL}/getabout/${Email}`
           );
           const { description, sociallinks, joining } = await response.json();
           setDescription(description);
@@ -81,7 +82,7 @@ function ChannelAbout(prop) {
       try {
         if (Email !== undefined) {
           const response = await fetch(
-            `https://youtube-clone-mern-backend.vercel.app/totalviews/${Email}`
+            `${backendURL}/totalviews/${Email}`
           );
           const totalViews = await response.json();
           setTotalViews(totalViews);

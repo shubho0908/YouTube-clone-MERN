@@ -25,6 +25,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function Content() {
+  const backendURL = "https://youtube-clone-mern-backend.vercel.app"
   const [userVideos, setUserVideos] = useState([]);
   const [sortByDateAsc, setSortByDateAsc] = useState(true);
   const [Email, setEmail] = useState();
@@ -151,7 +152,7 @@ function Content() {
       try {
         if (Email !== undefined) {
           const response = await fetch(
-            `https://youtube-clone-mern-backend.vercel.app/getuservideos/${Email}`
+            `${backendURL}/getuservideos/${Email}`
           );
 
           const data = await response.json();
@@ -170,7 +171,7 @@ function Content() {
       try {
         if (DeleteVideoID !== undefined) {
           const response = await fetch(
-            `https://youtube-clone-mern-backend.vercel.app/getdeletevideodata/${DeleteVideoID}`
+            `${backendURL}/getdeletevideodata/${DeleteVideoID}`
           );
 
           const data = await response.json();
@@ -206,7 +207,7 @@ function Content() {
     try {
       if (id !== undefined) {
         const response = await fetch(
-          `https://youtube-clone-mern-backend.vercel.app/deletevideo/${id}`,
+          `${backendURL}/deletevideo/${id}`,
           {
             method: "POST",
             headers: {

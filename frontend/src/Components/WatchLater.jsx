@@ -9,6 +9,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 function WatchLater() {
+  const backendURL = "https://youtube-clone-mern-backend.vercel.app";
   const [email, setEmail] = useState();
   const [name, setName] = useState();
   const [menuClicked, setMenuClicked] = useState(() => {
@@ -16,7 +17,6 @@ function WatchLater() {
     return menu ? JSON.parse(menu) : false;
   });
   const [watchlater, setWatchLater] = useState([]);
-  const [VideoViews, setVideoViews] = useState();
   const [loading, setLoading] = useState(true);
   const [theme, setTheme] = useState(() => {
     const Dark = localStorage.getItem("Dark");
@@ -89,7 +89,7 @@ function WatchLater() {
       try {
         if (email !== undefined) {
           const response = await fetch(
-            `https://youtube-clone-mern-backend.vercel.app/getwatchlater/${email}`
+            `${backendURL}/getwatchlater/${email}`
           );
           const savedData = await response.json();
           setWatchLater(savedData);
@@ -102,27 +102,11 @@ function WatchLater() {
     getWatchLater();
   }, [email]);
 
-  useEffect(() => {
-    const getVideos = async () => {
-      try {
-        const response = await fetch(
-          "https://youtube-clone-mern-backend.vercel.app/getvideos"
-        );
-        const { views } = await response.json();
-
-        setVideoViews(views);
-      } catch (error) {
-        // console.log(error.message);
-      }
-    };
-
-    getVideos();
-  }, []);
 
   const updateViews = async (id) => {
     try {
       const response = await fetch(
-        `https://youtube-clone-mern-backend.vercel.app/updateview/${id}`,
+        `${backendURL}/updateview/${id}`,
         {
           method: "POST",
           headers: {

@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function Branding() {
+  const backendURL = "https://youtube-clone-mern-backend.vercel.app"
   const [email, setEmail] = useState("");
   const [selectedProfile, setSelectedProfile] = useState(null);
   const [previewProfile, setPreviewProfile] = useState(defaultimg);
@@ -73,7 +74,7 @@ function Branding() {
       try {
         if (email !== undefined) {
           const response = await fetch(
-            `https://youtube-clone-mern-backend.vercel.app/getchannel/${email}`
+            `${backendURL}/getchannel/${email}`
           );
           const { profile } = await response.json();
           setPreviewProfile(profile);
@@ -90,7 +91,7 @@ function Branding() {
       try {
         if (email !== undefined) {
           const response = await fetch(
-            `https://youtube-clone-mern-backend.vercel.app/getchannelid/${email}`
+            `${backendURL}/getchannelid/${email}`
           );
           const { channelID } = await response.json();
           setChannelID(channelID);
@@ -105,7 +106,7 @@ function Branding() {
   useEffect(() => {
     const getChannelCover = async () => {
       try {
-        const response = await fetch(`https://youtube-clone-mern-backend.vercel.app/getcover/${email}`);
+        const response = await fetch(`${backendURL}/getcover/${email}`);
         const coverimg = await response.json();
         setPreviewBanner(coverimg);
       } catch (error) {
@@ -246,7 +247,7 @@ function Branding() {
       };
 
       const response = await fetch(
-        `https://youtube-clone-mern-backend.vercel.app/savecustomization/${email}`,
+        `${backendURL}/savecustomization/${email}`,
         {
           method: "POST",
           body: JSON.stringify(data),

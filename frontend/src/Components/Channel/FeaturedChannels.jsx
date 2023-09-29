@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function FeaturedChannels(prop) {
+  const backendURL = "https://youtube-clone-mern-backend.vercel.app"
   const [addChannelClicked, setAddChannelClicked] = useState(false);
   const [Subscriptions, setSubscriptions] = useState([]);
   const [Email, setEmail] = useState();
@@ -68,7 +69,7 @@ function FeaturedChannels(prop) {
       try {
         if (prop.newmail !== undefined) {
           const response = await fetch(
-            `https://youtube-clone-mern-backend.vercel.app/getsubscriptions/${prop.newmail}`
+            `${backendURL}/getsubscriptions/${prop.newmail}`
           );
           const result = await response.json();
           setSubscriptions(result);
@@ -84,7 +85,7 @@ function FeaturedChannels(prop) {
     const getFeaturedChannels = async () => {
       try {
         const response = await fetch(
-          `https://youtube-clone-mern-backend.vercel.app/getfeaturedchannels/${prop.newmail}`
+          `${backendURL}/getfeaturedchannels/${prop.newmail}`
         );
         const featuredChannelData = await response.json();
         setFeaturedChannelsData(featuredChannelData);
@@ -109,7 +110,7 @@ function FeaturedChannels(prop) {
         };
 
         const response = await fetch(
-          `https://youtube-clone-mern-backend.vercel.app/savefeaturedchannel/${prop.newmail}`,
+          `${backendURL}/savefeaturedchannel/${prop.newmail}`,
           {
             method: "POST",
             body: JSON.stringify(data),
@@ -134,7 +135,7 @@ function FeaturedChannels(prop) {
   const DeleteChannel = async (channelid) => {
     try {
       const response = await fetch(
-        `https://youtube-clone-mern-backend.vercel.app/deletefeaturedchannel/${Email}/${channelid}`,
+        `${backendURL}/deletefeaturedchannel/${Email}/${channelid}`,
         {
           method: "POST",
           headers: {

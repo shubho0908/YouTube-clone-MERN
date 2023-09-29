@@ -5,6 +5,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 function ChannelVideos(prop) {
+  const backendURL = "https://youtube-clone-mern-backend.vercel.app"
   const [myVideos, setMyVideos] = useState([]);
   const [Email, setEmail] = useState();
   const [videosort, setVideoSort] = useState();
@@ -45,13 +46,13 @@ function ChannelVideos(prop) {
       try {
         if (Email === prop.newmail) {
           const response = await fetch(
-            `https://youtube-clone-mern-backend.vercel.app/getuservideos/${Email}`
+            `${backendURL}/getuservideos/${Email}`
           );
           const myvideos = await response.json();
           setMyVideos(myvideos);
         } else {
           const response = await fetch(
-            `https://youtube-clone-mern-backend.vercel.app/getuservideos/${prop.newmail}`
+            `${backendURL}/getuservideos/${prop.newmail}`
           );
           const myvideos = await response.json();
           setMyVideos(myvideos);
@@ -67,7 +68,7 @@ function ChannelVideos(prop) {
   const updateViews = async (id) => {
     try {
       const response = await fetch(
-        `https://youtube-clone-mern-backend.vercel.app/updateview/${id}`,
+        `${backendURL}/updateview/${id}`,
         {
           method: "POST",
           headers: {

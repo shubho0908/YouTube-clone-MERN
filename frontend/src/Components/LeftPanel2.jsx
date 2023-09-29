@@ -21,6 +21,7 @@ import { BiCommentDetail } from "react-icons/bi";
 import { MdOutlineAutoFixHigh } from "react-icons/md";
 
 function LeftPanel2() {
+  const backendURL = "https://youtube-clone-mern-backend.vercel.app"
   const [email, setEmail] = useState("");
   const token = localStorage.getItem("userToken");
   const [profileIMG, setProfileIMG] = useState();
@@ -99,7 +100,7 @@ function LeftPanel2() {
       try {
         if (email !== undefined) {
           const response = await fetch(
-            `https://youtube-clone-mern-backend.vercel.app/getchannel/${email}`
+            `${backendURL}/getchannel/${email}`
           );
           const { profile, ChannelName } = await response.json();
           setProfileIMG(profile);
@@ -118,7 +119,7 @@ function LeftPanel2() {
       try {
         if (email !== undefined) {
           const response = await fetch(
-            `https://youtube-clone-mern-backend.vercel.app/getchannelid/${email}`
+            `${backendURL}/getchannelid/${email}`
           );
           const { channelID } = await response.json();
           setChannelId(channelID);

@@ -17,6 +17,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function SearchResults() {
+  const backendURL = "https://youtube-clone-mern-backend.vercel.app"
   const { data } = useParams();
   const [myemail, setmyEmail] = useState();
   const [searchedVideoData, setsearchedVideoData] = useState([]);
@@ -77,7 +78,7 @@ function SearchResults() {
     const getSearchResult = async () => {
       try {
         const response = await fetch(
-          `https://youtube-clone-mern-backend.vercel.app/search/${data}`
+          `${backendURL}/search/${data}`
         );
         const Data = await response.json();
         const { videoData, channelData } = Data;
@@ -106,7 +107,7 @@ function SearchResults() {
       try {
         if (channelID !== undefined) {
           const response = await fetch(
-            `https://youtube-clone-mern-backend.vercel.app/getotherchannel/${channelID}`
+            `${backendURL}/getotherchannel/${channelID}`
           );
           const userEmail = await response.json();
           setUserEmail(userEmail);
@@ -126,7 +127,7 @@ function SearchResults() {
       try {
         if (userEmail !== undefined) {
           const response = await fetch(
-            `https://youtube-clone-mern-backend.vercel.app/getuservideos/${userEmail}`
+            `${backendURL}/getuservideos/${userEmail}`
           );
 
           const myvideos = await response.json();
@@ -145,7 +146,7 @@ function SearchResults() {
       try {
         if (myemail !== undefined && channelID !== undefined) {
           const response = await fetch(
-            `https://youtube-clone-mern-backend.vercel.app/checksubscription/${channelID}/${myemail}`
+            `${backendURL}/checksubscription/${channelID}/${myemail}`
           );
           const { existingChannelID } = await response.json();
           if (existingChannelID !== undefined) {
@@ -169,7 +170,7 @@ function SearchResults() {
   const updateViews = async (id) => {
     try {
       const response = await fetch(
-        `https://youtube-clone-mern-backend.vercel.app/updateview/${id}`,
+        `${backendURL}/updateview/${id}`,
         {
           method: "POST",
           headers: {
@@ -195,7 +196,7 @@ function SearchResults() {
         youtubeChannelID,
       };
       const response = await fetch(
-        `https://youtube-clone-mern-backend.vercel.app/subscribe/${channelID}/${myemail}/${userEmail}`,
+        `${backendURL}/subscribe/${channelID}/${myemail}/${userEmail}`,
         {
           method: "POST",
           body: JSON.stringify(channelData),

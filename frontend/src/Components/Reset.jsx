@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function Reset() {
+  const backendURL = "https://youtube-clone-mern-backend.vercel.app"
   const [email, setEmail] = useState("");
   const [BtnLoading, setBtnLoading] = useState(false);
   const [theme, setTheme] = useState(() => {
@@ -45,7 +46,7 @@ function Reset() {
       return;
     } else {
       setBtnLoading(true);
-      const response = await fetch(`https://youtube-clone-mern-backend.vercel.app/resetlink`, {
+      const response = await fetch(`${backendURL}/resetlink`, {
         method: "POST",
         body: JSON.stringify({ email }),
         headers: {

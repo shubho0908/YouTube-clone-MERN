@@ -18,6 +18,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 function VideoComments() {
+  const backendURL = "https://youtube-clone-mern-backend.vercel.app"
   const { id } = useParams();
   const [Email, setEmail] = useState();
   const [videoComments, setVideoComments] = useState([]);
@@ -123,7 +124,7 @@ function VideoComments() {
       try {
         if (Email !== undefined) {
           const response = await fetch(
-            `https://youtube-clone-mern-backend.vercel.app/getchannel/${Email}`
+            `${backendURL}/getchannel/${Email}`
           );
           const { profile } = await response.json();
           setProfile(profile);
@@ -140,7 +141,7 @@ function VideoComments() {
       try {
         if (id !== undefined) {
           const response = await fetch(
-            `https://youtube-clone-mern-backend.vercel.app/getvideocommentsbyid/${id}`
+            `${backendURL}/getvideocommentsbyid/${id}`
           );
           const comments = await response.json();
           setVideoComments(comments);
@@ -158,7 +159,7 @@ function VideoComments() {
     try {
       if (commentId !== undefined && id !== undefined && Email !== undefined) {
         const response = await fetch(
-          `https://youtube-clone-mern-backend.vercel.app/likecomment/${id}/${commentId}/${Email}`,
+          `${backendURL}/likecomment/${id}/${commentId}/${Email}`,
           {
             method: "POST",
             headers: {
@@ -176,7 +177,7 @@ function VideoComments() {
   const HeartComment = async (id, commentID) => {
     try {
       const response = await fetch(
-        `https://youtube-clone-mern-backend.vercel.app/heartcomment/${id}/${commentID}`,
+        `${backendURL}/heartcomment/${id}/${commentID}`,
         {
           method: "POST",
           headers: {
@@ -193,7 +194,7 @@ function VideoComments() {
   const DeleteComment = async (id, commentId) => {
     try {
       const response = await fetch(
-        `https://youtube-clone-mern-backend.vercel.app/deletecomment/${id}/${commentId}/${Email}`,
+        `${backendURL}/deletecomment/${id}/${commentId}/${Email}`,
         {
           method: "POST",
           headers: {

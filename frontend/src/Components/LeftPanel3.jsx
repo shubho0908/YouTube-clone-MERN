@@ -11,6 +11,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 function LeftPanel2() {
+  const backendURL = "https://youtube-clone-mern-backend.vercel.app"
   const { id } = useParams();
   const [videodata, setVideoData] = useState();
   const VideoEditSection = localStorage.getItem("Video-Edit Section");
@@ -82,7 +83,7 @@ function LeftPanel2() {
       try {
         if (id !== undefined) {
           const response = await fetch(
-            `https://youtube-clone-mern-backend.vercel.app/getvideodata/${id}`
+            `${backendURL}/getvideodata/${id}`
           );
           const data = await response.json();
           setVideoData(data);

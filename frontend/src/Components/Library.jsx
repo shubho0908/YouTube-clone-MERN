@@ -31,6 +31,7 @@ function generateRandomColors(count) {
 }
 
 function Library() {
+  const backendURL = "https://youtube-clone-mern-backend.vercel.app"
   const [watchlater, setWatchLater] = useState([]);
   const [PlaylistData, setPlaylistData] = useState([]);
   const [playlistColors, setPlaylistColors] = useState([]);
@@ -83,7 +84,7 @@ function Library() {
       try {
         if (email !== undefined) {
           const response = await fetch(
-            `https://youtube-clone-mern-backend.vercel.app/getplaylistdata/${email}`
+            `${backendURL}/getplaylistdata/${email}`
           );
           const playlistData = await response.json();
           setPlaylistData(playlistData);
@@ -100,7 +101,7 @@ function Library() {
       try {
         if (email !== undefined) {
           const response = await fetch(
-            `https://youtube-clone-mern-backend.vercel.app/getwatchlater/${email}`
+            `${backendURL}/getwatchlater/${email}`
           );
           const savedData = await response.json();
           setWatchLater(savedData);
@@ -117,7 +118,7 @@ function Library() {
     const getLikeVideos = async () => {
       try {
         const response = await fetch(
-          `https://youtube-clone-mern-backend.vercel.app/getlikevideos/${email}`
+          `${backendURL}/getlikevideos/${email}`
         );
         const result = await response.json();
         setLikedVideos(result);
@@ -134,7 +135,7 @@ function Library() {
       try {
         if (email !== undefined) {
           const response = await fetch(
-            `https://youtube-clone-mern-backend.vercel.app/getchannelid/${email}`
+            `${backendURL}/getchannelid/${email}`
           );
           const { channelID } = await response.json();
           setChannelID(channelID);
@@ -152,7 +153,7 @@ function Library() {
       try {
         if (email !== undefined) {
           const response = await fetch(
-            `https://youtube-clone-mern-backend.vercel.app/getsavedplaylist/${email}`
+            `${backendURL}/getsavedplaylist/${email}`
           );
           const matchingPlaylists = await response.json();
           setSavedPlaylist(matchingPlaylists);

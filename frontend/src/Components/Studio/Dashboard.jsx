@@ -14,6 +14,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import noVideo from "../../img/no-video2.png";
 
 function Dashboard() {
+  const backendURL = "https://youtube-clone-mern-backend.vercel.app"
   const [myVideos, setMyVideos] = useState([]);
   const [Email, setEmail] = useState();
   const [dropDown, setDropDown] = useState(true);
@@ -63,7 +64,7 @@ function Dashboard() {
       try {
         if (Email !== undefined) {
           const response = await fetch(
-            `https://youtube-clone-mern-backend.vercel.app/getuservideos/${Email}`
+            `${backendURL}/getuservideos/${Email}`
           );
           const data = await response.json();
           setMyVideos(data);
@@ -81,7 +82,7 @@ function Dashboard() {
       try {
         if (Email !== undefined) {
           const response = await fetch(
-            `https://youtube-clone-mern-backend.vercel.app/getsubscribers/${Email}`
+            `${backendURL}/getsubscribers/${Email}`
           );
           const subscribers = await response.json();
 
@@ -101,7 +102,7 @@ function Dashboard() {
       try {
         if (Email !== undefined) {
           const response = await fetch(
-            `https://youtube-clone-mern-backend.vercel.app/totalviews/${Email}`
+            `${backendURL}/totalviews/${Email}`
           );
           const totalViews = await response.json();
           setTotalViews(totalViews);

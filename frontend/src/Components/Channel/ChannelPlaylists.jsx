@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import jwtDecode from "jwt-decode";
 import PlaylistPlayIcon from "@mui/icons-material/PlaylistPlay";
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import deleteIMG from "../../img/delete.jpg";
@@ -21,6 +20,7 @@ function generateRandomColors(count) {
 }
 
 function ChannelPlaylists(prop) {
+  const backendURL = "https://youtube-clone-mern-backend.vercel.app"
   const [PlaylistData, setPlaylistData] = useState([]);
   const [email, setEmail] = useState();
   const [playlistColors, setPlaylistColors] = useState([]);
@@ -55,7 +55,7 @@ function ChannelPlaylists(prop) {
       try {
         if (prop.newmail !== undefined) {
           const response = await fetch(
-            `https://youtube-clone-mern-backend.vercel.app/getplaylistdata/${prop.newmail}`
+            `${backendURL}/getplaylistdata/${prop.newmail}`
           );
           const playlistData = await response.json();
           setPlaylistData(playlistData);

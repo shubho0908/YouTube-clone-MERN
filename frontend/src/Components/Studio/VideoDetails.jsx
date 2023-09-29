@@ -20,6 +20,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { GrUndo } from "react-icons/gr";
 
 function VideoDetails() {
+  const backendURL = "https://youtube-clone-mern-backend.vercel.app"
   const { id } = useParams();
   const [videodata, setVideoData] = useState();
   const [previewTitle, setPreviewTitle] = useState("");
@@ -113,7 +114,7 @@ function VideoDetails() {
       try {
         if (id !== undefined) {
           const response = await fetch(
-            `https://youtube-clone-mern-backend.vercel.app/getvideodata/${id}`
+            `${backendURL}/getvideodata/${id}`
           );
           const data = await response.json();
           setVideoData(data);
@@ -302,7 +303,7 @@ function VideoDetails() {
       };
 
       const response = await fetch(
-        `https://youtube-clone-mern-backend.vercel.app/savevideoeditdetails/${id}`,
+        `${backendURL}/savevideoeditdetails/${id}`,
         {
           method: "POST",
           body: JSON.stringify(data),

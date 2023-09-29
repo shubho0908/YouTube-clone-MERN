@@ -18,6 +18,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { BiSearch } from "react-icons/bi";
 
 function Navbar2() {
+  const backendURL = "https://youtube-clone-mern-backend.vercel.app"
   const token = localStorage.getItem("userToken");
   const [email, setEmail] = useState();
   const [profilePic, setProfilePic] = useState();
@@ -94,7 +95,7 @@ function Navbar2() {
     const getData = async () => {
       try {
         const response = await fetch(
-          `https://youtube-clone-mern-backend.vercel.app/getchannel/${email}`
+          `${backendURL}/getchannel/${email}`
         );
         const { profile } = await response.json();
         setProfilePic(profile);
@@ -110,7 +111,7 @@ function Navbar2() {
     const getVideos = async () => {
       try {
         const response = await fetch(
-          `https://youtube-clone-mern-backend.vercel.app/getuservideos/${email}`
+          `${backendURL}/getuservideos/${email}`
         );
         const data = await response.json();
         setUserVideos(data);

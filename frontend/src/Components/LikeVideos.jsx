@@ -9,6 +9,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 function LikeVideos() {
+  const backendURL = "https://youtube-clone-mern-backend.vercel.app"
   const [email, setEmail] = useState();
   const [name, setName] = useState();
   const [menuClicked, setMenuClicked] = useState(() => {
@@ -44,7 +45,7 @@ function LikeVideos() {
     const getLikeVideos = async () => {
       try {
         const response = await fetch(
-          `https://youtube-clone-mern-backend.vercel.app/getlikevideos/${email}`
+          `${backendURL}/getlikevideos/${email}`
         );
         const result = await response.json();
         setLikedVideos(result);
@@ -103,7 +104,7 @@ function LikeVideos() {
   const updateViews = async (id) => {
     try {
       const response = await fetch(
-        `https://youtube-clone-mern-backend.vercel.app/updateview/${id}`,
+        `${backendURL}/updateview/${id}`,
         {
           method: "POST",
           headers: {

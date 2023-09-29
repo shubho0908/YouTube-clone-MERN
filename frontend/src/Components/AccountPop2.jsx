@@ -14,6 +14,7 @@ import Zoom from "@mui/material/Zoom";
 import YouTubeIcon from "@mui/icons-material/YouTube";
 
 function AccountPop() {
+  const backendURL = "https://youtube-clone-mern-backend.vercel.app"
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [profile, setProfile] = useState("");
@@ -47,7 +48,7 @@ function AccountPop() {
       try {
         if (email) {
           const response = await fetch(
-            `https://youtube-clone-mern-backend.vercel.app/getuserimage/${email}`
+            `${backendURL}/getuserimage/${email}`
           );
           const { channelIMG } = await response.json();
           setProfile(channelIMG);
@@ -65,7 +66,7 @@ function AccountPop() {
       try {
         if (email) {
           const response = await fetch(
-            `https://youtube-clone-mern-backend.vercel.app/getchannelid/${email}`
+            `${backendURL}/getchannelid/${email}`
           );
           const { channelID } = await response.json();
           setChannelID(channelID);

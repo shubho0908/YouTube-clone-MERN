@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function Basic() {
+  const backendURL = "https://youtube-clone-mern-backend.vercel.app"
   const [Email, setEmail] = useState("");
   const [channelName, setChannelName] = useState();
   const [channelDescription, setChannelDescription] = useState();
@@ -81,7 +82,7 @@ function Basic() {
     const getChannelData = async () => {
       try {
         const response = await fetch(
-          `https://youtube-clone-mern-backend.vercel.app/getchannel/${Email}`
+          `${backendURL}/getchannel/${Email}`
         );
         const { ChannelName } = await response.json();
         setChannelName(ChannelName);
@@ -93,7 +94,7 @@ function Basic() {
     const getChannelData2 = async () => {
       try {
         const response = await fetch(
-          `https://youtube-clone-mern-backend.vercel.app/getchannelid/${Email}`
+          `${backendURL}/getchannelid/${Email}`
         );
         const data = await response.json();
         const { channelDescription, channelID, links } = data;
@@ -150,7 +151,7 @@ function Basic() {
           channelID: channelID,
         };
         const response = await fetch(
-          `https://youtube-clone-mern-backend.vercel.app/savelinksdata/${Email}`,
+          `${backendURL}/savelinksdata/${Email}`,
           {
             method: "POST",
             body: JSON.stringify(data),
@@ -181,7 +182,7 @@ function Basic() {
           channelID,
         };
         const response = await fetch(
-          `https://youtube-clone-mern-backend.vercel.app/updatechanneldata/${Email}`,
+          `${backendURL}/updatechanneldata/${Email}`,
           {
             method: "POST",
             body: JSON.stringify(data),
