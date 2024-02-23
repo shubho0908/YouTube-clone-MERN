@@ -16,7 +16,7 @@ function Basic() {
   const [channelName, setChannelName] = useState();
   const [channelDescription, setChannelDescription] = useState();
   const [channelID, setChannelID] = useState("");
-  const channelUrl = "http://localhost:5173/channel";
+  const channelUrl = "https://shubho-youtube-mern.netlify.app/channel";
   const channelIDInputRef = useRef(null);
   const [Basicchanges, setBasicChanges] = useState(false);
   const [Linkchanges, setLinkChanges] = useState(false);
