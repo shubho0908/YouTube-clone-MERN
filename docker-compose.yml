@@ -1,0 +1,18 @@
+version: "3.8"
+services:
+  backend:
+    image: shubhobera09/youtube-backend
+    ports:
+      - "3000:3000"
+    environment:
+      DB_user: your_user
+      DB_password: your_db_password
+      DB_name: your_db_name
+      SECRET_KEY: jwt_secret
+      EMAIL: email_address
+      PASSWORD: google_app_password
+
+  frontend:
+    image: shubhobera09/youtube-frontend
+    ports:
+      - "4000:4000"
