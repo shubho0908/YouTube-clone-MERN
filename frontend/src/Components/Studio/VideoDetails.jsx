@@ -26,7 +26,7 @@ function VideoDetails() {
   const [previewTitle, setPreviewTitle] = useState("");
   const [previewDescription, setPreviewDescription] = useState("");
   const [previewTags, setPreviewTags] = useState("");
-  const videolink = "http://localhost:5173/video";
+  const videolink = "https://shubho-youtube-mern.netlify.app/video";
   const [thumbnailImage, setThumbnailImage] = useState(null);
   const [thumbnailSelected, setThumbnailSelected] = useState(false);
   const [finalThumbnail, setFinalThumbnail] = useState(null);
