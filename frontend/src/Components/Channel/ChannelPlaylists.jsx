@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import jwtDecode from "jwt-decode";
 import PlaylistPlayIcon from "@mui/icons-material/PlaylistPlay";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -21,10 +20,10 @@ function generateRandomColors(count) {
 
 function ChannelPlaylists(prop) {
   const backendURL = "https://youtube-clone-mern-backend.vercel.app"
+  // const backendURL = "http://localhost:3000"
   const [PlaylistData, setPlaylistData] = useState([]);
   const [email, setEmail] = useState();
   const [playlistColors, setPlaylistColors] = useState([]);
-  const token = localStorage.getItem("userToken");
   const [loading, setLoading] = useState(true);
   const sampleArr = [1, 2, 3, 4];
   const [theme, setTheme] = useState(() => {
@@ -32,16 +31,11 @@ function ChannelPlaylists(prop) {
     return Dark ? JSON.parse(Dark) : true;
   });
 
-  useEffect(() => {
-    if (token) {
-      setEmail(jwtDecode(token).email);
-    }
-  }, [token]);
 
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 3200);
+    }, 1000);
   }, []);
 
   useEffect(() => {
@@ -53,9 +47,9 @@ function ChannelPlaylists(prop) {
   useEffect(() => {
     const getPlaylistData = async () => {
       try {
-        if (prop.newmail !== undefined) {
+        if (prop?.newmail) {
           const response = await fetch(
-            `${backendURL}/getplaylistdata/${prop.newmail}`
+            `${backendURL}/getplaylistdata/${prop?.newmail}`
           );
           const playlistData = await response.json();
           setPlaylistData(playlistData);
@@ -65,7 +59,7 @@ function ChannelPlaylists(prop) {
       }
     };
     getPlaylistData();
-  }, [prop.newmail]);
+  }, [prop?.newmail]);
 
   const publicPlaylists =
     PlaylistData &&
@@ -77,7 +71,7 @@ function ChannelPlaylists(prop) {
   if (
     (loading === false && PlaylistData === "No playlists available...") ||
     (loading === false && PlaylistData.length === 0) ||
-    (email !== prop.newmail && noPublicPlaylists)
+    (email !== prop?.newmail && noPublicPlaylists)
   ) {
     return (
       <p
@@ -190,7 +184,7 @@ function ChannelPlaylists(prop) {
                       className="created-all-playlistss"
                       key={index}
                       style={
-                        prop.newmail !== email &&
+                        prop?.newmail !== email &&
                         element.playlist_privacy === "Private"
                           ? { display: "none" }
                           : { display: "block" }

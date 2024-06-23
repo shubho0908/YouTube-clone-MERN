@@ -21,6 +21,7 @@ import { GrUndo } from "react-icons/gr";
 
 function VideoDetails() {
   const backendURL = "https://youtube-clone-mern-backend.vercel.app"
+  // const backendURL = "http://localhost:3000";
   const { id } = useParams();
   const [videodata, setVideoData] = useState();
   const [previewTitle, setPreviewTitle] = useState("");
@@ -112,7 +113,7 @@ function VideoDetails() {
   useEffect(() => {
     const GetVideoData = async () => {
       try {
-        if (id !== undefined) {
+        if (id) {
           const response = await fetch(
             `${backendURL}/getvideodata/${id}`
           );
@@ -133,7 +134,7 @@ function VideoDetails() {
   useEffect(() => {
     setTimeout(() => {
       setFakeLoading(false);
-    }, 3000);
+    }, 1000);
   }, []);
 
   useEffect(() => {
@@ -306,6 +307,7 @@ function VideoDetails() {
         `${backendURL}/savevideoeditdetails/${id}`,
         {
           method: "POST",
+          credentials: "include",
           body: JSON.stringify(data),
           headers: {
             "Content-Type": "application/json",

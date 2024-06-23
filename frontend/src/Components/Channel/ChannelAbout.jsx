@@ -13,6 +13,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 function ChannelAbout(prop) {
   const backendURL = "https://youtube-clone-mern-backend.vercel.app"
+  // const backendURL = "http://localhost:3000"
   const [Email, setEmail] = useState();
   const [description, setDescription] = useState();
   const [links, setLinks] = useState();
@@ -40,7 +41,7 @@ function ChannelAbout(prop) {
     const getUserMail = async () => {
       try {
         const response = await fetch(
-          `${backendURL}/getotherchannel/${prop.channelid}`
+          `${backendURL}/getotherchannel/${prop?.channelid}`
         );
         const userEmail = await response.json();
         setEmail(userEmail);
@@ -50,12 +51,12 @@ function ChannelAbout(prop) {
     };
 
     getUserMail();
-  }, [prop.channelid]);
+  }, [prop?.channelid]);
 
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 3000);
+    }, 1000);
   }, []);
 
   useEffect(() => {

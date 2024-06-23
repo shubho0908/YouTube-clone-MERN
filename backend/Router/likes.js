@@ -3,11 +3,35 @@ require("../Database/database");
 const express = require("express");
 const userData = require("../Models/user");
 const videodata = require("../Models/videos");
+const cookieParser = require("cookie-parser");
+const { verifyRefreshToken, generateAccessToken } = require("../lib/tokens");
 const Likes = express.Router();
+
+Likes.use(cookieParser());
 
 Likes.post("/like/:id/:email/:email2", async (req, res) => {
   try {
     const { id, email, email2 } = req.params;
+
+    const refreshToken = req.cookies?.refreshToken;
+    const accessToken = req.cookies?.accessToken;
+    if (!refreshToken) {
+      return res.status(401).json({
+        message: "Unauthorized access, please login again",
+      });
+    }
+    if (!accessToken) {
+      //Refresh the access token
+      const userID = verifyRefreshToken(refreshToken);
+      const userData = { id: userID };
+      const accessToken = generateAccessToken(userData);
+      res.cookie("accessToken", accessToken, {
+        httpOnly: false,
+        sameSite: "None",
+        secure: true,
+        maxAge: 24 * 60 * 60 * 1000,
+      });
+    }
 
     const video = await videodata.findOne({ "VideoData._id": id });
     const user = await userData.findOne({ email });
@@ -46,23 +70,29 @@ Likes.post("/like/:id/:email/:email2", async (req, res) => {
         views: likedData.views,
         uploaded_date: likedData.uploaded_date,
         likedVideoID: likedData._id,
-        videoprivacy: likedData.visibility
+        videoprivacy: likedData.visibility,
       });
       video.VideoData[videoIndex].likes += 1;
-      res.json("Liked");
+      res
+        .status(200)
+        .json({ message: "Liked", likes: video?.VideoData[videoIndex]?.likes });
     } else {
       user.likedVideos = user.likedVideos.filter(
         (likedVideo) => likedVideo.likedVideoID !== likedData._id.toString()
       );
       video.VideoData[videoIndex].likes -= 1;
-      res.json("Disliked");
-
+      res
+        .status(200)
+        .json({
+          message: "Disliked",
+          likes: video?.VideoData[videoIndex]?.likes,
+        });
     }
 
     await user.save();
     await video.save();
   } catch (error) {
-    res.json(error.message);
+    res.status(500).json({ error: error.message });
   }
 });
 
@@ -131,6 +161,27 @@ Likes.post("/dislikevideo/:id/:email", async (req, res) => {
   try {
     const { id } = req.params;
     const email = req.params.email;
+
+    const refreshToken = req.cookies?.refreshToken;
+    const accessToken = req.cookies?.accessToken;
+    if (!refreshToken) {
+      return res.status(401).json({
+        message: "Unauthorized access, please login again",
+      });
+    }
+    if (!accessToken) {
+      //Refresh the access token
+      const userID = verifyRefreshToken(refreshToken);
+      const userData = { id: userID };
+      const accessToken = generateAccessToken(userData);
+      res.cookie("accessToken", accessToken, {
+        httpOnly: false,
+        sameSite: "None",
+        secure: true,
+        maxAge: 24 * 60 * 60 * 1000,
+      });
+    }
+
     const video = await videodata.findOne({ "VideoData._id": id });
     const user = await userData.findOne({ email });
 
@@ -167,7 +218,7 @@ Likes.post("/dislikevideo/:id/:email", async (req, res) => {
     await user.save(); // Save changes to the user object
     await video.save(); // Save changes to the video object
 
-    res.json(videoLikes);
+    res.status(200).json({ message: "Disliked", likes: video?.VideoData[videoIndex]?.likes });
   } catch (error) {
     res.json(error.message);
   }

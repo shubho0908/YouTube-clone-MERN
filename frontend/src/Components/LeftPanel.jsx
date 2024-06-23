@@ -7,7 +7,6 @@ import ClearRoundedIcon from "@mui/icons-material/ClearRounded";
 import WatchLaterOutlinedIcon from "@mui/icons-material/WatchLaterOutlined";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
 import PlaylistPlayOutlinedIcon from "@mui/icons-material/PlaylistPlayOutlined";
-import jwtDecode from "jwt-decode";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
 import { useEffect, useState } from "react";
@@ -35,19 +34,19 @@ import VideoLibraryIcon from "@mui/icons-material/VideoLibrary";
 import WatchLaterIcon from "@mui/icons-material/WatchLater";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import { MdVideoLibrary } from "react-icons/md";
+import { useSelector } from "react-redux";
 
 function LeftPanel() {
   const backendURL = "https://youtube-clone-mern-backend.vercel.app"
+  // const backendURL = "http://localhost:3000";
   const [menuClicked, setMenuClicked] = useState(() => {
     const menu = localStorage.getItem("menuClicked");
     return menu ? JSON.parse(menu) : false;
   });
-  const [Email, setEmail] = useState();
   const location = useLocation();
   const [Subscriptions, setSubscriptions] = useState([]);
   const [PlaylistData, setPlaylistData] = useState([]);
   const [isbtnClicked, setisbtnClicked] = useState(false);
-  const token = localStorage.getItem("userToken");
   const [isSwitch, setisSwitched] = useState(false);
   const [loading, setLoading] = useState(true);
   const [savedPlaylist, setSavedPlaylist] = useState([]);
@@ -58,11 +57,8 @@ function LeftPanel() {
     return Dark ? JSON.parse(Dark) : true;
   });
 
-  useEffect(() => {
-    if (token) {
-      setEmail(jwtDecode(token).email);
-    }
-  }, [token]);
+  const User = useSelector((state) => state.user.user);
+  const { user } = User;
 
   useEffect(() => {
     const handleMenuButtonClick = () => {
@@ -140,9 +136,9 @@ function LeftPanel() {
   useEffect(() => {
     const getSubscriptions = async () => {
       try {
-        if (Email !== undefined) {
+        if (user?.email) {
           const response = await fetch(
-            `${backendURL}/getsubscriptions/${Email}`
+            `${backendURL}/getsubscriptions/${user?.email}`
           );
           const result = await response.json();
           setSubscriptions(result);
@@ -151,17 +147,16 @@ function LeftPanel() {
         // console.log(error.message);
       }
     };
-    const interval = setInterval(getSubscriptions, 100);
 
-    return () => clearInterval(interval);
-  }, [Email]);
+    return () => getSubscriptions();
+  }, [user?.email]);
 
   useEffect(() => {
     const getPlaylistData = async () => {
       try {
-        if (Email !== undefined) {
+        if (user?.email) {
           const response = await fetch(
-            `${backendURL}/getplaylistdata/${Email}`
+            `${backendURL}/getplaylistdata/${user?.email}`
           );
           const playlistData = await response.json();
           setPlaylistData(playlistData);
@@ -170,17 +165,15 @@ function LeftPanel() {
         // console.log(error.message);
       }
     };
-    const interval = setInterval(getPlaylistData, 100);
-
-    return () => clearInterval(interval);
-  }, [Email]);
+    return () => getPlaylistData();
+  }, [user?.email]);
 
   useEffect(() => {
     const GetSavedPlaylist = async () => {
       try {
-        if (Email !== undefined) {
+        if (user?.email) {
           const response = await fetch(
-            `${backendURL}/getsavedplaylist/${Email}`
+            `${backendURL}/getsavedplaylist/${user?.email}`
           );
           const matchingPlaylists = await response.json();
           setSavedPlaylist(matchingPlaylists);
@@ -190,10 +183,8 @@ function LeftPanel() {
       }
     };
 
-    const interval = setInterval(GetSavedPlaylist, 250);
-
-    return () => clearInterval(interval);
-  }, [Email]);
+    return () => GetSavedPlaylist();
+  }, [user?.email]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -268,7 +259,7 @@ function LeftPanel() {
                 : "subscription sec-data"
             }
             onClick={() => {
-              if (token) {
+              if (user?.email) {
                 localStorage.setItem("selected", "subscription");
                 window.location.href = "/subscriptions";
               } else {
@@ -377,7 +368,7 @@ function LeftPanel() {
                 : "library sec-data"
             }
             onClick={() => {
-              if (token) {
+              if (user?.email) {
                 localStorage.setItem("selected", "library");
                 window.location.href = "/library";
               } else {
@@ -409,7 +400,7 @@ function LeftPanel() {
                 : "watch-later sec-data"
             }
             onClick={() => {
-              if (token) {
+              if (user?.email) {
                 localStorage.setItem("selected", "watch-later");
                 window.location.href = "/watchlater";
               } else {
@@ -440,7 +431,7 @@ function LeftPanel() {
                 : "liked-video sec-data"
             }
             onClick={() => {
-              if (token) {
+              if (user?.email) {
                 localStorage.setItem("selected", "liked-video");
 
                 window.location.href = "/likedVideos";
@@ -620,7 +611,7 @@ function LeftPanel() {
                 : "subscription subscription2 sec-data sec-data2"
             }
             onClick={() => {
-              if (token) {
+              if (user?.email) {
                 localStorage.setItem("selected", "subscription");
                 window.location.href = "/subscriptions";
               } else {
@@ -653,7 +644,7 @@ function LeftPanel() {
                 : "library library2 sec-data sec-data2"
             }
             onClick={() => {
-              if (token) {
+              if (user?.email) {
                 localStorage.setItem("selected", "library");
                 window.location.href = "/library";
               } else {
@@ -683,7 +674,7 @@ function LeftPanel() {
                 : "watch-later watch-later2 sec-data sec-data2"
             }
             onClick={() => {
-              if (token) {
+              if (user?.email) {
                 localStorage.setItem("selected", "watch-later");
                 window.location.href = "/watchlater";
               } else {
@@ -713,7 +704,7 @@ function LeftPanel() {
                 : "liked-video liked-video2 sec-data sec-data2"
             }
             onClick={() => {
-              if (token) {
+              if (user?.email) {
                 localStorage.setItem("selected", "liked-video");
 
                 window.location.href = "/likedVideos";
@@ -809,7 +800,7 @@ function LeftPanel() {
                 : "subscription subscription2 sec-data sec-data2"
             }
             onClick={() => {
-              if (token) {
+              if (user?.email) {
                 localStorage.setItem("selected", "subscription");
                 window.location.href = "/subscriptions";
               } else {
@@ -842,7 +833,7 @@ function LeftPanel() {
                 : "library library2 sec-data sec-data2"
             }
             onClick={() => {
-              if (token) {
+              if (user?.email) {
                 localStorage.setItem("selected", "library");
                 window.location.href = "/library";
               } else {
@@ -872,7 +863,7 @@ function LeftPanel() {
                 : "watch-later watch-later2 sec-data sec-data2"
             }
             onClick={() => {
-              if (token) {
+              if (user?.email) {
                 localStorage.setItem("selected", "watch-later");
                 window.location.href = "/watchlater";
               } else {
@@ -902,7 +893,7 @@ function LeftPanel() {
                 : "liked-video liked-video2 sec-data sec-data2"
             }
             onClick={() => {
-              if (token) {
+              if (user?.email) {
                 localStorage.setItem("selected", "liked-video");
 
                 window.location.href = "/likedVideos";
@@ -1094,7 +1085,7 @@ function LeftPanel() {
                   : "subscription sec-data"
               }
               onClick={() => {
-                if (token) {
+                if (user?.email) {
                   localStorage.setItem("selected", "subscription");
                   window.location.href = "/subscriptions";
                 } else {
@@ -1203,7 +1194,7 @@ function LeftPanel() {
                   : "library sec-data"
               }
               onClick={() => {
-                if (token) {
+                if (user?.email) {
                   localStorage.setItem("selected", "library");
                   window.location.href = "/library";
                 } else {
@@ -1235,7 +1226,7 @@ function LeftPanel() {
                   : "watch-later sec-data"
               }
               onClick={() => {
-                if (token) {
+                if (user?.email) {
                   localStorage.setItem("selected", "watch-later");
                   window.location.href = "/watchlater";
                 } else {
@@ -1266,7 +1257,7 @@ function LeftPanel() {
                   : "liked-video sec-data"
               }
               onClick={() => {
-                if (token) {
+                if (user?.email) {
                   localStorage.setItem("selected", "liked-video");
 
                   window.location.href = "/likedVideos";
@@ -1436,10 +1427,9 @@ function LeftPanel() {
             color={theme ? "white" : "black"}
             className="addvid-icon"
             onClick={() => {
-              if (token) {
-                (window.location.href = "/studio")
-              }
-              else{
+              if (user?.email) {
+                window.location.href = "/studio";
+              } else {
                 setisbtnClicked(true);
                 document.body.classList.add("bg-css");
               }
@@ -1452,7 +1442,7 @@ function LeftPanel() {
                 : "subscriptions-hori hori text-light-mode"
             }
             onClick={() => {
-              if (token) {
+              if (user?.email) {
                 localStorage.setItem("selected", "subscription");
                 window.location.href = "/subscriptions";
               } else {
@@ -1481,7 +1471,7 @@ function LeftPanel() {
               theme ? "library-hori hori" : "library-hori hori text-light-mode"
             }
             onClick={() => {
-              if (token) {
+              if (user?.email) {
                 localStorage.setItem("selected", "library");
                 window.location.href = "/library";
               } else {

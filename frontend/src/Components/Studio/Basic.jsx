@@ -1,5 +1,4 @@
 import { useState, useEffect, useRef } from "react";
-import jwtDecode from "jwt-decode";
 import ContentCopyOutlinedIcon from "@mui/icons-material/ContentCopyOutlined";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import FacebookIcon from "@mui/icons-material/Facebook";
@@ -9,10 +8,11 @@ import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useSelector } from "react-redux";
 
 function Basic() {
   const backendURL = "https://youtube-clone-mern-backend.vercel.app"
-  const [Email, setEmail] = useState("");
+  // const backendURL = "http://localhost:3000";
   const [channelName, setChannelName] = useState();
   const [channelDescription, setChannelDescription] = useState();
   const [channelID, setChannelID] = useState("");
@@ -37,6 +37,8 @@ function Basic() {
     return Dark ? JSON.parse(Dark) : true;
   });
 
+  const User = useSelector((state) => state.user.user);
+  const { user } = User;
   //TOASTS
 
   const CopiedNotify = () =>
@@ -64,14 +66,6 @@ function Basic() {
     });
 
   //USE EFFECTS
-
-  useEffect(() => {
-    const token = localStorage.getItem("userToken");
-    if (token) {
-      setEmail(jwtDecode(token).email);
-    }
-  }, []);
-
   const handleChannelIDClick = () => {
     if (channelIDInputRef.current) {
       channelIDInputRef.current.select();
@@ -81,11 +75,13 @@ function Basic() {
   useEffect(() => {
     const getChannelData = async () => {
       try {
-        const response = await fetch(
-          `${backendURL}/getchannel/${Email}`
-        );
-        const { ChannelName } = await response.json();
-        setChannelName(ChannelName);
+        if (user?.email) {
+          const response = await fetch(
+            `${backendURL}/getchannel/${user?.email}`
+          );
+          const { ChannelName } = await response.json();
+          setChannelName(ChannelName);
+        }
       } catch (error) {
         // console.log(error.message);
       }
@@ -93,18 +89,20 @@ function Basic() {
 
     const getChannelData2 = async () => {
       try {
-        const response = await fetch(
-          `${backendURL}/getchannelid/${Email}`
-        );
-        const data = await response.json();
-        const { channelDescription, channelID, links } = data;
-        setChannelDescription(channelDescription);
-        setChannelID(channelID);
-        setLinks(links);
-        setInstaLink(links[0].instagram ? links[0].instagram : "");
-        setfbLink(links[0].facebook ? links[0].facebook : "");
-        settwitterLink(links[0].twitter ? links[0].twitter : "");
-        setwebLink(links[0].website ? links[0].website : "");
+        if (user?.email) {
+          const response = await fetch(
+            `${backendURL}/getchannelid/${user?.email}`
+          );
+          const data = await response.json();
+          const { channelDescription, channelID, links } = data;
+          setChannelDescription(channelDescription);
+          setChannelID(channelID);
+          setLinks(links);
+          setInstaLink(links[0].instagram ? links[0].instagram : "");
+          setfbLink(links[0].facebook ? links[0].facebook : "");
+          settwitterLink(links[0].twitter ? links[0].twitter : "");
+          setwebLink(links[0].website ? links[0].website : "");
+        }
       } catch (error) {
         // console.log(error.message);
       }
@@ -112,7 +110,7 @@ function Basic() {
 
     getChannelData();
     getChannelData2();
-  }, [Email]);
+  }, [user?.email]);
 
   const handleCopyLink = () => {
     navigator.clipboard
@@ -142,7 +140,7 @@ function Basic() {
     try {
       setLoading(true);
 
-      if (Email !== undefined) {
+      if (user?.email) {
         const data = {
           fblink: fblink,
           instalink: instalink,
@@ -151,9 +149,10 @@ function Basic() {
           channelID: channelID,
         };
         const response = await fetch(
-          `${backendURL}/savelinksdata/${Email}`,
+          `${backendURL}/savelinksdata/${user?.email}`,
           {
             method: "POST",
+            credentials: "include",
             body: JSON.stringify(data),
             headers: {
               "Content-Type": "application/json",
@@ -171,7 +170,7 @@ function Basic() {
     try {
       setLoading(true);
       if (
-        Email !== undefined &&
+        user?.email &&
         channelName !== undefined &&
         channelDescription !== undefined &&
         channelID !== undefined
@@ -182,9 +181,10 @@ function Basic() {
           channelID,
         };
         const response = await fetch(
-          `${backendURL}/updatechanneldata/${Email}`,
+          `${backendURL}/updatechanneldata/${user?.email}`,
           {
             method: "POST",
+            credentials: "include",
             body: JSON.stringify(data),
             headers: {
               "Content-Type": "application/json",

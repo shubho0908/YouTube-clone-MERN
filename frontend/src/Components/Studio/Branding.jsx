@@ -1,4 +1,3 @@
-import jwtDecode from "jwt-decode";
 import { useState, useEffect } from "react";
 import defaultimg from "../../img/avatar.png";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
@@ -7,10 +6,11 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useSelector } from "react-redux";
 
 function Branding() {
   const backendURL = "https://youtube-clone-mern-backend.vercel.app"
-  const [email, setEmail] = useState("");
+  // const backendURL = "http://localhost:3000";
   const [selectedProfile, setSelectedProfile] = useState(null);
   const [previewProfile, setPreviewProfile] = useState(defaultimg);
   const [selectedBanner, setSelectedBanner] = useState(null);
@@ -25,7 +25,8 @@ function Branding() {
     const Dark = localStorage.getItem("Dark");
     return Dark ? JSON.parse(Dark) : true;
   });
-
+  const User = useSelector((state) => state.user.user);
+  const { user } = User;
   //TOAST FUNCTIONS
 
   const saveNotify = () =>
@@ -43,14 +44,9 @@ function Branding() {
   //USE EFFECTS
 
   useEffect(() => {
-    const token = localStorage.getItem("userToken");
-    setEmail(jwtDecode(token).email);
-  }, []);
-
-  useEffect(() => {
     setTimeout(() => {
       setFakeLoading(false);
-    }, 2800);
+    }, 1000);
   }, []);
 
   useEffect(() => {
@@ -72,26 +68,26 @@ function Branding() {
   useEffect(() => {
     const getData = async () => {
       try {
-        if (email !== undefined) {
+        if (user?.email) {
           const response = await fetch(
-            `${backendURL}/getchannel/${email}`
+            `${backendURL}/getchannel/${user?.email}`
           );
-          const { profile } = await response.json();
-          setPreviewProfile(profile);
+          const { userProfile } = await response.json();
+          setPreviewProfile(userProfile);
         }
       } catch (error) {
         // console.log(error.message);
       }
     };
     getData();
-  }, [email]);
+  }, [user?.email]);
 
   useEffect(() => {
     const getChannelID = async () => {
       try {
-        if (email !== undefined) {
+        if (user?.email) {
           const response = await fetch(
-            `${backendURL}/getchannelid/${email}`
+            `${backendURL}/getchannelid/${user?.email}`
           );
           const { channelID } = await response.json();
           setChannelID(channelID);
@@ -101,21 +97,23 @@ function Branding() {
       }
     };
     getChannelID();
-  }, [email]);
+  }, [user?.email]);
 
   useEffect(() => {
     const getChannelCover = async () => {
       try {
-        const response = await fetch(`${backendURL}/getcover/${email}`);
-        const coverimg = await response.json();
-        setPreviewBanner(coverimg);
+        if (user?.email) {
+          const response = await fetch(`${backendURL}/getcover/${user?.email}`);
+          const coverimg = await response.json();
+          setPreviewBanner(coverimg);
+        }
       } catch (error) {
         // console.log(error.message);
       }
     };
 
     getChannelCover();
-  }, [email]);
+  }, [user?.email]);
 
   const handleProfileChange = (e) => {
     const file = e.target.files[0];
@@ -232,46 +230,41 @@ function Branding() {
       let profileURL = previewProfile;
       let coverURL = previewBanner;
 
-      if (ProfileChanges === true) {
+      if (ProfileChanges) {
         profileURL = await UploadProfile();
       }
 
-      if (BannerChanges === true) {
+      if (BannerChanges) {
         coverURL = await UploadBanner();
       }
 
       const data = {
-        profileURL: profileURL,
-        coverURL: coverURL,
+        profileURL,
+        coverURL,
         channelid: channelID,
       };
 
-      const response = await fetch(
-        `${backendURL}/savecustomization/${email}`,
-        {
-          method: "POST",
-          body: JSON.stringify(data),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      const user = await response.json();
-      if (user) {
-        setLoading(false);
+      const response = await fetch(`${backendURL}/savecustomization/${user?.email}`, {
+        method: "POST",
+        credentials: "include",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const {success, userData} = await response.json();
+      if (success) {
         setChanges(false);
         saveNotify();
-      } else {
-        setLoading(true);
       }
     } catch (error) {
-      // console.log(error.message);
-      setLoading(false);
+      console.log(error.message);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
-    const publishBtn = document.querySelector(".save-customize");
+    const publishBtn = document?.querySelector(".save-customize");
 
     if (changes === false) {
       publishBtn.classList.add("disable-btn");

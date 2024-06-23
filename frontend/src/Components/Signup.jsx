@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 function Signup() {
   const backendURL = "https://youtube-clone-mern-backend.vercel.app"
+  // const backendURL = "http://localhost:3000";
   const [data, setData] = useState({});
   const [theme, setTheme] = useState(() => {
     const Dark = localStorage.getItem("Dark");
@@ -22,7 +23,7 @@ function Signup() {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-     theme: theme ? "dark" : "light",
+      theme: theme ? "dark" : "light",
     });
 
   const ErrorNotify = () =>
@@ -34,7 +35,7 @@ function Signup() {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-     theme: theme ? "dark" : "light",
+      theme: theme ? "dark" : "light",
     });
 
   const EmailErrorNotify = (data) =>
@@ -46,7 +47,7 @@ function Signup() {
       pauseOnHover: true,
       draggable: true,
       progress: undefined,
-     theme: theme ? "dark" : "light",
+      theme: theme ? "dark" : "light",
     });
 
   const handleInputs = (e) => {
@@ -65,22 +66,23 @@ function Signup() {
     try {
       const response = await fetch(`${backendURL}/signup`, {
         method: "POST",
+        credentials: "include",
         body: JSON.stringify(data),
         headers: {
           "Content-Type": "application/json",
         },
       });
-      const { message, token } = await response.json();
+      const { message, user } = await response.json();
       if (message === "REGISTRATION SUCCESSFUL") {
         SignupNotify();
-        localStorage.setItem("userToken", token);
+        localStorage.setItem("userData", JSON.stringify(user));
+        
         setTimeout(() => {
           window.location.reload();
           document.body.classList.remove("bg-class");
         }, 2000);
-      }
-      else{
-        EmailErrorNotify(message)
+      } else {
+        EmailErrorNotify(message);
       }
     } catch (error) {
       alert(error.message);

@@ -6,12 +6,36 @@ const userData = require("../Models/user");
 const videodata = require("../Models/videos");
 const TrendingData = require("../Models/trending");
 const bcrypt = require("bcrypt");
+const cookieParser = require("cookie-parser");
+const { verifyRefreshToken, generateAccessToken } = require("../lib/tokens");
 const Studio = express.Router();
 
-Studio.post("/deletevideo/:videoId", async (req, res) => {
-  const videoId = req.params.videoId;
+Studio.use(cookieParser());
 
+Studio.post("/deletevideo/:videoId", async (req, res) => {
   try {
+    const videoId = req.params.videoId;
+
+    const refreshToken = req.cookies?.refreshToken;
+    const accessToken = req.cookies?.accessToken;
+    if (!refreshToken) {
+      return res.status(401).json({
+        message: "Unauthorized access, please login again",
+      });
+    }
+    if (!accessToken) {
+      //Refresh the access token
+      const userID = verifyRefreshToken(refreshToken);
+      const userData = { id: userID };
+      const accessToken = generateAccessToken(userData);
+      res.cookie("accessToken", accessToken, {
+        httpOnly: false,
+        sameSite: "None",
+        secure: true,
+        maxAge: 24 * 60 * 60 * 1000,
+      });
+    }
+
     const video = await videodata.findOne({ "VideoData._id": videoId });
 
     if (!video) {
@@ -91,6 +115,27 @@ Studio.post("/savevideoeditdetails/:videoId", async (req, res) => {
     const { videoId } = req.params;
     const { thumbnail, title, desc, tags, privacy } = req.body;
 
+    const refreshToken = req.cookies?.refreshToken;
+    const accessToken = req.cookies?.accessToken;
+    if (!refreshToken) {
+      return res.status(401).json({
+        message: "Unauthorized access, please login again",
+      });
+    }
+    if (!accessToken) {
+      //Refresh the access token
+      const userID = verifyRefreshToken(refreshToken);
+      const userData = { id: userID };
+      const accessToken = generateAccessToken(userData);
+      res.cookie("accessToken", accessToken, {
+        httpOnly: false,
+        sameSite: "None",
+        secure: true,
+        maxAge: 24 * 60 * 60 * 1000,
+      });
+    }
+
+
     await TrendingData.updateOne(
       { videoid: videoId },
       {
@@ -144,7 +189,8 @@ Studio.post("/savevideoeditdetails/:videoId", async (req, res) => {
           "Playlists.$[playlist].playlist_videos.$[video].thumbnail": thumbnail,
           "Playlists.$[playlist].playlist_videos.$[video].title": title,
           "Playlists.$[playlist].playlist_videos.$[video].description": desc,
-          "Playlists.$[playlist].playlist_videos.$[video].videoprivacy": privacy,
+          "Playlists.$[playlist].playlist_videos.$[video].videoprivacy":
+            privacy,
         },
       },
       {
@@ -154,7 +200,6 @@ Studio.post("/savevideoeditdetails/:videoId", async (req, res) => {
         ],
       }
     );
-    
 
     res.status(200).json({ message: "Video updated successfully" });
   } catch (error) {
@@ -226,6 +271,27 @@ Studio.post("/savelinksdata/:email", async (req, res) => {
   try {
     const email = req.params.email;
     const { fblink, instalink, twitterlink, websitelink, channelID } = req.body;
+
+    const refreshToken = req.cookies?.refreshToken;
+    const accessToken = req.cookies?.accessToken;
+    if (!refreshToken) {
+      return res.status(401).json({
+        message: "Unauthorized access, please login again",
+      });
+    }
+    if (!accessToken) {
+      //Refresh the access token
+      const userID = verifyRefreshToken(refreshToken);
+      const userData = { id: userID };
+      const accessToken = generateAccessToken(userData);
+      res.cookie("accessToken", accessToken, {
+        httpOnly: false,
+        sameSite: "None",
+        secure: true,
+        maxAge: 24 * 60 * 60 * 1000,
+      });
+    }
+
 
     const updatedUserData = await userData.findOneAndUpdate(
       { email, "channelData._id": channelID },

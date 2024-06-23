@@ -3,7 +3,6 @@ import Navbar2 from "../Navbar2";
 import "../../Css/Studio/comments.css";
 import FilterListOutlinedIcon from "@mui/icons-material/FilterListOutlined";
 import { useEffect, useState } from "react";
-import jwtDecode from "jwt-decode";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
@@ -16,11 +15,12 @@ import noImage from "../../img/no-comment.png";
 import { useParams } from "react-router-dom";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { useSelector } from "react-redux";
 
 function VideoComments() {
   const backendURL = "https://youtube-clone-mern-backend.vercel.app"
+  // const backendURL = "http://localhost:3000";
   const { id } = useParams();
-  const [Email, setEmail] = useState();
   const [videoComments, setVideoComments] = useState([]);
   const [Profile, setProfile] = useState();
   const [filterComment, setFilterComment] = useState("");
@@ -33,7 +33,8 @@ function VideoComments() {
     const Dark = localStorage.getItem("Dark");
     return Dark ? JSON.parse(Dark) : true;
   });
-
+  const User = useSelector((state) => state.user.user);
+  const { user } = User;
   document.title = "Video comments - YouTube Studio";
 
   useEffect(() => {
@@ -69,14 +70,9 @@ function VideoComments() {
   }, [menu]);
 
   useEffect(() => {
-    const token = localStorage.getItem("userToken");
-    setEmail(jwtDecode(token).email);
-  }, []);
-
-  useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 2800);
+    }, 1000);
   }, []);
 
   useEffect(() => {
@@ -122,24 +118,24 @@ function VideoComments() {
   useEffect(() => {
     const getChannel = async () => {
       try {
-        if (Email !== undefined) {
+        if (user?.email) {
           const response = await fetch(
-            `${backendURL}/getchannel/${Email}`
+            `${backendURL}/getchannel/${user?.email}`
           );
-          const { profile } = await response.json();
-          setProfile(profile);
+          const { userProfile } = await response.json();
+          setProfile(userProfile);
         }
       } catch (error) {
         //console.log(error.message);
       }
     };
-    getChannel()
-  }, [Email]);
+    getChannel();
+  }, [user?.email]);
 
   useEffect(() => {
     const getComment = async () => {
       try {
-        if (id !== undefined) {
+        if (id) {
           const response = await fetch(
             `${backendURL}/getvideocommentsbyid/${id}`
           );
@@ -150,18 +146,17 @@ function VideoComments() {
         // console.log(error.message);
       }
     };
-    const interval = setInterval(getComment, 100);
-
-    return () => clearInterval(interval);
+    getComment();
   }, [id]);
 
   const LikeComment = async (id, commentId) => {
     try {
-      if (commentId !== undefined && id !== undefined && Email !== undefined) {
+      if (commentId && id && user?.email) {
         const response = await fetch(
-          `${backendURL}/likecomment/${id}/${commentId}/${Email}`,
+          `${backendURL}/likecomment/${id}/${commentId}/${user?.email}`,
           {
             method: "POST",
+            credentials: "include",
             headers: {
               "Content-Type": "application/json",
             },
@@ -180,6 +175,7 @@ function VideoComments() {
         `${backendURL}/heartcomment/${id}/${commentID}`,
         {
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
@@ -193,16 +189,22 @@ function VideoComments() {
 
   const DeleteComment = async (id, commentId) => {
     try {
-      const response = await fetch(
-        `${backendURL}/deletecomment/${id}/${commentId}/${Email}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+      if (user?.email) {
+        const response = await fetch(
+          `${backendURL}/deletecomment/${id}/${commentId}/${user?.email}`,
+          {
+            method: "POST",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        const { message, commentData } = await response.json();
+        if (message === "Comment Deleted") {
+          setVideoComments(commentData);
         }
-      );
-      await response.json();
+      }
       // window.location.reload();
     } catch (error) {
       //console.log(error.message);
@@ -761,7 +763,9 @@ function VideoComments() {
                 <div className="user-comment-data2" style={{ top: "60px" }}>
                   <div className="no-comment-found">
                     <div className="spin23">
-                      <span className={theme ? "loader2" : "loader2-light"}></span>
+                      <span
+                        className={theme ? "loader2" : "loader2-light"}
+                      ></span>
                     </div>
                   </div>
                 </div>

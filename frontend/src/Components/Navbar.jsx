@@ -13,22 +13,20 @@ import Signup from "./Signup";
 import Signin from "./Signin";
 import avatar from "../img/avatar.png";
 import { useParams } from "react-router-dom";
-import jwtDecode from "jwt-decode";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
 import { FiSearch } from "react-icons/fi";
 import { IoIosSearch } from "react-icons/io";
 import { RxCross1 } from "react-icons/rx";
 import { AiOutlineVideoCameraAdd } from "react-icons/ai";
-
+import { useSelector } from "react-redux";
 function Navbar() {
   const backendURL = "https://youtube-clone-mern-backend.vercel.app"
+  // const backendURL = "http://localhost:3000";
   const { data } = useParams();
   const [data2, setData] = useState(data);
   const [isbtnClicked, setisbtnClicked] = useState(false);
   const [isSwitch, setisSwitched] = useState(false);
-  const token = localStorage.getItem("userToken");
-  const [email, setEmail] = useState();
   const [profilePic, setProfilePic] = useState();
   const [showPop, setShowPop] = useState(false);
   const [searchedData, setSearchedData] = useState();
@@ -41,12 +39,13 @@ function Navbar() {
   const profileRef = useRef();
   const searchRef = useRef();
 
+  const User = useSelector((state) => state.user.user);
+  const { user } = User;
   useEffect(() => {
-    if (token) {
+    if (User.success) {
       setisbtnClicked(false);
-      setEmail(jwtDecode(token).email);
     }
-  }, [token]);
+  }, [user]);
 
   useEffect(() => {
     const handler = (e) => {
@@ -71,9 +70,9 @@ function Navbar() {
   useEffect(() => {
     const getData = async () => {
       try {
-        if (email) {
+        if (user?.email) {
           const response = await fetch(
-            `${backendURL}/getuserimage/${email}`
+            `${backendURL}/getuserimage/${user?.email}`
           );
           const { channelIMG } = await response.json();
           setProfilePic(channelIMG);
@@ -83,8 +82,8 @@ function Navbar() {
       }
     };
 
-    getData()
-  }, [email]);
+    getData();
+  }, [user?.email]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -147,7 +146,7 @@ function Navbar() {
         <div
           className="right-bar"
           style={
-            token
+            User.success
               ? { justifyContent: "space-evenly", paddingRight: "0px" }
               : { justifyContent: "space-evenly", paddingRight: "25px" }
           }
@@ -168,7 +167,7 @@ function Navbar() {
               fontSize="24px"
               style={{ color: theme ? "white" : "black" }}
               onClick={() => {
-                if (token) {
+                if (User.success) {
                   window.location.href = "/studio";
                 } else {
                   setisbtnClicked(true);
@@ -189,7 +188,7 @@ function Navbar() {
               }
             }}
             className={theme ? "signin" : "signin signin-light"}
-            style={token ? { display: "none" } : { display: "flex" }}
+            style={User.success ? { display: "none" } : { display: "flex" }}
           >
             <AccountCircleOutlinedIcon
               fontSize="medium"
@@ -205,7 +204,7 @@ function Navbar() {
             <div
               className="navimg"
               style={
-                loading === true && token
+                loading === true && User.success
                   ? { visibility: "visible" }
                   : { visibility: "hidden", display: "none" }
               }
@@ -225,7 +224,7 @@ function Navbar() {
             loading="lazy"
             className="profile-pic"
             style={
-              token && loading === false
+              User.success && loading === false
                 ? { display: "block" }
                 : { display: "none" }
             }
@@ -240,7 +239,9 @@ function Navbar() {
         </div>
       </div>
       <div
-        className={theme ? "auth-popup" : "auth-popup light-mode text-light-mode"}
+        className={
+          theme ? "auth-popup" : "auth-popup light-mode text-light-mode"
+        }
         style={
           isbtnClicked === true ? { display: "block" } : { display: "none" }
         }

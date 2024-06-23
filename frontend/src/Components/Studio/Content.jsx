@@ -3,7 +3,6 @@ import Navbar2 from "../Navbar2";
 import "../../Css/Studio/content.css";
 import SouthIcon from "@mui/icons-material/South";
 import { useEffect, useState } from "react";
-import jwtDecode from "jwt-decode";
 import RemoveRedEyeOutlinedIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutlined";
 import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
@@ -23,12 +22,13 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useSelector } from "react-redux";
 
 function Content() {
   const backendURL = "https://youtube-clone-mern-backend.vercel.app"
+  // const backendURL = "http://localhost:3000";
   const [userVideos, setUserVideos] = useState([]);
   const [sortByDateAsc, setSortByDateAsc] = useState(true);
-  const [Email, setEmail] = useState();
   const [changeSort, setChangeSort] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
   const [DeleteVideoID, setDeleteVideoID] = useState();
@@ -45,6 +45,8 @@ function Content() {
     const Dark = localStorage.getItem("Dark");
     return Dark ? JSON.parse(Dark) : true;
   });
+  const User = useSelector((state) => state.user.user);
+  const { user } = User;
 
   document.title = "Channel content - YouTube Studio";
 
@@ -63,11 +65,6 @@ function Content() {
     });
 
   //USE EFFECTS
-
-  useEffect(() => {
-    const token = localStorage.getItem("userToken");
-    setEmail(jwtDecode(token).email);
-  }, []);
 
   useEffect(() => {
     if (theme === false && window.location.href.includes("/studio/video")) {
@@ -104,7 +101,7 @@ function Content() {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 3200);
+    }, 1000);
   }, []);
 
   useEffect(() => {
@@ -150,9 +147,9 @@ function Content() {
   useEffect(() => {
     const GetUserVideos = async () => {
       try {
-        if (Email !== undefined) {
+        if (user?.email) {
           const response = await fetch(
-            `${backendURL}/getuservideos/${Email}`
+            `${backendURL}/getuservideos/${user?.email}`
           );
 
           const data = await response.json();
@@ -163,13 +160,13 @@ function Content() {
       }
     };
 
-    GetUserVideos()
-  }, [Email]);
+    GetUserVideos();
+  }, [user?.email]);
 
   useEffect(() => {
     const GetDeleteVideoData = async () => {
       try {
-        if (DeleteVideoID !== undefined) {
+        if (DeleteVideoID) {
           const response = await fetch(
             `${backendURL}/getdeletevideodata/${DeleteVideoID}`
           );
@@ -182,7 +179,7 @@ function Content() {
       }
     };
 
-    GetDeleteVideoData()
+    GetDeleteVideoData();
   }, [DeleteVideoID]);
 
   const handleSortByDate = () => {
@@ -205,16 +202,14 @@ function Content() {
 
   const DeleteVideo = async (id) => {
     try {
-      if (id !== undefined) {
-        const response = await fetch(
-          `${backendURL}/deletevideo/${id}`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+      if (id) {
+        const response = await fetch(`${backendURL}/deletevideo/${id}`, {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
 
         await response.json();
       }
@@ -562,28 +557,32 @@ function Content() {
                                 />
                                 <p>Edit title and description</p>
                               </div>
-                              <div
-                                className={
-                                  theme
-                                    ? "share-video-data-row option-row"
-                                    : "share-video-data-row option-row preview-lightt"
-                                }
-                                onClick={() => {
-                                  handleCopyLink(element._id);
-                                  setShowOptions(false);
-                                }}
-                              >
-                                <ShareOutlinedIcon
+                              {element.visibility === "Public" ? (
+                                <div
                                   className={
                                     theme
-                                      ? "video-edit-icons"
-                                      : "video-edit-icons-light"
+                                      ? "share-video-data-row option-row"
+                                      : "share-video-data-row option-row preview-lightt"
                                   }
-                                  fontSize="medium"
-                                  style={{ color: theme ? "#aaa" : "#606060" }}
-                                />
-                                <p>Get shareable link</p>
-                              </div>
+                                  onClick={() => {
+                                    handleCopyLink(element._id);
+                                    setShowOptions(false);
+                                  }}
+                                >
+                                  <ShareOutlinedIcon
+                                    className={
+                                      theme
+                                        ? "video-edit-icons"
+                                        : "video-edit-icons-light"
+                                    }
+                                    fontSize="medium"
+                                    style={{
+                                      color: theme ? "#aaa" : "#606060",
+                                    }}
+                                  />
+                                  <p>Get shareable link</p>
+                                </div>
+                              ) : null}
                               <div
                                 className={
                                   theme

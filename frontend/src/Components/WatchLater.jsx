@@ -1,15 +1,16 @@
 import Navbar from "./Navbar";
 import LeftPanel from "./LeftPanel";
 import { useEffect, useState } from "react";
-import jwtDecode from "jwt-decode";
 import nothing from "../img/nothing.png";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import "../Css/likevideos.css";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { useSelector } from "react-redux";
 
 function WatchLater() {
   const backendURL = "https://youtube-clone-mern-backend.vercel.app";
+  // const backendURL = "http://localhost:3000";
   const [email, setEmail] = useState();
   const [name, setName] = useState();
   const [menuClicked, setMenuClicked] = useState(() => {
@@ -23,19 +24,15 @@ function WatchLater() {
     return Dark ? JSON.parse(Dark) : true;
   });
 
-  const token = localStorage.getItem("userToken");
-  document.title = "Watch later - YouTube";
+  const User = useSelector((state) => state.user.user);
+  const { user } = User;
 
-  useEffect(() => {
-    const token = localStorage.getItem("userToken");
-    setEmail(jwtDecode(token).email);
-    setName(jwtDecode(token).name);
-  }, []);
+  document.title = "Watch later - YouTube";
 
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 4000);
+    }, 1000);
   }, []);
 
   useEffect(() => {
@@ -87,9 +84,9 @@ function WatchLater() {
   useEffect(() => {
     const getWatchLater = async () => {
       try {
-        if (email !== undefined) {
+        if (user?.email) {
           const response = await fetch(
-            `${backendURL}/getwatchlater/${email}`
+            `${backendURL}/getwatchlater/${user?.email}`
           );
           const savedData = await response.json();
           setWatchLater(savedData);
@@ -100,7 +97,7 @@ function WatchLater() {
     };
 
     getWatchLater();
-  }, [email]);
+  }, [user?.email]);
 
 
   const updateViews = async (id) => {
@@ -164,7 +161,7 @@ function WatchLater() {
                   <div
                     className="firstvideo-thumbnail"
                     onClick={() => {
-                      if (token) {
+                      if (user?.email) {
                         updateViews(watchlater[0].savedVideoID);
                         setTimeout(() => {
                           window.location.href = `/video/${watchlater[0].savedVideoID}`;
@@ -217,7 +214,7 @@ function WatchLater() {
                 <div className="last-like-section">
                   <p className="like-head">Watch later</p>
                   <div className="last-like2">
-                    <p className="like-username">{name}</p>
+                    <p className="like-username">{user?.name}</p>
                     <p className="like-total-videos">
                       {watchlater.length} videos
                     </p>
@@ -226,7 +223,7 @@ function WatchLater() {
                 <div
                   className="playvideo-btn"
                   onClick={() => {
-                    if (token) {
+                    if (user?.email) {
                       updateViews(watchlater[0].savedVideoID);
                       setTimeout(() => {
                         window.location.href = `/video/${watchlater[0].savedVideoID}`;
@@ -332,7 +329,7 @@ function WatchLater() {
                         <div
                           className="liked-videos-all-data"
                           onClick={() => {
-                            if (token) {
+                            if (user?.email) {
                               updateViews(element.savedVideoID);
                               setTimeout(() => {
                                 window.location.href = `/video/${element.savedVideoID}`;
@@ -415,7 +412,7 @@ function WatchLater() {
                     <div
                       className="firstvideo-thumbnail"
                       onClick={() => {
-                        if (token) {
+                        if (user?.email) {
                           updateViews(watchlater[0].savedVideoID);
                           setTimeout(() => {
                             window.location.href = `/video/${watchlater[0].savedVideoID}`;
@@ -468,7 +465,7 @@ function WatchLater() {
                   <div className="last-like-section2">
                     <p className="like-head">Watch later</p>
                     <div className="last-like2">
-                      <p className="like-username">{name}</p>
+                      <p className="like-username">{user?.name}</p>
                       <p className="like-total-videos">
                         {watchlater.length} videos
                       </p>
@@ -478,7 +475,7 @@ function WatchLater() {
                 <div
                   className="playvideo-btn"
                   onClick={() => {
-                    if (token) {
+                    if (user?.email) {
                       updateViews(watchlater[0].savedVideoID);
                       setTimeout(() => {
                         window.location.href = `/video/${watchlater[0].savedVideoID}`;
@@ -584,7 +581,7 @@ function WatchLater() {
                         <div
                           className="liked-videos-all-data2"
                           onClick={() => {
-                            if (token) {
+                            if (user?.email) {
                               updateViews(element.savedVideoID);
                               setTimeout(() => {
                                 window.location.href = `/video/${element.savedVideoID}`;

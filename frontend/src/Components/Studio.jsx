@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import Navbar2 from "./Navbar2";
 import LeftPanel2 from "./LeftPanel2";
-import jwtDecode from "jwt-decode";
 import avatar from "../img/avatar.png";
 import "../Css/studio.css";
 import { storage } from "../Firebase";
@@ -23,6 +22,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ClearRoundedIcon from "@mui/icons-material/ClearRounded";
 import { LiaUploadSolid } from "react-icons/lia";
+import { useSelector } from "react-redux";
 
 //SOCIALS
 
@@ -33,7 +33,7 @@ import LanguageIcon from "@mui/icons-material/Language";
 
 function Studio() {
   const backendURL = "https://youtube-clone-mern-backend.vercel.app"
-  const [email, setEmail] = useState("");
+  // const backendURL = "http://localhost:3000";
   const [isChannel, setisChannel] = useState();
   const [selectedImage, setSelectedImage] = useState(null);
   const [selectedThumbnail, setSelectedThumbnail] = useState(null);
@@ -68,7 +68,8 @@ function Studio() {
     const Dark = localStorage.getItem("Dark");
     return Dark ? JSON.parse(Dark) : true;
   });
-
+  const User = useSelector((state) => state.user.user);
+  const { user } = User;
   //TOAST FUNCTIONS
 
   const CancelNotify = () =>
@@ -122,11 +123,6 @@ function Studio() {
   //USE EFFECTS
 
   useEffect(() => {
-    const token = localStorage.getItem("userToken");
-    setEmail(jwtDecode(token).email);
-  }, []);
-
-  useEffect(() => {
     if (theme === false && window.location.href.includes("/studio")) {
       document.body.style.backgroundColor = "#F9F9F9";
     } else if (theme === true && window.location.href.includes("/studio")) {
@@ -137,9 +133,9 @@ function Studio() {
   useEffect(() => {
     const getVideos = async () => {
       try {
-        if (email !== undefined) {
+        if (user?.email) {
           const response = await fetch(
-            `${backendURL}/getuservideos/${email}`
+            `${backendURL}/getuservideos/${user?.email}`
           );
           const data = await response.json();
           setMyVideos(data);
@@ -149,8 +145,8 @@ function Studio() {
       }
     };
 
-    getVideos()
-  }, [email]);
+    return () => getVideos();
+  }, [user?.email]);
 
   useEffect(() => {
     const handleClick = () => {
@@ -226,18 +222,20 @@ function Studio() {
   useEffect(() => {
     const ChannelAvailable = async () => {
       try {
-        const response = await fetch(
-          `${backendURL}/getchannel/${email}`
-        );
-        const { channel } = await response.json();
-        setisChannel(channel);
+        if (user?.email) {
+          const response = await fetch(
+            `${backendURL}/getchannel/${user?.email}`
+          );
+          const { hasChannel } = await response.json();
+          setisChannel(hasChannel);
+        }
       } catch (error) {
         // console.log(error.message);
       }
     };
 
-    ChannelAvailable()
-  }, [email]);
+    ChannelAvailable();
+  }, [user?.email]);
 
   //IMAGE UPLOAD
 
@@ -422,12 +420,13 @@ function Studio() {
         twitterlink,
         websitelink,
         currentDate,
-        email,
+        email: user?.email,
       };
 
       // Proceed with saving the channel data
-      const response = await fetch("https://youtube-clone-mern-backend.vercel.app/savechannel", {
+      const response = await fetch(`${backendURL}/savechannel`, {
         method: "POST",
+        credentials: "include",
         body: JSON.stringify(data),
         headers: {
           "Content-Type": "application/json",
@@ -557,14 +556,15 @@ function Studio() {
           tags: videoTags,
           videoLink: VideoURL,
           thumbnailLink: thumbnailURL,
-          email: email,
+          email: user?.email,
           video_duration: duration,
           publishDate: currentDate,
           Visibility: visibility,
         };
         // Send the POST request
-        const response = await fetch("https://youtube-clone-mern-backend.vercel.app/publish", {
+        const response = await fetch(`${backendURL}/publish`, {
           method: "POST",
+          credentials: "include",
           body: JSON.stringify(data),
           headers: {
             "Content-Type": "application/json",
@@ -621,15 +621,20 @@ function Studio() {
         </div>
         <div
           style={isChannel === true ? { display: "flex" } : { display: "none" }}
-          className={
-            theme ? "create-btn-short" : "create-btn-short light-mode"
-          }
+          className={theme ? "create-btn-short" : "create-btn-short light-mode"}
           onClick={() => setIsClicked(true)}
         >
-          <LiaUploadSolid fontSize="22px" color={theme ? "#b1b1b1" : "#606060"} />
+          <LiaUploadSolid
+            fontSize="22px"
+            color={theme ? "#b1b1b1" : "#606060"}
+          />
         </div>
         <div
-          className={theme ? "create-channel" : "create-channel light-mode text-light-mode"}
+          className={
+            theme
+              ? "create-channel"
+              : "create-channel light-mode text-light-mode"
+          }
           style={
             isChannel === false ? { display: "flex" } : { display: "none" }
           }
@@ -643,14 +648,20 @@ function Studio() {
             }}
           />
           <p className="channel-head">Create Your Channel</p>
-          <p className={theme ? "channel-slogan" : "channel-slogan text-light-mode2"}>
+          <p
+            className={
+              theme ? "channel-slogan" : "channel-slogan text-light-mode2"
+            }
+          >
             Share Your Story: Inspire and Connect with a YouTube Channel!
           </p>
           <form onSubmit={saveChannelData} className="channel-deatils">
             <div className="profile-pic-section">
               <img src={previewImage} alt="" className="selected-pic" />
               <div className="upload-btn-wrapper">
-                <button className={theme ? "btn" : "btn text-dark-mode"}>SELECT</button>
+                <button className={theme ? "btn" : "btn text-dark-mode"}>
+                  SELECT
+                </button>
                 <input
                   type="file"
                   name="myfile"
@@ -661,7 +672,11 @@ function Studio() {
             </div>
             <div className="channel-name">
               <input
-                className={theme ? "channelName" : "channelName light-mode text-light-mode new-light-border"}
+                className={
+                  theme
+                    ? "channelName"
+                    : "channelName light-mode text-light-mode new-light-border"
+                }
                 type="text"
                 name="channelname"
                 placeholder="Channel Name"
@@ -670,14 +685,17 @@ function Studio() {
                 required
               />
               <textarea
-                className={theme ? "channelAbout" : "channelAbout light-mode text-light-mode new-light-border"}
+                className={
+                  theme
+                    ? "channelAbout"
+                    : "channelAbout light-mode text-light-mode new-light-border"
+                }
                 type="text"
                 name="channelAbout"
                 placeholder="About channel"
                 onChange={handleChannelabout}
                 style={{ width: "93%", resize: "vertical" }}
                 required
-
               />
               <Tooltip
                 TransitionComponent={Zoom}
@@ -685,7 +703,11 @@ function Studio() {
                 placement="top"
               >
                 <div
-                  className={theme ? "add-links" : "add-links light-mode new-light-border"}
+                  className={
+                    theme
+                      ? "add-links"
+                      : "add-links light-mode new-light-border"
+                  }
                   onClick={() => {
                     if (linksClicked === false) {
                       setLinksClicked(true);
@@ -694,11 +716,18 @@ function Studio() {
                     }
                   }}
                 >
-                  <LinkIcon fontSize="medium" style={{ color: theme ? "white" : "black" }} />
+                  <LinkIcon
+                    fontSize="medium"
+                    style={{ color: theme ? "white" : "black" }}
+                  />
                 </div>
               </Tooltip>
               <div
-                className={theme ? "social-icons-links" : "social-icons-links add-social-light"}
+                className={
+                  theme
+                    ? "social-icons-links"
+                    : "social-icons-links add-social-light"
+                }
                 style={
                   linksClicked === true
                     ? { display: "block" }
@@ -708,7 +737,10 @@ function Studio() {
                 <FacebookIcon
                   fontSize="large"
                   className={theme ? "social_links" : "social_links-light"}
-                  style={{ color: theme ? "white" : "#606060", marginRight: "15px" }}
+                  style={{
+                    color: theme ? "white" : "#606060",
+                    marginRight: "15px",
+                  }}
                   onClick={() => {
                     if (iconClicked !== "Facebook") {
                       setIconClicked("Facebook");
@@ -720,7 +752,10 @@ function Studio() {
                 <InstagramIcon
                   fontSize="large"
                   className={theme ? "social_links" : "social_links-light"}
-                  style={{ color: theme ? "white" : "#606060", marginRight: "15px" }}
+                  style={{
+                    color: theme ? "white" : "#606060",
+                    marginRight: "15px",
+                  }}
                   onClick={() => {
                     if (iconClicked !== "Instagram") {
                       setIconClicked("Instagram");
@@ -732,7 +767,10 @@ function Studio() {
                 <TwitterIcon
                   fontSize="large"
                   className={theme ? "social_links" : "social_links-light"}
-                  style={{ color: theme ? "white" : "#606060", marginRight: "15px" }}
+                  style={{
+                    color: theme ? "white" : "#606060",
+                    marginRight: "15px",
+                  }}
                   onClick={() => {
                     if (iconClicked !== "Twitter") {
                       setIconClicked("Twitter");
@@ -773,12 +811,20 @@ function Studio() {
                   <FacebookIcon
                     fontSize="large"
                     style={{ color: theme ? "white" : "#606060" }}
-                    className={theme ? "fb-input-icon" : "fb-input-icon social-lightt new-light-border"}
+                    className={
+                      theme
+                        ? "fb-input-icon"
+                        : "fb-input-icon social-lightt new-light-border"
+                    }
                   />
                   <input
                     type="text"
                     name="fb-link"
-                    className={theme ? "fb-input" : "fb-input light-mode text-light-mode new-light-border"}
+                    className={
+                      theme
+                        ? "fb-input"
+                        : "fb-input light-mode text-light-mode new-light-border"
+                    }
                     onChange={handleFacebookLink}
                   />
                 </div>
@@ -793,12 +839,20 @@ function Studio() {
                   <InstagramIcon
                     fontSize="large"
                     style={{ color: theme ? "white" : "#606060" }}
-                    className={theme ? "insta-input-icon" : "insta-input-icon social-lightt new-light-border"}
+                    className={
+                      theme
+                        ? "insta-input-icon"
+                        : "insta-input-icon social-lightt new-light-border"
+                    }
                   />
                   <input
                     type="text"
                     name="insta-link"
-                    className={theme ? "insta-input" : "insta-input light-mode text-light-mode new-light-border"}
+                    className={
+                      theme
+                        ? "insta-input"
+                        : "insta-input light-mode text-light-mode new-light-border"
+                    }
                     onChange={handleInstagramLink}
                   />
                 </div>
@@ -813,12 +867,20 @@ function Studio() {
                   <TwitterIcon
                     fontSize="large"
                     style={{ color: theme ? "white" : "#606060" }}
-                    className={theme ? "twitter-input-icon" : "twitter-input-icon social-lightt new-light-border"}
+                    className={
+                      theme
+                        ? "twitter-input-icon"
+                        : "twitter-input-icon social-lightt new-light-border"
+                    }
                   />
                   <input
                     type="text"
                     name="twitter-link"
-                    className={theme ? "twitter-input" : "twitter-input light-mode text-light-mode new-light-border"}
+                    className={
+                      theme
+                        ? "twitter-input"
+                        : "twitter-input light-mode text-light-mode new-light-border"
+                    }
                     onChange={handleTwitterLink}
                   />
                 </div>
@@ -833,12 +895,20 @@ function Studio() {
                   <LanguageIcon
                     fontSize="large"
                     style={{ color: theme ? "white" : "#606060" }}
-                    className={theme ? "website-input-icon" : "website-input-icon social-lightt new-light-border"}
+                    className={
+                      theme
+                        ? "website-input-icon"
+                        : "website-input-icon social-lightt new-light-border"
+                    }
                   />
                   <input
                     type="text"
                     name="website-link"
-                    className={theme ? "website-input" : "website-input light-mode text-light-mode new-light-border"}
+                    className={
+                      theme
+                        ? "website-input"
+                        : "website-input light-mode text-light-mode new-light-border"
+                    }
                     onChange={handleWebsiteLink}
                   />
                 </div>
@@ -846,7 +916,11 @@ function Studio() {
             </div>
             {isLoading === false ? (
               <button
-                className={isLoading ? `save-data-disable ${theme ? "" : "text-dark-mode"}` : `save-data ${theme ? "" : "text-dark-mode"}`}
+                className={
+                  isLoading
+                    ? `save-data-disable ${theme ? "" : "text-dark-mode"}`
+                    : `save-data ${theme ? "" : "text-dark-mode"}`
+                }
                 type="submit"
                 style={
                   linksClicked === true
@@ -1063,7 +1137,9 @@ function Studio() {
                       : { display: "block" }
                   }
                 >
-                  <p className={theme ? "" : "text-light-mode"}>Uploading video...</p>
+                  <p className={theme ? "" : "text-light-mode"}>
+                    Uploading video...
+                  </p>
                 </div>
                 {Progress === 100 && VideoURL !== "" ? (
                   <iframe
@@ -1193,11 +1269,11 @@ function Studio() {
                   style={
                     Progress === 100
                       ? {
-                        display: "block",
-                        color: "#3ea6ff",
-                        marginRight: "6px",
-                        animation: "none",
-                      }
+                          display: "block",
+                          color: "#3ea6ff",
+                          marginRight: "6px",
+                          animation: "none",
+                        }
                       : { display: "none" }
                   }
                 />
@@ -1207,11 +1283,11 @@ function Studio() {
                   style={
                     Progress >= 60
                       ? {
-                        display: "block",
-                        color: "#3ea6ff",
-                        marginLeft: "6px",
-                        animation: "none",
-                      }
+                          display: "block",
+                          color: "#3ea6ff",
+                          marginLeft: "6px",
+                          animation: "none",
+                        }
                       : { display: "none" }
                   }
                 />
@@ -1250,8 +1326,9 @@ function Studio() {
                 <button
                   className={
                     loading || Progress !== 100
-                      ? `save-video-data-disable ${theme ? "" : "text-dark-mode"
-                      }`
+                      ? `save-video-data-disable ${
+                          theme ? "" : "text-dark-mode"
+                        }`
                       : `save-video-data ${theme ? "" : "text-dark-mode"}`
                   }
                   onClick={PublishData}

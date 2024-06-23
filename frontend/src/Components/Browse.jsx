@@ -8,9 +8,11 @@ import "react-loading-skeleton/dist/skeleton.css";
 import LeftPanel from "./LeftPanel";
 import Navbar from "./Navbar";
 import "../Css/theme.css";
+import { useSelector } from "react-redux";
 
 function Browse() {
   const backendURL = "https://youtube-clone-mern-backend.vercel.app"
+  // const backendURL = "http://localhost:3000";
   const [thumbnails, setThumbnails] = useState([]);
   const [Titles, setTitles] = useState();
   const [uploader, setUploader] = useState();
@@ -33,7 +35,7 @@ function Browse() {
     return Dark ? JSON.parse(Dark) : true;
   });
 
-  const token = localStorage.getItem("userToken");
+  const user = useSelector((state) => state.user.user);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -92,9 +94,7 @@ function Browse() {
   useEffect(() => {
     const getVideos = async () => {
       try {
-        const response = await fetch(
-          "https://youtube-clone-mern-backend.vercel.app/getvideos"
-        );
+        const response = await fetch(`${backendURL}/getvideos`);
         const {
           thumbnailURLs,
           titles,
@@ -159,15 +159,12 @@ function Browse() {
 
   const updateViews = async (id) => {
     try {
-      const response = await fetch(
-        `${backendURL}/updateview/${id}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`${backendURL}/updateview/${id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       await response.json();
     } catch (error) {
       // console.log(error.message);
@@ -344,7 +341,7 @@ function Browse() {
                           : { display: "none" }
                       }
                       onClick={() => {
-                        if (token) {
+                        if (user?.success) {
                           updateViews(VideoID[index]);
                           setTimeout(() => {
                             window.location.href = `/video/${VideoID[index]}`;
@@ -506,7 +503,7 @@ function Browse() {
                           : { display: "none" }
                       }
                       onClick={() => {
-                        if (token) {
+                        if (user?.success) {
                           updateViews(element._id);
                           setTimeout(() => {
                             window.location.href = `/video/${element._id}`;

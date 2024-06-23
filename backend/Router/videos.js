@@ -4,7 +4,11 @@ const express = require("express");
 const userData = require("../Models/user");
 const videodata = require("../Models/videos");
 const TrendingData = require("../Models/trending");
+const cookieParser = require("cookie-parser");
+const { verifyRefreshToken, generateAccessToken } = require("../lib/tokens");
 const Videos = express.Router();
+
+Videos.use(cookieParser());
 
 Videos.post("/publish", async (req, res) => {
   try {
@@ -19,6 +23,26 @@ Videos.post("/publish", async (req, res) => {
       publishDate,
       Visibility,
     } = req.body;
+
+    const refreshToken = req.cookies?.refreshToken;
+    const accessToken = req.cookies?.accessToken;
+    if (!refreshToken) {
+      return res.status(401).json({
+        message: "Unauthorized access, please login again",
+      });
+    }
+    if (!accessToken) {
+      //Refresh the access token
+      const userID = verifyRefreshToken(refreshToken);
+      const userData = { id: userID };
+      const accessToken = generateAccessToken(userData);
+      res.cookie("accessToken", accessToken, {
+        httpOnly: false,
+        sameSite: "None",
+        secure: true,
+        maxAge: 24 * 60 * 60 * 1000,
+      });
+    }
 
     const user = await userData.findOne({ email });
     let videos = await videodata.findOne({ email });
@@ -235,6 +259,26 @@ Videos.post("/watchlater/:id/:email/:email2", async (req, res) => {
   try {
     const { id, email, email2 } = req.params;
 
+    const refreshToken = req.cookies?.refreshToken;
+    const accessToken = req.cookies?.accessToken;
+    if (!refreshToken) {
+      return res.status(401).json({
+        message: "Unauthorized access, please login again",
+      });
+    }
+    if (!accessToken) {
+      //Refresh the access token
+      const userID = verifyRefreshToken(refreshToken);
+      const userData = { id: userID };
+      const accessToken = generateAccessToken(userData);
+      res.cookie("accessToken", accessToken, {
+        httpOnly: false,
+        sameSite: "None",
+        secure: true,
+        maxAge: 24 * 60 * 60 * 1000,
+      });
+    }
+
     const video = await videodata.findOne({ "VideoData._id": id });
     const user = await userData.findOne({ email });
 
@@ -260,29 +304,34 @@ Videos.post("/watchlater/:id/:email/:email2", async (req, res) => {
       (savedVideo) => savedVideo.savedVideoID === WatchLater._id.toString()
     );
 
-    if (!existingSavedVideo) {
-      user.watchLater.push({
-        email: email2,
-        videoURL: WatchLater.videoURL,
-        thumbnailURL: WatchLater.thumbnailURL,
-        uploader: WatchLater.uploader,
-        ChannelProfile: WatchLater.ChannelProfile,
-        Title: WatchLater.Title,
-        videoLength: WatchLater.videoLength,
-        views: WatchLater.views,
-        uploaded_date: WatchLater.uploaded_date,
-        savedVideoID: WatchLater._id,
-        videoprivacy: WatchLater.visibility
-      });
-      res.json("Saved");
-    } else {
+    if (existingSavedVideo) {
       user.watchLater = user.watchLater.filter(
         (savedVideo) => savedVideo.savedVideoID !== WatchLater._id.toString()
       );
+
+      await user.save();
+      await video.save();
+
+      return res.json("Removed");
     }
+
+    user.watchLater.push({
+      email: email2,
+      videoURL: WatchLater.videoURL,
+      thumbnailURL: WatchLater.thumbnailURL,
+      uploader: WatchLater.uploader,
+      ChannelProfile: WatchLater.ChannelProfile,
+      Title: WatchLater.Title,
+      videoLength: WatchLater.videoLength,
+      views: WatchLater.views,
+      uploaded_date: WatchLater.uploaded_date,
+      savedVideoID: WatchLater._id,
+      videoprivacy: WatchLater.visibility,
+    });
 
     await user.save();
     await video.save();
+    res.json("Saved");
   } catch (error) {
     res.json(error.message);
   }
@@ -491,8 +540,28 @@ Videos.post("/addplaylist/:email", async (req, res) => {
       video_uploader,
       video_date,
       video_views,
-      videoprivacy
+      videoprivacy,
     } = req.body;
+
+    const refreshToken = req.cookies?.refreshToken;
+    const accessToken = req.cookies?.accessToken;
+    if (!refreshToken) {
+      return res.status(401).json({
+        message: "Unauthorized access, please login again",
+      });
+    }
+    if (!accessToken) {
+      //Refresh the access token
+      const userID = verifyRefreshToken(refreshToken);
+      const userData = { id: userID };
+      const accessToken = generateAccessToken(userData);
+      res.cookie("accessToken", accessToken, {
+        httpOnly: false,
+        sameSite: "None",
+        secure: true,
+        maxAge: 24 * 60 * 60 * 1000,
+      });
+    }
 
     const user = await userData.findOne({ email });
     if (!user) {
@@ -516,12 +585,12 @@ Videos.post("/addplaylist/:email", async (req, res) => {
           video_uploader,
           video_date,
           video_views,
-          videoprivacy
+          videoprivacy,
         },
       ],
     });
 
-    user.save();
+    await user.save();
 
     res.json(myPlaylists);
   } catch (error) {
@@ -562,8 +631,28 @@ Videos.post("/addvideotoplaylist/:email", async (req, res) => {
       video_uploader,
       video_date,
       video_views,
-      videoprivacy
+      videoprivacy,
     } = req.body;
+
+    const refreshToken = req.cookies?.refreshToken;
+    const accessToken = req.cookies?.accessToken;
+    if (!refreshToken) {
+      return res.status(401).json({
+        message: "Unauthorized access, please login again",
+      });
+    }
+    if (!accessToken) {
+      //Refresh the access token
+      const userID = verifyRefreshToken(refreshToken);
+      const userData = { id: userID };
+      const accessToken = generateAccessToken(userData);
+      res.cookie("accessToken", accessToken, {
+        httpOnly: false,
+        sameSite: "None",
+        secure: true,
+        maxAge: 24 * 60 * 60 * 1000,
+      });
+    }
 
     const user = await userData.findOne({ email });
     if (!user) {
@@ -596,13 +685,13 @@ Videos.post("/addvideotoplaylist/:email", async (req, res) => {
       video_uploader,
       video_date,
       video_views,
-      videoprivacy
+      videoprivacy,
     };
 
     playlistToUpdate.playlist_videos.push(newVideo);
     await user.save();
 
-    res.json(playlistToUpdate);
+    res.status(200).json({ message: "Video added to the playlist" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -638,6 +727,27 @@ Videos.get("/getvideodataplaylist/:email/:videoId", async (req, res) => {
 Videos.post("/removevideo/:email/:videoID/:playlistID", async (req, res) => {
   try {
     const { email, videoID, playlistID } = req.params;
+
+    const refreshToken = req.cookies?.refreshToken;
+    const accessToken = req.cookies?.accessToken;
+    if (!refreshToken) {
+      return res.status(401).json({
+        message: "Unauthorized access, please login again",
+      });
+    }
+    if (!accessToken) {
+      //Refresh the access token
+      const userID = verifyRefreshToken(refreshToken);
+      const userData = { id: userID };
+      const accessToken = generateAccessToken(userData);
+      res.cookie("accessToken", accessToken, {
+        httpOnly: false,
+        sameSite: "None",
+        secure: true,
+        maxAge: 24 * 60 * 60 * 1000,
+      });
+    }
+
     const user = await userData.findOne({ email });
 
     if (!user) {
@@ -693,26 +803,30 @@ Videos.get("/getplaylists/:playlistID", async (req, res) => {
   }
 });
 
-Videos.get("/getplaylistdata/:email", async (req, res) => {
-  try {
-    const email = req.params.email;
-    const user = await userData.findOne({ email });
-
-    if (!user) {
-      return res.status(404).json({ error: "User doesn't exist" });
-    }
-
-    const playlistData = user.Playlists;
-    res.json(playlistData);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
 Videos.post("/saveplaylist/:playlistID", async (req, res) => {
   try {
     const { playlistID } = req.params;
     const { playlist_name } = req.body;
+
+    const refreshToken = req.cookies?.refreshToken;
+    const accessToken = req.cookies?.accessToken;
+    if (!refreshToken) {
+      return res.status(401).json({
+        message: "Unauthorized access, please login again",
+      });
+    }
+    if (!accessToken) {
+      //Refresh the access token
+      const userID = verifyRefreshToken(refreshToken);
+      const userData = { id: userID };
+      const accessToken = generateAccessToken(userData);
+      res.cookie("accessToken", accessToken, {
+        httpOnly: false,
+        sameSite: "None",
+        secure: true,
+        maxAge: 24 * 60 * 60 * 1000,
+      });
+    }
 
     const user = await userData.findOne({ "Playlists._id": playlistID });
 
@@ -741,6 +855,27 @@ Videos.post("/saveplaylist/:playlistID", async (req, res) => {
 Videos.post("/deleteplaylist/:playlistID", async (req, res) => {
   try {
     const { playlistID } = req.params;
+
+    const refreshToken = req.cookies?.refreshToken;
+    const accessToken = req.cookies?.accessToken;
+    if (!refreshToken) {
+      return res.status(401).json({
+        message: "Unauthorized access, please login again",
+      });
+    }
+    if (!accessToken) {
+      //Refresh the access token
+      const userID = verifyRefreshToken(refreshToken);
+      const userData = { id: userID };
+      const accessToken = generateAccessToken(userData);
+      res.cookie("accessToken", accessToken, {
+        httpOnly: false,
+        sameSite: "None",
+        secure: true,
+        maxAge: 24 * 60 * 60 * 1000,
+      });
+    }
+
     const user = await userData.findOne({ "Playlists._id": playlistID });
 
     if (!user) {
@@ -759,6 +894,27 @@ Videos.post("/saveplaylistprivacy/:playlistID", async (req, res) => {
   try {
     const { playlistID } = req.params;
     const { privacy } = req.body;
+
+    const refreshToken = req.cookies?.refreshToken;
+    const accessToken = req.cookies?.accessToken;
+    if (!refreshToken) {
+      return res.status(401).json({
+        message: "Unauthorized access, please login again",
+      });
+    }
+    if (!accessToken) {
+      //Refresh the access token
+      const userID = verifyRefreshToken(refreshToken);
+      const userData = { id: userID };
+      const accessToken = generateAccessToken(userData);
+      res.cookie("accessToken", accessToken, {
+        httpOnly: false,
+        sameSite: "None",
+        secure: true,
+        maxAge: 24 * 60 * 60 * 1000,
+      });
+    }
+
     const user = await userData.findOne({ "Playlists._id": playlistID });
 
     if (!user) {
@@ -784,6 +940,27 @@ Videos.post("/saveplaylistprivacy/:playlistID", async (req, res) => {
 Videos.post("/addotherplaylist/:playlistID/:email", async (req, res) => {
   try {
     const { playlistID, email } = req.params;
+
+    const refreshToken = req.cookies?.refreshToken;
+    const accessToken = req.cookies?.accessToken;
+    if (!refreshToken) {
+      return res.status(401).json({
+        message: "Unauthorized access, please login again",
+      });
+    }
+    if (!accessToken) {
+      //Refresh the access token
+      const userID = verifyRefreshToken(refreshToken);
+      const userData = { id: userID };
+      const accessToken = generateAccessToken(userData);
+      res.cookie("accessToken", accessToken, {
+        httpOnly: false,
+        sameSite: "None",
+        secure: true,
+        maxAge: 24 * 60 * 60 * 1000,
+      });
+    }
+
     const user = await userData.findOne({ email });
 
     if (!user) {

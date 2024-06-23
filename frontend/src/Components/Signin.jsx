@@ -6,6 +6,7 @@ import Reset from "./Reset";
 
 function Signin(prop) {
   const backendURL = "https://youtube-clone-mern-backend.vercel.app"
+  // const backendURL = "http://localhost:3000"
   const [data, setData] = useState({});
   const [showReset, setShowReset] = useState(false);
   const [theme, setTheme] = useState(() => {
@@ -92,14 +93,14 @@ function Signin(prop) {
       const response = await fetch(`${backendURL}/login`, {
         method: "POST",
         body: JSON.stringify(data),
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
       });
-      const { message, token } = await response.json();
+      const { message } = await response.json();
       if (message === "LOGIN SUCCESSFUL") {
         LoginNotify();
-        localStorage.setItem("userToken", token);
         setTimeout(() => {
           window.location.reload();
           document.body.classList.remove("bg-class");

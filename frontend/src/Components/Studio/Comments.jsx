@@ -3,7 +3,6 @@ import Navbar2 from "../Navbar2";
 import "../../Css/Studio/comments.css";
 import FilterListOutlinedIcon from "@mui/icons-material/FilterListOutlined";
 import { useEffect, useState } from "react";
-import jwtDecode from "jwt-decode";
 import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
@@ -14,10 +13,11 @@ import Zoom from "@mui/material/Zoom";
 import noImage from "../../img/no-comment.png";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { useSelector } from "react-redux";
 
 function Comments() {
   const backendURL = "https://youtube-clone-mern-backend.vercel.app"
-  const [Email, setEmail] = useState();
+  // const backendURL = "http://localhost:3000";
   const [AllComments, setAllComments] = useState([]);
   const [Profile, setProfile] = useState();
   const [filterComment, setFilterComment] = useState("");
@@ -30,6 +30,8 @@ function Comments() {
     const Dark = localStorage.getItem("Dark");
     return Dark ? JSON.parse(Dark) : true;
   });
+  const User = useSelector((state) => state.user.user);
+  const { user } = User;
 
   document.title = "Channel comments - YouTube Studio";
 
@@ -55,14 +57,9 @@ function Comments() {
   }, [menu]);
 
   useEffect(() => {
-    const token = localStorage.getItem("userToken");
-    setEmail(jwtDecode(token).email);
-  }, []);
-
-  useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 3000);
+    }, 1000);
   }, []);
 
   useEffect(() => {
@@ -119,26 +116,26 @@ function Comments() {
   useEffect(() => {
     const getChannel = async () => {
       try {
-        if (Email !== undefined) {
+        if (user?.email) {
           const response = await fetch(
-            `${backendURL}/getchannel/${Email}`
+            `${backendURL}/getchannel/${user?.email}`
           );
-          const { profile } = await response.json();
-          setProfile(profile);
+          const { userProfile } = await response.json();
+          setProfile(userProfile);
         }
       } catch (error) {
         //console.log(error.message);
       }
     };
-    getChannel()
-  }, [Email]);
+    getChannel();
+  }, [user?.email]);
 
   useEffect(() => {
     const getComments = async () => {
       try {
-        if (Email !== undefined) {
+        if (user?.email) {
           const response = await fetch(
-            `${backendURL}/getallcomments/${Email}`
+            `${backendURL}/getallcomments/${user?.email}`
           );
           const { comments } = await response.json();
 
@@ -164,17 +161,17 @@ function Comments() {
       }
     };
 
-    const interval = setInterval(getComments, 500);
-    return () => clearInterval(interval);
-  }, [Email]);
+    getComments();
+  }, [user?.email]);
 
   const LikeComment = async (id, commentId) => {
     try {
-      if (commentId !== undefined && id !== undefined && Email !== undefined) {
+      if (commentId && id && user?.email) {
         const response = await fetch(
-          `${backendURL}/likecomment/${id}/${commentId}/${Email}`,
+          `${backendURL}/likecomment/${id}/${commentId}/${user?.email}`,
           {
             method: "POST",
+            credentials: "include",
             headers: {
               "Content-Type": "application/json",
             },
@@ -193,6 +190,7 @@ function Comments() {
         `${backendURL}/heartcomment/${id}/${commentID}`,
         {
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
@@ -207,9 +205,10 @@ function Comments() {
   const DeleteComment = async (id, commentId) => {
     try {
       const response = await fetch(
-        `${backendURL}/deletecomment/${id}/${commentId}/${Email}`,
+        `${backendURL}/deletecomment/${id}/${commentId}/${user?.email}`,
         {
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },

@@ -3,15 +3,14 @@ import LeftPanel2 from "../LeftPanel2";
 import "../../Css/Studio/customize.css";
 import Branding from "./Branding";
 import { useState, useEffect } from "react";
-import jwtDecode from "jwt-decode";
 import Basic from "./Basic";
+import { useSelector } from "react-redux";
 
 function Customization() {
   const backendURL = "https://youtube-clone-mern-backend.vercel.app"
+  // const backendURL = "http://localhost:3000";
   const [currentTab, setCurrentTab] = useState("branding");
-  const [email, setEmail] = useState();
   const [channelID, setChannelID] = useState();
-  const token = localStorage.getItem("userToken");
   const [menu, setmenu] = useState(() => {
     const menu = localStorage.getItem("studioMenuClicked");
     return menu ? JSON.parse(menu) : false;
@@ -20,7 +19,8 @@ function Customization() {
     const Dark = localStorage.getItem("Dark");
     return Dark ? JSON.parse(Dark) : true;
   });
-
+  const User = useSelector((state) => state.user.user);
+  const { user } = User;
   document.title = "Channel customization - YouTube Studio";
 
   useEffect(() => {
@@ -43,12 +43,6 @@ function Customization() {
   useEffect(() => {
     localStorage.setItem("studioMenuClicked", JSON.stringify(menu));
   }, [menu]);
-
-  useEffect(() => {
-    if (token) {
-      setEmail(jwtDecode(token).email);
-    }
-  }, [token]);
 
   useEffect(() => {
     if (theme === false && window.location.href.includes("/studio/customize")) {
@@ -102,9 +96,9 @@ function Customization() {
   useEffect(() => {
     const getChannelID = async () => {
       try {
-        if (email !== undefined) {
+        if (user?.email) {
           const response = await fetch(
-            `${backendURL}/getchannelid/${email}`
+            `${backendURL}/getchannelid/${user?.email}`
           );
           const { channelID } = await response.json();
           setChannelID(channelID);
@@ -115,7 +109,7 @@ function Customization() {
     };
 
     getChannelID()
-  }, [email]);
+  }, [user?.email]);
 
   return (
     <>

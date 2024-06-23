@@ -1,7 +1,6 @@
 import Navbar from "./Navbar";
 import LeftPanel from "./LeftPanel";
 import { useEffect, useState } from "react";
-import jwtDecode from "jwt-decode";
 import "../Css/subscriptions.css";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
@@ -9,10 +8,11 @@ import nothing from "../img/nothing.png";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { useSelector } from "react-redux";
 
 function Subscriptions() {
   const backendURL = "https://youtube-clone-mern-backend.vercel.app"
-  const [email, setEmail] = useState();
+  // const backendURL = "http://localhost:3000";
   const [subscriptions, setSubscriptions] = useState([]);
   const [subsVideos, setSubsVideos] = useState([]);
   const [menuClicked, setMenuClicked] = useState(() => {
@@ -24,18 +24,14 @@ function Subscriptions() {
     const Dark = localStorage.getItem("Dark");
     return Dark ? JSON.parse(Dark) : true;
   });
-  const token = localStorage.getItem("userToken");
   document.title = "Subscriptions - YouTube";
-
-  useEffect(() => {
-    const token = localStorage.getItem("userToken");
-    setEmail(jwtDecode(token).email);
-  }, []);
+  const User = useSelector((state) => state.user.user);
+  const { user } = User;
 
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 6200);
+    }, 1000);
   }, []);
 
   useEffect(() => {
@@ -45,17 +41,15 @@ function Subscriptions() {
   useEffect(() => {
     const getSubscriptions = async () => {
       try {
-        const response = await fetch(
-          `${backendURL}/getsubscriptions/${email}`
-        );
+        const response = await fetch(`${backendURL}/getsubscriptions/${user?.email}`);
         const result = await response.json();
         setSubscriptions(result);
       } catch (error) {
         // console.log(error.message);
       }
     };
-    getSubscriptions();
-  }, [email]);
+    return () => getSubscriptions();
+  }, [user?.email]);
 
   useEffect(() => {
     const getUserMail = async () => {
@@ -135,15 +129,12 @@ function Subscriptions() {
 
   const updateViews = async (id) => {
     try {
-      const response = await fetch(
-        `${backendURL}/updateview/${id}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`${backendURL}/updateview/${id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       await response.json();
     } catch (error) {
       // console.log(error.message);
@@ -336,7 +327,7 @@ function Subscriptions() {
                         className="subs-video-data"
                         key={index}
                         onClick={() => {
-                          if (token) {
+                          if (user?.email) {
                             updateViews(element._id);
                             setTimeout(() => {
                               window.location.href = `/video/${element._id}`;

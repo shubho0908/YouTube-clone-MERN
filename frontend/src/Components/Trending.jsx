@@ -9,21 +9,23 @@ import Zoom from "@mui/material/Zoom";
 import nothing from "../img/nothing.png";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { useSelector } from "react-redux";
 
 function Trending() {
   const backendURL = "https://youtube-clone-mern-backend.vercel.app";
+  // const backendURL = "http://localhost:3000";
   const [trendingVideos, setTrendingVideos] = useState([]);
   const [menuClicked, setMenuClicked] = useState(() => {
     const menu = localStorage.getItem("menuClicked");
     return menu ? JSON.parse(menu) : false;
   });
-  const token = localStorage.getItem("userToken");
   const [loading, setLoading] = useState(true);
   const [theme, setTheme] = useState(() => {
     const Dark = localStorage.getItem("Dark");
     return Dark ? JSON.parse(Dark) : true;
   });
-
+  const User = useSelector((state) => state.user.user);
+  const { user } = User;
   document.title = "Trending - YouTube";
 
   useEffect(() => {
@@ -213,7 +215,7 @@ function Trending() {
                       className="trending-video-data"
                       key={index}
                       onClick={() => {
-                        if (token) {
+                        if (user?.email) {
                           updateViews(element.videoid);
                           setTimeout(() => {
                             window.location.href = `/video/${element.videoid}`;

@@ -13,7 +13,6 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import PlaylistAddOutlinedIcon from "@mui/icons-material/PlaylistAddOutlined";
 import PlaylistAddCheckOutlinedIcon from "@mui/icons-material/PlaylistAddCheckOutlined";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import jwtDecode from "jwt-decode";
 import Signup from "./Signup";
 import Signin from "./Signin";
 import PublicOutlinedIcon from "@mui/icons-material/PublicOutlined";
@@ -23,9 +22,11 @@ import Zoom from "@mui/material/Zoom";
 import "../Css/likevideos.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useSelector } from "react-redux";
 
 function Playlists() {
   const backendURL = "https://youtube-clone-mern-backend.vercel.app"
+  // const backendURL = "http://localhost:3000";
   const { id } = useParams();
   const [menuClicked, setMenuClicked] = useState(() => {
     const menu = localStorage.getItem("menuClicked");
@@ -38,8 +39,6 @@ function Playlists() {
   });
   const [isbtnClicked, setisbtnClicked] = useState(false);
   const [isSwitch, setisSwitched] = useState(false);
-
-  const [Email, setEmail] = useState();
   const [playlistsVideos, setPlaylistsVideos] = useState([]);
   const [playlistDetails, setplaylistDetails] = useState();
   const [isEditmode, setIsEditmode] = useState(false);
@@ -48,10 +47,12 @@ function Playlists() {
   const [PlaylistName, setPlaylistName] = useState("");
   const [isSaved, setIsSaved] = useState(false);
   const [deleteClicked, setDeleteClicked] = useState(false);
-  const token = localStorage.getItem("userToken");
 
   const privacyRef = useRef();
   const deleteRef = useRef();
+
+  const User = useSelector((state) => state.user.user);
+  const { user } = User;
 
   //TOAST FUNCTIONS
 
@@ -94,15 +95,9 @@ function Playlists() {
   //USE EFFECTS
 
   useEffect(() => {
-    if (token) {
-      setEmail(jwtDecode(token).email);
-    }
-  }, [token]);
-
-  useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 3600);
+    }, 1000);
   }, []);
 
   useEffect(() => {
@@ -133,7 +128,7 @@ function Playlists() {
   useEffect(() => {
     const getPlaylists = async () => {
       try {
-        if (id !== undefined) {
+        if (id) {
           const response = await fetch(
             `${backendURL}/getplaylists/${id}`
           );
@@ -147,7 +142,7 @@ function Playlists() {
       }
     };
 
-    getPlaylists();
+    return () => getPlaylists();
   }, [id]);
 
   document.title =
@@ -199,15 +194,12 @@ function Playlists() {
 
   const updateViews = async (id) => {
     try {
-      const response = await fetch(
-        `${backendURL}/updateview/${id}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`${backendURL}/updateview/${id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       await response.json();
     } catch (error) {
       // console.log(error.message);
@@ -229,15 +221,15 @@ function Playlists() {
       }
     };
 
-    getChannelID();
-  });
+    return () => getChannelID();
+  }, [playlistDetails]);
 
   useEffect(() => {
     const GetSavedPlaylistData = async () => {
       try {
-        if (id !== undefined && Email !== undefined) {
+        if (id) {
           const response = await fetch(
-            `${backendURL}/getsavedplaylist/${id}/${Email}`
+            `${backendURL}/getsavedplaylist/${id}/${user?.email}`
           );
           const data = await response.json();
           if (data === "Found") {
@@ -250,25 +242,20 @@ function Playlists() {
         // console.log("Error fetching user data:", error.message);
       }
     };
-    const interval = setInterval(GetSavedPlaylistData, 250);
-
-    return () => clearInterval(interval);
-  }, [id, Email]);
+    return () => GetSavedPlaylistData();
+  }, [id, user?.email]);
 
   //POST REQUEST
 
   const saveEditData = async () => {
     try {
-      const response = await fetch(
-        `${backendURL}/saveplaylist/${id}`,
-        {
-          method: "POST",
-          body: JSON.stringify({ playlist_name: PlaylistName }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`${backendURL}/saveplaylist/${id}`, {
+        method: "POST",
+        body: JSON.stringify({ playlist_name: PlaylistName }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       await response.json();
     } catch (error) {
@@ -306,16 +293,13 @@ function Playlists() {
 
   const setPrivacy = async (privacy) => {
     try {
-      const response = await fetch(
-        `${backendURL}/saveplaylistprivacy/${id}`,
-        {
-          method: "POST",
-          body: JSON.stringify({ privacy }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`${backendURL}/saveplaylistprivacy/${id}`, {
+        method: "POST",
+        body: JSON.stringify({ privacy }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       await response.json();
     } catch (error) {
       // console.log(error.message);
@@ -325,7 +309,7 @@ function Playlists() {
   const SaveOtherPlaylist = async () => {
     try {
       const response = await fetch(
-        `${backendURL}/addotherplaylist/${id}/${Email}`,
+        `${backendURL}/addotherplaylist/${id}/${user?.email}`,
         {
           method: "POST",
           headers: {
@@ -364,7 +348,7 @@ function Playlists() {
 
   if (
     playlistDetails &&
-    playlistDetails.owner_email !== Email &&
+    playlistDetails.owner_email !== user?.email &&
     playlistsVideos !== "No Playlists Found" &&
     playlistDetails.playlist_privacy === "Private"
   ) {
@@ -416,7 +400,7 @@ function Playlists() {
                   <div
                     className="firstvideo-thumbnail"
                     onClick={() => {
-                      if (token) {
+                      if (user?.email) {
                         updateViews(playlistsVideos[0].videoID);
                         setTimeout(() => {
                           window.location.href = `/video/${playlistsVideos[0].videoID}`;
@@ -485,12 +469,12 @@ function Playlists() {
                         className="edit-name-btn"
                         fontSize="medium"
                         style={
-                          playlistDetails.owner_email === Email
+                          playlistDetails.owner_email === user?.email
                             ? { color: "white" }
                             : { display: "none" }
                         }
                         onClick={() => {
-                          if (token) {
+                          if (user?.email) {
                             setIsEditmode(true);
                           }
                         }}
@@ -554,7 +538,7 @@ function Playlists() {
                     <div
                       className="update-privacy"
                       style={
-                        playlistDetails && playlistDetails.owner_email === Email
+                        playlistDetails && playlistDetails.owner_email === user?.email
                           ? { display: "block" }
                           : { display: "none" }
                       }
@@ -573,7 +557,7 @@ function Playlists() {
                         <KeyboardArrowDownIcon
                           fontSize="medium"
                           style={
-                            playlistDetails.owner_email === Email
+                            playlistDetails.owner_email === user?.email
                               ? { color: "white" }
                               : { display: "none" }
                           }
@@ -661,12 +645,12 @@ function Playlists() {
                           className="savethis-playlist"
                           fontSize="medium"
                           style={
-                            playlistDetails.owner_email === Email
+                            playlistDetails.owner_email === user?.email
                               ? { display: "none" }
                               : { display: "block", color: "white" }
                           }
                           onClick={() => {
-                            if (token) {
+                            if (user?.email) {
                               SaveOtherPlaylist();
                             } else {
                               setisbtnClicked(true);
@@ -685,12 +669,12 @@ function Playlists() {
                           className="savethis-playlist"
                           fontSize="medium"
                           style={
-                            playlistDetails.owner_email === Email
+                            playlistDetails.owner_email === user?.email
                               ? { display: "none" }
                               : { display: "block", color: "white" }
                           }
                           onClick={() => {
-                            if (token) {
+                            if (user?.email) {
                               SaveOtherPlaylist();
                             } else {
                               setisbtnClicked(true);
@@ -721,7 +705,7 @@ function Playlists() {
                         className="delete-playlist"
                         fontSize="medium"
                         style={
-                          playlistDetails.owner_email === Email
+                          playlistDetails.owner_email === user?.email
                             ? { color: "white" }
                             : { display: "none" }
                         }
@@ -736,7 +720,7 @@ function Playlists() {
                 <div
                   className="playvideo-btn"
                   onClick={() => {
-                    if (token) {
+                    if (user?.email) {
                       updateViews(playlistsVideos[0].videoID);
                       setTimeout(() => {
                         window.location.href = `/video/${playlistsVideos[0].videoID}`;
@@ -842,7 +826,7 @@ function Playlists() {
                         <div
                           className="liked-videos-all-data playlistvideos"
                           onClick={() => {
-                            if (token) {
+                            if (user?.email) {
                               updateViews(element.videoID);
                               setTimeout(() => {
                                 window.location.href = `/video/${element.videoID}`;
@@ -927,7 +911,7 @@ function Playlists() {
                     <div
                       className="firstvideo-thumbnail"
                       onClick={() => {
-                        if (token) {
+                        if (user?.email) {
                           updateViews(playlistsVideos[0].videoID);
                           setTimeout(() => {
                             window.location.href = `/video/${playlistsVideos[0].videoID}`;
@@ -996,12 +980,12 @@ function Playlists() {
                           className="edit-name-btn"
                           fontSize="medium"
                           style={
-                            playlistDetails.owner_email === Email
+                            playlistDetails.owner_email === user?.email
                               ? { color: "white" }
                               : { display: "none" }
                           }
                           onClick={() => {
-                            if (token) {
+                            if (user?.email) {
                               setIsEditmode(true);
                             }
                           }}
@@ -1066,7 +1050,7 @@ function Playlists() {
                         className="update-privacy"
                         style={
                           playlistDetails &&
-                          playlistDetails.owner_email === Email
+                          playlistDetails.owner_email === user?.email
                             ? { display: "block" }
                             : { display: "none" }
                         }
@@ -1085,7 +1069,7 @@ function Playlists() {
                           <KeyboardArrowDownIcon
                             fontSize="medium"
                             style={
-                              playlistDetails.owner_email === Email
+                              playlistDetails.owner_email === user?.email
                                 ? { color: "white" }
                                 : { display: "none" }
                             }
@@ -1173,12 +1157,12 @@ function Playlists() {
                             className="savethis-playlist"
                             fontSize="medium"
                             style={
-                              playlistDetails.owner_email === Email
+                              playlistDetails.owner_email === user?.email
                                 ? { display: "none" }
                                 : { display: "block", color: "white" }
                             }
                             onClick={() => {
-                              if (token) {
+                              if (user?.email) {
                                 SaveOtherPlaylist();
                               } else {
                                 setisbtnClicked(true);
@@ -1197,12 +1181,12 @@ function Playlists() {
                             className="savethis-playlist"
                             fontSize="medium"
                             style={
-                              playlistDetails.owner_email === Email
+                              playlistDetails.owner_email === user?.email
                                 ? { display: "none" }
                                 : { display: "block", color: "white" }
                             }
                             onClick={() => {
-                              if (token) {
+                              if (user?.email) {
                                 SaveOtherPlaylist();
                               } else {
                                 setisbtnClicked(true);
@@ -1233,7 +1217,7 @@ function Playlists() {
                           className="delete-playlist"
                           fontSize="medium"
                           style={
-                            playlistDetails.owner_email === Email
+                            playlistDetails.owner_email === user?.email
                               ? { color: "white" }
                               : { display: "none" }
                           }
@@ -1249,7 +1233,7 @@ function Playlists() {
                 <div
                   className="playvideo-btn"
                   onClick={() => {
-                    if (token) {
+                    if (user?.email) {
                       updateViews(playlistsVideos[0].videoID);
                       setTimeout(() => {
                         window.location.href = `/video/${playlistsVideos[0].videoID}`;
@@ -1355,7 +1339,7 @@ function Playlists() {
                         <div
                           className="liked-videos-all-data playlistvideos"
                           onClick={() => {
-                            if (token) {
+                            if (user?.email) {
                               updateViews(element.videoID);
                               setTimeout(() => {
                                 window.location.href = `/video/${element.videoID}`;

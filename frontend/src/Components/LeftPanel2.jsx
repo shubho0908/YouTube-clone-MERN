@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import "../Css/leftpanel2.css";
-import jwtDecode from "jwt-decode";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import VideoLibraryOutlinedIcon from "@mui/icons-material/VideoLibraryOutlined";
 import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
@@ -12,7 +11,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { CiShare1 } from "react-icons/ci";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
-
+import { useSelector } from "react-redux";
 // REACT ICONS
 
 import { MdDashboard } from "react-icons/md";
@@ -22,8 +21,7 @@ import { MdOutlineAutoFixHigh } from "react-icons/md";
 
 function LeftPanel2() {
   const backendURL = "https://youtube-clone-mern-backend.vercel.app"
-  const [email, setEmail] = useState("");
-  const token = localStorage.getItem("userToken");
+  // const backendURL = "http://localhost:3000";
   const [profileIMG, setProfileIMG] = useState();
   const [channel, setChannel] = useState("");
   const [channelId, setChannelId] = useState();
@@ -38,6 +36,9 @@ function LeftPanel2() {
     const Dark = localStorage.getItem("Dark");
     return Dark ? JSON.parse(Dark) : true;
   });
+
+  const User = useSelector((state) => state.user.user);
+  const { user } = User;
 
   useEffect(() => {
     const handleMenuButtonClick = () => {
@@ -92,18 +93,14 @@ function LeftPanel2() {
   }, []);
 
   useEffect(() => {
-    setEmail(jwtDecode(token).email);
-  }, [token]);
-
-  useEffect(() => {
     const getData = async () => {
       try {
-        if (email !== undefined) {
+        if (user?.email) {
           const response = await fetch(
-            `${backendURL}/getchannel/${email}`
+            `${backendURL}/getchannel/${user?.email}`
           );
-          const { profile, ChannelName } = await response.json();
-          setProfileIMG(profile);
+          const { userProfile, ChannelName } = await response.json();
+          setProfileIMG(userProfile);
           setChannel(ChannelName);
         }
       } catch (error) {
@@ -111,15 +108,15 @@ function LeftPanel2() {
       }
     };
 
-    getData()
-  }, [email]);
+    getData();
+  }, [user?.email]);
 
   useEffect(() => {
     const getChannelId = async () => {
       try {
-        if (email !== undefined) {
+        if (user?.email) {
           const response = await fetch(
-            `${backendURL}/getchannelid/${email}`
+            `${backendURL}/getchannelid/${user?.email}`
           );
           const { channelID } = await response.json();
           setChannelId(channelID);
@@ -129,8 +126,8 @@ function LeftPanel2() {
       }
     };
 
-    getChannelId()
-  }, [email]);
+    getChannelId();
+  }, [user?.email]);
 
   return (
     <>
@@ -146,8 +143,10 @@ function LeftPanel2() {
             : { display: "flex", width: "270px" }
         }
       >
-        <SkeletonTheme baseColor={theme ? "#353535" : "#aaaaaa"}
-        highlightColor={theme ? "#444" : "#b6b6b6"}>
+        <SkeletonTheme
+          baseColor={theme ? "#353535" : "#aaaaaa"}
+          highlightColor={theme ? "#444" : "#b6b6b6"}
+        >
           <div
             className="first-panel"
             style={
@@ -311,8 +310,10 @@ function LeftPanel2() {
             : { display: "flex", width: "90px" }
         }
       >
-        <SkeletonTheme baseColor={theme ? "#353535" : "#aaaaaa"}
-        highlightColor={theme ? "#444" : "#b6b6b6"}>
+        <SkeletonTheme
+          baseColor={theme ? "#353535" : "#aaaaaa"}
+          highlightColor={theme ? "#444" : "#b6b6b6"}
+        >
           <div
             className="first-panel"
             style={
@@ -494,8 +495,10 @@ function LeftPanel2() {
             : "main-section2 short-left2 light-mode text-light-mode"
         }
       >
-        <SkeletonTheme baseColor={theme ? "#353535" : "#aaaaaa"}
-        highlightColor={theme ? "#444" : "#b6b6b6"}>
+        <SkeletonTheme
+          baseColor={theme ? "#353535" : "#aaaaaa"}
+          highlightColor={theme ? "#444" : "#b6b6b6"}
+        >
           <div
             className="first-panel"
             style={

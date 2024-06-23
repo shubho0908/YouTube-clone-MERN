@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import "../../Css/Studio/dashboard.css";
-import jwtDecode from "jwt-decode";
 import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
 import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
 import ThumbUpOutlinedIcon from "@mui/icons-material/ThumbUpOutlined";
@@ -12,11 +11,12 @@ import YouTubeIcon from "@mui/icons-material/YouTube";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import noVideo from "../../img/no-video2.png";
+import { useSelector } from "react-redux";
 
 function Dashboard() {
   const backendURL = "https://youtube-clone-mern-backend.vercel.app"
+  // const backendURL = "http://localhost:3000";
   const [myVideos, setMyVideos] = useState([]);
-  const [Email, setEmail] = useState();
   const [dropDown, setDropDown] = useState(true);
   const [showSortedVideos, setShowSortedVideos] = useState(false); // State for hover effect
   const [channelSubs, setChannelSubs] = useState();
@@ -33,10 +33,8 @@ function Dashboard() {
 
   document.title = "Channel dashboard - YouTube Studio";
 
-  useEffect(() => {
-    const token = localStorage.getItem("userToken");
-    setEmail(jwtDecode(token).email);
-  }, []);
+  const User = useSelector((state) => state.user.user);
+  const { user } = User;
 
   useEffect(() => {
     const handleMenuButtonClick = () => {
@@ -62,9 +60,9 @@ function Dashboard() {
   useEffect(() => {
     const getVideos = async () => {
       try {
-        if (Email !== undefined) {
+        if (user?.email) {
           const response = await fetch(
-            `${backendURL}/getuservideos/${Email}`
+            `${backendURL}/getuservideos/${user?.email}`
           );
           const data = await response.json();
           setMyVideos(data);
@@ -74,15 +72,15 @@ function Dashboard() {
       }
     };
 
-    getVideos()
-  }, [Email]);
+    getVideos();
+  }, [user?.email]);
 
   useEffect(() => {
     const getSubscribers = async () => {
       try {
-        if (Email !== undefined) {
+        if (user?.email) {
           const response = await fetch(
-            `${backendURL}/getsubscribers/${Email}`
+            `${backendURL}/getsubscribers/${user?.email}`
           );
           const subscribers = await response.json();
 
@@ -94,15 +92,15 @@ function Dashboard() {
       }
     };
 
-    getSubscribers()
-  }, [Email]);
+    getSubscribers();
+  }, [user?.email]);
 
   useEffect(() => {
     const GetTotalViews = async () => {
       try {
-        if (Email !== undefined) {
+        if (user?.email) {
           const response = await fetch(
-            `${backendURL}/totalviews/${Email}`
+            `${backendURL}/totalviews/${user?.email}`
           );
           const totalViews = await response.json();
           setTotalViews(totalViews);
@@ -113,12 +111,12 @@ function Dashboard() {
     };
 
     GetTotalViews();
-  }, [Email]);
+  }, [user?.email]);
 
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 3000);
+    }, 1000);
   }, []);
 
   const sortedVideos =
@@ -133,8 +131,10 @@ function Dashboard() {
 
   if (loading === true) {
     return (
-      <SkeletonTheme baseColor={theme ? "#353535" : "#aaaaaa"}
-      highlightColor={theme ? "#444" : "#b6b6b6"}>
+      <SkeletonTheme
+        baseColor={theme ? "#353535" : "#aaaaaa"}
+        highlightColor={theme ? "#444" : "#b6b6b6"}
+      >
         <div
           className="dashboard-data"
           style={{ left: menu ? "125px" : "310px" }}
@@ -194,7 +194,13 @@ function Dashboard() {
             </p>
             <div className="dash-data-all">
               <div className="left-dashboard-data">
-                <div className={theme ? "uploadnew-video-dash" : "uploadnew-video-dash light-mode text-light-mode"}>
+                <div
+                  className={
+                    theme
+                      ? "uploadnew-video-dash"
+                      : "uploadnew-video-dash light-mode text-light-mode"
+                  }
+                >
                   <div className="dashed-dash">
                     <div className="dash-dataimp">
                       <img
@@ -202,9 +208,19 @@ function Dashboard() {
                         alt="upload"
                         className="noupload-img"
                       />
-                      <p className={theme ? "" : "text-light-mode2"}>Want to see metrics on your recent video?</p>
-                      <p className={theme ? "" : "text-light-mode2"}>Upload and publish a video to get started.</p>
-                      <button className={theme ? "uploadnewone-video" : "uploadnewone-video text-dark-mode"}>
+                      <p className={theme ? "" : "text-light-mode2"}>
+                        Want to see metrics on your recent video?
+                      </p>
+                      <p className={theme ? "" : "text-light-mode2"}>
+                        Upload and publish a video to get started.
+                      </p>
+                      <button
+                        className={
+                          theme
+                            ? "uploadnewone-video"
+                            : "uploadnewone-video text-dark-mode"
+                        }
+                      >
                         UPLOAD VIDEOS
                       </button>
                     </div>
@@ -261,13 +277,29 @@ function Dashboard() {
           </p>
           <div className="dash-data-all">
             <div className="left-dashboard-data">
-              <div className={theme ? "uploadnew-video-dash" : "uploadnew-video-dash light-mode text-light-mode"}>
+              <div
+                className={
+                  theme
+                    ? "uploadnew-video-dash"
+                    : "uploadnew-video-dash light-mode text-light-mode"
+                }
+              >
                 <div className="dashed-dash">
                   <div className="dash-dataimp">
                     <img src={noVideo} alt="upload" className="noupload-img" />
-                    <p className={theme ? "" : "text-light-mode2"}>Want to see metrics on your recent video?</p>
-                    <p className={theme ? "" : "text-light-mode2"}>Upload and publish a video to get started.</p>
-                    <button className={theme ? "uploadnewone-video" : "uploadnewone-video text-dark-mode"}>
+                    <p className={theme ? "" : "text-light-mode2"}>
+                      Want to see metrics on your recent video?
+                    </p>
+                    <p className={theme ? "" : "text-light-mode2"}>
+                      Upload and publish a video to get started.
+                    </p>
+                    <button
+                      className={
+                        theme
+                          ? "uploadnewone-video"
+                          : "uploadnewone-video text-dark-mode"
+                      }
+                    >
                       UPLOAD VIDEOS
                     </button>
                   </div>

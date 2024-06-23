@@ -15,7 +15,7 @@ import deleteIMG from "../img/delete.jpg";
 import "../Css/library.css";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-
+import { useSelector } from "react-redux";
 function generateRandomColors(count) {
   const transparency = 0.65; // Adjust transparency as needed (0 to 1)
   const colors = [];
@@ -32,13 +32,12 @@ function generateRandomColors(count) {
 
 function Library() {
   const backendURL = "https://youtube-clone-mern-backend.vercel.app"
+  // const backendURL = "http://localhost:3000";
   const [watchlater, setWatchLater] = useState([]);
   const [PlaylistData, setPlaylistData] = useState([]);
   const [playlistColors, setPlaylistColors] = useState([]);
   const [channelID, setChannelID] = useState();
   const [videolike, setLikedVideos] = useState([]);
-  const [email, setEmail] = useState();
-  const token = localStorage.getItem("userToken");
   const [loading, setLoading] = useState(true);
   const [LibraryLoading, setLibraryLoading] = useState(true);
   const [menuClicked, setMenuClicked] = useState(() => {
@@ -52,9 +51,8 @@ function Library() {
     return Dark ? JSON.parse(Dark) : true;
   });
 
-  useEffect(() => {
-    setEmail(jwtDecode(token).email);
-  }, [token]);
+  const User = useSelector((state) => state.user.user);
+  const { user } = User;
 
   useEffect(() => {
     localStorage.setItem("menuClicked", JSON.stringify(menuClicked));
@@ -76,15 +74,15 @@ function Library() {
   useEffect(() => {
     setTimeout(() => {
       setLibraryLoading(false);
-    }, 4200);
+    }, 2500);
   }, []);
 
   useEffect(() => {
     const getPlaylistData = async () => {
       try {
-        if (email !== undefined) {
+        if (user?.email) {
           const response = await fetch(
-            `${backendURL}/getplaylistdata/${email}`
+            `${backendURL}/getplaylistdata/${user?.email}`
           );
           const playlistData = await response.json();
           setPlaylistData(playlistData);
@@ -94,14 +92,14 @@ function Library() {
       }
     };
     getPlaylistData();
-  }, [email]);
+  }, [user?.email]);
 
   useEffect(() => {
     const getWatchLater = async () => {
       try {
-        if (email !== undefined) {
+        if (user?.email) {
           const response = await fetch(
-            `${backendURL}/getwatchlater/${email}`
+            `${backendURL}/getwatchlater/${user?.email}`
           );
           const savedData = await response.json();
           setWatchLater(savedData);
@@ -111,14 +109,14 @@ function Library() {
       }
     };
 
-    getWatchLater()
-  }, [email]);
+    getWatchLater();
+  }, [user?.email]);
 
   useEffect(() => {
     const getLikeVideos = async () => {
       try {
         const response = await fetch(
-          `${backendURL}/getlikevideos/${email}`
+          `${backendURL}/getlikevideos/${user?.email}`
         );
         const result = await response.json();
         setLikedVideos(result);
@@ -127,15 +125,15 @@ function Library() {
       }
     };
 
-    getLikeVideos()
-  }, [email]);
+    getLikeVideos();
+  }, [user?.email]);
 
   useEffect(() => {
     const getChannelID = async () => {
       try {
-        if (email !== undefined) {
+        if (user?.email) {
           const response = await fetch(
-            `${backendURL}/getchannelid/${email}`
+            `${backendURL}/getchannelid/${user?.email}`
           );
           const { channelID } = await response.json();
           setChannelID(channelID);
@@ -145,15 +143,15 @@ function Library() {
       }
     };
 
-    getChannelID()
-  }, [email]);
+    return () => getChannelID();
+  }, [user?.email]);
 
   useEffect(() => {
     const GetSavedPlaylist = async () => {
       try {
-        if (email !== undefined) {
+        if (user?.email) {
           const response = await fetch(
-            `${backendURL}/getsavedplaylist/${email}`
+            `${backendURL}/getsavedplaylist/${user?.email}`
           );
           const matchingPlaylists = await response.json();
           setSavedPlaylist(matchingPlaylists);
@@ -163,8 +161,8 @@ function Library() {
       }
     };
 
-    GetSavedPlaylist()
-  }, [email]);
+    GetSavedPlaylist();
+  }, [user?.email]);
 
   useEffect(() => {
     const handleMenuButtonClick = () => {
@@ -382,7 +380,7 @@ function Library() {
                     className="thiswatchlater-videoss"
                     key={index}
                     onClick={() => {
-                      window.location.href = (`/video/${element.savedVideoID}`);
+                      window.location.href = `/video/${element.savedVideoID}`;
                     }}
                   >
                     <img
@@ -874,7 +872,7 @@ function Library() {
             className="likedvideos-library"
             style={{
               display:
-                LibraryLoading && (videolike && videolike !== "NO DATA")
+                LibraryLoading && videolike && videolike !== "NO DATA"
                   ? "block"
                   : "none",
             }}

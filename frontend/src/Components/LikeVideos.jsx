@@ -1,17 +1,15 @@
 import Navbar from "./Navbar";
 import LeftPanel from "./LeftPanel";
 import { useEffect, useState } from "react";
-import jwtDecode from "jwt-decode";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import nothing from "../img/nothing.png";
 import "../Css/likevideos.css";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-
+import { useSelector } from "react-redux";
 function LikeVideos() {
   const backendURL = "https://youtube-clone-mern-backend.vercel.app"
-  const [email, setEmail] = useState();
-  const [name, setName] = useState();
+  // const backendURL = "http://localhost:3000";
   const [menuClicked, setMenuClicked] = useState(() => {
     const menu = localStorage.getItem("menuClicked");
     return menu ? JSON.parse(menu) : false;
@@ -22,19 +20,15 @@ function LikeVideos() {
     const Dark = localStorage.getItem("Dark");
     return Dark ? JSON.parse(Dark) : true;
   });
-  const token = localStorage.getItem("userToken");
   document.title = "Liked videos - YouTube";
 
-  useEffect(() => {
-    const token = localStorage.getItem("userToken");
-    setEmail(jwtDecode(token).email);
-    setName(jwtDecode(token).name);
-  }, []);
+  const User = useSelector((state) => state.user.user);
+  const { user } = User;
 
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 3600);
+    }, 2500);
   }, []);
 
   useEffect(() => {
@@ -45,7 +39,7 @@ function LikeVideos() {
     const getLikeVideos = async () => {
       try {
         const response = await fetch(
-          `${backendURL}/getlikevideos/${email}`
+          `${backendURL}/getlikevideos/${user?.email}`
         );
         const result = await response.json();
         setLikedVideos(result);
@@ -53,11 +47,8 @@ function LikeVideos() {
         // console.log(error.message);
       }
     };
-
-    const interval = setInterval(getLikeVideos, 100);
-
-    return () => clearInterval(interval);
-  }, [email]);
+    return () => getLikeVideos();
+  }, [user?.email]);
 
   useEffect(() => {
     const handleMenuButtonClick = () => {
@@ -103,15 +94,12 @@ function LikeVideos() {
 
   const updateViews = async (id) => {
     try {
-      const response = await fetch(
-        `${backendURL}/updateview/${id}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`${backendURL}/updateview/${id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       await response.json();
     } catch (error) {
       // console.log(error.message);
@@ -162,7 +150,7 @@ function LikeVideos() {
                   <div
                     className="firstvideo-thumbnail"
                     onClick={() => {
-                      if (token) {
+                      if (user?._id) {
                         updateViews(videolike[0].likedVideoID);
                         setTimeout(() => {
                           window.location.href = `/video/${videolike[0].likedVideoID}`;
@@ -224,7 +212,7 @@ function LikeVideos() {
                 <div
                   className="playvideo-btn"
                   onClick={() => {
-                    if (token) {
+                    if (user?._id) {
                       updateViews(videolike[0].likedVideoID);
                       setTimeout(() => {
                         window.location.href = `/video/${videolike[0].likedVideoID}`;
@@ -330,7 +318,7 @@ function LikeVideos() {
                         <div
                           className="liked-videos-all-data"
                           onClick={() => {
-                            if (token) {
+                            if (user?._id) {
                               updateViews(element.likedVideoID);
                               setTimeout(() => {
                                 window.location.href = `/video/${element.likedVideoID}`;
@@ -413,7 +401,7 @@ function LikeVideos() {
                     <div
                       className="firstvideo-thumbnail"
                       onClick={() => {
-                        if (token) {
+                        if (user?._id) {
                           updateViews(videolike[0].likedVideoID);
                           setTimeout(() => {
                             window.location.href = `/video/${videolike[0].likedVideoID}`;
@@ -476,7 +464,7 @@ function LikeVideos() {
                 <div
                   className="playvideo-btn"
                   onClick={() => {
-                    if (token) {
+                    if (user?._id) {
                       updateViews(videolike[0].likedVideoID);
                       setTimeout(() => {
                         window.location.href = `/video/${videolike[0].likedVideoID}`;
@@ -582,7 +570,7 @@ function LikeVideos() {
                         <div
                           className="liked-videos-all-data2"
                           onClick={() => {
-                            if (token) {
+                            if (user?._id) {
                               updateViews(element.likedVideoID);
                               setTimeout(() => {
                                 window.location.href = `/video/${element.likedVideoID}`;

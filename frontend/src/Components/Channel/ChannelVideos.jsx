@@ -1,34 +1,28 @@
 import { useEffect, useState } from "react";
-import jwtDecode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { useSelector } from "react-redux";
 
 function ChannelVideos(prop) {
   const backendURL = "https://youtube-clone-mern-backend.vercel.app"
+  // const backendURL = "http://localhost:3000"
   const [myVideos, setMyVideos] = useState([]);
-  const [Email, setEmail] = useState();
   const [videosort, setVideoSort] = useState();
-  const token = localStorage.getItem("userToken");
   const [loading, setLoading] = useState(true);
   const [showDiv, setShowDiv] = useState(false);
   const [theme, setTheme] = useState(() => {
     const Dark = localStorage.getItem("Dark");
     return Dark ? JSON.parse(Dark) : true;
   });
-
+  const User = useSelector((state) => state.user.user);
+  const { user } = User;
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (token) {
-      setEmail(jwtDecode(token).email);
-    }
-  }, [token]);
 
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 3500);
+    }, 1000);
   }, []);
 
   useEffect(() => {
@@ -44,15 +38,15 @@ function ChannelVideos(prop) {
   useEffect(() => {
     const getUserVideos = async () => {
       try {
-        if (Email === prop.newmail) {
+        if (user?.email === prop?.newmail) {
           const response = await fetch(
-            `${backendURL}/getuservideos/${Email}`
+            `${backendURL}/getuservideos/${user?.email}`
           );
           const myvideos = await response.json();
           setMyVideos(myvideos);
         } else {
           const response = await fetch(
-            `${backendURL}/getuservideos/${prop.newmail}`
+            `${backendURL}/getuservideos/${prop?.newmail}`
           );
           const myvideos = await response.json();
           setMyVideos(myvideos);
@@ -63,7 +57,7 @@ function ChannelVideos(prop) {
     };
 
     getUserVideos();
-  }, [Email, prop.newmail]);
+  }, [user?.email, prop?.newmail]);
 
   const updateViews = async (id) => {
     try {
@@ -284,7 +278,7 @@ function ChannelVideos(prop) {
                     display: element.visibility === "Public" ? "block" : "none",
                   }}
                   onClick={() => {
-                    if (token) {
+                    if (user?.email) {
                       updateViews(element._id);
                       setTimeout(() => {
                         navigate(`/video/${element._id}`);

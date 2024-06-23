@@ -7,7 +7,6 @@ import "../Css/navbar.css";
 import StudioLogo from "../img/studio.png";
 import StudioLogo2 from "../img/studio2.png";
 import { useEffect, useState, useRef } from "react";
-import jwtDecode from "jwt-decode";
 import AccountPop2 from "./AccountPop2";
 import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
 import YouTubeIcon from "@mui/icons-material/YouTube";
@@ -16,11 +15,11 @@ import Zoom from "@mui/material/Zoom";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { BiSearch } from "react-icons/bi";
+import { useSelector } from "react-redux";
 
 function Navbar2() {
   const backendURL = "https://youtube-clone-mern-backend.vercel.app"
-  const token = localStorage.getItem("userToken");
-  const [email, setEmail] = useState();
+  // const backendURL = "http://localhost:3000";
   const [profilePic, setProfilePic] = useState();
   const [userVideos, setUserVideos] = useState([]);
   const [showPop, setShowPop] = useState(false);
@@ -39,11 +38,8 @@ function Navbar2() {
   const searchRef = useRef();
   const accountRef = useRef();
 
-  useEffect(() => {
-    if (token) {
-      setEmail(jwtDecode(token).email);
-    }
-  }, [token]);
+  const User = useSelector((state) => state.user.user);
+  const { user } = User;
 
   useEffect(() => {
     const handler = (e) => {
@@ -88,72 +84,70 @@ function Navbar2() {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 2800);
+    }, 2500);
   }, []);
 
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await fetch(
-          `${backendURL}/getchannel/${email}`
-        );
-        const { profile } = await response.json();
-        setProfilePic(profile);
+        const response = await fetch(`${backendURL}/getchannel/${user?.email}`);
+        const { userProfile } = await response.json();
+        setProfilePic(userProfile);
       } catch (error) {
         // console.log(error.message);
       }
     };
 
-    getData()
-  }, [email]);
+    return () => getData();
+  }, [user?.email]);
 
   useEffect(() => {
     const getVideos = async () => {
       try {
-        const response = await fetch(
-          `${backendURL}/getuservideos/${email}`
-        );
-        const data = await response.json();
-        setUserVideos(data);
+        if (user?.email) {
+          const response = await fetch(
+            `${backendURL}/getuservideos/${user?.email}`
+          );
+          const data = await response.json();
+          setUserVideos(data);
+        }
       } catch (error) {
         // console.log(error.message);
       }
     };
 
-    getVideos()
-  }, [email]);
+    getVideos();
+  }, [user?.email]);
 
   const filteredVideos =
-    userVideos &&
-    userVideos.length > 0 &&
-    userVideos.filter(
+    userVideos?.length > 0 &&
+    userVideos?.filter(
       (video) =>
         video.Title.toLowerCase().includes(
           searchInput !== undefined &&
-          searchInput !== "" &&
-          searchInput.toLowerCase()
+            searchInput !== "" &&
+            searchInput.toLowerCase()
         ) ||
         video.Description.toLowerCase().includes(
           searchInput !== undefined &&
-          searchInput !== "" &&
-          searchInput.toLowerCase()
+            searchInput !== "" &&
+            searchInput.toLowerCase()
         )
     );
 
   const filteredVideos2 =
-    userVideos &&
-    userVideos.length > 0 &&
-    userVideos.filter(
+    userVideos?.length > 0 &&
+    userVideos?.filter(
       (video) =>
         video.Title.toLowerCase().includes(
           searchInput2 !== undefined &&
-          searchInput2 !== "" &&
-          searchInput2.toLowerCase()
+            searchInput2 !== "" &&
+            searchInput2.toLowerCase()
         ) ||
         video.Description.toLowerCase().includes(
           searchInput2 !== undefined &&
-          searchInput2 !== "" &&
-          searchInput2.toLowerCase()
+            searchInput2 !== "" &&
+            searchInput2.toLowerCase()
         )
     );
 
@@ -211,15 +205,15 @@ function Navbar2() {
               style={
                 showResults === true
                   ? {
-                    color: theme ? "rgb(160, 160, 160)" : "black",
-                    paddingRight: "12px",
-                    opacity: "1",
-                  }
+                      color: theme ? "rgb(160, 160, 160)" : "black",
+                      paddingRight: "12px",
+                      opacity: "1",
+                    }
                   : {
-                    opacity: "0",
-                    paddingRight: "12px",
-                    pointerEvents: "none",
-                  }
+                      opacity: "0",
+                      paddingRight: "12px",
+                      pointerEvents: "none",
+                    }
               }
             />
           </div>
@@ -232,7 +226,7 @@ function Navbar2() {
             style={{
               display:
                 (showResults === true && searchInput === "") ||
-                  (showResults === true && searchInput === undefined)
+                (showResults === true && searchInput === undefined)
                   ? "block"
                   : "none",
               height: userVideos && userVideos.length >= 4 ? "450px" : "auto",
@@ -397,8 +391,8 @@ function Navbar2() {
             style={{
               display:
                 showResults === true &&
-                  filteredVideos &&
-                  filteredVideos.length > 0
+                filteredVideos &&
+                filteredVideos.length > 0
                   ? "block"
                   : "none",
               height:
@@ -566,10 +560,10 @@ function Navbar2() {
             style={{
               display:
                 showResults === true &&
-                  searchInput !== undefined &&
-                  searchInput.length !== 0 &&
-                  filteredVideos &&
-                  filteredVideos.length === 0
+                searchInput !== undefined &&
+                searchInput.length !== 0 &&
+                filteredVideos &&
+                filteredVideos.length === 0
                   ? "block"
                   : "none",
             }}
@@ -589,8 +583,10 @@ function Navbar2() {
             <div className="my-five-videos"></div>
           </div>
         </div>
-        <SkeletonTheme baseColor={theme ? "#353535" : "#aaaaaa"}
-        highlightColor={theme ? "#444" : "#b6b6b6"}>
+        <SkeletonTheme
+          baseColor={theme ? "#353535" : "#aaaaaa"}
+          highlightColor={theme ? "#444" : "#b6b6b6"}
+        >
           <div
             className="right-bar2 sk-right-bar2"
             style={loading ? { display: "block" } : { display: "none" }}
@@ -621,7 +617,7 @@ function Navbar2() {
             src={profilePic && profilePic}
             alt=""
             className="profile-pic2"
-            style={token ? { display: "block" } : { display: "none" }}
+            style={user?.email ? { display: "block" } : { display: "none" }}
             onClick={() => setShowPop(!showPop)}
           />
         </div>
@@ -671,15 +667,15 @@ function Navbar2() {
             style={
               showResults2 === true
                 ? {
-                  color: theme ? "rgb(160, 160, 160)" : "black",
-                  paddingRight: "12px",
-                  opacity: "1",
-                }
+                    color: theme ? "rgb(160, 160, 160)" : "black",
+                    paddingRight: "12px",
+                    opacity: "1",
+                  }
                 : {
-                  opacity: "0",
-                  paddingRight: "12px",
-                  pointerEvents: "none",
-                }
+                    opacity: "0",
+                    paddingRight: "12px",
+                    pointerEvents: "none",
+                  }
             }
           />
         </div>
@@ -693,7 +689,7 @@ function Navbar2() {
             style={{
               display:
                 (showResults2 === true && searchInput2 === "") ||
-                  (showResults2 === true && searchInput2 === undefined)
+                (showResults2 === true && searchInput2 === undefined)
                   ? "block"
                   : "none",
               height: userVideos && userVideos.length >= 4 ? "400px" : "auto",
@@ -858,8 +854,8 @@ function Navbar2() {
             style={{
               display:
                 showResults2 === true &&
-                  filteredVideos2 &&
-                  filteredVideos2.length > 0
+                filteredVideos2 &&
+                filteredVideos2.length > 0
                   ? "block"
                   : "none",
               height:
@@ -1028,10 +1024,10 @@ function Navbar2() {
             }
             style={
               showResults2 === true &&
-                searchInput2 !== undefined &&
-                searchInput2.length !== 0 &&
-                filteredVideos2 &&
-                filteredVideos2.length === 0
+              searchInput2 !== undefined &&
+              searchInput2.length !== 0 &&
+              filteredVideos2 &&
+              filteredVideos2.length === 0
                 ? { display: "block" }
                 : { display: "none" }
             }

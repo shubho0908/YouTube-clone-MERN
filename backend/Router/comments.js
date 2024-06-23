@@ -3,12 +3,36 @@ require("../Database/database");
 const express = require("express");
 const userData = require("../Models/user");
 const videodata = require("../Models/videos");
+const { verifyRefreshToken, generateAccessToken } = require("../lib/tokens");
+const cookieParser = require("cookie-parser");
 const Comments = express.Router();
+
+Comments.use(cookieParser());
 
 Comments.post("/comments/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const { comment, email, channelID } = req.body;
+
+    const refreshToken = req.cookies?.refreshToken;
+    const accessToken = req.cookies?.accessToken;
+    if (!refreshToken) {
+      return res.status(401).json({
+        message: "Unauthorized access, please login again",
+      });
+    }
+    if (!accessToken) {
+      //Refresh the access token
+      const userID = verifyRefreshToken(refreshToken);
+      const userData = { id: userID };
+      const accessToken = generateAccessToken(userData);
+      res.cookie("accessToken", accessToken, {
+        httpOnly: false,
+        sameSite: "None",
+        secure: true,
+        maxAge: 24 * 60 * 60 * 1000,
+      });
+    }
 
     const video = await videodata.find({});
 
@@ -53,7 +77,7 @@ Comments.post("/comments/:id", async (req, res) => {
 
     await vid.save();
 
-    res.json("Uploaded");
+    res.status(200).json({ message: "Uploaded", commentData: newComment });
   } catch (error) {
     res.json(error.message);
   }
@@ -62,6 +86,26 @@ Comments.post("/comments/:id", async (req, res) => {
 Comments.post("/likecomment/:videoId/:commentId/:email", async (req, res) => {
   try {
     const { videoId, commentId, email } = req.params;
+
+    const refreshToken = req.cookies?.refreshToken;
+    const accessToken = req.cookies?.accessToken;
+    if (!refreshToken) {
+      return res.status(401).json({
+        message: "Unauthorized access, please login again",
+      });
+    }
+    if (!accessToken) {
+      //Refresh the access token
+      const userID = verifyRefreshToken(refreshToken);
+      const userData = { id: userID };
+      const accessToken = generateAccessToken(userData);
+      res.cookie("accessToken", accessToken, {
+        httpOnly: false,
+        sameSite: "None",
+        secure: true,
+        maxAge: 24 * 60 * 60 * 1000,
+      });
+    }
 
     const video = await videodata.findOne({ "VideoData._id": videoId });
     const user = await userData.findOne({ email });
@@ -100,15 +144,20 @@ Comments.post("/likecomment/:videoId/:commentId/:email", async (req, res) => {
     if (likedCommentIndex === -1) {
       user.likedComments.push({ comment_ID: commentId });
       comment.likes += 1;
+      await user.save();
+      await video.save();
+      return res
+        .status(200)
+        .json({ message: "Comment liked successfully", likes: comments });
     } else {
       user.likedComments.splice(likedCommentIndex, 1);
       comment.likes -= 1;
+      await user.save();
+      await video.save();
+      return res
+        .status(200)
+        .json({ message: "Comment disliked successfully", likes: comments });
     }
-
-    await user.save();
-    await video.save();
-
-    res.status(200).json({ message: "Comment liked/unliked successfully" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -117,6 +166,25 @@ Comments.post("/likecomment/:videoId/:commentId/:email", async (req, res) => {
 Comments.post("/heartcomment/:videoId/:commentID", async (req, res) => {
   try {
     const { videoId, commentID } = req.params;
+    const refreshToken = req.cookies?.refreshToken;
+    const accessToken = req.cookies?.accessToken;
+    if (!refreshToken) {
+      return res.status(401).json({
+        message: "Unauthorized access, please login again",
+      });
+    }
+    if (!accessToken) {
+      //Refresh the access token
+      const userID = verifyRefreshToken(refreshToken);
+      const userData = { id: userID };
+      const accessToken = generateAccessToken(userData);
+      res.cookie("accessToken", accessToken, {
+        httpOnly: false,
+        sameSite: "None",
+        secure: true,
+        maxAge: 24 * 60 * 60 * 1000,
+      });
+    }
 
     const video = await videodata.findOne({ "VideoData._id": videoId });
 
@@ -145,7 +213,7 @@ Comments.post("/heartcomment/:videoId/:commentID", async (req, res) => {
 
     await video.save();
 
-    res.json(findComment.heartComment);
+    res.json(findComment?.heartComment);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -172,7 +240,7 @@ Comments.get("/getheartcomment/:videoId", async (req, res) => {
     const comments = video.VideoData[videoIndex].comments;
     const heart = comments.flatMap((item) => item.heartComment);
 
-    res.json(heart);
+    res.status(200).json(heart);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -180,7 +248,7 @@ Comments.get("/getheartcomment/:videoId", async (req, res) => {
 
 Comments.get("/likecomment/:videoId", async (req, res) => {
   try {
-    const { videoId, email } = req.params;
+    const { videoId } = req.params;
     const video = await videodata.findOne({ "VideoData._id": videoId });
 
     if (!video) {
@@ -226,6 +294,25 @@ Comments.get("/getcomments/:id", async (req, res) => {
 Comments.post("/deletecomment/:videoId/:commentId/:email", async (req, res) => {
   try {
     const { videoId, commentId, email } = req.params;
+    const refreshToken = req.cookies?.refreshToken;
+    const accessToken = req.cookies?.accessToken;
+    if (!refreshToken) {
+      return res.status(401).json({
+        message: "Unauthorized access, please login again",
+      });
+    }
+    if (!accessToken) {
+      //Refresh the access token
+      const userID = verifyRefreshToken(refreshToken);
+      const userData = { id: userID };
+      const accessToken = generateAccessToken(userData);
+      res.cookie("accessToken", accessToken, {
+        httpOnly: false,
+        sameSite: "None",
+        secure: true,
+        maxAge: 24 * 60 * 60 * 1000,
+      });
+    }
 
     const video = await videodata.findOne({ "VideoData._id": videoId });
     const user = await userData.findOne({ email });
@@ -258,7 +345,9 @@ Comments.post("/deletecomment/:videoId/:commentId/:email", async (req, res) => {
       // Save the updated video document
       await video.save();
 
-      res.json("Comment Deleted");
+      res
+        .status(200)
+        .json({ message: "Comment Deleted", commentData: comments });
     } else {
       return res.status(404).json({ error: "Comment not found" });
     }

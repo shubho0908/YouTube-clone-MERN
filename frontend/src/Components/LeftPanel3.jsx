@@ -9,9 +9,10 @@ import ModeEditOutlineOutlinedIcon from "@mui/icons-material/ModeEditOutlineOutl
 import ChatOutlinedIcon from "@mui/icons-material/ChatOutlined";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-
+import { useSelector } from "react-redux";
 function LeftPanel2() {
   const backendURL = "https://youtube-clone-mern-backend.vercel.app"
+  // const backendURL = "http://localhost:3000";
   const { id } = useParams();
   const [videodata, setVideoData] = useState();
   const VideoEditSection = localStorage.getItem("Video-Edit Section");
@@ -25,6 +26,9 @@ function LeftPanel2() {
     const Dark = localStorage.getItem("Dark");
     return Dark ? JSON.parse(Dark) : true;
   });
+
+  const User = useSelector((state) => state.user.user);
+  const { user } = User;
 
   useEffect(() => {
     const handleMenuButtonClick = () => {
@@ -81,10 +85,8 @@ function LeftPanel2() {
   useEffect(() => {
     const GetVideoData = async () => {
       try {
-        if (id !== undefined) {
-          const response = await fetch(
-            `${backendURL}/getvideodata/${id}`
-          );
+        if (id) {
+          const response = await fetch(`${backendURL}/getvideodata/${id}`);
           const data = await response.json();
           setVideoData(data);
         }
@@ -194,7 +196,7 @@ function LeftPanel2() {
             <p className="ur-vid">Your video</p>
             <Tooltip
               TransitionComponent={Zoom}
-              title={videodata && videodata.Title}
+              title={videodata && videodata?.Title}
               placement="bottom"
             >
               <p
@@ -204,9 +206,9 @@ function LeftPanel2() {
                     : "current-video-title text-light-mode2"
                 }
               >
-                {videodata && videodata.Title.length <= 38
-                  ? videodata && videodata.Title
-                  : `${videodata && videodata.Title.slice(0, 38)}...`}
+                {videodata && videodata?.Title?.length <= 38
+                  ? videodata && videodata?.Title
+                  : `${videodata && videodata?.Title?.slice(0, 38)}...`}
               </p>
             </Tooltip>
           </div>

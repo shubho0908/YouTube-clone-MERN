@@ -15,6 +15,7 @@ const Studio = require("./studio");
 router.use(
   cors({
     origin: ["https://shubho-youtube-mern.netlify.app"],
+    // origin: "http://localhost:5173",
     methods: ["POST", "GET"],
     credentials: true,
   })
@@ -27,9 +28,5 @@ router.use(Videos);
 router.use(Likes);
 router.use(Comments);
 router.use(Studio);
-
-router.get("/", (req, res) => {
-  res.send("Welcome to Youtube App Backend!");
-});
 
 module.exports = router;

@@ -272,6 +272,9 @@ const UserData = new mongoose.Schema({
     },
   ],
   Playlists: [Playlists],
+  refreshToken: {
+    type: String,
+  },
 });
 
 const user = mongoose.model("userData", UserData);

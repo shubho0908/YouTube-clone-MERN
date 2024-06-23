@@ -4,24 +4,32 @@ const express = require("express");
 const userData = require("../Models/user");
 const videodata = require("../Models/videos");
 const TrendingData = require("../Models/trending");
+const cookieParser = require("cookie-parser");
+const { generateAccessToken, verifyRefreshToken } = require("../lib/tokens");
 const Channel = express.Router();
+
+Channel.use(cookieParser());
 
 Channel.get("/getchannel/:email", async (req, res) => {
   try {
     const email = req.params.email;
     const user = await userData.findOne({ email });
     if (!user) {
-      return res.json({
+      return res.status(404).json({
         message: "USER DOESN'T EXIST",
       });
     } else {
-      const channel = user.hasChannel;
-      const profile = user.profilePic;
-      const ChannelName = user.channelName;
-      res.json({ channel, profile, ChannelName });
+      const hasChannel = user?.hasChannel;
+      const userProfile = user?.profilePic;
+      const ChannelName = user?.channelName;
+      res.status(200).json({
+        hasChannel,
+        userProfile,
+        ChannelName,
+      });
     }
   } catch (error) {
-    res.json({
+    res.status(500).json({
       message: error.message,
     });
   }
@@ -31,20 +39,21 @@ Channel.get("/getcover/:email", async (req, res) => {
   try {
     const email = req.params.email;
     const user = await userData.findOne({ email });
+
     if (!user) {
-      return res.json({
+      return res.status(404).json({
         message: "USER DOESN'T EXIST",
       });
     }
 
     const coverimg = user.channelData[0].channelCoverImg;
     if (!coverimg) {
-      res.json("No data");
-    } else {
-      res.json(coverimg);
+      return res.status(200).json("No data");
     }
+
+    return res.status(200).json(coverimg);
   } catch (error) {
-    res.json({
+    return res.status(500).json({
       message: error.message,
     });
   }
@@ -55,18 +64,26 @@ Channel.get("/getchannelid/:email", async (req, res) => {
     const email = req.params.email;
     const user = await userData.findOne({ email });
     if (!user) {
-      return res.json({
+      return res.status(404).json({
         message: "USER DOESN'T EXIST",
       });
-    } else {
+    }
+
+    if (user?.hasChannel) {
       const channelID = user.channelData[0]._id;
       const channelDescription = user.channelData[0].channelDescription;
       const subscribers = user.channelData[0].subscribers;
       const links = user.channelData[0].socialLinks;
-      res.json({ channelID, subscribers, channelDescription, links });
+      res
+        .status(200)
+        .json({ channelID, subscribers, channelDescription, links });
+    } else {
+      return res.status(404).json({
+        message: "USER DOESN'T HAVE CHANNEL",
+      });
     }
   } catch (error) {
-    res.json({
+    res.status(500).json({
       message: error.message,
     });
   }
@@ -78,15 +95,15 @@ Channel.get("/getsubscribers/:email", async (req, res) => {
     const user = await userData.findOne({ email });
 
     if (!user) {
-      return res.json({
+      return res.status(404).json({
         message: "USER DOESN'T EXIST",
       });
     } else {
       const subscribers = user.channelData[0].subscribers;
-      res.json(subscribers);
+      res.status(200).json(subscribers);
     }
   } catch (error) {
-    res.json({
+    res.status(500).json({
       message: error.message,
     });
   }
@@ -105,6 +122,27 @@ Channel.post("/savechannel", async (req, res) => {
       profileURL,
       currentDate,
     } = req.body;
+
+    const refreshToken = req.cookies?.refreshToken;
+    const accessToken = req.cookies?.accessToken;
+    if (!refreshToken) {
+      return res.status(401).json({
+        message: "Unauthorized access, please login again",
+      });
+    }
+    if (!accessToken) {
+      //Refresh the access token
+      const userID = verifyRefreshToken(refreshToken);
+      const userData = { id: userID };
+      const accessToken = generateAccessToken(userData);
+      res.cookie("accessToken", accessToken, {
+        httpOnly: false,
+        sameSite: "None",
+        secure: true,
+        maxAge: 24 * 60 * 60 * 1000,
+      });
+    }
+
     const user = await userData.findOneAndUpdate(
       { email },
       {
@@ -134,12 +172,12 @@ Channel.post("/savechannel", async (req, res) => {
     );
 
     if (!user) {
-      return res.json({
+      return res.status(404).json({
         message: "USER DOESN'T EXIST",
       });
     }
 
-    return res.json({
+    return res.status(201).json({
       message: "Channel saved successfully",
     });
   } catch (error) {
@@ -154,9 +192,18 @@ Channel.get("/checkchannel/:email", async (req, res) => {
     const email = req.params.email;
     const user = await userData.findOne({ email });
     const channelname = user.channelName;
-    res.json(channelname);
+
+    if (!channelname) {
+      return res.status(404).json({
+        message: "Channel not found",
+      });
+    }
+
+    return res.status(200).json(channelname);
   } catch (error) {
-    res.json(error.message);
+    return res.status(500).json({
+      message: error.message,
+    });
   }
 });
 
@@ -167,15 +214,17 @@ Channel.get("/getuservideos/:email", async (req, res) => {
     const email = req.params.email;
     const videos = await videodata.findOne({ email });
     if (!videos) {
-      return res.json({
+      return res.status(404).json({
         message: "USER DOESN'T EXIST",
       });
     }
 
     const myvideos = videos.VideoData;
-    res.json(myvideos);
+    res.status(200).json(myvideos);
   } catch (error) {
-    res.json(error.message);
+    res.status(500).json({
+      message: error.message,
+    });
   }
 });
 
@@ -243,9 +292,9 @@ Channel.get("/subscribe/:email", async (req, res) => {
       channelid,
     };
 
-    res.json(YoutuberData);
+    return res.status(200).json(YoutuberData);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 });
 
@@ -253,6 +302,28 @@ Channel.post("/subscribe/:channelID/:email/:email2", async (req, res) => {
   try {
     const { channelID, email, email2 } = req.params;
     const { youtuberName, youtuberProfile, youtubeChannelID } = req.body;
+
+    const refreshToken = req.cookies?.refreshToken;
+    const accessToken = req.cookies?.accessToken;
+
+    if (!refreshToken) {
+      return res.status(401).json({
+        message: "Unauthorized access, please login again",
+      });
+    }
+    if (!accessToken) {
+      //Refresh the access token
+      const userID = verifyRefreshToken(refreshToken);
+      const userData = { id: userID };
+      const accessToken = generateAccessToken(userData);
+      res.cookie("accessToken", accessToken, {
+        httpOnly: false,
+        sameSite: "None",
+        secure: true,
+        maxAge: 24 * 60 * 60 * 1000,
+      });
+    }
+
     const user = await userData.findOne({ email });
     const user2 = await userData.findOne({ email: email2 });
 
@@ -280,11 +351,11 @@ Channel.post("/subscribe/:channelID/:email/:email2", async (req, res) => {
         channelID: youtubeChannelID.toString(),
       });
       user2.channelData[0].subscribers += 1;
-      res.json("Subscribed");
+      res.status(201).json("Subscribed");
     } else {
       user.subscribedChannels.splice(existingChannelIndex, 1);
       user2.channelData[0].subscribers -= 1;
-      res.json("Unsubscribed");
+      res.status(200).json("Unsubscribed");
     }
 
     await user.save();
@@ -305,12 +376,12 @@ Channel.get("/getsubscriptions/:email", async (req, res) => {
 
     const subscribedData = user.subscribedChannels;
     if (subscribedData.length > 0) {
-      return res.json(subscribedData);
+      return res.status(200).json(subscribedData);
     } else {
-      res.json({ subscribedData: "NO DATA" });
+      return res.status(200).json({ subscribedData: "NO DATA" });
     }
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    return res.status(500).json({ error: error.message });
   }
 });
 
@@ -348,7 +419,11 @@ Channel.get("/checksubscription/:channelID/:email", async (req, res) => {
       (channel) => channel.channelID.toString() === channelID
     );
 
-    res.json({ existingChannelID });
+    if (existingChannelID === undefined) {
+      return res.status(200).json({ message: false });
+    } else {
+      res.status(200).json({ message: true });
+    }
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -367,7 +442,7 @@ Channel.get("/getabout/:email", async (req, res) => {
     const description = channeldata.channelDescription;
     const sociallinks = channeldata.socialLinks;
     const joining = channeldata.joinedDate;
-    res.json({ description, sociallinks, joining });
+    res.status(200).json({ description, sociallinks, joining });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -376,6 +451,27 @@ Channel.get("/getabout/:email", async (req, res) => {
 Channel.post("/savefeaturedchannel/:email", async (req, res) => {
   try {
     const email = req.params.email;
+
+    const refreshToken = req.cookies?.refreshToken;
+    const accessToken = req.cookies?.accessToken;
+    if (!refreshToken) {
+      return res.status(401).json({
+        message: "Unauthorized access, please login again",
+      });
+    }
+    if (!accessToken) {
+      //Refresh the access token
+      const userID = verifyRefreshToken(refreshToken);
+      const userData = { id: userID };
+      const accessToken = generateAccessToken(userData);
+      res.cookie("accessToken", accessToken, {
+        httpOnly: false,
+        sameSite: "None",
+        secure: true,
+        maxAge: 24 * 60 * 60 * 1000,
+      });
+    }
+
     const user = await userData.findOne({ email });
     const data = req.body;
 
@@ -390,7 +486,7 @@ Channel.post("/savefeaturedchannel/:email", async (req, res) => {
     );
 
     if (channelExists) {
-      return res.json("Channel added already");
+      return res.status(200).json("Channel added already");
     }
 
     featuredChannelData.push({
@@ -400,7 +496,7 @@ Channel.post("/savefeaturedchannel/:email", async (req, res) => {
     });
 
     await user.save();
-    res.json(featuredChannelData);
+    res.status(200).json(featuredChannelData);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -418,9 +514,9 @@ Channel.get("/getfeaturedchannels/:email", async (req, res) => {
     const featuredChannelData = user.featuredChannels;
 
     if (featuredChannelData.length > 0) {
-      res.json(featuredChannelData);
+      res.status(200).json(featuredChannelData);
     } else {
-      res.json("No channels");
+      res.status(200).json("No channels");
     }
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -430,6 +526,27 @@ Channel.get("/getfeaturedchannels/:email", async (req, res) => {
 Channel.post("/deletefeaturedchannel/:email/:channelid", async (req, res) => {
   try {
     const { email, channelid } = req.params;
+
+    const refreshToken = req.cookies?.refreshToken;
+    const accessToken = req.cookies?.accessToken;
+    if (!refreshToken) {
+      return res.status(401).json({
+        message: "Unauthorized access, please login again",
+      });
+    }
+    if (!accessToken) {
+      //Refresh the access token
+      const userID = verifyRefreshToken(refreshToken);
+      const userData = { id: userID };
+      const accessToken = generateAccessToken(userData);
+      res.cookie("accessToken", accessToken, {
+        httpOnly: false,
+        sameSite: "None",
+        secure: true,
+        maxAge: 24 * 60 * 60 * 1000,
+      });
+    }
+
     const user = await userData.findOne({ email });
 
     if (!user) {
@@ -454,6 +571,27 @@ Channel.post("/savecustomization/:email", async (req, res) => {
   try {
     const email = req.params.email;
     const { profileURL, coverURL, channelid } = req.body;
+
+    const refreshToken = req.cookies?.refreshToken;
+    const accessToken = req.cookies?.accessToken;
+    if (!refreshToken) {
+      return res.status(401).json({
+        message: "Unauthorized access, please login again",
+      });
+    }
+    if (!accessToken) {
+      //Refresh the access token
+      const userID = verifyRefreshToken(refreshToken);
+      const userData = { id: userID };
+      const accessToken = generateAccessToken(userData);
+      res.cookie("accessToken", accessToken, {
+        httpOnly: false,
+        sameSite: "None",
+        secure: true,
+        maxAge: 24 * 60 * 60 * 1000,
+      });
+    }
+
     const user = await userData.findOne({ email });
     const video = await videodata.findOne({ email });
 
@@ -509,7 +647,7 @@ Channel.post("/savecustomization/:email", async (req, res) => {
     await user.save();
     await video.save();
 
-    res.json(user);
+    res.json({ success: true, userData: user });
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
   }
@@ -519,6 +657,26 @@ Channel.post("/updatechanneldata/:email", async (req, res) => {
   try {
     const email = req.params.email;
     const { channelName, channelDescription, channelID } = req.body;
+
+    const refreshToken = req.cookies?.refreshToken;
+    const accessToken = req.cookies?.accessToken;
+    if (!refreshToken) {
+      return res.status(401).json({
+        message: "Unauthorized access, please login again",
+      });
+    }
+    if (!accessToken) {
+      //Refresh the access token
+      const userID = verifyRefreshToken(refreshToken);
+      const userData = { id: userID };
+      const accessToken = generateAccessToken(userData);
+      res.cookie("accessToken", accessToken, {
+        httpOnly: false,
+        sameSite: "None",
+        secure: true,
+        maxAge: 24 * 60 * 60 * 1000,
+      });
+    }
 
     const user = await userData.findOne({ email });
     const video = await videodata.findOne({ email });

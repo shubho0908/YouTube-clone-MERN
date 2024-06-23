@@ -7,7 +7,6 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import Tooltip from "@mui/material/Tooltip";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import jwtDecode from "jwt-decode";
 import Signup from "./Signup";
 import Signin from "./Signin";
 import ClearRoundedIcon from "@mui/icons-material/ClearRounded";
@@ -15,11 +14,12 @@ import nothing from "../img/nothing.png";
 import Zoom from "@mui/material/Zoom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useSelector } from "react-redux";
 
 function SearchResults() {
   const backendURL = "https://youtube-clone-mern-backend.vercel.app"
+  // const backendURL = "http://localhost:3000";
   const { data } = useParams();
-  const [myemail, setmyEmail] = useState();
   const [searchedVideoData, setsearchedVideoData] = useState([]);
   const [searchedChannelData, setsearchedChannelData] = useState([]);
   const [channelID, setChannelID] = useState();
@@ -33,7 +33,8 @@ function SearchResults() {
     const Dark = localStorage.getItem("Dark");
     return Dark ? JSON.parse(Dark) : true;
   });
-
+  const User = useSelector((state) => state.user.user);
+  const { user } = User;
   //TOASTS
 
   const SubscribeNotify = () =>
@@ -53,18 +54,10 @@ function SearchResults() {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 4000);
+    }, 2500);
   }, []);
 
   document.title = data && data !== undefined ? `${data} - YouTube` : "YouTube";
-
-  const token = localStorage.getItem("userToken");
-
-  useEffect(() => {
-    if (token) {
-      setmyEmail(jwtDecode(token).email);
-    }
-  }, [token]);
 
   useEffect(() => {
     if (theme === false && !window.location.href.includes("/studio")) {
@@ -77,9 +70,7 @@ function SearchResults() {
   useEffect(() => {
     const getSearchResult = async () => {
       try {
-        const response = await fetch(
-          `${backendURL}/search/${data}`
-        );
+        const response = await fetch(`${backendURL}/search/${data}`);
         const Data = await response.json();
         const { videoData, channelData } = Data;
         setsearchedVideoData(videoData);
@@ -88,8 +79,8 @@ function SearchResults() {
         // console.log(error.message);
       }
     };
-    getSearchResult();
-  }, [data, searchedChannelData, searchedVideoData]);
+    return () => getSearchResult();
+  }, [data]);
 
   useEffect(() => {
     const getChannelID = () => {
@@ -103,23 +94,21 @@ function SearchResults() {
   }, [searchedChannelData]);
 
   useEffect(() => {
-    const getOtherChannel = async () => {
+    const fetchOtherChannel = async () => {
       try {
-        if (channelID !== undefined) {
+        if (channelID) {
           const response = await fetch(
             `${backendURL}/getotherchannel/${channelID}`
           );
-          const userEmail = await response.json();
-          setUserEmail(userEmail);
+          const email = await response.json();
+          setUserEmail(email);
         }
       } catch (error) {
-        // console.log(error.message);
+        console.error(error);
       }
     };
 
-    const interval = setInterval(getOtherChannel, 200);
-
-    return () => clearInterval(interval);
+    fetchOtherChannel();
   }, [channelID]);
 
   useEffect(() => {
@@ -138,18 +127,18 @@ function SearchResults() {
       }
     };
 
-    getUserVideos();
+    return () => getUserVideos();
   }, [userEmail]);
 
   useEffect(() => {
     const checkSubscription = async () => {
       try {
-        if (myemail !== undefined && channelID !== undefined) {
+        if (user?.email && channelID) {
           const response = await fetch(
-            `${backendURL}/checksubscription/${channelID}/${myemail}`
+            `${backendURL}/checksubscription/${channelID}/${user?.email}`
           );
-          const { existingChannelID } = await response.json();
-          if (existingChannelID !== undefined) {
+          const { message } = await response.json();
+          if (message === true) {
             setIsSubscribed(true);
           } else {
             setIsSubscribed(false);
@@ -160,24 +149,19 @@ function SearchResults() {
       }
     };
 
-    const interval = setInterval(checkSubscription, 100);
-
-    return () => clearInterval(interval);
-  }, [channelID, myemail]);
+    return () => checkSubscription();
+  }, []);
 
   //POST REQUESTS
 
   const updateViews = async (id) => {
     try {
-      const response = await fetch(
-        `${backendURL}/updateview/${id}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await fetch(`${backendURL}/updateview/${id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       await response.json();
     } catch (error) {
       // console.log(error.message);
@@ -195,17 +179,25 @@ function SearchResults() {
         youtuberProfile,
         youtubeChannelID,
       };
-      const response = await fetch(
-        `${backendURL}/subscribe/${channelID}/${myemail}/${userEmail}`,
-        {
-          method: "POST",
-          body: JSON.stringify(channelData),
-          headers: {
-            "Content-Type": "application/json",
-          },
+      if (userEmail && user?.email) {
+        const response = await fetch(
+          `${backendURL}/subscribe/${channelID}/${user?.email}/${userEmail}`,
+          {
+            method: "POST",
+            body: JSON.stringify(channelData),
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        const data = await response.json();
+        if (data === "Subscribed") {
+          setIsSubscribed(true);
+        } else {
+          setIsSubscribed(false);
         }
-      );
-      await response.json();
+      }
     } catch (error) {
       // console.log(error.message);
     }
@@ -482,7 +474,7 @@ function SearchResults() {
                         </p>
                       </div>
                       <div className="subscribe-btnss">
-                        {myemail === userEmail ? (
+                        {user?.email === userEmail ? (
                           ""
                         ) : (
                           <>
@@ -498,7 +490,7 @@ function SearchResults() {
                                   : { display: "block" }
                               }
                               onClick={() => {
-                                if (token) {
+                                if (user?.email) {
                                   SubscribeChannel(
                                     element.channelName,
                                     element.channelProfile,
@@ -525,7 +517,7 @@ function SearchResults() {
                                   : { display: "none" }
                               }
                               onClick={() => {
-                                if (token) {
+                                if (user?.email) {
                                   SubscribeChannel(
                                     element.channelName,
                                     element.channelProfile,
@@ -574,7 +566,7 @@ function SearchResults() {
                       className="thischannel-all-data"
                       key={index}
                       onClick={() => {
-                        if (token) {
+                        if (user?.email) {
                           updateViews(element._id);
                           setTimeout(() => {
                             window.location.href = `/video/${element._id}`;
@@ -1069,7 +1061,7 @@ function SearchResults() {
                         element.visibility === "Public" ? "flex" : "none",
                     }}
                     onClick={() => {
-                      if (token) {
+                      if (user?.email) {
                         updateViews(element._id);
                         setTimeout(() => {
                           window.location.href = `/video/${element._id}`;
@@ -1616,7 +1608,7 @@ function SearchResults() {
                         </p>
                       </div>
                       <div className="subscribe-btnss">
-                        {myemail === userEmail ? (
+                        {user?.email === userEmail ? (
                           ""
                         ) : (
                           <>
@@ -1632,7 +1624,7 @@ function SearchResults() {
                                   : { display: "block" }
                               }
                               onClick={() => {
-                                if (token) {
+                                if (user?.email) {
                                   SubscribeChannel(
                                     element.channelName,
                                     element.channelProfile,
@@ -1659,7 +1651,7 @@ function SearchResults() {
                                   : { display: "none" }
                               }
                               onClick={() => {
-                                if (token) {
+                                if (user?.email) {
                                   SubscribeChannel(
                                     element.channelName,
                                     element.channelProfile,
@@ -1704,7 +1696,7 @@ function SearchResults() {
                         element.visibility === "Public" ? "flex" : "none",
                     }}
                     onClick={() => {
-                      if (token) {
+                      if (user?.email) {
                         updateViews(element._id);
                         setTimeout(() => {
                           window.location.href = `/video/${element._id}`;

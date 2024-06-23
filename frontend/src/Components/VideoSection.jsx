@@ -23,7 +23,6 @@ import ClearRoundedIcon from "@mui/icons-material/ClearRounded";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
-import jwtDecode from "jwt-decode";
 import Signin from "./Signin";
 import Signup from "./Signup";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
@@ -34,12 +33,13 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import LeftPanel from "./LeftPanel";
 import Error from "./Error";
+import { useSelector } from "react-redux";
 
 function VideoSection() {
   const backendURL = "https://youtube-clone-mern-backend.vercel.app";
+  // const backendURL = "http://localhost:3000";
   const { id } = useParams();
   const [videoData, setVideoData] = useState(null);
-  const [email, setEmail] = useState();
   const [channelName, setChannelName] = useState();
   const [plyrInitialized, setPlyrInitialized] = useState(false);
   const [Display, setDisplay] = useState("none");
@@ -57,7 +57,6 @@ function VideoSection() {
   const [checkTrending, setCheckTrending] = useState(false);
   const [loading, setLoading] = useState(false);
   const [recommendLoading, setRecommendLoading] = useState(true);
-  const token = localStorage.getItem("userToken");
   const [likeLoading, setLikeLoading] = useState(false);
   const [seeDesc, setSeeDesc] = useState(false);
   const [commentLoading, setCommentLoading] = useState(false);
@@ -77,9 +76,9 @@ function VideoSection() {
   const [Views, SetViews] = useState();
   const [publishdate, setPublishDate] = useState();
   const [VideoLikes, setVideoLikes] = useState();
-  const [CommentLikes, setCommentLikes] = useState();
-  const [isLiked, setIsLiked] = useState();
-  const [isSaved, setIsSaved] = useState();
+  const [commentLikes, setCommentLikes] = useState();
+  const [isLiked, setIsLiked] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
   const [createPlaylistClicked, setcreatePlaylistClicked] = useState(false);
   const [privacyClicked, setprivacyClicked] = useState(false);
   const [playlistClicked, setPlaylistClicked] = useState(false);
@@ -89,12 +88,13 @@ function VideoSection() {
   const [playlistID, setplaylistID] = useState([]);
   const [isHeart, setIsHeart] = useState([]);
   const [rec, setRecommend] = useState(false);
-
+  const User = useSelector((state) => state.user.user);
+  const { user } = User;
   //Get Channel Data
   const [youtuberName, setyoutuberName] = useState();
   const [youtuberProfile, setyoutuberProfile] = useState();
   const [youtubeChannelID, setyoutubeChannelID] = useState();
-  const [isSubscribed, setIsSubscribed] = useState();
+  const [isSubscribed, setIsSubscribed] = useState(false);
   const [Subscribers, setSubscribers] = useState();
 
   //Signup user Profile Pic
@@ -165,12 +165,6 @@ function VideoSection() {
   // USE EFFECTS
 
   useEffect(() => {
-    if (token) {
-      setEmail(jwtDecode(token).email);
-    }
-  }, [token]);
-
-  useEffect(() => {
     function handleResize() {
       setRecommend(window.innerWidth <= 1100);
     }
@@ -210,9 +204,9 @@ function VideoSection() {
   useEffect(() => {
     const checkChannel = async () => {
       try {
-        if (email !== undefined) {
+        if (user?.email) {
           const response = await fetch(
-            `${backendURL}/checkchannel/${email}`
+            `${backendURL}/checkchannel/${user?.email}`
           );
           const channelname = await response.json();
           setChannelName(channelname);
@@ -222,34 +216,32 @@ function VideoSection() {
       }
     };
 
-    checkChannel();
-  }, [email]);
+    return () => checkChannel();
+  }, [user?.email]);
 
   useEffect(() => {
     const getChannel = async () => {
       try {
-        if (email !== undefined) {
+        if (user?.email) {
           const response = await fetch(
-            `${backendURL}/getchannel/${email}`
+            `${backendURL}/getchannel/${user?.email}`
           );
-          const { channel, profile } = await response.json();
-          setisChannel(channel);
-          setUserProfile(profile);
+          const { hasChannel, userProfile } = await response.json();
+          setisChannel(hasChannel);
+          setUserProfile(userProfile);
         }
       } catch (error) {
         //console.log(error.message);
       }
     };
     getChannel();
-  }, [email]);
+  }, [user?.email]);
 
   useEffect(() => {
     const getTrendingData = async () => {
       try {
-        if (id !== undefined) {
-          const response = await fetch(
-            `${backendURL}/gettrendingdata/${id}`
-          );
+        if (id) {
+          const response = await fetch(`${backendURL}/gettrendingdata/${id}`);
           const data = await response.json();
           setCheckTrending(data);
         }
@@ -263,7 +255,7 @@ function VideoSection() {
   useEffect(() => {
     const PushTrending = async () => {
       try {
-        if (id !== undefined && usermail !== undefined) {
+        if (id && usermail) {
           const response = await fetch(
             `${backendURL}/checktrending/${id}/${usermail}`
           );
@@ -279,10 +271,8 @@ function VideoSection() {
   useEffect(() => {
     const getVideoData = async () => {
       try {
-        if (id !== undefined) {
-          const response = await fetch(
-            `${backendURL}/videodata/${id}`
-          );
+        if (id) {
+          const response = await fetch(`${backendURL}/videodata/${id}`);
           const video = await response.json();
           setVideoData(video);
         }
@@ -297,9 +287,7 @@ function VideoSection() {
   useEffect(() => {
     const getVideos = async () => {
       try {
-        const response = await fetch(
-          "https://youtube-clone-mern-backend.vercel.app/getvideos"
-        );
+        const response = await fetch(`${backendURL}/getvideos`);
         const {
           thumbnailURLs,
           titles,
@@ -343,10 +331,8 @@ function VideoSection() {
   useEffect(() => {
     const getLikes = async () => {
       try {
-        if (id !== undefined) {
-          const response = await fetch(
-            `${backendURL}/getlike/${id}/`
-          );
+        if (id) {
+          const response = await fetch(`${backendURL}/getlike/${id}`);
           const likes = await response.json();
           setVideoLikes(likes);
         }
@@ -355,17 +341,15 @@ function VideoSection() {
       }
     };
 
-    const interval = setInterval(getLikes, 300);
-
-    return () => clearInterval(interval);
+    getLikes();
   }, [id]);
 
   useEffect(() => {
     const LikeExists = async () => {
       try {
-        if (id !== undefined && email !== undefined) {
+        if (id && user?.email) {
           const response = await fetch(
-            `${backendURL}/getuserlikes/${id}/${email}`
+            `${backendURL}/getuserlikes/${id}/${user?.email}`
           );
           const { existingLikedVideo } = await response.json();
           if (!existingLikedVideo) {
@@ -378,18 +362,14 @@ function VideoSection() {
         //console.log(error.message);
       }
     };
-    const interval = setInterval(LikeExists, 200);
-
-    return () => clearInterval(interval);
-  }, [email, id]);
+    LikeExists();
+  }, [id, isLiked, user?.email]);
 
   useEffect(() => {
     const CommentLikes = async () => {
       try {
-        if (id !== undefined) {
-          const response = await fetch(
-            `${backendURL}/likecomment/${id}`
-          );
+        if (id) {
+          const response = await fetch(`${backendURL}/likecomment/${id}`);
           const result = await response.json();
           setCommentLikes(result);
         }
@@ -397,18 +377,15 @@ function VideoSection() {
         //console.log(error.message);
       }
     };
-
-    const interval = setInterval(CommentLikes, 200);
-
-    return () => clearInterval(interval);
+    CommentLikes();
   }, [id]);
 
   useEffect(() => {
     const getWatchlater = async () => {
       try {
-        if (id !== undefined && email !== undefined) {
+        if (id && user?.email) {
           const response = await fetch(
-            `${backendURL}/checkwatchlater/${id}/${email}`
+            `${backendURL}/checkwatchlater/${id}/${user?.email}`
           );
           const data = await response.json();
           if (data === "Found") {
@@ -422,18 +399,14 @@ function VideoSection() {
       }
     };
 
-    const interval = setInterval(getWatchlater, 200);
-
-    return () => clearInterval(interval);
-  });
+    getWatchlater();
+  }, [id, user?.email, isSaved]);
 
   useEffect(() => {
     const getComments = async () => {
       try {
-        if (id !== undefined) {
-          const response = await fetch(
-            `${backendURL}/getcomments/${id}`
-          );
+        if (id) {
+          const response = await fetch(`${backendURL}/getcomments/${id}`);
           const result = await response.json();
           setComments(result);
         }
@@ -441,18 +414,14 @@ function VideoSection() {
         //console.log(error.message);
       }
     };
-    const interval = setInterval(getComments, 200);
-
-    return () => clearInterval(interval);
+    getComments();
   }, [id]);
 
   useEffect(() => {
     const getOtherChannel = async () => {
       try {
-        if (id !== undefined) {
-          const response = await fetch(
-            `${backendURL}/otherchannel/${id}`
-          );
+        if (id) {
+          const response = await fetch(`${backendURL}/otherchannel/${id}`);
           const userEmail = await response.json();
           setUserMail(userEmail);
         }
@@ -467,7 +436,7 @@ function VideoSection() {
   useEffect(() => {
     const getChannelID = async () => {
       try {
-        if (usermail !== undefined) {
+        if (usermail) {
           const response = await fetch(
             `${backendURL}/getchannelid/${usermail}`
           );
@@ -480,16 +449,14 @@ function VideoSection() {
       }
     };
 
-    getChannelID()
+    getChannelID();
   }, [usermail]);
 
   useEffect(() => {
     const GetChannelData = async () => {
       try {
-        if (usermail !== undefined) {
-          const response = await fetch(
-            `${backendURL}/subscribe/${usermail}`
-          );
+        if (usermail) {
+          const response = await fetch(`${backendURL}/subscribe/${usermail}`);
           const { channel, profile, channelid } = await response.json();
           setyoutuberName(channel);
           setyoutuberProfile(profile);
@@ -506,31 +473,25 @@ function VideoSection() {
   useEffect(() => {
     const checkSubscription = async () => {
       try {
-        if (email !== undefined && channelID !== undefined) {
+        if (user?.email && channelID !== undefined) {
           const response = await fetch(
-            `${backendURL}/checksubscription/${channelID}/${email}`
+            `${backendURL}/checksubscription/${channelID}/${user?.email}`
           );
-          const { existingChannelID } = await response.json();
-          if (existingChannelID !== undefined) {
-            setIsSubscribed(true);
-          } else {
-            setIsSubscribed(false);
-          }
+          const { message } = await response.json();
+          setIsSubscribed(message);
         }
       } catch (error) {
         //console.log(error.message);
       }
     };
 
-    const interval = setInterval(checkSubscription, 400);
-
-    return () => clearInterval(interval);
-  }, [channelID, email]);
+    checkSubscription();
+  }, [channelID, user?.email]);
 
   useEffect(() => {
     const GetUserVideos = async () => {
       try {
-        if (usermail !== undefined) {
+        if (usermail) {
           const response = await fetch(
             `${backendURL}/getuservideos/${usermail}`
           );
@@ -548,29 +509,27 @@ function VideoSection() {
   useEffect(() => {
     const getPlaylists = async () => {
       try {
-        if (email !== undefined) {
+        if (user?.email) {
           const response = await fetch(
-            `${backendURL}/getplaylistdata/${email}`
+            `${backendURL}/getplaylistdata/${user?.email}`
           );
           const playlists = await response.json();
-          setUserPlaylist(playlists);
+          setUserPlaylist(playlists || "No playlists available...");
         }
       } catch (error) {
         //console.log(error.message);
       }
     };
 
-    const interval = setInterval(getPlaylists, 400);
-
-    return () => clearInterval(interval);
-  }, [email]);
+    getPlaylists();
+  }, [user?.email]);
 
   useEffect(() => {
     const getVideoAvailableInPlaylist = async () => {
       try {
-        if (id !== undefined && email !== undefined) {
+        if (id !== undefined && user?.email) {
           const response = await fetch(
-            `${backendURL}/getvideodataplaylist/${email}/${id}`
+            `${backendURL}/getvideodataplaylist/${user?.email}/${id}`
           );
           const playlistIdsWithVideo = await response.json();
           setplaylistID(playlistIdsWithVideo);
@@ -579,36 +538,29 @@ function VideoSection() {
         //console.log(error.message);
       }
     };
-
-    const interval = setInterval(getVideoAvailableInPlaylist, 400);
-
-    return () => clearInterval(interval);
-  }, [email, id]);
+    return () => getVideoAvailableInPlaylist();
+  }, [user?.email, id]);
 
   useEffect(() => {
-    const getHeartComments = async () => {
+    const fetchHeartComments = async () => {
+      if (!id) return;
+
       try {
-        if (id !== undefined) {
-          const response = await fetch(
-            `${backendURL}/getheartcomment/${id}`
-          );
-          const heart = await response.json();
-          setIsHeart(heart);
-        }
+        const response = await fetch(`${backendURL}/getheartcomment/${id}`);
+        const heart = await response.json();
+        setIsHeart(heart);
       } catch (error) {
         //console.log(error.message);
       }
     };
 
-    const interval = setInterval(getHeartComments, 400);
-
-    return () => clearInterval(interval);
-  }, [email, id]);
+    fetchHeartComments();
+  }, [id]);
 
   useEffect(() => {
     setTimeout(() => {
       setRecommendLoading(false);
-    }, 3500);
+    }, 1500);
   }, []);
 
   //POST REQUESTS
@@ -617,26 +569,25 @@ function VideoSection() {
     try {
       setCommentLoading(true);
       const response1 = await fetch(
-        `${backendURL}/getchannelid/${email}`
+        `${backendURL}/getchannelid/${user?.email}`
       );
       const { channelID } = await response1.json();
       const data = {
         comment,
-        email,
+        email: user?.email,
         channelID,
       };
-      const response = await fetch(
-        `${backendURL}/comments/${id}`,
-        {
-          method: "POST",
-          body: JSON.stringify(data),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      const Data = await response.json();
-      if (Data === "Uploaded") {
+      const response = await fetch(`${backendURL}/comments/${id}`, {
+        method: "POST",
+        credentials: "include",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const { message, commentData } = await response.json();
+      if (message === "Uploaded") {
+        setComments([...comments, commentData]);
         setCommentLoading(false);
       } else {
         setCommentLoading(true);
@@ -742,42 +693,51 @@ function VideoSection() {
       setLikeLoading(true);
 
       const response = await fetch(
-        `${backendURL}/like/${id}/${email}/${usermail}`,
+        `${backendURL}/like/${id}/${user?.email}/${usermail}`,
         {
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
         }
       );
-      const data = await response.json();
+      const { message, likes } = await response.json();
       // console.log(data);
-      if (data === "Liked") {
+      if (message === "Liked") {
         LikedNotify();
         setLikeLoading(false);
-      } else if (data === "Liked" || data === "Disliked") {
+        setIsLiked(true);
+        setVideoLikes(likes);
+      } else {
         setLikeLoading(false);
-      } else if (data !== "Liked" || data !== "Disliked") {
-        setLikeLoading(true);
+        setIsLiked(false);
+        setVideoLikes(likes);
       }
     } catch (error) {
+      setLikeLoading(false);
       //console.log(error.message);
     }
   };
-
   const LikeComment = async (commentId) => {
     try {
-      if (commentId !== undefined && id !== undefined && email !== undefined) {
+      if (commentId !== undefined && id !== undefined && user?.email) {
         const response = await fetch(
-          `${backendURL}/likecomment/${id}/${commentId}/${email}`,
+          `${backendURL}/likecomment/${id}/${commentId}/${user?.email}`,
           {
             method: "POST",
+            credentials: "include",
             headers: {
               "Content-Type": "application/json",
             },
           }
         );
-        await response.json();
+        const { message, likes } = await response.json();
+        if ((message = "Comment liked successfully")) {
+          setCommentLikes(likes);
+        } else {
+          setCommentLikes(likes);
+        }
       }
     } catch (error) {
       //console.log(error.message);
@@ -791,6 +751,7 @@ function VideoSection() {
           `${backendURL}/heartcomment/${id}/${commentID}`,
           {
             method: "POST",
+            credentials: "include",
             headers: {
               "Content-Type": "application/json",
             },
@@ -808,18 +769,20 @@ function VideoSection() {
       setCommentOpacity(0.34);
 
       const response = await fetch(
-        `${backendURL}/deletecomment/${id}/${commentId}/${email}`,
+        `${backendURL}/deletecomment/${id}/${commentId}/${user?.email}`,
         {
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
         }
       );
-      const data = await response.json();
-      if (data === "Comment Deleted") {
+      const { message, commentData } = await response.json();
+      if (message === "Comment Deleted") {
         setCommentOpacity(1);
         CommentDeleteNotify();
+        setComments(commentData);
       }
       // window.location.reload();
     } catch (error) {
@@ -830,16 +793,21 @@ function VideoSection() {
   const DislikeVideo = async () => {
     try {
       const response = await fetch(
-        `${backendURL}/dislikevideo/${id}/${email}`,
+        `${backendURL}/dislikevideo/${id}/${user?.email}`,
         {
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
         }
       );
-      await response.json();
-      // console.log("disliked");
+      const { message, likes } = await response.json();
+      if (message === "Disliked") {
+        setLikeLoading(false);
+        setIsLiked(false);
+        setVideoLikes(likes);
+      }
     } catch (error) {
       //console.log(error.message);
     }
@@ -855,11 +823,12 @@ function VideoSection() {
 
   const saveVideo = async () => {
     try {
-      if (id !== undefined && email !== undefined) {
+      if (id && user?.email) {
         const response = await fetch(
-          `${backendURL}/watchlater/${id}/${email}/${usermail}`,
+          `${backendURL}/watchlater/${id}/${user?.email}/${usermail}`,
           {
             method: "POST",
+            credentials: "include",
             headers: {
               "Content-Type": "application/json",
             },
@@ -868,6 +837,9 @@ function VideoSection() {
         const data = await response.json();
         if (data === "Saved") {
           watchLaterNotify();
+          setIsSaved(true);
+        } else {
+          setIsSaved(false);
         }
       }
     } catch (error) {
@@ -883,9 +855,10 @@ function VideoSection() {
         youtubeChannelID,
       };
       const response = await fetch(
-        `${backendURL}/subscribe/${channelID}/${email}/${usermail}`,
+        `${backendURL}/subscribe/${channelID}/${user?.email}/${usermail}`,
         {
           method: "POST",
+          credentials: "include",
           body: JSON.stringify(channelData),
           headers: {
             "Content-Type": "application/json",
@@ -895,6 +868,7 @@ function VideoSection() {
       const data = await response.json();
       if (data === "Subscribed") {
         SubscribeNotify();
+        setIsSubscribed(true);
       }
     } catch (error) {
       //console.log(error.message);
@@ -904,15 +878,12 @@ function VideoSection() {
   const updateViews = async (id) => {
     try {
       if (id !== undefined) {
-        const response = await fetch(
-          `${backendURL}/updateview/${id}`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        const response = await fetch(`${backendURL}/updateview/${id}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
         await response.json();
       }
     } catch (error) {
@@ -925,7 +896,7 @@ function VideoSection() {
   const AddPlaylist = async () => {
     try {
       setLoading(true);
-      if (email !== undefined) {
+      if (user?.email) {
         const currentDate = new Date().toISOString();
         const data = {
           playlist_name: playlistName,
@@ -944,9 +915,10 @@ function VideoSection() {
         };
 
         const response = await fetch(
-          `${backendURL}/addplaylist/${email}`,
+          `${backendURL}/addplaylist/${user?.email}`,
           {
             method: "POST",
+            credentials: "include",
             body: JSON.stringify(data),
             headers: {
               "Content-Type": "application/json",
@@ -969,7 +941,7 @@ function VideoSection() {
 
   const AddVideoToExistingPlaylist = async (Id) => {
     try {
-      if (email !== undefined && Id !== undefined) {
+      if (user?.email && Id !== undefined) {
         const data = {
           Id,
           thumbnail: thumbnailURL,
@@ -984,9 +956,10 @@ function VideoSection() {
         };
 
         const response = await fetch(
-          `${backendURL}/addvideotoplaylist/${email}`,
+          `${backendURL}/addvideotoplaylist/${user?.email}`,
           {
             method: "POST",
+            credentials: "include",
             body: JSON.stringify(data),
             headers: {
               "Content-Type": "application/json",
@@ -994,8 +967,11 @@ function VideoSection() {
           }
         );
 
-        await response.json();
-        playlistNotify();
+        const { message } = await response.json();
+        if (message === "Video added to the playlist") {
+          playlistNotify();
+          setPlaylistClicked;
+        }
       }
     } catch (error) {
       //console.log(error.message);
@@ -1006,17 +982,18 @@ function VideoSection() {
 
   const RemoveVideo = async (playlistID) => {
     try {
-      if (email !== undefined && id !== undefined && playlistID !== undefined) {
+      if (user?.email && id && playlistID) {
         const response = await fetch(
-          `${backendURL}/removevideo/${email}/${id}/${playlistID}`,
+          `${backendURL}/removevideo/${user?.email}/${id}/${playlistID}`,
           {
             method: "POST",
+            credentials: "include",
             headers: {
               "Content-Type": "application/json",
             },
           }
         );
-        await response.json();
+        const data = await response.json();
       }
     } catch (error) {
       //console.log(error.message);
@@ -1042,7 +1019,7 @@ function VideoSection() {
     return formattedDescription.replace(/\n/g, "<br>");
   };
 
-  if (email !== usermail && visibility === "Private") {
+  if (user?.email !== usermail && visibility === "Private") {
     return (
       <>
         <Error />
@@ -1138,17 +1115,18 @@ function VideoSection() {
                   {Subscribers} subscribers
                 </p>
               </div>
-              {isSubscribed === false || !token ? (
+              {isSubscribed === false || !user?.email ? (
                 <button
                   className={
                     theme
                       ? "subscribe"
-                      : `subscribe-light ${email === usermail ? "dull-subs" : ""
-                      }`
+                      : `subscribe-light ${
+                          user?.email === usermail ? "dull-subs" : ""
+                        }`
                   }
-                  disabled={email === usermail ? true : false}
+                  disabled={user?.email === usermail ? true : false}
                   onClick={() => {
-                    if (token) {
+                    if (user?.email) {
                       SubscribeChannel();
                     } else {
                       setisbtnClicked(true);
@@ -1156,7 +1134,7 @@ function VideoSection() {
                     }
                   }}
                   style={
-                    email === usermail
+                    user?.email === usermail
                       ? { cursor: "not-allowed" }
                       : { cursor: "pointer" }
                   }
@@ -1170,7 +1148,7 @@ function VideoSection() {
                       ? "subscribe subscribe2"
                       : "subscribe subscribe2-light text-light-mode"
                   }
-                  disabled={email === usermail ? true : false}
+                  disabled={user?.email === usermail ? true : false}
                   onClick={() => {
                     SubscribeChannel();
                   }}
@@ -1200,7 +1178,7 @@ function VideoSection() {
                         : "like-data like-data-light text-light-mode"
                     }
                     onClick={() => {
-                      if (token) {
+                      if (user?.email) {
                         likeVideo();
                       } else {
                         setisbtnClicked(true);
@@ -1208,7 +1186,7 @@ function VideoSection() {
                       }
                     }}
                   >
-                    {isLiked === true && token ? (
+                    {isLiked === true && user?.email ? (
                       <ThumbUpIcon
                         fontSize="medium"
                         style={{ color: theme ? "white" : "black" }}
@@ -1238,7 +1216,7 @@ function VideoSection() {
                         : "dislike-data dislike-data-light text-light-mode"
                     }
                     onClick={() => {
-                      if (token) {
+                      if (user?.email) {
                         DislikeVideo();
                       } else {
                         setisbtnClicked(true);
@@ -1299,6 +1277,7 @@ function VideoSection() {
                 >
                   <h3>
                     <LiaDownloadSolid
+                      fontSize={24}
                       className="download-icon"
                       color={theme ? "white" : "black"}
                     />
@@ -1318,7 +1297,7 @@ function VideoSection() {
                       : "save-later save-later-light text-light-mode"
                   }
                   onClick={() => {
-                    if (token) {
+                    if (user?.email) {
                       saveVideo();
                     } else {
                       setisbtnClicked(true);
@@ -1339,7 +1318,7 @@ function VideoSection() {
                       className="save-video-icon"
                     />
                   )}
-                  <p>Save</p>
+                  <p>{isSaved === true ? "Saved" : "Save"}</p>
                 </div>
               </Tooltip>
               <Tooltip
@@ -1354,10 +1333,10 @@ function VideoSection() {
                       : "add-playlist add-playlist-light text-light-mode"
                   }
                   onClick={() => {
-                    if (playlistClicked === false && token) {
+                    if (playlistClicked === false && user?.email) {
                       setPlaylistClicked(true);
                       document.body.classList.add("bg-css");
-                    } else if (!token) {
+                    } else if (!user?.email) {
                       setisbtnClicked(true);
                       document.body.classList.add("bg-css");
                     }
@@ -1395,7 +1374,7 @@ function VideoSection() {
                           : "like-data like-data-light text-light-mode"
                       }
                       onClick={() => {
-                        if (token) {
+                        if (user?.email) {
                           likeVideo();
                         } else {
                           setisbtnClicked(true);
@@ -1403,7 +1382,7 @@ function VideoSection() {
                         }
                       }}
                     >
-                      {isLiked === true && token ? (
+                      {isLiked === true && user?.email ? (
                         <ThumbUpIcon
                           fontSize="medium"
                           style={{ color: theme ? "white" : "black" }}
@@ -1433,7 +1412,7 @@ function VideoSection() {
                           : "dislike-data dislike-data-light text-light-mode"
                       }
                       onClick={() => {
-                        if (token) {
+                        if (user?.email) {
                           DislikeVideo();
                         } else {
                           setisbtnClicked(true);
@@ -1493,7 +1472,10 @@ function VideoSection() {
                     onClick={downloadVideo}
                   >
                     <h3>
-                      <LiaDownloadSolid className="download-icon" />
+                      <LiaDownloadSolid
+                        fontSize={24}
+                        className="download-icon"
+                      />
                     </h3>
                     <p className="download-txt">Download</p>
                   </div>
@@ -1510,7 +1492,7 @@ function VideoSection() {
                         : " save-later save-later-light text-light-mode"
                     }
                     onClick={() => {
-                      if (token) {
+                      if (user?.email) {
                         saveVideo();
                       } else {
                         setisbtnClicked(true);
@@ -1531,7 +1513,7 @@ function VideoSection() {
                         className="save-video-icon"
                       />
                     )}
-                    <p>Save</p>
+                    <p>{isSaved === true ? "Saved" : "Save"}</p>
                   </div>
                 </Tooltip>
               </div>
@@ -1556,7 +1538,7 @@ function VideoSection() {
                           : "like-data like-data-light text-light-mode"
                       }
                       onClick={() => {
-                        if (token) {
+                        if (user?.email) {
                           likeVideo();
                         } else {
                           setisbtnClicked(true);
@@ -1564,7 +1546,7 @@ function VideoSection() {
                         }
                       }}
                     >
-                      {isLiked === true && token ? (
+                      {isLiked === true && user?.email ? (
                         <ThumbUpIcon
                           fontSize="medium"
                           style={{ color: theme ? "white" : "black" }}
@@ -1594,7 +1576,7 @@ function VideoSection() {
                           : "dislike-data dislike-data-light text-light-mode"
                       }
                       onClick={() => {
-                        if (token) {
+                        if (user?.email) {
                           DislikeVideo();
                         } else {
                           setisbtnClicked(true);
@@ -1654,7 +1636,10 @@ function VideoSection() {
                     onClick={downloadVideo}
                   >
                     <h3>
-                      <LiaDownloadSolid className="download-icon" />
+                      <LiaDownloadSolid
+                        fontSize={24}
+                        className="download-icon"
+                      />
                     </h3>
                     <p className="download-txt">Download</p>
                   </div>
@@ -1673,10 +1658,10 @@ function VideoSection() {
                         : "add-playlist add-playlist-light text-light-mode"
                     }
                     onClick={() => {
-                      if (playlistClicked === false && token) {
+                      if (playlistClicked === false && user?.email) {
                         setPlaylistClicked(true);
                         document.body.classList.add("bg-css");
-                      } else if (!token) {
+                      } else if (!user?.email) {
                         setisbtnClicked(true);
                         document.body.classList.add("bg-css");
                       }
@@ -1704,7 +1689,7 @@ function VideoSection() {
                         : "save-later save-later-light text-light-mode"
                     }
                     onClick={() => {
-                      if (token) {
+                      if (user?.email) {
                         saveVideo();
                       } else {
                         setisbtnClicked(true);
@@ -1725,7 +1710,7 @@ function VideoSection() {
                         className="save-video-icon"
                       />
                     )}
-                    <p>Save</p>
+                    <p>{isSaved === true ? "Saved" : "Save"}</p>
                   </div>
                 </Tooltip>
                 <Tooltip
@@ -1740,10 +1725,10 @@ function VideoSection() {
                         : "add-playlist add-playlist-light text-light-mode"
                     }
                     onClick={() => {
-                      if (playlistClicked === false && token) {
+                      if (playlistClicked === false && user?.email) {
                         setPlaylistClicked(true);
                         document.body.classList.add("bg-css");
-                      } else if (!token) {
+                      } else if (!user?.email) {
                         setisbtnClicked(true);
                         document.body.classList.add("bg-css");
                       }
@@ -1772,10 +1757,10 @@ function VideoSection() {
                 {views >= 1e9
                   ? `${(views / 1e9).toFixed(1)}B`
                   : views >= 1e6
-                    ? `${(views / 1e6).toFixed(1)}M`
-                    : views >= 1e3
-                      ? `${(views / 1e3).toFixed(1)}K`
-                      : views}{" "}
+                  ? `${(views / 1e6).toFixed(1)}M`
+                  : views >= 1e3
+                  ? `${(views / 1e3).toFixed(1)}K`
+                  : views}{" "}
                 views
               </p>
               <p style={{ marginLeft: "10px" }}>
@@ -1929,12 +1914,16 @@ function VideoSection() {
                 <button
                   className={theme ? "upload-comment" : "upload-comment-light"}
                   onClick={() => {
-                    if (token && isChannel === true && comment !== "") {
+                    if (user?.email && isChannel === true && comment !== "") {
                       setComment("");
                       uploadComment();
-                    } else if (token && isChannel !== true) {
+                    } else if (user?.email && isChannel !== true) {
                       alert("Create a channel first");
-                    } else if (token && isChannel === true && comment === "") {
+                    } else if (
+                      user?.email &&
+                      isChannel === true &&
+                      comment === ""
+                    ) {
                       alert("Comment can't be empty");
                     } else {
                       setisbtnClicked(true);
@@ -1950,7 +1939,7 @@ function VideoSection() {
             )}
 
             <div className="video-comments">
-              {comments.map((element, index) => {
+              {comments?.sort()?.map((element, index) => {
                 return (
                   <>
                     <div
@@ -2037,7 +2026,7 @@ function VideoSection() {
                               cursor: "pointer",
                             }}
                             onClick={() => {
-                              if (token) {
+                              if (user?.email) {
                                 LikeComment(element._id);
                               } else {
                                 setisbtnClicked(true);
@@ -2048,26 +2037,26 @@ function VideoSection() {
                           />
 
                           <p style={{ marginLeft: "16px" }}>
-                            {CommentLikes &&
-                              CommentLikes[index] &&
-                              CommentLikes[index].likes}
+                            {commentLikes &&
+                              commentLikes[index] &&
+                              commentLikes[index].likes}
                           </p>
 
                           {isHeart[index] === false ? (
                             <FavoriteBorderOutlinedIcon
                               fontSize="small"
                               style={
-                                email === usermail
+                                user?.email === usermail
                                   ? {
-                                    color: theme ? "white" : "black",
-                                    marginLeft: "20px",
-                                    cursor: "pointer",
-                                  }
+                                      color: theme ? "white" : "black",
+                                      marginLeft: "20px",
+                                      cursor: "pointer",
+                                    }
                                   : { display: "none" }
                               }
                               className="heart-comment"
                               onClick={() => {
-                                if (email === usermail) {
+                                if (user?.email === usermail) {
                                   HeartComment(element._id);
                                 }
                               }}
@@ -2082,7 +2071,7 @@ function VideoSection() {
                                 className="heart-liked"
                                 style={{ cursor: "pointer" }}
                                 onClick={() => {
-                                  if (email === usermail) {
+                                  if (user?.email === usermail) {
                                     HeartComment(element._id);
                                   }
                                 }}
@@ -2102,8 +2091,8 @@ function VideoSection() {
                             </Tooltip>
                           )}
 
-                          {element.user_email === email ||
-                            email === usermail ? (
+                          {element.user_email === user?.email ||
+                          user?.email === usermail ? (
                             <button
                               className={
                                 theme
@@ -2137,8 +2126,9 @@ function VideoSection() {
                 <div
                   className={
                     TagSelected === "All"
-                      ? `top-tags tag-one ${theme ? "tag-color" : "tag-color-light"
-                      }`
+                      ? `top-tags tag-one ${
+                          theme ? "tag-color" : "tag-color-light"
+                        }`
                       : `top-tags tag-one ${theme ? "" : "tagcolor-newlight"}`
                   }
                 >
@@ -2147,8 +2137,9 @@ function VideoSection() {
                 <div
                   className={
                     TagSelected === uploader
-                      ? `top-tags tag-two ${theme ? "tag-color" : "tag-color-light"
-                      }`
+                      ? `top-tags tag-two ${
+                          theme ? "tag-color" : "tag-color-light"
+                        }`
                       : `top-tags tag-two ${theme ? "" : "tagcolor-newlight"}`
                   }
                   style={{ marginLeft: "10px" }}
@@ -2218,8 +2209,9 @@ function VideoSection() {
             <div
               className={
                 TagSelected === "All"
-                  ? `top-tags tag-one ${theme ? "tag-color" : "tag-color-light"
-                  }`
+                  ? `top-tags tag-one ${
+                      theme ? "tag-color" : "tag-color-light"
+                    }`
                   : `top-tags tag-one ${theme ? "" : "tagcolor-newlight"}`
               }
             >
@@ -2228,8 +2220,9 @@ function VideoSection() {
             <div
               className={
                 TagSelected === uploader
-                  ? `top-tags tag-two ${theme ? "tag-color" : "tag-color-light"
-                  }`
+                  ? `top-tags tag-two ${
+                      theme ? "tag-color" : "tag-color-light"
+                    }`
                   : `top-tags tag-two ${theme ? "" : "tagcolor-newlight"}`
               }
               style={{ marginLeft: "10px" }}
@@ -2258,7 +2251,7 @@ function VideoSection() {
                     }
                     key={index}
                     onClick={() => {
-                      if (token) {
+                      if (user?.email) {
                         updateViews(VideoID[index]);
                         setTimeout(() => {
                           window.location.href = `/video/${VideoID[index]}`;
@@ -2328,10 +2321,10 @@ function VideoSection() {
                           {Views[index] >= 1e9
                             ? `${(Views[index] / 1e9).toFixed(1)}B`
                             : Views[index] >= 1e6
-                              ? `${(Views[index] / 1e6).toFixed(1)}M`
-                              : Views[index] >= 1e3
-                                ? `${(Views[index] / 1e3).toFixed(1)}K`
-                                : Views[index]}{" "}
+                            ? `${(Views[index] / 1e6).toFixed(1)}M`
+                            : Views[index] >= 1e3
+                            ? `${(Views[index] / 1e3).toFixed(1)}K`
+                            : Views[index]}{" "}
                           views
                         </p>
                         <p
@@ -2385,7 +2378,7 @@ function VideoSection() {
                     }
                     key={index}
                     onClick={() => {
-                      if (token) {
+                      if (user?.email) {
                         updateViews(VideoID[index]);
                         setTimeout(() => {
                           window.location.href = `/video/${VideoID[index]}`;
@@ -2455,10 +2448,10 @@ function VideoSection() {
                           {Views[index] >= 1e9
                             ? `${(Views[index] / 1e9).toFixed(1)}B`
                             : Views[index] >= 1e6
-                              ? `${(Views[index] / 1e6).toFixed(1)}M`
-                              : Views[index] >= 1e3
-                                ? `${(Views[index] / 1e3).toFixed(1)}K`
-                                : Views[index]}{" "}
+                            ? `${(Views[index] / 1e6).toFixed(1)}M`
+                            : Views[index] >= 1e3
+                            ? `${(Views[index] / 1e3).toFixed(1)}K`
+                            : Views[index]}{" "}
                           views
                         </p>
                         <p
@@ -2520,7 +2513,7 @@ function VideoSection() {
                     }
                     key={index}
                     onClick={() => {
-                      if (token) {
+                      if (user?.email) {
                         updateViews(element._id);
                         setTimeout(() => {
                           window.location.href = `/video/${element._id}`;
@@ -2590,10 +2583,10 @@ function VideoSection() {
                           {element.views >= 1e9
                             ? `${(element.views / 1e9).toFixed(1)}B`
                             : element.views >= 1e6
-                              ? `${(element.views / 1e6).toFixed(1)}M`
-                              : element.views >= 1e3
-                                ? `${(element.views / 1e3).toFixed(1)}K`
-                                : element.views}{" "}
+                            ? `${(element.views / 1e6).toFixed(1)}M`
+                            : element.views >= 1e3
+                            ? `${(element.views / 1e3).toFixed(1)}K`
+                            : element.views}{" "}
                           views
                         </p>
                         <p
@@ -2648,7 +2641,7 @@ function VideoSection() {
                     }
                     key={index}
                     onClick={() => {
-                      if (token) {
+                      if (user?.email) {
                         updateViews(element._id);
                         setTimeout(() => {
                           window.location.href = `/video/${element._id}`;
@@ -2718,10 +2711,10 @@ function VideoSection() {
                           {element.views >= 1e9
                             ? `${(element.views / 1e9).toFixed(1)}B`
                             : element.views >= 1e6
-                              ? `${(element.views / 1e6).toFixed(1)}M`
-                              : element.views >= 1e3
-                                ? `${(element.views / 1e3).toFixed(1)}K`
-                                : element.views}{" "}
+                            ? `${(element.views / 1e6).toFixed(1)}M`
+                            : element.views >= 1e3
+                            ? `${(element.views / 1e3).toFixed(1)}K`
+                            : element.views}{" "}
                           views
                         </p>
                         <p
@@ -2836,12 +2829,16 @@ function VideoSection() {
                 <button
                   className={theme ? "upload-comment" : "upload-comment-light"}
                   onClick={() => {
-                    if (token && isChannel === true && comment !== "") {
+                    if (user?.email && isChannel === true && comment !== "") {
                       setComment("");
                       uploadComment();
-                    } else if (token && isChannel !== true) {
+                    } else if (user?.email && isChannel !== true) {
                       alert("Create a channel first");
-                    } else if (token && isChannel === true && comment === "") {
+                    } else if (
+                      user?.email &&
+                      isChannel === true &&
+                      comment === ""
+                    ) {
                       alert("Comment can't be empty");
                     } else {
                       setisbtnClicked(true);
@@ -2857,7 +2854,7 @@ function VideoSection() {
             )}
 
             <div className="video-comments">
-              {comments.map((element, index) => {
+              {comments?.sort()?.map((element, index) => {
                 return (
                   <>
                     <div
@@ -2944,7 +2941,7 @@ function VideoSection() {
                               cursor: "pointer",
                             }}
                             onClick={() => {
-                              if (token) {
+                              if (user?.email) {
                                 LikeComment(element._id);
                               } else {
                                 setisbtnClicked(true);
@@ -2955,26 +2952,26 @@ function VideoSection() {
                           />
 
                           <p style={{ marginLeft: "16px" }}>
-                            {CommentLikes &&
-                              CommentLikes[index] &&
-                              CommentLikes[index].likes}
+                            {commentLikes &&
+                              commentLikes[index] &&
+                              commentLikes[index].likes}
                           </p>
 
                           {isHeart[index] === false ? (
                             <FavoriteBorderOutlinedIcon
                               fontSize="small"
                               style={
-                                email === usermail
+                                user?.email === usermail
                                   ? {
-                                    color: theme ? "white" : "black",
-                                    marginLeft: "20px",
-                                    cursor: "pointer",
-                                  }
+                                      color: theme ? "white" : "black",
+                                      marginLeft: "20px",
+                                      cursor: "pointer",
+                                    }
                                   : { display: "none" }
                               }
                               className="heart-comment"
                               onClick={() => {
-                                if (email === usermail) {
+                                if (user?.email === usermail) {
                                   HeartComment(element._id);
                                 }
                               }}
@@ -2989,7 +2986,7 @@ function VideoSection() {
                                 className="heart-liked"
                                 style={{ cursor: "pointer" }}
                                 onClick={() => {
-                                  if (email === usermail) {
+                                  if (user?.email === usermail) {
                                     HeartComment(element._id);
                                   }
                                 }}
@@ -3009,8 +3006,8 @@ function VideoSection() {
                             </Tooltip>
                           )}
 
-                          {element.user_email === email ||
-                            email === usermail ? (
+                          {element.user_email === user?.email ||
+                          user?.email === usermail ? (
                             <button
                               className={
                                 theme
@@ -3146,7 +3143,7 @@ function VideoSection() {
           }
         >
           {!UserPlaylist ||
-            UserPlaylist.includes("No playlists available...") ? (
+          UserPlaylist.includes("No playlists available...") ? (
             <p>No Playlists available...</p>
           ) : (
             ""
@@ -3162,7 +3159,7 @@ function VideoSection() {
                     {(playlistID &&
                       playlistID.length > 0 &&
                       playlistID.includes(element._id) === false) ||
-                      playlistID === "Video doesn't exist in any playlist" ? (
+                    playlistID === "Video doesn't exist in any playlist" ? (
                       <CheckBoxOutlineBlankIcon
                         className="tick-box"
                         fontSize="medium"

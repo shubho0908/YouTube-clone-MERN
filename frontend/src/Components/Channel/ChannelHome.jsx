@@ -2,31 +2,26 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
 import { useEffect, useState } from "react";
-import jwtDecode from "jwt-decode";
 import ReactLoading from "react-loading";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import noImage from "../../img/no-video.jpg";
 import noImage2 from "../../img/novideo.png";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { useSelector } from "react-redux";
 
 function ChannelHome(prop) {
   const backendURL = "https://youtube-clone-mern-backend.vercel.app"
+  // const backendURL = "http://localhost:3000"
   const [myVideos, setMyVideos] = useState([]);
-  const [Email, setEmail] = useState();
-  const token = localStorage.getItem("userToken");
   const [loading, setLoading] = useState(true);
   const [showHome, setShowHome] = useState(false);
   const [theme, setTheme] = useState(() => {
     const Dark = localStorage.getItem("Dark");
     return Dark ? JSON.parse(Dark) : true;
   });
-
-  useEffect(() => {
-    if (token) {
-      setEmail(jwtDecode(token).email);
-    }
-  }, [token]);
+  const User = useSelector((state) => state.user.user);
+  const { user } = User;
 
   useEffect(() => {
     function handleResize() {
@@ -41,7 +36,7 @@ function ChannelHome(prop) {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 3200);
+    }, 1000);
   }, []);
 
   useEffect(() => {
@@ -55,15 +50,15 @@ function ChannelHome(prop) {
   useEffect(() => {
     const getUserVideos = async () => {
       try {
-        if (Email === prop.newmail) {
+        if (user?.email === prop?.newmail) {
           const response = await fetch(
-            `${backendURL}/getuservideos/${Email}`
+            `${backendURL}/getuservideos/${user?.email}`
           );
           const myvideos = await response.json();
           setMyVideos(myvideos);
         } else {
           const response = await fetch(
-            `${backendURL}/getuservideos/${prop.newmail}`
+            `${backendURL}/getuservideos/${prop?.newmail}`
           );
           const myvideos = await response.json();
           setMyVideos(myvideos);
@@ -74,7 +69,7 @@ function ChannelHome(prop) {
     };
 
     getUserVideos();
-  }, [Email, prop.newmail]);
+  }, [user?.email, prop?.newmail]);
 
   const updateViews = async (id) => {
     try {
@@ -226,7 +221,7 @@ function ChannelHome(prop) {
           <div
             className={theme ? "user-video" : "user-video text-light-mode"}
             onClick={() => {
-              if (token) {
+              if (user?.email) {
                 updateViews(myVideos[0]._id);
                 window.location.href = `/video/${myVideos[0]._id}`;
               }
@@ -480,7 +475,7 @@ function ChannelHome(prop) {
             <div
               className={theme ? "playall-videos" : "playall-videos-light"}
               onClick={() => {
-                if (token) {
+                if (user?.email) {
                   updateViews(AllVideos.sort(sortByViews2)[0]._id);
                   window.location.href = `/video/${
                     AllVideos.sort(sortByViews2)[0]._id
@@ -524,7 +519,7 @@ function ChannelHome(prop) {
                     display: element.visibility === "Public" ? "block" : "none",
                   }}
                   onClick={() => {
-                    if (token) {
+                    if (user?.email) {
                       updateViews(element._id);
                       setTimeout(() => {
                         window.location.href = `/video/${element._id}`;
@@ -714,7 +709,7 @@ function ChannelHome(prop) {
             <div
               className={theme ? "playall-videos" : "playall-videos-light"}
               onClick={() => {
-                if (token) {
+                if (user?.email) {
                   updateViews(AllVideos.sort(sortByViews)[0]._id);
                   window.location.href = `/video/${
                     AllVideos.sort(sortByViews)[0]._id
@@ -758,7 +753,7 @@ function ChannelHome(prop) {
                   }}
                   key={index}
                   onClick={() => {
-                    if (token) {
+                    if (user?.email) {
                       updateViews(element._id);
                       setTimeout(() => {
                         window.location.href = `/video/${element._id}`;
@@ -852,7 +847,7 @@ function ChannelHome(prop) {
         style={
           myVideos &&
           myVideos.message === "USER DOESN'T EXIST" &&
-          Email !== prop.newmail
+          Email !== prop?.newmail
             ? { display: "block" }
             : { display: "none" }
         }
@@ -868,7 +863,7 @@ function ChannelHome(prop) {
         style={
           myVideos &&
           myVideos.message === "USER DOESN'T EXIST" &&
-          Email === prop.newmail
+          Email === prop?.newmail
             ? { display: "flex" }
             : { display: "none" }
         }
@@ -1176,7 +1171,7 @@ function ChannelHome(prop) {
             <div
               className={theme ? "user-video" : "user-video text-light-mode"}
               onClick={() => {
-                if (token) {
+                if (user?.email) {
                   updateViews(myVideos[0]._id);
                   window.location.href = `/video/${myVideos[0]._id}`;
                 }
@@ -1328,7 +1323,7 @@ function ChannelHome(prop) {
               <div
                 className={theme ? "playall-videos" : "playall-videos-light"}
                 onClick={() => {
-                  if (token) {
+                  if (user?.email) {
                     updateViews(AllVideos.sort(sortByViews2)[0]._id);
                     window.location.href = `/video/${
                       AllVideos.sort(sortByViews2)[0]._id
@@ -1373,7 +1368,7 @@ function ChannelHome(prop) {
                     }}
                     key={index}
                     onClick={() => {
-                      if (token) {
+                      if (user?.email) {
                         updateViews(element._id);
                         setTimeout(() => {
                           window.location.href = `/video/${element._id}`;
@@ -1482,7 +1477,7 @@ function ChannelHome(prop) {
               <div
                 className={theme ? "playall-videos" : "playall-videos-light"}
                 onClick={() => {
-                  if (token) {
+                  if (user?.email) {
                     updateViews(AllVideos.sort(sortByViews)[0]._id);
                     window.location.href = `/video/${
                       AllVideos.sort(sortByViews)[0]._id
@@ -1527,7 +1522,7 @@ function ChannelHome(prop) {
                     }}
                     key={index}
                     onClick={() => {
-                      if (token) {
+                      if (user?.email) {
                         updateViews(element._id);
                         setTimeout(() => {
                           window.location.href = `/video/${element._id}`;

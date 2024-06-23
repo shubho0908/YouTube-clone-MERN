@@ -9,7 +9,6 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import ChannelVideos from "./ChannelVideos";
 import ClearRoundedIcon from "@mui/icons-material/ClearRounded";
-import jwtDecode from "jwt-decode";
 import Tooltip from "@mui/material/Tooltip";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import Zoom from "@mui/material/Zoom";
@@ -21,20 +20,19 @@ import FeaturedChannels from "./FeaturedChannels";
 import { RiUserSettingsLine } from "react-icons/ri";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { useSelector } from "react-redux";
 function OtherChannel() {
   const backendURL = "https://youtube-clone-mern-backend.vercel.app"
+  // const backendURL = "http://localhost:3000";
   const { id } = useParams();
   const [Email, setEmail] = useState();
-  const [newEmail, setnewEmail] = useState();
   const [channelName, setChannelname] = useState();
   const [ChannelProfile, setChannelProfile] = useState();
   const [myVideos, setMyVideos] = useState([]);
   const [isbtnClicked, setisbtnClicked] = useState(false);
   const [isSwitch, setisSwitched] = useState(false);
   const Section = localStorage.getItem("Section") || "Home";
-  const token = localStorage.getItem("userToken");
-  const [isSubscribed, setIsSubscribed] = useState();
+  const [isSubscribed, setIsSubscribed] = useState(false);
   const [Subscribers, setSubscribers] = useState();
   const [Top, setTop] = useState("155px");
   const [coverIMG, setCoverIMG] = useState("");
@@ -43,7 +41,8 @@ function OtherChannel() {
     const Dark = localStorage.getItem("Dark");
     return Dark ? JSON.parse(Dark) : true;
   });
-
+  const User = useSelector((state) => state.user.user);
+  const { user } = User;
   //TOAST FUNCTIONS
 
   const SubscribeNotify = () =>
@@ -61,23 +60,15 @@ function OtherChannel() {
   //USE EFFECTS
 
   useEffect(() => {
-    if (token) {
-      setnewEmail(jwtDecode(token).email);
-    }
-  }, [token]);
-
-  useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 3200);
+    }, 1000);
   }, []);
 
   useEffect(() => {
     const getUserMail = async () => {
       try {
-        const response = await fetch(
-          `${backendURL}/getotherchannel/${id}`
-        );
+        const response = await fetch(`${backendURL}/getotherchannel/${id}`);
         const userEmail = await response.json();
         setEmail(userEmail);
       } catch (error) {
@@ -85,19 +76,19 @@ function OtherChannel() {
       }
     };
 
-    getUserMail()
+    getUserMail();
   }, [id]);
 
   useEffect(() => {
     const getChannelData = async () => {
       try {
-        const response = await fetch(
-          `${backendURL}/getchannel/${Email}`
-        );
-        const data = await response.json();
-        const { profile, ChannelName } = data;
-        setChannelProfile(profile);
-        setChannelname(ChannelName);
+        if (Email) {
+          const response = await fetch(`${backendURL}/getchannel/${Email}`);
+          const data = await response.json();
+          const { userProfile, ChannelName } = data;
+          setChannelProfile(userProfile);
+          setChannelname(ChannelName);
+        }
       } catch (error) {
         // console.log(error.message);
       }
@@ -114,9 +105,11 @@ function OtherChannel() {
   useEffect(() => {
     const getChannelCover = async () => {
       try {
-        const response = await fetch(`${backendURL}/getcover/${Email}`);
-        const coverimg = await response.json();
-        setCoverIMG(coverimg);
+        if (Email) {
+          const response = await fetch(`${backendURL}/getcover/${Email}`);
+          const coverimg = await response.json();
+          setCoverIMG(coverimg);
+        }
       } catch (error) {
         // console.log(error.message);
       }
@@ -128,29 +121,27 @@ function OtherChannel() {
   useEffect(() => {
     const getSubscribers = async () => {
       try {
-        const response = await fetch(
-          `${backendURL}/getchannelid/${Email}`
-        );
-        const { subscribers } = await response.json();
-        setSubscribers(subscribers);
+        if (Email) {
+          const response = await fetch(`${backendURL}/getchannelid/${Email}`);
+          const { subscribers } = await response.json();
+          setSubscribers(subscribers);
+        }
       } catch (error) {
         // console.log(error.message);
       }
     };
 
-    const interval = setInterval(getSubscribers, 200);
-
-    return () => clearInterval(interval);
+    getSubscribers();
   }, [Email]);
 
   useEffect(() => {
     const getUserVideos = async () => {
       try {
-        const response = await fetch(
-          `${backendURL}/getuservideos/${Email}`
-        );
-        const myvideos = await response.json();
-        setMyVideos(myvideos);
+        if (Email) {
+          const response = await fetch(`${backendURL}/getuservideos/${Email}`);
+          const myvideos = await response.json();
+          setMyVideos(myvideos);
+        }
       } catch (error) {
         // console.log(error.message);
       }
@@ -191,24 +182,24 @@ function OtherChannel() {
   useEffect(() => {
     const checkSubscription = async () => {
       try {
-        const response = await fetch(
-          `${backendURL}/checksubscription/${id}/${newEmail}`
-        );
-        const { existingChannelID } = await response.json();
-        if (existingChannelID !== undefined) {
-          setIsSubscribed(true);
-        } else {
-          setIsSubscribed(false);
+        if (user?.email) {
+          const response = await fetch(
+            `${backendURL}/checksubscription/${id}/${user?.email}`
+          );
+          const { message } = await response.json();
+          if (message === true) {
+            setIsSubscribed(true);
+          } else {
+            setIsSubscribed(false);
+          }
         }
       } catch (error) {
         // console.log(error.message);
       }
     };
 
-    const interval = setInterval(checkSubscription, 200);
-
-    return () => clearInterval(interval);
-  }, [id, newEmail]);
+    checkSubscription();
+  }, [id, user?.email]);
 
   const getUsername = (email) => {
     return email.split("@")[0];
@@ -227,9 +218,10 @@ function OtherChannel() {
       };
 
       const response = await fetch(
-        `${backendURL}/subscribe/${id}/${newEmail}/${Email}`,
+        `${backendURL}/subscribe/${id}/${user?.email}/${Email}`,
         {
           method: "POST",
+          credentials: "include",
           body: JSON.stringify(channelData),
           headers: {
             "Content-Type": "application/json",
@@ -239,6 +231,9 @@ function OtherChannel() {
       const data = await response.json();
       if (data === "Subscribed") {
         SubscribeNotify();
+        setIsSubscribed(true);
+      } else {
+        setIsSubscribed(false);
       }
     } catch (error) {
       // console.log(error.message);
@@ -318,7 +313,7 @@ function OtherChannel() {
                       />
                     </div>
                   </div>
-                  {newEmail === Email ? (
+                  {user?.email === Email ? (
                     <div className="channel-right-content channel-dualbtns">
                       <Skeleton
                         count={1}
@@ -425,7 +420,7 @@ function OtherChannel() {
                     />
                   </div>
                 </div>
-                {newEmail === Email ? (
+                {user?.email === Email ? (
                   <div className="channel-right-content channel-dualbtns">
                     <button
                       className={
@@ -480,7 +475,7 @@ function OtherChannel() {
                           : { display: "block" }
                       }
                       onClick={() => {
-                        if (token) {
+                        if (user?.email) {
                           SubscribeChannel();
                         } else {
                           setisbtnClicked(true);
@@ -502,7 +497,7 @@ function OtherChannel() {
                           : { display: "none" }
                       }
                       onClick={() => {
-                        if (token) {
+                        if (user?.email) {
                           SubscribeChannel();
                         } else {
                           setisbtnClicked(true);

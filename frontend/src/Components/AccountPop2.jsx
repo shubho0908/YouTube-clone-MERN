@@ -1,4 +1,3 @@
-import jwtDecode from "jwt-decode";
 import { useEffect, useState } from "react";
 import "../Css/accountPop.css";
 import avatar from "../img/avatar.png";
@@ -12,11 +11,10 @@ import DoneOutlinedIcon from "@mui/icons-material/DoneOutlined";
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
 import YouTubeIcon from "@mui/icons-material/YouTube";
-
+import { useSelector } from "react-redux";
 function AccountPop() {
   const backendURL = "https://youtube-clone-mern-backend.vercel.app"
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  // const backendURL = "http://localhost:3000";
   const [profile, setProfile] = useState("");
   const [theme, setTheme] = useState(() => {
     const Dark = localStorage.getItem("Dark");
@@ -26,29 +24,18 @@ function AccountPop() {
   const [isBtnClicked, setIsBtnClicked] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem("userToken");
-
-    if (token) {
-      try {
-        const decodedToken = jwtDecode(token);
-        setName(decodedToken.name || "");
-        setEmail(decodedToken.email || "");
-      } catch (error) {
-        console.log("Error decoding token:", error.message);
-      }
-    }
-  }, []);
-
-  useEffect(() => {
     localStorage.setItem("Dark", JSON.stringify(theme));
   }, [theme]);
+
+  const User = useSelector((state) => state.user.user);
+  const { user } = User;
 
   useEffect(() => {
     const getUserData = async () => {
       try {
-        if (email) {
+        if (user?.email) {
           const response = await fetch(
-            `${backendURL}/getuserimage/${email}`
+            `${backendURL}/getuserimage/${user?.email}`
           );
           const { channelIMG } = await response.json();
           setProfile(channelIMG);
@@ -59,14 +46,14 @@ function AccountPop() {
     };
 
     getUserData();
-  }, [email]);
+  }, [user?.email]);
 
   useEffect(() => {
     const getChannelID = async () => {
       try {
-        if (email) {
+        if (user?.email) {
           const response = await fetch(
-            `${backendURL}/getchannelid/${email}`
+            `${backendURL}/getchannelid/${user?.email}`
           );
           const { channelID } = await response.json();
           setChannelID(channelID);
@@ -77,7 +64,22 @@ function AccountPop() {
     };
 
     getChannelID();
-  }, [email]);
+  }, [user?.email]);
+
+  const handleLogout = async () => {
+    try {
+      const response = await fetch(`${backendURL}/logout`, {
+        credentials: "include",
+      });
+      const { success, message } = await response.json();
+      if (success) {
+        alert(message);
+        window.location.href = "/";
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -96,15 +98,15 @@ function AccountPop() {
             />
           </div>
           <div className="right-part">
-            <p>{name}</p>
+            <p>{user?.name}</p>
             <Tooltip
               TransitionComponent={Zoom}
-              title={email}
+              title={user?.email}
               placement="bottom"
             >
               <p>
-                {email.slice(0, 12)}
-                {email.length > 12 ? "..." : ""}
+                {user?.email.slice(0, 12)}
+                {user?.email.length > 12 ? "..." : ""}
               </p>
             </Tooltip>
           </div>
@@ -178,10 +180,7 @@ function AccountPop() {
           </div>
           <div
             className={theme ? "exitout c-sec" : "exitout c-sec preview-lightt"}
-            onClick={() => {
-              localStorage.removeItem("userToken");
-              window.location.href = "/";
-            }}
+            onClick={handleLogout}
           >
             <LogoutOutlinedIcon
               fontSize="medium"
