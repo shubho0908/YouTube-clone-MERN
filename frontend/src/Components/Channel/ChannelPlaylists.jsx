@@ -3,6 +3,7 @@ import PlaylistPlayIcon from "@mui/icons-material/PlaylistPlay";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import deleteIMG from "../../img/delete.jpg";
+import { useSelector } from "react-redux";
 
 function generateRandomColors(count) {
   const transparency = 0.7; // Adjust transparency as needed (0 to 1)
@@ -22,7 +23,6 @@ function ChannelPlaylists(prop) {
   const backendURL = "https://youtube-clone-mern-backend.vercel.app"
   // const backendURL = "http://localhost:3000"
   const [PlaylistData, setPlaylistData] = useState([]);
-  const [email, setEmail] = useState();
   const [playlistColors, setPlaylistColors] = useState([]);
   const [loading, setLoading] = useState(true);
   const sampleArr = [1, 2, 3, 4];
@@ -30,7 +30,8 @@ function ChannelPlaylists(prop) {
     const Dark = localStorage.getItem("Dark");
     return Dark ? JSON.parse(Dark) : true;
   });
-
+  const User = useSelector((state) => state.user.user);
+  const { user } = User;
 
   useEffect(() => {
     setTimeout(() => {
@@ -71,7 +72,7 @@ function ChannelPlaylists(prop) {
   if (
     (loading === false && PlaylistData === "No playlists available...") ||
     (loading === false && PlaylistData.length === 0) ||
-    (email !== prop?.newmail && noPublicPlaylists)
+    (user?.email !== prop?.newmail && noPublicPlaylists)
   ) {
     return (
       <p
@@ -184,7 +185,7 @@ function ChannelPlaylists(prop) {
                       className="created-all-playlistss"
                       key={index}
                       style={
-                        prop?.newmail !== email &&
+                        prop?.newmail !== user?.email &&
                         element.playlist_privacy === "Private"
                           ? { display: "none" }
                           : { display: "block" }

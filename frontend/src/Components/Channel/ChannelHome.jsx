@@ -847,7 +847,7 @@ function ChannelHome(prop) {
         style={
           myVideos &&
           myVideos.message === "USER DOESN'T EXIST" &&
-          Email !== prop?.newmail
+          user?.email !== prop?.newmail
             ? { display: "block" }
             : { display: "none" }
         }
@@ -863,7 +863,7 @@ function ChannelHome(prop) {
         style={
           myVideos &&
           myVideos.message === "USER DOESN'T EXIST" &&
-          Email === prop?.newmail
+          user?.email === prop?.newmail
             ? { display: "flex" }
             : { display: "none" }
         }

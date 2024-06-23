@@ -62,7 +62,7 @@ function ChannelAbout(prop) {
   useEffect(() => {
     const GetAboutData = async () => {
       try {
-        if (Email !== undefined) {
+        if (Email) {
           const response = await fetch(
             `${backendURL}/getabout/${Email}`
           );
@@ -81,7 +81,7 @@ function ChannelAbout(prop) {
   useEffect(() => {
     const GetTotalViews = async () => {
       try {
-        if (Email !== undefined) {
+        if (Email) {
           const response = await fetch(
             `${backendURL}/totalviews/${Email}`
           );
