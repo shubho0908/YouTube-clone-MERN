@@ -39,7 +39,7 @@ function Trending() {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 3200);
+    }, 1000);
   }, []);
 
   useEffect(() => {

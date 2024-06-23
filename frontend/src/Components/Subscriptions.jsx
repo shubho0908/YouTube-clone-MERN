@@ -11,7 +11,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { useSelector } from "react-redux";
 
 function Subscriptions() {
-  const backendURL = "https://youtube-clone-mern-backend.vercel.app"
+  const backendURL = "https://youtube-clone-mern-backend.vercel.app";
   // const backendURL = "http://localhost:3000";
   const [subscriptions, setSubscriptions] = useState([]);
   const [subsVideos, setSubsVideos] = useState([]);
@@ -41,14 +41,18 @@ function Subscriptions() {
   useEffect(() => {
     const getSubscriptions = async () => {
       try {
-        const response = await fetch(`${backendURL}/getsubscriptions/${user?.email}`);
-        const result = await response.json();
-        setSubscriptions(result);
+        if (user?.email) {
+          const response = await fetch(
+            `${backendURL}/getsubscriptions/${user?.email}`
+          );
+          const result = await response.json();
+          setSubscriptions(result);
+        }
       } catch (error) {
         // console.log(error.message);
       }
     };
-    return () => getSubscriptions();
+   getSubscriptions();
   }, [user?.email]);
 
   useEffect(() => {
