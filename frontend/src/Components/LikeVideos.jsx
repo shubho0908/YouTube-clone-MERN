@@ -8,7 +8,7 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useSelector } from "react-redux";
 function LikeVideos() {
-  const backendURL = "https://youtube-clone-mern-backend.vercel.app"
+  const backendURL = "https://youtube-clone-mern-backend.vercel.app";
   // const backendURL = "http://localhost:3000";
   const [menuClicked, setMenuClicked] = useState(() => {
     const menu = localStorage.getItem("menuClicked");
@@ -38,16 +38,18 @@ function LikeVideos() {
   useEffect(() => {
     const getLikeVideos = async () => {
       try {
-        const response = await fetch(
-          `${backendURL}/getlikevideos/${user?.email}`
-        );
-        const result = await response.json();
-        setLikedVideos(result);
+        if (user?.email) {
+          const response = await fetch(
+            `${backendURL}/getlikevideos/${user?.email}`
+          );
+          const result = await response.json();
+          setLikedVideos(result);
+        }
       } catch (error) {
         // console.log(error.message);
       }
     };
-    return () => getLikeVideos();
+    getLikeVideos();
   }, [user?.email]);
 
   useEffect(() => {
@@ -132,7 +134,7 @@ function LikeVideos() {
             : "liked-video-data light-mode text-light-mode"
         }
       >
-        {videolike.length > 0 ? (
+        {videolike?.length > 0 ? (
           <div
             className="like-video-sections"
             style={menuClicked === false ? { left: "80px" } : { left: "255px" }}
