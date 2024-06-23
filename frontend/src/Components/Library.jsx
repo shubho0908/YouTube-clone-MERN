@@ -2,7 +2,6 @@ import Navbar from "./Navbar";
 import LeftPanel from "./LeftPanel";
 import WatchLaterOutlinedIcon from "@mui/icons-material/WatchLaterOutlined";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import jwtDecode from "jwt-decode";
 import nothing from "../img/nothing.png";
 import PlaylistPlayOutlinedIcon from "@mui/icons-material/PlaylistPlayOutlined";
 import Tooltip from "@mui/material/Tooltip";
