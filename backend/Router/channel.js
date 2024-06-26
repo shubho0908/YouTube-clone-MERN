@@ -593,7 +593,7 @@ Channel.post("/savecustomization/:email", async (req, res) => {
     }
 
     const user = await userData.findOne({ email });
-    const video = await videodata.findOne({ email });
+    const video = await videodata.findOne({ user_email: email });
 
     if (!user) {
       return res.status(404).json({ error: "User not found" });
